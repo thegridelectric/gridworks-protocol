@@ -19,7 +19,6 @@ import gwproto.property_format as property_format
 import gwproto.messages as messages
 
 __all__ = [
-
     # top level
     "Decoder",
     "DecoderItem",

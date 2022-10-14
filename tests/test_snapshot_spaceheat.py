@@ -11,7 +11,13 @@ def test_snapshot_spaceheat():
     gw_dict = {
         "FromGNodeAlias": "dw1.isone.ct.newhaven.orange1.ta.scada",
         "FromGNodeInstanceId": "0384ef21-648b-4455-b917-58a1172d7fc1",
-        "Snapshot": {"TelemetryNameList": ["5a71d4b3"], "AboutNodeAliasList": ["a.elt1.relay"], "ReportTimeUnixMs": 1656363448000, "ValueList": [1], "TypeAlias": "telemetry.snapshot.spaceheat.100"},
+        "Snapshot": {
+            "TelemetryNameList": ["5a71d4b3"],
+            "AboutNodeAliasList": ["a.elt1.relay"],
+            "ReportTimeUnixMs": 1656363448000,
+            "ValueList": [1],
+            "TypeAlias": "telemetry.snapshot.spaceheat.100",
+        },
         "TypeAlias": "snapshot.spaceheat.100",
     }
 

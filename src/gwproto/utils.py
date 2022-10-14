@@ -69,9 +69,9 @@ def screen_style_utc_date_s(timestamp):
 
 
 def get_git_short_commit() -> str:
-    return bytes.decode(subprocess.check_output(["git", "rev-parse", "--short", "HEAD"])).split(
-        "\n"
-    )[0]
+    return bytes.decode(
+        subprocess.check_output(["git", "rev-parse", "--short", "HEAD"])
+    ).split("\n")[0]
 
 
 def socket_is_open(host, port) -> bool:
@@ -95,4 +95,3 @@ def all_equal(iterator):
     except StopIteration:
         return True
     return all(first == x for x in iterator)
-

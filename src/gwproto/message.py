@@ -17,11 +17,14 @@ from pydantic.generics import GenericModel
 EnumType = TypeVar("EnumType")
 
 
-def as_enum(value: Any, enum_type: EnumType, default: Optional[EnumType] = None) -> Optional[EnumType]:
+def as_enum(
+    value: Any, enum_type: EnumType, default: Optional[EnumType] = None
+) -> Optional[EnumType]:
     try:
         return enum_type(value)
     except ValueError:
         return default
+
 
 class Header(BaseModel):
     src: str
@@ -30,7 +33,9 @@ class Header(BaseModel):
     message_id: str = ""
     type_name: str = Field("gridworks.header.000", const=True)
 
+
 PayloadT = TypeVar("PayloadT")
+
 
 class Message(GenericModel, Generic[PayloadT]):
     header: Header
@@ -69,6 +74,7 @@ class Message(GenericModel, Generic[PayloadT]):
         else:
             header = header.copy(update=header_kwargs, deep=True)
         return header
+
 
 class EventBase(BaseModel):
     message_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
@@ -115,15 +121,21 @@ class MQTTCommEvent(CommEvent):
 
 
 class MQTTConnectFailedEvent(MQTTCommEvent):
-    type_name: Literal["gridworks.event.comm.mqtt.connect_failed.000"] = "gridworks.event.comm.mqtt.connect_failed.000"
+    type_name: Literal[
+        "gridworks.event.comm.mqtt.connect_failed.000"
+    ] = "gridworks.event.comm.mqtt.connect_failed.000"
 
 
 class MQTTDisconnectEvent(MQTTCommEvent):
-    type_name: Literal["gridworks.event.comm.mqtt.disconnect.000"] = "gridworks.event.comm.mqtt.disconnect.000"
+    type_name: Literal[
+        "gridworks.event.comm.mqtt.disconnect.000"
+    ] = "gridworks.event.comm.mqtt.disconnect.000"
 
 
 class MQTTFullySubscribedEvent(CommEvent):
-    type_name: Literal["gridworks.event.comm.mqtt.fully_subscribed.000"] = "gridworks.event.comm.mqtt.fully_subscribed.000"
+    type_name: Literal[
+        "gridworks.event.comm.mqtt.fully_subscribed.000"
+    ] = "gridworks.event.comm.mqtt.fully_subscribed.000"
 
 
 class EventMessage(Message[EventT], Generic[EventT]):

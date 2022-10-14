@@ -4,9 +4,11 @@ from typing import Callable, Any, Optional, NamedTuple
 
 Decoder = Callable[[Any], Any]
 
+
 class DecoderItem(NamedTuple):
     type_name: str
     decoder: Decoder
+
 
 class Decoders:
     _decoders: dict[str, Decoder]
@@ -37,7 +39,7 @@ class Decoders:
         type_name: str,
         content: str | bytes,
         encoding: str = "utf-8",
-        json_args: Optional[dict[str, Any]] = None
+        json_args: Optional[dict[str, Any]] = None,
     ) -> Any:
         if isinstance(content, bytes):
             content = content.decode(encoding)
@@ -48,9 +50,11 @@ class Decoders:
         type_name: str,
         path: str | Path,
         encoding: str = "utf-8",
-        json_args: Optional[dict[str, Any]] = None
+        json_args: Optional[dict[str, Any]] = None,
     ):
-        return self.decode_json(type_name, Path(path).read_bytes(), encoding=encoding, json_args=json_args)
+        return self.decode_json(
+            type_name, Path(path).read_bytes(), encoding=encoding, json_args=json_args
+        )
 
     def add_decoder(self, type_name: str, decoder: Decoder) -> "Decoders":
         self._validate(type_name, decoder)
@@ -79,5 +83,5 @@ class Decoders:
         if type_name in self._decoders:
             if self._decoders[type_name] is not decoder:
                 raise ValueError(
-                    f"ERROR. decoder for [{type_name}] is already present as [{self._decoders[type_name]}]")
-
+                    f"ERROR. decoder for [{type_name}] is already present as [{self._decoders[type_name]}]"
+                )

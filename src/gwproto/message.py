@@ -1,13 +1,14 @@
-"""Message structures for use between proactor and its sub-objects."""
 import time
 import uuid
 from enum import Enum
 from typing import Any
+from typing import Callable
 from typing import Generic
 from typing import Literal
 from typing import Mapping
 from typing import Optional
 from typing import TypeVar
+from typing import Union
 
 from pydantic import BaseModel
 from pydantic import Field
@@ -19,7 +20,7 @@ EnumType = TypeVar("EnumType")
 
 
 def as_enum(
-    value: Any, enum_type: EnumType, default: Optional[EnumType] = None
+    value: Any, enum_type: Callable[[Any], EnumType], default: Optional[EnumType] = None
 ) -> Optional[EnumType]:
     try:
         return enum_type(value)
@@ -37,17 +38,19 @@ class Header(BaseModel):
 
 PayloadT = TypeVar("PayloadT")
 
+PAYLOAD_TYPE_FIELDS = ["type_name", "type_alias", "TypeAlias"]
+
 
 class Message(GenericModel, Generic[PayloadT]):
     header: Header
     payload: PayloadT
     type_name: str = Field("gridworks.message.000", const=True)
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs: Any):
         kwargs["header"] = self._header_from_kwargs(kwargs)
         super().__init__(**kwargs)
 
-    def mqtt_topic(self):
+    def mqtt_topic(self) -> str:
         return f"{self.header.src}/{self.type_name.replace('.', '-')}"
 
     @classmethod
@@ -58,7 +61,7 @@ class Message(GenericModel, Generic[PayloadT]):
             ("src", ["src"]),
             ("dst", ["dst"]),
             ("message_id", ["message_id"]),
-            ("message_type", ["type_name", "type_alias", "TypeAlias"]),
+            ("message_type", PAYLOAD_TYPE_FIELDS),
         ]:
             val = kwargs.get(header_field, None)
             if val is None:
@@ -69,11 +72,13 @@ class Message(GenericModel, Generic[PayloadT]):
                         val = payload[payload_field]
             if val is not None:
                 header_kwargs[header_field] = val
-        header = kwargs.get("header", None)
-        if header is None:
-            header = Header(**header_kwargs)
-        else:
+        header: Optional[Union[Header, dict]] = kwargs.get("header", None)
+        if isinstance(header, Header):
             header = header.copy(update=header_kwargs, deep=True)
+        else:
+            if header is not None:
+                header_kwargs = dict(header, **header_kwargs)
+            header = Header(**header_kwargs)
         return header
 
 
@@ -109,7 +114,7 @@ class ProblemEvent(EventBase):
     type_name: Literal["gridworks.event.problem.000"] = "gridworks.event.problem.000"
 
     @validator("problem_type", pre=True)
-    def problem_type_value(cls, v):
+    def problem_type_value(cls, v: Any) -> Optional[Problems]:
         return as_enum(v, Problems)
 
 

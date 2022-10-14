@@ -10,8 +10,8 @@ from .decoders_factory import MessageDiscriminator
 from .decoders_factory import OneDecoderExtractor
 from .decoders_factory import PydanticExtractor
 from .decoders_factory import create_message_payload_discriminator
+from .decoders_factory import get_pydantic_literal_type_name
 from .decoders_factory import gridworks_message_decoder
-from .decoders_factory import has_pydantic_literal_type_name
 from .decoders_factory import pydantic_named_types
 from .errors import MpSchemaError
 
@@ -26,7 +26,7 @@ __all__ = [
     "gridworks_message_decoder",
     "MessageDiscriminator",
     "OneDecoderExtractor",
-    "has_pydantic_literal_type_name",
+    "get_pydantic_literal_type_name",
     "pydantic_named_types",
     "PydanticExtractor",
     "enums",

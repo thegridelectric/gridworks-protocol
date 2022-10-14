@@ -5,7 +5,6 @@ import sys
 import typing
 from dataclasses import dataclass
 from typing import Any
-from typing import Callable
 from typing import Optional
 from typing import Sequence
 from typing import Type
@@ -25,16 +24,17 @@ from gwproto.message import Message
 DEFAULT_TYPE_NAME_FIELD = "type_name"
 
 
-def has_pydantic_literal_type_name(
-    o, type_name_field: str = DEFAULT_TYPE_NAME_FIELD
-) -> bool:
+def get_pydantic_literal_type_name(
+    o: Any, type_name_field: str = DEFAULT_TYPE_NAME_FIELD
+) -> str:
     if hasattr(o, "__fields__"):
         if type_name_field in o.__fields__:
-            return (
+            if (
                 typing.get_origin(o.__fields__[type_name_field].annotation)
                 == typing.Literal
-            )
-    return False
+            ):
+                return str(o.__fields__[type_name_field].default)
+    return ""
 
 
 def pydantic_named_types(
@@ -47,39 +47,44 @@ def pydantic_named_types(
     ]:
         raise ValueError(f"ERROR. modules {unimported} have not been imported.")
     types = []
+    type_names: dict[str, Any] = dict()
     for module_name in module_names:
-        types.extend(
-            [
-                entry[1]
-                for entry in inspect.getmembers(
-                    sys.modules[module_name], inspect.isclass
-                )
-                if has_pydantic_literal_type_name(
-                    entry[1], type_name_field=type_name_field
-                )
-            ]
-        )
+        for module_class in [
+            entry[1]
+            for entry in inspect.getmembers(sys.modules[module_name], inspect.isclass)
+        ]:
+            if type_name := get_pydantic_literal_type_name(
+                module_class, type_name_field=type_name_field
+            ):
+                if type_name in type_names:
+                    raise ValueError(
+                        f"ERROR {type_name_field} ({type_name}) "
+                        f"for {module_class} already seen for "
+                        f"class {type_names[type_name]}"
+                    )
+                type_names[type_name] = module_class
+                types.append(module_class)
     return types
 
 
-MessageDiscriminator = TypeVar("MessageDiscriminator", bound=Message)
+MessageDiscriminator = TypeVar("MessageDiscriminator", bound=Message[Any])
 
 
 def create_message_payload_discriminator(
-    model_name: str, modules_names: str | Sequence[str]
+    model_name: str,
+    modules_names: str | Sequence[str],
+    type_name_field: str = DEFAULT_TYPE_NAME_FIELD,
 ) -> Type["MessageDiscriminator"]:
     return create_model(
         model_name,
-        __base__=Message,
+        __base__=Message,  # type: ignore
         payload=(
             Union[
                 tuple(
-                    pydantic_named_types(
-                        modules_names, type_name_field=DEFAULT_TYPE_NAME_FIELD
-                    )
+                    pydantic_named_types(modules_names, type_name_field=type_name_field)
                 )
             ],
-            Field(..., discriminator=DEFAULT_TYPE_NAME_FIELD),
+            Field(..., discriminator=type_name_field),
         ),
     )
 
@@ -94,8 +99,13 @@ def gridworks_message_decoder(
         content = content.decode("utf-8")
     if isinstance(content, str):
         content = json.loads(content)
+    if not isinstance(content, dict):
+        raise ValueError(
+            f"ERROR. decoded content has type {type(content)}; dict required"
+        )
     message_dict = dict(content)
     message_dict["header"] = Header.parse_obj(content.get("header", dict()))
+    message: Message
     if message_dict["header"].message_type in decoders:
         message_dict["payload"] = decoders.decode(
             message_dict["header"].message_type,
@@ -130,7 +140,7 @@ class OneDecoderExtractor:
                 decoder_function = getattr(obj, self.decoder_function_name)
             else:
                 decoder_function = obj
-            if not isinstance(decoder_function, Callable):
+            if not callable(decoder_function):
                 raise ValueError(
                     f"ERROR. object {obj} attribute {self.decoder_function_name} is not Callable"
                 )
@@ -176,12 +186,11 @@ class DecoderExtractor:
         return item
 
     def decoder_items_from_objects(self, objs: list) -> dict[str, Decoder]:
-        return dict(
-            filter(
-                lambda item: item is not None,
-                [self.decoder_item_from_object(obj) for obj in objs],
-            )
-        )
+        items = dict()
+        for obj in objs:
+            if (item := self.decoder_item_from_object(obj)) is not None:
+                items[item.type_name] = item.decoder
+        return items
 
     def from_objects(
         self,

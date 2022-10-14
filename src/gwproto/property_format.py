@@ -1,7 +1,25 @@
 import string
 import struct
+from typing import Any
+from typing import Callable
 
 import pendulum
+import pydantic
+
+
+def predicate_validator(
+    field_name: str, predicate: Callable[[Any], bool], error_format: str = ""
+) -> classmethod:
+    def _validator(v: Any) -> Any:
+        if not predicate(v):
+            if error_format:
+                err_str = error_format.format(value=v)
+            else:
+                err_str = f"Failure of predicate on [{v}] with predicate {predicate}"
+            raise ValueError(err_str)
+        return v
+
+    return pydantic.validator(field_name, allow_reuse=True)(_validator)
 
 
 def is_bit(candidate):
@@ -20,9 +38,10 @@ def is_64_bit_hex(candidate):
     return True
 
 
-def is_lrd_alias_format(candidate: str):
+def is_lrd_alias_format(candidate: str) -> bool:
     """AlphanumericStrings separated by periods, with most
     significant word to the left.  I.e. `dw1.ne` is the child of `dw1`."""
+    # noinspection PyBroadException
     try:
         x = candidate.split(".")
     except:
@@ -58,6 +77,7 @@ def is_reasonable_unix_time_s(candidate):
 
 
 def is_unsigned_short(candidate):
+    # noinspection PyBroadException
     try:
         struct.pack("H", candidate)
     except:
@@ -67,6 +87,7 @@ def is_unsigned_short(candidate):
 
 
 def is_short_integer(candidate):
+    # noinspection PyBroadException
     try:
         struct.pack("h", candidate)
     except:
@@ -84,7 +105,7 @@ def is_uuid_canonical_textual(candidate):
         return False
     for hex_word in x:
         try:
-            y = int(hex_word, 16)
+            int(hex_word, 16)
         except ValueError:
             return False
     if len(x[0]) != 8:

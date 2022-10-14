@@ -6,6 +6,7 @@ import sys
 from pathlib import Path
 from textwrap import dedent
 
+# noinspection PyUnresolvedReferences
 import nox
 
 
@@ -23,14 +24,14 @@ except ImportError:
 
 
 package = "gwproto"
-python_versions = ["3.10", "3.9", "3.8", "3.7"]
+python_versions = ["3.10"]
 nox.needs_version = ">= 2021.6.6"
 nox.options.sessions = (
     "pre-commit",
     "safety",
-    "mypy",
+    # "mypy",
     "tests",
-    "typeguard",
+    # "typeguard",
     "xdoctest",
     "docs-build",
 )
@@ -122,11 +123,11 @@ def precommit(session: Session) -> None:
     session.install(
         "black",
         "darglint",
-        "flake8",
-        "flake8-bandit",
-        "flake8-bugbear",
-        "flake8-docstrings",
-        "flake8-rst-docstrings",
+        # "flake8",
+        # "flake8-bandit",
+        # "flake8-bugbear",
+        # "flake8-docstrings",
+        # "flake8-rst-docstrings",
         "isort",
         "pep8-naming",
         "pre-commit",

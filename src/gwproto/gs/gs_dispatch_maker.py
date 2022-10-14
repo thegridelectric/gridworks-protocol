@@ -1,5 +1,6 @@
 """Makes GridWorksSerial protocol GsDispatch with MpAlias d"""
 import struct
+
 from gwproto.gs.gs_dispatch import GsDispatch
 
 

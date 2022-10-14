@@ -1,4 +1,5 @@
 import pytest
+
 from gwproto.errors import MpSchemaError
 from gwproto.messages import GsPwr_Maker as Maker
 

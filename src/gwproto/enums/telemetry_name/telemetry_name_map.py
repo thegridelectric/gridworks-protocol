@@ -1,9 +1,10 @@
 from typing import Dict
-from gwproto.errors import MpSchemaError
+
 from gwproto.enums.telemetry_name.spaceheat_telemetry_name_100 import (
-    TelemetryName,
     SpaceheatTelemetryName100GtEnum,
 )
+from gwproto.enums.telemetry_name.spaceheat_telemetry_name_100 import TelemetryName
+from gwproto.errors import MpSchemaError
 
 
 class TelemetryNameGtEnum(SpaceheatTelemetryName100GtEnum):

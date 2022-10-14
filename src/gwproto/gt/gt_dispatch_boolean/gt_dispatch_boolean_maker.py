@@ -1,8 +1,8 @@
 """Makes gt.dispatch.boolean.100 type"""
 import json
 
-from gwproto.gt.gt_dispatch_boolean.gt_dispatch_boolean import GtDispatchBoolean
 from gwproto.errors import MpSchemaError
+from gwproto.gt.gt_dispatch_boolean.gt_dispatch_boolean import GtDispatchBoolean
 
 
 class GtDispatchBoolean_Maker:

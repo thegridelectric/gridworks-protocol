@@ -1,9 +1,7 @@
 """snapshot.spaceheat.100 type"""
 
 from gwproto.errors import MpSchemaError
-from gwproto.gt.snapshot_spaceheat.snapshot_spaceheat_base import (
-    SnapshotSpaceheatBase,
-)
+from gwproto.gt.snapshot_spaceheat.snapshot_spaceheat_base import SnapshotSpaceheatBase
 
 
 class SnapshotSpaceheat(SnapshotSpaceheatBase):

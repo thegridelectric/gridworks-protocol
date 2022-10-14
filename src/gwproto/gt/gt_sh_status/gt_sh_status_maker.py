@@ -2,20 +2,26 @@
 import json
 from typing import List
 
-from gwproto.gt.gt_sh_status.gt_sh_status import GtShStatus
 from gwproto.errors import MpSchemaError
-from gwproto.gt.gt_sh_simple_telemetry_status.gt_sh_simple_telemetry_status_maker import (
-    GtShSimpleTelemetryStatus,
-    GtShSimpleTelemetryStatus_Maker,
-)
 from gwproto.gt.gt_sh_booleanactuator_cmd_status.gt_sh_booleanactuator_cmd_status_maker import (
     GtShBooleanactuatorCmdStatus,
+)
+from gwproto.gt.gt_sh_booleanactuator_cmd_status.gt_sh_booleanactuator_cmd_status_maker import (
     GtShBooleanactuatorCmdStatus_Maker,
 )
 from gwproto.gt.gt_sh_multipurpose_telemetry_status.gt_sh_multipurpose_telemetry_status_maker import (
     GtShMultipurposeTelemetryStatus,
+)
+from gwproto.gt.gt_sh_multipurpose_telemetry_status.gt_sh_multipurpose_telemetry_status_maker import (
     GtShMultipurposeTelemetryStatus_Maker,
 )
+from gwproto.gt.gt_sh_simple_telemetry_status.gt_sh_simple_telemetry_status_maker import (
+    GtShSimpleTelemetryStatus,
+)
+from gwproto.gt.gt_sh_simple_telemetry_status.gt_sh_simple_telemetry_status_maker import (
+    GtShSimpleTelemetryStatus_Maker,
+)
+from gwproto.gt.gt_sh_status.gt_sh_status import GtShStatus
 
 
 class GtShStatus_Maker:

@@ -2,6 +2,7 @@
 import json
 
 import pytest
+
 from gwproto.errors import MpSchemaError
 from gwproto.messages import GtShMultipurposeTelemetryStatus_Maker as Maker
 

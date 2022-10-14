@@ -2,11 +2,11 @@
 import json
 from typing import List
 
-from gwproto.gt.telemetry_snapshot_spaceheat.telemetry_snapshot_spaceheat import TelemetrySnapshotSpaceheat
+from gwproto.enums import TelemetryName
+from gwproto.enums import TelemetryNameMap
 from gwproto.errors import MpSchemaError
-from gwproto.enums import (
-    TelemetryName,
-    TelemetryNameMap,
+from gwproto.gt.telemetry_snapshot_spaceheat.telemetry_snapshot_spaceheat import (
+    TelemetrySnapshotSpaceheat,
 )
 
 

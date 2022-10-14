@@ -1,10 +1,12 @@
 """Makes snapshot.spaceheat.100 type"""
 import json
 
-from gwproto.gt.snapshot_spaceheat.snapshot_spaceheat import SnapshotSpaceheat
 from gwproto.errors import MpSchemaError
+from gwproto.gt.snapshot_spaceheat.snapshot_spaceheat import SnapshotSpaceheat
 from gwproto.gt.telemetry_snapshot_spaceheat.telemetry_snapshot_spaceheat_maker import (
     TelemetrySnapshotSpaceheat,
+)
+from gwproto.gt.telemetry_snapshot_spaceheat.telemetry_snapshot_spaceheat_maker import (
     TelemetrySnapshotSpaceheat_Maker,
 )
 

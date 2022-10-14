@@ -2,8 +2,10 @@
 import json
 from typing import List
 
-from gwproto.gt.gt_sh_booleanactuator_cmd_status.gt_sh_booleanactuator_cmd_status import GtShBooleanactuatorCmdStatus
 from gwproto.errors import MpSchemaError
+from gwproto.gt.gt_sh_booleanactuator_cmd_status.gt_sh_booleanactuator_cmd_status import (
+    GtShBooleanactuatorCmdStatus,
+)
 
 
 class GtShBooleanactuatorCmdStatus_Maker:

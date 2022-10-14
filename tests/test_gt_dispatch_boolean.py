@@ -2,6 +2,7 @@
 import json
 
 import pytest
+
 from gwproto.errors import MpSchemaError
 from gwproto.messages import GtDispatchBoolean_Maker as Maker
 

@@ -1,11 +1,11 @@
 """Base for telemetry.snapshot.spaceheat.100"""
 import json
-from typing import List, NamedTuple
+from typing import List
+from typing import NamedTuple
+
 import gwproto.property_format as property_format
-from gwproto.enums import (
-    TelemetryName,
-    TelemetryNameMap,
-)
+from gwproto.enums import TelemetryName
+from gwproto.enums import TelemetryNameMap
 
 
 class TelemetrySnapshotSpaceheatBase(NamedTuple):

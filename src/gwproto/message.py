@@ -14,6 +14,7 @@ from pydantic import Field
 from pydantic import validator
 from pydantic.generics import GenericModel
 
+
 EnumType = TypeVar("EnumType")
 
 

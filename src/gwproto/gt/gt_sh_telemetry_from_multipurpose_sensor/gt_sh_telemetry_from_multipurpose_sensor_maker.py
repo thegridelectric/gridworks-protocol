@@ -2,11 +2,11 @@
 import json
 from typing import List
 
-from gwproto.gt.gt_sh_telemetry_from_multipurpose_sensor.gt_sh_telemetry_from_multipurpose_sensor import GtShTelemetryFromMultipurposeSensor
+from gwproto.enums import TelemetryName
+from gwproto.enums import TelemetryNameMap
 from gwproto.errors import MpSchemaError
-from gwproto.enums import (
-    TelemetryName,
-    TelemetryNameMap,
+from gwproto.gt.gt_sh_telemetry_from_multipurpose_sensor.gt_sh_telemetry_from_multipurpose_sensor import (
+    GtShTelemetryFromMultipurposeSensor,
 )
 
 

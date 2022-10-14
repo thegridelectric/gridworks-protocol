@@ -1,6 +1,8 @@
 """Base for gt.driver.booleanactuator.cmd.100"""
 import json
-from typing import List, NamedTuple
+from typing import List
+from typing import NamedTuple
+
 import gwproto.property_format as property_format
 
 

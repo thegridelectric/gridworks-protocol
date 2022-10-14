@@ -1,6 +1,10 @@
 import json
 from pathlib import Path
-from typing import Callable, Any, Optional, NamedTuple
+from typing import Any
+from typing import Callable
+from typing import NamedTuple
+from typing import Optional
+
 
 Decoder = Callable[[Any], Any]
 

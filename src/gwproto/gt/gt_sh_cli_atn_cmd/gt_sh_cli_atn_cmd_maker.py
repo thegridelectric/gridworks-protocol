@@ -1,8 +1,8 @@
 """Makes gt.sh.cli.atn.cmd.110 type"""
 import json
 
-from gwproto.gt.gt_sh_cli_atn_cmd.gt_sh_cli_atn_cmd import GtShCliAtnCmd
 from gwproto.errors import MpSchemaError
+from gwproto.gt.gt_sh_cli_atn_cmd.gt_sh_cli_atn_cmd import GtShCliAtnCmd
 
 
 class GtShCliAtnCmd_Maker:

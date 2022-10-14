@@ -1,6 +1,7 @@
 """Base for GridWorks gwproto gs.dispatch.100 with TypeAlias d"""
-from typing import List, NamedTuple
 import struct
+from typing import List
+from typing import NamedTuple
 
 import gwproto.property_format as property_format
 

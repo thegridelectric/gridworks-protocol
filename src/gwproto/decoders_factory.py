@@ -1,23 +1,26 @@
-import json
-import sys
-from typing import (
-    Any,
-    Sequence,
-    Optional,
-    Callable,
-    Union,
-    Type,
-    TypeVar,
-)
-import typing
 import functools
 import inspect
+import json
+import sys
+import typing
 from dataclasses import dataclass
+from typing import Any
+from typing import Callable
+from typing import Optional
+from typing import Sequence
+from typing import Type
+from typing import TypeVar
+from typing import Union
 
-from pydantic import create_model, Field
+from pydantic import Field
+from pydantic import create_model
 
-from gwproto.message import Message, Header
-from gwproto.decoders import Decoders, Decoder, DecoderItem
+from gwproto.decoders import Decoder
+from gwproto.decoders import DecoderItem
+from gwproto.decoders import Decoders
+from gwproto.message import Header
+from gwproto.message import Message
+
 
 DEFAULT_TYPE_NAME_FIELD = "type_name"
 

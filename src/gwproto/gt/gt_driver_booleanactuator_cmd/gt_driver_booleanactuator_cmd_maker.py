@@ -1,8 +1,10 @@
 """Makes gt.driver.booleanactuator.cmd.100 type"""
 import json
 
-from gwproto.gt.gt_driver_booleanactuator_cmd.gt_driver_booleanactuator_cmd import GtDriverBooleanactuatorCmd
 from gwproto.errors import MpSchemaError
+from gwproto.gt.gt_driver_booleanactuator_cmd.gt_driver_booleanactuator_cmd import (
+    GtDriverBooleanactuatorCmd,
+)
 
 
 class GtDriverBooleanactuatorCmd_Maker:

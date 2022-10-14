@@ -1,5 +1,6 @@
 """Makes GridWorksSerial protocol gs.pwr.100 with MpAlias p"""
 import struct
+
 from gwproto.gs.gs_pwr import GsPwr
 
 

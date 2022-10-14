@@ -1,6 +1,7 @@
-import pendulum
-import struct
 import string
+import struct
+
+import pendulum
 
 
 def is_bit(candidate):

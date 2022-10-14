@@ -1,9 +1,7 @@
 """gt.sh.status.110 type"""
 
 from gwproto.errors import MpSchemaError
-from gwproto.gt.gt_sh_status.gt_sh_status_base import (
-    GtShStatusBase,
-)
+from gwproto.gt.gt_sh_status.gt_sh_status_base import GtShStatusBase
 
 
 class GtShStatus(GtShStatusBase):

@@ -1,8 +1,12 @@
 """Base for snapshot.spaceheat.100"""
 import json
-from typing import List, NamedTuple
+from typing import List
+from typing import NamedTuple
+
 import gwproto.property_format as property_format
-from gwproto.gt.telemetry_snapshot_spaceheat.telemetry_snapshot_spaceheat_maker import TelemetrySnapshotSpaceheat
+from gwproto.gt.telemetry_snapshot_spaceheat.telemetry_snapshot_spaceheat_maker import (
+    TelemetrySnapshotSpaceheat,
+)
 
 
 class SnapshotSpaceheatBase(NamedTuple):

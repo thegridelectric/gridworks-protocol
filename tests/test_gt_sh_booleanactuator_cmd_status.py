@@ -2,6 +2,7 @@
 import json
 
 import pytest
+
 from gwproto.errors import MpSchemaError
 from gwproto.messages import GtShBooleanactuatorCmdStatus_Maker as Maker
 

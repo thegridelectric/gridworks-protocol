@@ -1,12 +1,10 @@
 """Makes gt.telemetry.110 type"""
 import json
 
-from gwproto.gt.gt_telemetry.gt_telemetry import GtTelemetry
+from gwproto.enums import TelemetryName
+from gwproto.enums import TelemetryNameMap
 from gwproto.errors import MpSchemaError
-from gwproto.enums import (
-    TelemetryName,
-    TelemetryNameMap,
-)
+from gwproto.gt.gt_telemetry.gt_telemetry import GtTelemetry
 
 
 class GtTelemetry_Maker:

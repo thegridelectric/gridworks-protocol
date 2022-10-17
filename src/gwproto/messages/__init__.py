@@ -1,5 +1,8 @@
-from .gs import *
-from .gt.messages import *
+from gwproto.gs import *
+from gwproto.gt.messages import *
+
+from .event import *
+from .misc import *
 
 
 __all__ = [
@@ -33,4 +36,18 @@ __all__ = [
     "SnapshotSpaceheat_Maker",
     "TelemetrySnapshotSpaceheat",
     "TelemetrySnapshotSpaceheat_Maker",
+    # event
+    "CommEvent",
+    "EventT",
+    "EventBase",
+    "EventMessage",
+    "MQTTConnectFailedEvent",
+    "MQTTDisconnectEvent",
+    "MQTTFullySubscribedEvent",
+    "Problems",
+    "ProblemEvent",
+    "ShutdownEvent",
+    "StartupEvent",
+    # misc
+    "Ack",
 ]

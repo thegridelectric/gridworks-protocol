@@ -20,7 +20,7 @@ def test_gt_dispatch_boolean():
     }
 
     with pytest.raises(MpSchemaError):
-        Maker.type_to_tuple(gw_dict)
+        Maker.type_to_tuple(gw_dict)  # type: ignore
 
     with pytest.raises(MpSchemaError):
         Maker.type_to_tuple('"not a dict"')
@@ -95,37 +95,37 @@ def test_gt_dispatch_boolean():
     ######################################
 
     orig_value = gw_dict["AboutNodeAlias"]
-    gw_dict["AboutNodeAlias"] = 42
+    gw_dict["AboutNodeAlias"] = 42  # type: ignore
     with pytest.raises(MpSchemaError):
         Maker.dict_to_tuple(gw_dict)
     gw_dict["AboutNodeAlias"] = orig_value
 
     orig_value = gw_dict["ToGNodeAlias"]
-    gw_dict["ToGNodeAlias"] = 42
+    gw_dict["ToGNodeAlias"] = 42  # type: ignore
     with pytest.raises(MpSchemaError):
         Maker.dict_to_tuple(gw_dict)
     gw_dict["ToGNodeAlias"] = orig_value
 
     orig_value = gw_dict["FromGNodeAlias"]
-    gw_dict["FromGNodeAlias"] = 42
+    gw_dict["FromGNodeAlias"] = 42  # type: ignore
     with pytest.raises(MpSchemaError):
         Maker.dict_to_tuple(gw_dict)
     gw_dict["FromGNodeAlias"] = orig_value
 
     orig_value = gw_dict["FromGNodeId"]
-    gw_dict["FromGNodeId"] = 42
+    gw_dict["FromGNodeId"] = 42  # type: ignore
     with pytest.raises(MpSchemaError):
         Maker.dict_to_tuple(gw_dict)
     gw_dict["FromGNodeId"] = orig_value
 
     orig_value = gw_dict["RelayState"]
-    gw_dict["RelayState"] = 1.1
+    gw_dict["RelayState"] = 1.1  # type: ignore
     with pytest.raises(MpSchemaError):
         Maker.dict_to_tuple(gw_dict)
     gw_dict["RelayState"] = orig_value
 
     orig_value = gw_dict["SendTimeUnixMs"]
-    gw_dict["SendTimeUnixMs"] = 1.1
+    gw_dict["SendTimeUnixMs"] = 1.1  # type: ignore
     with pytest.raises(MpSchemaError):
         Maker.dict_to_tuple(gw_dict)
     gw_dict["SendTimeUnixMs"] = orig_value

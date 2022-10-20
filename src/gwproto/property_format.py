@@ -9,7 +9,7 @@ import pydantic
 
 def predicate_validator(
     field_name: str, predicate: Callable[[Any], bool], error_format: str = ""
-) -> classmethod:
+) -> classmethod:  # type: ignore
     def _validator(v: Any) -> Any:
         if not predicate(v):
             if error_format:
@@ -22,7 +22,7 @@ def predicate_validator(
     return pydantic.validator(field_name, allow_reuse=True)(_validator)
 
 
-def is_bit(candidate):
+def is_bit(candidate: int) -> bool:
     if candidate == 0:
         return True
     if candidate == 1:
@@ -30,7 +30,7 @@ def is_bit(candidate):
     return False
 
 
-def is_64_bit_hex(candidate):
+def is_64_bit_hex(candidate: str) -> bool:
     if len(candidate) != 8:
         return False
     if not all(c in string.hexdigits for c in candidate):
@@ -52,7 +52,7 @@ def is_lrd_alias_format(candidate: str) -> bool:
     return True
 
 
-def is_positive_integer(candidate):
+def is_positive_integer(candidate: Any) -> bool:
     if not isinstance(candidate, int):
         return False
     if candidate <= 0:
@@ -60,23 +60,23 @@ def is_positive_integer(candidate):
     return True
 
 
-def is_reasonable_unix_time_ms(candidate):
-    if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp * 1000 > candidate:
+def is_reasonable_unix_time_ms(candidate: float) -> bool:
+    if pendulum.datetime(2000, 1, 1, 0, 0, 0).int_timestamp * 1000 > candidate:
         return False
-    if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp * 1000 < candidate:
-        return False
-    return True
-
-
-def is_reasonable_unix_time_s(candidate):
-    if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp > candidate:
-        return False
-    if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp < candidate:
+    if pendulum.datetime(3000, 1, 1, 0, 0, 0).int_timestamp * 1000 < candidate:
         return False
     return True
 
 
-def is_unsigned_short(candidate):
+def is_reasonable_unix_time_s(candidate: float) -> bool:
+    if pendulum.datetime(2000, 1, 1, 0, 0, 0).int_timestamp > candidate:
+        return False
+    if pendulum.datetime(3000, 1, 1, 0, 0, 0).int_timestamp < candidate:
+        return False
+    return True
+
+
+def is_unsigned_short(candidate: int) -> bool:
     # noinspection PyBroadException
     try:
         struct.pack("H", candidate)
@@ -86,7 +86,7 @@ def is_unsigned_short(candidate):
     return True
 
 
-def is_short_integer(candidate):
+def is_short_integer(candidate: int) -> bool:
     # noinspection PyBroadException
     try:
         struct.pack("h", candidate)
@@ -96,7 +96,7 @@ def is_short_integer(candidate):
     return True
 
 
-def is_uuid_canonical_textual(candidate):
+def is_uuid_canonical_textual(candidate: str) -> bool:
     try:
         x = candidate.split("-")
     except AttributeError:

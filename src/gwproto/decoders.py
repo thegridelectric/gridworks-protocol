@@ -25,7 +25,7 @@ class Decoders:
     def decoder(self, type_name: str) -> Decoder:
         return self._decoders[type_name]
 
-    def decode(self, type_name: str, *args, **kwargs) -> Any:
+    def decode(self, type_name: str, *args: Any, **kwargs: Any) -> Any:
         return self.decoder(type_name)(*args, **kwargs)
 
     def decode_str(
@@ -55,7 +55,7 @@ class Decoders:
         path: str | Path,
         encoding: str = "utf-8",
         json_args: Optional[dict[str, Any]] = None,
-    ):
+    ) -> Any:
         return self.decode_json(
             type_name, Path(path).read_bytes(), encoding=encoding, json_args=json_args
         )
@@ -83,7 +83,7 @@ class Decoders:
     def types(self) -> list[str]:
         return list(self._decoders.keys())
 
-    def _validate(self, type_name: str, decoder: Callable) -> None:
+    def _validate(self, type_name: str, decoder: Callable[[Any], Any]) -> None:
         if type_name in self._decoders:
             if self._decoders[type_name] is not decoder:
                 raise ValueError(

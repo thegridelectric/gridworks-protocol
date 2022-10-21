@@ -38,21 +38,27 @@ def get_pydantic_literal_type_name(
 
 
 def pydantic_named_types(
-    module_names: str | Sequence[str], type_name_field: str = DEFAULT_TYPE_NAME_FIELD
-) -> list:
+    module_names: str | Sequence[str],
+    modules: Optional[Sequence[Any]] = None,
+    type_name_field: str = DEFAULT_TYPE_NAME_FIELD,
+) -> list[Any]:
     if isinstance(module_names, str):
         module_names = [module_names]
     if unimported := [
         module_name for module_name in module_names if not module_name in sys.modules
     ]:
         raise ValueError(f"ERROR. modules {unimported} have not been imported.")
-    types = []
+    named_types = []
     type_names: dict[str, Any] = dict()
-    for module_name in module_names:
-        for module_class in [
-            entry[1]
-            for entry in inspect.getmembers(sys.modules[module_name], inspect.isclass)
-        ]:
+    if modules is None:
+        modules = []
+    for module in [sys.modules[module_name] for module_name in module_names] + list(
+        modules
+    ):
+        module_classes = [
+            entry[1] for entry in inspect.getmembers(module, inspect.isclass)
+        ]
+        for module_class in module_classes:
             if type_name := get_pydantic_literal_type_name(
                 module_class, type_name_field=type_name_field
             ):
@@ -63,8 +69,8 @@ def pydantic_named_types(
                         f"class {type_names[type_name]}"
                     )
                 type_names[type_name] = module_class
-                types.append(module_class)
-    return types
+                named_types.append(module_class)
+    return named_types
 
 
 MessageDiscriminator = TypeVar("MessageDiscriminator", bound=Message[Any])
@@ -72,18 +78,19 @@ MessageDiscriminator = TypeVar("MessageDiscriminator", bound=Message[Any])
 
 def create_message_payload_discriminator(
     model_name: str,
-    modules_names: str | Sequence[str],
+    module_names: str | Sequence[str] = "",
+    modules: Optional[Sequence[Any]] = None,
+    explicit_types: Optional[Sequence[Any]] = None,
     type_name_field: str = DEFAULT_TYPE_NAME_FIELD,
 ) -> Type["MessageDiscriminator"]:
+    used_types = pydantic_named_types(module_names=module_names, modules=modules)
+    if explicit_types is not None:
+        used_types.extend(explicit_types)
     return create_model(
         model_name,
         __base__=Message,  # type: ignore
         payload=(
-            Union[
-                tuple(
-                    pydantic_named_types(modules_names, type_name_field=type_name_field)
-                )
-            ],
+            Union[tuple(used_types)],
             Field(..., discriminator=type_name_field),
         ),
     )
@@ -91,10 +98,10 @@ def create_message_payload_discriminator(
 
 # TODO: type of content should be better thought out (or maybe never dict?); decode needs encoding
 def gridworks_message_decoder(
-    content: str | bytes | dict,
+    content: str | bytes | dict[str, Any],
     decoders: Decoders,
     message_payload_discriminator: Optional[Type["MessageDiscriminator"]] = None,
-) -> Message:
+) -> Message[Any]:
     if isinstance(content, bytes):
         content = content.decode("utf-8")
     if isinstance(content, str):
@@ -105,11 +112,11 @@ def gridworks_message_decoder(
         )
     message_dict = dict(content)
     message_dict["header"] = Header.parse_obj(content.get("header", dict()))
-    message: Message
+    message: Message[Any]
     if message_dict["header"].message_type in decoders:
         message_dict["payload"] = decoders.decode(
             message_dict["header"].message_type,
-            json.dumps(message_dict.get("payload", dict())),
+            message_dict.get("payload", dict()),
         )
         message = Message(**message_dict)
     else:
@@ -166,7 +173,7 @@ class PydanticExtractor(OneDecoderExtractor):
 
 
 class DecoderExtractor:
-    _extractors: list
+    _extractors: list[OneDecoderExtractor]
 
     def __init__(self, extractors: Optional[Sequence[OneDecoderExtractor]] = None):
         if extractors is None:
@@ -185,7 +192,7 @@ class DecoderExtractor:
                 break
         return item
 
-    def decoder_items_from_objects(self, objs: list) -> dict[str, Decoder]:
+    def decoder_items_from_objects(self, objs: list[Any]) -> dict[str, Decoder]:
         items = dict()
         for obj in objs:
             if (item := self.decoder_item_from_object(obj)) is not None:
@@ -194,7 +201,7 @@ class DecoderExtractor:
 
     def from_objects(
         self,
-        objs: list,
+        objs: list[Any],
         message_payload_discriminator: Optional[Type["MessageDiscriminator"]] = None,
     ) -> Decoders:
         d = Decoders(self.decoder_items_from_objects(objs))

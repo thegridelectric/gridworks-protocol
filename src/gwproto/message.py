@@ -1,10 +1,6 @@
-import time
-import uuid
-from enum import Enum
 from typing import Any
 from typing import Callable
 from typing import Generic
-from typing import Literal
 from typing import Mapping
 from typing import Optional
 from typing import TypeVar
@@ -12,7 +8,6 @@ from typing import Union
 
 from pydantic import BaseModel
 from pydantic import Field
-from pydantic import validator
 from pydantic.generics import GenericModel
 
 
@@ -54,7 +49,7 @@ class Message(GenericModel, Generic[PayloadT]):
         return f"{self.header.src}/{self.type_name.replace('.', '-')}"
 
     @classmethod
-    def _header_from_kwargs(cls, kwargs: dict) -> Header:
+    def _header_from_kwargs(cls, kwargs: dict[str, Any]) -> Header:
         header_kwargs = dict()
         payload = kwargs["payload"]
         for header_field, payload_fields in [
@@ -72,7 +67,7 @@ class Message(GenericModel, Generic[PayloadT]):
                         val = payload[payload_field]
             if val is not None:
                 header_kwargs[header_field] = val
-        header: Optional[Union[Header, dict]] = kwargs.get("header", None)
+        header: Optional[Union[Header, dict[str, Any]]] = kwargs.get("header", None)
         if isinstance(header, Header):
             header = header.copy(update=header_kwargs, deep=True)
         else:

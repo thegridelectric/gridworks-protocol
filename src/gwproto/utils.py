@@ -1,9 +1,8 @@
 import datetime
 import json
 import re
-import socket
 import subprocess
-from contextlib import closing
+from typing import Any
 
 import pytz
 
@@ -11,27 +10,31 @@ import pytz
 snake_add_underscore_to_camel_pattern = re.compile(r"(?<!^)(?=[A-Z])")
 
 
-def camel_to_snake(name):
+def camel_to_snake(name: str) -> str:
     return snake_add_underscore_to_camel_pattern.sub("_", name).lower()
 
 
-def snake_to_camel(word):
+def snake_to_camel(word: str) -> str:
     return "".join(x.capitalize() or "_" for x in word.split("_"))
 
 
-def string_to_dict(payload_as_string):
+def string_to_dict(payload_as_string: str) -> dict[str, Any]:
     payload_as_dict = json.loads(payload_as_string)
+    if not isinstance(payload_as_dict, dict):
+        raise ValueError(
+            f"ERROR. json.loads(payload) produced {type(payload_as_dict)} not dict"
+        )
     return payload_as_dict
 
 
-def log_style_utc_date(timestamp):
+def log_style_utc_date(timestamp: float) -> str:
     d = datetime.datetime.utcfromtimestamp(timestamp)
     d = pytz.UTC.localize(d)
     utc_date = d.strftime("%Y-%m-%d %H:%M:%S")
     return utc_date + d.strftime(" %Z")
 
 
-def log_style_utc_date_w_millis(timestamp):
+def log_style_utc_date_w_millis(timestamp: float) -> str:
     d = datetime.datetime.utcfromtimestamp(timestamp)
     d = pytz.UTC.localize(d)
     millis = round(d.microsecond / 1000)
@@ -48,7 +51,7 @@ def log_style_utc_date_w_millis(timestamp):
     return utc_date + millis_string + d.strftime(" %Z")
 
 
-def screen_style_utc_date_w_millis(timestamp):
+def screen_style_utc_date_w_millis(timestamp: float) -> str:
     d = datetime.datetime.utcfromtimestamp(timestamp)
     d = pytz.UTC.localize(d)
     millis = round(d.microsecond / 1000)
@@ -62,7 +65,7 @@ def screen_style_utc_date_w_millis(timestamp):
     return utc_date + millis_string
 
 
-def screen_style_utc_date_s(timestamp):
+def screen_style_utc_date_s(timestamp: float) -> str:
     d = datetime.datetime.utcfromtimestamp(timestamp)
     d = pytz.UTC.localize(d)
     utc_date = d.strftime("%Y-%m-%d %H:%M:%S")
@@ -75,21 +78,11 @@ def get_git_short_commit() -> str:
     ).split("\n")[0]
 
 
-def socket_is_open(host, port) -> bool:
-    with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as sock:
-        if sock.connect_ex((host, port)) == 0:
-            return True
-        else:
-            return False
+def rld_alias(alias: str) -> str:
+    return ".".join(reversed(alias.split(".")))
 
 
-def rld_alias(alias) -> str:
-    words = alias.split(".")
-    words = reversed(words)
-    return ".".join(words)
-
-
-def all_equal(iterator):
+def all_equal(iterator: Any) -> bool:
     iterator = iter(iterator)
     try:
         first = next(iterator)

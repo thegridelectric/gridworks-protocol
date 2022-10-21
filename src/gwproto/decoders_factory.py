@@ -116,7 +116,7 @@ def gridworks_message_decoder(
     if message_dict["header"].message_type in decoders:
         message_dict["payload"] = decoders.decode(
             message_dict["header"].message_type,
-            json.dumps(message_dict.get("payload", dict())),
+            message_dict.get("payload", dict()),
         )
         message = Message(**message_dict)
     else:

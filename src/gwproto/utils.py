@@ -21,9 +21,7 @@ def snake_to_camel(word: str) -> str:
 def string_to_dict(payload_as_string: str) -> dict[str, Any]:
     payload_as_dict = json.loads(payload_as_string)
     if not isinstance(payload_as_dict, dict):
-        raise ValueError(
-            f"ERROR. json.loads(payload) produced {type(payload_as_dict)} not dict"
-        )
+        raise ValueError(f"ERROR. json.loads(payload) produced {type(payload_as_dict)} not dict")
     return payload_as_dict
 
 
@@ -73,9 +71,9 @@ def screen_style_utc_date_s(timestamp: float) -> str:
 
 
 def get_git_short_commit() -> str:
-    return bytes.decode(
-        subprocess.check_output(["git", "rev-parse", "--short", "HEAD"])
-    ).split("\n")[0]
+    return bytes.decode(subprocess.check_output(["git", "rev-parse", "--short", "HEAD"])).split(
+        "\n"
+    )[0]
 
 
 def rld_alias(alias: str) -> str:

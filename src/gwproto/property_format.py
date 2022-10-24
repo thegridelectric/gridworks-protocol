@@ -38,13 +38,48 @@ def is_64_bit_hex(candidate: str) -> bool:
     return True
 
 
-def is_lrd_alias_format(candidate: str) -> bool:
-    """AlphanumericStrings separated by periods, with most
-    significant word to the left.  I.e. `dw1.ne` is the child of `dw1`."""
-    # noinspection PyBroadException
+def check_is_lrd_alias_format(candidate: str):
+    """AlphanumericStrings separated by dots (i.e. periods), with most
+    significant word to the left.  I.e. `dw1.ne` is the child of `dw1`.
+    Checking the format cannot verify the significance of words. All
+    words must be alphanumeric. Most significant word must start with
+    an alphabet charecter
+
+
+    Raises:
+        SchemaError: if candidate is not of lrd format (e.g. dw1.iso.me.apple)
+    """
     try:
         x = candidate.split(".")
     except:
+        raise ValueError("Failed to seperate into words with split'.'")
+    first_word = x[0]
+    first_char = first_word[0]
+    if not first_char.isalpha():
+        raise ValueError(f"Most significant word must start with alphabet char. Got '{word}'")
+    for word in x:
+        if not word.isalnum():
+            raise ValueError(f"words seperated by dots must be alphanumeric. Got '{word}'")
+
+
+def is_lrd_alias_format(candidate: str) -> bool:
+    """AlphanumericStrings separated by dots (i.e. periods), with most
+    significant word to the left.  I.e. `dw1.ne` is the child of `dw1`.
+    Checking the format cannot verify the significance of words. All
+    words must be alphanumeric. Most significant word must start with
+    an alphabet charecter.
+
+
+    Raises:
+        SchemaError: if candidate is not of lrd format (e.g. dw1.iso.me.apple)
+    """
+    try:
+        x = candidate.split(".")
+    except:
+        return False
+    first_word = x[0]
+    first_char = first_word[0]
+    if not first_char.isalpha():
         return False
     for word in x:
         if not word.isalnum():

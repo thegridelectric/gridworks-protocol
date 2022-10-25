@@ -2,9 +2,9 @@
 import json
 from typing import Literal
 from pydantic import BaseModel
+
 import gwproto.property_format as property_format
 from gwproto.property_format import predicate_validator
-
 from gwproto.gt import TelemetrySnapshotSpaceheat, TelemetrySnapshotSpaceheat_Maker
 
 
@@ -17,6 +17,7 @@ class SnapshotSpaceheat(BaseModel):
     _validator_from_g_node_alias = predicate_validator(
         "FromGNodeAlias", property_format.is_lrd_alias_format
     )
+
     _validator_from_g_node_instance_id = predicate_validator(
         "FromGNodeInstanceId", property_format.is_uuid_canonical_textual
     )

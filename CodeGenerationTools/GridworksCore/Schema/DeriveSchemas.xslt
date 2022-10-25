@@ -54,16 +54,7 @@
    
 <xsl:text>"""</xsl:text><xsl:value-of select="Alias"/><xsl:text> type"""
 import json
-from typing import Literal
-from pydantic import BaseModel</xsl:text>
-<xsl:if test="count($airtable//SchemaAttributes/SchemaAttribute[(Schema = $schema-id) and  (IsPrimitive='true') and (IsRequired = 'true') and (IsList='true') and normalize-space(PrimitiveFormat) != '')]) > 0">
-<xsl:text>, validator</xsl:text>
-</xsl:if>
-<xsl:if test="count($airtable//SchemaAttributes/SchemaAttribute[(Schema = $schema-id) and (IsType = 'true') and (IsList = 'true'))]) > 0">
-<xsl:text>, validator</xsl:text>
-</xsl:if>
-
-
+from typing import Literal</xsl:text>
 <xsl:if test="count($airtable//SchemaAttributes/SchemaAttribute[(Schema = $schema-id) and not (IsRequired = 'true')]) > 0">
 <xsl:text>, Optional</xsl:text>
 </xsl:if>
@@ -80,6 +71,12 @@ from pydantic import BaseModel</xsl:text>
 </xsl:if>
 <xsl:if test="count($airtable//SchemaAttributes/SchemaAttribute[(Schema = $schema-id) and ((normalize-space(SubTypeDataClass) != '') or (normalize-space(PrimitiveFormat) != ''))]) > 0">
 <xsl:text>
+from pydantic import BaseModel</xsl:text>
+<xsl:if test="count($airtable//SchemaAttributes/SchemaAttribute[Schema = $schema-id and IsList='true' and (IsType = 'true' or (IsPrimitive='true'  and normalize-space(PrimitiveFormat) != '') )]) > 0">
+<xsl:text>, validator</xsl:text>
+</xsl:if>
+<xsl:text>
+
 import gwproto.property_format as property_format</xsl:text>
 </xsl:if>
 <xsl:text>
@@ -104,7 +101,7 @@ from gwproto.enums import (
 
 <xsl:if test="(IsType = 'true') and ((IsList = 'true') or (normalize-space(SubTypeDataClass)=''))">
 <xsl:text>
-from gwproto.messages import </xsl:text>
+from gwproto.gt import </xsl:text>
 <xsl:call-template name="nt-case">
     <xsl:with-param name="mp-schema-text" select="SubMessageFormatAliasRoot" />
 </xsl:call-template>
@@ -204,13 +201,13 @@ class </xsl:text>
     </xsl:text> 
 </xsl:if>
 </xsl:for-each>
-<xsl:text>TypeAlias: Literal["</xsl:text><xsl:value-of select="Alias"/><xsl:text>"] = "</xsl:text><xsl:value-of select="Alias"/><xsl:text>"
-</xsl:text>
+<xsl:text>TypeAlias: Literal["</xsl:text><xsl:value-of select="Alias"/><xsl:text>"] = "</xsl:text><xsl:value-of select="Alias"/><xsl:text>"</xsl:text>
     <xsl:for-each select="$airtable//SchemaAttributes/SchemaAttribute[(Schema = $schema-id)]">
 
 
     <xsl:if test="(IsPrimitive='true') and (IsRequired = 'true') and not (IsList='true') and normalize-space(PrimitiveFormat) != ''">
             <xsl:text>
+
     _validator_</xsl:text>
         <xsl:call-template name="python-case">
         <xsl:with-param name="camel-case-text" select="Value"  />

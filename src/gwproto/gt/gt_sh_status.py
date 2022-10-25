@@ -2,9 +2,9 @@
 import json
 from typing import Literal, List
 from pydantic import BaseModel, validator
+
 import gwproto.property_format as property_format
 from gwproto.property_format import predicate_validator
-
 from gwproto.gt import GtShSimpleTelemetryStatus, GtShSimpleTelemetryStatus_Maker
 from gwproto.gt import GtShBooleanactuatorCmdStatus, GtShBooleanactuatorCmdStatus_Maker
 from gwproto.gt import GtShMultipurposeTelemetryStatus, GtShMultipurposeTelemetryStatus_Maker
@@ -61,6 +61,7 @@ class GtShStatus(BaseModel):
     _validator_from_g_node_id = predicate_validator(
         "FromGNodeId", property_format.is_uuid_canonical_textual
     )
+
     _validator_status_uid = predicate_validator(
         "StatusUid", property_format.is_uuid_canonical_textual
     )

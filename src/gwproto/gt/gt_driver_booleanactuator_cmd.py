@@ -2,6 +2,7 @@
 import json
 from typing import Literal
 from pydantic import BaseModel
+
 import gwproto.property_format as property_format
 from gwproto.property_format import predicate_validator
 
@@ -13,9 +14,11 @@ class GtDriverBooleanactuatorCmd(BaseModel):
     TypeAlias: Literal["gt.driver.booleanactuator.cmd.100"] = "gt.driver.booleanactuator.cmd.100"
 
     _validator_relay_state = predicate_validator("RelayState", property_format.is_bit)
+
     _validator_sh_node_alias = predicate_validator(
         "ShNodeAlias", property_format.is_lrd_alias_format
     )
+
     _validator_command_time_unix_ms = predicate_validator(
         "CommandTimeUnixMs", property_format.is_reasonable_unix_time_ms
     )

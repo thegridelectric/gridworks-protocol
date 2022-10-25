@@ -2,9 +2,9 @@
 import json
 from typing import Literal
 from pydantic import BaseModel
+
 import gwproto.property_format as property_format
 from gwproto.property_format import predicate_validator
-
 from gwproto.enums import (
     TelemetryName,
     TelemetryNameMap,

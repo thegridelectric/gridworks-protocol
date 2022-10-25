@@ -10,6 +10,8 @@ from pydantic import BaseModel
 from pydantic import Field
 from pydantic.generics import GenericModel
 
+from gwproto.topic import MQTTTopic
+
 
 EnumType = TypeVar("EnumType")
 
@@ -35,18 +37,31 @@ PayloadT = TypeVar("PayloadT")
 
 PAYLOAD_TYPE_FIELDS = ["type_name", "type_alias", "TypeAlias"]
 
+GRIDWORKS_ENVELOPE_TYPE = "gw"
+
 
 class Message(GenericModel, Generic[PayloadT]):
     header: Header
     payload: PayloadT
-    type_name: str = Field("gridworks.message.000", const=True)
+    type_name: str = Field(GRIDWORKS_ENVELOPE_TYPE, const=True)
 
     def __init__(self, **kwargs: Any):
         kwargs["header"] = self._header_from_kwargs(kwargs)
         super().__init__(**kwargs)
 
+    def message_type(self) -> str:
+        return self.header.message_type
+
+    def src(self) -> str:
+        return self.header.src
+
+    # TODO: Rename as "type_name" after renaming field to TypeName
+    @classmethod
+    def get_type_name(cls) -> str:
+        return Message.__fields__["type_name"].default
+
     def mqtt_topic(self) -> str:
-        return f"{self.header.src}/{self.type_name.replace('.', '-')}"
+        return MQTTTopic.encode(self.src(), self.get_type_name(), self.message_type())
 
     @classmethod
     def _header_from_kwargs(cls, kwargs: dict[str, Any]) -> Header:

@@ -7,7 +7,7 @@ repos:
         language: system
         types: [python]
         require_serial: true
-        exclude: "src/gwproto/gt/|src/gwproto/gs/|src/gwproto/enums/"
+        exclude: "src/gwproto/gt/|src/gwproto/gs/|src/gwproto/enums/|CodeGenerationTools/"
       - id: check-added-large-files
         name: Check for added large files
         entry: check-added-large-files
@@ -28,13 +28,14 @@ repos:
         language: system
         types: [python]
         stages: [manual]
+        exclude: "CodeGenerationTools/"
       - id: end-of-file-fixer
         name: Fix End of Files
         entry: end-of-file-fixer
         language: system
         types: [text]
         stages: [commit, push, manual]
-        exclude: "src/gwproto/gt/|src/gwproto/gs/|src/gwproto/enums/"
+        exclude: "src/gwproto/gt/|src/gwproto/gs/|src/gwproto/enums/|CodeGenerationTools/"
         #      - id: flake8
         #        name: flake8
         #        entry: flake8
@@ -62,7 +63,7 @@ repos:
         language: system
         types: [text]
         stages: [commit, push, manual]
-        exclude: "src/gwproto/gt/|src/gwproto/gs/|src/gwproto/enums/"
+        exclude: "src/gwproto/gt/|src/gwproto/gs/|src/gwproto/enums/|CodeGenerationTools/"
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v2.6.0
     hooks:

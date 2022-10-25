@@ -1,6 +1,7 @@
 """gt.sh.cli.atn.cmd.110 type"""
 import json
 from typing import Literal
+
 from pydantic import BaseModel
 
 import gwproto.property_format as property_format

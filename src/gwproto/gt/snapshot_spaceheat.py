@@ -1,11 +1,13 @@
 """snapshot.spaceheat.100 type"""
 import json
 from typing import Literal
+
 from pydantic import BaseModel
 
 import gwproto.property_format as property_format
+from gwproto.gt import TelemetrySnapshotSpaceheat
+from gwproto.gt import TelemetrySnapshotSpaceheat_Maker
 from gwproto.property_format import predicate_validator
-from gwproto.gt import TelemetrySnapshotSpaceheat, TelemetrySnapshotSpaceheat_Maker
 
 
 class SnapshotSpaceheat(BaseModel):

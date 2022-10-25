@@ -56,10 +56,14 @@ def check_is_lrd_alias_format(candidate: str):
     first_word = x[0]
     first_char = first_word[0]
     if not first_char.isalpha():
-        raise ValueError(f"Most significant word must start with alphabet char. Got '{word}'")
+        raise ValueError(
+            f"Most significant word must start with alphabet char. Got '{word}'"
+        )
     for word in x:
         if not word.isalnum():
-            raise ValueError(f"words seperated by dots must be alphanumeric. Got '{word}'")
+            raise ValueError(
+                f"words seperated by dots must be alphanumeric. Got '{word}'"
+            )
 
 
 def is_lrd_alias_format(candidate: str) -> bool:

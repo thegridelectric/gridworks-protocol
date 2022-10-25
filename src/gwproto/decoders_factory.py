@@ -24,10 +24,15 @@ from gwproto.message import Message
 DEFAULT_TYPE_NAME_FIELD = "type_name"
 
 
-def get_pydantic_literal_type_name(o: Any, type_name_field: str = DEFAULT_TYPE_NAME_FIELD) -> str:
+def get_pydantic_literal_type_name(
+    o: Any, type_name_field: str = DEFAULT_TYPE_NAME_FIELD
+) -> str:
     if hasattr(o, "__fields__"):
         if type_name_field in o.__fields__:
-            if typing.get_origin(o.__fields__[type_name_field].annotation) == typing.Literal:
+            if (
+                typing.get_origin(o.__fields__[type_name_field].annotation)
+                == typing.Literal
+            ):
                 return str(o.__fields__[type_name_field].default)
     return ""
 
@@ -47,8 +52,12 @@ def pydantic_named_types(
     type_names: dict[str, Any] = dict()
     if modules is None:
         modules = []
-    for module in [sys.modules[module_name] for module_name in module_names] + list(modules):
-        module_classes = [entry[1] for entry in inspect.getmembers(module, inspect.isclass)]
+    for module in [sys.modules[module_name] for module_name in module_names] + list(
+        modules
+    ):
+        module_classes = [
+            entry[1] for entry in inspect.getmembers(module, inspect.isclass)
+        ]
         for module_class in module_classes:
             if type_name := get_pydantic_literal_type_name(
                 module_class, type_name_field=type_name_field
@@ -98,7 +107,9 @@ def gridworks_message_decoder(
     if isinstance(content, str):
         content = json.loads(content)
     if not isinstance(content, dict):
-        raise ValueError(f"ERROR. decoded content has type {type(content)}; dict required")
+        raise ValueError(
+            f"ERROR. decoded content has type {type(content)}; dict required"
+        )
     message_dict = dict(content)
     message_dict["header"] = Header.parse_obj(content.get("header", dict()))
     message: Message[Any]

@@ -1,7 +1,10 @@
 """gt.sh.booleanactuator.cmd.status.100 type"""
 import json
-from typing import Literal, List
-from pydantic import BaseModel, validator
+from typing import List
+from typing import Literal
+
+from pydantic import BaseModel
+from pydantic import validator
 
 import gwproto.property_format as property_format
 from gwproto.property_format import predicate_validator

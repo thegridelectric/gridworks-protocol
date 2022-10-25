@@ -1,13 +1,19 @@
 """gt.sh.status.110 type"""
 import json
-from typing import Literal, List
-from pydantic import BaseModel, validator
+from typing import List
+from typing import Literal
+
+from pydantic import BaseModel
+from pydantic import validator
 
 import gwproto.property_format as property_format
+from gwproto.gt import GtShBooleanactuatorCmdStatus
+from gwproto.gt import GtShBooleanactuatorCmdStatus_Maker
+from gwproto.gt import GtShMultipurposeTelemetryStatus
+from gwproto.gt import GtShMultipurposeTelemetryStatus_Maker
+from gwproto.gt import GtShSimpleTelemetryStatus
+from gwproto.gt import GtShSimpleTelemetryStatus_Maker
 from gwproto.property_format import predicate_validator
-from gwproto.gt import GtShSimpleTelemetryStatus, GtShSimpleTelemetryStatus_Maker
-from gwproto.gt import GtShBooleanactuatorCmdStatus, GtShBooleanactuatorCmdStatus_Maker
-from gwproto.gt import GtShMultipurposeTelemetryStatus, GtShMultipurposeTelemetryStatus_Maker
 
 
 class GtShStatus(BaseModel):

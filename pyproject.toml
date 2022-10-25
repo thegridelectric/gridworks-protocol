@@ -69,7 +69,7 @@ show_missing = true
 fail_under = 90
 
 [tool.black]
-extend_exclude = "src/gwproto/gt/|src/gwproto/gs/|src/gwproto/enums/"
+extend_exclude = "src/gwproto/gs/|src/gwproto/enums/"
 
 [tool.isort]
 profile = "black"

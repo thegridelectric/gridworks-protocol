@@ -52,7 +52,7 @@
                         <xsl:element name="FileContents">
 
    
-<xsl:text>"""</xsl:text><xsl:value-of select="Alias"/><xsl:text> type"""
+<xsl:text>"""</xsl:text><xsl:value-of select="AliasRoot"/><xsl:text> type"""
 import json</xsl:text>
 <xsl:if test="count($airtable//SchemaAttributes/SchemaAttribute[(Schema = $schema-id) and (IsEnum = 'true')])>0">
 <xsl:text>
@@ -207,7 +207,7 @@ class </xsl:text>
     </xsl:text> 
 </xsl:if>
 </xsl:for-each>
-<xsl:text>TypeAlias: Literal["</xsl:text><xsl:value-of select="Alias"/><xsl:text>"] = "</xsl:text><xsl:value-of select="Alias"/><xsl:text>"</xsl:text>
+<xsl:text>TypeAlias: Literal["</xsl:text><xsl:value-of select="AliasRoot"/><xsl:text>"] = "</xsl:text><xsl:value-of select="AliasRoot"/><xsl:text>"</xsl:text>
     <xsl:for-each select="$airtable//SchemaAttributes/SchemaAttribute[(Schema = $schema-id)]">
 
 

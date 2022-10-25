@@ -1,4 +1,4 @@
-"""gt.dispatch.boolean.100 type"""
+"""gt.dispatch.boolean type"""
 import json
 from typing import Literal
 
@@ -15,7 +15,7 @@ class GtDispatchBoolean(BaseModel):
     FromGNodeId: str  #
     RelayState: int  #
     SendTimeUnixMs: int  #
-    TypeAlias: Literal["gt.dispatch.boolean.100"] = "gt.dispatch.boolean.100"
+    TypeAlias: Literal["gt.dispatch.boolean"] = "gt.dispatch.boolean"
 
     _validator_about_node_alias = predicate_validator("AboutNodeAlias", property_format.is_lrd_alias_format)
 

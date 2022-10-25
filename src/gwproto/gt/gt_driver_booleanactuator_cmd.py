@@ -1,4 +1,4 @@
-"""gt.driver.booleanactuator.cmd.100 type"""
+"""gt.driver.booleanactuator.cmd type"""
 import json
 from typing import Literal
 
@@ -12,7 +12,7 @@ class GtDriverBooleanactuatorCmd(BaseModel):
     RelayState: int  #
     ShNodeAlias: str  #
     CommandTimeUnixMs: int  #
-    TypeAlias: Literal["gt.driver.booleanactuator.cmd.100"] = "gt.driver.booleanactuator.cmd.100"
+    TypeAlias: Literal["gt.driver.booleanactuator.cmd"] = "gt.driver.booleanactuator.cmd"
 
     _validator_relay_state = predicate_validator("RelayState", property_format.is_bit)
 

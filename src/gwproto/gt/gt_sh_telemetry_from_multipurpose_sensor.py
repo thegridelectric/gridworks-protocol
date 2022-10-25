@@ -1,4 +1,4 @@
-"""gt.sh.telemetry.from.multipurpose.sensor.100 type"""
+"""gt.sh.telemetry.from.multipurpose.sensor type"""
 import json
 from typing import Any
 from typing import List
@@ -19,7 +19,7 @@ class GtShTelemetryFromMultipurposeSensor(BaseModel):
     ValueList: List[int]
     ScadaReadTimeUnixMs: int  #
     TelemetryNameList: List[TelemetryName]
-    TypeAlias: Literal["gt.sh.telemetry.from.multipurpose.sensor.100"] = "gt.sh.telemetry.from.multipurpose.sensor.100"
+    TypeAlias: Literal["gt.sh.telemetry.from.multipurpose.sensor"] = "gt.sh.telemetry.from.multipurpose.sensor"
 
     @validator("AboutNodeAliasList")
     def _validator_about_node_alias_list(cls, v: List) -> List:

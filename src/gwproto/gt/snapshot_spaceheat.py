@@ -1,4 +1,4 @@
-"""snapshot.spaceheat.100 type"""
+"""snapshot.spaceheat type"""
 import json
 from typing import Literal
 
@@ -13,7 +13,7 @@ class SnapshotSpaceheat(BaseModel):
     FromGNodeAlias: str  #
     FromGNodeInstanceId: str  #
     Snapshot: TelemetrySnapshotSpaceheat  #
-    TypeAlias: Literal["snapshot.spaceheat.100"] = "snapshot.spaceheat.100"
+    TypeAlias: Literal["snapshot.spaceheat"] = "snapshot.spaceheat"
 
     _validator_from_g_node_alias = predicate_validator("FromGNodeAlias", property_format.is_lrd_alias_format)
 

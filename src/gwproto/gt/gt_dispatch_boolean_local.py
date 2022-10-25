@@ -1,4 +1,4 @@
-"""gt.dispatch.boolean.local.100 type"""
+"""gt.dispatch.boolean.local type"""
 import json
 from typing import Literal
 
@@ -13,7 +13,7 @@ class GtDispatchBooleanLocal(BaseModel):
     FromNodeAlias: str  #
     AboutNodeAlias: str  #
     RelayState: int  #
-    TypeAlias: Literal["gt.dispatch.boolean.local.100"] = "gt.dispatch.boolean.local.100"
+    TypeAlias: Literal["gt.dispatch.boolean.local"] = "gt.dispatch.boolean.local"
 
     _validator_send_time_unix_ms = predicate_validator("SendTimeUnixMs", property_format.is_reasonable_unix_time_ms)
 

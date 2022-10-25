@@ -1,4 +1,4 @@
-"""gt.sh.multipurpose.telemetry.status.100 type"""
+"""gt.sh.multipurpose.telemetry.status type"""
 import json
 from typing import Any
 from typing import List
@@ -20,7 +20,7 @@ class GtShMultipurposeTelemetryStatus(BaseModel):
     ValueList: List[int]
     ReadTimeUnixMsList: List[int]
     SensorNodeAlias: str  #
-    TypeAlias: Literal["gt.sh.multipurpose.telemetry.status.100"] = "gt.sh.multipurpose.telemetry.status.100"
+    TypeAlias: Literal["gt.sh.multipurpose.telemetry.status"] = "gt.sh.multipurpose.telemetry.status"
 
     _validator_about_node_alias = predicate_validator("AboutNodeAlias", property_format.is_lrd_alias_format)
 

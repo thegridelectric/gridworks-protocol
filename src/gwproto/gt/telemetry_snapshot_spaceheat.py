@@ -1,4 +1,4 @@
-"""telemetry.snapshot.spaceheat.100 type"""
+"""telemetry.snapshot.spaceheat type"""
 import json
 from typing import Any
 from typing import List
@@ -19,7 +19,7 @@ class TelemetrySnapshotSpaceheat(BaseModel):
     ValueList: List[int]
     TelemetryNameList: List[TelemetryName]
     ReportTimeUnixMs: int  #
-    TypeAlias: Literal["telemetry.snapshot.spaceheat.100"] = "telemetry.snapshot.spaceheat.100"
+    TypeAlias: Literal["telemetry.snapshot.spaceheat"] = "telemetry.snapshot.spaceheat"
 
     @validator("AboutNodeAliasList")
     def _validator_about_node_alias_list(cls, v: List) -> List:

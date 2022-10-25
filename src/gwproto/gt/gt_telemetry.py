@@ -1,4 +1,4 @@
-"""gt.telemetry.110 type"""
+"""gt.telemetry type"""
 import json
 from typing import Any
 from typing import Literal
@@ -18,7 +18,7 @@ class GtTelemetry(BaseModel):
     Value: int  #
     Name: TelemetryName  #
     Exponent: int  #
-    TypeAlias: Literal["gt.telemetry.110"] = "gt.telemetry.110"
+    TypeAlias: Literal["gt.telemetry"] = "gt.telemetry"
 
     _validator_scada_read_time_unix_ms = predicate_validator("ScadaReadTimeUnixMs", property_format.is_reasonable_unix_time_ms)
 

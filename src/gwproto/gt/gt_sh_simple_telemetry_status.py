@@ -1,4 +1,4 @@
-"""gt.sh.simple.telemetry.status.100 type"""
+"""gt.sh.simple.telemetry.status type"""
 import json
 from typing import Any
 from typing import List
@@ -19,7 +19,7 @@ class GtShSimpleTelemetryStatus(BaseModel):
     ReadTimeUnixMsList: List[int]
     TelemetryName: TelemetryName  #
     ShNodeAlias: str  #
-    TypeAlias: Literal["gt.sh.simple.telemetry.status.100"] = "gt.sh.simple.telemetry.status.100"
+    TypeAlias: Literal["gt.sh.simple.telemetry.status"] = "gt.sh.simple.telemetry.status"
 
     @validator("ReadTimeUnixMsList")
     def _validator_read_time_unix_ms_list(cls, v: List) -> List:

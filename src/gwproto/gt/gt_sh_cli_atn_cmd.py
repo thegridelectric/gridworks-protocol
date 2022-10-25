@@ -1,4 +1,4 @@
-"""gt.sh.cli.atn.cmd.110 type"""
+"""gt.sh.cli.atn.cmd type"""
 import json
 from typing import Literal
 
@@ -12,7 +12,7 @@ class GtShCliAtnCmd(BaseModel):
     FromGNodeAlias: str  #
     SendSnapshot: bool  #
     FromGNodeId: str  #
-    TypeAlias: Literal["gt.sh.cli.atn.cmd.110"] = "gt.sh.cli.atn.cmd.110"
+    TypeAlias: Literal["gt.sh.cli.atn.cmd"] = "gt.sh.cli.atn.cmd"
 
     _validator_from_g_node_alias = predicate_validator("FromGNodeAlias", property_format.is_lrd_alias_format)
 

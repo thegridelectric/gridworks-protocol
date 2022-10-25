@@ -1,4 +1,4 @@
-"""gt.sh.status.110 type"""
+"""gt.sh.status type"""
 import json
 from typing import List
 from typing import Literal
@@ -25,7 +25,7 @@ class GtShStatus(BaseModel):
     FromGNodeId: str  #
     StatusUid: str  #
     ReportingPeriodS: int  #
-    TypeAlias: Literal["gt.sh.status.110"] = "gt.sh.status.110"
+    TypeAlias: Literal["gt.sh.status"] = "gt.sh.status"
 
     _validator_slot_start_unix_s = predicate_validator("SlotStartUnixS", property_format.is_reasonable_unix_time_s)
 

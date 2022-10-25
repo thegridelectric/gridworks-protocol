@@ -1,4 +1,4 @@
-"""gt.sh.booleanactuator.cmd.status.100 type"""
+"""gt.sh.booleanactuator.cmd.status type"""
 import json
 from typing import List
 from typing import Literal
@@ -14,7 +14,7 @@ class GtShBooleanactuatorCmdStatus(BaseModel):
     ShNodeAlias: str  #
     RelayStateCommandList: List[int]
     CommandTimeUnixMsList: List[int]
-    TypeAlias: Literal["gt.sh.booleanactuator.cmd.status.100"] = "gt.sh.booleanactuator.cmd.status.100"
+    TypeAlias: Literal["gt.sh.booleanactuator.cmd.status"] = "gt.sh.booleanactuator.cmd.status"
 
     _validator_sh_node_alias = predicate_validator("ShNodeAlias", property_format.is_lrd_alias_format)
 

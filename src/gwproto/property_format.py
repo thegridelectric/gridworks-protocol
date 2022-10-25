@@ -45,9 +45,11 @@ def check_is_lrd_alias_format(candidate: str):
     words must be alphanumeric. Most significant word must start with
     an alphabet charecter
 
+    Args:
+        candidate (str): candidate string
 
     Raises:
-        SchemaError: if candidate is not of lrd format (e.g. dw1.iso.me.apple)
+        ValueError: if candidate is not of lrd format (e.g. dw1.iso.me.apple)
     """
     try:
         x = candidate.split(".")
@@ -73,9 +75,11 @@ def is_lrd_alias_format(candidate: str) -> bool:
     words must be alphanumeric. Most significant word must start with
     an alphabet charecter.
 
+    Args:
+        candidate (str): candidate string
 
-    Raises:
-        SchemaError: if candidate is not of lrd format (e.g. dw1.iso.me.apple)
+    Returns:
+        bool: True if predicate is true, False if predicate is false
     """
     try:
         x = candidate.split(".")

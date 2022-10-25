@@ -1,6 +1,7 @@
 """gt.dispatch.boolean.100 type"""
 import json
 from typing import Literal
+from typing import Optional
 
 from pydantic import BaseModel
 
@@ -12,7 +13,7 @@ class GtDispatchBoolean(BaseModel):
     AboutNodeAlias: str  #
     ToGNodeAlias: str  #
     FromGNodeAlias: str  #
-    FromGNodeId: str  #
+    FromGNodeId: Optional[str]  #
     RelayState: int  #
     SendTimeUnixMs: int  #
     TypeAlias: Literal["gt.dispatch.boolean.100"] = "gt.dispatch.boolean.100"
@@ -23,14 +24,14 @@ class GtDispatchBoolean(BaseModel):
 
     _validator_from_g_node_alias = predicate_validator("FromGNodeAlias", property_format.is_lrd_alias_format)
 
-    _validator_from_g_node_id = predicate_validator("FromGNodeId", property_format.is_uuid_canonical_textual)
-
     _validator_relay_state = predicate_validator("RelayState", property_format.is_bit)
 
     _validator_send_time_unix_ms = predicate_validator("SendTimeUnixMs", property_format.is_reasonable_unix_time_ms)
 
     def asdict(self):
         d = self.dict()
+        if self.FromGNodeId is None:
+            del d['FromGNodeId']
         return d
 
     def as_type(self):

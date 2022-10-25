@@ -1,5 +1,6 @@
 """gt.sh.telemetry.from.multipurpose.sensor.100 type"""
 import json
+from typing import Any
 from typing import List
 from typing import Literal
 
@@ -9,6 +10,7 @@ from pydantic import validator
 import gwproto.property_format as property_format
 from gwproto.enums import TelemetryName
 from gwproto.enums import TelemetryNameMap
+from gwproto.message import as_enum
 from gwproto.property_format import predicate_validator
 
 
@@ -27,6 +29,15 @@ class GtShTelemetryFromMultipurposeSensor(BaseModel):
         return v
 
     _validator_scada_read_time_unix_ms = predicate_validator("ScadaReadTimeUnixMs", property_format.is_reasonable_unix_time_ms)
+
+    @validator("TelemetryNameList", pre=True)
+    def _validator_telemetry_name_list(cls, v: Any) -> TelemetryName:
+        if not isinstance(v, List):
+            raise ValueError("TelemetryNameList must be a list!")
+        enum_list = []
+        for elt in v:
+            enum_list.append(as_enum(elt, TelemetryName, TelemetryName.UNKNOWN))
+        return enum_list
 
     def asdict(self):
         d = self.dict()

@@ -53,30 +53,30 @@
 
    
 <xsl:text>"""</xsl:text><xsl:value-of select="Alias"/><xsl:text> type"""
-import json
+import json</xsl:text>
+<xsl:if test="count($airtable//SchemaAttributes/SchemaAttribute[(Schema = $schema-id) and (IsEnum = 'true')])>0">
+<xsl:text>
+from typing import Any</xsl:text>
+</xsl:if>
+<xsl:text>
 from typing import Literal</xsl:text>
-<xsl:if test="count($airtable//SchemaAttributes/SchemaAttribute[(Schema = $schema-id) and not (IsRequired = 'true')]) > 0">
-<xsl:text>, Optional</xsl:text>
-</xsl:if>
-<xsl:if test="count($airtable//SchemaAttributes/SchemaAttribute[(Schema = $schema-id) and not(IsRequired = 'true')])>0">
-<xsl:if test="count($airtable//SchemaAttributes/SchemaAttribute[(Schema = $schema-id) and (IsList = 'true')])=0">
-<xsl:text>, Optional</xsl:text>
-</xsl:if>
 <xsl:if test="count($airtable//SchemaAttributes/SchemaAttribute[(Schema = $schema-id) and (IsList = 'true')])>0">
-<xsl:text>, List, Optional</xsl:text>
+<xsl:text>
+from typing import List</xsl:text>
 </xsl:if>
+<xsl:if test="count($airtable//SchemaAttributes/SchemaAttribute[(Schema = $schema-id) and not (IsRequired = 'true')]) > 0">
+<xsl:text>
+from typing import Optional</xsl:text>
 </xsl:if>
-<xsl:if test="count($airtable//SchemaAttributes/SchemaAttribute[(Schema = $schema-id) and (IsRequired = 'true') and (IsList = 'true')])>0">
-<xsl:text>, List</xsl:text>
-</xsl:if>
-<xsl:if test="count($airtable//SchemaAttributes/SchemaAttribute[(Schema = $schema-id) and ((normalize-space(SubTypeDataClass) != '') or (normalize-space(PrimitiveFormat) != ''))]) > 0">
 <xsl:text>
 from pydantic import BaseModel</xsl:text>
-<xsl:if test="count($airtable//SchemaAttributes/SchemaAttribute[Schema = $schema-id and IsList='true' and (IsType = 'true' or (IsPrimitive='true'  and normalize-space(PrimitiveFormat) != '') )]) > 0">
-<xsl:text>, validator</xsl:text>
-</xsl:if>
+<xsl:if test="count($airtable//SchemaAttributes/SchemaAttribute[Schema = $schema-id and (IsEnum='true' or (IsList='true' and (IsType = 'true' or (IsPrimitive='true'  and normalize-space(PrimitiveFormat) != '') )))]) > 0">
 <xsl:text>
+from pydantic import validator</xsl:text>
+</xsl:if>
 
+<xsl:if test="count($airtable//SchemaAttributes/SchemaAttribute[(Schema = $schema-id) and ((normalize-space(SubTypeDataClass) != '') or (normalize-space(PrimitiveFormat) != ''))]) > 0">
+<xsl:text>
 import gwproto.property_format as property_format</xsl:text>
 </xsl:if>
 <xsl:text>
@@ -116,6 +116,12 @@ from gwproto.gt.</xsl:text>
 <xsl:text>_Maker</xsl:text>
 </xsl:if>
 </xsl:for-each>
+
+<xsl:if test="count($airtable//SchemaAttributes/SchemaAttribute[(Schema = $schema-id) and (IsEnum = 'true')])>0">
+<xsl:text>
+from gwproto.message import as_enum</xsl:text>
+</xsl:if>
+
 <xsl:text>
 
 
@@ -238,11 +244,64 @@ class </xsl:text>
                 <xsl:with-param name="camel-case-text" select="translate(PrimitiveFormat,'.','_')"  />
             </xsl:call-template>
         <xsl:text>(elt):
-                raise ValueError(f"failure of predicate is_lrd_alias_format() on elt {elt} of </xsl:text><xsl:value-of select="Value"/>
+                raise ValueError(f"failure of predicate is_</xsl:text>
+                <xsl:call-template name="python-case">
+                    <xsl:with-param name="camel-case-text" select="translate(PrimitiveFormat,'.','_')"  />
+                </xsl:call-template>
+                
+                <xsl:text>() on elt {elt} of </xsl:text><xsl:value-of select="Value"/>
             <xsl:text>")
         return v</xsl:text>
     </xsl:if>
 
+    <xsl:if test="(IsEnum='true') and (IsRequired = 'true') and not (IsList='true')">
+        <xsl:text>
+
+    @validator("</xsl:text><xsl:value-of select="Value"/><xsl:text>", pre=True)
+    def _validator_</xsl:text><xsl:call-template name="python-case">
+    <xsl:with-param name="camel-case-text" select="Value"  />
+    </xsl:call-template><xsl:text>(cls, v: Any) -> </xsl:text>
+        <xsl:call-template name="nt-case">
+        <xsl:with-param name="mp-schema-text" select="EnumLocalName" />
+    </xsl:call-template>
+    <xsl:text>:
+        return as_enum(v, </xsl:text>
+        <xsl:call-template name="nt-case">
+            <xsl:with-param name="mp-schema-text" select="EnumLocalName" />
+        </xsl:call-template>
+        <xsl:text>, </xsl:text>
+        <xsl:call-template name="nt-case">
+            <xsl:with-param name="mp-schema-text" select="EnumLocalName" />
+        </xsl:call-template>
+        <xsl:text>.UNKNOWN)</xsl:text>
+    </xsl:if>
+
+    <xsl:if test="(IsEnum='true') and (IsRequired = 'true') and (IsList='true')">
+        <xsl:text>
+
+    @validator("</xsl:text><xsl:value-of select="Value"/><xsl:text>", pre=True)
+    def _validator_</xsl:text><xsl:call-template name="python-case">
+    <xsl:with-param name="camel-case-text" select="Value"  />
+    </xsl:call-template><xsl:text>(cls, v: Any) -> </xsl:text>
+        <xsl:call-template name="nt-case">
+        <xsl:with-param name="mp-schema-text" select="EnumLocalName" />
+    </xsl:call-template>
+    <xsl:text>:
+        if not isinstance(v, List):
+            raise ValueError("</xsl:text><xsl:value-of select="Value"/><xsl:text> must be a list!")
+        enum_list = []
+        for elt in v:
+            enum_list.append(as_enum(elt, </xsl:text>
+        <xsl:call-template name="nt-case">
+        <xsl:with-param name="mp-schema-text" select="EnumLocalName" />
+    </xsl:call-template>
+        <xsl:text>, </xsl:text>
+        <xsl:call-template name="nt-case">
+            <xsl:with-param name="mp-schema-text" select="EnumLocalName" />
+        </xsl:call-template>
+        <xsl:text>.UNKNOWN))
+        return enum_list</xsl:text>
+    </xsl:if>
 
     <xsl:if test="(IsPrimitive='true') and not(IsRequired = 'true') and not (IsList='true') and normalize-space(PrimitiveFormat) != ''">
                 <xsl:text>

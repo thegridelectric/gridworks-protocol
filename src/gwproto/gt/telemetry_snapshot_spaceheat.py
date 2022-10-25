@@ -1,5 +1,6 @@
 """telemetry.snapshot.spaceheat.100 type"""
 import json
+from typing import Any
 from typing import List
 from typing import Literal
 
@@ -9,6 +10,7 @@ from pydantic import validator
 import gwproto.property_format as property_format
 from gwproto.enums import TelemetryName
 from gwproto.enums import TelemetryNameMap
+from gwproto.message import as_enum
 from gwproto.property_format import predicate_validator
 
 
@@ -25,6 +27,15 @@ class TelemetrySnapshotSpaceheat(BaseModel):
             if not property_format.is_lrd_alias_format(elt):
                 raise ValueError(f"failure of predicate is_lrd_alias_format() on elt {elt} of AboutNodeAliasList")
         return v
+
+    @validator("TelemetryNameList", pre=True)
+    def _validator_telemetry_name_list(cls, v: Any) -> TelemetryName:
+        if not isinstance(v, List):
+            raise ValueError("TelemetryNameList must be a list!")
+        enum_list = []
+        for elt in v:
+            enum_list.append(as_enum(elt, TelemetryName, TelemetryName.UNKNOWN))
+        return enum_list
 
     _validator_report_time_unix_ms = predicate_validator("ReportTimeUnixMs", property_format.is_reasonable_unix_time_ms)
 

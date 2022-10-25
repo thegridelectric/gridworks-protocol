@@ -1,5 +1,6 @@
 """gt.sh.multipurpose.telemetry.status.100 type"""
 import json
+from typing import Any
 from typing import List
 from typing import Literal
 
@@ -9,6 +10,7 @@ from pydantic import validator
 import gwproto.property_format as property_format
 from gwproto.enums import TelemetryName
 from gwproto.enums import TelemetryNameMap
+from gwproto.message import as_enum
 from gwproto.property_format import predicate_validator
 
 
@@ -22,11 +24,15 @@ class GtShMultipurposeTelemetryStatus(BaseModel):
 
     _validator_about_node_alias = predicate_validator("AboutNodeAlias", property_format.is_lrd_alias_format)
 
+    @validator("TelemetryName", pre=True)
+    def _validator_telemetry_name(cls, v: Any) -> TelemetryName:
+        return as_enum(v, TelemetryName, TelemetryName.UNKNOWN)
+
     @validator("ReadTimeUnixMsList")
     def _validator_read_time_unix_ms_list(cls, v: List) -> List:
         for elt in v:
             if not property_format.is_reasonable_unix_time_ms(elt):
-                raise ValueError(f"failure of predicate is_lrd_alias_format() on elt {elt} of ReadTimeUnixMsList")
+                raise ValueError(f"failure of predicate is_reasonable_unix_time_ms() on elt {elt} of ReadTimeUnixMsList")
         return v
 
     def asdict(self):

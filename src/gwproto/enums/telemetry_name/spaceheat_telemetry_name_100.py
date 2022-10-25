@@ -9,26 +9,26 @@ class TelemetryName(enum.Enum):
     def values(cls):
         return [elt.value for elt in cls]
 
-    POWER_W = "PowerW"
-    WATER_TEMP_F_TIMES1000 = "WaterTempFTimes1000"
-    GALLONS_PER_MINUTE_TIMES10 = "GallonsPerMinuteTimes10"
-    WATER_FLOW_GPM_TIMES100 = "WaterFlowGpmTimes100"
-    WATER_TEMP_C_TIMES1000 = "WaterTempCTimes1000"
-    RELAY_STATE = "RelayState"
-    CURRENT_RMS_MICRO_AMPS = "CurrentRmsMicroAmps"
     UNKNOWN = "Unknown"
+    POWER_W = "PowerW"
+    RELAY_STATE = "RelayState"
+    WATER_TEMP_C_TIMES1000 = "WaterTempCTimes1000"
+    WATER_TEMP_F_TIMES1000 = "WaterTempFTimes1000"
+    WATER_FLOW_GPM_TIMES100 = "WaterFlowGpmTimes100"
+    CURRENT_RMS_MICRO_AMPS = "CurrentRmsMicroAmps"
+    GALLONS_PER_MINUTE_TIMES10 = "GallonsPerMinuteTimes10"
     #
 
 
 class SpaceheatTelemetryName100GtEnum(ABC):
     symbols: List[str] = [
-        "af39eec9",
-        "793505aa",
-        "329a68c0",
-        "d70cce28",
-        "c89d0ba1",
-        "5a71d4b3",
-        "ad19e79c",
         "00000000",
+        "af39eec9",
+        "5a71d4b3",
+        "c89d0ba1",
+        "793505aa",
+        "d70cce28",
+        "ad19e79c",
+        "329a68c0",
         #
     ]

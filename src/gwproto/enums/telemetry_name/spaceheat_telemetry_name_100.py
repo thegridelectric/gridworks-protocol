@@ -16,6 +16,7 @@ class TelemetryName(enum.Enum):
     WATER_TEMP_C_TIMES1000 = "WaterTempCTimes1000"
     RELAY_STATE = "RelayState"
     CURRENT_RMS_MICRO_AMPS = "CurrentRmsMicroAmps"
+    UNKNOWN = "Unknown"
     #
 
 
@@ -28,5 +29,6 @@ class SpaceheatTelemetryName100GtEnum(ABC):
         "c89d0ba1",
         "5a71d4b3",
         "ad19e79c",
+        "00000000",
         #
     ]

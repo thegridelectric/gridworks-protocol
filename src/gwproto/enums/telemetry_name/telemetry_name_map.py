@@ -38,6 +38,7 @@ class TelemetryNameMap:
         "c89d0ba1": TelemetryName.WATER_TEMP_C_TIMES1000,
         "5a71d4b3": TelemetryName.RELAY_STATE,
         "ad19e79c": TelemetryName.CURRENT_RMS_MICRO_AMPS,
+        "00000000": TelemetryName.UNKNOWN
     }
 
     local_to_gt_dict: Dict[TelemetryName, str] = {
@@ -48,5 +49,6 @@ class TelemetryNameMap:
         TelemetryName.WATER_TEMP_C_TIMES1000: "c89d0ba1",
         TelemetryName.RELAY_STATE: "5a71d4b3",
         TelemetryName.CURRENT_RMS_MICRO_AMPS: "ad19e79c",
+        TelemetryName.UNKNOWN: "00000000"
         #
     }

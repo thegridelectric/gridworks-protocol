@@ -16,23 +16,23 @@ from gwproto.message import as_enum
 
 
 class EventBase(BaseModel):
-    message_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    time_ns: int = Field(default_factory=time.time_ns)
-    src: str = ""
-    type_name: str = Field(const=True)
+    MessageId: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    TimeNS: int = Field(default_factory=time.time_ns)
+    Src: str = ""
+    TypeName: str = Field(const=True)
 
 
 EventT = TypeVar("EventT", bound=EventBase)
 
 
 class StartupEvent(EventBase):
-    clean_shutdown: bool
-    type_name: Literal["gridworks.event.startup.000"] = "gridworks.event.startup.000"
+    CleanShutdown: bool
+    TypeName: Literal["gridworks.event.startup"] = "gridworks.event.startup"
 
 
 class ShutdownEvent(EventBase):
-    reason: str
-    type_name: Literal["gridworks.event.shutdown.000"] = "gridworks.event.shutdown.000"
+    Reason: str
+    TypeName: Literal["gridworks.event.shutdown"] = "gridworks.event.shutdown"
 
 
 class Problems(Enum):
@@ -41,12 +41,12 @@ class Problems(Enum):
 
 
 class ProblemEvent(EventBase):
-    problem_type: Problems
-    summary: str
-    details: str = ""
-    type_name: Literal["gridworks.event.problem.000"] = "gridworks.event.problem.000"
+    ProblemType: Problems
+    Summary: str
+    Details: str = ""
+    TypeName: Literal["gridworks.event.problem"] = "gridworks.event.problem"
 
-    @validator("problem_type", pre=True)
+    @validator("ProblemType", pre=True)
     def problem_type_value(cls, v: Any) -> Optional[Problems]:
         return as_enum(v, Problems)
 
@@ -60,21 +60,21 @@ class MQTTCommEvent(CommEvent):
 
 
 class MQTTConnectFailedEvent(MQTTCommEvent):
-    type_name: Literal[
-        "gridworks.event.comm.mqtt.connect_failed.000"
-    ] = "gridworks.event.comm.mqtt.connect_failed.000"
+    TypeName: Literal[
+        "gridworks.event.comm.mqtt.connect_failed"
+    ] = "gridworks.event.comm.mqtt.connect_failed"
 
 
 class MQTTDisconnectEvent(MQTTCommEvent):
-    type_name: Literal[
-        "gridworks.event.comm.mqtt.disconnect.000"
-    ] = "gridworks.event.comm.mqtt.disconnect.000"
+    TypeName: Literal[
+        "gridworks.event.comm.mqtt.disconnect"
+    ] = "gridworks.event.comm.mqtt.disconnect"
 
 
 class MQTTFullySubscribedEvent(CommEvent):
-    type_name: Literal[
-        "gridworks.event.comm.mqtt.fully_subscribed.000"
-    ] = "gridworks.event.comm.mqtt.fully_subscribed.000"
+    TypeName: Literal[
+        "gridworks.event.comm.mqtt.fully_subscribed"
+    ] = "gridworks.event.comm.mqtt.fully_subscribed"
 
 
 class EventMessage(Message[EventT], Generic[EventT]):

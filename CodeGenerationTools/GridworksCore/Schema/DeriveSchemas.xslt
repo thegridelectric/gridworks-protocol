@@ -685,7 +685,14 @@ class </xsl:text>
             <xsl:with-param name="mp-schema-text" select="Value" />
         </xsl:call-template>
             <xsl:text>GtEnumSymbol")
-        new_d["</xsl:text> <xsl:call-template name="nt-case">
+        if new_d["</xsl:text> <xsl:call-template name="nt-case">
+            <xsl:with-param name="mp-schema-text" select="Value" />
+        </xsl:call-template><xsl:text>"] in </xsl:text>
+        <xsl:call-template name="nt-case">
+            <xsl:with-param name="mp-schema-text" select="EnumLocalName" />
+        </xsl:call-template>
+        <xsl:text>Map.gt_to_local_dict.keys():
+            new_d["</xsl:text> <xsl:call-template name="nt-case">
             <xsl:with-param name="mp-schema-text" select="Value" />
         </xsl:call-template><xsl:text>"] = </xsl:text>
         <xsl:call-template name="nt-case">
@@ -694,7 +701,15 @@ class </xsl:text>
         <xsl:text>Map.gt_to_local(new_d["</xsl:text>
         <xsl:call-template name="nt-case">
             <xsl:with-param name="mp-schema-text" select="Value" />
-        </xsl:call-template><xsl:text>GtEnumSymbol"])</xsl:text>
+        </xsl:call-template><xsl:text>GtEnumSymbol"])
+        else:
+            new_d["</xsl:text> <xsl:call-template name="nt-case">
+            <xsl:with-param name="mp-schema-text" select="Value" />
+        </xsl:call-template><xsl:text>"] = </xsl:text>
+        <xsl:call-template name="nt-case">
+            <xsl:with-param name="mp-schema-text" select="EnumLocalName" />
+        </xsl:call-template>
+        <xsl:text>.UNKNOWN</xsl:text>
     </xsl:if>
 
 
@@ -714,15 +729,30 @@ class </xsl:text>
         for elt in new_d["</xsl:text>
         <xsl:value-of select="Value"/>
         <xsl:text>"]:
+            if elt in </xsl:text>
+            <xsl:call-template name="nt-case">
+                <xsl:with-param name="mp-schema-text" select="EnumLocalName" />
+            </xsl:call-template>
+            <xsl:text>Map.gt_to_local_dict.keys():
+                v = </xsl:text>
+                <xsl:call-template name="nt-case">
+                    <xsl:with-param name="mp-schema-text" select="EnumLocalName" />
+                </xsl:call-template>
+                <xsl:text>Map.gt_to_local(new_d["</xsl:text>
+                <xsl:call-template name="nt-case">
+                    <xsl:with-param name="mp-schema-text" select="Value" />
+                </xsl:call-template><xsl:text>GtEnumSymbol"])
+            else:
+                v= </xsl:text>
+            <xsl:call-template name="nt-case">
+                <xsl:with-param name="mp-schema-text" select="EnumLocalName" />
+            </xsl:call-template>
+            <xsl:text>.UNKNOWN
             </xsl:text>
             <xsl:call-template name="python-case">
                 <xsl:with-param name="camel-case-text" select="Value"  />
             </xsl:call-template>
-            <xsl:text>.append(</xsl:text>
-            <xsl:call-template name="nt-case">
-            <xsl:with-param name="mp-schema-text" select="EnumLocalName" />
-        </xsl:call-template>
-            <xsl:text>Map.gt_to_local(elt))
+            <xsl:text>.append(v)
         new_d["</xsl:text><xsl:value-of select="Value"/>
         <xsl:text>"] = </xsl:text>
         <xsl:call-template name="python-case">

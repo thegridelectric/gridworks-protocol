@@ -92,7 +92,11 @@ class TelemetrySnapshotSpaceheat_Maker:
             raise TypeError(f"dict {new_d} missing TelemetryNameList")
         telemetry_name_list = []
         for elt in new_d["TelemetryNameList"]:
-            telemetry_name_list.append(TelemetryNameMap.gt_to_local(elt))
+            if elt in TelemetryNameMap.gt_to_local_dict.keys():
+                v = TelemetryNameMap.gt_to_local(new_d["TelemetryNameListGtEnumSymbol"])
+            else:
+                v = TelemetryName.UNKNOWN
+            telemetry_name_list.append(v)
         new_d["TelemetryNameList"] = telemetry_name_list
         if "ReportTimeUnixMs" not in new_d.keys():
             raise TypeError(f"dict {new_d} missing ReportTimeUnixMs")

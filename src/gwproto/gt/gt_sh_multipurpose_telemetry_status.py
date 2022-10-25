@@ -90,7 +90,12 @@ class GtShMultipurposeTelemetryStatus_Maker:
             raise TypeError(f"dict {new_d} missing AboutNodeAlias")
         if "TelemetryNameGtEnumSymbol" not in new_d.keys():
             raise TypeError(f"dict {new_d} missing TelemetryNameGtEnumSymbol")
-        new_d["TelemetryName"] = TelemetryNameMap.gt_to_local(new_d["TelemetryNameGtEnumSymbol"])
+        if new_d["TelemetryName"] in TelemetryNameMap.gt_to_local_dict.keys():
+            new_d["TelemetryName"] = TelemetryNameMap.gt_to_local(
+                new_d["TelemetryNameGtEnumSymbol"]
+            )
+        else:
+            new_d["TelemetryName"] = TelemetryName.UNKNOWN
         if "ValueList" not in new_d.keys():
             raise TypeError(f"dict {new_d} missing ValueList")
         if "ReadTimeUnixMsList" not in new_d.keys():

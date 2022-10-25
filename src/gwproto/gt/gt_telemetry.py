@@ -74,7 +74,10 @@ class GtTelemetry_Maker:
             raise TypeError(f"dict {new_d} missing Value")
         if "NameGtEnumSymbol" not in new_d.keys():
             raise TypeError(f"dict {new_d} missing NameGtEnumSymbol")
-        new_d["Name"] = TelemetryNameMap.gt_to_local(new_d["NameGtEnumSymbol"])
+        if new_d["Name"] in TelemetryNameMap.gt_to_local_dict.keys():
+            new_d["Name"] = TelemetryNameMap.gt_to_local(new_d["NameGtEnumSymbol"])
+        else:
+            new_d["Name"] = TelemetryName.UNKNOWN
         if "Exponent" not in new_d.keys():
             raise TypeError(f"dict {new_d} missing Exponent")
 

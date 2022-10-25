@@ -1,4 +1,4 @@
-"""gt.sh.simple.telemetry.status.100 type"""
+"""gt.sh.simple.telemetry.status.100 type of silliness"""
 import json
 from typing import List
 from typing import Literal

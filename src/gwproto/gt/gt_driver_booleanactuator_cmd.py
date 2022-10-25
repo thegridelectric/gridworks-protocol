@@ -16,13 +16,9 @@ class GtDriverBooleanactuatorCmd(BaseModel):
 
     _validator_relay_state = predicate_validator("RelayState", property_format.is_bit)
 
-    _validator_sh_node_alias = predicate_validator(
-        "ShNodeAlias", property_format.is_lrd_alias_format
-    )
+    _validator_sh_node_alias = predicate_validator("ShNodeAlias", property_format.is_lrd_alias_format)
 
-    _validator_command_time_unix_ms = predicate_validator(
-        "CommandTimeUnixMs", property_format.is_reasonable_unix_time_ms
-    )
+    _validator_command_time_unix_ms = predicate_validator("CommandTimeUnixMs", property_format.is_reasonable_unix_time_ms)
 
     def asdict(self):
         d = self.dict()
@@ -35,7 +31,10 @@ class GtDriverBooleanactuatorCmd(BaseModel):
 class GtDriverBooleanactuatorCmd_Maker:
     type_alias = "gt.driver.booleanactuator.cmd.100"
 
-    def __init__(self, relay_state: int, sh_node_alias: str, command_time_unix_ms: int):
+    def __init__(self,
+                    relay_state: int,
+                    sh_node_alias: str,
+                    command_time_unix_ms: int):
 
         self.tuple = GtDriverBooleanactuatorCmd(
             RelayState=relay_state,

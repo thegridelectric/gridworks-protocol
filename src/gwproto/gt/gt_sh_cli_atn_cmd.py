@@ -14,13 +14,9 @@ class GtShCliAtnCmd(BaseModel):
     FromGNodeId: str  #
     TypeAlias: Literal["gt.sh.cli.atn.cmd.110"] = "gt.sh.cli.atn.cmd.110"
 
-    _validator_from_g_node_alias = predicate_validator(
-        "FromGNodeAlias", property_format.is_lrd_alias_format
-    )
+    _validator_from_g_node_alias = predicate_validator("FromGNodeAlias", property_format.is_lrd_alias_format)
 
-    _validator_from_g_node_id = predicate_validator(
-        "FromGNodeId", property_format.is_uuid_canonical_textual
-    )
+    _validator_from_g_node_id = predicate_validator("FromGNodeId", property_format.is_uuid_canonical_textual)
 
     def asdict(self):
         d = self.dict()
@@ -33,7 +29,10 @@ class GtShCliAtnCmd(BaseModel):
 class GtShCliAtnCmd_Maker:
     type_alias = "gt.sh.cli.atn.cmd.110"
 
-    def __init__(self, from_g_node_alias: str, send_snapshot: bool, from_g_node_id: str):
+    def __init__(self,
+                    from_g_node_alias: str,
+                    send_snapshot: bool,
+                    from_g_node_id: str):
 
         self.tuple = GtShCliAtnCmd(
             FromGNodeAlias=from_g_node_alias,

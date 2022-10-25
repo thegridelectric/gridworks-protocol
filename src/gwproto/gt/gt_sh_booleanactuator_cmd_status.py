@@ -14,30 +14,22 @@ class GtShBooleanactuatorCmdStatus(BaseModel):
     ShNodeAlias: str  #
     RelayStateCommandList: List[int]
     CommandTimeUnixMsList: List[int]
-    TypeAlias: Literal[
-        "gt.sh.booleanactuator.cmd.status.100"
-    ] = "gt.sh.booleanactuator.cmd.status.100"
+    TypeAlias: Literal["gt.sh.booleanactuator.cmd.status.100"] = "gt.sh.booleanactuator.cmd.status.100"
 
-    _validator_sh_node_alias = predicate_validator(
-        "ShNodeAlias", property_format.is_lrd_alias_format
-    )
+    _validator_sh_node_alias = predicate_validator("ShNodeAlias", property_format.is_lrd_alias_format)
 
     @validator("RelayStateCommandList")
     def _validator_relay_state_command_list(cls, v: List) -> List:
         for elt in v:
             if not property_format.is_bit(elt):
-                raise ValueError(
-                    f"failure of predicate is_lrd_alias_format() on elt {elt} of RelayStateCommandList"
-                )
+                raise ValueError(f"failure of predicate is_lrd_alias_format() on elt {elt} of RelayStateCommandList")
         return v
 
     @validator("CommandTimeUnixMsList")
     def _validator_command_time_unix_ms_list(cls, v: List) -> List:
         for elt in v:
             if not property_format.is_reasonable_unix_time_ms(elt):
-                raise ValueError(
-                    f"failure of predicate is_lrd_alias_format() on elt {elt} of CommandTimeUnixMsList"
-                )
+                raise ValueError(f"failure of predicate is_lrd_alias_format() on elt {elt} of CommandTimeUnixMsList")
         return v
 
     def asdict(self):
@@ -51,12 +43,10 @@ class GtShBooleanactuatorCmdStatus(BaseModel):
 class GtShBooleanactuatorCmdStatus_Maker:
     type_alias = "gt.sh.booleanactuator.cmd.status.100"
 
-    def __init__(
-        self,
-        sh_node_alias: str,
-        relay_state_command_list: List[int],
-        command_time_unix_ms_list: List[int],
-    ):
+    def __init__(self,
+                    sh_node_alias: str,
+                    relay_state_command_list: List[int],
+                    command_time_unix_ms_list: List[int]):
 
         self.tuple = GtShBooleanactuatorCmdStatus(
             ShNodeAlias=sh_node_alias,

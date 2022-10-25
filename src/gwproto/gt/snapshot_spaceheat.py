@@ -5,8 +5,8 @@ from typing import Literal
 from pydantic import BaseModel
 
 import gwproto.property_format as property_format
-from gwproto.gt import TelemetrySnapshotSpaceheat
-from gwproto.gt import TelemetrySnapshotSpaceheat_Maker
+from gwproto.gt.telemetry_snapshot_spaceheat import TelemetrySnapshotSpaceheat
+from gwproto.gt.telemetry_snapshot_spaceheat import TelemetrySnapshotSpaceheat_Maker
 from gwproto.property_format import predicate_validator
 
 
@@ -16,13 +16,9 @@ class SnapshotSpaceheat(BaseModel):
     Snapshot: TelemetrySnapshotSpaceheat  #
     TypeAlias: Literal["snapshot.spaceheat.100"] = "snapshot.spaceheat.100"
 
-    _validator_from_g_node_alias = predicate_validator(
-        "FromGNodeAlias", property_format.is_lrd_alias_format
-    )
+    _validator_from_g_node_alias = predicate_validator("FromGNodeAlias", property_format.is_lrd_alias_format)
 
-    _validator_from_g_node_instance_id = predicate_validator(
-        "FromGNodeInstanceId", property_format.is_uuid_canonical_textual
-    )
+    _validator_from_g_node_instance_id = predicate_validator("FromGNodeInstanceId", property_format.is_uuid_canonical_textual)
 
     def asdict(self):
         d = self.dict()
@@ -36,12 +32,10 @@ class SnapshotSpaceheat(BaseModel):
 class SnapshotSpaceheat_Maker:
     type_alias = "snapshot.spaceheat.100"
 
-    def __init__(
-        self,
-        from_g_node_alias: str,
-        from_g_node_instance_id: str,
-        snapshot: TelemetrySnapshotSpaceheat,
-    ):
+    def __init__(self,
+                    from_g_node_alias: str,
+                    from_g_node_instance_id: str,
+                    snapshot: TelemetrySnapshotSpaceheat):
 
         self.tuple = SnapshotSpaceheat(
             FromGNodeAlias=from_g_node_alias,
@@ -78,9 +72,7 @@ class SnapshotSpaceheat_Maker:
         if "Snapshot" not in new_d.keys():
             raise TypeError(f"dict {new_d} missing Snapshot")
         if not isinstance(new_d["Snapshot"], dict):
-            raise TypeError(
-                f"d['Snapshot'] {new_d['Snapshot']} must be a TelemetrySnapshotSpaceheat!"
-            )
+            raise TypeError(f"d['Snapshot'] {new_d['Snapshot']} must be a TelemetrySnapshotSpaceheat!")
         snapshot = TelemetrySnapshotSpaceheat_Maker.dict_to_tuple(new_d["Snapshot"])
         new_d["Snapshot"] = snapshot
 

@@ -101,7 +101,11 @@ from gwproto.enums import (
 
 <xsl:if test="(IsType = 'true') and ((IsList = 'true') or (normalize-space(SubTypeDataClass)=''))">
 <xsl:text>
-from gwproto.gt import </xsl:text>
+from gwproto.gt.</xsl:text>
+<xsl:call-template name="python-case">
+    <xsl:with-param name="camel-case-text" select="translate(SubMessageFormatAliasRoot,'.','_')"  />
+</xsl:call-template>
+<xsl:text> import </xsl:text>
 <xsl:call-template name="nt-case">
     <xsl:with-param name="mp-schema-text" select="SubMessageFormatAliasRoot" />
 </xsl:call-template>

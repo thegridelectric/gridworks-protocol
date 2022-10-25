@@ -1,4 +1,4 @@
-"""gt.sh.simple.telemetry.status.100 type of doom"""
+"""gt.sh.simple.telemetry.status.100 type"""
 import json
 from typing import List
 from typing import Literal
@@ -23,14 +23,10 @@ class GtShSimpleTelemetryStatus(BaseModel):
     def _validator_read_time_unix_ms_list(cls, v: List) -> List:
         for elt in v:
             if not property_format.is_reasonable_unix_time_ms(elt):
-                raise ValueError(
-                    f"failure of predicate is_lrd_alias_format() on elt {elt} of ReadTimeUnixMsList"
-                )
+                raise ValueError(f"failure of predicate is_lrd_alias_format() on elt {elt} of ReadTimeUnixMsList")
         return v
 
-    _validator_sh_node_alias = predicate_validator(
-        "ShNodeAlias", property_format.is_lrd_alias_format
-    )
+    _validator_sh_node_alias = predicate_validator("ShNodeAlias", property_format.is_lrd_alias_format)
 
     def asdict(self):
         d = self.dict()
@@ -45,13 +41,11 @@ class GtShSimpleTelemetryStatus(BaseModel):
 class GtShSimpleTelemetryStatus_Maker:
     type_alias = "gt.sh.simple.telemetry.status.100"
 
-    def __init__(
-        self,
-        value_list: List[int],
-        read_time_unix_ms_list: List[int],
-        telemetry_name: TelemetryName,
-        sh_node_alias: str,
-    ):
+    def __init__(self,
+                    value_list: List[int],
+                    read_time_unix_ms_list: List[int],
+                    telemetry_name: TelemetryName,
+                    sh_node_alias: str):
 
         self.tuple = GtShSimpleTelemetryStatus(
             ValueList=value_list,
@@ -89,9 +83,7 @@ class GtShSimpleTelemetryStatus_Maker:
         if "TelemetryNameGtEnumSymbol" not in new_d.keys():
             raise TypeError(f"dict {new_d} missing TelemetryNameGtEnumSymbol")
         if new_d["TelemetryName"] in TelemetryNameMap.gt_to_local_dict.keys():
-            new_d["TelemetryName"] = TelemetryNameMap.gt_to_local(
-                new_d["TelemetryNameGtEnumSymbol"]
-            )
+            new_d["TelemetryName"] = TelemetryNameMap.gt_to_local(new_d["TelemetryNameGtEnumSymbol"])
         else:
             new_d["TelemetryName"] = TelemetryName.UNKNOWN
         if "ShNodeAlias" not in new_d.keys():

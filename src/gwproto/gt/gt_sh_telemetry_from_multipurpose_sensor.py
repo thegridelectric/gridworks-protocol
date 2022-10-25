@@ -17,22 +17,16 @@ class GtShTelemetryFromMultipurposeSensor(BaseModel):
     ValueList: List[int]
     ScadaReadTimeUnixMs: int  #
     TelemetryNameList: List[TelemetryName]
-    TypeAlias: Literal[
-        "gt.sh.telemetry.from.multipurpose.sensor.100"
-    ] = "gt.sh.telemetry.from.multipurpose.sensor.100"
+    TypeAlias: Literal["gt.sh.telemetry.from.multipurpose.sensor.100"] = "gt.sh.telemetry.from.multipurpose.sensor.100"
 
     @validator("AboutNodeAliasList")
     def _validator_about_node_alias_list(cls, v: List) -> List:
         for elt in v:
             if not property_format.is_lrd_alias_format(elt):
-                raise ValueError(
-                    f"failure of predicate is_lrd_alias_format() on elt {elt} of AboutNodeAliasList"
-                )
+                raise ValueError(f"failure of predicate is_lrd_alias_format() on elt {elt} of AboutNodeAliasList")
         return v
 
-    _validator_scada_read_time_unix_ms = predicate_validator(
-        "ScadaReadTimeUnixMs", property_format.is_reasonable_unix_time_ms
-    )
+    _validator_scada_read_time_unix_ms = predicate_validator("ScadaReadTimeUnixMs", property_format.is_reasonable_unix_time_ms)
 
     def asdict(self):
         d = self.dict()
@@ -50,13 +44,11 @@ class GtShTelemetryFromMultipurposeSensor(BaseModel):
 class GtShTelemetryFromMultipurposeSensor_Maker:
     type_alias = "gt.sh.telemetry.from.multipurpose.sensor.100"
 
-    def __init__(
-        self,
-        about_node_alias_list: List[str],
-        value_list: List[int],
-        scada_read_time_unix_ms: int,
-        telemetry_name_list: List[TelemetryName],
-    ):
+    def __init__(self,
+                    about_node_alias_list: List[str],
+                    value_list: List[int],
+                    scada_read_time_unix_ms: int,
+                    telemetry_name_list: List[TelemetryName]):
 
         self.tuple = GtShTelemetryFromMultipurposeSensor(
             AboutNodeAliasList=about_node_alias_list,
@@ -100,7 +92,7 @@ class GtShTelemetryFromMultipurposeSensor_Maker:
             if elt in TelemetryNameMap.gt_to_local_dict.keys():
                 v = TelemetryNameMap.gt_to_local(new_d["TelemetryNameListGtEnumSymbol"])
             else:
-                v = TelemetryName.UNKNOWN
+                v= TelemetryName.UNKNOWN
             telemetry_name_list.append(v)
         new_d["TelemetryNameList"] = telemetry_name_list
 

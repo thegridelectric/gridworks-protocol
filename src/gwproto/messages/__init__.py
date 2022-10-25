@@ -1,5 +1,5 @@
 from gwproto.gs import *
-from gwproto.gt.messages import *
+from gwproto.gt import *
 
 from .event import *
 from .misc import *

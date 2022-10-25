@@ -15,17 +15,11 @@ class GtDispatchBooleanLocal(BaseModel):
     RelayState: int  #
     TypeAlias: Literal["gt.dispatch.boolean.local.100"] = "gt.dispatch.boolean.local.100"
 
-    _validator_send_time_unix_ms = predicate_validator(
-        "SendTimeUnixMs", property_format.is_reasonable_unix_time_ms
-    )
+    _validator_send_time_unix_ms = predicate_validator("SendTimeUnixMs", property_format.is_reasonable_unix_time_ms)
 
-    _validator_from_node_alias = predicate_validator(
-        "FromNodeAlias", property_format.is_lrd_alias_format
-    )
+    _validator_from_node_alias = predicate_validator("FromNodeAlias", property_format.is_lrd_alias_format)
 
-    _validator_about_node_alias = predicate_validator(
-        "AboutNodeAlias", property_format.is_lrd_alias_format
-    )
+    _validator_about_node_alias = predicate_validator("AboutNodeAlias", property_format.is_lrd_alias_format)
 
     _validator_relay_state = predicate_validator("RelayState", property_format.is_bit)
 
@@ -40,9 +34,11 @@ class GtDispatchBooleanLocal(BaseModel):
 class GtDispatchBooleanLocal_Maker:
     type_alias = "gt.dispatch.boolean.local.100"
 
-    def __init__(
-        self, send_time_unix_ms: int, from_node_alias: str, about_node_alias: str, relay_state: int
-    ):
+    def __init__(self,
+                    send_time_unix_ms: int,
+                    from_node_alias: str,
+                    about_node_alias: str,
+                    relay_state: int):
 
         self.tuple = GtDispatchBooleanLocal(
             SendTimeUnixMs=send_time_unix_ms,

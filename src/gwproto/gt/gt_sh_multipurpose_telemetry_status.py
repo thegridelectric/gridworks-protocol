@@ -18,21 +18,15 @@ class GtShMultipurposeTelemetryStatus(BaseModel):
     ValueList: List[int]
     ReadTimeUnixMsList: List[int]
     SensorNodeAlias: str  #
-    TypeAlias: Literal[
-        "gt.sh.multipurpose.telemetry.status.100"
-    ] = "gt.sh.multipurpose.telemetry.status.100"
+    TypeAlias: Literal["gt.sh.multipurpose.telemetry.status.100"] = "gt.sh.multipurpose.telemetry.status.100"
 
-    _validator_about_node_alias = predicate_validator(
-        "AboutNodeAlias", property_format.is_lrd_alias_format
-    )
+    _validator_about_node_alias = predicate_validator("AboutNodeAlias", property_format.is_lrd_alias_format)
 
     @validator("ReadTimeUnixMsList")
     def _validator_read_time_unix_ms_list(cls, v: List) -> List:
         for elt in v:
             if not property_format.is_reasonable_unix_time_ms(elt):
-                raise ValueError(
-                    f"failure of predicate is_lrd_alias_format() on elt {elt} of ReadTimeUnixMsList"
-                )
+                raise ValueError(f"failure of predicate is_lrd_alias_format() on elt {elt} of ReadTimeUnixMsList")
         return v
 
     def asdict(self):
@@ -48,14 +42,12 @@ class GtShMultipurposeTelemetryStatus(BaseModel):
 class GtShMultipurposeTelemetryStatus_Maker:
     type_alias = "gt.sh.multipurpose.telemetry.status.100"
 
-    def __init__(
-        self,
-        about_node_alias: str,
-        telemetry_name: TelemetryName,
-        value_list: List[int],
-        read_time_unix_ms_list: List[int],
-        sensor_node_alias: str,
-    ):
+    def __init__(self,
+                    about_node_alias: str,
+                    telemetry_name: TelemetryName,
+                    value_list: List[int],
+                    read_time_unix_ms_list: List[int],
+                    sensor_node_alias: str):
 
         self.tuple = GtShMultipurposeTelemetryStatus(
             AboutNodeAlias=about_node_alias,
@@ -92,9 +84,7 @@ class GtShMultipurposeTelemetryStatus_Maker:
         if "TelemetryNameGtEnumSymbol" not in new_d.keys():
             raise TypeError(f"dict {new_d} missing TelemetryNameGtEnumSymbol")
         if new_d["TelemetryName"] in TelemetryNameMap.gt_to_local_dict.keys():
-            new_d["TelemetryName"] = TelemetryNameMap.gt_to_local(
-                new_d["TelemetryNameGtEnumSymbol"]
-            )
+            new_d["TelemetryName"] = TelemetryNameMap.gt_to_local(new_d["TelemetryNameGtEnumSymbol"])
         else:
             new_d["TelemetryName"] = TelemetryName.UNKNOWN
         if "ValueList" not in new_d.keys():

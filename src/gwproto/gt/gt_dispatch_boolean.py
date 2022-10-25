@@ -17,27 +17,17 @@ class GtDispatchBoolean(BaseModel):
     SendTimeUnixMs: int  #
     TypeAlias: Literal["gt.dispatch.boolean.100"] = "gt.dispatch.boolean.100"
 
-    _validator_about_node_alias = predicate_validator(
-        "AboutNodeAlias", property_format.is_lrd_alias_format
-    )
+    _validator_about_node_alias = predicate_validator("AboutNodeAlias", property_format.is_lrd_alias_format)
 
-    _validator_to_g_node_alias = predicate_validator(
-        "ToGNodeAlias", property_format.is_lrd_alias_format
-    )
+    _validator_to_g_node_alias = predicate_validator("ToGNodeAlias", property_format.is_lrd_alias_format)
 
-    _validator_from_g_node_alias = predicate_validator(
-        "FromGNodeAlias", property_format.is_lrd_alias_format
-    )
+    _validator_from_g_node_alias = predicate_validator("FromGNodeAlias", property_format.is_lrd_alias_format)
 
-    _validator_from_g_node_id = predicate_validator(
-        "FromGNodeId", property_format.is_uuid_canonical_textual
-    )
+    _validator_from_g_node_id = predicate_validator("FromGNodeId", property_format.is_uuid_canonical_textual)
 
     _validator_relay_state = predicate_validator("RelayState", property_format.is_bit)
 
-    _validator_send_time_unix_ms = predicate_validator(
-        "SendTimeUnixMs", property_format.is_reasonable_unix_time_ms
-    )
+    _validator_send_time_unix_ms = predicate_validator("SendTimeUnixMs", property_format.is_reasonable_unix_time_ms)
 
     def asdict(self):
         d = self.dict()
@@ -50,15 +40,13 @@ class GtDispatchBoolean(BaseModel):
 class GtDispatchBoolean_Maker:
     type_alias = "gt.dispatch.boolean.100"
 
-    def __init__(
-        self,
-        about_node_alias: str,
-        to_g_node_alias: str,
-        from_g_node_alias: str,
-        from_g_node_id: str,
-        relay_state: int,
-        send_time_unix_ms: int,
-    ):
+    def __init__(self,
+                    about_node_alias: str,
+                    to_g_node_alias: str,
+                    from_g_node_alias: str,
+                    from_g_node_id: str,
+                    relay_state: int,
+                    send_time_unix_ms: int):
 
         self.tuple = GtDispatchBoolean(
             AboutNodeAlias=about_node_alias,

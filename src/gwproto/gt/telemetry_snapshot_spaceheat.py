@@ -23,14 +23,10 @@ class TelemetrySnapshotSpaceheat(BaseModel):
     def _validator_about_node_alias_list(cls, v: List) -> List:
         for elt in v:
             if not property_format.is_lrd_alias_format(elt):
-                raise ValueError(
-                    f"failure of predicate is_lrd_alias_format() on elt {elt} of AboutNodeAliasList"
-                )
+                raise ValueError(f"failure of predicate is_lrd_alias_format() on elt {elt} of AboutNodeAliasList")
         return v
 
-    _validator_report_time_unix_ms = predicate_validator(
-        "ReportTimeUnixMs", property_format.is_reasonable_unix_time_ms
-    )
+    _validator_report_time_unix_ms = predicate_validator("ReportTimeUnixMs", property_format.is_reasonable_unix_time_ms)
 
     def asdict(self):
         d = self.dict()
@@ -48,13 +44,11 @@ class TelemetrySnapshotSpaceheat(BaseModel):
 class TelemetrySnapshotSpaceheat_Maker:
     type_alias = "telemetry.snapshot.spaceheat.100"
 
-    def __init__(
-        self,
-        about_node_alias_list: List[str],
-        value_list: List[int],
-        telemetry_name_list: List[TelemetryName],
-        report_time_unix_ms: int,
-    ):
+    def __init__(self,
+                    about_node_alias_list: List[str],
+                    value_list: List[int],
+                    telemetry_name_list: List[TelemetryName],
+                    report_time_unix_ms: int):
 
         self.tuple = TelemetrySnapshotSpaceheat(
             AboutNodeAliasList=about_node_alias_list,
@@ -96,7 +90,7 @@ class TelemetrySnapshotSpaceheat_Maker:
             if elt in TelemetryNameMap.gt_to_local_dict.keys():
                 v = TelemetryNameMap.gt_to_local(new_d["TelemetryNameListGtEnumSymbol"])
             else:
-                v = TelemetryName.UNKNOWN
+                v= TelemetryName.UNKNOWN
             telemetry_name_list.append(v)
         new_d["TelemetryNameList"] = telemetry_name_list
         if "ReportTimeUnixMs" not in new_d.keys():

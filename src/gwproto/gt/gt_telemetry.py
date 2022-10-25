@@ -17,9 +17,7 @@ class GtTelemetry(BaseModel):
     Exponent: int  #
     TypeAlias: Literal["gt.telemetry.110"] = "gt.telemetry.110"
 
-    _validator_scada_read_time_unix_ms = predicate_validator(
-        "ScadaReadTimeUnixMs", property_format.is_reasonable_unix_time_ms
-    )
+    _validator_scada_read_time_unix_ms = predicate_validator("ScadaReadTimeUnixMs", property_format.is_reasonable_unix_time_ms)
 
     def asdict(self):
         d = self.dict()
@@ -34,9 +32,11 @@ class GtTelemetry(BaseModel):
 class GtTelemetry_Maker:
     type_alias = "gt.telemetry.110"
 
-    def __init__(
-        self, scada_read_time_unix_ms: int, value: int, name: TelemetryName, exponent: int
-    ):
+    def __init__(self,
+                    scada_read_time_unix_ms: int,
+                    value: int,
+                    name: TelemetryName,
+                    exponent: int):
 
         self.tuple = GtTelemetry(
             ScadaReadTimeUnixMs=scada_read_time_unix_ms,

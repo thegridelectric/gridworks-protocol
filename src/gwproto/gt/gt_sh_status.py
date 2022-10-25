@@ -7,12 +7,18 @@ from pydantic import BaseModel
 from pydantic import validator
 
 import gwproto.property_format as property_format
-from gwproto.gt import GtShBooleanactuatorCmdStatus
-from gwproto.gt import GtShBooleanactuatorCmdStatus_Maker
-from gwproto.gt import GtShMultipurposeTelemetryStatus
-from gwproto.gt import GtShMultipurposeTelemetryStatus_Maker
-from gwproto.gt import GtShSimpleTelemetryStatus
-from gwproto.gt import GtShSimpleTelemetryStatus_Maker
+from gwproto.gt.gt_sh_booleanactuator_cmd_status import GtShBooleanactuatorCmdStatus
+from gwproto.gt.gt_sh_booleanactuator_cmd_status import (
+    GtShBooleanactuatorCmdStatus_Maker,
+)
+from gwproto.gt.gt_sh_multipurpose_telemetry_status import (
+    GtShMultipurposeTelemetryStatus,
+)
+from gwproto.gt.gt_sh_multipurpose_telemetry_status import (
+    GtShMultipurposeTelemetryStatus_Maker,
+)
+from gwproto.gt.gt_sh_simple_telemetry_status import GtShSimpleTelemetryStatus
+from gwproto.gt.gt_sh_simple_telemetry_status import GtShSimpleTelemetryStatus_Maker
 from gwproto.property_format import predicate_validator
 
 
@@ -28,49 +34,39 @@ class GtShStatus(BaseModel):
     ReportingPeriodS: int  #
     TypeAlias: Literal["gt.sh.status.110"] = "gt.sh.status.110"
 
-    _validator_slot_start_unix_s = predicate_validator(
-        "SlotStartUnixS", property_format.is_reasonable_unix_time_s
-    )
+    _validator_slot_start_unix_s = predicate_validator("SlotStartUnixS", property_format.is_reasonable_unix_time_s)
 
     @validator("SimpleTelemetryList")
     def _validator_simple_telemetry_list(cls, v: List) -> List:
         for elt in v:
             if not isinstance(elt, GtShSimpleTelemetryStatus):
                 raise ValueError(
-                    f"elt {elt} of SimpleTelemetryList must have type GtShSimpleTelemetryStatus."
-                )
+                        f"elt {elt} of SimpleTelemetryList must have type GtShSimpleTelemetryStatus."
+                    )
 
-    _validator_about_g_node_alias = predicate_validator(
-        "AboutGNodeAlias", property_format.is_lrd_alias_format
-    )
+    _validator_about_g_node_alias = predicate_validator("AboutGNodeAlias", property_format.is_lrd_alias_format)
 
     @validator("BooleanactuatorCmdList")
     def _validator_booleanactuator_cmd_list(cls, v: List) -> List:
         for elt in v:
             if not isinstance(elt, GtShBooleanactuatorCmdStatus):
                 raise ValueError(
-                    f"elt {elt} of BooleanactuatorCmdList must have type GtShBooleanactuatorCmdStatus."
-                )
+                        f"elt {elt} of BooleanactuatorCmdList must have type GtShBooleanactuatorCmdStatus."
+                    )
 
-    _validator_from_g_node_alias = predicate_validator(
-        "FromGNodeAlias", property_format.is_lrd_alias_format
-    )
+    _validator_from_g_node_alias = predicate_validator("FromGNodeAlias", property_format.is_lrd_alias_format)
 
     @validator("MultipurposeTelemetryList")
     def _validator_multipurpose_telemetry_list(cls, v: List) -> List:
         for elt in v:
             if not isinstance(elt, GtShMultipurposeTelemetryStatus):
                 raise ValueError(
-                    f"elt {elt} of MultipurposeTelemetryList must have type GtShMultipurposeTelemetryStatus."
-                )
+                        f"elt {elt} of MultipurposeTelemetryList must have type GtShMultipurposeTelemetryStatus."
+                    )
 
-    _validator_from_g_node_id = predicate_validator(
-        "FromGNodeId", property_format.is_uuid_canonical_textual
-    )
+    _validator_from_g_node_id = predicate_validator("FromGNodeId", property_format.is_uuid_canonical_textual)
 
-    _validator_status_uid = predicate_validator(
-        "StatusUid", property_format.is_uuid_canonical_textual
-    )
+    _validator_status_uid = predicate_validator("StatusUid", property_format.is_uuid_canonical_textual)
 
     def asdict(self):
         d = self.dict()
@@ -101,18 +97,16 @@ class GtShStatus(BaseModel):
 class GtShStatus_Maker:
     type_alias = "gt.sh.status.110"
 
-    def __init__(
-        self,
-        slot_start_unix_s: int,
-        simple_telemetry_list: List[GtShSimpleTelemetryStatus],
-        about_g_node_alias: str,
-        booleanactuator_cmd_list: List[GtShBooleanactuatorCmdStatus],
-        from_g_node_alias: str,
-        multipurpose_telemetry_list: List[GtShMultipurposeTelemetryStatus],
-        from_g_node_id: str,
-        status_uid: str,
-        reporting_period_s: int,
-    ):
+    def __init__(self,
+                    slot_start_unix_s: int,
+                    simple_telemetry_list: List[GtShSimpleTelemetryStatus],
+                    about_g_node_alias: str,
+                    booleanactuator_cmd_list: List[GtShBooleanactuatorCmdStatus],
+                    from_g_node_alias: str,
+                    multipurpose_telemetry_list: List[GtShMultipurposeTelemetryStatus],
+                    from_g_node_id: str,
+                    status_uid: str,
+                    reporting_period_s: int):
 
         self.tuple = GtShStatus(
             SlotStartUnixS=slot_start_unix_s,
@@ -159,7 +153,9 @@ class GtShStatus_Maker:
                     f"elt {elt} of SimpleTelemetryList must be "
                     "GtShSimpleTelemetryStatus but not even a dict!"
                 )
-            simple_telemetry_list.append(GtShSimpleTelemetryStatus_Maker.dict_to_tuple(elt))
+            simple_telemetry_list.append(
+                GtShSimpleTelemetryStatus_Maker.dict_to_tuple(elt)
+            )
         new_d["SimpleTelemetryList"] = simple_telemetry_list
         if "AboutGNodeAlias" not in new_d.keys():
             raise TypeError(f"dict {new_d} missing AboutGNodeAlias")
@@ -172,7 +168,9 @@ class GtShStatus_Maker:
                     f"elt {elt} of BooleanactuatorCmdList must be "
                     "GtShBooleanactuatorCmdStatus but not even a dict!"
                 )
-            booleanactuator_cmd_list.append(GtShBooleanactuatorCmdStatus_Maker.dict_to_tuple(elt))
+            booleanactuator_cmd_list.append(
+                GtShBooleanactuatorCmdStatus_Maker.dict_to_tuple(elt)
+            )
         new_d["BooleanactuatorCmdList"] = booleanactuator_cmd_list
         if "FromGNodeAlias" not in new_d.keys():
             raise TypeError(f"dict {new_d} missing FromGNodeAlias")

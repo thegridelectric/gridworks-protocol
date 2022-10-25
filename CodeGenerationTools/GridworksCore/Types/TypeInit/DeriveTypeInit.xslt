@@ -49,7 +49,7 @@ __all__ = [</xsl:text>
 </xsl:for-each>
 <xsl:text>
 ]
-    
+
 </xsl:text>
 
 

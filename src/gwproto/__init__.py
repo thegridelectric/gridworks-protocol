@@ -16,6 +16,8 @@ from gwproto.errors import MpSchemaError
 from gwproto.message import Header
 from gwproto.message import Message
 from gwproto.message import as_enum
+from gwproto.topic import DecodedMQTTTopic
+from gwproto.topic import MQTTTopic
 
 
 __all__ = [
@@ -25,6 +27,7 @@ __all__ = [
     "DecoderItem",
     "Decoders",
     "DecoderExtractor",
+    "DecodedMQTTTopic",
     "enums",
     "get_pydantic_literal_type_name",
     "gridworks_message_decoder",
@@ -33,6 +36,7 @@ __all__ = [
     "messages",
     "MessageDiscriminator",
     "MpSchemaError",
+    "MQTTTopic",
     "OneDecoderExtractor",
     "property_format",
     "pydantic_named_types",

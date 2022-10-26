@@ -21,7 +21,7 @@ from gwproto.message import Header
 from gwproto.message import Message
 
 
-DEFAULT_TYPE_NAME_FIELD = "type_name"
+DEFAULT_TYPE_NAME_FIELD = "TypeName"
 
 
 def get_pydantic_literal_type_name(
@@ -89,7 +89,7 @@ def create_message_payload_discriminator(
     return create_model(
         model_name,
         __base__=Message,  # type: ignore
-        payload=(
+        Payload=(
             Union[tuple(used_types)],
             Field(..., discriminator=type_name_field),
         ),
@@ -111,18 +111,18 @@ def gridworks_message_decoder(
             f"ERROR. decoded content has type {type(content)}; dict required"
         )
     message_dict = dict(content)
-    message_dict["header"] = Header.parse_obj(content.get("header", dict()))
+    message_dict["Header"] = Header.parse_obj(content.get("Header", dict()))
     message: Message[Any]
-    if message_dict["header"].message_type in decoders:
-        message_dict["payload"] = decoders.decode(
-            message_dict["header"].message_type,
-            message_dict.get("payload", dict()),
+    if message_dict["Header"].MessageType in decoders:
+        message_dict["Payload"] = decoders.decode(
+            message_dict["Header"].MessageType,
+            message_dict.get("Payload", dict()),
         )
         message = Message(**message_dict)
     else:
         if message_payload_discriminator is None:
             raise ValueError(
-                f"ERROR. No decoder present for payload type {message_dict['header'].message_type}"
+                f"ERROR. No decoder present for payload type {message_dict['Header'].MessageType}"
             )
         else:
             message = message_payload_discriminator.parse_obj(content)

@@ -14,7 +14,7 @@ def test_property_format():
     assert not gwproto.property_format.is_64_bit_hex("12345abcd")
     assert not gwproto.property_format.is_64_bit_hex("1234567g")
 
-    assert not gwproto.property_format.is_lrd_alias_format(5)
+    assert not gwproto.property_format.is_lrd_alias_format(5)  # type: ignore
     assert not gwproto.property_format.is_lrd_alias_format("5.a-h")
     assert gwproto.property_format.is_lrd_alias_format("a.s")
 
@@ -52,7 +52,7 @@ def test_property_format():
 
     s = "d4be12d5-33ba-4f1f-b9e5-2582fe41241d"
     assert gwproto.property_format.is_uuid_canonical_textual(s)
-    assert not gwproto.property_format.is_uuid_canonical_textual(uuid.uuid4())
+    assert not gwproto.property_format.is_uuid_canonical_textual(uuid.uuid4())  # type: ignore
     fail1 = "d4be12d5-33ba-4f1f-b9e5"
     assert not gwproto.property_format.is_uuid_canonical_textual(fail1)
     fail2 = "d4be12d-33ba-4f1f-b9e5-2582fe41241d"

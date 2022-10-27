@@ -4,7 +4,6 @@ import json
 import pytest
 
 from gwproto.errors import MpSchemaError
-from gwproto.messages import TelemetrySnapshotSpaceheat_Maker as Maker
 
 
 def test_telemetry_snapshot_spaceheat():

@@ -4,7 +4,6 @@ import json
 import pytest
 
 from gwproto.errors import MpSchemaError
-from gwproto.messages import GtShSimpleTelemetryStatus_Maker as Maker
 
 
 def test_gt_sh_simple_telemetry_status():

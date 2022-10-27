@@ -4,7 +4,6 @@ import json
 import pytest
 
 from gwproto.errors import MpSchemaError
-from gwproto.messages import GtDispatchBooleanLocal_Maker as Maker
 
 
 def test_gt_dispatch_boolean_local():

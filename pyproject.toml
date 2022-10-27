@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gridworks-protocol"
-version = "0.1.0"
+version = "0.1.1"
 description = "Gridworks Protocol"
 authors = ["Jessica Millar <jmillar@gridworks-consulting.com>"]
 license = "MIT"
@@ -55,6 +55,7 @@ gridworks-protocol = "gwproto.__main__:main"
 
 [tool.poetry.group.dev.dependencies]
 types-pytz = "^2022.4.0.0"
+rich = "^12.6.0"
 
 [tool.coverage.paths]
 source = ["src", "*/site-packages"]

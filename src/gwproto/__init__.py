@@ -6,15 +6,13 @@ from gwproto.decoders import Decoder
 from gwproto.decoders import DecoderItem
 from gwproto.decoders import Decoders
 from gwproto.decoders import MakerDecoder
+from gwproto.decoders import MakerExtractor
+from gwproto.decoders import MessageDiscriminator
+from gwproto.decoders import OneDecoderExtractor
 from gwproto.decoders import PydanticDecoder
-from gwproto.decoders_factory import DecoderExtractor
-from gwproto.decoders_factory import MakerExtractor
-from gwproto.decoders_factory import MessageDiscriminator
-from gwproto.decoders_factory import OneDecoderExtractor
-from gwproto.decoders_factory import create_message_payload_discriminator
-from gwproto.decoders_factory import get_pydantic_literal_type_name
-from gwproto.decoders_factory import gridworks_message_decoder
-from gwproto.decoders_factory import pydantic_named_types
+from gwproto.decoders import create_message_payload_discriminator
+from gwproto.decoders import get_pydantic_literal_type_name
+from gwproto.decoders import pydantic_named_types
 from gwproto.errors import MpSchemaError
 from gwproto.message import Header
 from gwproto.message import Message
@@ -28,13 +26,11 @@ __all__ = [
     "CallableDecoder",
     "create_message_payload_discriminator",
     "Decoder",
-    "DecoderExtractor",
     "DecoderItem",
     "DecodedMQTTTopic",
     "Decoders",
     "enums",
     "get_pydantic_literal_type_name",
-    "gridworks_message_decoder",
     "Header",
     "MakerDecoder",
     "MakerExtractor",

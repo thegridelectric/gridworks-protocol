@@ -21,6 +21,7 @@ from pydantic import create_model
 
 from gwproto.message import Header
 from gwproto.message import Message
+from gwproto.topic import MQTTTopic
 
 
 class Decoder(abc.ABC):
@@ -187,24 +188,58 @@ class Decoders:
     @classmethod
     def from_objects(
         cls,
-        objs: list[Any],
+        objs: Optional[list[Any]] = None,
         message_payload_discriminator: Optional[Type[MessageDiscriminator]] = None,
         extractors: Optional[Sequence[OneDecoderExtractor]] = None,
     ) -> "Decoders":
-        if extractors is None:
-            extractors = [OneDecoderExtractor(), MakerExtractor()]
         items = dict()
-        for obj in objs:
-            for extractor in extractors:
-                item = extractor.extract(obj)
-                if item is not None:
-                    items[item.type_name] = item.decoder
-                    break
+        if objs is not None:
+            if extractors is None:
+                extractors = [OneDecoderExtractor(), MakerExtractor()]
+            for obj in objs:
+                for extractor in extractors:
+                    item = extractor.extract(obj)
+                    if item is not None:
+                        items[item.type_name] = item.decoder
+                        break
         d = Decoders(items)
         d.add_decoder(
             Message.get_type_name(), MessageDecoder(d, message_payload_discriminator)
         )
         return d
+
+
+class MQTTCodec(abc.ABC):
+    ENCODING = "utf-8"
+    decoders: Decoders
+
+    def __init__(self, decoders: Decoders):
+        self.decoders = Decoders().merge(decoders)
+        super().__init__()
+
+    def encode(self, content: Any) -> bytes:
+        if isinstance(content, bytes):
+            encoded = content
+        else:
+            encoded = content.json()
+            if not isinstance(encoded, bytes):
+                encoded = encoded.encode(self.ENCODING)
+        return encoded
+
+    def decode(self, topic: str, payload: bytes) -> Any:
+        decoded_topic = MQTTTopic.decode(topic)
+        if decoded_topic.envelope_type not in self.decoders:
+            raise Exception(
+                f"Type {decoded_topic.envelope_type} not recognized. Available decoders: {self.decoders.types()}"
+            )
+        self.validate_source_alias(decoded_topic.src)
+        return self.decoders.decode_str(
+            decoded_topic.envelope_type, payload, encoding=self.ENCODING
+        )
+
+    @abstractmethod
+    def validate_source_alias(self, source_alias: str):
+        ...
 
 
 def get_pydantic_literal_type_name(

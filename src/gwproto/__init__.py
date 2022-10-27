@@ -8,6 +8,7 @@ from gwproto.decoders import Decoders
 from gwproto.decoders import MakerDecoder
 from gwproto.decoders import MakerExtractor
 from gwproto.decoders import MessageDiscriminator
+from gwproto.decoders import MQTTCodec
 from gwproto.decoders import OneDecoderExtractor
 from gwproto.decoders import PydanticDecoder
 from gwproto.decoders import create_message_payload_discriminator
@@ -38,6 +39,7 @@ __all__ = [
     "messages",
     "MessageDiscriminator",
     "MpSchemaError",
+    "MQTTCodec",
     "MQTTTopic",
     "OneDecoderExtractor",
     "property_format",

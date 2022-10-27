@@ -26,7 +26,6 @@ EventT = TypeVar("EventT", bound=EventBase)
 
 
 class StartupEvent(EventBase):
-    CleanShutdown: bool
     TypeName: Literal["gridworks.event.startup"] = "gridworks.event.startup"
 
 
@@ -59,6 +58,12 @@ class MQTTCommEvent(CommEvent):
     ...
 
 
+class MQTTConnectEvent(MQTTCommEvent):
+    TypeName: Literal[
+        "gridworks.event.comm.mqtt.connect"
+    ] = "gridworks.event.comm.mqtt.connect"
+
+
 class MQTTConnectFailedEvent(MQTTCommEvent):
     TypeName: Literal[
         "gridworks.event.comm.mqtt.connect_failed"
@@ -78,4 +83,7 @@ class MQTTFullySubscribedEvent(CommEvent):
 
 
 class EventMessage(Message[EventT], Generic[EventT]):
-    ...
+    def __init__(self, **data: Any):
+        if "AckRequired" not in data:
+            data["AckRequired"] = True
+        super().__init__(**data)

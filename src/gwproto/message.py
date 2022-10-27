@@ -30,6 +30,7 @@ class Header(BaseModel):
     Dst: str = ""
     MessageType: str
     MessageId: str = ""
+    AckRequired: bool = False
     TypeName: str = Field("gridworks.header", const=True)
 
 
@@ -71,6 +72,7 @@ class Message(GenericModel, Generic[PayloadT]):
             ("Dst", ["Dst"]),
             ("MessageId", ["MessageId"]),
             ("MessageType", PAYLOAD_TYPE_FIELDS),
+            ("AckRequired", []),
         ]:
             val = kwargs.get(header_field, None)
             if val is None:

@@ -1,2 +1,2 @@
-class MpSchemaError(ValueError):
-    """Base class for Message Protocol Schema errors"""
+class SchemaError(ValueError):
+    """Base class for gt Schema errors"""

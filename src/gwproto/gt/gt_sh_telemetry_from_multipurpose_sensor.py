@@ -10,6 +10,7 @@ from pydantic import validator
 import gwproto.property_format as property_format
 from gwproto.enums import TelemetryName
 from gwproto.enums import TelemetryNameMap
+from gwproto.errors import SchemaError
 from gwproto.message import as_enum
 from gwproto.property_format import predicate_validator
 
@@ -50,3 +51,60 @@ class GtShTelemetryFromMultipurposeSensor(BaseModel):
 
     def as_type(self):
         return json.dumps(self.asdict())
+
+
+class GtShTelemetryFromMultipurposeSensor_Maker:
+    type_alias = "gt.sh.telemetry.from.multipurpose.sensor"
+
+    def __init__(self,
+                    about_node_alias_list: List[str],
+                    value_list: List[int],
+                    scada_read_time_unix_ms: int,
+                    telemetry_name_list: List[TelemetryName]):
+
+        self.tuple = GtShTelemetryFromMultipurposeSensor(
+            AboutNodeAliasList=about_node_alias_list,
+            ValueList=value_list,
+            ScadaReadTimeUnixMs=scada_read_time_unix_ms,
+            TelemetryNameList=telemetry_name_list,
+            #
+        )
+
+    @classmethod
+    def tuple_to_type(cls, tuple: GtShTelemetryFromMultipurposeSensor) -> str:
+        return tuple.as_type()
+
+    @classmethod
+    def type_to_tuple(cls, t: str) -> GtShTelemetryFromMultipurposeSensor:
+        try:
+            d = json.loads(t)
+        except TypeError:
+            raise SchemaError("Type must be string or bytes!")
+        if not isinstance(d, dict):
+            raise SchemaError(f"Deserializing {t} must result in dict!")
+        return cls.dict_to_tuple(d)
+
+    @classmethod
+    def dict_to_tuple(cls, d: dict) -> GtShTelemetryFromMultipurposeSensor:
+        d2 = dict(d)
+        if "TypeAlias" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing TypeAlias")
+        if "TelemetryNameList" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing TelemetryNameList")
+        telemetry_name_list = []
+        for elt in d2["TelemetryNameList"]:
+            if elt in TelemetryNameMap.gt_to_local_dict.keys():
+                v = TelemetryNameMap.gt_to_local(elt)
+            else:
+                v= TelemetryName.UNKNOWN
+            telemetry_name_list.append(v)
+        d2["TelemetryNameList"] = telemetry_name_list
+
+        return GtShTelemetryFromMultipurposeSensor(
+            TypeAlias=d2["TypeAlias"],
+            AboutNodeAliasList=d2["AboutNodeAliasList"],
+            ValueList=d2["ValueList"],
+            ScadaReadTimeUnixMs=d2["ScadaReadTimeUnixMs"],
+            TelemetryNameList=d2["TelemetryNameList"],
+            #
+        )

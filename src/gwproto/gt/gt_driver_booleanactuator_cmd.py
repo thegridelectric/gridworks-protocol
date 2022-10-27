@@ -5,6 +5,7 @@ from typing import Literal
 from pydantic import BaseModel
 
 import gwproto.property_format as property_format
+from gwproto.errors import SchemaError
 from gwproto.property_format import predicate_validator
 
 
@@ -26,3 +27,47 @@ class GtDriverBooleanactuatorCmd(BaseModel):
 
     def as_type(self):
         return json.dumps(self.asdict())
+
+
+class GtDriverBooleanactuatorCmd_Maker:
+    type_alias = "gt.driver.booleanactuator.cmd"
+
+    def __init__(self,
+                    relay_state: int,
+                    sh_node_alias: str,
+                    command_time_unix_ms: int):
+
+        self.tuple = GtDriverBooleanactuatorCmd(
+            RelayState=relay_state,
+            ShNodeAlias=sh_node_alias,
+            CommandTimeUnixMs=command_time_unix_ms,
+            #
+        )
+
+    @classmethod
+    def tuple_to_type(cls, tuple: GtDriverBooleanactuatorCmd) -> str:
+        return tuple.as_type()
+
+    @classmethod
+    def type_to_tuple(cls, t: str) -> GtDriverBooleanactuatorCmd:
+        try:
+            d = json.loads(t)
+        except TypeError:
+            raise SchemaError("Type must be string or bytes!")
+        if not isinstance(d, dict):
+            raise SchemaError(f"Deserializing {t} must result in dict!")
+        return cls.dict_to_tuple(d)
+
+    @classmethod
+    def dict_to_tuple(cls, d: dict) -> GtDriverBooleanactuatorCmd:
+        d2 = dict(d)
+        if "TypeAlias" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing TypeAlias")
+
+        return GtDriverBooleanactuatorCmd(
+            TypeAlias=d2["TypeAlias"],
+            RelayState=d2["RelayState"],
+            ShNodeAlias=d2["ShNodeAlias"],
+            CommandTimeUnixMs=d2["CommandTimeUnixMs"],
+            #
+        )

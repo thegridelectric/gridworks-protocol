@@ -7,6 +7,7 @@ from pydantic import BaseModel
 from pydantic import validator
 
 import gwproto.property_format as property_format
+from gwproto.errors import SchemaError
 from gwproto.property_format import predicate_validator
 
 
@@ -38,3 +39,47 @@ class GtShBooleanactuatorCmdStatus(BaseModel):
 
     def as_type(self):
         return json.dumps(self.asdict())
+
+
+class GtShBooleanactuatorCmdStatus_Maker:
+    type_alias = "gt.sh.booleanactuator.cmd.status"
+
+    def __init__(self,
+                    sh_node_alias: str,
+                    relay_state_command_list: List[int],
+                    command_time_unix_ms_list: List[int]):
+
+        self.tuple = GtShBooleanactuatorCmdStatus(
+            ShNodeAlias=sh_node_alias,
+            RelayStateCommandList=relay_state_command_list,
+            CommandTimeUnixMsList=command_time_unix_ms_list,
+            #
+        )
+
+    @classmethod
+    def tuple_to_type(cls, tuple: GtShBooleanactuatorCmdStatus) -> str:
+        return tuple.as_type()
+
+    @classmethod
+    def type_to_tuple(cls, t: str) -> GtShBooleanactuatorCmdStatus:
+        try:
+            d = json.loads(t)
+        except TypeError:
+            raise SchemaError("Type must be string or bytes!")
+        if not isinstance(d, dict):
+            raise SchemaError(f"Deserializing {t} must result in dict!")
+        return cls.dict_to_tuple(d)
+
+    @classmethod
+    def dict_to_tuple(cls, d: dict) -> GtShBooleanactuatorCmdStatus:
+        d2 = dict(d)
+        if "TypeAlias" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing TypeAlias")
+
+        return GtShBooleanactuatorCmdStatus(
+            TypeAlias=d2["TypeAlias"],
+            ShNodeAlias=d2["ShNodeAlias"],
+            RelayStateCommandList=d2["RelayStateCommandList"],
+            CommandTimeUnixMsList=d2["CommandTimeUnixMsList"],
+            #
+        )

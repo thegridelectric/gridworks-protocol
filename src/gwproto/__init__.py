@@ -12,7 +12,7 @@ from gwproto.decoders_factory import create_message_payload_discriminator
 from gwproto.decoders_factory import get_pydantic_literal_type_name
 from gwproto.decoders_factory import gridworks_message_decoder
 from gwproto.decoders_factory import pydantic_named_types
-from gwproto.errors import MpSchemaError
+from gwproto.errors import SchemaError
 from gwproto.message import Header
 from gwproto.message import Message
 from gwproto.message import as_enum
@@ -35,7 +35,7 @@ __all__ = [
     "Message",
     "messages",
     "MessageDiscriminator",
-    "MpSchemaError",
+    "SchemaError",
     "MQTTTopic",
     "OneDecoderExtractor",
     "property_format",

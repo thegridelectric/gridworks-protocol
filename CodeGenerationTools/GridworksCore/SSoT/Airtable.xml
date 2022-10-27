@@ -76,6 +76,7 @@
       <UsedAsSubMessagein>ElectricalQuantityReportingConfigList</UsedAsSubMessagein>
       <CurrentSemanticEnd>100</CurrentSemanticEnd>
       <SchemaRootscopy>recDEr7ob2KLqM4gU</SchemaRootscopy>
+      <ProtocolTypes>recfoYDMZWworrvz0</ProtocolTypes>
       <Alias>gt.eq.reporting.config</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
     </SchemaRoot>
@@ -90,6 +91,7 @@
       <DataClass>ResistiveHeaterComponent</DataClass>
       <IsComponent>true</IsComponent>
       <SchemaRootscopy>recDjO3rdq76LMOoL</SchemaRootscopy>
+      <ProtocolTypes>recuBTnuqfY7oFpMX</ProtocolTypes>
       <Alias>resistive.heater.component.gt</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
     </SchemaRoot>
@@ -130,6 +132,7 @@
       <DataClass>PipeFlowSensorComponent</DataClass>
       <IsComponent>true</IsComponent>
       <SchemaRootscopy>recGuvhjDYO65d5rP</SchemaRootscopy>
+      <ProtocolTypes>recSCV9lCLutdZ4Rp</ProtocolTypes>
       <Alias>gt.pipe.flow.sensor.component</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
     </SchemaRoot>
@@ -143,6 +146,8 @@
       <CurrentSemanticEnd>100</CurrentSemanticEnd>
       <SchemaRootscopy>recdNEAMkZeOLS8Vo</SchemaRootscopy>
       <InGwProto>true</InGwProto>
+      <ProtocolTypes>recqsyZumKc34aYKw</ProtocolTypes>
+      <ProtocolTypes>recMsIGCOA1xrovMa</ProtocolTypes>
       <Alias>telemetry.snapshot.spaceheat</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
     </SchemaRoot>
@@ -171,6 +176,8 @@
       <CurrentSemanticEnd>100</CurrentSemanticEnd>
       <SchemaRootscopy>receGKnJ8CfemQLdQ</SchemaRootscopy>
       <InGwProto>true</InGwProto>
+      <ProtocolTypes>recoK8EOQVETFbsV8</ProtocolTypes>
+      <ProtocolTypes>recflyRbodmOzpp9A</ProtocolTypes>
       <Alias>gt.sh.multipurpose.telemetry.status</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
     </SchemaRoot>
@@ -249,6 +256,7 @@
       <DataClass>TempSensorComponent</DataClass>
       <IsComponent>true</IsComponent>
       <SchemaRootscopy>recjrd0YFmqQQm5sv</SchemaRootscopy>
+      <ProtocolTypes>reckw8y3hzOUX3jr0</ProtocolTypes>
       <Alias>gt.temp.sensor.component</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
     </SchemaRoot>
@@ -293,6 +301,7 @@
       <DataClass>PipeFlowSensorCac</DataClass>
       <IsCac>true</IsCac>
       <SchemaRootscopy>recmVKHF3ugtUOYrz</SchemaRootscopy>
+      <ProtocolTypes>recNv1PxrVeOdh2sW</ProtocolTypes>
       <Alias>gt.pipe.flow.sensor.cac</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
     </SchemaRoot>
@@ -318,6 +327,8 @@
       <CurrentSemanticEnd>100</CurrentSemanticEnd>
       <SchemaRootscopy>recpHvfV5mSI7pgRP</SchemaRootscopy>
       <InGwProto>true</InGwProto>
+      <ProtocolTypes>recJMXzJRbd8YnSqe</ProtocolTypes>
+      <ProtocolTypes>recWNnxg9gs8t0S4j</ProtocolTypes>
       <Alias>gt.sh.booleanactuator.cmd.status</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
     </SchemaRoot>
@@ -358,6 +369,8 @@
       <ActorMessages>recWWAN9rudjlUYst</ActorMessages>
       <SchemaRootscopy>recrnRklRws6Txbqr</SchemaRootscopy>
       <InGwProto>true</InGwProto>
+      <ProtocolTypes>receQDLMQ99uuDXJA</ProtocolTypes>
+      <ProtocolTypes>recsrfAtjpjCA9KcP</ProtocolTypes>
       <Alias>snapshot.spaceheat</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
     </SchemaRoot>
@@ -374,6 +387,7 @@
       <IsComponent>true</IsComponent>
       <ReplaceWithSchema>rec1joYefgk9OQTyG</ReplaceWithSchema>
       <SchemaRootscopy>recv6t6fQhy9hHCPe</SchemaRootscopy>
+      <ProtocolTypes>recI8e3XyPL9wMCZ1</ProtocolTypes>
       <Alias>gt.electric.heater.component</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
       <ReplaceWithTypeAliasRoot>resistive.heater.component.gt</ReplaceWithTypeAliasRoot>
@@ -387,6 +401,7 @@
       <CurrentSemanticEnd>100</CurrentSemanticEnd>
       <SchemaAxioms>gt.powermeter.reporting.config.100__</SchemaAxioms>
       <SchemaRootscopy>recwr8WwMjrVGNL7L</SchemaRootscopy>
+      <ProtocolTypes>recz6K624L06TsCMw</ProtocolTypes>
       <Alias>gt.powermeter.reporting.config</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
     </SchemaRoot>
@@ -466,6 +481,8 @@
       <SchemaRootscopy>recNe1NhrgRzyRlSA</SchemaRootscopy>
       <SchemaRootscopy>recNbXbJE9rcnLXAs</SchemaRootscopy>
       <InGwProto>true</InGwProto>
+      <ProtocolTypes>reckt1IcZuS9Y0V5d</ProtocolTypes>
+      <ProtocolTypes>rec26AcQiLVNe8zWY</ProtocolTypes>
       <Alias>gt.sh.status</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
     </SchemaRoot>
@@ -495,6 +512,7 @@
       <DataClass>ElectricMeterCac</DataClass>
       <IsCac>true</IsCac>
       <ReplaceWithSchema>recIjNSTFZEY0rZ5x</ReplaceWithSchema>
+      <ProtocolTypes>rec5HzQPU0O7SnJDF</ProtocolTypes>
       <Alias>gt.electric.meter.cac</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
       <ReplaceWithTypeAliasRoot>electric.meter.cac.gt</ReplaceWithTypeAliasRoot>
@@ -536,9 +554,10 @@
       <ProtocolType>Json</ProtocolType>
       <CurrentSemanticEnd>100</CurrentSemanticEnd>
       <SchemaRootscopy>recPmpuzBMWnnZRpa</SchemaRootscopy>
+      <InGwProto>true</InGwProto>
+      <ProtocolTypes>recMpBw1m6iU3Lzea</ProtocolTypes>
       <Alias>gt.driver.booleanactuator.cmd</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
-      <InGwProto>true</InGwProto>
     </SchemaRoot>
     <SchemaRoot>
       <SchemaRootId>rece1suo3h3SqfW4M</SchemaRootId>
@@ -549,6 +568,7 @@
       <CurrentSemanticEnd>100</CurrentSemanticEnd>
       <DataClass>SensorReportingConfig</DataClass>
       <SchemaRootscopy>recQ1SzB1rQPnbRUR</SchemaRootscopy>
+      <ProtocolTypes>recLpG1TktARpf8JX</ProtocolTypes>
       <Alias>gt.sensor.reporting.config</Alias>
       <ConsistencyCheck>0</ConsistencyCheck>
     </SchemaRoot>
@@ -563,6 +583,8 @@
       <SchemaRootscopy>recm2rM5o9GxgCqbL</SchemaRootscopy>
       <SchemaRootscopy>recQVDSRdSrYEHimS</SchemaRootscopy>
       <InGwProto>true</InGwProto>
+      <ProtocolTypes>recagwkXy3XPYrb5G</ProtocolTypes>
+      <ProtocolTypes>recjAnULSnFv5QZ4e</ProtocolTypes>
       <Alias>gt.sh.cli.atn.cmd</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
     </SchemaRoot>
@@ -603,6 +625,8 @@
       <SchemaRootscopy>recTZ13dEbwrKazkL</SchemaRootscopy>
       <Description>Boolean dispatch command sent over the cloud broker from one GNode (FromGNodeAlias/ FromGNodeId) to another (ToGNodeAlias). AboutNodeAlias is the node getting dispatched. It may be a GNode, but it can also be a SpaceHeatNode.</Description>
       <InGwProto>true</InGwProto>
+      <ProtocolTypes>recFHUT6Tq1gdscHE</ProtocolTypes>
+      <ProtocolTypes>recL7fDBGO65Kv8gY</ProtocolTypes>
       <Alias>gt.dispatch.boolean</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
     </SchemaRoot>
@@ -647,6 +671,7 @@
       <IsCac>true</IsCac>
       <ReplaceWithSchema>recqmA1Cu9GIg4hpp</ReplaceWithSchema>
       <SchemaRootscopy>recVwZYbc3U4zm2D4</SchemaRootscopy>
+      <ProtocolTypes>rec1ybIEvcrkA22Sg</ProtocolTypes>
       <Alias>gt.electric.heater.cac</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
       <ReplaceWithTypeAliasRoot>resistive.heater.cac.gt</ReplaceWithTypeAliasRoot>
@@ -699,9 +724,10 @@
       <ProtocolType>Json</ProtocolType>
       <CurrentSemanticEnd>100</CurrentSemanticEnd>
       <SchemaRootscopy>rec0ASFtYgDm4fTf8</SchemaRootscopy>
+      <InGwProto>true</InGwProto>
+      <ProtocolTypes>recOAFtXzKorE5j3Y</ProtocolTypes>
       <Alias>gt.dispatch.boolean.local</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
-      <InGwProto>true</InGwProto>
     </SchemaRoot>
     <SchemaRoot>
       <SchemaRootId>recpr0byizj3PmqXi</SchemaRootId>
@@ -716,6 +742,7 @@
       <SchemaRootscopy>reccMc9ZKijwpXVkd</SchemaRootscopy>
       <SchemaRootscopy>recKCOYYEIkxUd1JI</SchemaRootscopy>
       <SchemaRootscopy>rec1rqgLgJ60MilNn</SchemaRootscopy>
+      <ProtocolTypes>recrpWVWrtkysvfUK</ProtocolTypes>
       <Alias>gt.sh.node</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
       <ReplaceWithTypeAliasRoot>spaceheat.node.gt</ReplaceWithTypeAliasRoot>
@@ -731,6 +758,7 @@
       <DataClass>ResistiveHeaterCac</DataClass>
       <IsCac>true</IsCac>
       <SchemaRootscopy>rec2m06PsjtFd0cfu</SchemaRootscopy>
+      <ProtocolTypes>recTx1CrKF86p575e</ProtocolTypes>
       <Alias>resistive.heater.cac.gt</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
     </SchemaRoot>
@@ -746,6 +774,7 @@
       <DataClass>TempSensorCac</DataClass>
       <IsCac>true</IsCac>
       <SchemaRootscopy>rec3Noy3m1X4Vdly9</SchemaRootscopy>
+      <ProtocolTypes>recu5PBovaUSqz3zQ</ProtocolTypes>
       <Alias>gt.temp.sensor.cac</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
     </SchemaRoot>
@@ -761,6 +790,7 @@
       <DataClass>ElectricMeterComponent</DataClass>
       <IsComponent>true</IsComponent>
       <SchemaRootscopy>rec4MOmfHutZVLMYz</SchemaRootscopy>
+      <ProtocolTypes>recLMIlUyptmp1NOE</ProtocolTypes>
       <Alias>gt.electric.meter.component</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
     </SchemaRoot>
@@ -822,6 +852,8 @@
       <CurrentSemanticEnd>100</CurrentSemanticEnd>
       <SchemaRootscopy>rec8c4KjhwNmfrRYP</SchemaRootscopy>
       <InGwProto>true</InGwProto>
+      <ProtocolTypes>rece56XyibIOkMBN8</ProtocolTypes>
+      <ProtocolTypes>recN437wDjSIkN3Fs</ProtocolTypes>
       <Alias>gt.sh.simple.telemetry.status</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
     </SchemaRoot>
@@ -833,9 +865,10 @@
       <ProtocolType>Json</ProtocolType>
       <CurrentSemanticEnd>100</CurrentSemanticEnd>
       <SchemaRootscopy>rec93KBYcwiqJ6OQy</SchemaRootscopy>
+      <InGwProto>true</InGwProto>
+      <ProtocolTypes>reclUxEFFpjztqXZb</ProtocolTypes>
       <Alias>gt.sh.telemetry.from.multipurpose.sensor</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
-      <InGwProto>true</InGwProto>
     </SchemaRoot>
     <SchemaRoot>
       <SchemaRootId>recx4EL5mDebUhtzp</SchemaRootId>
@@ -846,9 +879,10 @@
       <CurrentSemanticEnd>110</CurrentSemanticEnd>
       <SchemaRootscopy>rec2V7vc3NDSaRb1D</SchemaRootscopy>
       <SchemaRootscopy>rec944QikN18Rdopu</SchemaRootscopy>
+      <InGwProto>true</InGwProto>
+      <ProtocolTypes>rec3RZiMEi47auK5y</ProtocolTypes>
       <Alias>gt.telemetry</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
-      <InGwProto>true</InGwProto>
     </SchemaRoot>
     <SchemaRoot>
       <SchemaRootId>recxnrRBEZg5cPVPt</SchemaRootId>
@@ -933,6 +967,7 @@
       <FiniteStringSetMembers>recFoYhRoxxQ5pAPB</FiniteStringSetMembers>
       <FiniteStringSetMembers>rec4UxxZLx0pcrNYV</FiniteStringSetMembers>
       <FiniteStringSetMembers>recvW004kIKJFfD0A</FiniteStringSetMembers>
+      <FiniteStringSetMembers>recZR3u3WuSGv96su</FiniteStringSetMembers>
       <SchemaAttributes>recfMyBibCC1lqTy1</SchemaAttributes>
       <SchemaAttributes>recAy1MJ6WTkJC2Bt</SchemaAttributes>
       <SchemaAttributes>recFfaru1gmnzHcg3</SchemaAttributes>
@@ -949,7 +984,10 @@
       <PythonEnumNameStyle>UpperPython</PythonEnumNameStyle>
       <Status>Deprecated</Status>
       <SchemaRootscopy>rec2V7vc3NDSaRb1D</SchemaRootscopy>
+      <Default>recZR3u3WuSGv96su</Default>
       <Alias>spaceheat.telemetry.name.100</Alias>
+      <DefaultSymbol>00000000</DefaultSymbol>
+      <DefaultEnumValue>Unknown</DefaultEnumValue>
     </GtEnum>
     <GtEnum>
       <GtEnumId>rec5HXPeyp3jic6FV</GtEnumId>
@@ -1160,12 +1198,16 @@
       <FiniteStringSetMembers>recZmH3dJcvoiEUVW</FiniteStringSetMembers>
       <FiniteStringSetMembers>recOVz3BfaUEoVjbv</FiniteStringSetMembers>
       <FiniteStringSetMembers>recPV5eCtZVeT7zmX</FiniteStringSetMembers>
+      <FiniteStringSetMembers>recSX3WlRp7TuWGiy</FiniteStringSetMembers>
       <AliasRoot>spaceheat.telemetry.name</AliasRoot>
       <SemanticEnd>110</SemanticEnd>
       <LocalName>telemetry.name</LocalName>
       <PythonEnumNameStyle>UpperPython</PythonEnumNameStyle>
       <Status>Active</Status>
+      <Default>recSX3WlRp7TuWGiy</Default>
       <Alias>spaceheat.telemetry.name.110</Alias>
+      <DefaultSymbol>00000000</DefaultSymbol>
+      <DefaultEnumValue>Unknown</DefaultEnumValue>
     </GtEnum>
     <GtEnum>
       <GtEnumId>recc1W1unmzowrKX9</GtEnumId>
@@ -1361,7 +1403,8 @@
       <createdTime>2022-07-20T18:46:05Z</createdTime>
       <LocalValue>CurrentRmsMicroAmps</LocalValue>
       <Enum>recUJtDNaSJdt9wie</Enum>
-      <Symbol>88d66538</Symbol>
+      <Symbol>ad19e79c</Symbol>
+      <Index>6</Index>
       <DisplayName>spaceheat.telemetry.name.110__CurrentRmsMicroAmps</DisplayName>
     </EnumSymbol>
     <EnumSymbol>
@@ -1378,6 +1421,7 @@
       <LocalValue>PowerW</LocalValue>
       <Enum>rec2HyLffy6QK9QId</Enum>
       <Symbol>af39eec9</Symbol>
+      <Index>1</Index>
       <DisplayName>spaceheat.telemetry.name.100__PowerW</DisplayName>
     </EnumSymbol>
     <EnumSymbol>
@@ -1385,7 +1429,8 @@
       <createdTime>2022-07-20T18:45:47Z</createdTime>
       <LocalValue>WaterFlowGpmTimes100</LocalValue>
       <Enum>recUJtDNaSJdt9wie</Enum>
-      <Symbol>ed15568a</Symbol>
+      <Symbol>d70cce28</Symbol>
+      <Index>5</Index>
       <DisplayName>spaceheat.telemetry.name.110__WaterFlowGpmTimes100</DisplayName>
     </EnumSymbol>
     <EnumSymbol>
@@ -1444,7 +1489,8 @@
       <createdTime>2022-07-20T18:45:55Z</createdTime>
       <LocalValue>WaterTempCTimes1000</LocalValue>
       <Enum>recUJtDNaSJdt9wie</Enum>
-      <Symbol>00ef2d85</Symbol>
+      <Symbol>c89d0ba1</Symbol>
+      <Index>3</Index>
       <DisplayName>spaceheat.telemetry.name.110__WaterTempCTimes1000</DisplayName>
     </EnumSymbol>
     <EnumSymbol>
@@ -1485,6 +1531,7 @@
       <LocalValue>WaterTempFTimes1000</LocalValue>
       <Enum>rec2HyLffy6QK9QId</Enum>
       <Symbol>793505aa</Symbol>
+      <Index>4</Index>
       <DisplayName>spaceheat.telemetry.name.100__WaterTempFTimes1000</DisplayName>
     </EnumSymbol>
     <EnumSymbol>
@@ -1612,6 +1659,7 @@
       <LocalValue>GallonsPerMinuteTimes10</LocalValue>
       <Enum>rec2HyLffy6QK9QId</Enum>
       <Symbol>329a68c0</Symbol>
+      <Index>7</Index>
       <DisplayName>spaceheat.telemetry.name.100__GallonsPerMinuteTimes10</DisplayName>
     </EnumSymbol>
     <EnumSymbol>
@@ -1763,6 +1811,7 @@
       <LocalValue>WaterFlowGpmTimes100</LocalValue>
       <Enum>rec2HyLffy6QK9QId</Enum>
       <Symbol>d70cce28</Symbol>
+      <Index>5</Index>
       <DisplayName>spaceheat.telemetry.name.100__WaterFlowGpmTimes100</DisplayName>
     </EnumSymbol>
     <EnumSymbol>
@@ -1795,6 +1844,7 @@
       <LocalValue>PhaseAngleDegreesTimes10</LocalValue>
       <Enum>recUJtDNaSJdt9wie</Enum>
       <Symbol>e0bb014b</Symbol>
+      <Index>10</Index>
       <DisplayName>spaceheat.telemetry.name.110__PhaseAngleDegreesTimes10</DisplayName>
     </EnumSymbol>
     <EnumSymbol>
@@ -1811,6 +1861,7 @@
       <LocalValue>WaterTempCTimes1000</LocalValue>
       <Enum>rec2HyLffy6QK9QId</Enum>
       <Symbol>c89d0ba1</Symbol>
+      <Index>3</Index>
       <DisplayName>spaceheat.telemetry.name.100__WaterTempCTimes1000</DisplayName>
     </EnumSymbol>
     <EnumSymbol>
@@ -1819,6 +1870,7 @@
       <LocalValue>WattHours</LocalValue>
       <Enum>recUJtDNaSJdt9wie</Enum>
       <Symbol>337b8659</Symbol>
+      <Index>11</Index>
       <DisplayName>spaceheat.telemetry.name.110__WattHours</DisplayName>
     </EnumSymbol>
     <EnumSymbol>
@@ -1870,6 +1922,16 @@
       <DisplayName>spaceheat.make.model.100__Gridworks__SimPm1</DisplayName>
     </EnumSymbol>
     <EnumSymbol>
+      <EnumSymbolId>recSX3WlRp7TuWGiy</EnumSymbolId>
+      <createdTime>2022-10-25T12:10:57Z</createdTime>
+      <LocalValue>Unknown</LocalValue>
+      <Enum>recUJtDNaSJdt9wie</Enum>
+      <Symbol>00000000</Symbol>
+      <Index>0</Index>
+      <GtEnums>recUJtDNaSJdt9wie</GtEnums>
+      <DisplayName>spaceheat.telemetry.name.110__Unknown</DisplayName>
+    </EnumSymbol>
+    <EnumSymbol>
       <EnumSymbolId>recSnVcPTdO1wigJU</EnumSymbolId>
       <createdTime>2022-07-20T17:31:24Z</createdTime>
       <LocalValue>YMDC__SCT013-100</LocalValue>
@@ -1891,6 +1953,7 @@
       <LocalValue>RelayState</LocalValue>
       <Enum>rec2HyLffy6QK9QId</Enum>
       <Symbol>5a71d4b3</Symbol>
+      <Index>2</Index>
       <DisplayName>spaceheat.telemetry.name.100__RelayState</DisplayName>
     </EnumSymbol>
     <EnumSymbol>
@@ -1899,6 +1962,7 @@
       <LocalValue>VoltageRmsMilliVolts</LocalValue>
       <Enum>recUJtDNaSJdt9wie</Enum>
       <Symbol>bb6fdd59</Symbol>
+      <Index>9</Index>
       <DisplayName>spaceheat.telemetry.name.110__VoltageRmsMilliVolts</DisplayName>
     </EnumSymbol>
     <EnumSymbol>
@@ -1911,7 +1975,8 @@
       <createdTime>2022-07-20T18:46:02Z</createdTime>
       <LocalValue>PowerW</LocalValue>
       <Enum>recUJtDNaSJdt9wie</Enum>
-      <Symbol>6ee0cc1f</Symbol>
+      <Symbol>af39eec9</Symbol>
+      <Index>1</Index>
       <DisplayName>spaceheat.telemetry.name.110__PowerW</DisplayName>
     </EnumSymbol>
     <EnumSymbol>
@@ -1993,11 +2058,22 @@
       <DisplayName>spaceheat.actor.class.100__SimpleSensor</DisplayName>
     </EnumSymbol>
     <EnumSymbol>
+      <EnumSymbolId>recZR3u3WuSGv96su</EnumSymbolId>
+      <createdTime>2022-10-25T12:11:23Z</createdTime>
+      <LocalValue>Unknown</LocalValue>
+      <Enum>rec2HyLffy6QK9QId</Enum>
+      <Symbol>00000000</Symbol>
+      <Index>0</Index>
+      <GtEnums>rec2HyLffy6QK9QId</GtEnums>
+      <DisplayName>spaceheat.telemetry.name.100__Unknown</DisplayName>
+    </EnumSymbol>
+    <EnumSymbol>
       <EnumSymbolId>recZmH3dJcvoiEUVW</EnumSymbolId>
       <createdTime>2022-07-20T18:46:52Z</createdTime>
       <LocalValue>CurrentRmsMilliAmps</LocalValue>
       <Enum>recUJtDNaSJdt9wie</Enum>
       <Symbol>aeed9c8e</Symbol>
+      <Index>8</Index>
       <DisplayName>spaceheat.telemetry.name.110__CurrentRmsMilliAmps</DisplayName>
     </EnumSymbol>
     <EnumSymbol>
@@ -2061,6 +2137,7 @@ For GNodes with actors, a Status of active is required for any authorized actor 
 If a GNode is Active, its parent GNode MUST ALSO be active.</Description>
       <DisplayName>g.node.status.100__Active</DisplayName>
     </EnumSymbol>
+    <EnumSymbol>itrxibTs1H5af0FTq/reccbyMtvH1trII7S</EnumSymbol>
     <EnumSymbol>
       <EnumSymbolId>recd0XHBcPJLkrg0B</EnumSymbolId>
       <createdTime>2022-07-15T17:12:45Z</createdTime>
@@ -2070,6 +2147,11 @@ If a GNode is Active, its parent GNode MUST ALSO be active.</Description>
       <DisplayName>spaceheat.node.role.100__HomeAlone</DisplayName>
     </EnumSymbol>
     <EnumSymbol>
+      <EnumSymbolId>recdOoocJBLhxafev</EnumSymbolId>
+      <createdTime>2022-10-25T12:11:21Z</createdTime>
+      <DisplayName>__</DisplayName>
+    </EnumSymbol>
+    <EnumSymbol>
       <EnumSymbolId>recdWX5ZrS6f3KjcR</EnumSymbolId>
       <createdTime>2022-06-14T10:26:50Z</createdTime>
       <LocalValue>DedicatedThermalStore</LocalValue>
@@ -2077,7 +2159,6 @@ If a GNode is Active, its parent GNode MUST ALSO be active.</Description>
       <Symbol>3ecfe9b8</Symbol>
       <DisplayName>sh.node.role.110__DedicatedThermalStore</DisplayName>
     </EnumSymbol>
-    <EnumSymbol>itr6swaHt3m443mE4/recdWX5ZrS6f3KjcR</EnumSymbol>
     <EnumSymbol>
       <EnumSymbolId>recdXZrhRCXtUuvYk</EnumSymbolId>
       <createdTime>2022-07-15T17:12:30Z</createdTime>
@@ -2107,7 +2188,8 @@ If a GNode is Active, its parent GNode MUST ALSO be active.</Description>
       <createdTime>2022-07-20T18:45:57Z</createdTime>
       <LocalValue>RelayState</LocalValue>
       <Enum>recUJtDNaSJdt9wie</Enum>
-      <Symbol>90495d90</Symbol>
+      <Symbol>5a71d4b3</Symbol>
+      <Index>2</Index>
       <DisplayName>spaceheat.telemetry.name.110__RelayState</DisplayName>
     </EnumSymbol>
     <EnumSymbol>
@@ -2486,6 +2568,7 @@ If a GNode is Active, its parent GNode MUST ALSO be active.</Description>
       <LocalValue>CurrentRmsMicroAmps</LocalValue>
       <Enum>rec2HyLffy6QK9QId</Enum>
       <Symbol>ad19e79c</Symbol>
+      <Index>6</Index>
       <DisplayName>spaceheat.telemetry.name.100__CurrentRmsMicroAmps</DisplayName>
     </EnumSymbol>
     <EnumSymbol>
@@ -2493,7 +2576,8 @@ If a GNode is Active, its parent GNode MUST ALSO be active.</Description>
       <createdTime>2022-07-20T18:46:00Z</createdTime>
       <LocalValue>GallonsPerMinuteTimes10</LocalValue>
       <Enum>recUJtDNaSJdt9wie</Enum>
-      <Symbol>a42482a1</Symbol>
+      <Symbol>329a68c0</Symbol>
+      <Index>7</Index>
       <DisplayName>spaceheat.telemetry.name.110__GallonsPerMinuteTimes10</DisplayName>
     </EnumSymbol>
     <EnumSymbol>
@@ -2533,7 +2617,8 @@ If a GNode is Active, its parent GNode MUST ALSO be active.</Description>
       <createdTime>2022-07-20T18:45:50Z</createdTime>
       <LocalValue>WaterTempFTimes1000</LocalValue>
       <Enum>recUJtDNaSJdt9wie</Enum>
-      <Symbol>22641963</Symbol>
+      <Symbol>793505aa</Symbol>
+      <Index>4</Index>
       <DisplayName>spaceheat.telemetry.name.110__WaterTempFTimes1000</DisplayName>
     </EnumSymbol>
     <EnumSymbol>
@@ -4899,7 +4984,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsRequired>true</IsRequired>
       <IsList>true</IsList>
       <Enum>rec2HyLffy6QK9QId</Enum>
-      <TestValue>["90495d90", "22641963"]</TestValue>
+      <TestValue>["5a71d4b3", "c89d0ba1"]</TestValue>
       <Schema>recauOuVBqhRdNWcN</Schema>
       <EnumLocalName>telemetry.name</EnumLocalName>
       <EnumRoot>spaceheat.telemetry.name</EnumRoot>
@@ -5060,7 +5145,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Value>TelemetryName</Value>
       <IsRequired>true</IsRequired>
       <Enum>rec2HyLffy6QK9QId</Enum>
-      <TestValue>"6ee0cc1f"</TestValue>
+      <TestValue>"af39eec9"</TestValue>
       <Schema>receGKnJ8CfemQLdQ</Schema>
       <EnumLocalName>telemetry.name</EnumLocalName>
       <EnumRoot>spaceheat.telemetry.name</EnumRoot>
@@ -5317,13 +5402,13 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Value>SimpleTelemetryList</Value>
       <IsRequired>true</IsRequired>
       <IsList>true</IsList>
-      <TestValue> [{"ValueList": [0, 1], "ReadTimeUnixMsList": [1656945400527, 1656945414270], "ShNodeAlias": "a.elt1.relay", "TypeAlias": "gt.sh.simple.telemetry.status.100", "TelemetryNameGtEnumSymbol": "90495d90"}]</TestValue>
       <Schema>recNbXbJE9rcnLXAs</Schema>
       <SubTypeFormat>rec8c4KjhwNmfrRYP</SubTypeFormat>
       <SubMessageFormatAlias>gt.sh.simple.telemetry.status.100</SubMessageFormatAlias>
       <IsEnum>false</IsEnum>
       <IsType>true</IsType>
       <SubMessageFormatAliasRoot>gt.sh.simple.telemetry.status</SubMessageFormatAliasRoot>
+      <TestValue>[{"ValueList": [0, 1], "ReadTimeUnixMsList": [1656945400527, 1656945414270], "ShNodeAlias": "a.elt1.relay", "TypeAlias": "gt.sh.simple.telemetry.status", "TelemetryNameGtEnumSymbol": "5a71d4b3"}]</TestValue>
     </SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recBvZfLA3CxARt9t</SchemaAttributeId>
@@ -5487,7 +5572,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsPrimitive>true</IsPrimitive>
       <IsList>true</IsList>
       <PrimitiveType>Integer</PrimitiveType>
-      <TestValue>[0]</TestValue>
+      <TestValue>[4559]</TestValue>
       <Schema>receGKnJ8CfemQLdQ</Schema>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
@@ -5905,7 +5990,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
     </SchemaAttribute>
-    <SchemaAttribute>itrnBi1kyGMDPTU5S/recHyghQ3390tN8LF</SchemaAttribute>
+    <SchemaAttribute>itrSNWUAD9QMsdVwN/recHyghQ3390tN8LF</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recIJFbNuY4X6wfQG</SchemaAttributeId>
       <createdTime>2022-06-07T09:30:40Z</createdTime>
@@ -5998,7 +6083,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Value>BooleanactuatorCmdList</Value>
       <IsRequired>true</IsRequired>
       <IsList>true</IsList>
-      <TestValue> [{"ShNodeAlias": "a.elt1.relay","RelayStateCommandList": [1], "CommandTimeUnixMsList": [1656945413464],"TypeAlias": "gt.sh.booleanactuator.cmd.status.100"}]</TestValue>
+      <TestValue> [{"ShNodeAlias": "a.elt1.relay","RelayStateCommandList": [1], "CommandTimeUnixMsList": [1656945413464],"TypeAlias": "gt.sh.booleanactuator.cmd.status"}]</TestValue>
       <Schema>recNbXbJE9rcnLXAs</Schema>
       <SubTypeFormat>recpHvfV5mSI7pgRP</SubTypeFormat>
       <SubMessageFormatAlias>gt.sh.booleanactuator.cmd.status.100</SubMessageFormatAlias>
@@ -6095,7 +6180,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Value>MultipurposeTelemetryList</Value>
       <IsRequired>true</IsRequired>
       <IsList>true</IsList>
-      <TestValue> [{"AboutNodeAlias": "a.elt1", "ValueList": [18000], "ReadTimeUnixMsList": [1656945390152], "SensorNodeAlias": "a.m", "TypeAlias": "gt.sh.multipurpose.telemetry.status.100", "TelemetryNameGtEnumSymbol": "88d66538"}]</TestValue>
+      <TestValue> [{"AboutNodeAlias": "a.elt1", "ValueList": [18000], "ReadTimeUnixMsList": [1656945390152], "SensorNodeAlias": "a.m", "TypeAlias": "gt.sh.multipurpose.telemetry.status", "TelemetryNameGtEnumSymbol": "ad19e79c"}]</TestValue>
       <Schema>recNbXbJE9rcnLXAs</Schema>
       <SubTypeFormat>receGKnJ8CfemQLdQ</SubTypeFormat>
       <SubMessageFormatAlias>gt.sh.multipurpose.telemetry.status.100</SubMessageFormatAlias>
@@ -7184,7 +7269,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
     </SchemaAttribute>
-    <SchemaAttribute>itrnBi1kyGMDPTU5S/recay2Tf4O4c9dgvH</SchemaAttribute>
+    <SchemaAttribute>itrSNWUAD9QMsdVwN/recay2Tf4O4c9dgvH</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recazWVfmVGIXktTn</SchemaAttributeId>
       <createdTime>2022-06-18T17:00:33Z</createdTime>
@@ -7540,7 +7625,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsRequired>true</IsRequired>
       <PrimitiveType>String</PrimitiveType>
       <Enum>rec2HyLffy6QK9QId</Enum>
-      <TestValue>"22641963"</TestValue>
+      <TestValue>"c89d0ba1"</TestValue>
       <Schema>rec944QikN18Rdopu</Schema>
       <EnumLocalName>telemetry.name</EnumLocalName>
       <EnumRoot>spaceheat.telemetry.name</EnumRoot>
@@ -7937,7 +8022,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Value>TelemetryName</Value>
       <IsRequired>true</IsRequired>
       <Enum>rec2HyLffy6QK9QId</Enum>
-      <TestValue>"90495d90"</TestValue>
+      <TestValue>"5a71d4b3"</TestValue>
       <Schema>rec8c4KjhwNmfrRYP</Schema>
       <EnumLocalName>telemetry.name</EnumLocalName>
       <EnumRoot>spaceheat.telemetry.name</EnumRoot>
@@ -8041,7 +8126,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsRequired>true</IsRequired>
       <IsList>true</IsList>
       <Enum>rec2HyLffy6QK9QId</Enum>
-      <TestValue>["90495d90", "22641963"]</TestValue>
+      <TestValue>["5a71d4b3", "c89d0ba1"]</TestValue>
       <Schema>recdNEAMkZeOLS8Vo</Schema>
       <EnumLocalName>telemetry.name</EnumLocalName>
       <EnumRoot>spaceheat.telemetry.name</EnumRoot>
@@ -8463,7 +8548,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <SubTypeDataClass>ElectricHeaterCac</SubTypeDataClass>
       <SubMessageFormatAliasRoot>gt.electric.heater.cac</SubMessageFormatAliasRoot>
     </SchemaAttribute>
-    <SchemaAttribute>itrnBi1kyGMDPTU5S/recpqHev4KGlcd4q4</SchemaAttribute>
+    <SchemaAttribute>itrSNWUAD9QMsdVwN/recpqHev4KGlcd4q4</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recpwKIE1g7BN8jGg</SchemaAttributeId>
       <createdTime>2022-09-30T19:13:23Z</createdTime>
@@ -8859,7 +8944,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsRequired>true</IsRequired>
       <IsList>true</IsList>
       <Enum>rec2HyLffy6QK9QId</Enum>
-      <TestValue>["88d66538"]</TestValue>
+      <TestValue>["ad19e79c"]</TestValue>
       <Schema>rec93KBYcwiqJ6OQy</Schema>
       <EnumLocalName>telemetry.name</EnumLocalName>
       <EnumRoot>spaceheat.telemetry.name</EnumRoot>
@@ -8910,7 +8995,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <createdTime>2022-08-11T17:32:48Z</createdTime>
       <Value>Snapshot</Value>
       <IsRequired>true</IsRequired>
-      <TestValue>{"TelemetryNameList": ["90495d90"], "AboutNodeAliasList": ["a.elt1.relay"], "ReportTimeUnixMs": 1656363448000, "ValueList": [1], "TypeAlias": "telemetry.snapshot.spaceheat.100"}</TestValue>
+      <TestValue>{"TelemetryNameList": ["5a71d4b3"], "AboutNodeAliasList": ["a.elt1.relay"], "ReportTimeUnixMs": 1656363448000, "ValueList": [1], "TypeAlias": "telemetry.snapshot.spaceheat"}</TestValue>
       <Schema>recrnRklRws6Txbqr</Schema>
       <SubTypeFormat>recdNEAMkZeOLS8Vo</SubTypeFormat>
       <SubMessageFormatAlias>telemetry.snapshot.spaceheat.100</SubMessageFormatAlias>

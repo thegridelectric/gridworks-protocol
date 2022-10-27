@@ -4,7 +4,7 @@ from gwproto.enums.telemetry_name.spaceheat_telemetry_name_100 import (
     SpaceheatTelemetryName100GtEnum,
 )
 from gwproto.enums.telemetry_name.spaceheat_telemetry_name_100 import TelemetryName
-from gwproto.errors import MpSchemaError
+from gwproto.errors import SchemaError
 
 
 class TelemetryNameGtEnum(SpaceheatTelemetryName100GtEnum):
@@ -19,7 +19,7 @@ class TelemetryNameMap:
     @classmethod
     def gt_to_local(cls, symbol):
         if not TelemetryNameGtEnum.is_symbol(symbol):
-            raise MpSchemaError(
+            raise SchemaError(
                 f"{symbol} must belong to key of {TelemetryNameMap.gt_to_local_dict}"
             )
         return cls.gt_to_local_dict[symbol]
@@ -27,7 +27,7 @@ class TelemetryNameMap:
     @classmethod
     def local_to_gt(cls, telemetry_name):
         if not isinstance(telemetry_name, TelemetryName):
-            raise MpSchemaError(f"{telemetry_name} must be of type {TelemetryName}")
+            raise SchemaError(f"{telemetry_name} must be of type {TelemetryName}")
         return cls.local_to_gt_dict[telemetry_name]
 
     gt_to_local_dict: Dict[str, TelemetryName] = {

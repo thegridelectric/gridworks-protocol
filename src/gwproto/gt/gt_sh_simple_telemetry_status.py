@@ -10,6 +10,7 @@ from pydantic import validator
 import gwproto.property_format as property_format
 from gwproto.enums import TelemetryName
 from gwproto.enums import TelemetryNameMap
+from gwproto.errors import SchemaError
 from gwproto.message import as_enum
 from gwproto.property_format import predicate_validator
 
@@ -42,3 +43,56 @@ class GtShSimpleTelemetryStatus(BaseModel):
 
     def as_type(self):
         return json.dumps(self.asdict())
+
+
+class GtShSimpleTelemetryStatus_Maker:
+    type_alias = "gt.sh.simple.telemetry.status"
+
+    def __init__(self,
+                    value_list: List[int],
+                    read_time_unix_ms_list: List[int],
+                    telemetry_name: TelemetryName,
+                    sh_node_alias: str):
+
+        self.tuple = GtShSimpleTelemetryStatus(
+            ValueList=value_list,
+            ReadTimeUnixMsList=read_time_unix_ms_list,
+            TelemetryName=telemetry_name,
+            ShNodeAlias=sh_node_alias,
+            #
+        )
+
+    @classmethod
+    def tuple_to_type(cls, tuple: GtShSimpleTelemetryStatus) -> str:
+        return tuple.as_type()
+
+    @classmethod
+    def type_to_tuple(cls, t: str) -> GtShSimpleTelemetryStatus:
+        try:
+            d = json.loads(t)
+        except TypeError:
+            raise SchemaError("Type must be string or bytes!")
+        if not isinstance(d, dict):
+            raise SchemaError(f"Deserializing {t} must result in dict!")
+        return cls.dict_to_tuple(d)
+
+    @classmethod
+    def dict_to_tuple(cls, d: dict) -> GtShSimpleTelemetryStatus:
+        d2 = dict(d)
+        if "TypeAlias" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing TypeAlias")
+        if "TelemetryNameGtEnumSymbol" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing TelemetryNameGtEnumSymbol")
+        if d2["TelemetryNameGtEnumSymbol"] in TelemetryNameMap.gt_to_local_dict.keys():
+            d2["TelemetryName"] = TelemetryNameMap.gt_to_local(d2["TelemetryNameGtEnumSymbol"])
+        else:
+            d2["TelemetryName"] = TelemetryName.UNKNOWN
+
+        return GtShSimpleTelemetryStatus(
+            TypeAlias=d2["TypeAlias"],
+            ValueList=d2["ValueList"],
+            ReadTimeUnixMsList=d2["ReadTimeUnixMsList"],
+            TelemetryName=d2["TelemetryName"],
+            ShNodeAlias=d2["ShNodeAlias"],
+            #
+        )

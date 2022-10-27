@@ -35,8 +35,18 @@ from .</xsl:text>
 <xsl:call-template name="nt-case">
     <xsl:with-param name="mp-schema-text" select="AliasRoot" />
 </xsl:call-template>
+<xsl:text>
+from .</xsl:text>
+<xsl:value-of select="translate(AliasRoot,'.','_')"/>
+<xsl:text> import </xsl:text>
+<xsl:call-template name="nt-case">
+    <xsl:with-param name="mp-schema-text" select="AliasRoot" />
+</xsl:call-template>
+<xsl:text>_Maker</xsl:text>
+
 </xsl:for-each>
 <xsl:text>
+
 
 __all__ = [</xsl:text>
 <xsl:for-each select="$airtable//Schemas/Schema[(normalize-space(Alias) !='')  and (InGwProto = 'true') and (Status = 'Active' or Status = 'Pending') and (ProtocolType = 'Json')]">
@@ -46,6 +56,12 @@ __all__ = [</xsl:text>
         <xsl:with-param name="mp-schema-text" select="AliasRoot" />
     </xsl:call-template>
     <xsl:text>",</xsl:text>
+<xsl:text>
+    "</xsl:text>
+    <xsl:call-template name="nt-case">
+        <xsl:with-param name="mp-schema-text" select="AliasRoot" />
+    </xsl:call-template>
+    <xsl:text>_Maker",</xsl:text>
 </xsl:for-each>
 <xsl:text>
 ]

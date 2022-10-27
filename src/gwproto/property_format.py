@@ -8,7 +8,7 @@ import pydantic
 
 
 def predicate_validator(
-    field_name: str, predicate: Callable[[Any], bool], error_format: str = ""
+    field_name: str, predicate: Callable[[Any], bool], error_format: str = "", **kwargs
 ) -> classmethod:  # type: ignore
     def _validator(v: Any) -> Any:
         if not predicate(v):
@@ -19,7 +19,7 @@ def predicate_validator(
             raise ValueError(err_str)
         return v
 
-    return pydantic.validator(field_name, allow_reuse=True)(_validator)
+    return pydantic.validator(field_name, allow_reuse=True, **kwargs)(_validator)
 
 
 def is_bit(candidate: int) -> bool:

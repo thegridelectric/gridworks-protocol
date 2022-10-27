@@ -204,7 +204,7 @@ class Decoders:
                         break
         d = Decoders(items)
         d.add_decoder(
-            Message.get_type_name(), MessageDecoder(d, message_payload_discriminator)
+            Message.type_name(), MessageDecoder(d, message_payload_discriminator)
         )
         return d
 

@@ -55,13 +55,12 @@ class Message(GenericModel, Generic[PayloadT]):
     def src(self) -> str:
         return self.Header.Src
 
-    # TODO: Rename as "type_name" after renaming field to TypeName
     @classmethod
-    def get_type_name(cls) -> str:
+    def type_name(cls) -> str:
         return Message.__fields__["TypeName"].default
 
     def mqtt_topic(self) -> str:
-        return MQTTTopic.encode(self.src(), self.get_type_name(), self.message_type())
+        return MQTTTopic.encode(self.src(), self.type_name(), self.message_type())
 
     @classmethod
     def _header_from_kwargs(cls, kwargs: dict[str, Any]) -> Header:

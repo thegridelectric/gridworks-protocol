@@ -41,6 +41,7 @@ __all__ = [
     "EventT",
     "EventBase",
     "EventMessage",
+    "MQTTConnectEvent",
     "MQTTConnectFailedEvent",
     "MQTTDisconnectEvent",
     "MQTTFullySubscribedEvent",

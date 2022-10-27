@@ -25,7 +25,7 @@ class GtDispatchBoolean(BaseModel):
 
     _validator_from_g_node_id = predicate_validator("FromGNodeId", property_format.is_uuid_canonical_textual)
 
-    _validator_relay_state = predicate_validator("RelayState", property_format.is_bit)
+    _validator_relay_state = predicate_validator("RelayState", property_format.is_bit, pre=True)
 
     _validator_send_time_unix_ms = predicate_validator("SendTimeUnixMs", property_format.is_reasonable_unix_time_ms)
 

@@ -165,6 +165,11 @@ def test_</xsl:text><xsl:value-of select="translate($local-alias,'.','_')"/>
     ######################################
     # ValidationError raised if missing a required attribute
     ######################################
+
+    d2 = dict(d)
+    del d2["TypeAlias"]
+    with pytest.raises(ValidationError):
+        GtDispatchBoolean(**d2)
 </xsl:text>
     <xsl:for-each select="$airtable//SchemaAttributes/SchemaAttribute[(Schema = $schema-id) and (IsRequired='true') ]">
     <xsl:if test = "((not (IsEnum = 'true') and normalize-space(SubTypeDataClass) = '') or (IsList = 'true'))">

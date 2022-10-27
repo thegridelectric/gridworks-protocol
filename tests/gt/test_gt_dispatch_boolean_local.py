@@ -48,6 +48,11 @@ def test_gt_dispatch_boolean_local_generated():
     ######################################
 
     d2 = dict(d)
+    del d2["TypeAlias"]
+    with pytest.raises(ValidationError):
+        GtDispatchBoolean(**d2)
+
+    d2 = dict(d)
     del d2["SendTimeUnixMs"]
     with pytest.raises(ValidationError):
         GtDispatchBooleanLocal(**d2)

@@ -46,6 +46,11 @@ def test_gt_sh_cli_atn_cmd_generated():
     ######################################
 
     d2 = dict(d)
+    del d2["TypeAlias"]
+    with pytest.raises(ValidationError):
+        GtDispatchBoolean(**d2)
+
+    d2 = dict(d)
     del d2["FromGNodeAlias"]
     with pytest.raises(ValidationError):
         GtShCliAtnCmd(**d2)

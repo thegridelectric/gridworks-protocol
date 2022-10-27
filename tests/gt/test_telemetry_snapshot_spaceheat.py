@@ -49,6 +49,11 @@ def test_telemetry_snapshot_spaceheat_generated():
     ######################################
 
     d2 = dict(d)
+    del d2["TypeAlias"]
+    with pytest.raises(ValidationError):
+        GtDispatchBoolean(**d2)
+
+    d2 = dict(d)
     del d2["AboutNodeAliasList"]
     with pytest.raises(ValidationError):
         TelemetrySnapshotSpaceheat(**d2)

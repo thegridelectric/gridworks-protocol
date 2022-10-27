@@ -46,6 +46,11 @@ def test_gt_driver_booleanactuator_cmd_generated():
     ######################################
 
     d2 = dict(d)
+    del d2["TypeAlias"]
+    with pytest.raises(ValidationError):
+        GtDispatchBoolean(**d2)
+
+    d2 = dict(d)
     del d2["RelayState"]
     with pytest.raises(ValidationError):
         GtDriverBooleanactuatorCmd(**d2)

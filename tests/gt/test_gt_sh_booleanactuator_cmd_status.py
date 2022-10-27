@@ -46,6 +46,11 @@ def test_gt_sh_booleanactuator_cmd_status_generated():
     ######################################
 
     d2 = dict(d)
+    del d2["TypeAlias"]
+    with pytest.raises(ValidationError):
+        GtDispatchBoolean(**d2)
+
+    d2 = dict(d)
     del d2["ShNodeAlias"]
     with pytest.raises(ValidationError):
         GtShBooleanactuatorCmdStatus(**d2)

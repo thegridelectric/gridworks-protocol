@@ -52,6 +52,11 @@ def test_snapshot_spaceheat_generated():
     ######################################
 
     d2 = dict(d)
+    del d2["TypeAlias"]
+    with pytest.raises(ValidationError):
+        GtDispatchBoolean(**d2)
+
+    d2 = dict(d)
     del d2["FromGNodeAlias"]
     with pytest.raises(ValidationError):
         SnapshotSpaceheat(**d2)

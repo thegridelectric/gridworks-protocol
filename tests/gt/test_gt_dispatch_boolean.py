@@ -52,6 +52,11 @@ def test_gt_dispatch_boolean_generated():
     ######################################
 
     d2 = dict(d)
+    del d2["TypeAlias"]
+    with pytest.raises(ValidationError):
+        GtDispatchBoolean(**d2)
+
+    d2 = dict(d)
     del d2["AboutNodeAlias"]
     with pytest.raises(ValidationError):
         GtDispatchBoolean(**d2)

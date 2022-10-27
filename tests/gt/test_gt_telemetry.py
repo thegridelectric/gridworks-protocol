@@ -49,6 +49,11 @@ def test_gt_telemetry_generated():
     ######################################
 
     d2 = dict(d)
+    del d2["TypeAlias"]
+    with pytest.raises(ValidationError):
+        GtDispatchBoolean(**d2)
+
+    d2 = dict(d)
     del d2["ScadaReadTimeUnixMs"]
     with pytest.raises(ValidationError):
         GtTelemetry(**d2)

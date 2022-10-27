@@ -49,6 +49,11 @@ def test_gt_sh_simple_telemetry_status_generated():
     ######################################
 
     d2 = dict(d)
+    del d2["TypeAlias"]
+    with pytest.raises(ValidationError):
+        GtDispatchBoolean(**d2)
+
+    d2 = dict(d)
     del d2["ValueList"]
     with pytest.raises(ValidationError):
         GtShSimpleTelemetryStatus(**d2)

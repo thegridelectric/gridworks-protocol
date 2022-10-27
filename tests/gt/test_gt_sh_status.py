@@ -82,6 +82,11 @@ def test_gt_sh_status_generated():
     ######################################
 
     d2 = dict(d)
+    del d2["TypeAlias"]
+    with pytest.raises(ValidationError):
+        GtDispatchBoolean(**d2)
+
+    d2 = dict(d)
     del d2["SlotStartUnixS"]
     with pytest.raises(ValidationError):
         GtShStatus(**d2)

@@ -51,6 +51,11 @@ def test_gt_sh_multipurpose_telemetry_status_generated():
     ######################################
 
     d2 = dict(d)
+    del d2["TypeAlias"]
+    with pytest.raises(ValidationError):
+        GtDispatchBoolean(**d2)
+
+    d2 = dict(d)
     del d2["AboutNodeAlias"]
     with pytest.raises(ValidationError):
         GtShMultipurposeTelemetryStatus(**d2)

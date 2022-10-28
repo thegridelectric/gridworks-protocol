@@ -5,4 +5,4 @@ from pydantic import BaseModel
 
 class Ack(BaseModel):
     AckMessageID: str
-    TypeName: Literal["gridworks.ack.000"] = "gridworks.ack"
+    TypeName: Literal["gridworks.ack"] = "gridworks.ack"

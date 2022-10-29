@@ -147,6 +147,8 @@ class GtShStatus_Maker:
         if "SimpleTelemetryList" not in d2.keys():
             raise SchemaError(f"dict {d2} missing SimpleTelemetryList")
         simple_telemetry_list = []
+        if not isinstance(d2["SimpleTelemetryList"], List):
+            raise SchemaError("SimpleTelemetryList must be a List!")
         for elt in d2["SimpleTelemetryList"]:
             if not isinstance(elt, dict):
                 raise SchemaError(
@@ -160,6 +162,8 @@ class GtShStatus_Maker:
         if "BooleanactuatorCmdList" not in d2.keys():
             raise SchemaError(f"dict {d2} missing BooleanactuatorCmdList")
         booleanactuator_cmd_list = []
+        if not isinstance(d2["BooleanactuatorCmdList"], List):
+            raise SchemaError("BooleanactuatorCmdList must be a List!")
         for elt in d2["BooleanactuatorCmdList"]:
             if not isinstance(elt, dict):
                 raise SchemaError(
@@ -173,6 +177,8 @@ class GtShStatus_Maker:
         if "MultipurposeTelemetryList" not in d2.keys():
             raise SchemaError(f"dict {d2} missing MultipurposeTelemetryList")
         multipurpose_telemetry_list = []
+        if not isinstance(d2["MultipurposeTelemetryList"], List):
+            raise SchemaError("MultipurposeTelemetryList must be a List!")
         for elt in d2["MultipurposeTelemetryList"]:
             if not isinstance(elt, dict):
                 raise SchemaError(

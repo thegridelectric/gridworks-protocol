@@ -77,6 +77,17 @@
       "Name": "XmlXsltTransform",
       "RelativePath": "/Types/TypeTests",
       "CommandLine": "codee42/xml-xslt-transform -i ../../SSoT/Airtable.xml -i DeriveTypeTests.xslt -i ../../GnfCommon.xslt -i ../../ODXML/DataSchema.odxml -w 120000"
+    },
+    {
+      "MatchedTranspiler": {
+        "TranspilerId": "4b713f03-1d9f-42f2-b02f-e3cdbd237bb3",
+        "Name": "XmlXsltTransform",
+        "Description": "Given an Xml and Xslt file, will process and \"split\" a resulting fileset."
+      },
+      "ProjectTranspilerId": "acec0e95-12d2-447c-9311-367e385a71b4",
+      "Name": "XmlXsltTransform",
+      "RelativePath": "/Enums",
+      "CommandLine": "codee42/xml-xslt-transform -i ../SSoT/Airtable.xml -i DeriveEnums.xslt -i ../GnfCommon.xslt -i ../ODXML/DataSchema.odxml -w 120000"
     }
   ]
 }

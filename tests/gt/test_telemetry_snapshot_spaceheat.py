@@ -50,8 +50,8 @@ def test_telemetry_snapshot_spaceheat_generated():
 
     d2 = dict(d)
     del d2["TypeAlias"]
-    with pytest.raises(ValidationError):
-        GtDispatchBoolean(**d2)
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
     del d2["AboutNodeAliasList"]
@@ -72,7 +72,6 @@ def test_telemetry_snapshot_spaceheat_generated():
     del d2["ReportTimeUnixMs"]
     with pytest.raises(ValidationError):
         TelemetrySnapshotSpaceheat(**d2)
-
     ######################################
     # Behavior on attribute types
     ######################################
@@ -99,7 +98,7 @@ def test_telemetry_snapshot_spaceheat_generated():
     assert Maker.dict_to_tuple(d2) == Maker.dict_to_tuple(d)
 
     ######################################
-    # SchemaError raised if TypeName is incorrect
+    # ValidationError raised if TypeName is incorrect
     ######################################
 
     d2 = dict(d, TypeAlias="not the type alias")
@@ -107,10 +106,10 @@ def test_telemetry_snapshot_spaceheat_generated():
         Maker.dict_to_tuple(d2)
 
     ######################################
-    # SchemaError raised if primitive attributes do not have appropriate property_format
+    # ValidationError raised if primitive attributes do not have appropriate property_format
     ######################################
 
-    d2 = dict(d, AboutNodeAliasList="a.b-h")
+    d2 = dict(d, AboutNodeAliasList=["a.b-h"])
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 

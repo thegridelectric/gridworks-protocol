@@ -53,8 +53,8 @@ def test_snapshot_spaceheat_generated():
 
     d2 = dict(d)
     del d2["TypeAlias"]
-    with pytest.raises(ValidationError):
-        GtDispatchBoolean(**d2)
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
     del d2["FromGNodeAlias"]
@@ -71,6 +71,8 @@ def test_snapshot_spaceheat_generated():
     with pytest.raises(ValidationError):
         SnapshotSpaceheat(**d2)
 
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
     ######################################
     # Behavior on attribute types
     ######################################
@@ -88,7 +90,7 @@ def test_snapshot_spaceheat_generated():
         Maker.dict_to_tuple(d2)
 
     ######################################
-    # SchemaError raised if TypeName is incorrect
+    # ValidationError raised if TypeName is incorrect
     ######################################
 
     d2 = dict(d, TypeAlias="not the type alias")
@@ -96,7 +98,7 @@ def test_snapshot_spaceheat_generated():
         Maker.dict_to_tuple(d2)
 
     ######################################
-    # SchemaError raised if primitive attributes do not have appropriate property_format
+    # ValidationError raised if primitive attributes do not have appropriate property_format
     ######################################
 
     d2 = dict(d, FromGNodeAlias="a.b-h")

@@ -699,6 +699,12 @@ class </xsl:text>
             <xsl:with-param name="camel-case-text" select="Value"  />
         </xsl:call-template>
         <xsl:text> = []
+        if not isinstance(d2["</xsl:text>
+        <xsl:value-of select="Value"/>
+        <xsl:text>"], List):
+            raise SchemaError("</xsl:text>
+                <xsl:value-of select="Value"/>
+                <xsl:text> must be a List!")
         for elt in d2["</xsl:text>
         <xsl:value-of select="Value"/>
         <xsl:text>"]:
@@ -786,6 +792,12 @@ class </xsl:text>
             <xsl:with-param name="camel-case-text" select="Value"  />
         </xsl:call-template>
         <xsl:text> = []
+        if not isinstance(d2["</xsl:text>
+            <xsl:value-of select="Value"/>
+            <xsl:text>"], List):
+                raise SchemaError("</xsl:text>
+                    <xsl:value-of select="Value"/>
+                    <xsl:text> must be a List!")
         for elt in d2["</xsl:text>
         <xsl:value-of select="Value"/>
         <xsl:text>"]:
@@ -933,8 +945,11 @@ class </xsl:text>
 </xsl:text>
 </xsl:if>
     
+<xsl:for-each select="$airtable//SchemaAttributes/SchemaAttribute[(Schema = $schema-id)]">
+<xsl:if test="IsEnum = 'true'">
 
-
+</xsl:if>
+</xsl:for-each>
                         </xsl:element>
                      </FileSetFile>
                 </xsl:for-each>

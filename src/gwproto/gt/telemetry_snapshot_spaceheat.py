@@ -92,6 +92,8 @@ class TelemetrySnapshotSpaceheat_Maker:
         if "TelemetryNameList" not in d2.keys():
             raise SchemaError(f"dict {d2} missing TelemetryNameList")
         telemetry_name_list = []
+        if not isinstance(d2["TelemetryNameList"], List):
+                raise SchemaError("TelemetryNameList must be a List!")
         for elt in d2["TelemetryNameList"]:
             if elt in TelemetryNameMap.gt_to_local_dict.keys():
                 v = TelemetryNameMap.gt_to_local(elt)

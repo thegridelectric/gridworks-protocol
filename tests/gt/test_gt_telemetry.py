@@ -50,8 +50,8 @@ def test_gt_telemetry_generated():
 
     d2 = dict(d)
     del d2["TypeAlias"]
-    with pytest.raises(ValidationError):
-        GtDispatchBoolean(**d2)
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
     del d2["ScadaReadTimeUnixMs"]
@@ -68,11 +68,13 @@ def test_gt_telemetry_generated():
     with pytest.raises(ValidationError):
         GtTelemetry(**d2)
 
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
     d2 = dict(d)
     del d2["Exponent"]
     with pytest.raises(ValidationError):
         GtTelemetry(**d2)
-
     ######################################
     # Behavior on attribute types
     ######################################
@@ -111,7 +113,7 @@ def test_gt_telemetry_generated():
     assert Maker.dict_to_tuple(d2) == Maker.dict_to_tuple(d)
 
     ######################################
-    # SchemaError raised if TypeName is incorrect
+    # ValidationError raised if TypeName is incorrect
     ######################################
 
     d2 = dict(d, TypeAlias="not the type alias")
@@ -119,7 +121,7 @@ def test_gt_telemetry_generated():
         Maker.dict_to_tuple(d2)
 
     ######################################
-    # SchemaError raised if primitive attributes do not have appropriate property_format
+    # ValidationError raised if primitive attributes do not have appropriate property_format
     ######################################
 
     d2 = dict(d, ScadaReadTimeUnixMs=1656245000)

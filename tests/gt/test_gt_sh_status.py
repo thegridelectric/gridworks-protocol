@@ -83,8 +83,8 @@ def test_gt_sh_status_generated():
 
     d2 = dict(d)
     del d2["TypeAlias"]
-    with pytest.raises(ValidationError):
-        GtDispatchBoolean(**d2)
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
     del d2["SlotStartUnixS"]
@@ -96,6 +96,9 @@ def test_gt_sh_status_generated():
     with pytest.raises(ValidationError):
         GtShStatus(**d2)
 
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
     d2 = dict(d)
     del d2["AboutGNodeAlias"]
     with pytest.raises(ValidationError):
@@ -106,6 +109,9 @@ def test_gt_sh_status_generated():
     with pytest.raises(ValidationError):
         GtShStatus(**d2)
 
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
     d2 = dict(d)
     del d2["FromGNodeAlias"]
     with pytest.raises(ValidationError):
@@ -115,6 +121,9 @@ def test_gt_sh_status_generated():
     del d2["MultipurposeTelemetryList"]
     with pytest.raises(ValidationError):
         GtShStatus(**d2)
+
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
     del d2["FromGNodeId"]
@@ -130,7 +139,6 @@ def test_gt_sh_status_generated():
     del d2["ReportingPeriodS"]
     with pytest.raises(ValidationError):
         GtShStatus(**d2)
-
     ######################################
     # Behavior on attribute types
     ######################################
@@ -145,139 +153,49 @@ def test_gt_sh_status_generated():
     d2 = dict(d, SlotStartUnixS=1656945300.1)
     assert Maker.dict_to_tuple(d2) == Maker.dict_to_tuple(d)
 
-    orig_value = d["SimpleTelemetryList"]
-    d["SimpleTelemetryList"] = "Not a list."
+    d2 = dict(d, SimpleTelemetryList="Not a list.")
     with pytest.raises(SchemaError):
-        Maker.dict_to_tuple(d)
-    d["SimpleTelemetryList"] = orig_value
+        Maker.dict_to_tuple(d2)
 
-    orig_value = d["SimpleTelemetryList"]
-    d["SimpleTelemetryList"] = ["Not even a dict"]
+    d2 = dict(d, SimpleTelemetryList=["Not even a dict"])
     with pytest.raises(SchemaError):
-        Maker.dict_to_tuple(d)
+        Maker.dict_to_tuple(d2)
 
-    d["SimpleTelemetryList"] = [{"Failed": "Not a GtSimpleSingleStatus"}]
+    d2 = dict(d, SimpleTelemetryList=[{"Failed": "Not a GtSimpleSingleStatus"}])
     with pytest.raises(SchemaError):
-        Maker.dict_to_tuple(d)
-    d["SimpleTelemetryList"] = orig_value
-
-    with pytest.raises(ValidationError):
-        Maker(
-            slot_start_unix_s=d["SlotStartUnixS"],
-            about_g_node_alias=d["AboutGNodeAlias"],
-            booleanactuator_cmd_list=d["BooleanactuatorCmdList"],
-            from_g_node_alias=d["FromGNodeAlias"],
-            multipurpose_telemetry_list=d["MultipurposeTelemetryList"],
-            from_g_node_id=d["FromGNodeId"],
-            status_uid=d["StatusUid"],
-            reporting_period_s=d["ReportingPeriodS"],
-            simple_telemetry_list=["Not a GtShSimpleTelemetryStatus100"],
-        )
-
-    with pytest.raises(ValidationError):
-        Maker(
-            slot_start_unix_s=gw_tuple.SlotStartUnixS,
-            about_g_node_alias=gw_tuple.AboutGNodeAlias,
-            booleanactuator_cmd_list=gw_tuple.BooleanactuatorCmdList,
-            from_g_node_alias=gw_tuple.FromGNodeAlias,
-            multipurpose_telemetry_list=gw_tuple.MultipurposeTelemetryList,
-            from_g_node_id=gw_tuple.FromGNodeId,
-            status_uid=gw_tuple.StatusUid,
-            reporting_period_s=gw_tuple.ReportingPeriodS,
-            simple_telemetry_list="This string is not a list",
-        )
+        Maker.dict_to_tuple(d2)
 
     d2 = dict(d, AboutGNodeAlias={})
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    orig_value = d["BooleanactuatorCmdList"]
-    d["BooleanactuatorCmdList"] = "Not a list."
+    d2 = dict(d, BooleanactuatorCmdList="Not a list.")
     with pytest.raises(SchemaError):
-        Maker.dict_to_tuple(d)
-    d["BooleanactuatorCmdList"] = orig_value
+        Maker.dict_to_tuple(d2)
 
-    orig_value = d["BooleanactuatorCmdList"]
-    d["BooleanactuatorCmdList"] = ["Not even a dict"]
+    d2 = dict(d, BooleanactuatorCmdList=["Not even a dict"])
     with pytest.raises(SchemaError):
-        Maker.dict_to_tuple(d)
+        Maker.dict_to_tuple(d2)
 
-    d["BooleanactuatorCmdList"] = [{"Failed": "Not a GtSimpleSingleStatus"}]
+    d2 = dict(d, BooleanactuatorCmdList=[{"Failed": "Not a GtSimpleSingleStatus"}])
     with pytest.raises(SchemaError):
-        Maker.dict_to_tuple(d)
-    d["BooleanactuatorCmdList"] = orig_value
-
-    with pytest.raises(ValidationError):
-        Maker(
-            slot_start_unix_s=d["SlotStartUnixS"],
-            simple_telemetry_list=d["SimpleTelemetryList"],
-            about_g_node_alias=d["AboutGNodeAlias"],
-            from_g_node_alias=d["FromGNodeAlias"],
-            multipurpose_telemetry_list=d["MultipurposeTelemetryList"],
-            from_g_node_id=d["FromGNodeId"],
-            status_uid=d["StatusUid"],
-            reporting_period_s=d["ReportingPeriodS"],
-            booleanactuator_cmd_list=["Not a GtShBooleanactuatorCmdStatus100"],
-        )
-
-    with pytest.raises(ValidationError):
-        Maker(
-            slot_start_unix_s=gw_tuple.SlotStartUnixS,
-            simple_telemetry_list=gw_tuple.SimpleTelemetryList,
-            about_g_node_alias=gw_tuple.AboutGNodeAlias,
-            from_g_node_alias=gw_tuple.FromGNodeAlias,
-            multipurpose_telemetry_list=gw_tuple.MultipurposeTelemetryList,
-            from_g_node_id=gw_tuple.FromGNodeId,
-            status_uid=gw_tuple.StatusUid,
-            reporting_period_s=gw_tuple.ReportingPeriodS,
-            booleanactuator_cmd_list="This string is not a list",
-        )
+        Maker.dict_to_tuple(d2)
 
     d2 = dict(d, FromGNodeAlias={})
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    orig_value = d["MultipurposeTelemetryList"]
-    d["MultipurposeTelemetryList"] = "Not a list."
+    d2 = dict(d, MultipurposeTelemetryList="Not a list.")
     with pytest.raises(SchemaError):
-        Maker.dict_to_tuple(d)
-    d["MultipurposeTelemetryList"] = orig_value
+        Maker.dict_to_tuple(d2)
 
-    orig_value = d["MultipurposeTelemetryList"]
-    d["MultipurposeTelemetryList"] = ["Not even a dict"]
+    d2 = dict(d, MultipurposeTelemetryList=["Not even a dict"])
     with pytest.raises(SchemaError):
-        Maker.dict_to_tuple(d)
+        Maker.dict_to_tuple(d2)
 
-    d["MultipurposeTelemetryList"] = [{"Failed": "Not a GtSimpleSingleStatus"}]
+    d2 = dict(d, MultipurposeTelemetryList=[{"Failed": "Not a GtSimpleSingleStatus"}])
     with pytest.raises(SchemaError):
-        Maker.dict_to_tuple(d)
-    d["MultipurposeTelemetryList"] = orig_value
-
-    with pytest.raises(ValidationError):
-        Maker(
-            slot_start_unix_s=d["SlotStartUnixS"],
-            simple_telemetry_list=d["SimpleTelemetryList"],
-            about_g_node_alias=d["AboutGNodeAlias"],
-            booleanactuator_cmd_list=d["BooleanactuatorCmdList"],
-            from_g_node_alias=d["FromGNodeAlias"],
-            from_g_node_id=d["FromGNodeId"],
-            status_uid=d["StatusUid"],
-            reporting_period_s=d["ReportingPeriodS"],
-            multipurpose_telemetry_list=["Not a GtShMultipurposeTelemetryStatus100"],
-        )
-
-    with pytest.raises(ValidationError):
-        Maker(
-            slot_start_unix_s=gw_tuple.SlotStartUnixS,
-            simple_telemetry_list=gw_tuple.SimpleTelemetryList,
-            about_g_node_alias=gw_tuple.AboutGNodeAlias,
-            booleanactuator_cmd_list=gw_tuple.BooleanactuatorCmdList,
-            from_g_node_alias=gw_tuple.FromGNodeAlias,
-            from_g_node_id=gw_tuple.FromGNodeId,
-            status_uid=gw_tuple.StatusUid,
-            reporting_period_s=gw_tuple.ReportingPeriodS,
-            multipurpose_telemetry_list="This string is not a list",
-        )
+        Maker.dict_to_tuple(d2)
 
     d2 = dict(d, FromGNodeId={})
     with pytest.raises(ValidationError):
@@ -298,7 +216,7 @@ def test_gt_sh_status_generated():
     assert Maker.dict_to_tuple(d2) == Maker.dict_to_tuple(d)
 
     ######################################
-    # SchemaError raised if TypeName is incorrect
+    # ValidationError raised if TypeName is incorrect
     ######################################
 
     d2 = dict(d, TypeAlias="not the type alias")
@@ -306,7 +224,7 @@ def test_gt_sh_status_generated():
         Maker.dict_to_tuple(d2)
 
     ######################################
-    # SchemaError raised if primitive attributes do not have appropriate property_format
+    # ValidationError raised if primitive attributes do not have appropriate property_format
     ######################################
 
     d2 = dict(d, SlotStartUnixS=32503683600)

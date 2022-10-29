@@ -49,8 +49,8 @@ def test_gt_dispatch_boolean_local_generated():
 
     d2 = dict(d)
     del d2["TypeAlias"]
-    with pytest.raises(ValidationError):
-        GtDispatchBoolean(**d2)
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
     del d2["SendTimeUnixMs"]
@@ -71,7 +71,6 @@ def test_gt_dispatch_boolean_local_generated():
     del d2["RelayState"]
     with pytest.raises(ValidationError):
         GtDispatchBooleanLocal(**d2)
-
     ######################################
     # Behavior on attribute types
     ######################################
@@ -105,7 +104,7 @@ def test_gt_dispatch_boolean_local_generated():
     assert Maker.dict_to_tuple(d2) == Maker.dict_to_tuple(d)
 
     ######################################
-    # SchemaError raised if TypeName is incorrect
+    # ValidationError raised if TypeName is incorrect
     ######################################
 
     d2 = dict(d, TypeAlias="not the type alias")
@@ -113,7 +112,7 @@ def test_gt_dispatch_boolean_local_generated():
         Maker.dict_to_tuple(d2)
 
     ######################################
-    # SchemaError raised if primitive attributes do not have appropriate property_format
+    # ValidationError raised if primitive attributes do not have appropriate property_format
     ######################################
 
     d2 = dict(d, SendTimeUnixMs=1656245000)

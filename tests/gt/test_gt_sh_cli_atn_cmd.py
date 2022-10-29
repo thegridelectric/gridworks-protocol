@@ -47,8 +47,8 @@ def test_gt_sh_cli_atn_cmd_generated():
 
     d2 = dict(d)
     del d2["TypeAlias"]
-    with pytest.raises(ValidationError):
-        GtDispatchBoolean(**d2)
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
     del d2["FromGNodeAlias"]
@@ -64,7 +64,6 @@ def test_gt_sh_cli_atn_cmd_generated():
     del d2["FromGNodeId"]
     with pytest.raises(ValidationError):
         GtShCliAtnCmd(**d2)
-
     ######################################
     # Behavior on attribute types
     ######################################
@@ -82,7 +81,7 @@ def test_gt_sh_cli_atn_cmd_generated():
         Maker.dict_to_tuple(d2)
 
     ######################################
-    # SchemaError raised if TypeName is incorrect
+    # ValidationError raised if TypeName is incorrect
     ######################################
 
     d2 = dict(d, TypeAlias="not the type alias")
@@ -90,7 +89,7 @@ def test_gt_sh_cli_atn_cmd_generated():
         Maker.dict_to_tuple(d2)
 
     ######################################
-    # SchemaError raised if primitive attributes do not have appropriate property_format
+    # ValidationError raised if primitive attributes do not have appropriate property_format
     ######################################
 
     d2 = dict(d, FromGNodeAlias="a.b-h")

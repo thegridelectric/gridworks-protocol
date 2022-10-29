@@ -50,8 +50,8 @@ def test_gt_sh_simple_telemetry_status_generated():
 
     d2 = dict(d)
     del d2["TypeAlias"]
-    with pytest.raises(ValidationError):
-        GtDispatchBoolean(**d2)
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
     del d2["ValueList"]
@@ -68,11 +68,13 @@ def test_gt_sh_simple_telemetry_status_generated():
     with pytest.raises(ValidationError):
         GtShSimpleTelemetryStatus(**d2)
 
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
     d2 = dict(d)
     del d2["ShNodeAlias"]
     with pytest.raises(ValidationError):
         GtShSimpleTelemetryStatus(**d2)
-
     ######################################
     # Behavior on attribute types
     ######################################
@@ -93,7 +95,7 @@ def test_gt_sh_simple_telemetry_status_generated():
         Maker.dict_to_tuple(d2)
 
     ######################################
-    # SchemaError raised if TypeName is incorrect
+    # ValidationError raised if TypeName is incorrect
     ######################################
 
     d2 = dict(d, TypeAlias="not the type alias")
@@ -101,10 +103,10 @@ def test_gt_sh_simple_telemetry_status_generated():
         Maker.dict_to_tuple(d2)
 
     ######################################
-    # SchemaError raised if primitive attributes do not have appropriate property_format
+    # ValidationError raised if primitive attributes do not have appropriate property_format
     ######################################
 
-    d2 = dict(d, ReadTimeUnixMsList=1656245000)
+    d2 = dict(d, ReadTimeUnixMsList=[1656245000])
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 

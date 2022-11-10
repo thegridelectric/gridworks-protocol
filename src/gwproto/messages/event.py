@@ -51,7 +51,7 @@ class ProblemEvent(EventBase):
 
 
 class CommEvent(EventBase):
-    ...
+    PeerName: str
 
 
 class MQTTCommEvent(CommEvent):
@@ -80,6 +80,18 @@ class MQTTFullySubscribedEvent(CommEvent):
     TypeName: Literal[
         "gridworks.event.comm.mqtt.fully_subscribed"
     ] = "gridworks.event.comm.mqtt.fully_subscribed"
+
+
+class ResponseTimeoutEvent(CommEvent):
+    TypeName: Literal[
+        "gridworks.event.comm.response_timeout"
+    ] = "gridworks.event.comm.response_timeout"
+
+
+class PeerActiveEvent(CommEvent):
+    TypeName: Literal[
+        "gridworks.event.comm.peer_active"
+    ] = "gridworks.event.comm.peer_active"
 
 
 class EventMessage(Message[EventT], Generic[EventT]):

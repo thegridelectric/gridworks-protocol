@@ -45,10 +45,14 @@ __all__ = [
     "MQTTConnectFailedEvent",
     "MQTTDisconnectEvent",
     "MQTTFullySubscribedEvent",
+    "PeerActiveEvent",
     "Problems",
     "ProblemEvent",
+    "ResponseTimeoutEvent",
     "ShutdownEvent",
     "StartupEvent",
     # misc
     "Ack",
+    "Ping",
+    "PingMessage",
 ]

@@ -8,7 +8,7 @@ class TelemetryName(enum.Enum):
     @classmethod
     def values(cls):
         return [elt.value for elt in cls]
-
+    UNKNOWN = "Unknown"
     POWER_W = "PowerW"
     WATER_TEMP_F_TIMES1000 = "WaterTempFTimes1000"
     GALLONS_PER_MINUTE_TIMES10 = "GallonsPerMinuteTimes10"
@@ -21,6 +21,7 @@ class TelemetryName(enum.Enum):
 
 class SpaceheatTelemetryName100GtEnum(ABC):
     symbols: List[str] = [
+        "00000000",
         "af39eec9",
         "793505aa",
         "329a68c0",

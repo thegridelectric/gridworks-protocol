@@ -47,7 +47,7 @@ class ProblemEvent(EventBase):
 
     @validator("ProblemType", pre=True)
     def problem_type_value(cls, v: Any) -> Optional[Problems]:
-        return as_enum(v, Problems)
+        return as_enum(v, Problems, Problems.error)
 
 
 class CommEvent(EventBase):

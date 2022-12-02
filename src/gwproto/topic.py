@@ -4,29 +4,32 @@ from dataclasses import dataclass
 
 @dataclass
 class DecodedMQTTTopic:
-    src: str = ""
     envelope_type: str = ""
+    src: str = ""
     message_type: str = ""
     remainder: list[str] = dataclasses.field(default_factory=list)
+
+    def __str__(self) -> str:
+        return f"DecodedMQTTTopic {self.envelope_type}/{self.src}/{self.message_type} remainder:{self.remainder}"
 
 
 class MQTTTopic:
     """Valid Gridworks MQTT topic is one of:
 
-     - SRC/ENVELOPE_TYPE/MESSAGE_TYPE, for example: 'hw1-isone-ma-boston-scada/gw/snapshot-spaceheat',
-        meaning a message from 'hw1-isone-ma-boston-scada', using envelope format 'gw', with message type
+     - ENVELOPE_TYPE/SRC/MESSAGE_TYPE, for example: 'gw/hw1-isone-ma-boston-scada/snapshot-spaceheat',
+        meaning a message using envelope format 'gw', from 'hw1-isone-ma-boston-scada', with message type
         'snapshot-spaceheat'.
 
-     - SRC/ENVELOPE_TYPE, for example: 'hw1-isone-ma-boston-scada/gw',
-        meaning a message from 'hw1-isone-ma-boston-scada', using envelope format 'gw'. Message type must be inferred
+     - ENVELOPE_TYPE/src, for exxample: 'gw/hw1-isone-ma-boston-scada',
+        meaning a message using envelope format 'gw', from 'hw1-isone-ma-boston-scada'. Message type must be inferred
         the contents of the envelope.
 
     - ENVELOPE_TYPE, for example: 'gw',
         meaning a message using envelope format 'gw'. Source and message type must be inferred the contents of the
         envelope.
 
-     - SRC/ENVELOPE_TYPE/MESSAGE_TYPE/OTHER/STUFF, for example: 'hw1-isone-ma-boston-scada/gw/snapshot-spaceheat/bla/bla',
-        meaning a message from 'hw1-isone-ma-boston-scada', using envelope format 'gw', with message type
+     - ENVELOPE_TYPE/SRC/MESSAGE_TYPE/OTHER/STUFF, for example: 'gw/hw1-isone-ma-boston-scada/snapshot-spaceheat/bla/bla',
+        meaning a message using envelope format 'gw', from 'hw1-isone-ma-boston-scada', with message type
         'snapshot-spaceheat', with extra components OTHER and STUFF that may be used by code down-stream code.
 
     The only valid component separator is '/'.
@@ -40,14 +43,14 @@ class MQTTTopic:
     SEPARATOR = "/"
 
     @classmethod
-    def encode(cls, src: str, envelope_type: str, message_type: str):
+    def encode(cls, envelope_type: str, src: str, message_type: str) -> str:
         return (
-            src + cls.SEPARATOR + envelope_type + cls.SEPARATOR + message_type
+            envelope_type + cls.SEPARATOR + src + cls.SEPARATOR + message_type
         ).replace(".", cls.DOT_REPLACEMENT)
 
     @classmethod
-    def encode_subscription(cls, src: str, envelope_type: str):
-        return cls.encode(src, envelope_type, "#")
+    def encode_subscription(cls, envelope_type: str, src: str) -> str:
+        return cls.encode(envelope_type, src, "#")
 
     @classmethod
     def decode(cls, topic: str) -> DecodedMQTTTopic:
@@ -56,20 +59,20 @@ class MQTTTopic:
         topic = topic.replace("-", ".")
         split = topic.split(cls.SEPARATOR)
         if len(split) == 1:
-            src = ""
             envelope_type = split[0]
+            src = ""
             message_type = ""
         elif len(split) == 2:
-            src = split[0]
-            envelope_type = split[1]
+            envelope_type = split[0]
+            src = split[1]
             message_type = ""
         else:
-            src = split[0]
-            envelope_type = split[1]
+            envelope_type = split[0]
+            src = split[1]
             message_type = split[2]
         return DecodedMQTTTopic(
-            src=src,
             envelope_type=envelope_type,
+            src=src,
             message_type=message_type,
             remainder=split[3:],
         )

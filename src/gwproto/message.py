@@ -61,7 +61,7 @@ class Message(GenericModel, Generic[PayloadT]):
         return Message.__fields__["TypeName"].default
 
     def mqtt_topic(self) -> str:
-        return MQTTTopic.encode(self.src(), self.type_name(), self.message_type())
+        return MQTTTopic.encode(self.type_name(), self.src(), self.message_type())
 
     @classmethod
     def _header_from_kwargs(cls, kwargs: dict[str, Any]) -> Header:
@@ -72,7 +72,7 @@ class Message(GenericModel, Generic[PayloadT]):
             ("Dst", ["Dst"]),
             ("MessageId", ["MessageId"]),
             ("MessageType", PAYLOAD_TYPE_FIELDS),
-            ("AckRequired", []),
+            ("AckRequired", ["AckRequired"]),
         ]:
             val = kwargs.get(header_field, None)
             if val is None:

@@ -1,8 +1,13 @@
 import uuid
+from typing import Any
 
 import pendulum
+import pytest
+from pydantic import BaseModel
+from pydantic import ValidationError
 
 import gwproto
+from gwproto.property_format import predicate_validator
 
 
 def test_property_format():
@@ -14,6 +19,7 @@ def test_property_format():
     assert not gwproto.property_format.is_64_bit_hex("12345abcd")
     assert not gwproto.property_format.is_64_bit_hex("1234567g")
 
+    # noinspection PyTypeChecker
     assert not gwproto.property_format.is_lrd_alias_format(5)
     assert not gwproto.property_format.is_lrd_alias_format("5.a-h")
     assert gwproto.property_format.is_lrd_alias_format("a.s")
@@ -52,6 +58,7 @@ def test_property_format():
 
     s = "d4be12d5-33ba-4f1f-b9e5-2582fe41241d"
     assert gwproto.property_format.is_uuid_canonical_textual(s)
+    # noinspection PyTypeChecker
     assert not gwproto.property_format.is_uuid_canonical_textual(uuid.uuid4())
     fail1 = "d4be12d5-33ba-4f1f-b9e5"
     assert not gwproto.property_format.is_uuid_canonical_textual(fail1)
@@ -67,3 +74,55 @@ def test_property_format():
     assert not gwproto.property_format.is_uuid_canonical_textual(fail6)
     fail7 = "d4be12d5-33ba-4f1f-b9e5-2582fe41241"
     assert not gwproto.property_format.is_uuid_canonical_textual(fail7)
+
+
+def test_predicate_validator():
+    def is_truthy(v: Any) -> bool:
+        return bool(v)
+
+    class Foo(BaseModel):
+        an_int: int
+        some_ints: list[int]
+        list_with_contents: list
+        _validate_an_int = predicate_validator("an_int", is_truthy)
+        _validate_some_ints = predicate_validator(
+            "some_ints", is_truthy, each_item=True
+        )
+        _validate_list_with_contents = predicate_validator(
+            "list_with_contents", is_truthy
+        )
+
+    # predicates pass
+    Foo(an_int=1, some_ints=[1, 2, 3], list_with_contents=[False, "xyz"])
+    Foo(an_int=1, some_ints=[1, "2", 3], list_with_contents=[False, "xyz"])
+    Foo(an_int=1, some_ints=[], list_with_contents=[False, "xyz"])
+
+    # predicates pass with implicit type conversion
+    # noinspection PyTypeChecker
+    Foo(an_int="45", some_ints=[1, 2, 3], list_with_contents=[False])
+
+    # scalar field validation
+    with pytest.raises(ValidationError):
+        Foo(an_int=0, some_ints=[1, 2, 3], list_with_contents=[False])
+
+    # field type annotation still used
+    with pytest.raises(ValidationError):
+        # noinspection PyTypeChecker
+        Foo(an_int="yes!", some_ints=[1, 2, 3], list_with_contents=[False])
+
+    # field type annotation still used - convertible value ok.
+    with pytest.raises(ValidationError):
+        Foo(an_int=False, some_ints=[1, 2, 3], list_with_contents=[False])
+
+    # field type annotation still used.
+    with pytest.raises(ValidationError):
+        # noinspection PyTypeChecker
+        Foo(an_int="0", some_ints=[1, 2, 3], list_with_contents=[False])
+
+    # per_item validator applied as expected
+    with pytest.raises(ValidationError):
+        Foo(an_int=1, some_ints=[1, 2, 3, "z"], list_with_contents=[False, "xyz"])
+
+    # non-per_item validator on list
+    with pytest.raises(ValidationError):
+        Foo(an_int=1, some_ints=[1, 2, 3], list_with_contents=[])

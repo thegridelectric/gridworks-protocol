@@ -56,7 +56,7 @@ class MQTTTopic:
     def decode(cls, topic: str) -> DecodedMQTTTopic:
         if not topic:
             raise ValueError("ERROR. Topic must have at least one character")
-        topic = topic.replace("-", ".")
+        topic = str(topic).replace("-", ".")
         split = topic.split(cls.SEPARATOR)
         if len(split) == 1:
             envelope_type = split[0]

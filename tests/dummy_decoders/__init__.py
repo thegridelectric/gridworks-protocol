@@ -1,0 +1,2 @@
+CHILD = "child"
+PARENT = "parent"

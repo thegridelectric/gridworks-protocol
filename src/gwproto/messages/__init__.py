@@ -41,6 +41,7 @@ __all__ = [
     "EventT",
     "EventBase",
     "EventMessage",
+    "GtShStatusEvent",
     "MQTTConnectEvent",
     "MQTTConnectFailedEvent",
     "MQTTDisconnectEvent",
@@ -51,6 +52,7 @@ __all__ = [
     "ResponseTimeoutEvent",
     "ShutdownEvent",
     "StartupEvent",
+    "SnapshotSpaceheatEvent",
     # misc
     "Ack",
     "Ping",

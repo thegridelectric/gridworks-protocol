@@ -11,6 +11,10 @@ from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
 
+from gwproto.gt.gt_sh_status import GtShStatus
+from gwproto.gt.gt_sh_status import GtShStatus_Maker
+from gwproto.gt.snapshot_spaceheat import SnapshotSpaceheat
+from gwproto.gt.snapshot_spaceheat import SnapshotSpaceheat_Maker
 from gwproto.message import Message
 from gwproto.message import as_enum
 
@@ -23,6 +27,13 @@ class EventBase(BaseModel):
 
 
 EventT = TypeVar("EventT", bound=EventBase)
+
+
+class EventMessage(Message[EventT], Generic[EventT]):
+    def __init__(self, **data: Any):
+        if "AckRequired" not in data:
+            data["AckRequired"] = True
+        super().__init__(**data)
 
 
 class StartupEvent(EventBase):
@@ -94,8 +105,29 @@ class PeerActiveEvent(CommEvent):
     ] = "gridworks.event.comm.peer_active"
 
 
-class EventMessage(Message[EventT], Generic[EventT]):
-    def __init__(self, **data: Any):
-        if "AckRequired" not in data:
-            data["AckRequired"] = True
-        super().__init__(**data)
+class GtShStatusEvent(EventBase):
+    status: GtShStatus | dict
+    TypeName: Literal[
+        "gridworks.event.gt.sh.status.110"
+    ] = "gridworks.event.gt.sh.status.110"
+
+    @validator("status")
+    def convert_status(cls, v: Any) -> GtShStatus | dict:
+        if isinstance(v, dict):
+            return GtShStatus_Maker.dict_to_tuple(v)
+        else:
+            return v.asdict()
+
+
+class SnapshotSpaceheatEvent(EventBase):
+    snap: SnapshotSpaceheat | dict
+    TypeName: Literal[
+        "gridworks.event.snapshot.spaceheat.100"
+    ] = "gridworks.event.snapshot.spaceheat.100"
+
+    @validator("snap")
+    def convert_status(cls, v: Any) -> SnapshotSpaceheat | dict:
+        if isinstance(v, dict):
+            return SnapshotSpaceheat_Maker.dict_to_tuple(v)
+        else:
+            return v.asdict()

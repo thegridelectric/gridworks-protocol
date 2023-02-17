@@ -188,7 +188,7 @@ def test_from_payload():
 def test_errors():
 
     # no Payload
-    with pytest.raises(KeyError):
+    with pytest.raises(ValidationError):
         Message()
 
     # No Src

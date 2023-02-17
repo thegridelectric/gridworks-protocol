@@ -6,7 +6,11 @@ from pathlib import Path
 from typing import Any
 from typing import Optional
 
-import rich
+
+try:
+    from rich import print
+except ImportError:
+    pass
 
 from gwproto import Message
 from gwproto import MQTTCodec
@@ -178,9 +182,9 @@ def assert_encode_decode(
                 errors.append(i)
                 if len(errors) == 1:
                     path_dbg |= 0x00000004
-                    rich.print(f"FIRST ERROR, at index {i}")
-                    rich.print(f"exp: {case.exp_message}")
-                    rich.print(f"got: {decoded}")
+                    print(f"FIRST ERROR, at index {i}")
+                    print(f"exp: {case.exp_message}")
+                    print(f"got: {decoded}")
         else:
             path_dbg |= 0x00000008
             if case.exp_payload is None:
@@ -194,9 +198,9 @@ def assert_encode_decode(
                 errors.append(i)
                 if len(errors) == 1:
                     path_dbg |= 0x00000080
-                    rich.print(f"FIRST ERROR, at index {i}")
-                    rich.print(f"exp: {case.exp_payload}")
-                    rich.print(f"got: {decoded.Payload}")
+                    print(f"FIRST ERROR, at index {i}")
+                    print(f"exp: {case.exp_payload}")
+                    print(f"got: {decoded.Payload}")
         # print(f"{decoded.message_type():50s}: path:0x{path_dbg:08X}  {len(errors) == old_len}")
     if errors:
         raise ValueError(f"ERROR. Got codec matching errors at indices {errors}")

@@ -73,23 +73,24 @@ class Message(GenericModel, Generic[PayloadT]):
     @classmethod
     def _header_from_kwargs(cls, kwargs: dict[str, Any]) -> Header:
         header_kwargs = dict()
-        payload = kwargs["Payload"]
-        for header_field, payload_fields in [
-            ("Src", ["Src"]),
-            ("Dst", ["Dst"]),
-            ("MessageId", ["MessageId"]),
-            ("MessageType", PAYLOAD_TYPE_FIELDS),
-            ("AckRequired", ["AckRequired"]),
-        ]:
-            val = kwargs.get(header_field, None)
-            if val is None:
-                for payload_field in payload_fields:
-                    if hasattr(payload, payload_field):
-                        val = getattr(payload, payload_field)
-                    elif isinstance(payload, Mapping) and payload_field in payload:
-                        val = payload[payload_field]
-            if val is not None:
-                header_kwargs[header_field] = val
+        if "Payload" in kwargs:
+            payload = kwargs["Payload"]
+            for header_field, payload_fields in [
+                ("Src", ["Src"]),
+                ("Dst", ["Dst"]),
+                ("MessageId", ["MessageId"]),
+                ("MessageType", PAYLOAD_TYPE_FIELDS),
+                ("AckRequired", ["AckRequired"]),
+            ]:
+                val = kwargs.get(header_field, None)
+                if val is None:
+                    for payload_field in payload_fields:
+                        if hasattr(payload, payload_field):
+                            val = getattr(payload, payload_field)
+                        elif isinstance(payload, Mapping) and payload_field in payload:
+                            val = payload[payload_field]
+                if val is not None:
+                    header_kwargs[header_field] = val
         header: Optional[Union[Header, dict[str, Any]]] = kwargs.get("Header", None)
         if isinstance(header, Header):
             header = header.copy(update=header_kwargs, deep=True)

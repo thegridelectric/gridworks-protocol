@@ -3,8 +3,8 @@ from gwproto import Decoders
 from gwproto import MQTTCodec
 from gwproto import create_message_payload_discriminator
 from gwproto.gs import GsPwr_Maker
-from gwproto.gt.gt_sh_status import GtShStatus_Maker
-from gwproto.gt.snapshot_spaceheat import SnapshotSpaceheat_Maker
+from gwproto.types import GtShStatus_Maker
+from gwproto.types import SnapshotSpaceheat_Maker
 from tests.dummy_decoders import CHILD
 
 

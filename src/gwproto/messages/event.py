@@ -11,12 +11,12 @@ from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
 
-from gwproto.gt.gt_sh_status import GtShStatus
-from gwproto.gt.gt_sh_status import GtShStatus_Maker
-from gwproto.gt.snapshot_spaceheat import SnapshotSpaceheat
-from gwproto.gt.snapshot_spaceheat import SnapshotSpaceheat_Maker
 from gwproto.message import Message
 from gwproto.message import as_enum
+from gwproto.types import GtShStatus
+from gwproto.types import GtShStatus_Maker
+from gwproto.types import SnapshotSpaceheat
+from gwproto.types import SnapshotSpaceheat_Maker
 
 
 class EventBase(BaseModel):
@@ -107,27 +107,25 @@ class PeerActiveEvent(CommEvent):
 
 class GtShStatusEvent(EventBase):
     status: GtShStatus | dict
-    TypeName: Literal[
-        "gridworks.event.gt.sh.status.110"
-    ] = "gridworks.event.gt.sh.status.110"
+    TypeName: Literal["gridworks.event.gt.sh.status"] = "gridworks.event.gt.sh.status"
 
     @validator("status")
     def convert_status(cls, v: Any) -> GtShStatus | dict:
         if isinstance(v, dict):
             return GtShStatus_Maker.dict_to_tuple(v)
         else:
-            return v.asdict()
+            return v.as_dict()
 
 
 class SnapshotSpaceheatEvent(EventBase):
     snap: SnapshotSpaceheat | dict
     TypeName: Literal[
-        "gridworks.event.snapshot.spaceheat.100"
-    ] = "gridworks.event.snapshot.spaceheat.100"
+        "gridworks.event.snapshot.spaceheat"
+    ] = "gridworks.event.snapshot.spaceheat"
 
     @validator("snap")
     def convert_status(cls, v: Any) -> SnapshotSpaceheat | dict:
         if isinstance(v, dict):
             return SnapshotSpaceheat_Maker.dict_to_tuple(v)
         else:
-            return v.asdict()
+            return v.as_dict()

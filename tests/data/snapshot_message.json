@@ -30,7 +30,8 @@
         0, 0, 0, 17812, 15250, 14312, 21812, 15062, 0, -44, -3626, -3015, 3041
       ],
       "ReportTimeUnixMs": 1676592300011,
-      "TypeAlias": "telemetry.snapshot.spaceheat.100",
+      "TypeName": "telemetry.snapshot.spaceheat",
+      "Version": "100",
       "TelemetryNameList": [
         "5a71d4b3",
         "5a71d4b3",
@@ -47,7 +48,8 @@
         "c89d0ba1"
       ]
     },
-    "TypeAlias": "snapshot.spaceheat.100"
+    "TypeName": "snapshot.spaceheat",
+    "Version": "100"
   },
   "TypeName": "gw"
 }

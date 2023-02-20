@@ -1,8 +1,8 @@
 from gwproto import Decoders
 from gwproto import MQTTCodec
 from gwproto import create_message_payload_discriminator
-from gwproto.gt.gt_dispatch_boolean import GtDispatchBoolean_Maker
-from gwproto.gt.gt_sh_cli_atn_cmd import GtShCliAtnCmd_Maker
+from gwproto.types import GtDispatchBoolean_Maker
+from gwproto.types import GtShCliAtnCmd_Maker
 from tests.dummy_decoders import PARENT
 
 

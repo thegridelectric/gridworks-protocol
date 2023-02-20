@@ -12,3 +12,4 @@ __pycache__/
 hacking
 .idea
 scratch.*
+cook.sh

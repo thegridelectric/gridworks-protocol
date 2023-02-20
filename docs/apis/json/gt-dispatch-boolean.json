@@ -1,0 +1,72 @@
+{
+  "gwapi": "001",
+  "type_name": "gt.dispatch.boolean",
+  "version": "110",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": ". Boolean dispatch command sent over the cloud broker from one GNode (FromGNodeAlias/ FromGNodeId) to another (ToGNodeAlias). AboutNodeAlias is the node getting dispatched. It may be a GNode, but it can also be a SpaceHeatNode.",
+  "formats": {
+    "UuidCanonicalTextual": {
+      "type": "string",
+      "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
+      "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"
+    },
+    "LeftRightDot": {
+      "type": "string",
+      "description": "Lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character.",
+      "example": "dw1.isone.me.freedom.apple"
+    },
+    "ReasonableUnixTimeMs": {
+      "type": "string",
+      "description": "An integer reflecting unix time in ms between midnight Jan 1 2000 and midnight Jan 1 3000 UTC",
+      "example": ""
+    }
+  },
+  "properties": {
+    "AboutNodeName": {
+      "type": "string",
+      "format": "LeftRightDot",
+      "title": "The Spaceheat Node getting dispatched",
+      "required": true
+    },
+    "ToGNodeAlias": {
+      "type": "string",
+      "format": "LeftRightDot",
+      "title": "GNodeAlias of the SCADA",
+      "required": true
+    },
+    "FromGNodeAlias": {
+      "type": "string",
+      "format": "LeftRightDot",
+      "title": "GNodeAlias of AtomicTNode",
+      "required": true
+    },
+    "FromGNodeInstanceId": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "GNodeInstance of the AtomicTNode",
+      "required": true
+    },
+    "RelayState": {
+      "type": "integer",
+      "title": "0 or 1",
+      "required": true
+    },
+    "SendTimeUnixMs": {
+      "type": "integer",
+      "format": "ReasonableUnixTimeMs",
+      "title": "Time the AtomicTNode sends the dispatch, by its clock",
+      "required": true
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "gt.dispatch.boolean.110",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "110",
+      "required": true
+    }
+  }
+}

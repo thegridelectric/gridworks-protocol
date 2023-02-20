@@ -1,0 +1,123 @@
+{
+  "gwapi": "001",
+  "type_name": "gt.telemetry",
+  "version": "110",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": "",
+  "formats": {
+    "ReasonableUnixTimeMs": {
+      "type": "string",
+      "description": "An integer reflecting unix time in ms between midnight Jan 1 2000 and midnight Jan 1 3000 UTC",
+      "example": ""
+    }
+  },
+  "enums": {
+    "SpaceheatTelemetryName000": {
+      "type": "string",
+      "name": "spaceheat.telemetry.name.000",
+      "description": "Specifies the name of sensed data reported by SCADA",
+      "oneOf": [
+        {
+          "const": "00000000",
+          "title": "Unknown",
+          "description": ""
+        },
+        {
+          "const": "af39eec9",
+          "title": "PowerW",
+          "description": ""
+        },
+        {
+          "const": "5a71d4b3",
+          "title": "RelayState",
+          "description": ""
+        },
+        {
+          "const": "c89d0ba1",
+          "title": "WaterTempCTimes1000",
+          "description": ""
+        },
+        {
+          "const": "793505aa",
+          "title": "WaterTempFTimes1000",
+          "description": ""
+        },
+        {
+          "const": "d70cce28",
+          "title": "GpmTimes100",
+          "description": ""
+        },
+        {
+          "const": "ad19e79c",
+          "title": "CurrentRmsMicroAmps",
+          "description": ""
+        },
+        {
+          "const": "329a68c0",
+          "title": "GallonsTimes100",
+          "description": ""
+        },
+        {
+          "const": "bb6fdd59",
+          "title": "VoltageRmsMilliVolts",
+          "description": ""
+        },
+        {
+          "const": "e0bb014b",
+          "title": "MilliWattHours",
+          "description": ""
+        },
+        {
+          "const": "337b8659",
+          "title": "FrequencyMicroHz",
+          "description": ""
+        },
+        {
+          "const": "0f627faa",
+          "title": "AirTempCTimes1000",
+          "description": ""
+        },
+        {
+          "const": "4c3f8c78",
+          "title": "AirTempFTimes1000",
+          "description": ""
+        }
+      ]
+    }
+  },
+  "properties": {
+    "ScadaReadTimeUnixMs": {
+      "type": "integer",
+      "format": "ReasonableUnixTimeMs",
+      "title": "",
+      "required": true
+    },
+    "Value": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "Name": {
+      "type": "string",
+      "format": "SpaceheatTelemetryName000",
+      "title": "",
+      "required": true
+    },
+    "Exponent": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "gt.telemetry.110",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "110",
+      "required": true
+    }
+  }
+}

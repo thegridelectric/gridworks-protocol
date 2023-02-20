@@ -1,0 +1,134 @@
+{
+  "gwapi": "001",
+  "type_name": "gt.sh.multipurpose.telemetry.status",
+  "version": "100",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": "",
+  "formats": {
+    "LeftRightDot": {
+      "type": "string",
+      "description": "Lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character.",
+      "example": "dw1.isone.me.freedom.apple"
+    },
+    "ReasonableUnixTimeMs": {
+      "type": "string",
+      "description": "An integer reflecting unix time in ms between midnight Jan 1 2000 and midnight Jan 1 3000 UTC",
+      "example": ""
+    }
+  },
+  "enums": {
+    "SpaceheatTelemetryName000": {
+      "type": "string",
+      "name": "spaceheat.telemetry.name.000",
+      "description": "Specifies the name of sensed data reported by SCADA",
+      "oneOf": [
+        {
+          "const": "00000000",
+          "title": "Unknown",
+          "description": ""
+        },
+        {
+          "const": "af39eec9",
+          "title": "PowerW",
+          "description": ""
+        },
+        {
+          "const": "5a71d4b3",
+          "title": "RelayState",
+          "description": ""
+        },
+        {
+          "const": "c89d0ba1",
+          "title": "WaterTempCTimes1000",
+          "description": ""
+        },
+        {
+          "const": "793505aa",
+          "title": "WaterTempFTimes1000",
+          "description": ""
+        },
+        {
+          "const": "d70cce28",
+          "title": "GpmTimes100",
+          "description": ""
+        },
+        {
+          "const": "ad19e79c",
+          "title": "CurrentRmsMicroAmps",
+          "description": ""
+        },
+        {
+          "const": "329a68c0",
+          "title": "GallonsTimes100",
+          "description": ""
+        },
+        {
+          "const": "bb6fdd59",
+          "title": "VoltageRmsMilliVolts",
+          "description": ""
+        },
+        {
+          "const": "e0bb014b",
+          "title": "MilliWattHours",
+          "description": ""
+        },
+        {
+          "const": "337b8659",
+          "title": "FrequencyMicroHz",
+          "description": ""
+        },
+        {
+          "const": "0f627faa",
+          "title": "AirTempCTimes1000",
+          "description": ""
+        },
+        {
+          "const": "4c3f8c78",
+          "title": "AirTempFTimes1000",
+          "description": ""
+        }
+      ]
+    }
+  },
+  "properties": {
+    "AboutNodeAlias": {
+      "type": "string",
+      "format": "LeftRightDot",
+      "title": "",
+      "required": true
+    },
+    "TelemetryName": {
+      "type": "string",
+      "format": "SpaceheatTelemetryName000",
+      "title": "",
+      "required": true
+    },
+    "ValueList": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "ReadTimeUnixMsList": {
+      "type": "integer",
+      "format": "ReasonableUnixTimeMs",
+      "title": "",
+      "required": true
+    },
+    "SensorNodeAlias": {
+      "type": "string",
+      "title": "",
+      "required": true
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "gt.sh.multipurpose.telemetry.status.100",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "100",
+      "required": true
+    }
+  }
+}

@@ -16,6 +16,9 @@ from gwproto import Message
 from gwproto import MQTTCodec
 from gwproto.gs import GsPwr_Maker
 from gwproto.messages import Ack
+from gwproto.messages import GtDispatchBoolean_Maker
+from gwproto.messages import GtShCliAtnCmd_Maker
+from gwproto.messages import GtShStatus_Maker
 from gwproto.messages import GtShStatusEvent
 from gwproto.messages import MQTTConnectEvent
 from gwproto.messages import MQTTConnectFailedEvent
@@ -27,12 +30,9 @@ from gwproto.messages import ProblemEvent
 from gwproto.messages import Problems
 from gwproto.messages import ResponseTimeoutEvent
 from gwproto.messages import ShutdownEvent
+from gwproto.messages import SnapshotSpaceheat_Maker
 from gwproto.messages import SnapshotSpaceheatEvent
 from gwproto.messages import StartupEvent
-from gwproto.types import GtDispatchBoolean_Maker
-from gwproto.types import GtShCliAtnCmd_Maker
-from gwproto.types import GtShStatus_Maker
-from gwproto.types import SnapshotSpaceheat_Maker
 from tests.dummy_decoders import CHILD
 from tests.dummy_decoders import PARENT
 from tests.dummy_decoders.child.codec import ChildMQTTCodec
@@ -64,7 +64,7 @@ class MessageCase:
 
 
 def child_to_parent_messages() -> list[MessageCase]:
-    stored_message_dicts = child_to_parent_payload_dicts
+    stored_message_dicts = child_to_parent_payload_dicts()
     status_message_dict = stored_message_dicts["status"]
     gt_sh_status = GtShStatus_Maker.dict_to_tuple(status_message_dict["Payload"])
     gt_sh_status_event = GtShStatusEvent(Src=CHILD, status=gt_sh_status)

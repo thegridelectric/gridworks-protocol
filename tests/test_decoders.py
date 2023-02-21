@@ -47,6 +47,15 @@ def get_stored_message_dicts() -> dict:
     return d
 
 
+def child_to_parent_payload_dicts() -> dict:
+    d = {}
+    for prefix in ["status", "snapshot"]:
+        with (TEST_DATA_DIR / f"{prefix}_message.json").open() as f:
+            d[prefix] = json.loads(f.read())
+            d[prefix]["Header"]["Src"] = CHILD
+    return d
+
+
 @dataclass
 class MessageCase:
     src_message: Message
@@ -55,11 +64,7 @@ class MessageCase:
 
 
 def child_to_parent_messages() -> list[MessageCase]:
-    stored_message_dicts = {}
-    for prefix in ["status", "snapshot"]:
-        with (TEST_DATA_DIR / f"{prefix}_message.json").open() as f:
-            stored_message_dicts[prefix] = json.loads(f.read())
-        stored_message_dicts[prefix]["Header"]["Src"] = CHILD
+    stored_message_dicts = child_to_parent_payload_dicts
     status_message_dict = stored_message_dicts["status"]
     gt_sh_status = GtShStatus_Maker.dict_to_tuple(status_message_dict["Payload"])
     gt_sh_status_event = GtShStatusEvent(Src=CHILD, status=gt_sh_status)

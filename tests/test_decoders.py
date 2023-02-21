@@ -66,8 +66,12 @@ class MessageCase:
 def child_to_parent_messages() -> list[MessageCase]:
     stored_message_dicts = child_to_parent_payload_dicts()
     status_message_dict = stored_message_dicts["status"]
-    gt_sh_status = GtShStatus_Maker.dict_to_tuple(status_message_dict["Payload"])
-    gt_sh_status_event = GtShStatusEvent(Src=CHILD, status=gt_sh_status)
+    # gt_sh_status = GtShStatus_Maker.dict_to_tuple(status_message_dict["Payload"])
+    # gt_sh_status_event = GtShStatusEvent(Src=CHILD, status=gt_sh_status)
+    gt_sh_status_event = GtShStatusEvent(
+        Src=CHILD, status=status_message_dict["Payload"]
+    )
+    gt_sh_status = gt_sh_status_event.status
     exp_status_event = GtShStatusEvent(
         Src=CHILD,
         MessageId=gt_sh_status_event.MessageId,
@@ -90,7 +94,12 @@ def child_to_parent_messages() -> list[MessageCase]:
         # Gs Pwr
         MessageCase(Message(Src=CHILD, MessageType="p", Payload=GsPwr_Maker(1).tuple)),
         # status
-        MessageCase(Message(**status_message_dict), None, gt_sh_status),
+        MessageCase(
+            Message(Src=CHILD, MessageType="gt.sh.status.110", Payload=gt_sh_status),
+            None,
+            gt_sh_status,
+        ),
+        # MessageCase(Message(**status_message_dict), None, gt_sh_status),
         MessageCase(
             Message(Src=CHILD, Payload=status_message_dict["Payload"]),
             None,

@@ -66,12 +66,8 @@ class MessageCase:
 def child_to_parent_messages() -> list[MessageCase]:
     stored_message_dicts = child_to_parent_payload_dicts()
     status_message_dict = stored_message_dicts["status"]
-    # gt_sh_status = GtShStatus_Maker.dict_to_tuple(status_message_dict["Payload"])
-    # gt_sh_status_event = GtShStatusEvent(Src=CHILD, status=gt_sh_status)
-    gt_sh_status_event = GtShStatusEvent(
-        Src=CHILD, status=status_message_dict["Payload"]
-    )
-    gt_sh_status = gt_sh_status_event.status
+    gt_sh_status = GtShStatus_Maker.dict_to_tuple(status_message_dict["Payload"])
+    gt_sh_status_event = GtShStatusEvent(Src=CHILD, status=gt_sh_status)
     exp_status_event = GtShStatusEvent(
         Src=CHILD,
         MessageId=gt_sh_status_event.MessageId,

@@ -136,7 +136,7 @@ class OneDecoderExtractor:
 
 @dataclass
 class MakerExtractor(OneDecoderExtractor):
-    type_name_field: str = "type_alias"
+    type_name_field: str = "type_name"
     decoder_function_name: str = MakerDecoder.DECODER_FUNCTION_NAME
 
 

@@ -13,10 +13,10 @@ def test_gt_sh_multipurpose_telemetry_status_generated() -> None:
 
     d = {
         "AboutNodeAlias": "a.elt1",
+        "SensorNodeAlias": "a.m",
         "TelemetryNameGtEnumSymbol": "af39eec9",
         "ValueList": [4559],
         "ReadTimeUnixMsList": [1656443705023],
-        "SensorNodeAlias": "a.m",
         "TypeName": "gt.sh.multipurpose.telemetry.status",
         "Version": "100",
     }
@@ -37,15 +37,15 @@ def test_gt_sh_multipurpose_telemetry_status_generated() -> None:
     # test Maker init
     t = Maker(
         about_node_alias=gtuple.AboutNodeAlias,
+        sensor_node_alias=gtuple.SensorNodeAlias,
         telemetry_name=gtuple.TelemetryName,
         value_list=gtuple.ValueList,
         read_time_unix_ms_list=gtuple.ReadTimeUnixMsList,
-        sensor_node_alias=gtuple.SensorNodeAlias,
     ).tuple
     assert t == gtuple
 
     ######################################
-    # MpMpSchemaError raised if missing a required attribute
+    # MpSchemaError raised if missing a required attribute
     ######################################
 
     d2 = dict(d)
@@ -55,6 +55,11 @@ def test_gt_sh_multipurpose_telemetry_status_generated() -> None:
 
     d2 = dict(d)
     del d2["AboutNodeAlias"]
+    with pytest.raises(MpSchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    del d2["SensorNodeAlias"]
     with pytest.raises(MpSchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -73,11 +78,6 @@ def test_gt_sh_multipurpose_telemetry_status_generated() -> None:
     with pytest.raises(MpSchemaError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d)
-    del d2["SensorNodeAlias"]
-    with pytest.raises(MpSchemaError):
-        Maker.dict_to_tuple(d2)
-
     ######################################
     # Behavior on incorrect types
     ######################################
@@ -86,7 +86,7 @@ def test_gt_sh_multipurpose_telemetry_status_generated() -> None:
     Maker.dict_to_tuple(d2).TelemetryName = TelemetryName.default()
 
     ######################################
-    # MpMpSchemaError raised if TypeName is incorrect
+    # MpSchemaError raised if TypeName is incorrect
     ######################################
 
     d2 = dict(d, TypeName="not the type alias")
@@ -94,7 +94,7 @@ def test_gt_sh_multipurpose_telemetry_status_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     ######################################
-    # MpMpSchemaError raised if primitive attributes do not have appropriate property_format
+    # MpSchemaError raised if primitive attributes do not have appropriate property_format
     ######################################
 
     d2 = dict(d, AboutNodeAlias="a.b-h")

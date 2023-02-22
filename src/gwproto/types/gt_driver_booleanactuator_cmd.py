@@ -12,7 +12,8 @@ from gwproto.errors import MpSchemaError
 
 
 def check_is_left_right_dot(v: str) -> None:
-    """
+    """Checks LeftRightDot Format
+
     LeftRightDot format: Lowercase alphanumeric words separated by periods,
     most significant word (on the left) starting with an alphabet character.
 
@@ -40,11 +41,13 @@ def check_is_left_right_dot(v: str) -> None:
 
 
 def check_is_reasonable_unix_time_ms(v: int) -> None:
-    """
-    ReasonableUnixTimeMs format: time in unix milliseconds between Jan 1 2000 and Jan 1 3000
+    """Checks ReasonableUnixTimeMs format
+
+    ReasonableUnixTimeMs format: unix milliseconds between Jan 1 2000 and Jan 1 3000
 
     Args:
         v (int): the candidate
+
     Raises:
         ValueError: if v is not ReasonableUnixTimeMs format
     """

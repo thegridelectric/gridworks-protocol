@@ -12,12 +12,13 @@ from gwproto.errors import MpSchemaError
 
 
 def check_is_uuid_canonical_textual(v: str) -> None:
-    """
+    """Checks UuidCanonicalTextual format
+
     UuidCanonicalTextual format:  A string of hex words separated by hyphens
     of length 8-4-4-4-12.
 
     Args:
-    v (str): the candidate
+        v (str): the candidate
 
     Raises:
         ValueError: if v is not UuidCanonicalTextual format
@@ -46,7 +47,8 @@ def check_is_uuid_canonical_textual(v: str) -> None:
 
 
 def check_is_left_right_dot(v: str) -> None:
-    """
+    """Checks LeftRightDot Format
+
     LeftRightDot format: Lowercase alphanumeric words separated by periods,
     most significant word (on the left) starting with an alphabet character.
 

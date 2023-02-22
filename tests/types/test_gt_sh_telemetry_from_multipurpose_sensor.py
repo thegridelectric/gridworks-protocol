@@ -12,10 +12,10 @@ from gwproto.types import GtShTelemetryFromMultipurposeSensor_Maker as Maker
 def test_gt_sh_telemetry_from_multipurpose_sensor_generated() -> None:
 
     d = {
-        "AboutNodeAliasList": ["a.elt1"],
-        "ValueList": [18000],
-        "TelemetryNameList": ["ad19e79c"],
         "ScadaReadTimeUnixMs": 1656587343297,
+        "AboutNodeAliasList": ["a.elt1"],
+        "TelemetryNameList": ["ad19e79c"],
+        "ValueList": [18000],
         "TypeName": "gt.sh.telemetry.from.multipurpose.sensor",
         "Version": "100",
     }
@@ -35,10 +35,10 @@ def test_gt_sh_telemetry_from_multipurpose_sensor_generated() -> None:
 
     # test Maker init
     t = Maker(
-        about_node_alias_list=gtuple.AboutNodeAliasList,
-        value_list=gtuple.ValueList,
         scada_read_time_unix_ms=gtuple.ScadaReadTimeUnixMs,
+        about_node_alias_list=gtuple.AboutNodeAliasList,
         telemetry_name_list=gtuple.TelemetryNameList,
+        value_list=gtuple.ValueList,
     ).tuple
     assert t == gtuple
 
@@ -52,22 +52,22 @@ def test_gt_sh_telemetry_from_multipurpose_sensor_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["AboutNodeAliasList"]
-    with pytest.raises(MpSchemaError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d)
-    del d2["ValueList"]
-    with pytest.raises(MpSchemaError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d)
     del d2["ScadaReadTimeUnixMs"]
     with pytest.raises(MpSchemaError):
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
+    del d2["AboutNodeAliasList"]
+    with pytest.raises(MpSchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
     del d2["TelemetryNameList"]
+    with pytest.raises(MpSchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    del d2["ValueList"]
     with pytest.raises(MpSchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -91,11 +91,11 @@ def test_gt_sh_telemetry_from_multipurpose_sensor_generated() -> None:
     # MpSchemaError raised if primitive attributes do not have appropriate property_format
     ######################################
 
-    d2 = dict(d, AboutNodeAliasList=["a.b-h"])
+    d2 = dict(d, ScadaReadTimeUnixMs=1656245000)
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, ScadaReadTimeUnixMs=1656245000)
+    d2 = dict(d, AboutNodeAliasList=["a.b-h"])
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 

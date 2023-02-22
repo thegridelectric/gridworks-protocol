@@ -6,19 +6,15 @@ Python pydantic class corresponding to  json type ```gt.sh.booleanactuator.cmd.s
     :members:
 
 **ShNodeAlias**:
-    - Description:
+    - Description: SpaceheatNodeAlias. The alias of the spaceheat node that is getting actuated. For example, `a.elt1.relay` would likely indicate the relay for a resistive element.
     - Format: LeftRightDot
 
 **RelayStateCommandList**:
-    - Description:
+    - Description: List of RelayStateCommands
 
 **CommandTimeUnixMsList**:
-    - Description:
+    - Description: List of Command Times
     - Format: ReasonableUnixTimeMs
-
-.. autoclass:: gwproto.types.gt_sh_booleanactuator_cmd_status.check_is_bit
-    :members:
-
 
 .. autoclass:: gwproto.types.gt_sh_booleanactuator_cmd_status.check_is_left_right_dot
     :members:

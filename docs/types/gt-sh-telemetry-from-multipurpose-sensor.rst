@@ -5,19 +5,19 @@ Python pydantic class corresponding to  json type ```gt.sh.telemetry.from.multip
 .. autoclass:: gwproto.types.GtShTelemetryFromMultipurposeSensor
     :members:
 
-**AboutNodeAliasList**:
-    - Description:
-    - Format: LeftRightDot
-
-**ValueList**:
-    - Description:
-
 **ScadaReadTimeUnixMs**:
-    - Description:
+    - Description: ScadaReadTime in Unix MilliSeconds
     - Format: ReasonableUnixTimeMs
 
+**AboutNodeAliasList**:
+    - Description: AboutNodeAliasList. List of aliases of the SpaceHeat Nodes getting measured
+    - Format: LeftRightDot
+
 **TelemetryNameList**:
-    - Description:
+    - Description: TelemetryNameList. List of the TelemetryNames. The nth name in this list indicates the TelemetryName of the nth alias in the AboutNodeAliasList.
+
+**ValueList**:
+    - Description: ValueList
 
 .. autoclass:: gwproto.types.gt_sh_telemetry_from_multipurpose_sensor.check_is_left_right_dot
     :members:

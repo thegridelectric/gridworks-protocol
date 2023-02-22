@@ -313,6 +313,11 @@ by the concept of MarketType.</Description>
       <ProtocolTypes>Unnamed record, Unnamed record</ProtocolTypes>
       <Alias>telemetry.snapshot.spaceheat</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
+      <Title>Snapshot of Telemetry Data from a SpaceHeat SCADA</Title>
+      <Description>A snapshot of all current sensed states, sent from a spaceheat SCADA to its
+    AtomicTNode. The nth element of each of the three lists refer to the same reading
+    (i.e., what is getting read, what the value is, what the TelemetryNames are.)</Description>
+      <Url>https://gridworks-protocol.readthedocs.io/en/latest/spaceheat-node.html</Url>
     </SchemaRoot>
     <SchemaRoot>
       <SchemaRootId>recBX9s6MqEmX6EjU</SchemaRootId>
@@ -353,8 +358,14 @@ by the concept of MarketType.</Description>
       <SchemaRootscopy>receGKnJ8CfemQLdQ</SchemaRootscopy>
       <InGwProto>true</InGwProto>
       <ProtocolTypes>Unnamed record, Unnamed record</ProtocolTypes>
+      <Title>Data read from a MultipurposeSensor run by a Spaceheat SCADA</Title>
+      <Url>https://gridworks-protocol.readthedocs.io/en/latest/multipurpose-sensor.html</Url>
       <Alias>gt.sh.multipurpose.telemetry.status</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
+      <Description>A list of readings about a specific SpaceheatNode made by a MultipurposeSensor node,
+     for a  Spaceheat SCADA. Designed as part of a status message sent from the SCADA
+     to its AtomicTNode typically once every 5 minutes. The nth element of each of its
+     two lists refer to the same reading (i.e. what the value is, when it was read).</Description>
     </SchemaRoot>
     <SchemaRoot>
       <SchemaRootId>recCKmWozQuINHiaT</SchemaRootId>
@@ -1401,8 +1412,14 @@ by the concept of MarketType.</Description>
       <SchemaRootscopy>rec8c4KjhwNmfrRYP</SchemaRootscopy>
       <InGwProto>true</InGwProto>
       <ProtocolTypes>Unnamed record, Unnamed record</ProtocolTypes>
+      <Title>Data read from a SimpleSensor run by a SpaceHeat SCADA</Title>
+      <Url>https://gridworks-protocol.readthedocs.io/en/latest/simple-sensor.html</Url>
       <Alias>gt.sh.simple.telemetry.status</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
+      <Description>A list of readings from a simple sensor for a Spaceheat SCADA. Designed as part of a status
+    message sent from the SCADA to its AtomicTNode typically once every 5 minutes. The nth
+    element of each of its two lists refer to the same reading (i.e. what the value is,
+    when it was read).</Description>
     </SchemaRoot>
     <SchemaRoot>
       <SchemaRootId>recx3kwLemvtMaT0t</SchemaRootId>
@@ -1414,8 +1431,13 @@ by the concept of MarketType.</Description>
       <SchemaRootscopy>rec93KBYcwiqJ6OQy</SchemaRootscopy>
       <InGwProto>true</InGwProto>
       <ProtocolTypes>Unnamed record</ProtocolTypes>
+      <Title>Data sent from a MultipurposeSensor to a Spaceheat SCADA</Title>
+      <Url>https://gridworks-protocol.readthedocs.io/en/latest/multipurpose-sensor.html</Url>
       <Alias>gt.sh.telemetry.from.multipurpose.sensor</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
+      <Description>A set of readings made at the same time by a multipurpose sensor, sent by the
+    MultipurposeSensor SpaceheatNode actor to its SCADA.  The nth element of each of its
+    three readings (what is getting read, what the value is, what the TelemetryNames are).</Description>
     </SchemaRoot>
     <SchemaRoot>
       <SchemaRootId>recx4EL5mDebUhtzp</SchemaRootId>
@@ -1431,7 +1453,7 @@ by the concept of MarketType.</Description>
       <Alias>gt.telemetry</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
     </SchemaRoot>
-    <SchemaRoot>itrUeanJRnk15r1c8/recx4EL5mDebUhtzp</SchemaRoot>
+    <SchemaRoot>itrdejwTMsju55CO6/recx4EL5mDebUhtzp</SchemaRoot>
     <SchemaRoot>
       <SchemaRootId>recxXnNUXYPwJi4ns</SchemaRootId>
       <createdTime>2023-02-14T13:12:20Z</createdTime>
@@ -1606,8 +1628,9 @@ by the concept of MarketType.</Description>
       <ProtocolEnums>recfpS2uOHAcfWGdN</ProtocolEnums>
       <ProtocolEnums>recEoOqNnACzUFpeY</ProtocolEnums>
       <Version>000</Version>
-      <Description>Specifies the name of sensed data reported by SCADA</Description>
+      <Description>Specifies the name of sensed data reported by a Spaceheat SCADA</Description>
       <PropertyFormatRoot>SpaceheatTelemetryName</PropertyFormatRoot>
+      <Url>https://gridworks-protocol.readthedocs.io/en/latest/telemetry-name.html</Url>
       <Alias>spaceheat.telemetry.name.000</Alias>
       <DefaultSymbol>00000000</DefaultSymbol>
       <DefaultEnumValue>Unknown</DefaultEnumValue>
@@ -2772,6 +2795,7 @@ by the concept of MarketType.</Description>
       <LocalValue>PowerW</LocalValue>
       <Enum>rec2HyLffy6QK9QId</Enum>
       <Symbol>af39eec9</Symbol>
+      <Description>Power in Watts</Description>
       <Idx>1</Idx>
       <Version>000</Version>
       <DisplayName>spaceheat.telemetry.name.000__PowerW</DisplayName>
@@ -2903,6 +2927,7 @@ by the concept of MarketType.</Description>
       <LocalValue>WaterTempFTimes1000</LocalValue>
       <Enum>rec2HyLffy6QK9QId</Enum>
       <Symbol>793505aa</Symbol>
+      <Description>Water temperature, in Degrees F multiplied by 1000. So 142100 means 142.1 deg F</Description>
       <Idx>4</Idx>
       <Version>000</Version>
       <DisplayName>spaceheat.telemetry.name.000__WaterTempFTimes1000</DisplayName>
@@ -3113,6 +3138,7 @@ by the concept of MarketType.</Description>
       <LocalValue>GallonsTimes100</LocalValue>
       <Enum>rec2HyLffy6QK9QId</Enum>
       <Symbol>329a68c0</Symbol>
+      <Description>Gallons multipled by 100</Description>
       <Idx>7</Idx>
       <Version>000</Version>
       <DisplayName>spaceheat.telemetry.name.000__GallonsTimes100</DisplayName>
@@ -3400,6 +3426,7 @@ by the concept of MarketType.</Description>
       <LocalValue>GpmTimes100</LocalValue>
       <Enum>rec2HyLffy6QK9QId</Enum>
       <Symbol>d70cce28</Symbol>
+      <Description>Gallons Per Minute multiplied by 100. So 433 means 4.33 gallons per minute.</Description>
       <Idx>5</Idx>
       <Version>000</Version>
       <DisplayName>spaceheat.telemetry.name.000__GpmTimes100</DisplayName>
@@ -3436,6 +3463,7 @@ by the concept of MarketType.</Description>
       <LocalValue>MilliWattHours</LocalValue>
       <Enum>rec2HyLffy6QK9QId</Enum>
       <Symbol>e0bb014b</Symbol>
+      <Description>Energy in MilliWattHours.</Description>
       <Idx>10</Idx>
       <Version>001</Version>
       <DisplayName>spaceheat.telemetry.name.000__MilliWattHours</DisplayName>
@@ -3489,6 +3517,7 @@ by the concept of MarketType.</Description>
       <LocalValue>WaterTempCTimes1000</LocalValue>
       <Enum>rec2HyLffy6QK9QId</Enum>
       <Symbol>c89d0ba1</Symbol>
+      <Description>Water temperature, in Degrees Celcius multiplied by 1000. So 43200 means 43.2 deg C</Description>
       <Idx>3</Idx>
       <Version>000</Version>
       <DisplayName>spaceheat.telemetry.name.000__WaterTempCTimes1000</DisplayName>
@@ -3511,6 +3540,7 @@ by the concept of MarketType.</Description>
       <LocalValue>FrequencyMicroHz</LocalValue>
       <Enum>rec2HyLffy6QK9QId</Enum>
       <Symbol>337b8659</Symbol>
+      <Description>Frequency in MicroHz</Description>
       <Idx>11</Idx>
       <Version>001</Version>
       <DisplayName>spaceheat.telemetry.name.000__FrequencyMicroHz</DisplayName>
@@ -3533,7 +3563,7 @@ by the concept of MarketType.</Description>
       <Symbol>f8cf443b</Symbol>
       <DisplayName>component.category.000__Generator</DisplayName>
     </EnumSymbol>
-    <EnumSymbol>itrV3zVn5aV2MWHH6/recQH1y9oFoMDcnsd</EnumSymbol>
+    <EnumSymbol>itrr1rnu1d9dcipNT/recQH1y9oFoMDcnsd</EnumSymbol>
     <EnumSymbol>
       <EnumSymbolId>recQVMwz6qwFEr9n8</EnumSymbolId>
       <createdTime>2022-07-15T17:12:47Z</createdTime>
@@ -3613,7 +3643,9 @@ by the concept of MarketType.</Description>
       <LocalValue>AirTempFTimes1000</LocalValue>
       <Enum>rec2HyLffy6QK9QId</Enum>
       <Symbol>4c3f8c78</Symbol>
+      <Description>Air temperature, in Degrees F multiplied by 1000.</Description>
       <Idx>13</Idx>
+      <Version>002</Version>
       <DisplayName>spaceheat.telemetry.name.000__AirTempFTimes1000</DisplayName>
     </EnumSymbol>
     <EnumSymbol>
@@ -3642,6 +3674,7 @@ by the concept of MarketType.</Description>
       <LocalValue>RelayState</LocalValue>
       <Enum>rec2HyLffy6QK9QId</Enum>
       <Symbol>5a71d4b3</Symbol>
+      <Description>State of a Relay. 0 means open, 1 means closed</Description>
       <Idx>2</Idx>
       <Version>000</Version>
       <DisplayName>spaceheat.telemetry.name.000__RelayState</DisplayName>
@@ -3652,6 +3685,7 @@ by the concept of MarketType.</Description>
       <LocalValue>VoltageRmsMilliVolts</LocalValue>
       <Enum>rec2HyLffy6QK9QId</Enum>
       <Symbol>bb6fdd59</Symbol>
+      <Description>Voltage in Root Mean Square MilliVolts</Description>
       <Idx>9</Idx>
       <Version>001</Version>
       <DisplayName>spaceheat.telemetry.name.000__VoltageRmsMilliVolts</DisplayName>
@@ -3747,7 +3781,9 @@ by the concept of MarketType.</Description>
       <LocalValue>AirTempCTimes1000</LocalValue>
       <Enum>rec2HyLffy6QK9QId</Enum>
       <Symbol>0f627faa</Symbol>
+      <Description>Air temperature, in Degrees Celsius multiplied by 1000.</Description>
       <Idx>12</Idx>
+      <Version>002</Version>
       <DisplayName>spaceheat.telemetry.name.000__AirTempCTimes1000</DisplayName>
     </EnumSymbol>
     <EnumSymbol>
@@ -3840,6 +3876,7 @@ by the concept of MarketType.</Description>
       <LocalValue>Unknown</LocalValue>
       <Enum>rec2HyLffy6QK9QId</Enum>
       <Symbol>00000000</Symbol>
+      <Description>Default Value - unknown telemetry name</Description>
       <Idx>0</Idx>
       <DefaultFor>rec2HyLffy6QK9QId</DefaultFor>
       <Version>000</Version>
@@ -4488,7 +4525,7 @@ by the concept of MarketType.</Description>
       <Idx>5</Idx>
       <DisplayName>sh.actor.class.000__SimpleSensor</DisplayName>
     </EnumSymbol>
-    <EnumSymbol>itrV3zVn5aV2MWHH6/recoNR7leouxWteyP</EnumSymbol>
+    <EnumSymbol>itrr1rnu1d9dcipNT/recoNR7leouxWteyP</EnumSymbol>
     <EnumSymbol>
       <EnumSymbolId>recoQaLaEtnGeQcwe</EnumSymbolId>
       <createdTime>2022-06-16T10:09:48Z</createdTime>
@@ -4759,6 +4796,7 @@ by the concept of MarketType.</Description>
       <LocalValue>CurrentRmsMicroAmps</LocalValue>
       <Enum>rec2HyLffy6QK9QId</Enum>
       <Symbol>ad19e79c</Symbol>
+      <Description>Current measurement in Root Mean Square MicroAmps</Description>
       <Idx>6</Idx>
       <Version>000</Version>
       <DisplayName>spaceheat.telemetry.name.000__CurrentRmsMicroAmps</DisplayName>
@@ -5300,6 +5338,7 @@ by the concept of MarketType.</Description>
       <PreStatus>Active</PreStatus>
       <PropertyFormatsUsed>recqSXVzLo8RtEjlH</PropertyFormatsUsed>
       <PropertyFormatsUsed>recb9fI4kRkTYXDzA</PropertyFormatsUsed>
+      <MultiPropertyAxioms>recXMf6hlVg265ccL</MultiPropertyAxioms>
       <Alias>gt.sh.simple.telemetry.status.100</Alias>
       <RootStatus>Active</RootStatus>
       <ProtocolCategory>Json</ProtocolCategory>
@@ -5312,6 +5351,12 @@ by the concept of MarketType.</Description>
       <IsCurrent>1</IsCurrent>
       <Status>Active</Status>
       <InGwProto>true</InGwProto>
+      <Title>Data read from a SimpleSensor run by a SpaceHeat SCADA</Title>
+      <Url>https://gridworks-protocol.readthedocs.io/en/latest/simple-sensor.html</Url>
+      <Description>A list of readings from a simple sensor for a Spaceheat SCADA. Designed as part of a status
+    message sent from the SCADA to its AtomicTNode typically once every 5 minutes. The nth
+    element of each of its two lists refer to the same reading (i.e. what the value is,
+    when it was read).</Description>
     </Schema>
     <Schema>
       <SchemaId>rec8uTC7GK5qgXzg9</SchemaId>
@@ -5394,6 +5439,7 @@ by the concept of MarketType.</Description>
       <PreStatus>Active</PreStatus>
       <PropertyFormatsUsed>recb9fI4kRkTYXDzA</PropertyFormatsUsed>
       <PropertyFormatsUsed>recqSXVzLo8RtEjlH</PropertyFormatsUsed>
+      <MultiPropertyAxioms>recEnG4y5Q19QVq6H</MultiPropertyAxioms>
       <Alias>gt.sh.telemetry.from.multipurpose.sensor.100</Alias>
       <RootStatus>Active</RootStatus>
       <ProtocolCategory>Json</ProtocolCategory>
@@ -5406,6 +5452,11 @@ by the concept of MarketType.</Description>
       <IsCurrent>1</IsCurrent>
       <Status>Active</Status>
       <InGwProto>true</InGwProto>
+      <Title>Data sent from a MultipurposeSensor to a Spaceheat SCADA</Title>
+      <Url>https://gridworks-protocol.readthedocs.io/en/latest/multipurpose-sensor.html</Url>
+      <Description>A set of readings made at the same time by a multipurpose sensor, sent by the
+    MultipurposeSensor SpaceheatNode actor to its SCADA.  The nth element of each of its
+    three readings (what is getting read, what the value is, what the TelemetryNames are).</Description>
     </Schema>
     <Schema>
       <SchemaId>rec944QikN18Rdopu</SchemaId>
@@ -7320,6 +7371,12 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsCurrent>1</IsCurrent>
       <Status>Active</Status>
       <InGwProto>true</InGwProto>
+      <Title>Snapshot of Telemetry Data from a SpaceHeat SCADA</Title>
+      <Description>A snapshot of all current sensed states, sent from a spaceheat SCADA to its
+    AtomicTNode. The nth element of each of the three lists refer to the same reading
+    (i.e., what is getting read, what the value is, what the TelemetryNames are.)</Description>
+      <Url>https://gridworks-protocol.readthedocs.io/en/latest/spaceheat-node.html</Url>
+      <MultiPropertyAxioms>recj0W1AWU40FitTy</MultiPropertyAxioms>
     </Schema>
     <Schema>
       <SchemaId>recdXzxjKArjU2z9Z</SchemaId>
@@ -7394,6 +7451,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <PreStatus>Active</PreStatus>
       <PropertyFormatsUsed>recb9fI4kRkTYXDzA</PropertyFormatsUsed>
       <PropertyFormatsUsed>recqSXVzLo8RtEjlH</PropertyFormatsUsed>
+      <MultiPropertyAxioms>recSLBrC1olag5pK9</MultiPropertyAxioms>
       <Alias>gt.sh.multipurpose.telemetry.status.100</Alias>
       <RootStatus>Active</RootStatus>
       <ProtocolCategory>Json</ProtocolCategory>
@@ -7406,6 +7464,12 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsCurrent>1</IsCurrent>
       <Status>Active</Status>
       <InGwProto>true</InGwProto>
+      <Title>Data read from a MultipurposeSensor run by a Spaceheat SCADA</Title>
+      <Url>https://gridworks-protocol.readthedocs.io/en/latest/multipurpose-sensor.html</Url>
+      <Description>A list of readings about a specific SpaceheatNode made by a MultipurposeSensor node,
+     for a  Spaceheat SCADA. Designed as part of a status message sent from the SCADA
+     to its AtomicTNode typically once every 5 minutes. The nth element of each of its
+     two lists refer to the same reading (i.e. what the value is, when it was read).</Description>
     </Schema>
     <Schema>
       <SchemaId>recepkVk3vOelGIUa</SchemaId>
@@ -7826,7 +7890,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Status>Deprecated</Status>
       <InGwProto />
     </Schema>
-    <Schema>itr3MsD7Hg0BT1EkR/recncxVAzn76fL8xN</Schema>
+    <Schema>itrt1vTH6iFE1vEkX/recncxVAzn76fL8xN</Schema>
     <Schema>
       <SchemaId>recpHvfV5mSI7pgRP</SchemaId>
       <createdTime>2022-07-03T22:18:20Z</createdTime>
@@ -7841,7 +7905,6 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <ProtocolTypes>rechguvetrpAQbz7J</ProtocolTypes>
       <PreStatus>Pending</PreStatus>
       <PropertyFormatsUsed>recb9fI4kRkTYXDzA</PropertyFormatsUsed>
-      <PropertyFormatsUsed>recLyqFB0L7XFIp6C</PropertyFormatsUsed>
       <PropertyFormatsUsed>recqSXVzLo8RtEjlH</PropertyFormatsUsed>
       <Alias>gt.sh.booleanactuator.cmd.status.100</Alias>
       <RootStatus>Active</RootStatus>
@@ -8485,6 +8548,9 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <PrimitiveFormatId>recb9fI4kRkTYXDzA</PrimitiveFormatId>
       <TestValue>["a.elt1"]</TestValue>
       <Schema>rec93KBYcwiqJ6OQy</Schema>
+      <Description>List of aliases of the SpaceHeat Nodes getting measured</Description>
+      <Idx>1</Idx>
+      <Title>AboutNodeAliasList</Title>
       <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
@@ -8535,6 +8601,9 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <PrimitiveType>Integer</PrimitiveType>
       <TestValue>[0]</TestValue>
       <Schema>rec8c4KjhwNmfrRYP</Schema>
+      <Description>The values of the readings. </Description>
+      <Idx>2</Idx>
+      <Title>List of Values</Title>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
       <TypeInPayload>Integer</TypeInPayload>
@@ -9029,6 +9098,13 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <PrimitiveFormatId>recb9fI4kRkTYXDzA</PrimitiveFormatId>
       <TestValue>"a.elt1"</TestValue>
       <Schema>receGKnJ8CfemQLdQ</Schema>
+      <Description>The SpaceheatNode representing the physical object that the sensor reading is
+        collecting data about. For example, a multipurpose temp sensor that reads
+        12 temperatures would have data for 12 different AboutNodeAliases,
+        including say `a.tank1.temp1` for a temp sensor at the top of a water tank.</Description>
+      <Idx>0</Idx>
+      <Title>AboutNodeAlias</Title>
+      <Url>https://gridworks-protocol.readthedocs.io/en/latest/spaceheat-node.html</Url>
       <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
@@ -9567,6 +9643,13 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Enum>rec2HyLffy6QK9QId</Enum>
       <TestValue>"af39eec9"</TestValue>
       <Schema>receGKnJ8CfemQLdQ</Schema>
+      <Description>The TelemetryName of the readings. This is used to interpet the meaning of the
+        reading values. For example, WaterTempCTimes1000 means the reading is measuring
+        the temperature of water, in Celsius multiplied by 1000. So a value of 37000 would be
+        a reading of 37 deg C.</Description>
+      <Idx>2</Idx>
+      <Title>TelemetryName</Title>
+      <Url>https://gridworks-protocol.readthedocs.io/en/latest/telemetry-name.html</Url>
       <EnumLocalName>telemetry.name</EnumLocalName>
       <IsEnum>true</IsEnum>
       <IsType>false</IsType>
@@ -9998,7 +10081,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <TypeInPayload>Integer</TypeInPayload>
       <Format>ReasonableUnixTimeS</Format>
     </SchemaAttribute>
-    <SchemaAttribute>itrU8EdHlP8CO2apK/recABBs8u89Tj3Iu2</SchemaAttribute>
+    <SchemaAttribute>itr06IQTYSKuYrSNl/recABBs8u89Tj3Iu2</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recAHDR5VnUrRann9</SchemaAttributeId>
       <createdTime>2022-07-03T22:36:14Z</createdTime>
@@ -10009,6 +10092,10 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <PrimitiveFormatId>recb9fI4kRkTYXDzA</PrimitiveFormatId>
       <TestValue>"a.elt1.relay"</TestValue>
       <Schema>recpHvfV5mSI7pgRP</Schema>
+      <Description>The alias of the spaceheat node that is getting actuated. For example, `a.elt1.relay` would likely indicate the relay for a resistive element.</Description>
+      <Idx>0</Idx>
+      <Title>SpaceheatNodeAlias</Title>
+      <Url>https://gridworks-protocol.readthedocs.io/en/latest/boolean-actuator.html</Url>
       <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
@@ -10500,6 +10587,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <PrimitiveFormatId>recqSXVzLo8RtEjlH</PrimitiveFormatId>
       <TestValue>1657025211851</TestValue>
       <Schema>rec0ASFtYgDm4fTf8</Schema>
+      <Idx>3</Idx>
       <PrimitiveFormat>ReasonableUnixTimeMs</PrimitiveFormat>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
@@ -10631,6 +10719,9 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <PrimitiveType>Integer</PrimitiveType>
       <TestValue>[4559]</TestValue>
       <Schema>receGKnJ8CfemQLdQ</Schema>
+      <Description>The values of the readings. </Description>
+      <Idx>3</Idx>
+      <Title>List of Values</Title>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
       <TypeInPayload>Integer</TypeInPayload>
@@ -11165,6 +11256,8 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <PrimitiveType>Integer</PrimitiveType>
       <TestValue>[18000]</TestValue>
       <Schema>rec93KBYcwiqJ6OQy</Schema>
+      <Idx>3</Idx>
+      <Title>ValueList</Title>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
       <TypeInPayload>Integer</TypeInPayload>
@@ -11377,6 +11470,9 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
       <TypeInPayload>String</TypeInPayload>
       <Format>LeftRightDot</Format>
+      <Title>AboutNodeAliases</Title>
+      <Description>The list of Spaceheat nodes in the snapshot. </Description>
+      <Url>https://gridworks-protocol.readthedocs.io/en/latest/spaceheat-node.html</Url>
     </SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recHZBCEFTBrFubo9</SchemaAttributeId>
@@ -11596,7 +11692,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsType>false</IsType>
       <TypeInPayload>String</TypeInPayload>
     </SchemaAttribute>
-    <SchemaAttribute>itrU8EdHlP8CO2apK/recIoMtP3BgfOzQ9C</SchemaAttribute>
+    <SchemaAttribute>itr06IQTYSKuYrSNl/recIoMtP3BgfOzQ9C</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recIu6hGiK3PDyJrn</SchemaAttributeId>
       <createdTime>2022-06-07T09:36:52Z</createdTime>
@@ -12474,6 +12570,8 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <PrimitiveType>Integer</PrimitiveType>
       <TestValue>[0]</TestValue>
       <Schema>recpHvfV5mSI7pgRP</Schema>
+      <Idx>1</Idx>
+      <Title>List of RelayStateCommands</Title>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
       <TypeInPayload>Integer</TypeInPayload>
@@ -12549,6 +12647,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <PrimitiveFormatId>recb9fI4kRkTYXDzA</PrimitiveFormatId>
       <TestValue>"a.s"</TestValue>
       <Schema>rec0ASFtYgDm4fTf8</Schema>
+      <Idx>2</Idx>
       <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
@@ -12777,6 +12876,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
       <TypeInPayload>Integer</TypeInPayload>
+      <Title>ValueList</Title>
     </SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recOxmICij5REVdXj</SchemaAttributeId>
@@ -12842,6 +12942,8 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <PrimitiveFormatId>recqSXVzLo8RtEjlH</PrimitiveFormatId>
       <TestValue>1656587343297</TestValue>
       <Schema>rec93KBYcwiqJ6OQy</Schema>
+      <Idx>0</Idx>
+      <Title>ScadaReadTime in Unix MilliSeconds</Title>
       <PrimitiveFormat>ReasonableUnixTimeMs</PrimitiveFormat>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
@@ -12860,6 +12962,8 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <PrimitiveFormatId>recqSXVzLo8RtEjlH</PrimitiveFormatId>
       <TestValue>[1656443704800]</TestValue>
       <Schema>recpHvfV5mSI7pgRP</Schema>
+      <Idx>2</Idx>
+      <Title>List of Command Times</Title>
       <PrimitiveFormat>ReasonableUnixTimeMs</PrimitiveFormat>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
@@ -13204,7 +13308,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsType>false</IsType>
       <TypeInPayload>String</TypeInPayload>
     </SchemaAttribute>
-    <SchemaAttribute>itrU8EdHlP8CO2apK/recRbzzZK0pCTehDf</SchemaAttribute>
+    <SchemaAttribute>itr06IQTYSKuYrSNl/recRbzzZK0pCTehDf</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recRjhyzbBd693UU7</SchemaAttributeId>
       <createdTime>2022-07-10T12:50:59Z</createdTime>
@@ -14159,6 +14263,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <PrimitiveFormatId>recb9fI4kRkTYXDzA</PrimitiveFormatId>
       <TestValue>"a.elt1.relay"</TestValue>
       <Schema>rec0ASFtYgDm4fTf8</Schema>
+      <Idx>1</Idx>
       <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
@@ -14820,7 +14925,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <SubMessageFormatAliasRoot>price.quantity.unitless</SubMessageFormatAliasRoot>
       <TypeInPayload>price.quantity.unitless.000</TypeInPayload>
     </SchemaAttribute>
-    <SchemaAttribute>itrU8EdHlP8CO2apK/recb85VFWSeaqaKV0</SchemaAttribute>
+    <SchemaAttribute>itr06IQTYSKuYrSNl/recb85VFWSeaqaKV0</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recbP43UORyJcMOyK</SchemaAttributeId>
       <createdTime>2022-10-02T23:33:30Z</createdTime>
@@ -15839,6 +15944,9 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <PrimitiveFormatId>recqSXVzLo8RtEjlH</PrimitiveFormatId>
       <TestValue>[1656443705023]</TestValue>
       <Schema>rec8c4KjhwNmfrRYP</Schema>
+      <Description>The times that the SImpleSensor took the readings, in unix milliseconds</Description>
+      <Idx>3</Idx>
+      <Title>List of Read Times</Title>
       <PrimitiveFormat>ReasonableUnixTimeMs</PrimitiveFormat>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
@@ -16371,7 +16479,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <TypeInPayload>String</TypeInPayload>
       <Format>LeftRightDot</Format>
     </SchemaAttribute>
-    <SchemaAttribute>itrU8EdHlP8CO2apK/recjdjO1e7eWo3j8T</SchemaAttribute>
+    <SchemaAttribute>itr06IQTYSKuYrSNl/recjdjO1e7eWo3j8T</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recjhPIPtr6UXppHQ</SchemaAttributeId>
       <createdTime>2022-06-23T18:40:11Z</createdTime>
@@ -16431,6 +16539,13 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Enum>rec2HyLffy6QK9QId</Enum>
       <TestValue>"5a71d4b3"</TestValue>
       <Schema>rec8c4KjhwNmfrRYP</Schema>
+      <Description>The TelemetryName of the readings. This is used to interpet the meaning of the
+        reading values. For example, WaterTempCTimes1000 means the reading is measuring
+        the temperature of water, in Celsius multiplied by 1000. So a value of 37000 would be
+        a reading of 37 deg C.</Description>
+      <Idx>1</Idx>
+      <Title>TelemetryName</Title>
+      <Url>https://gridworks-protocol.readthedocs.io/en/latest/enums.html#gridworks-protocol.enums.TelemetryName</Url>
       <EnumLocalName>telemetry.name</EnumLocalName>
       <IsEnum>true</IsEnum>
       <IsType>false</IsType>
@@ -16578,6 +16693,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <TypeInPayload>String</TypeInPayload>
       <Format>SpaceheatTelemetryName000</Format>
       <EnumPropertyFormat>SpaceheatTelemetryName000</EnumPropertyFormat>
+      <Url>https://gridworks-protocol.readthedocs.io/en/latest/telemetry-name.html</Url>
     </SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recl7m0jNXQLR5SZu</SchemaAttributeId>
@@ -17120,6 +17236,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <PrimitiveType>Integer</PrimitiveType>
       <TestValue>1</TestValue>
       <Schema>rec0ASFtYgDm4fTf8</Schema>
+      <Idx>0</Idx>
       <PydanticFormatId>recLyqFB0L7XFIp6C</PydanticFormatId>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
@@ -17463,6 +17580,9 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <PrimitiveFormatId>recb9fI4kRkTYXDzA</PrimitiveFormatId>
       <TestValue>"a.elt1.relay"</TestValue>
       <Schema>rec8c4KjhwNmfrRYP</Schema>
+      <Description>The Alias of the SimpleSensor associated to the readings</Description>
+      <Idx>0</Idx>
+      <Title>SpaceheatNodeAlias</Title>
       <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
@@ -17540,6 +17660,9 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <PrimitiveFormatId>recqSXVzLo8RtEjlH</PrimitiveFormatId>
       <TestValue>[1656443705023]</TestValue>
       <Schema>receGKnJ8CfemQLdQ</Schema>
+      <Description>The times that the MultipurposeSensor took the readings, in unix milliseconds</Description>
+      <Idx>4</Idx>
+      <Title>List of Read Times</Title>
       <PrimitiveFormat>ReasonableUnixTimeMs</PrimitiveFormat>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
@@ -17953,7 +18076,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <TypeInPayload>Integer</TypeInPayload>
       <Format>ReasonableUnixTimeMs</Format>
     </SchemaAttribute>
-    <SchemaAttribute>itrU8EdHlP8CO2apK/recsZD75bQDFRNQt2</SchemaAttribute>
+    <SchemaAttribute>itr06IQTYSKuYrSNl/recsZD75bQDFRNQt2</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recscJlOCJSX2ckU5</SchemaAttributeId>
       <createdTime>2022-11-21T05:25:03Z</createdTime>
@@ -18035,6 +18158,9 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <PrimitiveType>String</PrimitiveType>
       <TestValue>"a.m"</TestValue>
       <Schema>receGKnJ8CfemQLdQ</Schema>
+      <Description>The alias of the SpaceheatNode representing the telemetry device</Description>
+      <Idx>1</Idx>
+      <Title>SensorNodeAlias</Title>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
       <TypeInPayload>String</TypeInPayload>
@@ -18163,6 +18289,8 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <PrimitiveFormatFail1>1656245000</PrimitiveFormatFail1>
       <TypeInPayload>Integer</TypeInPayload>
       <Format>ReasonableUnixTimeMs</Format>
+      <Title>ReportTimeUnixMs</Title>
+      <Description>The time, in unix ms, that the SCADA creates this type. It may not be when the SCADA sends the type to the atn (for example if Internet is down).</Description>
     </SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recuTyHJfuZVMXRQ4</SchemaAttributeId>
@@ -18610,6 +18738,10 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Enum>rec2HyLffy6QK9QId</Enum>
       <TestValue>["ad19e79c"]</TestValue>
       <Schema>rec93KBYcwiqJ6OQy</Schema>
+      <Description>List of the TelemetryNames. The nth name in this list indicates the TelemetryName of the nth alias in the AboutNodeAliasList.</Description>
+      <Idx>2</Idx>
+      <Title>TelemetryNameList</Title>
+      <Url>https://gridworks-protocol.readthedocs.io/en/latest/enums.html#gridworks-protocol.enums.TelemetryName</Url>
       <EnumLocalName>telemetry.name</EnumLocalName>
       <IsEnum>true</IsEnum>
       <IsType>false</IsType>
@@ -18690,6 +18822,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <createdTime>2022-08-11T17:32:48Z</createdTime>
       <Value>Snapshot</Value>
       <IsRequired>true</IsRequired>
+      <TestValue>{"TelemetryNameList": ["5a71d4b3"], "AboutNodeAliasList": ["a.elt1.relay"], "ReportTimeUnixMs": 1656363448000, "ValueList": [1], "TypeName": "telemetry.snapshot.spaceheat"}</TestValue>
       <Schema>recrnRklRws6Txbqr</Schema>
       <SubTypeFormat>recdNEAMkZeOLS8Vo</SubTypeFormat>
       <Idx>2</Idx>
@@ -18698,7 +18831,6 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsType>true</IsType>
       <SubMessageFormatAliasRoot>telemetry.snapshot.spaceheat</SubMessageFormatAliasRoot>
       <TypeInPayload>telemetry.snapshot.spaceheat.000</TypeInPayload>
-      <TestValue>{"TelemetryNameList": ["5a71d4b3"], "AboutNodeAliasList": ["a.elt1.relay"], "ReportTimeUnixMs": 1656363448000, "ValueList": [1], "TypeName": "telemetry.snapshot.spaceheat"}</TestValue>
     </SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recz8oHfchlgvWxux</SchemaAttributeId>
@@ -19136,6 +19268,16 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Type>tavalidatorcert.algo.create.000</Type>
     </SchemaAxiom>
     <SchemaAxiom>
+      <SchemaAxiomId>recEnG4y5Q19QVq6H</SchemaAxiomId>
+      <createdTime>2023-02-22T11:42:45Z</createdTime>
+      <Description>AboutNodeAliasList, ValueList and TelemetryNameList must all have the same length.</Description>
+      <AxiomNumber>1</AxiomNumber>
+      <Title>ListLengthConsistency</Title>
+      <MultiPropertyAxiom>rec93KBYcwiqJ6OQy</MultiPropertyAxiom>
+      <Name>gt.sh.telemetry.from.multipurpose.sensor.100 Type Axiom 1</Name>
+      <Type>gt.sh.telemetry.from.multipurpose.sensor.100</Type>
+    </SchemaAxiom>
+    <SchemaAxiom>
       <SchemaAxiomId>recH512a7g6p8cLQM</SchemaAxiomId>
       <createdTime>2022-09-22T01:30:26Z</createdTime>
       <Description>total must be 1, unit name must be TADEED, manager must be Gnf Admin or Gnf Graveyard</Description>
@@ -19318,6 +19460,16 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <MakeDataClass />
     </SchemaAxiom>
     <SchemaAxiom>
+      <SchemaAxiomId>recSLBrC1olag5pK9</SchemaAxiomId>
+      <createdTime>2023-02-22T11:46:16Z</createdTime>
+      <Description>ValueList and ReadTimeUnixMsList must have the same length.</Description>
+      <AxiomNumber>1</AxiomNumber>
+      <Title>ListLengthConsistency</Title>
+      <MultiPropertyAxiom>receGKnJ8CfemQLdQ</MultiPropertyAxiom>
+      <Name>gt.sh.multipurpose.telemetry.status.100 Type Axiom 1</Name>
+      <Type>gt.sh.multipurpose.telemetry.status.100</Type>
+    </SchemaAxiom>
+    <SchemaAxiom>
       <SchemaAxiomId>recSkcGAjBCP4uFPX</SchemaAxiomId>
       <createdTime>2022-09-22T03:04:49Z</createdTime>
       <Description>Decoded HalfSignedCertCreationMtx must have type MultisigTransaction from the
@@ -19382,6 +19534,16 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <MultiPropertyAxiom>recbrp6V9qD6J1NHb</MultiPropertyAxiom>
       <Name>scada.cert.transfer.000 Type Axiom 1</Name>
       <Type>scada.cert.transfer.000</Type>
+    </SchemaAxiom>
+    <SchemaAxiom>
+      <SchemaAxiomId>recXMf6hlVg265ccL</SchemaAxiomId>
+      <createdTime>2023-02-22T11:45:36Z</createdTime>
+      <Description>ValueList and ReadTimeUnixMsList must have the same length.</Description>
+      <AxiomNumber>1</AxiomNumber>
+      <Title>ListLengthConsistency</Title>
+      <MultiPropertyAxiom>rec8c4KjhwNmfrRYP</MultiPropertyAxiom>
+      <Name>gt.sh.simple.telemetry.status.100 Type Axiom 1</Name>
+      <Type>gt.sh.simple.telemetry.status.100</Type>
     </SchemaAxiom>
     <SchemaAxiom>
       <SchemaAxiomId>recY7qq8BPIydsNm8</SchemaAxiomId>
@@ -19473,6 +19635,11 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <MakeDataClass>true</MakeDataClass>
     </SchemaAxiom>
     <SchemaAxiom>
+      <SchemaAxiomId>recfWb4u5BnUXLlW6</SchemaAxiomId>
+      <createdTime>2023-02-22T11:45:35Z</createdTime>
+      <Name> Type Axiom </Name>
+    </SchemaAxiom>
+    <SchemaAxiom>
       <SchemaAxiomId>recgkttJLsyUmqLlp</SchemaAxiomId>
       <createdTime>2022-09-22T02:46:32Z</createdTime>
       <Description>The FirstDeedTransferMtx.txn must have type AssetTransferTxn</Description>
@@ -19520,6 +19687,16 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Title>Correctly Signed</Title>
       <Name> Type Axiom 4</Name>
       <MakeDataClass />
+    </SchemaAxiom>
+    <SchemaAxiom>
+      <SchemaAxiomId>recj0W1AWU40FitTy</SchemaAxiomId>
+      <createdTime>2023-02-22T13:34:18Z</createdTime>
+      <Type>telemetry.snapshot.spaceheat.000</Type>
+      <Name>telemetry.snapshot.spaceheat.000 Type Axiom 1</Name>
+      <MultiPropertyAxiom>recdNEAMkZeOLS8Vo</MultiPropertyAxiom>
+      <Title>ListLengthConsistency</Title>
+      <Description>AboutNodeAliastList, ValueList and TelemetryNameList must all have the same length.</Description>
+      <AxiomNumber>1</AxiomNumber>
     </SchemaAxiom>
     <SchemaAxiom>
       <SchemaAxiomId>recj13iYXBkX5UZr3</SchemaAxiomId>
@@ -19888,7 +20065,6 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <MpSchemaAttributes>reckbdPijd806F8LT</MpSchemaAttributes>
       <MpSchemaAttributes>reciVyeMslNHUJKN8</MpSchemaAttributes>
       <DefaultFail1>2</DefaultFail1>
-      <TypesThatUse>recpHvfV5mSI7pgRP</TypesThatUse>
       <SchemaAttributes2>recnqelpRWYmV8MJR</SchemaAttributes2>
       <SchemaAttributes2>recjPLNQVJ2uCOYfC</SchemaAttributes2>
       <SchemaAttributes2>recsgnh5t5it39M5o</SchemaAttributes2>
@@ -21511,7 +21687,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <TypeName>gt.sh.simple.telemetry.status.100</TypeName>
       <TypeStatus>Active</TypeStatus>
     </ProtocolType>
-    <ProtocolType>itrq4gVKojlMcMnNX/recU7kqqWFDEW9g7n</ProtocolType>
+    <ProtocolType>itritlZSJhsBdHhVr/recU7kqqWFDEW9g7n</ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recUS213iNyPUBMKS</ProtocolTypeId>
       <createdTime>2023-02-20T14:31:46Z</createdTime>

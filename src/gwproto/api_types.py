@@ -88,7 +88,7 @@ def status_by_versioned_type_name() -> Dict[str, str]:
         "gt.telemetry.110": "Pending",
         "heartbeat.b.000": "Pending",
         "snapshot.spaceheat.000": "Pending",
-        "telemetry.snapshot.spaceheat.000": "Active",
+        "telemetry.snapshot.spaceheat.000": "Pending",
     }
 
     return v

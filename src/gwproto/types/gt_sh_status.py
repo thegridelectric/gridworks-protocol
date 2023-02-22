@@ -25,8 +25,9 @@ from gwproto.types.gt_sh_simple_telemetry_status import GtShSimpleTelemetryStatu
 
 
 def check_is_reasonable_unix_time_s(v: int) -> None:
-    """
-    ReasonableUnixTimeS format: time in unix seconds between Jan 1 2000 and Jan 1 3000
+    """Checks ReasonableUnixTimeS format
+
+    ReasonableUnixTimeS format: unix seconds between Jan 1 2000 and Jan 1 3000
 
     Args:
         v (int): the candidate
@@ -43,12 +44,13 @@ def check_is_reasonable_unix_time_s(v: int) -> None:
 
 
 def check_is_uuid_canonical_textual(v: str) -> None:
-    """
+    """Checks UuidCanonicalTextual format
+
     UuidCanonicalTextual format:  A string of hex words separated by hyphens
     of length 8-4-4-4-12.
 
     Args:
-    v (str): the candidate
+        v (str): the candidate
 
     Raises:
         ValueError: if v is not UuidCanonicalTextual format
@@ -77,7 +79,8 @@ def check_is_uuid_canonical_textual(v: str) -> None:
 
 
 def check_is_left_right_dot(v: str) -> None:
-    """
+    """Checks LeftRightDot Format
+
     LeftRightDot format: Lowercase alphanumeric words separated by periods,
     most significant word (on the left) starting with an alphabet character.
 

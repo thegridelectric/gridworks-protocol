@@ -5,11 +5,6 @@
   "owner": "gridworks@gridworks-consulting.com",
   "description": "",
   "formats": {
-    "Bit": {
-      "type": "string",
-      "description": "0 or 1",
-      "example": ""
-    },
     "LeftRightDot": {
       "type": "string",
       "description": "Lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character.",
@@ -25,18 +20,19 @@
     "ShNodeAlias": {
       "type": "string",
       "format": "LeftRightDot",
-      "title": "",
+      "title": "SpaceheatNodeAlias",
+      "description": "The alias of the spaceheat node that is getting actuated. For example, `a.elt1.relay` would likely indicate the relay for a resistive element.",
       "required": true
     },
     "RelayStateCommandList": {
       "type": "integer",
-      "title": "",
+      "title": "List of RelayStateCommands",
       "required": true
     },
     "CommandTimeUnixMsList": {
       "type": "integer",
       "format": "ReasonableUnixTimeMs",
-      "title": "",
+      "title": "List of Command Times",
       "required": true
     },
     "TypeName": {

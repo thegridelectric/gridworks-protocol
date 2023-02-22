@@ -11,10 +11,10 @@ from gwproto.types import GtDispatchBooleanLocal_Maker as Maker
 def test_gt_dispatch_boolean_local_generated() -> None:
 
     d = {
-        "SendTimeUnixMs": 1657025211851,
-        "FromNodeAlias": "a.s",
-        "AboutNodeAlias": "a.elt1.relay",
         "RelayState": 1,
+        "AboutNodeAlias": "a.elt1.relay",
+        "FromNodeAlias": "a.s",
+        "SendTimeUnixMs": 1657025211851,
         "TypeName": "gt.dispatch.boolean.local",
         "Version": "100",
     }
@@ -34,10 +34,10 @@ def test_gt_dispatch_boolean_local_generated() -> None:
 
     # test Maker init
     t = Maker(
-        send_time_unix_ms=gtuple.SendTimeUnixMs,
-        from_node_alias=gtuple.FromNodeAlias,
-        about_node_alias=gtuple.AboutNodeAlias,
         relay_state=gtuple.RelayState,
+        about_node_alias=gtuple.AboutNodeAlias,
+        from_node_alias=gtuple.FromNodeAlias,
+        send_time_unix_ms=gtuple.SendTimeUnixMs,
     ).tuple
     assert t == gtuple
 
@@ -51,12 +51,7 @@ def test_gt_dispatch_boolean_local_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["SendTimeUnixMs"]
-    with pytest.raises(MpSchemaError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d)
-    del d2["FromNodeAlias"]
+    del d2["RelayState"]
     with pytest.raises(MpSchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -66,7 +61,12 @@ def test_gt_dispatch_boolean_local_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["RelayState"]
+    del d2["FromNodeAlias"]
+    with pytest.raises(MpSchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    del d2["SendTimeUnixMs"]
     with pytest.raises(MpSchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -74,11 +74,11 @@ def test_gt_dispatch_boolean_local_generated() -> None:
     # Behavior on incorrect types
     ######################################
 
-    d2 = dict(d, SendTimeUnixMs="1657025211851.1")
+    d2 = dict(d, RelayState="1.1")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, RelayState="1.1")
+    d2 = dict(d, SendTimeUnixMs="1657025211851.1")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
@@ -94,7 +94,7 @@ def test_gt_dispatch_boolean_local_generated() -> None:
     # MpSchemaError raised if primitive attributes do not have appropriate property_format
     ######################################
 
-    d2 = dict(d, SendTimeUnixMs=1656245000)
+    d2 = dict(d, AboutNodeAlias="a.b-h")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
@@ -102,7 +102,7 @@ def test_gt_dispatch_boolean_local_generated() -> None:
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, AboutNodeAlias="a.b-h")
+    d2 = dict(d, SendTimeUnixMs=1656245000)
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 

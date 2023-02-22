@@ -70,4 +70,3 @@ This project was generated from [@cjolowicz]'s [Hypermodern Python Cookiecutter]
 
 [license]: https://github.com/thegridelectric/gridworks-protocol/blob/main/LICENSE
 [contributor guide]: https://github.com/thegridelectric/gridworks-protocol/blob/main/CONTRIBUTING.md
-[command-line reference]: https://gridworks-protocol.readthedocs.io/en/latest/usage.html

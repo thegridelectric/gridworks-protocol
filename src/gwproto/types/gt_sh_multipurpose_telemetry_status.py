@@ -9,6 +9,7 @@ from typing import Literal
 from fastapi_utils.enums import StrEnum
 from pydantic import BaseModel
 from pydantic import Field
+from pydantic import root_validator
 from pydantic import validator
 
 from gwproto.enums import TelemetryName as EnumTelemetryName
@@ -120,12 +121,16 @@ class TelemetryNameMap:
 
 
 def check_is_left_right_dot(v: str) -> None:
-    """
+    """Checks LeftRightDot Format
+
     LeftRightDot format: Lowercase alphanumeric words separated by periods,
     most significant word (on the left) starting with an alphabet character.
 
+    Args:
+        v (str): the candidate
+
     Raises:
-        ValueError: if not LeftRightDot format
+        ValueError: if v is not LeftRightDot format
     """
     from typing import List
 
@@ -144,12 +149,16 @@ def check_is_left_right_dot(v: str) -> None:
         raise ValueError(f"All characters of {v} must be lowercase.")
 
 
-def check_is_reasonable_unix_time_ms(v: str) -> None:
-    """
-    ReasonableUnixTimeMs format: time in unix milliseconds between Jan 1 2000 and Jan 1 3000
+def check_is_reasonable_unix_time_ms(v: int) -> None:
+    """Checks ReasonableUnixTimeMs format
+
+    ReasonableUnixTimeMs format: unix milliseconds between Jan 1 2000 and Jan 1 3000
+
+    Args:
+        v (int): the candidate
 
     Raises:
-        ValueError: if not ReasonableUnixTimeMs format
+        ValueError: if v is not ReasonableUnixTimeMs format
     """
     import pendulum
 
@@ -160,22 +169,34 @@ def check_is_reasonable_unix_time_ms(v: str) -> None:
 
 
 class GtShMultipurposeTelemetryStatus(BaseModel):
-    """ """
+    """Data read from a MultipurposeSensor run by a Spaceheat SCADA.
+
+    A list of readings about a specific SpaceheatNode made by a MultipurposeSensor node,
+     for a  Spaceheat SCADA. Designed as part of a status message sent from the SCADA
+     to its AtomicTNode typically once every 5 minutes. The nth element of each of its
+     two lists refer to the same reading (i.e. what the value is, when it was read).
+    [More info](https://gridworks-protocol.readthedocs.io/en/latest/multipurpose-sensor.html).
+    """
 
     AboutNodeAlias: str = Field(
         title="AboutNodeAlias",
-    )
-    TelemetryName: EnumTelemetryName = Field(
-        title="TelemetryName",
-    )
-    ValueList: List[int] = Field(
-        title="ValueList",
-    )
-    ReadTimeUnixMsList: List[int] = Field(
-        title="ReadTimeUnixMsList",
+        description="The SpaceheatNode representing the physical object that the sensor reading is collecting data about. For example, a multipurpose temp sensor that reads 12 temperatures would have data for 12 different AboutNodeAliases, including say `a.tank1.temp1` for a temp sensor at the top of a water tank. [More info](https://gridworks-protocol.readthedocs.io/en/latest/spaceheat-node.html).",
     )
     SensorNodeAlias: str = Field(
         title="SensorNodeAlias",
+        description="The alias of the SpaceheatNode representing the telemetry device",
+    )
+    TelemetryName: EnumTelemetryName = Field(
+        title="TelemetryName",
+        description="The TelemetryName of the readings. This is used to interpet the meaning of the reading values. For example, WaterTempCTimes1000 means the reading is measuring the temperature of water, in Celsius multiplied by 1000. So a value of 37000 would be a reading of 37 deg C. [More info](https://gridworks-protocol.readthedocs.io/en/latest/telemetry-name.html).",
+    )
+    ValueList: List[int] = Field(
+        title="List of Values",
+        description="The values of the readings.",
+    )
+    ReadTimeUnixMsList: List[int] = Field(
+        title="List of Read Times",
+        description="The times that the MultipurposeSensor took the readings, in unix milliseconds",
     )
     TypeName: Literal[
         "gt.sh.multipurpose.telemetry.status"
@@ -205,6 +226,20 @@ class GtShMultipurposeTelemetryStatus(BaseModel):
                 raise ValueError(
                     f"ReadTimeUnixMsList element {elt} failed ReasonableUnixTimeMs format validation: {e}"
                 )
+        return v
+
+    @root_validator
+    def check_axiom_1(cls, v: dict) -> dict:
+        """
+        Axiom 1: ListLengthConsistency.
+        ValueList and ReadTimeUnixMsList must have the same length.
+        """
+        value_list: List[int] = v.get("ValueList", None)
+        time_list: List[int] = v.get("ReadTimeUnixMsList", None)
+        if len(value_list) != len(time_list):
+            raise ValueError(
+                "Axiom 1: ValueList and ReadTimeUnixMsList must have the same length."
+            )
         return v
 
     def as_dict(self) -> Dict[str, Any]:

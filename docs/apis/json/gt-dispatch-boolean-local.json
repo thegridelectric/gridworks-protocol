@@ -17,15 +17,8 @@
     }
   },
   "properties": {
-    "SendTimeUnixMs": {
+    "RelayState": {
       "type": "integer",
-      "format": "ReasonableUnixTimeMs",
-      "title": "",
-      "required": true
-    },
-    "FromNodeAlias": {
-      "type": "string",
-      "format": "LeftRightDot",
       "title": "",
       "required": true
     },
@@ -35,8 +28,15 @@
       "title": "",
       "required": true
     },
-    "RelayState": {
+    "FromNodeAlias": {
+      "type": "string",
+      "format": "LeftRightDot",
+      "title": "",
+      "required": true
+    },
+    "SendTimeUnixMs": {
       "type": "integer",
+      "format": "ReasonableUnixTimeMs",
       "title": "",
       "required": true
     },

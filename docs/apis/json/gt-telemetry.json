@@ -15,72 +15,73 @@
     "SpaceheatTelemetryName000": {
       "type": "string",
       "name": "spaceheat.telemetry.name.000",
-      "description": "Specifies the name of sensed data reported by SCADA",
+      "description": "Specifies the name of sensed data reported by a Spaceheat SCADA",
+      "url": "https://gridworks-protocol.readthedocs.io/en/latest/telemetry-name.html",
       "oneOf": [
         {
           "const": "00000000",
           "title": "Unknown",
-          "description": ""
+          "description": "Default Value - unknown telemetry name"
         },
         {
           "const": "af39eec9",
           "title": "PowerW",
-          "description": ""
+          "description": "Power in Watts"
         },
         {
           "const": "5a71d4b3",
           "title": "RelayState",
-          "description": ""
+          "description": "State of a Relay. 0 means open, 1 means closed"
         },
         {
           "const": "c89d0ba1",
           "title": "WaterTempCTimes1000",
-          "description": ""
+          "description": "Water temperature, in Degrees Celcius multiplied by 1000. So 43200 means 43.2 deg C"
         },
         {
           "const": "793505aa",
           "title": "WaterTempFTimes1000",
-          "description": ""
+          "description": "Water temperature, in Degrees F multiplied by 1000. So 142100 means 142.1 deg F"
         },
         {
           "const": "d70cce28",
           "title": "GpmTimes100",
-          "description": ""
+          "description": "Gallons Per Minute multiplied by 100. So 433 means 4.33 gallons per minute."
         },
         {
           "const": "ad19e79c",
           "title": "CurrentRmsMicroAmps",
-          "description": ""
+          "description": "Current measurement in Root Mean Square MicroAmps"
         },
         {
           "const": "329a68c0",
           "title": "GallonsTimes100",
-          "description": ""
+          "description": "Gallons multipled by 100"
         },
         {
           "const": "bb6fdd59",
           "title": "VoltageRmsMilliVolts",
-          "description": ""
+          "description": "Voltage in Root Mean Square MilliVolts"
         },
         {
           "const": "e0bb014b",
           "title": "MilliWattHours",
-          "description": ""
+          "description": "Energy in MilliWattHours."
         },
         {
           "const": "337b8659",
           "title": "FrequencyMicroHz",
-          "description": ""
+          "description": "Frequency in MicroHz"
         },
         {
           "const": "0f627faa",
           "title": "AirTempCTimes1000",
-          "description": ""
+          "description": "Air temperature, in Degrees Celsius multiplied by 1000."
         },
         {
           "const": "4c3f8c78",
           "title": "AirTempFTimes1000",
-          "description": ""
+          "description": "Air temperature, in Degrees F multiplied by 1000."
         }
       ]
     }

@@ -9,6 +9,7 @@ from typing import Literal
 from fastapi_utils.enums import StrEnum
 from pydantic import BaseModel
 from pydantic import Field
+from pydantic import root_validator
 from pydantic import validator
 
 from gwproto.enums import TelemetryName
@@ -120,12 +121,16 @@ class TelemetryNameMap:
 
 
 def check_is_left_right_dot(v: str) -> None:
-    """
+    """Checks LeftRightDot Format
+
     LeftRightDot format: Lowercase alphanumeric words separated by periods,
     most significant word (on the left) starting with an alphabet character.
 
+    Args:
+        v (str): the candidate
+
     Raises:
-        ValueError: if not LeftRightDot format
+        ValueError: if v is not LeftRightDot format
     """
     from typing import List
 
@@ -144,35 +149,48 @@ def check_is_left_right_dot(v: str) -> None:
         raise ValueError(f"All characters of {v} must be lowercase.")
 
 
-def check_is_reasonable_unix_time_ms(v: str) -> None:
-    """
-    ReasonableUnixTimeMs format: time in unix milliseconds between Jan 1 2000 and Jan 1 3000
+def check_is_reasonable_unix_time_ms(v: int) -> None:
+    """Checks ReasonableUnixTimeMs format
+
+    ReasonableUnixTimeMs format: unix milliseconds between Jan 1 2000 and Jan 1 3000
+
+    Args:
+        v (int): the candidate
 
     Raises:
-        ValueError: if not ReasonableUnixTimeMs format
+        ValueError: if v is not ReasonableUnixTimeMs format
     """
     import pendulum
 
-    if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp * 1000 > v:  # type: ignore[attr-defined]
+    if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp * 1000 > v:  # type: ignore[union-attr]
         raise ValueError(f"{v} must be after Jan 1 2000")
-    if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp * 1000 < v:  # type: ignore[attr-defined]
+    if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp * 1000 < v:  # type: ignore[union-attr]
         raise ValueError(f"{v} must be before Jan 1 3000")
 
 
 class TelemetrySnapshotSpaceheat(BaseModel):
-    """ """
+    """Snapshot of Telemetry Data from a SpaceHeat SCADA.
+
+    A snapshot of all current sensed states, sent from a spaceheat SCADA to its
+    AtomicTNode. The nth element of each of the three lists refer to the same reading
+    (i.e., what is getting read, what the value is, what the TelemetryNames are.)
+    [More info](https://gridworks-protocol.readthedocs.io/en/latest/spaceheat-node.html).
+    """
 
     ReportTimeUnixMs: int = Field(
         title="ReportTimeUnixMs",
+        description="The time, in unix ms, that the SCADA creates this type. It may not be when the SCADA sends the type to the atn (for example if Internet is down).",
     )
     AboutNodeAliasList: List[str] = Field(
-        title="AboutNodeAliasList",
+        title="AboutNodeAliases",
+        description="The list of Spaceheat nodes in the snapshot. [More info](https://gridworks-protocol.readthedocs.io/en/latest/spaceheat-node.html).",
     )
     ValueList: List[int] = Field(
         title="ValueList",
     )
     TelemetryNameList: List[TelemetryName] = Field(
         title="TelemetryNameList",
+        description=" [More info](https://gridworks-protocol.readthedocs.io/en/latest/telemetry-name.html).",
     )
     TypeName: Literal["telemetry.snapshot.spaceheat"] = "telemetry.snapshot.spaceheat"
     Version: str = "000"
@@ -208,6 +226,21 @@ class TelemetrySnapshotSpaceheat(BaseModel):
         for elt in v:
             enum_list.append(as_enum(elt, TelemetryName, TelemetryName.Unknown))
         return enum_list
+
+    @root_validator
+    def check_axiom_1(cls, v: dict) -> dict:
+        """
+        Axiom 1: ListLengthConsistency.
+        AboutNodeAliasList, ValueList and TelemetryNameList must all have the same length.
+        """
+        alias_list: List[str] = v.get("AboutNodeAliasList", None)
+        value_list: List[int] = v.get("ValueList", None)
+        tn_list: List[TelemetryName] = v.get("TelemetryNameList", None)
+        if (len(value_list) != len(alias_list)) or (len(value_list) != len(tn_list)):
+            raise ValueError(
+                "Axiom 1: AboutNodeAliasList, ValueList and TelemetryNameList must all have the same length."
+            )
+        return v
 
     def as_dict(self) -> Dict[str, Any]:
         d = self.dict()

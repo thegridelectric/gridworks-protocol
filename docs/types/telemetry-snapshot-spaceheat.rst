@@ -6,15 +6,15 @@ Python pydantic class corresponding to  json type ```telemetry.snapshot.spacehea
     :members:
 
 **ReportTimeUnixMs**:
-    - Description:
+    - Description: ReportTimeUnixMs. The time, in unix ms, that the SCADA creates this type. It may not be when the SCADA sends the type to the atn (for example if Internet is down).
     - Format: ReasonableUnixTimeMs
 
 **AboutNodeAliasList**:
-    - Description:
+    - Description: AboutNodeAliases. The list of Spaceheat nodes in the snapshot.
     - Format: LeftRightDot
 
 **ValueList**:
-    - Description:
+    - Description: ValueList
 
 **TelemetryNameList**:
     - Description:

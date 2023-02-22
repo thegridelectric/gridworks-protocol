@@ -26,10 +26,10 @@
                 <xsl:element name="FileContents">
 <xsl:text>
 
-SDK for `gridworks-atn &lt;https://pypi.org/project/gridworks-atn/&gt;`_  Types
+SDK for `gridworks-protocol &lt;https://pypi.org/project/gridworks-protocol/&gt;`_  Types
 ===========================================================================
 
-The Python classes enumerated below provide an interpretation of gridworks-atn
+The Python classes enumerated below provide an interpretation of gridworks-protocol
 type instances (serialized JSON) as Python objects. Types are the building
 blocks for all GridWorks APIs. You can read more about how they work
 `here &lt;https://gridworks.readthedocs.io/en/latest/api-sdk-abi.html&gt;`_, and

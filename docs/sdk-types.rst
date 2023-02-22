@@ -1,9 +1,9 @@
 
 
-SDK for `gridworks-atn <https://pypi.org/project/gridworks-atn/>`_  Types
+SDK for `gridworks-protocol <https://pypi.org/project/gridworks-protocol/>`_  Types
 ===========================================================================
 
-The Python classes enumerated below provide an interpretation of gridworks-atn
+The Python classes enumerated below provide an interpretation of gridworks-protocol
 type instances (serialized JSON) as Python objects. Types are the building
 blocks for all GridWorks APIs. You can read more about how they work
 `here <https://gridworks.readthedocs.io/en/latest/api-sdk-abi.html>`_, and

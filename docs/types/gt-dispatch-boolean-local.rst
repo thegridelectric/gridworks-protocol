@@ -5,20 +5,20 @@ Python pydantic class corresponding to  json type ```gt.dispatch.boolean.local``
 .. autoclass:: gwproto.types.GtDispatchBooleanLocal
     :members:
 
-**SendTimeUnixMs**:
+**RelayState**:
     - Description:
-    - Format: ReasonableUnixTimeMs
-
-**FromNodeAlias**:
-    - Description:
-    - Format: LeftRightDot
 
 **AboutNodeAlias**:
     - Description:
     - Format: LeftRightDot
 
-**RelayState**:
+**FromNodeAlias**:
     - Description:
+    - Format: LeftRightDot
+
+**SendTimeUnixMs**:
+    - Description:
+    - Format: ReasonableUnixTimeMs
 
 .. autoclass:: gwproto.types.gt_dispatch_boolean_local.check_is_left_right_dot
     :members:

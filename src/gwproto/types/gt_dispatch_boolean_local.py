@@ -12,7 +12,8 @@ from gwproto.errors import MpSchemaError
 
 
 def check_is_left_right_dot(v: str) -> None:
-    """
+    """Checks LeftRightDot Format
+
     LeftRightDot format: Lowercase alphanumeric words separated by periods,
     most significant word (on the left) starting with an alphabet character.
 
@@ -40,11 +41,13 @@ def check_is_left_right_dot(v: str) -> None:
 
 
 def check_is_reasonable_unix_time_ms(v: int) -> None:
-    """
-    ReasonableUnixTimeMs format: time in unix milliseconds between Jan 1 2000 and Jan 1 3000
+    """Checks ReasonableUnixTimeMs format
+
+    ReasonableUnixTimeMs format: unix milliseconds between Jan 1 2000 and Jan 1 3000
 
     Args:
         v (int): the candidate
+
     Raises:
         ValueError: if v is not ReasonableUnixTimeMs format
     """
@@ -59,28 +62,28 @@ def check_is_reasonable_unix_time_ms(v: int) -> None:
 class GtDispatchBooleanLocal(BaseModel):
     """ """
 
-    SendTimeUnixMs: int = Field(
-        title="SendTimeUnixMs",
-    )
-    FromNodeAlias: str = Field(
-        title="FromNodeAlias",
+    RelayState: int = Field(
+        title="RelayState",
     )
     AboutNodeAlias: str = Field(
         title="AboutNodeAlias",
     )
-    RelayState: int = Field(
-        title="RelayState",
+    FromNodeAlias: str = Field(
+        title="FromNodeAlias",
+    )
+    SendTimeUnixMs: int = Field(
+        title="SendTimeUnixMs",
     )
     TypeName: Literal["gt.dispatch.boolean.local"] = "gt.dispatch.boolean.local"
     Version: str = "100"
 
-    @validator("SendTimeUnixMs")
-    def _check_send_time_unix_ms(cls, v: int) -> int:
+    @validator("AboutNodeAlias")
+    def _check_about_node_alias(cls, v: str) -> str:
         try:
-            check_is_reasonable_unix_time_ms(v)
+            check_is_left_right_dot(v)
         except ValueError as e:
             raise ValueError(
-                f"SendTimeUnixMs failed ReasonableUnixTimeMs format validation: {e}"
+                f"AboutNodeAlias failed LeftRightDot format validation: {e}"
             )
         return v
 
@@ -94,13 +97,13 @@ class GtDispatchBooleanLocal(BaseModel):
             )
         return v
 
-    @validator("AboutNodeAlias")
-    def _check_about_node_alias(cls, v: str) -> str:
+    @validator("SendTimeUnixMs")
+    def _check_send_time_unix_ms(cls, v: int) -> int:
         try:
-            check_is_left_right_dot(v)
+            check_is_reasonable_unix_time_ms(v)
         except ValueError as e:
             raise ValueError(
-                f"AboutNodeAlias failed LeftRightDot format validation: {e}"
+                f"SendTimeUnixMs failed ReasonableUnixTimeMs format validation: {e}"
             )
         return v
 
@@ -118,17 +121,17 @@ class GtDispatchBooleanLocal_Maker:
 
     def __init__(
         self,
-        send_time_unix_ms: int,
-        from_node_alias: str,
-        about_node_alias: str,
         relay_state: int,
+        about_node_alias: str,
+        from_node_alias: str,
+        send_time_unix_ms: int,
     ):
 
         self.tuple = GtDispatchBooleanLocal(
-            SendTimeUnixMs=send_time_unix_ms,
-            FromNodeAlias=from_node_alias,
-            AboutNodeAlias=about_node_alias,
             RelayState=relay_state,
+            AboutNodeAlias=about_node_alias,
+            FromNodeAlias=from_node_alias,
+            SendTimeUnixMs=send_time_unix_ms,
             #
         )
 
@@ -155,22 +158,22 @@ class GtDispatchBooleanLocal_Maker:
     @classmethod
     def dict_to_tuple(cls, d: dict[str, Any]) -> GtDispatchBooleanLocal:
         d2 = dict(d)
-        if "SendTimeUnixMs" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing SendTimeUnixMs")
-        if "FromNodeAlias" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing FromNodeAlias")
-        if "AboutNodeAlias" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing AboutNodeAlias")
         if "RelayState" not in d2.keys():
             raise MpSchemaError(f"dict {d2} missing RelayState")
+        if "AboutNodeAlias" not in d2.keys():
+            raise MpSchemaError(f"dict {d2} missing AboutNodeAlias")
+        if "FromNodeAlias" not in d2.keys():
+            raise MpSchemaError(f"dict {d2} missing FromNodeAlias")
+        if "SendTimeUnixMs" not in d2.keys():
+            raise MpSchemaError(f"dict {d2} missing SendTimeUnixMs")
         if "TypeName" not in d2.keys():
             raise MpSchemaError(f"dict {d2} missing TypeName")
 
         return GtDispatchBooleanLocal(
-            SendTimeUnixMs=d2["SendTimeUnixMs"],
-            FromNodeAlias=d2["FromNodeAlias"],
-            AboutNodeAlias=d2["AboutNodeAlias"],
             RelayState=d2["RelayState"],
+            AboutNodeAlias=d2["AboutNodeAlias"],
+            FromNodeAlias=d2["FromNodeAlias"],
+            SendTimeUnixMs=d2["SendTimeUnixMs"],
             TypeName=d2["TypeName"],
             Version="100",
         )

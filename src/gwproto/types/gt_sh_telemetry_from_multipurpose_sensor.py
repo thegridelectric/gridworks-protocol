@@ -9,6 +9,7 @@ from typing import Literal
 from fastapi_utils.enums import StrEnum
 from pydantic import BaseModel
 from pydantic import Field
+from pydantic import root_validator
 from pydantic import validator
 
 from gwproto.enums import TelemetryName
@@ -120,12 +121,16 @@ class TelemetryNameMap:
 
 
 def check_is_left_right_dot(v: str) -> None:
-    """
+    """Checks LeftRightDot Format
+
     LeftRightDot format: Lowercase alphanumeric words separated by periods,
     most significant word (on the left) starting with an alphabet character.
 
+    Args:
+        v (str): the candidate
+
     Raises:
-        ValueError: if not LeftRightDot format
+        ValueError: if v is not LeftRightDot format
     """
     from typing import List
 
@@ -144,12 +149,16 @@ def check_is_left_right_dot(v: str) -> None:
         raise ValueError(f"All characters of {v} must be lowercase.")
 
 
-def check_is_reasonable_unix_time_ms(v: str) -> None:
-    """
-    ReasonableUnixTimeMs format: time in unix milliseconds between Jan 1 2000 and Jan 1 3000
+def check_is_reasonable_unix_time_ms(v: int) -> None:
+    """Checks ReasonableUnixTimeMs format
+
+    ReasonableUnixTimeMs format: unix milliseconds between Jan 1 2000 and Jan 1 3000
+
+    Args:
+        v (int): the candidate
 
     Raises:
-        ValueError: if not ReasonableUnixTimeMs format
+        ValueError: if v is not ReasonableUnixTimeMs format
     """
     import pendulum
 
@@ -160,19 +169,28 @@ def check_is_reasonable_unix_time_ms(v: str) -> None:
 
 
 class GtShTelemetryFromMultipurposeSensor(BaseModel):
-    """ """
+    """Data sent from a MultipurposeSensor to a Spaceheat SCADA.
 
+    A set of readings made at the same time by a multipurpose sensor, sent by the
+    MultipurposeSensor SpaceheatNode actor to its SCADA.  The nth element of each of its
+    three readings (what is getting read, what the value is, what the TelemetryNames are).
+
+    [More info](https://gridworks-protocol.readthedocs.io/en/latest/multipurpose-sensor.html).
+    """
+
+    ScadaReadTimeUnixMs: int = Field(
+        title="ScadaReadTime in Unix MilliSeconds",
+    )
     AboutNodeAliasList: List[str] = Field(
         title="AboutNodeAliasList",
-    )
-    ValueList: List[int] = Field(
-        title="ValueList",
-    )
-    ScadaReadTimeUnixMs: int = Field(
-        title="ScadaReadTimeUnixMs",
+        description="List of aliases of the SpaceHeat Nodes getting measured",
     )
     TelemetryNameList: List[TelemetryName] = Field(
         title="TelemetryNameList",
+        description="List of the TelemetryNames. The nth name in this list indicates the TelemetryName of the nth alias in the AboutNodeAliasList. [More info](https://gridworks-protocol.readthedocs.io/en/latest/enums.html#gridworks-protocol.enums.TelemetryName).",
+    )
+    ValueList: List[int] = Field(
+        title="ValueList",
     )
     TypeName: Literal[
         "gt.sh.telemetry.from.multipurpose.sensor"
@@ -210,6 +228,21 @@ class GtShTelemetryFromMultipurposeSensor(BaseModel):
         for elt in v:
             enum_list.append(as_enum(elt, TelemetryName, TelemetryName.Unknown))
         return enum_list
+
+    @root_validator
+    def check_axiom_1(cls, v: dict) -> dict:
+        """
+        Axiom 1: ListLengthConsistency.
+        AboutNodeAliasList, ValueList and TelemetryNameList must all have the same length.
+        """
+        alias_list: List[str] = v.get("AboutNodeAliasList", None)
+        value_list: List[int] = v.get("ValueList", None)
+        tn_list: List[TelemetryName] = v.get("TelemetryNameList", None)
+        if (len(value_list) != len(alias_list)) or (len(value_list) != len(tn_list)):
+            raise ValueError(
+                "Axiom 1: AboutNodeAliasList, ValueList and TelemetryNameList must all have the same length."
+            )
+        return v
 
     def as_dict(self) -> Dict[str, Any]:
         d = self.dict()

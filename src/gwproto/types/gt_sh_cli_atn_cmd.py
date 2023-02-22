@@ -16,8 +16,11 @@ def check_is_uuid_canonical_textual(v: str) -> None:
     UuidCanonicalTextual format:  A string of hex words separated by hyphens
     of length 8-4-4-4-12.
 
+    Args:
+    v (str): the candidate
+
     Raises:
-        ValueError: if not UuidCanonicalTextual format
+        ValueError: if v is not UuidCanonicalTextual format
     """
     try:
         x = v.split("-")
@@ -47,8 +50,11 @@ def check_is_left_right_dot(v: str) -> None:
     LeftRightDot format: Lowercase alphanumeric words separated by periods,
     most significant word (on the left) starting with an alphabet character.
 
+    Args:
+        v (str): the candidate
+
     Raises:
-        ValueError: if not LeftRightDot format
+        ValueError: if v is not LeftRightDot format
     """
     from typing import List
 

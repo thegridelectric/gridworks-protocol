@@ -440,8 +440,11 @@ def check_is_left_right_dot(v: str) -> None:
     LeftRightDot format: Lowercase alphanumeric words separated by periods,
     most significant word (on the left) starting with an alphabet character.
 
+    Args:
+        v (str): the candidate
+
     Raises:
-        ValueError: if not LeftRightDot format
+        ValueError: if v is not LeftRightDot format
     """
     from typing import List
 
@@ -469,8 +472,11 @@ def check_is_reasonable_unix_time_s(v: int) -> None:
     """
     ReasonableUnixTimeS format: time in unix seconds between Jan 1 2000 and Jan 1 3000
 
+    Args:
+        v (int): the candidate
+
     Raises:
-        ValueError: if not ReasonableUnixTimeS format
+        ValueError: if v is not ReasonableUnixTimeS format
     """
     import pendulum
     if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp > v:  # type: ignore[attr-defined]
@@ -484,12 +490,14 @@ def check_is_reasonable_unix_time_s(v: int) -> None:
     <xsl:text>
 
 
-def check_is_reasonable_unix_time_ms(v: str) -> None:
+def check_is_reasonable_unix_time_ms(v: int) -> None:
     """
     ReasonableUnixTimeMs format: time in unix milliseconds between Jan 1 2000 and Jan 1 3000
 
+    Args:
+        v (int): the candidate
     Raises:
-        ValueError: if not ReasonableUnixTimeMs format
+        ValueError: if v is not ReasonableUnixTimeMs format
     """
     import pendulum
     if pendulum.parse('2000-01-01T00:00:00Z').int_timestamp * 1000 > v:  # type: ignore[attr-defined]
@@ -509,8 +517,11 @@ def check_is_uuid_canonical_textual(v: str) -> None:
     UuidCanonicalTextual format:  A string of hex words separated by hyphens
     of length 8-4-4-4-12.
 
+    Args:
+    v (str): the candidate
+
     Raises:
-        ValueError: if not UuidCanonicalTextual format
+        ValueError: if v is not UuidCanonicalTextual format
     """
     try:
         x = v.split("-")
@@ -547,8 +558,11 @@ def check_is_world_instance_name_format(v: str) -> None:
     with an alphabet char (the root GNodeAlias) and an integer,
     seperated by '__'. For example 'd1__1'
 
+    Args:
+        v (str): the candidate
+
     Raises:
-        ValueError: if not WorldInstanceNameFormat format
+        ValueError: if v is not WorldInstanceNameFormat format
     """
     try:
         words = v.split("__")

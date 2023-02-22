@@ -119,12 +119,14 @@ class TelemetryNameMap:
     }
 
 
-def check_is_reasonable_unix_time_ms(v: str) -> None:
+def check_is_reasonable_unix_time_ms(v: int) -> None:
     """
     ReasonableUnixTimeMs format: time in unix milliseconds between Jan 1 2000 and Jan 1 3000
 
+    Args:
+        v (int): the candidate
     Raises:
-        ValueError: if not ReasonableUnixTimeMs format
+        ValueError: if v is not ReasonableUnixTimeMs format
     """
     import pendulum
 

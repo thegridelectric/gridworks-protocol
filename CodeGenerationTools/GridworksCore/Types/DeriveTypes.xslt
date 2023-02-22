@@ -479,9 +479,9 @@ def check_is_reasonable_unix_time_s(v: int) -> None:
         ValueError: if v is not ReasonableUnixTimeS format
     """
     import pendulum
-    if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp > v:  # type: ignore[attr-defined]
+    if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp > v:  # type: ignore[union-attr]
         raise ValueError(f"{v} must be after Jan 1 2000")
-    if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp &lt; v:  # type: ignore[attr-defined]
+    if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp &lt; v:  # type: ignore[union-attr]
         raise ValueError(f"{v} must be before Jan 1 3000")</xsl:text>
 
     </xsl:if>
@@ -500,9 +500,9 @@ def check_is_reasonable_unix_time_ms(v: int) -> None:
         ValueError: if v is not ReasonableUnixTimeMs format
     """
     import pendulum
-    if pendulum.parse('2000-01-01T00:00:00Z').int_timestamp * 1000 > v:  # type: ignore[attr-defined]
+    if pendulum.parse('2000-01-01T00:00:00Z').int_timestamp * 1000 > v: # type: ignore[union-attr]
         raise ValueError(f"{v} must be after Jan 1 2000")
-    if pendulum.parse('3000-01-01T00:00:00Z').int_timestamp * 1000 &lt; v:  # type: ignore[attr-defined]
+    if pendulum.parse('3000-01-01T00:00:00Z').int_timestamp * 1000 &lt; v: # type: ignore[union-attr]
         raise ValueError(f"{v} must be before Jan 1 3000")</xsl:text>
 
 

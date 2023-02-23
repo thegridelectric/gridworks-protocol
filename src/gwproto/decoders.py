@@ -278,6 +278,8 @@ def pydantic_named_types(
                 module_class, type_name_field=type_name_field
             ):
                 if type_name in type_names:
+                    if type_names[type_name] is module_class:
+                        continue
                     raise ValueError(
                         f"ERROR {type_name_field} ({type_name}) "
                         f"for {module_class} already seen for "

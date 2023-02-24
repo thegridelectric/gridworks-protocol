@@ -68,23 +68,11 @@ def child_to_parent_messages() -> list[MessageCase]:
     status_message_dict = stored_message_dicts["status"]
     gt_sh_status = GtShStatus_Maker.dict_to_tuple(status_message_dict["Payload"])
     gt_sh_status_event = GtShStatusEvent(Src=CHILD, status=gt_sh_status)
-    exp_status_event = GtShStatusEvent(
-        Src=CHILD,
-        MessageId=gt_sh_status_event.MessageId,
-        TimeNS=gt_sh_status_event.TimeNS,
-        status=gt_sh_status.as_dict(),
-    )
     snap_message_dict = stored_message_dicts["snapshot"]
     snapshot_spaceheat = SnapshotSpaceheat_Maker.dict_to_tuple(
         snap_message_dict["Payload"]
     )
     snapshot_event = SnapshotSpaceheatEvent(Src=CHILD, snap=snapshot_spaceheat)
-    exp_snap_event = SnapshotSpaceheatEvent(
-        Src=CHILD,
-        MessageId=snapshot_event.MessageId,
-        TimeNS=snapshot_event.TimeNS,
-        snap=snapshot_spaceheat.as_dict(),
-    )
 
     return [
         # Gs Pwr
@@ -95,7 +83,6 @@ def child_to_parent_messages() -> list[MessageCase]:
             None,
             gt_sh_status,
         ),
-        # MessageCase(Message(**status_message_dict), None, gt_sh_status),
         MessageCase(
             Message(Src=CHILD, Payload=status_message_dict["Payload"]),
             None,
@@ -117,10 +104,8 @@ def child_to_parent_messages() -> list[MessageCase]:
             snapshot_spaceheat,
         ),
         # events
-        MessageCase(
-            Message(Src=CHILD, Payload=gt_sh_status_event), None, exp_status_event
-        ),
-        MessageCase(Message(Src=CHILD, Payload=snapshot_event), None, exp_snap_event),
+        MessageCase(Message(Src=CHILD, Payload=gt_sh_status_event)),
+        MessageCase(Message(Src=CHILD, Payload=snapshot_event)),
         MessageCase(Message(Src=CHILD, Payload=StartupEvent())),
         MessageCase(Message(Src=CHILD, Payload=ShutdownEvent(Reason="foo"))),
         MessageCase(

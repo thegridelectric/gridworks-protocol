@@ -1,4 +1,3 @@
-from abc import ABC
 from enum import auto
 from typing import List
 
@@ -52,21 +51,3 @@ class TelemetryName(StrEnum):
         Returns enum choices
         """
         return [elt.value for elt in cls]
-
-
-class SpaceheatTelemetryName100GtEnum(ABC):
-    symbols: List[str] = [
-        "00000000",
-        "af39eec9",
-        "5a71d4b3",
-        "c89d0ba1",
-        "793505aa",
-        "d70cce28",
-        "ad19e79c",
-        "329a68c0",
-        "bb6fdd59",
-        "e0bb014b",
-        "337b8659",
-        "0f627faa",
-        "4c3f8c78",
-    ]

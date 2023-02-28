@@ -1,8 +1,27 @@
+from abc import ABC
 from typing import Dict
+from typing import List
 
 from gwproto.enums import TelemetryName
-from gwproto.enums.telemetry_name import SpaceheatTelemetryName100GtEnum
 from gwproto.errors import MpSchemaError
+
+
+class SpaceheatTelemetryName100GtEnum(ABC):
+    symbols: List[str] = [
+        "00000000",
+        "af39eec9",
+        "5a71d4b3",
+        "c89d0ba1",
+        "793505aa",
+        "d70cce28",
+        "ad19e79c",
+        "329a68c0",
+        "bb6fdd59",
+        "e0bb014b",
+        "337b8659",
+        "0f627faa",
+        "4c3f8c78",
+    ]
 
 
 class TelemetryNameGtEnum(SpaceheatTelemetryName100GtEnum):

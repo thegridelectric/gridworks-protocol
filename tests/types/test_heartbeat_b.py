@@ -1,4 +1,4 @@
-"""Tests heartbeat.b type, version 000"""
+"""Tests heartbeat.b type, version 001"""
 import json
 
 import pytest
@@ -17,8 +17,9 @@ def test_heartbeat_b_generated() -> None:
         "YourLastHex": 2,
         "LastReceivedTimeUnixMs": 1673635764282,
         "SendTimeUnixMs": 1673635765317,
+        "StartingOver": False,
         "TypeName": "heartbeat.b",
-        "Version": "000",
+        "Version": "001",
     }
 
     with pytest.raises(MpSchemaError):
@@ -42,6 +43,7 @@ def test_heartbeat_b_generated() -> None:
         your_last_hex=gtuple.YourLastHex,
         last_received_time_unix_ms=gtuple.LastReceivedTimeUnixMs,
         send_time_unix_ms=gtuple.SendTimeUnixMs,
+        starting_over=gtuple.StartingOver,
     ).tuple
     assert t == gtuple
 
@@ -84,6 +86,11 @@ def test_heartbeat_b_generated() -> None:
     with pytest.raises(MpSchemaError):
         Maker.dict_to_tuple(d2)
 
+    d2 = dict(d)
+    del d2["StartingOver"]
+    with pytest.raises(MpSchemaError):
+        Maker.dict_to_tuple(d2)
+
     ######################################
     # Behavior on incorrect types
     ######################################
@@ -93,6 +100,10 @@ def test_heartbeat_b_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d, SendTimeUnixMs="1673635765317.1")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, StartingOver="this is not a boolean")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 

@@ -1,4 +1,4 @@
-"""Type heartbeat.b, version 000"""
+"""Type heartbeat.b, version 001"""
 import json
 from typing import Any
 from typing import Dict
@@ -130,8 +130,7 @@ class HeartbeatB(BaseModel):
         default="0",
     )
     YourLastHex: str = Field(
-        title="Last hex character received from heartbeat partner",
-        default="0",
+        title="Last hex character received from heartbeat partner.",
     )
     LastReceivedTimeUnixMs: int = Field(
         title="Time YourLastHex was received on my clock",
@@ -139,8 +138,12 @@ class HeartbeatB(BaseModel):
     SendTimeUnixMs: int = Field(
         title="Time this message is made and sent on my clock",
     )
+    StartingOver: bool = Field(
+        title="True if the heartbeat initiator wants to start the volley over",
+        description="(typically the AtomicTNode in an AtomicTNode / SCADA pair) wants to start the heartbeating volley over. The result is that its partner will not expect the initiator to know its last Hex.",
+    )
     TypeName: Literal["heartbeat.b"] = "heartbeat.b"
-    Version: str = "000"
+    Version: str = "001"
 
     @validator("FromGNodeAlias")
     def _check_from_g_node_alias(cls, v: str) -> str:
@@ -208,7 +211,7 @@ class HeartbeatB(BaseModel):
 
 class HeartbeatB_Maker:
     type_name = "heartbeat.b"
-    version = "000"
+    version = "001"
 
     def __init__(
         self,
@@ -218,6 +221,7 @@ class HeartbeatB_Maker:
         your_last_hex: str,
         last_received_time_unix_ms: int,
         send_time_unix_ms: int,
+        starting_over: bool,
     ):
 
         self.tuple = HeartbeatB(
@@ -227,6 +231,7 @@ class HeartbeatB_Maker:
             YourLastHex=your_last_hex,
             LastReceivedTimeUnixMs=last_received_time_unix_ms,
             SendTimeUnixMs=send_time_unix_ms,
+            StartingOver=starting_over,
             #
         )
 
@@ -265,6 +270,8 @@ class HeartbeatB_Maker:
             raise MpSchemaError(f"dict {d2} missing LastReceivedTimeUnixMs")
         if "SendTimeUnixMs" not in d2.keys():
             raise MpSchemaError(f"dict {d2} missing SendTimeUnixMs")
+        if "StartingOver" not in d2.keys():
+            raise MpSchemaError(f"dict {d2} missing StartingOver")
         if "TypeName" not in d2.keys():
             raise MpSchemaError(f"dict {d2} missing TypeName")
 
@@ -275,6 +282,7 @@ class HeartbeatB_Maker:
             YourLastHex=d2["YourLastHex"],
             LastReceivedTimeUnixMs=d2["LastReceivedTimeUnixMs"],
             SendTimeUnixMs=d2["SendTimeUnixMs"],
+            StartingOver=d2["StartingOver"],
             TypeName=d2["TypeName"],
-            Version="000",
+            Version="001",
         )

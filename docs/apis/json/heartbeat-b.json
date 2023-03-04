@@ -1,7 +1,7 @@
 {
   "gwapi": "001",
   "type_name": "heartbeat.b",
-  "version": "000",
+  "version": "001",
   "owner": "gridworks@gridworks-consulting.com",
   "description": ". Heartbeat for Scada-AtomicTNode DispatchContract, to send via RabbitMQ",
   "formats": {
@@ -48,7 +48,7 @@
     "YourLastHex": {
       "type": "string",
       "format": "HexChar",
-      "title": "Last hex character received from heartbeat partner",
+      "title": "Last hex character received from heartbeat partner.",
       "required": true
     },
     "LastReceivedTimeUnixMs": {
@@ -63,15 +63,21 @@
       "title": "Time this message is made and sent on my clock",
       "required": true
     },
+    "StartingOver": {
+      "type": "boolean",
+      "title": "True if the heartbeat initiator wants to start the volley over",
+      "description": "(typically the AtomicTNode in an AtomicTNode / SCADA pair) wants to start the heartbeating volley over. The result is that its partner will not expect the initiator to know its last Hex.",
+      "required": true
+    },
     "TypeName": {
       "type": "string",
-      "value": "heartbeat.b.000",
+      "value": "heartbeat.b.001",
       "title": "The type name"
     },
     "Version": {
       "type": "string",
       "title": "The type version",
-      "default": "000",
+      "default": "001",
       "required": true
     }
   }

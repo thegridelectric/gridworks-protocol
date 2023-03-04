@@ -61,7 +61,7 @@ def version_by_type_name() -> Dict[str, str]:
         "gt.sh.status": "110",
         "gt.sh.telemetry.from.multipurpose.sensor": "100",
         "gt.telemetry": "110",
-        "heartbeat.b": "000",
+        "heartbeat.b": "001",
         "snapshot.spaceheat": "000",
         "telemetry.snapshot.spaceheat": "000",
     }
@@ -86,7 +86,7 @@ def status_by_versioned_type_name() -> Dict[str, str]:
         "gt.sh.status.110": "Pending",
         "gt.sh.telemetry.from.multipurpose.sensor.100": "Active",
         "gt.telemetry.110": "Pending",
-        "heartbeat.b.000": "Pending",
+        "heartbeat.b.001": "Pending",
         "snapshot.spaceheat.000": "Pending",
         "telemetry.snapshot.spaceheat.000": "Active",
     }

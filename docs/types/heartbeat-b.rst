@@ -18,7 +18,7 @@ Python pydantic class corresponding to  json type ```heartbeat.b```.
     - Format: HexChar
 
 **YourLastHex**:
-    - Description: Last hex character received from heartbeat partner
+    - Description: Last hex character received from heartbeat partner.
     - Format: HexChar
 
 **LastReceivedTimeUnixMs**:
@@ -28,6 +28,9 @@ Python pydantic class corresponding to  json type ```heartbeat.b```.
 **SendTimeUnixMs**:
     - Description: Time this message is made and sent on my clock
     - Format: ReasonableUnixTimeMs
+
+**StartingOver**:
+    - Description: True if the heartbeat initiator wants to start the volley over.  (typically the AtomicTNode in an AtomicTNode / SCADA pair) wants to start the heartbeating volley over. The result is that its partner will not expect the initiator to know its last Hex.
 
 .. autoclass:: gwproto.types.heartbeat_b.check_is_uuid_canonical_textual
     :members:

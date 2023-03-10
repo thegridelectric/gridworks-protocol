@@ -1,0 +1,84 @@
+{
+  "gwapi": "001",
+  "type_name": "heartbeat.b",
+  "version": "001",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": ". Heartbeat for Scada-AtomicTNode DispatchContract, to send via RabbitMQ",
+  "formats": {
+    "UuidCanonicalTextual": {
+      "type": "string",
+      "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
+      "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"
+    },
+    "HexChar": {
+      "type": "string",
+      "description": "single-char string in '0123456789abcdefABCDEF'",
+      "example": "d"
+    },
+    "LeftRightDot": {
+      "type": "string",
+      "description": "Lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character.",
+      "example": "dw1.isone.me.freedom.apple"
+    },
+    "ReasonableUnixTimeMs": {
+      "type": "string",
+      "description": "An integer reflecting unix time in ms between midnight Jan 1 2000 and midnight Jan 1 3000 UTC",
+      "example": ""
+    }
+  },
+  "properties": {
+    "FromGNodeAlias": {
+      "type": "string",
+      "format": "LeftRightDot",
+      "title": "My GNodeAlias",
+      "required": true
+    },
+    "FromGNodeInstanceId": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "My GNodeInstanceId",
+      "required": true
+    },
+    "MyHex": {
+      "type": "string",
+      "format": "HexChar",
+      "title": "Hex character getting sent",
+      "required": true
+    },
+    "YourLastHex": {
+      "type": "string",
+      "format": "HexChar",
+      "title": "Last hex character received from heartbeat partner.",
+      "required": true
+    },
+    "LastReceivedTimeUnixMs": {
+      "type": "integer",
+      "format": "ReasonableUnixTimeMs",
+      "title": "Time YourLastHex was received on my clock",
+      "required": true
+    },
+    "SendTimeUnixMs": {
+      "type": "integer",
+      "format": "ReasonableUnixTimeMs",
+      "title": "Time this message is made and sent on my clock",
+      "required": true
+    },
+    "StartingOver": {
+      "type": "boolean",
+      "title": "True if the heartbeat initiator wants to start the volley over",
+      "description": "(typically the AtomicTNode in an AtomicTNode / SCADA pair) wants to start the heartbeating volley over. The result is that its partner will not expect the initiator to know its last Hex.",
+      "required": true
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "heartbeat.b.001",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "001",
+      "required": true
+    }
+  }
+}

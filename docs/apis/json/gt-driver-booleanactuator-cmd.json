@@ -1,0 +1,49 @@
+{
+  "gwapi": "001",
+  "type_name": "gt.driver.booleanactuator.cmd",
+  "version": "100",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": "",
+  "formats": {
+    "LeftRightDot": {
+      "type": "string",
+      "description": "Lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character.",
+      "example": "dw1.isone.me.freedom.apple"
+    },
+    "ReasonableUnixTimeMs": {
+      "type": "string",
+      "description": "An integer reflecting unix time in ms between midnight Jan 1 2000 and midnight Jan 1 3000 UTC",
+      "example": ""
+    }
+  },
+  "properties": {
+    "RelayState": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "ShNodeAlias": {
+      "type": "string",
+      "format": "LeftRightDot",
+      "title": "",
+      "required": true
+    },
+    "CommandTimeUnixMs": {
+      "type": "integer",
+      "format": "ReasonableUnixTimeMs",
+      "title": "",
+      "required": true
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "gt.driver.booleanactuator.cmd.100",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "100",
+      "required": true
+    }
+  }
+}

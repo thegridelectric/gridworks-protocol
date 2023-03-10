@@ -18,7 +18,8 @@
         "ReadTimeUnixMsList": [1676592055586],
         "SensorNodeAlias": "a.m",
         "TelemetryNameGtEnumSymbol": "af39eec9",
-        "TypeAlias": "gt.sh.multipurpose.telemetry.status.100",
+        "TypeName": "gt.sh.multipurpose.telemetry.status",
+        "Version": "100",
         "ValueList": [0]
       },
       {
@@ -29,7 +30,8 @@
         ],
         "SensorNodeAlias": "a.s.analog.temp",
         "TelemetryNameGtEnumSymbol": "c89d0ba1",
-        "TypeAlias": "gt.sh.multipurpose.telemetry.status.100",
+        "TypeName": "gt.sh.multipurpose.telemetry.status",
+        "Version": "100",
         "ValueList": [77, 361, -115, -9, -44]
       },
       {
@@ -40,7 +42,8 @@
         ],
         "SensorNodeAlias": "a.s.analog.temp",
         "TelemetryNameGtEnumSymbol": "c89d0ba1",
-        "TypeAlias": "gt.sh.multipurpose.telemetry.status.100",
+        "TypeName": "gt.sh.multipurpose.telemetry.status",
+        "Version": "100",
         "ValueList": [-3587, -3574, -3771, -3656, -3626]
       },
       {
@@ -51,7 +54,8 @@
         ],
         "SensorNodeAlias": "a.s.analog.temp",
         "TelemetryNameGtEnumSymbol": "c89d0ba1",
-        "TypeAlias": "gt.sh.multipurpose.telemetry.status.100",
+        "TypeName": "gt.sh.multipurpose.telemetry.status",
+        "Version": "100",
         "ValueList": [-3222, -3036, -3264, -3087, -3015]
       },
       {
@@ -62,7 +66,8 @@
         ],
         "SensorNodeAlias": "a.s.analog.temp",
         "TelemetryNameGtEnumSymbol": "c89d0ba1",
-        "TypeAlias": "gt.sh.multipurpose.telemetry.status.100",
+        "TypeName": "gt.sh.multipurpose.telemetry.status",
+        "Version": "100",
         "ValueList": [3011, 3037, 2893, 3037, 3041]
       }
     ],
@@ -72,21 +77,24 @@
         "ReadTimeUnixMsList": [1676592052038],
         "ShNodeAlias": "a.elt1.relay",
         "TelemetryNameGtEnumSymbol": "5a71d4b3",
-        "TypeAlias": "gt.sh.simple.telemetry.status.100",
+        "TypeName": "gt.sh.simple.telemetry.status",
+        "Version": "100",
         "ValueList": [0]
       },
       {
         "ReadTimeUnixMsList": [1676592232171],
         "ShNodeAlias": "a.tank.out.pump.relay",
         "TelemetryNameGtEnumSymbol": "5a71d4b3",
-        "TypeAlias": "gt.sh.simple.telemetry.status.100",
+        "TypeName": "gt.sh.simple.telemetry.status",
+        "Version": "100",
         "ValueList": [0]
       },
       {
         "ReadTimeUnixMsList": [1676592079160],
         "ShNodeAlias": "a.tank.out.pump.baseboard1.fan.relay",
         "TelemetryNameGtEnumSymbol": "5a71d4b3",
-        "TypeAlias": "gt.sh.simple.telemetry.status.100",
+        "TypeName": "gt.sh.simple.telemetry.status",
+        "Version": "100",
         "ValueList": [0]
       },
       {
@@ -96,7 +104,8 @@
         ],
         "ShNodeAlias": "a.tank.out.temp1",
         "TelemetryNameGtEnumSymbol": "c89d0ba1",
-        "TypeAlias": "gt.sh.simple.telemetry.status.100",
+        "TypeName": "gt.sh.simple.telemetry.status",
+        "Version": "100",
         "ValueList": [18000, 17937, 17937, 17875, 17812]
       },
       {
@@ -106,7 +115,8 @@
         ],
         "ShNodeAlias": "a.tank.out.far.temp1",
         "TelemetryNameGtEnumSymbol": "c89d0ba1",
-        "TypeAlias": "gt.sh.simple.telemetry.status.100",
+        "TypeName": "gt.sh.simple.telemetry.status",
+        "Version": "100",
         "ValueList": [15375, 15312, 15312, 15312, 15250]
       },
       {
@@ -116,7 +126,8 @@
         ],
         "ShNodeAlias": "a.tank.in.temp1",
         "TelemetryNameGtEnumSymbol": "c89d0ba1",
-        "TypeAlias": "gt.sh.simple.telemetry.status.100",
+        "TypeName": "gt.sh.simple.telemetry.status",
+        "Version": "100",
         "ValueList": [14437, 14375, 14312, 14312, 14312]
       },
       {
@@ -126,7 +137,8 @@
         ],
         "ShNodeAlias": "a.tank.temp0",
         "TelemetryNameGtEnumSymbol": "c89d0ba1",
-        "TypeAlias": "gt.sh.simple.telemetry.status.100",
+        "TypeName": "gt.sh.simple.telemetry.status",
+        "Version": "100",
         "ValueList": [21812, 21812, 21812, 21812, 21812]
       },
       {
@@ -136,13 +148,15 @@
         ],
         "ShNodeAlias": "a.garage.temp1",
         "TelemetryNameGtEnumSymbol": "c89d0ba1",
-        "TypeAlias": "gt.sh.simple.telemetry.status.100",
+        "TypeName": "gt.sh.simple.telemetry.status",
+        "Version": "100",
         "ValueList": [15125, 15062, 15062, 15062, 15062]
       }
     ],
     "SlotStartUnixS": 1676592000,
     "StatusUid": "82abba64-d0df-4907-9b2b-6cb585421068",
-    "TypeAlias": "gt.sh.status.110"
+    "TypeName": "gt.sh.status",
+    "Version": "110"
   },
   "TypeName": "gw"
 }

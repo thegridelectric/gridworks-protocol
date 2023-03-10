@@ -5,7 +5,7 @@ from gwproto.gs.gs_dispatch import GsDispatch
 
 
 class GsDispatch_Maker:
-    type_alias = "d"
+    type_name = "d"
 
     def __init__(self, relay_state):
         tuple = GsDispatch(RelayState=relay_state)

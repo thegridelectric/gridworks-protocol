@@ -15,11 +15,10 @@ except ImportError:
 from gwproto import Message
 from gwproto import MQTTCodec
 from gwproto.gs import GsPwr_Maker
-from gwproto.gt.gt_dispatch_boolean import GtDispatchBoolean_Maker
-from gwproto.gt.gt_sh_cli_atn_cmd import GtShCliAtnCmd_Maker
-from gwproto.gt.gt_sh_status import GtShStatus_Maker
-from gwproto.gt.snapshot_spaceheat import SnapshotSpaceheat_Maker
 from gwproto.messages import Ack
+from gwproto.messages import GtDispatchBoolean_Maker
+from gwproto.messages import GtShCliAtnCmd_Maker
+from gwproto.messages import GtShStatus_Maker
 from gwproto.messages import GtShStatusEvent
 from gwproto.messages import MQTTConnectEvent
 from gwproto.messages import MQTTConnectFailedEvent
@@ -31,6 +30,7 @@ from gwproto.messages import ProblemEvent
 from gwproto.messages import Problems
 from gwproto.messages import ResponseTimeoutEvent
 from gwproto.messages import ShutdownEvent
+from gwproto.messages import SnapshotSpaceheat_Maker
 from gwproto.messages import SnapshotSpaceheatEvent
 from gwproto.messages import StartupEvent
 from tests.dummy_decoders import CHILD
@@ -68,36 +68,28 @@ def child_to_parent_messages() -> list[MessageCase]:
     status_message_dict = stored_message_dicts["status"]
     gt_sh_status = GtShStatus_Maker.dict_to_tuple(status_message_dict["Payload"])
     gt_sh_status_event = GtShStatusEvent(Src=CHILD, status=gt_sh_status)
-    exp_status_event = GtShStatusEvent(
-        Src=CHILD,
-        MessageId=gt_sh_status_event.MessageId,
-        TimeNS=gt_sh_status_event.TimeNS,
-        status=gt_sh_status.asdict(),
-    )
     snap_message_dict = stored_message_dicts["snapshot"]
     snapshot_spaceheat = SnapshotSpaceheat_Maker.dict_to_tuple(
         snap_message_dict["Payload"]
     )
     snapshot_event = SnapshotSpaceheatEvent(Src=CHILD, snap=snapshot_spaceheat)
-    exp_snap_event = SnapshotSpaceheatEvent(
-        Src=CHILD,
-        MessageId=snapshot_event.MessageId,
-        TimeNS=snapshot_event.TimeNS,
-        snap=snapshot_spaceheat.asdict(),
-    )
 
     return [
         # Gs Pwr
         MessageCase(Message(Src=CHILD, MessageType="p", Payload=GsPwr_Maker(1).tuple)),
         # status
-        MessageCase(Message(**status_message_dict), None, gt_sh_status),
+        MessageCase(
+            Message(Src=CHILD, MessageType="gt.sh.status.110", Payload=gt_sh_status),
+            None,
+            gt_sh_status,
+        ),
         MessageCase(
             Message(Src=CHILD, Payload=status_message_dict["Payload"]),
             None,
             gt_sh_status,
         ),
         MessageCase(
-            Message(Src=CHILD, Payload=gt_sh_status.asdict()), None, gt_sh_status
+            Message(Src=CHILD, Payload=gt_sh_status.as_dict()), None, gt_sh_status
         ),
         # snapshot
         MessageCase(Message(**snap_message_dict), None, snapshot_spaceheat),
@@ -107,15 +99,13 @@ def child_to_parent_messages() -> list[MessageCase]:
             snapshot_spaceheat,
         ),
         MessageCase(
-            Message(Src=CHILD, Payload=snapshot_spaceheat.asdict()),
+            Message(Src=CHILD, Payload=snapshot_spaceheat.as_dict()),
             None,
             snapshot_spaceheat,
         ),
         # events
-        MessageCase(
-            Message(Src=CHILD, Payload=gt_sh_status_event), None, exp_status_event
-        ),
-        MessageCase(Message(Src=CHILD, Payload=snapshot_event), None, exp_snap_event),
+        MessageCase(Message(Src=CHILD, Payload=gt_sh_status_event)),
+        MessageCase(Message(Src=CHILD, Payload=snapshot_event)),
         MessageCase(Message(Src=CHILD, Payload=StartupEvent())),
         MessageCase(Message(Src=CHILD, Payload=ShutdownEvent(Reason="foo"))),
         MessageCase(
@@ -147,10 +137,10 @@ def parent_to_child_messages() -> list[MessageCase]:
         send_snapshot=True,
     ).tuple
     set_relay = GtDispatchBoolean_Maker(
-        about_node_alias="a.b.c",
+        about_node_name="a.b.c",
         to_g_node_alias="a.b.c",
         from_g_node_alias="a.b.c",
-        from_g_node_id=str(uuid.uuid4()),
+        from_g_node_instance_id=str(uuid.uuid4()),
         relay_state=1,
         send_time_unix_ms=int(time.time() * 1000),
     ).tuple
@@ -159,11 +149,11 @@ def parent_to_child_messages() -> list[MessageCase]:
         MessageCase(PingMessage(Src=PARENT)),
         MessageCase(Message(Src=PARENT, Payload=Ack(AckMessageID="1"))),
         MessageCase(
-            Message(Src=PARENT, Payload=snapshot_request.asdict()),
+            Message(Src=PARENT, Payload=snapshot_request.as_dict()),
             None,
             snapshot_request,
         ),
-        MessageCase(Message(Src=PARENT, Payload=set_relay.asdict()), None, set_relay),
+        MessageCase(Message(Src=PARENT, Payload=set_relay.as_dict()), None, set_relay),
     ]
 
 

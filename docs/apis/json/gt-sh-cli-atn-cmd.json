@@ -1,0 +1,49 @@
+{
+  "gwapi": "001",
+  "type_name": "gt.sh.cli.atn.cmd",
+  "version": "110",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": "",
+  "formats": {
+    "UuidCanonicalTextual": {
+      "type": "string",
+      "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
+      "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"
+    },
+    "LeftRightDot": {
+      "type": "string",
+      "description": "Lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character.",
+      "example": "dw1.isone.me.freedom.apple"
+    }
+  },
+  "properties": {
+    "FromGNodeAlias": {
+      "type": "string",
+      "format": "LeftRightDot",
+      "title": "",
+      "required": true
+    },
+    "SendSnapshot": {
+      "type": "boolean",
+      "title": "",
+      "required": true
+    },
+    "FromGNodeId": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "",
+      "required": true
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "gt.sh.cli.atn.cmd.110",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "110",
+      "required": true
+    }
+  }
+}

@@ -12,3 +12,9 @@ __pycache__/
 hacking
 .idea
 scratch.*
+cook.sh
+
+
+# Code generation airtable
+CodeGenerationTools/GridworksCore/SassyMQ/
+CodeGenerationTools/GridworksCore/.ssotme/**/*.zfs

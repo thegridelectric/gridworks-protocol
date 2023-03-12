@@ -5,7 +5,7 @@ from gwproto.gs.gs_pwr import GsPwr
 
 
 class GsPwr_Maker:
-    type_alias = "p"
+    type_name = "p"
 
     def __init__(self, power):
         tuple = GsPwr(Power=power)

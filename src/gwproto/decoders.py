@@ -15,12 +15,14 @@ from typing import TypeVar
 from typing import Union
 from typing import get_origin
 
+import pydantic
 from pydantic import BaseModel
 from pydantic import Field
 from pydantic import create_model
 
 from gwproto.message import Header
 from gwproto.message import Message
+from gwproto.messages import AnyEvent
 from gwproto.topic import MQTTTopic
 
 
@@ -92,7 +94,35 @@ class MessageDecoder(Decoder):
             )
             message = Message(**message_dict)
         else:
-            message = self.message_payload_discriminator.parse_obj(message_dict)
+            try:
+                message = self.message_payload_discriminator.parse_obj(message_dict)
+            except pydantic.ValidationError as e:
+                # This can result because we receive a TypeName we don't recognize, either because the sender is
+                # newer or older than our code. In some cases we can still meaningfully interpret the message,
+                # for example if we can recognize that it is an event messasge, as is done here.
+                special_typename_handling_message: Optional[Message[Any]] = None
+                for error in e.errors():
+                    if (
+                        error.get("type", "")
+                        == "value_error.discriminated_union.invalid_discriminator"
+                    ):
+                        ctx = error.get("ctx", dict())
+                        if ctx.get("discriminator_key", "") == "TypeName":
+                            if ctx.get("discriminator_value", "").startswith(
+                                "gridworks.event"
+                            ):
+                                try:
+                                    message_dict["Payload"] = AnyEvent(
+                                        **message_dict["Payload"]
+                                    )
+                                    special_typename_handling_message = Message(
+                                        **message_dict
+                                    )
+                                except Exception as e2:
+                                    raise e2 from e
+                if special_typename_handling_message is None:
+                    raise e
+                message = special_typename_handling_message
         return message
 
 

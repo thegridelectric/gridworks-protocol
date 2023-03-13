@@ -1,13 +1,6 @@
-Spaceheat SCADA
-================
+ActorClass
+============
 
-A Spaceheat SCADA is a `SCADA <https://gridworks.readthedocs.io/en/latest/scada.html>`_ whose
-`TerminalAsset <https://gridworks.readthedocs.io/en/latest/terminal-asset.html>`_ represents
-a thermal storage heating system for heating a building and/or a room.
-
-
-Scada as Spaceheat actor
-^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The opensource GridWorks `Spaceheat Scada software <https://github.com/thegridelectric/gw-scada-spaceheat-python>`_
 is organized internally as a set of actors, with the prime actor being the SCADA itself.  The SCADA must be

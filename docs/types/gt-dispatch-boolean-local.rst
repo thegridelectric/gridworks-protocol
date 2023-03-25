@@ -8,11 +8,11 @@ Python pydantic class corresponding to  json type ```gt.dispatch.boolean.local``
 **RelayState**:
     - Description:
 
-**AboutNodeAlias**:
+**AboutNodeName**:
     - Description:
     - Format: LeftRightDot
 
-**FromNodeAlias**:
+**FromNodeName**:
     - Description:
     - Format: LeftRightDot
 

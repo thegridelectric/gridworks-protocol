@@ -1,4 +1,4 @@
-"""Type gt.dispatch.boolean.local, version 100"""
+"""Type gt.dispatch.boolean.local, version 110"""
 import json
 from typing import Any
 from typing import Dict
@@ -60,41 +60,42 @@ def check_is_reasonable_unix_time_ms(v: int) -> None:
 
 
 class GtDispatchBooleanLocal(BaseModel):
-    """ """
+    """Dispatch message sent locally by SCADA HomeAlone actor.
+
+    By Locally, this means sent without access to Internet. The HomeAlone actor must reside within the Local Area Network of the SCADA - typically it should reside on the same hardware.
+    """
 
     RelayState: int = Field(
         title="RelayState",
     )
-    AboutNodeAlias: str = Field(
-        title="AboutNodeAlias",
+    AboutNodeName: str = Field(
+        title="AboutNodeName",
     )
-    FromNodeAlias: str = Field(
-        title="FromNodeAlias",
+    FromNodeName: str = Field(
+        title="FromNodeName",
     )
     SendTimeUnixMs: int = Field(
         title="SendTimeUnixMs",
     )
     TypeName: Literal["gt.dispatch.boolean.local"] = "gt.dispatch.boolean.local"
-    Version: str = "100"
+    Version: str = "110"
 
-    @validator("AboutNodeAlias")
-    def _check_about_node_alias(cls, v: str) -> str:
+    @validator("AboutNodeName")
+    def _check_about_node_name(cls, v: str) -> str:
         try:
             check_is_left_right_dot(v)
         except ValueError as e:
             raise ValueError(
-                f"AboutNodeAlias failed LeftRightDot format validation: {e}"
+                f"AboutNodeName failed LeftRightDot format validation: {e}"
             )
         return v
 
-    @validator("FromNodeAlias")
-    def _check_from_node_alias(cls, v: str) -> str:
+    @validator("FromNodeName")
+    def _check_from_node_name(cls, v: str) -> str:
         try:
             check_is_left_right_dot(v)
         except ValueError as e:
-            raise ValueError(
-                f"FromNodeAlias failed LeftRightDot format validation: {e}"
-            )
+            raise ValueError(f"FromNodeName failed LeftRightDot format validation: {e}")
         return v
 
     @validator("SendTimeUnixMs")
@@ -114,23 +115,26 @@ class GtDispatchBooleanLocal(BaseModel):
     def as_type(self) -> str:
         return json.dumps(self.as_dict())
 
+    def __hash__(self):
+        return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
+
 
 class GtDispatchBooleanLocal_Maker:
     type_name = "gt.dispatch.boolean.local"
-    version = "100"
+    version = "110"
 
     def __init__(
         self,
         relay_state: int,
-        about_node_alias: str,
-        from_node_alias: str,
+        about_node_name: str,
+        from_node_name: str,
         send_time_unix_ms: int,
     ):
 
         self.tuple = GtDispatchBooleanLocal(
             RelayState=relay_state,
-            AboutNodeAlias=about_node_alias,
-            FromNodeAlias=from_node_alias,
+            AboutNodeName=about_node_name,
+            FromNodeName=from_node_name,
             SendTimeUnixMs=send_time_unix_ms,
             #
         )
@@ -160,10 +164,10 @@ class GtDispatchBooleanLocal_Maker:
         d2 = dict(d)
         if "RelayState" not in d2.keys():
             raise MpSchemaError(f"dict {d2} missing RelayState")
-        if "AboutNodeAlias" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing AboutNodeAlias")
-        if "FromNodeAlias" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing FromNodeAlias")
+        if "AboutNodeName" not in d2.keys():
+            raise MpSchemaError(f"dict {d2} missing AboutNodeName")
+        if "FromNodeName" not in d2.keys():
+            raise MpSchemaError(f"dict {d2} missing FromNodeName")
         if "SendTimeUnixMs" not in d2.keys():
             raise MpSchemaError(f"dict {d2} missing SendTimeUnixMs")
         if "TypeName" not in d2.keys():
@@ -171,9 +175,9 @@ class GtDispatchBooleanLocal_Maker:
 
         return GtDispatchBooleanLocal(
             RelayState=d2["RelayState"],
-            AboutNodeAlias=d2["AboutNodeAlias"],
-            FromNodeAlias=d2["FromNodeAlias"],
+            AboutNodeName=d2["AboutNodeName"],
+            FromNodeName=d2["FromNodeName"],
             SendTimeUnixMs=d2["SendTimeUnixMs"],
             TypeName=d2["TypeName"],
-            Version="100",
+            Version="110",
         )

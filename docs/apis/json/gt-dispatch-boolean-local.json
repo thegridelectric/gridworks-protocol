@@ -1,9 +1,9 @@
 {
   "gwapi": "001",
   "type_name": "gt.dispatch.boolean.local",
-  "version": "100",
+  "version": "110",
   "owner": "gridworks@gridworks-consulting.com",
-  "description": "",
+  "description": "Dispatch message sent locally by SCADA HomeAlone actor. By Locally, this means sent without access to Internet. The HomeAlone actor must reside within the Local Area Network of the SCADA - typically it should reside on the same hardware.",
   "formats": {
     "LeftRightDot": {
       "type": "string",
@@ -22,13 +22,13 @@
       "title": "",
       "required": true
     },
-    "AboutNodeAlias": {
+    "AboutNodeName": {
       "type": "string",
       "format": "LeftRightDot",
       "title": "",
       "required": true
     },
-    "FromNodeAlias": {
+    "FromNodeName": {
       "type": "string",
       "format": "LeftRightDot",
       "title": "",
@@ -42,13 +42,13 @@
     },
     "TypeName": {
       "type": "string",
-      "value": "gt.dispatch.boolean.local.100",
+      "value": "gt.dispatch.boolean.local.110",
       "title": "The type name"
     },
     "Version": {
       "type": "string",
       "title": "The type version",
-      "default": "100",
+      "default": "110",
       "required": true
     }
   }

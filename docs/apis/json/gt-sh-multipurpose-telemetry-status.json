@@ -128,7 +128,7 @@
     },
     "TypeName": {
       "type": "string",
-      "value": "gt.sh.multipurpose.telemetry.status.100",
+      "value": "gt.sh.multipurpose.telemetry.status",
       "title": "The type name"
     },
     "Version": {

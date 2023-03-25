@@ -36,7 +36,7 @@
     },
     "TypeName": {
       "type": "string",
-      "value": "gt.sh.cli.atn.cmd.110",
+      "value": "gt.sh.cli.atn.cmd",
       "title": "The type name"
     },
     "Version": {

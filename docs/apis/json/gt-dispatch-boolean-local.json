@@ -42,7 +42,7 @@
     },
     "TypeName": {
       "type": "string",
-      "value": "gt.dispatch.boolean.local.110",
+      "value": "gt.dispatch.boolean.local",
       "title": "The type name"
     },
     "Version": {

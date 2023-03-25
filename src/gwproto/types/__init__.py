@@ -32,6 +32,8 @@ from gwproto.types.gt_telemetry import GtTelemetry
 from gwproto.types.gt_telemetry import GtTelemetry_Maker
 from gwproto.types.heartbeat_b import HeartbeatB
 from gwproto.types.heartbeat_b import HeartbeatB_Maker
+from gwproto.types.power_watts import PowerWatts
+from gwproto.types.power_watts import PowerWatts_Maker
 from gwproto.types.snapshot_spaceheat import SnapshotSpaceheat
 from gwproto.types.snapshot_spaceheat import SnapshotSpaceheat_Maker
 from gwproto.types.telemetry_snapshot_spaceheat import TelemetrySnapshotSpaceheat
@@ -61,6 +63,8 @@ __all__ = [
     "GtTelemetry_Maker",
     "HeartbeatB",
     "HeartbeatB_Maker",
+    "PowerWatts",
+    "PowerWatts_Maker",
     "SnapshotSpaceheat",
     "SnapshotSpaceheat_Maker",
     "TelemetrySnapshotSpaceheat",

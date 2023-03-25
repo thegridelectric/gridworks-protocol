@@ -36,7 +36,7 @@
     },
     "TypeName": {
       "type": "string",
-      "value": "snapshot.spaceheat.000",
+      "value": "snapshot.spaceheat",
       "title": "The type name"
     },
     "Version": {

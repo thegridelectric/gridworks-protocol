@@ -1,4 +1,4 @@
-"""Tests gt.dispatch.boolean.local type, version 100"""
+"""Tests gt.dispatch.boolean.local type, version 110"""
 import json
 
 import pytest
@@ -12,11 +12,11 @@ def test_gt_dispatch_boolean_local_generated() -> None:
 
     d = {
         "RelayState": 1,
-        "AboutNodeAlias": "a.elt1.relay",
-        "FromNodeAlias": "a.s",
+        "AboutNodeName": "a.elt1.relay",
+        "FromNodeName": "a.s",
         "SendTimeUnixMs": 1657025211851,
         "TypeName": "gt.dispatch.boolean.local",
-        "Version": "100",
+        "Version": "110",
     }
 
     with pytest.raises(MpSchemaError):
@@ -35,8 +35,8 @@ def test_gt_dispatch_boolean_local_generated() -> None:
     # test Maker init
     t = Maker(
         relay_state=gtuple.RelayState,
-        about_node_alias=gtuple.AboutNodeAlias,
-        from_node_alias=gtuple.FromNodeAlias,
+        about_node_name=gtuple.AboutNodeName,
+        from_node_name=gtuple.FromNodeName,
         send_time_unix_ms=gtuple.SendTimeUnixMs,
     ).tuple
     assert t == gtuple
@@ -56,12 +56,12 @@ def test_gt_dispatch_boolean_local_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["AboutNodeAlias"]
+    del d2["AboutNodeName"]
     with pytest.raises(MpSchemaError):
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["FromNodeAlias"]
+    del d2["FromNodeName"]
     with pytest.raises(MpSchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -94,11 +94,11 @@ def test_gt_dispatch_boolean_local_generated() -> None:
     # MpSchemaError raised if primitive attributes do not have appropriate property_format
     ######################################
 
-    d2 = dict(d, AboutNodeAlias="a.b-h")
+    d2 = dict(d, AboutNodeName="a.b-h")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, FromNodeAlias="a.b-h")
+    d2 = dict(d, FromNodeName="a.b-h")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 

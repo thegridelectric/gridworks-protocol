@@ -254,6 +254,9 @@ class GtShMultipurposeTelemetryStatus(BaseModel):
     def as_type(self) -> str:
         return json.dumps(self.as_dict())
 
+    def __hash__(self):
+        return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
+
 
 class GtShMultipurposeTelemetryStatus_Maker:
     type_name = "gt.sh.multipurpose.telemetry.status"

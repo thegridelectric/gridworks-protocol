@@ -52,7 +52,7 @@ def version_by_type_name() -> Dict[str, str]:
 
     v: Dict[str, str] = {
         "gt.dispatch.boolean": "110",
-        "gt.dispatch.boolean.local": "100",
+        "gt.dispatch.boolean.local": "110",
         "gt.driver.booleanactuator.cmd": "100",
         "gt.sh.booleanactuator.cmd.status": "100",
         "gt.sh.cli.atn.cmd": "110",
@@ -76,18 +76,18 @@ def status_by_versioned_type_name() -> Dict[str, str]:
     """
 
     v: Dict[str, str] = {
-        "gt.dispatch.boolean.110": "Pending",
-        "gt.dispatch.boolean.local.100": "Pending",
-        "gt.driver.booleanactuator.cmd.100": "Pending",
-        "gt.sh.booleanactuator.cmd.status.100": "Pending",
-        "gt.sh.cli.atn.cmd.110": "Pending",
+        "gt.dispatch.boolean.110": "Active",
+        "gt.dispatch.boolean.local.110": "Active",
+        "gt.driver.booleanactuator.cmd.100": "Active",
+        "gt.sh.booleanactuator.cmd.status.100": "Active",
+        "gt.sh.cli.atn.cmd.110": "Active",
         "gt.sh.multipurpose.telemetry.status.100": "Active",
         "gt.sh.simple.telemetry.status.100": "Active",
-        "gt.sh.status.110": "Pending",
+        "gt.sh.status.110": "Active",
         "gt.sh.telemetry.from.multipurpose.sensor.100": "Active",
-        "gt.telemetry.110": "Pending",
-        "heartbeat.b.001": "Pending",
-        "snapshot.spaceheat.000": "Pending",
+        "gt.telemetry.110": "Active",
+        "heartbeat.b.001": "Active",
+        "snapshot.spaceheat.000": "Active",
         "telemetry.snapshot.spaceheat.000": "Active",
     }
 

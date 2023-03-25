@@ -2,9 +2,15 @@ import json
 import time
 import uuid
 from dataclasses import dataclass
+from dataclasses import field
 from pathlib import Path
 from typing import Any
 from typing import Optional
+from typing import Type
+
+from pydantic import ValidationError
+
+from gwproto.messages import AnyEvent
 
 
 try:
@@ -61,6 +67,7 @@ class MessageCase:
     src_message: Message
     exp_message: Optional[Message] = None
     exp_payload: Any = None
+    exp_exceptions: list[Type[Exception]] = field(default_factory=list)
 
 
 def child_to_parent_messages() -> list[MessageCase]:
@@ -68,6 +75,18 @@ def child_to_parent_messages() -> list[MessageCase]:
     status_message_dict = stored_message_dicts["status"]
     gt_sh_status = GtShStatus_Maker.dict_to_tuple(status_message_dict["Payload"])
     gt_sh_status_event = GtShStatusEvent(Src=CHILD, status=gt_sh_status)
+    unrecognized_status_event = AnyEvent(**gt_sh_status_event.dict())
+    unrecognized_status_event.TypeName += ".foo"
+    unrecognized_event = AnyEvent(
+        TypeName="gridworks.event.bar", MessageId="1", TimeNS=1, Src="1"
+    )
+    unrecognizeable_not_event_type = AnyEvent(
+        **dict(
+            gt_sh_status_event.dict(),
+            TypeName="bla",
+        )
+    )
+    unrecognizeable_bad_event_content = dict(TypeName="gridworks.event.baz")
     snap_message_dict = stored_message_dicts["snapshot"]
     snapshot_spaceheat = SnapshotSpaceheat_Maker.dict_to_tuple(
         snap_message_dict["Payload"]
@@ -105,6 +124,22 @@ def child_to_parent_messages() -> list[MessageCase]:
         ),
         # events
         MessageCase(Message(Src=CHILD, Payload=gt_sh_status_event)),
+        MessageCase(Message(Src=CHILD, Payload=unrecognized_status_event)),
+        MessageCase(Message(Src=CHILD, Payload=unrecognized_event)),
+        MessageCase(
+            Message(
+                Src=CHILD,
+                Payload=unrecognizeable_not_event_type,
+            ),
+            exp_exceptions=[ValidationError],
+        ),
+        MessageCase(
+            Message(
+                Src=CHILD,
+                Payload=unrecognizeable_bad_event_content,
+            ),
+            exp_exceptions=[ValidationError],
+        ),
         MessageCase(Message(Src=CHILD, Payload=snapshot_event)),
         MessageCase(Message(Src=CHILD, Payload=StartupEvent())),
         MessageCase(Message(Src=CHILD, Payload=ShutdownEvent(Reason="foo"))),
@@ -164,38 +199,69 @@ def assert_encode_decode(
 ):
     errors = []
     for i, case in enumerate(messages):
-        decoded = dst_codec.decode(
-            case.src_message.mqtt_topic(),
-            src_codec.encode(case.src_message),
-        )
         path_dbg = 0
         # old_len = len(errors)
-        if case.exp_message is not None:
+        try:
+            decoded = dst_codec.decode(
+                case.src_message.mqtt_topic(),
+                src_codec.encode(case.src_message),
+            )
+        except Exception as e:
             path_dbg |= 0x00000001
-            if decoded != case.exp_message:
+            if type(e) in case.exp_exceptions:
                 path_dbg |= 0x00000002
-                errors.append(i)
-                if len(errors) == 1:
-                    path_dbg |= 0x00000004
-                    print(f"FIRST ERROR, at index {i}")
-                    print(f"exp: {case.exp_message}")
-                    print(f"got: {decoded}")
-        else:
-            path_dbg |= 0x00000008
-            if case.exp_payload is None:
-                path_dbg |= 0x00000010
-                exp_payload = case.src_message.Payload
+                continue
             else:
-                path_dbg |= 0x00000020
-                exp_payload = case.exp_payload
-            if decoded.Payload != exp_payload:
-                path_dbg |= 0x00000040
+                path_dbg |= 0x00000004
                 errors.append(i)
                 if len(errors) == 1:
-                    path_dbg |= 0x00000080
+                    path_dbg |= 0x00000008
                     print(f"FIRST ERROR, at index {i}")
-                    print(f"exp: {case.exp_payload}")
-                    print(f"got: {decoded.Payload}")
+                    print(f"exp expected exception in {case.exp_exceptions}")
+                    print(f"got: <{type(e)}> <{e}>")
+
+        else:
+            path_dbg |= 0x00000010
+            if case.exp_exceptions:
+                path_dbg |= 0x00000020
+                errors.append(i)
+                if len(errors) == 1:
+                    path_dbg |= 0x00000040
+                    print(f"FIRST ERROR, at index {i}")
+                    print(f"exp expected exception in {case.exp_exceptions}")
+                    print(f"got: {decoded}")
+            else:
+                path_dbg |= 0x00000080
+                decoded = dst_codec.decode(
+                    case.src_message.mqtt_topic(),
+                    src_codec.encode(case.src_message),
+                )
+                if case.exp_message is not None:
+                    path_dbg |= 0x00000100
+                    if decoded != case.exp_message:
+                        path_dbg |= 0x00000040
+                        errors.append(i)
+                        if len(errors) == 1:
+                            path_dbg |= 0x00000200
+                            print(f"FIRST ERROR, at index {i}")
+                            print(f"exp: {case.exp_message}")
+                            print(f"got: {decoded}")
+                else:
+                    path_dbg |= 0x00000400
+                    if case.exp_payload is None:
+                        path_dbg |= 0x00000800
+                        exp_payload = case.src_message.Payload
+                    else:
+                        path_dbg |= 0x00001000
+                        exp_payload = case.exp_payload
+                    if decoded.Payload != exp_payload:
+                        path_dbg |= 0x00000400
+                        errors.append(i)
+                        if len(errors) == 1:
+                            path_dbg |= 0x00002000
+                            print(f"FIRST ERROR, at index {i}")
+                            print(f"exp: {case.exp_payload}")
+                            print(f"got: {decoded.Payload}")
         # print(f"{decoded.message_type():50s}: path:0x{path_dbg:08X}  {len(errors) == old_len}")
     if errors:
         raise ValueError(f"ERROR. Got codec matching errors at indices {errors}")

@@ -8,15 +8,14 @@ from typing import Optional
 from typing import TypeVar
 
 from pydantic import BaseModel
+from pydantic import Extra
 from pydantic import Field
 from pydantic import validator
 
 from gwproto.message import Message
 from gwproto.message import as_enum
 from gwproto.types import GtShStatus
-from gwproto.types import GtShStatus_Maker
 from gwproto.types import SnapshotSpaceheat
-from gwproto.types import SnapshotSpaceheat_Maker
 
 
 class EventBase(BaseModel):
@@ -24,6 +23,13 @@ class EventBase(BaseModel):
     TimeNS: int = Field(default_factory=time.time_ns)
     Src: str = ""
     TypeName: str = Field(const=True)
+
+
+class AnyEvent(EventBase, extra=Extra.allow):
+    MessageId: str
+    TimeNS: int
+    Src: str
+    TypeName: str
 
 
 EventT = TypeVar("EventT", bound=EventBase)

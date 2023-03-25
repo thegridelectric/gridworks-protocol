@@ -29,5 +29,6 @@ forth between type instances and Python objects.
     GtShTelemetryFromMultipurposeSensor  <types/gt-sh-telemetry-from-multipurpose-sensor>
     GtTelemetry  <types/gt-telemetry>
     HeartbeatB  <types/heartbeat-b>
+    PowerWatts  <types/power-watts>
     SnapshotSpaceheat  <types/snapshot-spaceheat>
     TelemetrySnapshotSpaceheat  <types/telemetry-snapshot-spaceheat>

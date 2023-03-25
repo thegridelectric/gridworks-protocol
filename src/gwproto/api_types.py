@@ -14,6 +14,7 @@ from gwproto.types import GtShStatus_Maker
 from gwproto.types import GtShTelemetryFromMultipurposeSensor_Maker
 from gwproto.types import GtTelemetry_Maker
 from gwproto.types import HeartbeatB_Maker
+from gwproto.types import PowerWatts_Maker
 from gwproto.types import SnapshotSpaceheat_Maker
 from gwproto.types import TelemetrySnapshotSpaceheat_Maker
 
@@ -35,6 +36,7 @@ def type_makers() -> List[HeartbeatB_Maker]:
         GtShTelemetryFromMultipurposeSensor_Maker,
         GtTelemetry_Maker,
         HeartbeatB_Maker,
+        PowerWatts_Maker,
         SnapshotSpaceheat_Maker,
         TelemetrySnapshotSpaceheat_Maker,
     ]
@@ -62,6 +64,7 @@ def version_by_type_name() -> Dict[str, str]:
         "gt.sh.telemetry.from.multipurpose.sensor": "100",
         "gt.telemetry": "110",
         "heartbeat.b": "001",
+        "power.watts": "000",
         "snapshot.spaceheat": "000",
         "telemetry.snapshot.spaceheat": "000",
     }
@@ -87,6 +90,7 @@ def status_by_versioned_type_name() -> Dict[str, str]:
         "gt.sh.telemetry.from.multipurpose.sensor.100": "Active",
         "gt.telemetry.110": "Active",
         "heartbeat.b.001": "Active",
+        "power.watts.000": "Pending",
         "snapshot.spaceheat.000": "Active",
         "telemetry.snapshot.spaceheat.000": "Active",
     }

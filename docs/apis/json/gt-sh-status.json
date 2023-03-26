@@ -74,7 +74,7 @@
     },
     "TypeName": {
       "type": "string",
-      "value": "gt.sh.status.110",
+      "value": "gt.sh.status",
       "title": "The type name"
     },
     "Version": {

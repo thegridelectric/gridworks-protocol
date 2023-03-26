@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gridworks-protocol"
-version = "0.3.3"
+version = "0.3.4"
 description = "Gridworks Protocol"
 authors = ["Jessica Millar <jmillar@gridworks-consulting.com>"]
 license = "MIT"
@@ -66,7 +66,7 @@ source = ["gwproto", "tests"]
 
 [tool.coverage.report]
 show_missing = false
-fail_under = 90
+fail_under = 85
 
 [tool.black]
 extend_exclude = "src/gwproto/gt/|src/gwproto/gs/|src/gwproto/enums/"

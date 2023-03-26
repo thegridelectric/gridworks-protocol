@@ -120,7 +120,7 @@
     },
     "TypeName": {
       "type": "string",
-      "value": "gt.sh.telemetry.from.multipurpose.sensor.100",
+      "value": "gt.sh.telemetry.from.multipurpose.sensor",
       "title": "The type name"
     },
     "Version": {

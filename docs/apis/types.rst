@@ -46,6 +46,10 @@ HeartbeatB
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/heartbeat-b.json
 
+PowerWatts
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. literalinclude:: json/power-watts.json
+
 SnapshotSpaceheat
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/snapshot-spaceheat.json

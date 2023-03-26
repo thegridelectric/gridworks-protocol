@@ -37,7 +37,7 @@
     },
     "TypeName": {
       "type": "string",
-      "value": "gt.sh.booleanactuator.cmd.status.100",
+      "value": "gt.sh.booleanactuator.cmd.status",
       "title": "The type name"
     },
     "Version": {

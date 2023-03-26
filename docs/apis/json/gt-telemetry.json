@@ -111,7 +111,7 @@
     },
     "TypeName": {
       "type": "string",
-      "value": "gt.telemetry.110",
+      "value": "gt.telemetry",
       "title": "The type name"
     },
     "Version": {

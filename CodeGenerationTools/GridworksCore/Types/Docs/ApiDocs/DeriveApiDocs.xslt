@@ -190,7 +190,7 @@
       <xsl:text>
         "TypeName": {
             "type": "string",
-            "value": "</xsl:text><xsl:value-of select="Alias"/><xsl:text>",
+            "value": "</xsl:text><xsl:value-of select="AliasRoot"/><xsl:text>",
             "title": "The type name"
         },
         "Version": {

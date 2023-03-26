@@ -120,7 +120,7 @@
     },
     "TypeName": {
       "type": "string",
-      "value": "telemetry.snapshot.spaceheat.000",
+      "value": "telemetry.snapshot.spaceheat",
       "title": "The type name"
     },
     "Version": {

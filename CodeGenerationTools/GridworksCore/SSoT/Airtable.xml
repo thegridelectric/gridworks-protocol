@@ -939,6 +939,8 @@ by the concept of MarketType.</Description>
       <SchemaRootscopy>recO5QLpXXDMjgo1j</SchemaRootscopy>
       <Status>Active</Status>
       <AliasRoot>gs.pwr</AliasRoot>
+      <Description>Used by a SCADA -&gt; Atn or Atn -&gt; AggregatedTNode to report real-time power of their TerminalAsset. Positive number means WITHDRAWAL from the grid - so generating electricity creates a negative number. This message is considered worse than useless to send after the first attempt, and does not require an ack. Shares the same purpose as power.watts, but designed to be small in size (thus using the GridWorks Serial protocol instead of JSON). The idea is this message, instantaneous reporting of power, is the highest priority message in the system and thus gets to have its metadata made explicit in the structure of the code instead of parameterized. One result is the size of the sent data is very small. Sometimes bandwidth can be an issue, and smaller messages are very useful.</Description>
+      <Title>Real-time power of TerminalAsset in Watts</Title>
       <CurrentSemanticEnd>100</CurrentSemanticEnd>
       <InGwProto>true</InGwProto>
       <SendAlias>p</SendAlias>
@@ -1171,17 +1173,17 @@ by the concept of MarketType.</Description>
     <SchemaRoot>
       <SchemaRootId>recjFoqZkvOjg0VXc</SchemaRootId>
       <createdTime>2023-03-25T22:52:13Z</createdTime>
-      <ConsistencyCheck>1</ConsistencyCheck>
-      <Alias>power.watts</Alias>
-      <AliasRoot>power.watts</AliasRoot>
-      <CurrentSemanticEnd>000</CurrentSemanticEnd>
-      <Status>Active</Status>
       <ProtocolCategory>Json</ProtocolCategory>
-      <Title>Real-time power of TerminalAsset in Watts.</Title>
+      <SchemaRootscopy>rec3EIGuvfybwwFOK</SchemaRootscopy>
+      <Status>Active</Status>
+      <AliasRoot>power.watts</AliasRoot>
       <Description>Used by a SCADA -&gt; Atn or Atn -&gt; AggregatedTNode to report real-time power of their TerminalAsset. Positive number means WITHDRAWAL from the grid - so generating electricity creates a negative number. This message is considered worse than useless to send after the first attempt, and does not require an ack.
 
-Shares the same purpose as gs.pwr, but comes with extra meta data. The idea is this message, instantaneous reporting of power, is the highest priority message in the system and thus gets to have its metadata made explicit in the structure of the code instead of parameterized. One result is the size of the sent data is very small. Sometimes bandwidth can be an issue, and smaller messages are very useful.</Description>
-      <SchemaRootscopy>rec3EIGuvfybwwFOK</SchemaRootscopy>
+Shares the same purpose as gs.pwr, but is not designed to minimize bytes so comes in JSON format.</Description>
+      <Title>Real-time power of TerminalAsset in Watts.</Title>
+      <CurrentSemanticEnd>000</CurrentSemanticEnd>
+      <Alias>power.watts</Alias>
+      <ConsistencyCheck>1</ConsistencyCheck>
     </SchemaRoot>
     <SchemaRoot>
       <SchemaRootId>recjI10N2qf36kpmC</SchemaRootId>
@@ -1270,11 +1272,6 @@ Shares the same purpose as gs.pwr, but comes with extra meta data. The idea is t
       <CurrentSemanticEnd>100</CurrentSemanticEnd>
       <Alias>gt.thermal.edge</Alias>
       <ConsistencyCheck>0</ConsistencyCheck>
-    </SchemaRoot>
-    <SchemaRoot>
-      <SchemaRootId>recnQ4tTxfWT8gXZb</SchemaRootId>
-      <createdTime>2023-01-31T14:18:15Z</createdTime>
-      <ConsistencyCheck>1</ConsistencyCheck>
     </SchemaRoot>
     <SchemaRoot>
       <SchemaRootId>recnUzSx1WgKUdTZO</SchemaRootId>
@@ -1450,11 +1447,6 @@ Shares the same purpose as gs.pwr, but comes with extra meta data. The idea is t
       <ConsistencyCheck>1</ConsistencyCheck>
     </SchemaRoot>
     <SchemaRoot>
-      <SchemaRootId>recvlArnALjI6Ivij</SchemaRootId>
-      <createdTime>2023-02-15T14:10:08Z</createdTime>
-      <ConsistencyCheck>1</ConsistencyCheck>
-    </SchemaRoot>
-    <SchemaRoot>
       <SchemaRootId>recwEHKPPTKLK8OFz</SchemaRootId>
       <createdTime>2022-11-17T06:03:05Z</createdTime>
       <ProtocolCategory>Json</ProtocolCategory>
@@ -1505,7 +1497,6 @@ Shares the same purpose as gs.pwr, but comes with extra meta data. The idea is t
       <Alias>gt.sh.telemetry.from.multipurpose.sensor</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
     </SchemaRoot>
-    <SchemaRoot>itrGQiCmDVxoWMyiA/recx3kwLemvtMaT0t</SchemaRoot>
     <SchemaRoot>
       <SchemaRootId>recx4EL5mDebUhtzp</SchemaRootId>
       <createdTime>2022-06-09T15:17:43Z</createdTime>
@@ -1533,6 +1524,7 @@ Shares the same purpose as gs.pwr, but comes with extra meta data. The idea is t
       <Alias>egauge.register.config</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
     </SchemaRoot>
+    <SchemaRoot>itrgmjdMJzW6rf6jc/recxXnNUXYPwJi4ns</SchemaRoot>
     <SchemaRoot>
       <SchemaRootId>recxnrRBEZg5cPVPt</SchemaRootId>
       <createdTime>2022-10-03T04:44:51Z</createdTime>
@@ -3632,7 +3624,7 @@ Shares the same purpose as gs.pwr, but comes with extra meta data. The idea is t
       <Enum>recounhEj97w5SfDm</Enum>
       <DisplayName>market.quantity.unit.000__AvgkW</DisplayName>
     </EnumSymbol>
-    <EnumSymbol>itrcsTn3XdzMb1oYt/recRYMQ5xAzlYZafa</EnumSymbol>
+    <EnumSymbol>itroXNSJiNonhZArg/recRYMQ5xAzlYZafa</EnumSymbol>
     <EnumSymbol>
       <EnumSymbolId>recRhxuG4B3RCPPqB</EnumSymbolId>
       <createdTime>2022-06-23T18:00:39Z</createdTime>
@@ -4638,7 +4630,7 @@ Shares the same purpose as gs.pwr, but comes with extra meta data. The idea is t
       <LocalValue>NoActor</LocalValue>
       <DisplayName>__NoActor</DisplayName>
     </EnumSymbol>
-    <EnumSymbol>itrcsTn3XdzMb1oYt/recsXsCs2syjI8IBg</EnumSymbol>
+    <EnumSymbol>itroXNSJiNonhZArg/recsXsCs2syjI8IBg</EnumSymbol>
     <EnumSymbol>
       <EnumSymbolId>recseefFsB6BWwTQj</EnumSymbolId>
       <createdTime>2022-06-23T16:27:43Z</createdTime>
@@ -5038,27 +5030,27 @@ Shares the same purpose as gs.pwr, but comes with extra meta data. The idea is t
     <Schema>
       <SchemaId>rec3EIGuvfybwwFOK</SchemaId>
       <createdTime>2023-03-25T23:00:03Z</createdTime>
-      <Alias>power.watts.000</Alias>
-      <ConsistencyCheck>1</ConsistencyCheck>
-      <IsCurrent>1</IsCurrent>
-      <Status>Pending</Status>
-      <SchemaRoot>recjFoqZkvOjg0VXc</SchemaRoot>
-      <AliasRoot>power.watts</AliasRoot>
-      <MakeDataClass />
-      <ProtocolCategory>Json</ProtocolCategory>
-      <IsCac />
-      <IsComponent />
-      <Description>Used by a SCADA -&gt; Atn or Atn -&gt; AggregatedTNode to report real-time power of their TerminalAsset. Positive number means WITHDRAWAL from the grid - so generating electricity creates a negative number. This message is considered worse than useless to send after the first attempt, and does not require an ack.
-
-Shares the same purpose as gs.pwr, but comes with extra meta data. The idea is this message, instantaneous reporting of power, is the highest priority message in the system and thus gets to have its metadata made explicit in the structure of the code instead of parameterized. One result is the size of the sent data is very small. Sometimes bandwidth can be an issue, and smaller messages are very useful.</Description>
-      <InGwProto />
-      <Title>Real-time power of TerminalAsset in Watts.</Title>
-      <RootStatus>Active</RootStatus>
-      <RootCurrentSemanticEnd>000</RootCurrentSemanticEnd>
-      <PreStatus>Pending</PreStatus>
       <SemanticEnd>000</SemanticEnd>
       <SchemaAttributes>recuSkupIk5cS8BGw</SchemaAttributes>
+      <SchemaRoot>recjFoqZkvOjg0VXc</SchemaRoot>
+      <PreStatus>Active</PreStatus>
       <ProtocolTypes>recnQycM6WlPw1K0f</ProtocolTypes>
+      <Alias>power.watts.000</Alias>
+      <RootStatus>Active</RootStatus>
+      <ProtocolCategory>Json</ProtocolCategory>
+      <MakeDataClass />
+      <IsCac />
+      <IsComponent />
+      <ConsistencyCheck>1</ConsistencyCheck>
+      <Description>Used by a SCADA -&gt; Atn or Atn -&gt; AggregatedTNode to report real-time power of their TerminalAsset. Positive number means WITHDRAWAL from the grid - so generating electricity creates a negative number. This message is considered worse than useless to send after the first attempt, and does not require an ack.
+
+Shares the same purpose as gs.pwr, but is not designed to minimize bytes so comes in JSON format.</Description>
+      <AliasRoot>power.watts</AliasRoot>
+      <RootCurrentSemanticEnd>000</RootCurrentSemanticEnd>
+      <IsCurrent>1</IsCurrent>
+      <Status>Active</Status>
+      <InGwProto />
+      <Title>Real-time power of TerminalAsset in Watts.</Title>
       <Protocols>gwproto</Protocols>
     </Schema>
     <Schema>
@@ -6425,11 +6417,13 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsCac />
       <IsComponent />
       <ConsistencyCheck>1</ConsistencyCheck>
+      <Description>Used by a SCADA -&gt; Atn or Atn -&gt; AggregatedTNode to report real-time power of their TerminalAsset. Positive number means WITHDRAWAL from the grid - so generating electricity creates a negative number. This message is considered worse than useless to send after the first attempt, and does not require an ack. Shares the same purpose as power.watts, but designed to be small in size (thus using the GridWorks Serial protocol instead of JSON). The idea is this message, instantaneous reporting of power, is the highest priority message in the system and thus gets to have its metadata made explicit in the structure of the code instead of parameterized. One result is the size of the sent data is very small. Sometimes bandwidth can be an issue, and smaller messages are very useful.</Description>
       <AliasRoot>gs.pwr</AliasRoot>
       <RootCurrentSemanticEnd>100</RootCurrentSemanticEnd>
       <IsCurrent>1</IsCurrent>
       <Status>Pending</Status>
       <InGwProto>true</InGwProto>
+      <Title>Real-time power of TerminalAsset in Watts</Title>
     </Schema>
     <Schema>
       <SchemaId>recO8OdobcISYms0B</SchemaId>
@@ -8078,7 +8072,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Url>https://g-node-registry.readthedocs.io/en/latest/component-attribute-class.html</Url>
       <Protocols>newatn</Protocols>
     </Schema>
-    <Schema>itrmD4B8bSOAvBmQi/reckjdX6D9rVXnUVC</Schema>
+    <Schema>itrKl1hHXzCnXbFJZ/reckjdX6D9rVXnUVC</Schema>
     <Schema>
       <SchemaId>recm2rM5o9GxgCqbL</SchemaId>
       <createdTime>2022-06-20T12:58:57Z</createdTime>
@@ -10492,7 +10486,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsType>false</IsType>
       <TypeInPayload>String</TypeInPayload>
     </SchemaAttribute>
-    <SchemaAttribute>itreWOXkJstxD6faP/rec9OvxSYyzTJ3J46</SchemaAttribute>
+    <SchemaAttribute>itrnvrgmsFCWGnQS3/rec9OvxSYyzTJ3J46</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>rec9PJA13l3jM7pJm</SchemaAttributeId>
       <createdTime>2023-01-19T15:38:46Z</createdTime>
@@ -12109,7 +12103,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <TypeInPayload>String</TypeInPayload>
       <Format>UuidCanonicalTextual</Format>
     </SchemaAttribute>
-    <SchemaAttribute>itreWOXkJstxD6faP/recI6AdAg9Dz3yaLq</SchemaAttribute>
+    <SchemaAttribute>itrnvrgmsFCWGnQS3/recI6AdAg9Dz3yaLq</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recI9U053gkcDYRVB</SchemaAttributeId>
       <createdTime>2023-01-06T03:13:26Z</createdTime>
@@ -13711,7 +13705,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsType>false</IsType>
       <TypeInPayload>Integer</TypeInPayload>
     </SchemaAttribute>
-    <SchemaAttribute>itreWOXkJstxD6faP/recQduwtmVeYjXuQV</SchemaAttribute>
+    <SchemaAttribute>itrnvrgmsFCWGnQS3/recQduwtmVeYjXuQV</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recQegsyGIGw5mDwR</SchemaAttributeId>
       <createdTime>2022-11-04T15:05:37Z</createdTime>
@@ -15338,7 +15332,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsType>false</IsType>
       <TypeInPayload>Integer</TypeInPayload>
     </SchemaAttribute>
-    <SchemaAttribute>itreWOXkJstxD6faP/recZgJsPfRC7njgAu</SchemaAttribute>
+    <SchemaAttribute>itrnvrgmsFCWGnQS3/recZgJsPfRC7njgAu</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recZoRtISP4HaNWda</SchemaAttributeId>
       <createdTime>2022-09-20T12:16:10Z</createdTime>
@@ -16887,7 +16881,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <TypeInPayload>String</TypeInPayload>
       <Format>UuidCanonicalTextual</Format>
     </SchemaAttribute>
-    <SchemaAttribute>itreWOXkJstxD6faP/rechtGIFRjENiH3Cv</SchemaAttribute>
+    <SchemaAttribute>itrnvrgmsFCWGnQS3/rechtGIFRjENiH3Cv</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>rechuNHy6Cnk00Ynu</SchemaAttributeId>
       <createdTime>2023-01-24T17:49:21Z</createdTime>
@@ -18498,7 +18492,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <SubMessageFormatAliasRoot>gt.sh.simple.single.status</SubMessageFormatAliasRoot>
       <TypeInPayload>gt.sh.simple.single.status.100</TypeInPayload>
     </SchemaAttribute>
-    <SchemaAttribute>itreWOXkJstxD6faP/recqTlmb22FCbFzaQ</SchemaAttribute>
+    <SchemaAttribute>itrnvrgmsFCWGnQS3/recqTlmb22FCbFzaQ</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recqWDbdtjF1TThWh</SchemaAttributeId>
       <createdTime>2022-11-08T04:07:01Z</createdTime>
@@ -19181,17 +19175,17 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
     <SchemaAttribute>
       <SchemaAttributeId>recuSkupIk5cS8BGw</SchemaAttributeId>
       <createdTime>2023-03-25T23:00:36Z</createdTime>
-      <IsType>false</IsType>
-      <IsEnum>false</IsEnum>
-      <TypeInPayload>Integer</TypeInPayload>
-      <Schema>rec3EIGuvfybwwFOK</Schema>
-      <Idx>0</Idx>
       <IsRequired>true</IsRequired>
-      <Value>Watts</Value>
-      <Title>Current Power in Watts</Title>
-      <PrimitiveType>Integer</PrimitiveType>
       <IsPrimitive>true</IsPrimitive>
+      <Schema>rec3EIGuvfybwwFOK</Schema>
+      <PrimitiveType>Integer</PrimitiveType>
+      <Value>Watts</Value>
+      <Idx>0</Idx>
+      <Title>Current Power in Watts</Title>
       <TestValue>4500</TestValue>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TypeInPayload>Integer</TypeInPayload>
     </SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recuTyHJfuZVMXRQ4</SchemaAttributeId>
@@ -22678,7 +22672,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <TypeName>super.starter.000</TypeName>
       <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
-    <ProtocolType>itrUPIbYBF1iZ3bTa/recSxY4F5Ewetp9tW</ProtocolType>
+    <ProtocolType>itr77ZND6hKfkQCZq/recSxY4F5Ewetp9tW</ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recTvm4cpEzdavk6J</ProtocolTypeId>
       <createdTime>2022-11-21T05:23:19Z</createdTime>
@@ -23274,12 +23268,12 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
     <ProtocolType>
       <ProtocolTypeId>recnQycM6WlPw1K0f</ProtocolTypeId>
       <createdTime>2023-03-25T23:09:30Z</createdTime>
-      <Name>gwproto power.watts.000</Name>
       <Protocol>rec5aZ8ud9lQDmlBu</Protocol>
-      <ProtocolName>gwproto</ProtocolName>
       <Type>rec3EIGuvfybwwFOK</Type>
+      <Name>gwproto power.watts.000</Name>
+      <ProtocolName>gwproto</ProtocolName>
       <TypeName>power.watts.000</TypeName>
-      <TypeStatus>Pending</TypeStatus>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recnode9jR9HdGfcE</ProtocolTypeId>
@@ -23629,7 +23623,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <TypeName>heartbeat.a.100</TypeName>
       <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
-    <ProtocolType>itrUPIbYBF1iZ3bTa/recyENjaG4Mi1n27B</ProtocolType>
+    <ProtocolType>itr77ZND6hKfkQCZq/recyENjaG4Mi1n27B</ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recytzNgmiqkWb2di</ProtocolTypeId>
       <createdTime>2023-02-20T19:00:00Z</createdTime>

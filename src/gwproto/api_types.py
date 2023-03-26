@@ -90,7 +90,7 @@ def status_by_versioned_type_name() -> Dict[str, str]:
         "gt.sh.telemetry.from.multipurpose.sensor.100": "Active",
         "gt.telemetry.110": "Active",
         "heartbeat.b.001": "Active",
-        "power.watts.000": "Pending",
+        "power.watts.000": "Active",
         "snapshot.spaceheat.000": "Active",
         "telemetry.snapshot.spaceheat.000": "Active",
     }

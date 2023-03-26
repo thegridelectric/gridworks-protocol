@@ -36,7 +36,7 @@
     },
     "TypeName": {
       "type": "string",
-      "value": "gt.driver.booleanactuator.cmd.100",
+      "value": "gt.driver.booleanactuator.cmd",
       "title": "The type name"
     },
     "Version": {

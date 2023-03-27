@@ -32,6 +32,8 @@ __all__ = [
     "GtShTelemetryFromMultipurposeSensor_Maker",
     "GtTelemetry",
     "GtTelemetry_Maker",
+    "PowerWatts",
+    "PowerWatts_Maker",
     "SnapshotSpaceheat",
     "SnapshotSpaceheat_Maker",
     "TelemetrySnapshotSpaceheat",

@@ -20,7 +20,6 @@ except ImportError:
 
 from gwproto import Message
 from gwproto import MQTTCodec
-from gwproto.gs import GsPwr_Maker
 from gwproto.messages import Ack
 from gwproto.messages import GtDispatchBoolean_Maker
 from gwproto.messages import GtShCliAtnCmd_Maker
@@ -32,6 +31,7 @@ from gwproto.messages import MQTTDisconnectEvent
 from gwproto.messages import MQTTFullySubscribedEvent
 from gwproto.messages import PeerActiveEvent
 from gwproto.messages import PingMessage
+from gwproto.messages import PowerWatts_Maker
 from gwproto.messages import ProblemEvent
 from gwproto.messages import Problems
 from gwproto.messages import ResponseTimeoutEvent
@@ -95,8 +95,13 @@ def child_to_parent_messages() -> list[MessageCase]:
 
     return [
         # Gs Pwr
-        MessageCase(Message(Src=CHILD, MessageType="p", Payload=GsPwr_Maker(1).tuple)),
+        MessageCase(
+            Message(
+                Src=CHILD, MessageType="power.watts", Payload=PowerWatts_Maker(1).tuple
+            )
+        ),
         # status
+        # QUESTION: why does this fail when replacing "gt.sh.status.110" with "gt.sh.status"?
         MessageCase(
             Message(Src=CHILD, MessageType="gt.sh.status.110", Payload=gt_sh_status),
             None,

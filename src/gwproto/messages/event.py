@@ -96,7 +96,7 @@ class MQTTDisconnectEvent(MQTTCommEvent):
 class MQTTFullySubscribedEvent(CommEvent):
     TypeName: Literal[
         "gridworks.event.comm.mqtt.fully.subscribed"
-    ] = "gridworks.event.comm.mqtt.fully_subscribed"
+    ] = "gridworks.event.comm.mqtt.fully.subscribed"
 
 
 class ResponseTimeoutEvent(CommEvent):

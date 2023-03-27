@@ -83,8 +83,8 @@ class MQTTConnectEvent(MQTTCommEvent):
 
 class MQTTConnectFailedEvent(MQTTCommEvent):
     TypeName: Literal[
-        "gridworks.event.comm.mqtt.connect_failed"
-    ] = "gridworks.event.comm.mqtt.connect_failed"
+        "gridworks.event.comm.mqtt.connect.failed"
+    ] = "gridworks.event.comm.mqtt.connect.failed"
 
 
 class MQTTDisconnectEvent(MQTTCommEvent):
@@ -95,20 +95,20 @@ class MQTTDisconnectEvent(MQTTCommEvent):
 
 class MQTTFullySubscribedEvent(CommEvent):
     TypeName: Literal[
-        "gridworks.event.comm.mqtt.fully_subscribed"
+        "gridworks.event.comm.mqtt.fully.subscribed"
     ] = "gridworks.event.comm.mqtt.fully_subscribed"
 
 
 class ResponseTimeoutEvent(CommEvent):
     TypeName: Literal[
-        "gridworks.event.comm.response_timeout"
-    ] = "gridworks.event.comm.response_timeout"
+        "gridworks.event.comm.response.timeout"
+    ] = "gridworks.event.comm.response.timeout"
 
 
 class PeerActiveEvent(CommEvent):
     TypeName: Literal[
-        "gridworks.event.comm.peer_active"
-    ] = "gridworks.event.comm.peer_active"
+        "gridworks.event.comm.peer.active"
+    ] = "gridworks.event.comm.peer.active"
 
 
 class GtShStatusEvent(EventBase):

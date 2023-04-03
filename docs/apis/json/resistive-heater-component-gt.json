@@ -1,0 +1,60 @@
+{
+  "gwapi": "001",
+  "type_name": "resistive.heater.component.gt",
+  "version": "000",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": "Type for tracking Resistive Heater Components. GridWorks Spaceheat SCADA uses the GridWorks GNodeRegistry structures and abstractions for managing relational device data. The Component associated to a SpaceheatNode is part of this structure.",
+  "url": "https://g-node-registry.readthedocs.io/en/latest/component.html",
+  "formats": {
+    "UuidCanonicalTextual": {
+      "type": "string",
+      "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
+      "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"
+    }
+  },
+  "properties": {
+    "ComponentId": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "",
+      "required": true
+    },
+    "ComponentAttributeClassId": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "",
+      "required": true
+    },
+    "DisplayName": {
+      "type": "string",
+      "title": "",
+      "required": false
+    },
+    "HwUid": {
+      "type": "string",
+      "title": "",
+      "required": false
+    },
+    "TestedMaxHotMilliOhms": {
+      "type": "integer",
+      "title": "",
+      "required": false
+    },
+    "TestedMaxColdMilliOhms": {
+      "type": "integer",
+      "title": "",
+      "required": false
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "resistive.heater.component.gt",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "000",
+      "required": true
+    }
+  }
+}

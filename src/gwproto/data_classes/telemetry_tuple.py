@@ -1,10 +1,10 @@
-from pydantic import BaseModel
+from typing import NamedTuple
 
 from gwproto.data_classes.sh_node import ShNode
 from gwproto.enums import TelemetryName
 
 
-class TelemetryTuple(BaseModel):
+class TelemetryTuple(NamedTuple):
     AboutNode: ShNode
     SensorNode: ShNode
     TelemetryName: TelemetryName

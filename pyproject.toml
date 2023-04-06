@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gridworks-protocol"
-version = "0.4.1"
+version = "0.4.2"
 description = "Gridworks Protocol"
 authors = ["Jessica Millar <jmillar@gridworks-consulting.com>"]
 license = "MIT"

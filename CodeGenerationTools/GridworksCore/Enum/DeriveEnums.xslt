@@ -28,20 +28,36 @@
                             <xsl:with-param name="mp-schema-text" select="Alias" />
                         </xsl:call-template>
                     </xsl:variable>
+                    <xsl:variable name="current-version" select="Version" />
                     <xsl:variable name="local-class-name">
                         <xsl:call-template name="nt-case">
                             <xsl:with-param name="mp-schema-text" select="LocalName" />
                         </xsl:call-template>
                     </xsl:variable>
+
+                    <xsl:variable name="overwrite-mode">
+                        <xsl:if test="not (Status = 'Pending')">
+                        <xsl:text>Never</xsl:text>
+                        </xsl:if>
+                        <xsl:if test="(Status = 'Pending')">
+                        <xsl:text>Always</xsl:text>
+                        </xsl:if>
+                    </xsl:variable>
+
                     <FileSetFile>
                                 <xsl:element name="RelativePath"><xsl:text>../../../src/gwproto/enums/</xsl:text>
                                 <xsl:value-of select="translate(LocalName,'.','_')"/><xsl:text>.py</xsl:text></xsl:element>
 
-                        <OverwriteMode>Always</OverwriteMode>
-                        <xsl:element name="FileContents">
+                    <OverwriteMode><xsl:value-of select="$overwrite-mode"/></OverwriteMode>
+                    <xsl:element name="FileContents">
 
 
-<xsl:text>
+<xsl:text>""" Enum with TypeName </xsl:text>
+<xsl:value-of select="AliasRoot"/>
+<xsl:text>, Version </xsl:text>
+<xsl:value-of select="Version"/><xsl:text>, Status </xsl:text>
+<xsl:value-of select="Status"/>
+<xsl:text>"""
 from typing import List
 from enum import auto
 from fastapi_utils.enums import StrEnum
@@ -53,19 +69,33 @@ class </xsl:text><xsl:value-of select="$local-class-name"/>
     </xsl:text>
     <xsl:value-of select="normalize-space(Description)"/>
     <xsl:if test="(normalize-space(Url)!='')">
-    <xsl:text>. [More Info](</xsl:text>
+    <xsl:text>
+    [More Info](</xsl:text>
     <xsl:value-of select="normalize-space(Url)"/>
     <xsl:text>).</xsl:text>
     </xsl:if>
     <xsl:text>
 
-    Choices and descriptions:
+    Name (EnumSymbol, Version): description
     </xsl:text>
-    <xsl:for-each select="$airtable//EnumSymbols/EnumSymbol[(Enum = $enum-id)]">
+    <xsl:for-each select="$airtable//EnumSymbols/EnumSymbol[(Enum = $enum-id) and (Version &lt;= $current-version) ]">
     <xsl:sort select="Idx" data-type="number"/>
+
     <xsl:text>
       * </xsl:text>
-      <xsl:value-of select="LocalValue"/><xsl:text>: </xsl:text>
+
+    <xsl:if test="$enum-name-style = 'Upper'">
+        <xsl:value-of select="translate(translate(LocalValue,'-',''),$lcletters, $ucletters)"/>
+    </xsl:if>
+    <xsl:if test="$enum-name-style ='UpperPython'">
+        <xsl:value-of select="LocalValue"/>
+    </xsl:if>
+
+       <xsl:text> (</xsl:text>
+       <xsl:value-of select="normalize-space(Symbol)"/>
+       <xsl:text>, </xsl:text>
+       <xsl:value-of select="Version"/>
+       <xsl:text>): </xsl:text>
       <xsl:value-of select="normalize-space(Description)"/>
 
     <xsl:if test="(normalize-space(Url)!='')">
@@ -81,7 +111,7 @@ class </xsl:text><xsl:value-of select="$local-class-name"/>
     </xsl:text>
 
 <xsl:for-each select="$airtable//EnumSymbols/EnumSymbol[(Enum = $enum-id)]">
-<xsl:sort select="Idx"/>
+<xsl:sort select="Idx" data-type="number"/>
 <xsl:if test="$enum-name-style = 'Upper'">
     <xsl:value-of select="translate(translate(LocalValue,'-',''),$lcletters, $ucletters)"/>
 </xsl:if>

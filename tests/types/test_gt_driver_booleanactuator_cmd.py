@@ -9,7 +9,6 @@ from gwproto.types import GtDriverBooleanactuatorCmd_Maker as Maker
 
 
 def test_gt_driver_booleanactuator_cmd_generated() -> None:
-
     d = {
         "RelayState": 0,
         "ShNodeAlias": "a.elt1.relay",

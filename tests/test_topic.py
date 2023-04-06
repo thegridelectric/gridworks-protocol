@@ -5,7 +5,6 @@ from gwproto import MQTTTopic
 
 
 def test_mqtt_topic_encode():
-
     assert MQTTTopic.encode("foo", "bar", "baz") == "foo/bar/baz"
     assert MQTTTopic.encode("foo.bar", "baz.bla", "bla") == "foo-bar/baz-bla/bla"
     assert MQTTTopic.encode_subscription("foo", "bar") == "foo/bar/#"
@@ -13,7 +12,6 @@ def test_mqtt_topic_encode():
 
 
 def test_mqtt_topic_decode():
-
     with pytest.raises(ValueError):
         MQTTTopic.decode("")
 

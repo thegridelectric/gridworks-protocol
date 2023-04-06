@@ -9,7 +9,6 @@ from gwproto.types import GtShBooleanactuatorCmdStatus_Maker as Maker
 
 
 def test_gt_sh_booleanactuator_cmd_status_generated() -> None:
-
     d = {
         "ShNodeAlias": "a.elt1.relay",
         "RelayStateCommandList": [0],

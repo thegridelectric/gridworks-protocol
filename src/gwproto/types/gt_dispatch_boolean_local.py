@@ -130,7 +130,6 @@ class GtDispatchBooleanLocal_Maker:
         from_node_name: str,
         send_time_unix_ms: int,
     ):
-
         self.tuple = GtDispatchBooleanLocal(
             RelayState=relay_state,
             AboutNodeName=about_node_name,

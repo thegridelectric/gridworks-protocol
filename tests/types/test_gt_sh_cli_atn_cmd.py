@@ -9,7 +9,6 @@ from gwproto.types import GtShCliAtnCmd_Maker as Maker
 
 
 def test_gt_sh_cli_atn_cmd_generated() -> None:
-
     d = {
         "FromGNodeAlias": "dwtest.isone.ct.newhaven.orange1",
         "SendSnapshot": True,

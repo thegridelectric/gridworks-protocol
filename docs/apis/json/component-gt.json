@@ -1,0 +1,49 @@
+{
+  "gwapi": "001",
+  "type_name": "component.gt",
+  "version": "000",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": "",
+  "formats": {
+    "UuidCanonicalTextual": {
+      "type": "string",
+      "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
+      "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"
+    }
+  },
+  "properties": {
+    "ComponentId": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "",
+      "required": true
+    },
+    "ComponentAttributeClassId": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "",
+      "required": true
+    },
+    "DisplayName": {
+      "type": "string",
+      "title": "",
+      "required": false
+    },
+    "HwUid": {
+      "type": "string",
+      "title": "",
+      "required": false
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "component.gt",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "000",
+      "required": true
+    }
+  }
+}

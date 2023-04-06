@@ -41,7 +41,6 @@ class PowerWatts_Maker:
     version = "000"
 
     def __init__(self, watts: int):
-
         self.tuple = PowerWatts(
             Watts=watts,
             #

@@ -464,7 +464,6 @@ class MultipurposeSensorCacGt_Maker:
         display_name: Optional[str],
         comms_method: Optional[str],
     ):
-
         self.tuple = MultipurposeSensorCacGt(
             ComponentAttributeClassId=component_attribute_class_id,
             MakeModel=make_model,

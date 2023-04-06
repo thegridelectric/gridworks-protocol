@@ -114,7 +114,6 @@ class ComponentGt_Maker:
         display_name: Optional[str],
         hw_uid: Optional[str],
     ):
-
         self.tuple = ComponentGt(
             ComponentId=component_id,
             ComponentAttributeClassId=component_attribute_class_id,

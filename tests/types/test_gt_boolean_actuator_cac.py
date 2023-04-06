@@ -10,7 +10,6 @@ from gwproto.types import GtBooleanActuatorCac_Maker as Maker
 
 
 def test_gt_boolean_actuator_cac_generated() -> None:
-
     d = {
         "ComponentAttributeClassId": "69f101fc-22e4-4caa-8103-50b8aeb66028",
         "MakeModelGtEnumSymbol": "9cc57878",

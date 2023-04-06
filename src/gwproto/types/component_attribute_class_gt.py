@@ -90,7 +90,6 @@ class ComponentAttributeClassGt_Maker:
     version = "000"
 
     def __init__(self, component_attribute_class_id: str, display_name: Optional[str]):
-
         self.tuple = ComponentAttributeClassGt(
             ComponentAttributeClassId=component_attribute_class_id,
             DisplayName=display_name,

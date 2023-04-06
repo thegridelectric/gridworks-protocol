@@ -269,7 +269,6 @@ class TelemetrySnapshotSpaceheat_Maker:
         value_list: List[int],
         telemetry_name_list: List[TelemetryName],
     ):
-
         self.tuple = TelemetrySnapshotSpaceheat(
             ReportTimeUnixMs=report_time_unix_ms,
             AboutNodeAliasList=about_node_alias_list,

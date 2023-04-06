@@ -128,7 +128,6 @@ class GtShCliAtnCmd_Maker:
     def __init__(
         self, from_g_node_alias: str, send_snapshot: bool, from_g_node_id: str
     ):
-
         self.tuple = GtShCliAtnCmd(
             FromGNodeAlias=from_g_node_alias,
             SendSnapshot=send_snapshot,

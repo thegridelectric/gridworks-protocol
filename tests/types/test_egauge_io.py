@@ -9,7 +9,6 @@ from gwproto.types import EgaugeIo_Maker as Maker
 
 
 def test_egauge_io_generated() -> None:
-
     d = {
         "InputConfig": {
             "Address": 9004,

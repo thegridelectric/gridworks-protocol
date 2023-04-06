@@ -136,7 +136,6 @@ class ResistiveHeaterComponentGt_Maker:
         tested_max_hot_milli_ohms: Optional[int],
         tested_max_cold_milli_ohms: Optional[int],
     ):
-
         self.tuple = ResistiveHeaterComponentGt(
             ComponentId=component_id,
             ComponentAttributeClassId=component_attribute_class_id,

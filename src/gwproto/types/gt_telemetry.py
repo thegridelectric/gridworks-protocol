@@ -195,7 +195,6 @@ class GtTelemetry_Maker:
         name: TelemetryName,
         exponent: int,
     ):
-
         self.tuple = GtTelemetry(
             ScadaReadTimeUnixMs=scada_read_time_unix_ms,
             Value=value,

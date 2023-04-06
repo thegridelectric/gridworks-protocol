@@ -223,7 +223,6 @@ class ResistiveHeaterCacGt_Maker:
         nameplate_max_power_w: int,
         rated_voltage_v: int,
     ):
-
         self.tuple = ResistiveHeaterCacGt(
             ComponentAttributeClassId=component_attribute_class_id,
             MakeModel=make_model,

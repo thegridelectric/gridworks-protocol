@@ -3,7 +3,6 @@ from gwproto.enums import Role
 
 
 def test_role() -> None:
-
     assert set(Role.values()) == {
         "Unknown",
         "Scada",

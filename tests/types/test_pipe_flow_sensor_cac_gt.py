@@ -10,7 +10,6 @@ from gwproto.types import PipeFlowSensorCacGt_Maker as Maker
 
 
 def test_pipe_flow_sensor_cac_gt_generated() -> None:
-
     d = {
         "ComponentAttributeClassId": "14e7105a-e797-485a-a304-328ecc85cd98",
         "MakeModelGtEnumSymbol": "d0b0e375",

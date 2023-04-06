@@ -9,7 +9,6 @@ from gwproto.types import ComponentGt_Maker as Maker
 
 
 def test_component_gt_generated() -> None:
-
     d = {
         "ComponentId": "987e0a5f-9036-411e-ba30-bac1075114ba",
         "ComponentAttributeClassId": "0a2fed00-8ff9-4391-a6d8-4b08ab94dfe1",

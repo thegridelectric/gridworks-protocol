@@ -11,7 +11,6 @@ from gwproto.types import TelemetryReportingConfig_Maker as Maker
 
 
 def test_telemetry_reporting_config_generated() -> None:
-
     d = {
         "TelemetryNameGtEnumSymbol": "af39eec9",
         "AboutNodeName": "a.elt1",

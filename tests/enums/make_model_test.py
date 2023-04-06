@@ -3,7 +3,6 @@ from gwproto.enums import MakeModel
 
 
 def test_make_model() -> None:
-
     assert set(MakeModel.values()) == {
         "UNKNOWNMAKE__UNKNOWNMODEL",
         "EGAUGE__4030",

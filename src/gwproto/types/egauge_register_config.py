@@ -65,7 +65,6 @@ class EgaugeRegisterConfig_Maker:
         denominator: int,
         unit: str,
     ):
-
         self.tuple = EgaugeRegisterConfig(
             Address=address,
             Name=name,

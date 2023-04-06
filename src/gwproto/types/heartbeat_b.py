@@ -226,7 +226,6 @@ class HeartbeatB_Maker:
         send_time_unix_ms: int,
         starting_over: bool,
     ):
-
         self.tuple = HeartbeatB(
             FromGNodeAlias=from_g_node_alias,
             FromGNodeInstanceId=from_g_node_instance_id,

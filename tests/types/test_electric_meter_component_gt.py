@@ -11,7 +11,6 @@ from gwproto.types.electric_meter_component_gt import (
 
 
 def test_electric_meter_component_gt_generated() -> None:
-
     d = {
         "ComponentId": "04ceb282-d7e8-4293-80b5-72455e1a5db3",
         "ComponentAttributeClassId": "c1856e62-d8c0-4352-b79e-6ae05a5294c2",

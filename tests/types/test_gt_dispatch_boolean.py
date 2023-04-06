@@ -9,7 +9,6 @@ from gwproto.types import GtDispatchBoolean_Maker as Maker
 
 
 def test_gt_dispatch_boolean_generated() -> None:
-
     d = {
         "AboutNodeName": "a.elt1.relay",
         "ToGNodeAlias": "dwtest.isone.ct.newhaven.orange1.ta.scada",

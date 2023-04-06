@@ -134,7 +134,6 @@ class SnapshotSpaceheat_Maker:
         from_g_node_instance_id: str,
         snapshot: TelemetrySnapshotSpaceheat,
     ):
-
         self.tuple = SnapshotSpaceheat(
             FromGNodeAlias=from_g_node_alias,
             FromGNodeInstanceId=from_g_node_instance_id,

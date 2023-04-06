@@ -10,7 +10,6 @@ from gwproto.types import DataChannel_Maker as Maker
 
 
 def test_data_channel_generated() -> None:
-
     d = {
         "DisplayName": "BoostPower",
         "AboutName": "a.elt1",

@@ -130,7 +130,6 @@ class GtBooleanActuatorComponent_Maker:
         gpio: Optional[int],
         hw_uid: Optional[str],
     ):
-
         self.tuple = GtBooleanActuatorComponent(
             ComponentId=component_id,
             ComponentAttributeClassId=component_attribute_class_id,

@@ -10,7 +10,6 @@ from gwproto.types import GtTelemetry_Maker as Maker
 
 
 def test_gt_telemetry_generated() -> None:
-
     d = {
         "ScadaReadTimeUnixMs": 1656513094288,
         "Value": 63430,

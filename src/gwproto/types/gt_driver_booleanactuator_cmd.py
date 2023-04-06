@@ -108,7 +108,6 @@ class GtDriverBooleanactuatorCmd_Maker:
     version = "100"
 
     def __init__(self, relay_state: int, sh_node_alias: str, command_time_unix_ms: int):
-
         self.tuple = GtDriverBooleanactuatorCmd(
             RelayState=relay_state,
             ShNodeAlias=sh_node_alias,

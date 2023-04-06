@@ -3,7 +3,6 @@ from gwproto.enums import ActorClass
 
 
 def test_actor_class() -> None:
-
     assert set(ActorClass.values()) == {
         "NoActor",
         "Scada",

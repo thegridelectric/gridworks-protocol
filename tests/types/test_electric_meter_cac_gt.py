@@ -12,7 +12,6 @@ from gwproto.types import ElectricMeterCacGt_Maker as Maker
 
 
 def test_electric_meter_cac_gt_generated() -> None:
-
     d = {
         "ComponentAttributeClassId": "a3d298fb-a4ef-427a-939d-02cc9c9689c1",
         "MakeModelGtEnumSymbol": "53129448",

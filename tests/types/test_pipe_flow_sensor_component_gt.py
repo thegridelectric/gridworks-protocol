@@ -9,7 +9,6 @@ from gwproto.types import PipeFlowSensorComponentGt_Maker as Maker
 
 
 def test_pipe_flow_sensor_component_gt_generated() -> None:
-
     d = {
         "ComponentId": "dd5ac673-91a8-40e2-a233-b67479cec709",
         "ComponentAttributeClassId": "13d916dc-8764-4b16-b85d-b8ead3e2fc80",

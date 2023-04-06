@@ -9,7 +9,6 @@ from gwproto.types import EgaugeRegisterConfig_Maker as Maker
 
 
 def test_egauge_register_config_generated() -> None:
-
     d = {
         "Address": 9004,
         "Name": "Garage power",

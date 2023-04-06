@@ -333,7 +333,6 @@ class TelemetryReportingConfig_Maker:
         async_report_threshold: Optional[float],
         nameplate_max_value: Optional[int],
     ):
-
         self.tuple = TelemetryReportingConfig(
             TelemetryName=telemetry_name,
             AboutNodeName=about_node_name,

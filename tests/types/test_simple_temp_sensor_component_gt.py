@@ -9,7 +9,6 @@ from gwproto.types import SimpleTempSensorComponentGt_Maker as Maker
 
 
 def test_simple_temp_sensor_component_gt_generated() -> None:
-
     d = {
         "ComponentId": "2ca9e65a-5e85-4eaa-811b-901e940f8d09",
         "ComponentAttributeClassId": "43564cd2-0e78-41a2-8b67-ad80c02161e8",

@@ -231,7 +231,6 @@ class DataChannel_Maker:
         expected_max_value: Optional[int],
         expected_min_value: Optional[int],
     ):
-
         self.tuple = DataChannel(
             DisplayName=display_name,
             AboutName=about_name,

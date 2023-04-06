@@ -10,7 +10,6 @@ from gwproto.types import GtShMultipurposeTelemetryStatus_Maker as Maker
 
 
 def test_gt_sh_multipurpose_telemetry_status_generated() -> None:
-
     d = {
         "AboutNodeAlias": "a.elt1",
         "SensorNodeAlias": "a.m",

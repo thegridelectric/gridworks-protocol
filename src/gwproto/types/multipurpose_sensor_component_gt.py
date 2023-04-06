@@ -180,7 +180,6 @@ class MultipurposeSensorComponentGt_Maker:
         hw_uid: Optional[str],
         display_name: Optional[str],
     ):
-
         self.tuple = MultipurposeSensorComponentGt(
             ComponentId=component_id,
             ComponentAttributeClassId=component_attribute_class_id,

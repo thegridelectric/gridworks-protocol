@@ -456,7 +456,6 @@ class ElectricMeterCacGt_Maker:
         interface: LocalCommInterface,
         default_baud: Optional[int],
     ):
-
         self.tuple = ElectricMeterCacGt(
             ComponentAttributeClassId=component_attribute_class_id,
             MakeModel=make_model,

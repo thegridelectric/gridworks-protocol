@@ -3,7 +3,6 @@ from gwproto.enums import Unit
 
 
 def test_unit() -> None:
-
     assert set(Unit.values()) == {
         "Unknown",
         "Unitless",

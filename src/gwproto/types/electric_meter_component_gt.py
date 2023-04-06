@@ -227,7 +227,6 @@ class ElectricMeterComponentGt_Maker:
         modbus_port: Optional[int],
         egauge_io_list: List[EgaugeIo],
     ):
-
         self.tuple = ElectricMeterComponentGt(
             ComponentId=component_id,
             ComponentAttributeClassId=component_attribute_class_id,

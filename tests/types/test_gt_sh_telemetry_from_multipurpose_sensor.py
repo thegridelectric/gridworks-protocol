@@ -10,7 +10,6 @@ from gwproto.types import GtShTelemetryFromMultipurposeSensor_Maker as Maker
 
 
 def test_gt_sh_telemetry_from_multipurpose_sensor_generated() -> None:
-
     d = {
         "ScadaReadTimeUnixMs": 1656587343297,
         "AboutNodeAliasList": ["a.elt1"],

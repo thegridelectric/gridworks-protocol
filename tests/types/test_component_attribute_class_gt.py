@@ -9,7 +9,6 @@ from gwproto.types import ComponentAttributeClassGt_Maker as Maker
 
 
 def test_component_attribute_class_gt_generated() -> None:
-
     d = {
         "ComponentAttributeClassId": "29c5257b-8a86-4dbe-a9d4-9c7330c3c4d0",
         "DisplayName": "Sample CAC",

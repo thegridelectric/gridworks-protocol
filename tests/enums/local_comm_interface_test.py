@@ -3,7 +3,6 @@ from gwproto.enums import LocalCommInterface
 
 
 def test_local_comm_interface() -> None:
-
     assert set(LocalCommInterface.values()) == {
         "UNKNOWN",
         "I2C",

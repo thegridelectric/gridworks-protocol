@@ -1,0 +1,82 @@
+{
+  "gwapi": "001",
+  "type_name": "electric.meter.component.gt",
+  "version": "000",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": "Type for tracking Electric Meter Components. GridWorks Spaceheat SCADA uses the GridWorks GNodeRegistry structures and abstractions for managing relational device data. The Component associated to a SpaceheatNode is part of this structure.",
+  "url": "https://g-node-registry.readthedocs.io/en/latest/component.html",
+  "formats": {
+    "UuidCanonicalTextual": {
+      "type": "string",
+      "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
+      "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"
+    }
+  },
+  "properties": {
+    "ComponentId": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "",
+      "required": true
+    },
+    "ComponentAttributeClassId": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "",
+      "required": true
+    },
+    "DisplayName": {
+      "type": "string",
+      "title": "Display Name for the Power Meter",
+      "required": false
+    },
+    "ConfigList": {
+      "type": "telemetry.reporting.config.000",
+      "title": "List of Data Channel configs ",
+      "description": "This power meter will produce multiple data channels. Each data channel measures a certain quantities (like power, current) for certain ShNodes (like a boost element or heat pump).",
+      "required": true
+    },
+    "HwUid": {
+      "type": "string",
+      "title": "Unique Hardware Id for the Power Meter",
+      "required": false
+    },
+    "ModbusHost": {
+      "type": "string",
+      "title": "Host on LAN when power meter is modbus over Ethernet",
+      "required": false
+    },
+    "ModbusPort": {
+      "type": "integer",
+      "title": "",
+      "required": false
+    },
+    "EgaugeIoList": {
+      "type": "egauge.io.000",
+      "title": "Bijecton from EGauge4030 input to ConfigList output",
+      "description": "This should be empty unless the MakeModel of the corresponding component attribute class is EGauge 4030. The channels that can be read from an EGauge 4030 are configurable by the person who installs the device. The information is encapsulated in a modbus map provided by eGauge as a csv from a device-specific API. The EGaugeIoList maps the data from this map to the data that the SCADA expects to see.",
+      "required": true
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "electric.meter.component.gt",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "000",
+      "required": true
+    }
+  },
+  "axioms": {
+    "Axiom1": {
+      "title": "Modbus consistency",
+      "description": "ModbusHost is None if and only if ModbusPort is None"
+    },
+    "Axiom2": {
+      "title": "Egauge4030 consistency",
+      "description": "If the EgaugeIoList has non-zero length, then the ModbusHost is not None and the set of output configs is equal to ConfigList as a set"
+    }
+  }
+}

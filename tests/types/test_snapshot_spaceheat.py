@@ -9,7 +9,6 @@ from gwproto.types import SnapshotSpaceheat_Maker as Maker
 
 
 def test_snapshot_spaceheat_generated() -> None:
-
     d = {
         "FromGNodeAlias": "dwtest.isone.ct.newhaven.orange1.ta.scada",
         "FromGNodeInstanceId": "0384ef21-648b-4455-b917-58a1172d7fc1",

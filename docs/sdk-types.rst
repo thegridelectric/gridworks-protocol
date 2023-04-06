@@ -18,6 +18,15 @@ forth between type instances and Python objects.
    :maxdepth: 1
    :caption: TYPE SDKS
 
+    ComponentAttributeClassGt  <types/component-attribute-class-gt>
+    ComponentGt  <types/component-gt>
+    DataChannel  <types/data-channel>
+    EgaugeIo  <types/egauge-io>
+    EgaugeRegisterConfig  <types/egauge-register-config>
+    ElectricMeterCacGt  <types/electric-meter-cac-gt>
+    ElectricMeterComponentGt  <types/electric-meter-component-gt>
+    GtBooleanActuatorCac  <types/gt-boolean-actuator-cac>
+    GtBooleanActuatorComponent  <types/gt-boolean-actuator-component>
     GtDispatchBoolean  <types/gt-dispatch-boolean>
     GtDispatchBooleanLocal  <types/gt-dispatch-boolean-local>
     GtDriverBooleanactuatorCmd  <types/gt-driver-booleanactuator-cmd>
@@ -29,6 +38,16 @@ forth between type instances and Python objects.
     GtShTelemetryFromMultipurposeSensor  <types/gt-sh-telemetry-from-multipurpose-sensor>
     GtTelemetry  <types/gt-telemetry>
     HeartbeatB  <types/heartbeat-b>
+    MultipurposeSensorCacGt  <types/multipurpose-sensor-cac-gt>
+    MultipurposeSensorComponentGt  <types/multipurpose-sensor-component-gt>
+    PipeFlowSensorCacGt  <types/pipe-flow-sensor-cac-gt>
+    PipeFlowSensorComponentGt  <types/pipe-flow-sensor-component-gt>
     PowerWatts  <types/power-watts>
+    ResistiveHeaterCacGt  <types/resistive-heater-cac-gt>
+    ResistiveHeaterComponentGt  <types/resistive-heater-component-gt>
+    SimpleTempSensorCacGt  <types/simple-temp-sensor-cac-gt>
+    SimpleTempSensorComponentGt  <types/simple-temp-sensor-component-gt>
     SnapshotSpaceheat  <types/snapshot-spaceheat>
+    SpaceheatNodeGt  <types/spaceheat-node-gt>
+    TelemetryReportingConfig  <types/telemetry-reporting-config>
     TelemetrySnapshotSpaceheat  <types/telemetry-snapshot-spaceheat>

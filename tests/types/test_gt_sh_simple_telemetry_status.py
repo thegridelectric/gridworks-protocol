@@ -10,7 +10,6 @@ from gwproto.types import GtShSimpleTelemetryStatus_Maker as Maker
 
 
 def test_gt_sh_simple_telemetry_status_generated() -> None:
-
     d = {
         "ShNodeAlias": "a.elt1.relay",
         "TelemetryNameGtEnumSymbol": "5a71d4b3",

@@ -195,7 +195,6 @@ class GtDispatchBoolean_Maker:
         relay_state: int,
         send_time_unix_ms: int,
     ):
-
         self.tuple = GtDispatchBoolean(
             AboutNodeName=about_node_name,
             ToGNodeAlias=to_g_node_alias,

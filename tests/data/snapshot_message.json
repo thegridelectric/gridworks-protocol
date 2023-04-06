@@ -2,7 +2,7 @@
   "Header": {
     "Src": "hw1.isone.ct.newhaven.orange1.ta.scada",
     "Dst": "",
-    "MessageType": "snapshot.spaceheat.100",
+    "MessageType": "snapshot.spaceheat",
     "MessageId": "",
     "AckRequired": false,
     "TypeName": "gridworks.header"

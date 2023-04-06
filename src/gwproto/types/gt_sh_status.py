@@ -265,7 +265,6 @@ class GtShStatus_Maker:
         booleanactuator_cmd_list: List[GtShBooleanactuatorCmdStatus],
         status_uid: str,
     ):
-
         self.tuple = GtShStatus(
             FromGNodeAlias=from_g_node_alias,
             FromGNodeId=from_g_node_id,

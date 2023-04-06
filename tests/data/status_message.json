@@ -3,7 +3,7 @@
     "AckRequired": false,
     "Dst": "",
     "MessageId": "",
-    "MessageType": "gt.sh.status.110",
+    "MessageType": "gt.sh.status",
     "Src": "hw1.isone.ct.newhaven.orange1.ta.scada",
     "TypeName": "gridworks.header"
   },

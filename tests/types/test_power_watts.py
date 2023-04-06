@@ -9,7 +9,6 @@ from gwproto.types import PowerWatts_Maker as Maker
 
 
 def test_power_watts_generated() -> None:
-
     d = {
         "Watts": 4500,
         "TypeName": "power.watts",

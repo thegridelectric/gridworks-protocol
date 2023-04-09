@@ -14,6 +14,7 @@ class BooleanActuatorComponent(Component):
         self,
         component_id: str,
         component_attribute_class_id: str,
+        normally_open: bool,
         display_name: Optional[str] = None,
         gpio: Optional[int] = None,
         hw_uid: Optional[str] = None,
@@ -24,6 +25,7 @@ class BooleanActuatorComponent(Component):
             hw_uid=hw_uid,
             component_attribute_class_id=component_attribute_class_id,
         )
+        self.normally_open = normally_open
         self.gpio = gpio
 
         BooleanActuatorComponent.by_id[self.component_id] = self

@@ -2,6 +2,14 @@
 Type API Specs
 ===============
 
+BooleanActuatorCacGt
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. literalinclude:: json/boolean-actuator-cac-gt.json
+
+BooleanActuatorComponentGt
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. literalinclude:: json/boolean-actuator-component-gt.json
+
 ComponentAttributeClassGt
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/component-attribute-class-gt.json
@@ -29,14 +37,6 @@ ElectricMeterCacGt
 ElectricMeterComponentGt
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/electric-meter-component-gt.json
-
-GtBooleanActuatorCac
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/gt-boolean-actuator-cac.json
-
-GtBooleanActuatorComponent
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/gt-boolean-actuator-component.json
 
 GtDispatchBoolean
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^

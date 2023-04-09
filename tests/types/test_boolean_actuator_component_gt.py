@@ -1,21 +1,22 @@
-"""Tests gt.boolean.actuator.component type, version 000"""
+"""Tests boolean.actuator.component.gt type, version 000"""
 import json
 
 import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import MpSchemaError
-from gwproto.types import GtBooleanActuatorComponent_Maker as Maker
+from gwproto.types import BooleanActuatorComponentGt_Maker as Maker
 
 
-def test_gt_boolean_actuator_component_generated() -> None:
+def test_boolean_actuator_component_gt_generated() -> None:
     d = {
         "ComponentId": "798fe14a-4073-41eb-bce2-075906aee6bb",
         "ComponentAttributeClassId": "69f101fc-22e4-4caa-8103-50b8aeb66028",
         "DisplayName": "relay for first elt in tank",
         "Gpio": 0,
         "HwUid": "abc123",
-        "TypeName": "gt.boolean.actuator.component",
+        "NormallyOpen": True,
+        "TypeName": "boolean.actuator.component.gt",
         "Version": "000",
     }
 
@@ -39,6 +40,7 @@ def test_gt_boolean_actuator_component_generated() -> None:
         display_name=gtuple.DisplayName,
         gpio=gtuple.Gpio,
         hw_uid=gtuple.HwUid,
+        normally_open=gtuple.NormallyOpen,
     ).tuple
     assert t == gtuple
 
@@ -69,6 +71,11 @@ def test_gt_boolean_actuator_component_generated() -> None:
     with pytest.raises(MpSchemaError):
         Maker.dict_to_tuple(d2)
 
+    d2 = dict(d)
+    del d2["NormallyOpen"]
+    with pytest.raises(MpSchemaError):
+        Maker.dict_to_tuple(d2)
+
     ######################################
     # Optional attributes can be removed from type
     ######################################
@@ -93,6 +100,10 @@ def test_gt_boolean_actuator_component_generated() -> None:
     ######################################
 
     d2 = dict(d, Gpio="0.1")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, NormallyOpen="this is not a boolean")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 

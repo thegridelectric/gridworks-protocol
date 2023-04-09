@@ -18,6 +18,8 @@ forth between type instances and Python objects.
    :maxdepth: 1
    :caption: TYPE SDKS
 
+    BooleanActuatorCacGt  <types/boolean-actuator-cac-gt>
+    BooleanActuatorComponentGt  <types/boolean-actuator-component-gt>
     ComponentAttributeClassGt  <types/component-attribute-class-gt>
     ComponentGt  <types/component-gt>
     DataChannel  <types/data-channel>
@@ -25,8 +27,6 @@ forth between type instances and Python objects.
     EgaugeRegisterConfig  <types/egauge-register-config>
     ElectricMeterCacGt  <types/electric-meter-cac-gt>
     ElectricMeterComponentGt  <types/electric-meter-component-gt>
-    GtBooleanActuatorCac  <types/gt-boolean-actuator-cac>
-    GtBooleanActuatorComponent  <types/gt-boolean-actuator-component>
     GtDispatchBoolean  <types/gt-dispatch-boolean>
     GtDispatchBooleanLocal  <types/gt-dispatch-boolean-local>
     GtDriverBooleanactuatorCmd  <types/gt-driver-booleanactuator-cmd>

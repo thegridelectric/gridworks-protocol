@@ -1,4 +1,4 @@
-"""Type gt.boolean.actuator.cac, version 000"""
+"""Type boolean.actuator.cac.gt, version 000"""
 import json
 from enum import auto
 from typing import Any
@@ -158,7 +158,7 @@ def check_is_uuid_canonical_textual(v: str) -> None:
         raise ValueError(f"{v} word lengths not 8-4-4-4-12")
 
 
-class GtBooleanActuatorCac(BaseModel):
+class BooleanActuatorCacGt(BaseModel):
     """Type for tracking Boolean Actuator ComponentAttributeClasses.
 
     GridWorks Spaceheat SCADA uses the GridWorks GNodeRegistry structures and abstractions for managing relational device data. The Cac, or ComponentAttributeClass, is part of this structure.
@@ -178,7 +178,7 @@ class GtBooleanActuatorCac(BaseModel):
     TypicalResponseTimeMs: int = Field(
         title="TypicalResponseTimeMs",
     )
-    TypeName: Literal["gt.boolean.actuator.cac"] = "gt.boolean.actuator.cac"
+    TypeName: Literal["boolean.actuator.cac.gt"] = "boolean.actuator.cac.gt"
     Version: str = "000"
 
     @validator("ComponentAttributeClassId")
@@ -211,8 +211,8 @@ class GtBooleanActuatorCac(BaseModel):
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
-class GtBooleanActuatorCac_Maker:
-    type_name = "gt.boolean.actuator.cac"
+class BooleanActuatorCacGt_Maker:
+    type_name = "boolean.actuator.cac.gt"
     version = "000"
 
     def __init__(
@@ -222,7 +222,7 @@ class GtBooleanActuatorCac_Maker:
         display_name: Optional[str],
         typical_response_time_ms: int,
     ):
-        self.tuple = GtBooleanActuatorCac(
+        self.tuple = BooleanActuatorCacGt(
             ComponentAttributeClassId=component_attribute_class_id,
             MakeModel=make_model,
             DisplayName=display_name,
@@ -231,14 +231,14 @@ class GtBooleanActuatorCac_Maker:
         )
 
     @classmethod
-    def tuple_to_type(cls, tuple: GtBooleanActuatorCac) -> str:
+    def tuple_to_type(cls, tuple: BooleanActuatorCacGt) -> str:
         """
         Given a Python class object, returns the serialized JSON type object
         """
         return tuple.as_type()
 
     @classmethod
-    def type_to_tuple(cls, t: str) -> GtBooleanActuatorCac:
+    def type_to_tuple(cls, t: str) -> BooleanActuatorCacGt:
         """
         Given a serialized JSON type object, returns the Python class object
         """
@@ -251,7 +251,7 @@ class GtBooleanActuatorCac_Maker:
         return cls.dict_to_tuple(d)
 
     @classmethod
-    def dict_to_tuple(cls, d: dict[str, Any]) -> GtBooleanActuatorCac:
+    def dict_to_tuple(cls, d: dict[str, Any]) -> BooleanActuatorCacGt:
         d2 = dict(d)
         if "ComponentAttributeClassId" not in d2.keys():
             raise MpSchemaError(f"dict {d2} missing ComponentAttributeClassId")
@@ -268,7 +268,7 @@ class GtBooleanActuatorCac_Maker:
         if "TypeName" not in d2.keys():
             raise MpSchemaError(f"dict {d2} missing TypeName")
 
-        return GtBooleanActuatorCac(
+        return BooleanActuatorCacGt(
             ComponentAttributeClassId=d2["ComponentAttributeClassId"],
             MakeModel=d2["MakeModel"],
             DisplayName=d2["DisplayName"],
@@ -278,7 +278,7 @@ class GtBooleanActuatorCac_Maker:
         )
 
     @classmethod
-    def tuple_to_dc(cls, t: GtBooleanActuatorCac) -> BooleanActuatorCac:
+    def tuple_to_dc(cls, t: BooleanActuatorCacGt) -> BooleanActuatorCac:
         if t.ComponentAttributeClassId in BooleanActuatorCac.by_id.keys():
             dc = BooleanActuatorCac.by_id[t.ComponentAttributeClassId]
         else:
@@ -292,8 +292,8 @@ class GtBooleanActuatorCac_Maker:
         return dc
 
     @classmethod
-    def dc_to_tuple(cls, dc: BooleanActuatorCac) -> GtBooleanActuatorCac:
-        t = GtBooleanActuatorCac_Maker(
+    def dc_to_tuple(cls, dc: BooleanActuatorCac) -> BooleanActuatorCacGt:
+        t = BooleanActuatorCacGt_Maker(
             component_attribute_class_id=dc.component_attribute_class_id,
             make_model=dc.make_model,
             display_name=dc.display_name,

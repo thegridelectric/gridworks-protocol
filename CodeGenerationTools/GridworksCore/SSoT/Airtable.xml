@@ -995,14 +995,14 @@ by the concept of MarketType.</Description>
       <DataClass>BooleanActuatorComponent</DataClass>
       <MakeDataClass>true</MakeDataClass>
       <Status>Active</Status>
-      <AliasRoot>gt.boolean.actuator.component</AliasRoot>
+      <AliasRoot>boolean.actuator.component.gt</AliasRoot>
       <Description>GridWorks Spaceheat SCADA uses the GridWorks GNodeRegistry structures and abstractions for managing relational device data. The Component associated to a SpaceheatNode is part of this structure.</Description>
       <UsedAsSubMessagein>BooleanActuatorComponents</UsedAsSubMessagein>
       <Title>Type for tracking Boolean ActuatorComponents</Title>
       <IsComponent>true</IsComponent>
       <CurrentSemanticEnd>000</CurrentSemanticEnd>
       <Url>https://g-node-registry.readthedocs.io/en/latest/component.html</Url>
-      <Alias>gt.boolean.actuator.component</Alias>
+      <Alias>boolean.actuator.component.gt</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
     </SchemaRoot>
     <SchemaRoot>
@@ -1515,7 +1515,7 @@ Shares the same purpose as gs.pwr, but is not designed to minimize bytes so come
       <Alias>gt.telemetry</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
     </SchemaRoot>
-    <SchemaRoot>itrKEdbrzQTmujU9S/recx4EL5mDebUhtzp</SchemaRoot>
+    <SchemaRoot>itrqtp23VdHGZdkiu/recx4EL5mDebUhtzp</SchemaRoot>
     <SchemaRoot>
       <SchemaRootId>recxXnNUXYPwJi4ns</SchemaRootId>
       <createdTime>2023-02-14T13:12:20Z</createdTime>
@@ -1565,13 +1565,13 @@ Shares the same purpose as gs.pwr, but is not designed to minimize bytes so come
       <DataClass>BooleanActuatorCac</DataClass>
       <MakeDataClass>true</MakeDataClass>
       <Status>Active</Status>
-      <AliasRoot>gt.boolean.actuator.cac</AliasRoot>
+      <AliasRoot>boolean.actuator.cac.gt</AliasRoot>
       <Description>GridWorks Spaceheat SCADA uses the GridWorks GNodeRegistry structures and abstractions for managing relational device data. The Cac, or ComponentAttributeClass, is part of this structure.</Description>
       <UsedAsSubMessagein>ComponentAttributeClass, BooleanActuatorCacs</UsedAsSubMessagein>
       <Title>Type for tracking Boolean Actuator ComponentAttributeClasses</Title>
       <CurrentSemanticEnd>000</CurrentSemanticEnd>
       <Url>https://g-node-registry.readthedocs.io/en/latest/component-attribute-class.html</Url>
-      <Alias>gt.boolean.actuator.cac</Alias>
+      <Alias>boolean.actuator.cac.gt</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
     </SchemaRoot>
     <SchemaRoot>
@@ -2314,6 +2314,11 @@ Shares the same purpose as gs.pwr, but is not designed to minimize bytes so come
       <DefaultSymbol>00000000</DefaultSymbol>
       <DefaultEnumValue>Unknown</DefaultEnumValue>
       <PropertyFormatName>EnergySupplyType000</PropertyFormatName>
+    </GtEnum>
+    <GtEnum>
+      <GtEnumId>recfdR0NaoJuQy24A</GtEnumId>
+      <createdTime>2023-04-09T21:06:02Z</createdTime>
+      <Alias>.</Alias>
     </GtEnum>
     <GtEnum>
       <GtEnumId>recgq98LIAwVwgALk</GtEnumId>
@@ -3646,7 +3651,7 @@ Shares the same purpose as gs.pwr, but is not designed to minimize bytes so come
       <Enum>recounhEj97w5SfDm</Enum>
       <DisplayName>market.quantity.unit.000__AvgkW</DisplayName>
     </EnumSymbol>
-    <EnumSymbol>itrFwUs8y6JpxSYt9/recRYMQ5xAzlYZafa</EnumSymbol>
+    <EnumSymbol>itr99tq63ogVO4ULL/recRYMQ5xAzlYZafa</EnumSymbol>
     <EnumSymbol>
       <EnumSymbolId>recRhxuG4B3RCPPqB</EnumSymbolId>
       <createdTime>2022-06-23T18:00:39Z</createdTime>
@@ -4652,7 +4657,7 @@ Shares the same purpose as gs.pwr, but is not designed to minimize bytes so come
       <Symbol>99a5f20d</Symbol>
       <Idx>6</Idx>
     </EnumSymbol>
-    <EnumSymbol>itrFwUs8y6JpxSYt9/recsXsCs2syjI8IBg</EnumSymbol>
+    <EnumSymbol>itr99tq63ogVO4ULL/recsXsCs2syjI8IBg</EnumSymbol>
     <EnumSymbol>
       <EnumSymbolId>recseefFsB6BWwTQj</EnumSymbolId>
       <createdTime>2022-06-23T16:27:43Z</createdTime>
@@ -6532,14 +6537,15 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <SchemaAttributes>recEXU8tEG6X0jUnU</SchemaAttributes>
       <SchemaAttributes>recPuhtbcBHZR6Qai</SchemaAttributes>
       <SchemaAttributes>reci7Ga0o0Ubtlk5g</SchemaAttributes>
+      <SchemaAttributes>recUc59QIjyPi1Xpl</SchemaAttributes>
       <PropertyFormatsUsed>rec24qjC90m0f4Kvl</PropertyFormatsUsed>
       <SchemaRoot>recdbl99ZoQqyOhS7</SchemaRoot>
-      <PreStatus>Active</PreStatus>
+      <PreStatus>Pending</PreStatus>
       <ProtocolTypes>recxelQn6OCbkk5A5</ProtocolTypes>
       <ProtocolTypes>recZBrVC3qx5dJ9B0</ProtocolTypes>
       <ProtocolTypes>recxgiw8kmcghenPd</ProtocolTypes>
       <DataClassIdField>ComponentId</DataClassIdField>
-      <Alias>gt.boolean.actuator.component.000</Alias>
+      <Alias>boolean.actuator.component.gt.000</Alias>
       <RootStatus>Active</RootStatus>
       <ProtocolCategory>Json</ProtocolCategory>
       <MakeDataClass>true</MakeDataClass>
@@ -6548,10 +6554,10 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsComponent>true</IsComponent>
       <ConsistencyCheck>1</ConsistencyCheck>
       <Description>GridWorks Spaceheat SCADA uses the GridWorks GNodeRegistry structures and abstractions for managing relational device data. The Component associated to a SpaceheatNode is part of this structure.</Description>
-      <AliasRoot>gt.boolean.actuator.component</AliasRoot>
+      <AliasRoot>boolean.actuator.component.gt</AliasRoot>
       <RootCurrentSemanticEnd>000</RootCurrentSemanticEnd>
       <IsCurrent>1</IsCurrent>
-      <Status>Active</Status>
+      <Status>Pending</Status>
       <InGwProto />
       <Title>Type for tracking Boolean ActuatorComponents</Title>
       <Url>https://g-node-registry.readthedocs.io/en/latest/component.html</Url>
@@ -6752,6 +6758,16 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <InGwProto>true</InGwProto>
       <Protocols>newatn</Protocols>
       <Protocols>gwproto</Protocols>
+    </Schema>
+    <Schema>
+      <SchemaId>recRzt4GyUgwjJy3l</SchemaId>
+      <createdTime>2023-04-09T21:06:47Z</createdTime>
+      <Alias>.001</Alias>
+      <ConsistencyCheck>1</ConsistencyCheck>
+      <IsCurrent>0</IsCurrent>
+      <Status>Deprecated</Status>
+      <PropertyFormatsUsed>rec24qjC90m0f4Kvl</PropertyFormatsUsed>
+      <SemanticEnd>001</SemanticEnd>
     </Schema>
     <Schema>
       <SchemaId>recT4SSkJ18pz5YoZ</SchemaId>
@@ -7148,6 +7164,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <SchemaAttributes>rec9E6HTIAJLoh9wW</SchemaAttributes>
       <SchemaAttributes>reciCl45E5pQe7ans</SchemaAttributes>
       <SchemaAttributes>recEmEL3LueXj4YbW</SchemaAttributes>
+      <SchemaAttributes>reckgfkjeNGk0Rqx0</SchemaAttributes>
       <PropertyFormatsUsed>rec24qjC90m0f4Kvl</PropertyFormatsUsed>
       <SchemaRoot>recy2lAURQitTqKTR</SchemaRoot>
       <PreStatus>Active</PreStatus>
@@ -7156,7 +7173,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <ProtocolTypes>recMWNrvkQjOIdOjQ</ProtocolTypes>
       <ProtocolTypes>reco01YhMk6anEqXo</ProtocolTypes>
       <DataClassIdField>ComponentAttributeClassId</DataClassIdField>
-      <Alias>gt.boolean.actuator.cac.000</Alias>
+      <Alias>boolean.actuator.cac.gt.000</Alias>
       <RootStatus>Active</RootStatus>
       <ProtocolCategory>Json</ProtocolCategory>
       <MakeDataClass>true</MakeDataClass>
@@ -7165,7 +7182,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsComponent />
       <ConsistencyCheck>1</ConsistencyCheck>
       <Description>GridWorks Spaceheat SCADA uses the GridWorks GNodeRegistry structures and abstractions for managing relational device data. The Cac, or ComponentAttributeClass, is part of this structure.</Description>
-      <AliasRoot>gt.boolean.actuator.cac</AliasRoot>
+      <AliasRoot>boolean.actuator.cac.gt</AliasRoot>
       <RootCurrentSemanticEnd>000</RootCurrentSemanticEnd>
       <IsCurrent>1</IsCurrent>
       <Status>Active</Status>
@@ -8072,36 +8089,36 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Status>Deprecated</Status>
       <InGwProto>true</InGwProto>
     </Schema>
+    <Schema>itrLHi18VZyycfjXv/recm2rM5o9GxgCqbL</Schema>
     <Schema>
       <SchemaId>recm57e2rjMmC2c6n</SchemaId>
       <createdTime>2022-06-14T10:58:01Z</createdTime>
-      <SemanticEnd>000</SemanticEnd>
-      <SchemaAttributes>reczq5nTQlac95iGp</SchemaAttributes>
-      <SchemaAttributes>recGVW20Oju9m6FtH</SchemaAttributes>
-      <PropertyFormatsUsed>rec24qjC90m0f4Kvl</PropertyFormatsUsed>
-      <SchemaRoot>recK5H9Pt9ZpF6hgi</SchemaRoot>
-      <PreStatus>Active</PreStatus>
-      <ProtocolTypes>rec5uG0IulOeg3qcr</ProtocolTypes>
-      <ProtocolTypes>recgeWd2XE4WEhaqC</ProtocolTypes>
-      <ProtocolTypes>recEPIMe5vF9Dqd9e</ProtocolTypes>
-      <DataClassIdField>ComponentAttributeClassId</DataClassIdField>
       <Alias>component.attribute.class.gt.000</Alias>
       <RootStatus>Active</RootStatus>
       <ProtocolCategory>Json</ProtocolCategory>
+      <SchemaAttributes>reczq5nTQlac95iGp</SchemaAttributes>
+      <SchemaAttributes>recGVW20Oju9m6FtH</SchemaAttributes>
+      <SemanticEnd>000</SemanticEnd>
       <MakeDataClass>true</MakeDataClass>
       <DataClass>ComponentAttributeClass</DataClass>
       <IsCac />
       <IsComponent />
       <ConsistencyCheck>1</ConsistencyCheck>
+      <SchemaRoot>recK5H9Pt9ZpF6hgi</SchemaRoot>
       <AliasRoot>component.attribute.class.gt</AliasRoot>
       <RootCurrentSemanticEnd>000</RootCurrentSemanticEnd>
       <IsCurrent>1</IsCurrent>
       <Status>Active</Status>
       <InGwProto />
+      <ProtocolTypes>rec5uG0IulOeg3qcr</ProtocolTypes>
+      <ProtocolTypes>recgeWd2XE4WEhaqC</ProtocolTypes>
+      <ProtocolTypes>recEPIMe5vF9Dqd9e</ProtocolTypes>
+      <DataClassIdField>ComponentAttributeClassId</DataClassIdField>
+      <PreStatus>Active</PreStatus>
+      <PropertyFormatsUsed>rec24qjC90m0f4Kvl</PropertyFormatsUsed>
       <Protocols>scada</Protocols>
       <Protocols>gwproto</Protocols>
     </Schema>
-    <Schema>itrn41hd4VmvPSMja/recm57e2rjMmC2c6n</Schema>
     <Schema>
       <SchemaId>recmVKHF3ugtUOYrz</SchemaId>
       <createdTime>2022-06-04T19:17:25Z</createdTime>
@@ -10517,7 +10534,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsType>false</IsType>
       <TypeInPayload>Number</TypeInPayload>
     </SchemaAttribute>
-    <SchemaAttribute>itr0ywZCrd7lSSgXI/rec9XvWitA9d8vD2l</SchemaAttribute>
+    <SchemaAttribute>itrCoO2Iu9SRS6VRI/rec9XvWitA9d8vD2l</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>rec9fsScoo91bMhGw</SchemaAttributeId>
       <createdTime>2023-01-28T16:43:58Z</createdTime>
@@ -12132,7 +12149,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <PydanticFormat>PositiveInteger</PydanticFormat>
       <TypeInPayload>Integer</TypeInPayload>
     </SchemaAttribute>
-    <SchemaAttribute>itr0ywZCrd7lSSgXI/recIhSSpqIviBUW64</SchemaAttribute>
+    <SchemaAttribute>itrCoO2Iu9SRS6VRI/recIhSSpqIviBUW64</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recIkJy1G5tzWXqbs</SchemaAttributeId>
       <createdTime>2022-11-09T23:00:57Z</createdTime>
@@ -13733,7 +13750,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Format>MarketQuantityUnit000</Format>
       <EnumPropertyFormat>MarketQuantityUnit000</EnumPropertyFormat>
     </SchemaAttribute>
-    <SchemaAttribute>itr0ywZCrd7lSSgXI/recREgyk5HQKEtSMJ</SchemaAttribute>
+    <SchemaAttribute>itrCoO2Iu9SRS6VRI/recREgyk5HQKEtSMJ</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recRMYT3frXP98k2q</SchemaAttributeId>
       <createdTime>2022-11-04T13:44:57Z</createdTime>
@@ -14399,6 +14416,21 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Title>When the gni starts representing the GNode</Title>
       <TypeInPayload>Integer</TypeInPayload>
       <Format>ReasonableUnixTimeS</Format>
+    </SchemaAttribute>
+    <SchemaAttribute>
+      <SchemaAttributeId>recUc59QIjyPi1Xpl</SchemaAttributeId>
+      <createdTime>2023-04-09T21:09:35Z</createdTime>
+      <Value>NormallyOpen</Value>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>Boolean</PrimitiveType>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <Schema>recPbLemXyDnvKcIc</Schema>
+      <Description>Normally open relays default in the open position, meaning that when they're not in use, there is no contact between the circuits. When power is introduced, an electromagnet pulls the first circuit into contact with the second, thereby closing the circuit and allowing power to flow through</Description>
+      <Idx>5</Idx>
+      <Title>Normally Open</Title>
+      <TypeInPayload>Boolean</TypeInPayload>
     </SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recUgM344FS0QIgRe</SchemaAttributeId>
@@ -15337,6 +15369,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <DefaultValue>240</DefaultValue>
       <TypeInPayload>Integer</TypeInPayload>
     </SchemaAttribute>
+    <SchemaAttribute>itrCoO2Iu9SRS6VRI/reca6fj3KeJFrWBbK</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recaYqACGpgpO40W8</SchemaAttributeId>
       <createdTime>2023-01-16T17:19:44Z</createdTime>
@@ -15353,7 +15386,6 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <PydanticFormat>PositiveInteger</PydanticFormat>
       <TypeInPayload>Integer</TypeInPayload>
     </SchemaAttribute>
-    <SchemaAttribute>itr0ywZCrd7lSSgXI/recaYqACGpgpO40W8</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recaaEpN2NrRBsCmW</SchemaAttributeId>
       <createdTime>2022-11-10T13:23:39Z</createdTime>
@@ -16900,6 +16932,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Idx>4</Idx>
       <TypeInPayload>String</TypeInPayload>
     </SchemaAttribute>
+    <SchemaAttribute>itrCoO2Iu9SRS6VRI/reci7Ga0o0Ubtlk5g</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>reci7qQs2JCeyRbV7</SchemaAttributeId>
       <createdTime>2023-03-25T18:46:49Z</createdTime>
@@ -16918,7 +16951,6 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <TypeInPayload>String</TypeInPayload>
       <Format>LeftRightDot</Format>
     </SchemaAttribute>
-    <SchemaAttribute>itr0ywZCrd7lSSgXI/reci7qQs2JCeyRbV7</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>reci7stPQ0Nulidwl</SchemaAttributeId>
       <createdTime>2022-12-02T17:49:23Z</createdTime>
@@ -17357,6 +17389,13 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <PrimitiveFormatFail1>2</PrimitiveFormatFail1>
       <TypeInPayload>Integer</TypeInPayload>
       <Format>Bit</Format>
+    </SchemaAttribute>
+    <SchemaAttribute>
+      <SchemaAttributeId>reckgfkjeNGk0Rqx0</SchemaAttributeId>
+      <createdTime>2023-04-09T21:09:24Z</createdTime>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <Schema>reca2LF7P05qQmFJW</Schema>
     </SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recl1CjNX7CBI77Cf</SchemaAttributeId>
@@ -18481,6 +18520,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Idx>1</Idx>
       <TypeInPayload>Integer</TypeInPayload>
     </SchemaAttribute>
+    <SchemaAttribute>itrCoO2Iu9SRS6VRI/recqbPC3JOFtb5oXx</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recqk08O9ID51tC31</SchemaAttributeId>
       <createdTime>2023-01-28T16:43:01Z</createdTime>
@@ -18517,7 +18557,6 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <TypeInPayload>String</TypeInPayload>
       <Format>AlgoMsgPackEncoded</Format>
     </SchemaAttribute>
-    <SchemaAttribute>itr0ywZCrd7lSSgXI/recqsyHUDPXWxf39U</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recr1lA07ReOr9HMQ</SchemaAttributeId>
       <createdTime>2022-11-09T23:00:46Z</createdTime>
@@ -20924,6 +20963,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <TypesThatUse>recEhzcpob8H7VuEF</TypesThatUse>
       <TypesThatUse>recxdlQ6gCN8mD39r</TypesThatUse>
       <TypesThatUse>reccsu6ZeZHKoDqDy</TypesThatUse>
+      <TypesThatUse>recRzt4GyUgwjJy3l</TypesThatUse>
       <Example>652ba6b0-c3bf-4f06-8a80-6b9832d60a25</Example>
       <Name>UuidCanonicalTextual</Name>
     </PropertyFormat>
@@ -22077,9 +22117,9 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <createdTime>2022-12-27T15:56:38Z</createdTime>
       <Protocol>recvaW2RuHMh5mwwR</Protocol>
       <Type>reca2LF7P05qQmFJW</Type>
-      <Name>newatn gt.boolean.actuator.cac.000</Name>
+      <Name>newatn boolean.actuator.cac.gt.000</Name>
       <ProtocolName>newatn</ProtocolName>
-      <TypeName>gt.boolean.actuator.cac.000</TypeName>
+      <TypeName>boolean.actuator.cac.gt.000</TypeName>
       <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
@@ -22480,9 +22520,9 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <createdTime>2022-12-27T15:56:53Z</createdTime>
       <Protocol>recdu3DxzzmNH2eNq</Protocol>
       <Type>reca2LF7P05qQmFJW</Type>
-      <Name>scada gt.boolean.actuator.cac.000</Name>
+      <Name>scada boolean.actuator.cac.gt.000</Name>
       <ProtocolName>scada</ProtocolName>
-      <TypeName>gt.boolean.actuator.cac.000</TypeName>
+      <TypeName>boolean.actuator.cac.gt.000</TypeName>
       <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
@@ -22611,7 +22651,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <TypeName>basegnodes.broadcast.000</TypeName>
       <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
-    <ProtocolType>itrdTTIWU1JgMHVfM/recRLpRImAACQhmSj</ProtocolType>
+    <ProtocolType>itr2hTh8CrqVhVUOa/recRLpRImAACQhmSj</ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recRONwOhclu8u3Ef</ProtocolTypeId>
       <createdTime>2023-04-03T20:40:05Z</createdTime>
@@ -22847,12 +22887,12 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
     <ProtocolType>
       <ProtocolTypeId>recZBrVC3qx5dJ9B0</ProtocolTypeId>
       <createdTime>2022-12-27T15:55:43Z</createdTime>
-      <Name>newatn gt.boolean.actuator.component.000</Name>
+      <Name>newatn boolean.actuator.component.gt.000</Name>
       <Protocol>recvaW2RuHMh5mwwR</Protocol>
       <ProtocolName>newatn</ProtocolName>
       <Type>recPbLemXyDnvKcIc</Type>
-      <TypeName>gt.boolean.actuator.component.000</TypeName>
-      <TypeStatus>Active</TypeStatus>
+      <TypeName>boolean.actuator.component.gt.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recZCRfLe9nDmrRAU</ProtocolTypeId>
@@ -23380,11 +23420,11 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
     <ProtocolType>
       <ProtocolTypeId>reco01YhMk6anEqXo</ProtocolTypeId>
       <createdTime>2023-04-03T20:38:24Z</createdTime>
-      <Name>gwproto gt.boolean.actuator.cac.000</Name>
+      <Name>gwproto boolean.actuator.cac.gt.000</Name>
       <Protocol>rec5aZ8ud9lQDmlBu</Protocol>
       <ProtocolName>gwproto</ProtocolName>
       <Type>reca2LF7P05qQmFJW</Type>
-      <TypeName>gt.boolean.actuator.cac.000</TypeName>
+      <TypeName>boolean.actuator.cac.gt.000</TypeName>
       <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
@@ -23562,7 +23602,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <TypeName>market.type.gt.000</TypeName>
       <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
-    <ProtocolType>itrdTTIWU1JgMHVfM/rectD1KxAzqJILPfu</ProtocolType>
+    <ProtocolType>itr2hTh8CrqVhVUOa/rectD1KxAzqJILPfu</ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rectQ3NbkFd9nWXGO</ProtocolTypeId>
       <createdTime>2023-02-20T19:19:42Z</createdTime>
@@ -23716,22 +23756,22 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
     <ProtocolType>
       <ProtocolTypeId>recxelQn6OCbkk5A5</ProtocolTypeId>
       <createdTime>2022-12-27T15:55:26Z</createdTime>
-      <Name>scada gt.boolean.actuator.component.000</Name>
+      <Name>scada boolean.actuator.component.gt.000</Name>
       <Protocol>recdu3DxzzmNH2eNq</Protocol>
       <ProtocolName>scada</ProtocolName>
       <Type>recPbLemXyDnvKcIc</Type>
-      <TypeName>gt.boolean.actuator.component.000</TypeName>
-      <TypeStatus>Active</TypeStatus>
+      <TypeName>boolean.actuator.component.gt.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recxgiw8kmcghenPd</ProtocolTypeId>
       <createdTime>2023-04-03T20:38:27Z</createdTime>
-      <Name>gwproto gt.boolean.actuator.component.000</Name>
+      <Name>gwproto boolean.actuator.component.gt.000</Name>
       <Protocol>rec5aZ8ud9lQDmlBu</Protocol>
       <ProtocolName>gwproto</ProtocolName>
       <Type>recPbLemXyDnvKcIc</Type>
-      <TypeName>gt.boolean.actuator.component.000</TypeName>
-      <TypeStatus>Active</TypeStatus>
+      <TypeName>boolean.actuator.component.gt.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recxtr4LhX2Ixojmg</ProtocolTypeId>

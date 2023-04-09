@@ -3,6 +3,8 @@ from typing import Dict
 from typing import List
 from typing import no_type_check
 
+from gwproto.types import BooleanActuatorCacGt_Maker
+from gwproto.types import BooleanActuatorComponentGt_Maker
 from gwproto.types import ComponentAttributeClassGt_Maker
 from gwproto.types import ComponentGt_Maker
 from gwproto.types import DataChannel_Maker
@@ -10,8 +12,6 @@ from gwproto.types import EgaugeIo_Maker
 from gwproto.types import EgaugeRegisterConfig_Maker
 from gwproto.types import ElectricMeterCacGt_Maker
 from gwproto.types import ElectricMeterComponentGt_Maker
-from gwproto.types import GtBooleanActuatorCac_Maker
-from gwproto.types import GtBooleanActuatorComponent_Maker
 from gwproto.types import GtDispatchBoolean_Maker
 from gwproto.types import GtDispatchBooleanLocal_Maker
 from gwproto.types import GtDriverBooleanactuatorCmd_Maker
@@ -44,6 +44,8 @@ TypeMakerByName: Dict[str, HeartbeatB_Maker] = {}
 @no_type_check
 def type_makers() -> List[HeartbeatB_Maker]:
     return [
+        BooleanActuatorCacGt_Maker,
+        BooleanActuatorComponentGt_Maker,
         ComponentAttributeClassGt_Maker,
         ComponentGt_Maker,
         DataChannel_Maker,
@@ -51,8 +53,6 @@ def type_makers() -> List[HeartbeatB_Maker]:
         EgaugeRegisterConfig_Maker,
         ElectricMeterCacGt_Maker,
         ElectricMeterComponentGt_Maker,
-        GtBooleanActuatorCac_Maker,
-        GtBooleanActuatorComponent_Maker,
         GtDispatchBoolean_Maker,
         GtDispatchBooleanLocal_Maker,
         GtDriverBooleanactuatorCmd_Maker,
@@ -91,6 +91,8 @@ def version_by_type_name() -> Dict[str, str]:
     """
 
     v: Dict[str, str] = {
+        "boolean.actuator.cac.gt": "000",
+        "boolean.actuator.component.gt": "000",
         "component.attribute.class.gt": "000",
         "component.gt": "000",
         "data.channel": "000",
@@ -98,8 +100,6 @@ def version_by_type_name() -> Dict[str, str]:
         "egauge.register.config": "000",
         "electric.meter.cac.gt": "000",
         "electric.meter.component.gt": "000",
-        "gt.boolean.actuator.cac": "000",
-        "gt.boolean.actuator.component": "000",
         "gt.dispatch.boolean": "110",
         "gt.dispatch.boolean.local": "110",
         "gt.driver.booleanactuator.cmd": "100",
@@ -136,6 +136,8 @@ def status_by_versioned_type_name() -> Dict[str, str]:
     """
 
     v: Dict[str, str] = {
+        "boolean.actuator.cac.gt.000": "Active",
+        "boolean.actuator.component.gt.000": "Pending",
         "component.attribute.class.gt.000": "Active",
         "component.gt.000": "Active",
         "data.channel.000": "Active",
@@ -143,8 +145,6 @@ def status_by_versioned_type_name() -> Dict[str, str]:
         "egauge.register.config.000": "Active",
         "electric.meter.cac.gt.000": "Active",
         "electric.meter.component.gt.000": "Active",
-        "gt.boolean.actuator.cac.000": "Active",
-        "gt.boolean.actuator.component.000": "Active",
         "gt.dispatch.boolean.110": "Active",
         "gt.dispatch.boolean.local.110": "Active",
         "gt.driver.booleanactuator.cmd.100": "Active",

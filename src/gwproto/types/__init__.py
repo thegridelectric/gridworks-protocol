@@ -1,5 +1,9 @@
 """ List of all the schema types """
 
+from gwproto.types.boolean_actuator_cac_gt import BooleanActuatorCacGt
+from gwproto.types.boolean_actuator_cac_gt import BooleanActuatorCacGt_Maker
+from gwproto.types.boolean_actuator_component_gt import BooleanActuatorComponentGt
+from gwproto.types.boolean_actuator_component_gt import BooleanActuatorComponentGt_Maker
 from gwproto.types.component_attribute_class_gt import ComponentAttributeClassGt
 from gwproto.types.component_attribute_class_gt import ComponentAttributeClassGt_Maker
 from gwproto.types.component_gt import ComponentGt
@@ -12,10 +16,6 @@ from gwproto.types.egauge_register_config import EgaugeRegisterConfig
 from gwproto.types.egauge_register_config import EgaugeRegisterConfig_Maker
 from gwproto.types.electric_meter_cac_gt import ElectricMeterCacGt
 from gwproto.types.electric_meter_cac_gt import ElectricMeterCacGt_Maker
-from gwproto.types.gt_boolean_actuator_cac import GtBooleanActuatorCac
-from gwproto.types.gt_boolean_actuator_cac import GtBooleanActuatorCac_Maker
-from gwproto.types.gt_boolean_actuator_component import GtBooleanActuatorComponent
-from gwproto.types.gt_boolean_actuator_component import GtBooleanActuatorComponent_Maker
 from gwproto.types.gt_dispatch_boolean import GtDispatchBoolean
 from gwproto.types.gt_dispatch_boolean import GtDispatchBoolean_Maker
 from gwproto.types.gt_dispatch_boolean_local import GtDispatchBooleanLocal
@@ -77,6 +77,10 @@ from gwproto.types.telemetry_snapshot_spaceheat import TelemetrySnapshotSpacehea
 
 
 __all__ = [
+    "BooleanActuatorCacGt",
+    "BooleanActuatorCacGt_Maker",
+    "BooleanActuatorComponentGt",
+    "BooleanActuatorComponentGt_Maker",
     "ComponentAttributeClassGt",
     "ComponentAttributeClassGt_Maker",
     "ComponentGt",
@@ -91,10 +95,6 @@ __all__ = [
     "ElectricMeterCacGt_Maker",
     # "ElectricMeterComponentGt",
     # "ElectricMeterComponentGt_Maker",
-    "GtBooleanActuatorCac",
-    "GtBooleanActuatorCac_Maker",
-    "GtBooleanActuatorComponent",
-    "GtBooleanActuatorComponent_Maker",
     "GtDispatchBoolean",
     "GtDispatchBoolean_Maker",
     "GtDispatchBooleanLocal",

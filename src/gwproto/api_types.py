@@ -3,8 +3,6 @@ from typing import Dict
 from typing import List
 from typing import no_type_check
 
-from gwproto.types import BooleanActuatorCacGt_Maker
-from gwproto.types import BooleanActuatorComponentGt_Maker
 from gwproto.types import ComponentAttributeClassGt_Maker
 from gwproto.types import ComponentGt_Maker
 from gwproto.types import DataChannel_Maker
@@ -28,6 +26,8 @@ from gwproto.types import MultipurposeSensorComponentGt_Maker
 from gwproto.types import PipeFlowSensorCacGt_Maker
 from gwproto.types import PipeFlowSensorComponentGt_Maker
 from gwproto.types import PowerWatts_Maker
+from gwproto.types import RelayCacGt_Maker
+from gwproto.types import RelayComponentGt_Maker
 from gwproto.types import ResistiveHeaterCacGt_Maker
 from gwproto.types import ResistiveHeaterComponentGt_Maker
 from gwproto.types import SimpleTempSensorCacGt_Maker
@@ -44,8 +44,6 @@ TypeMakerByName: Dict[str, HeartbeatB_Maker] = {}
 @no_type_check
 def type_makers() -> List[HeartbeatB_Maker]:
     return [
-        BooleanActuatorCacGt_Maker,
-        BooleanActuatorComponentGt_Maker,
         ComponentAttributeClassGt_Maker,
         ComponentGt_Maker,
         DataChannel_Maker,
@@ -69,6 +67,8 @@ def type_makers() -> List[HeartbeatB_Maker]:
         PipeFlowSensorCacGt_Maker,
         PipeFlowSensorComponentGt_Maker,
         PowerWatts_Maker,
+        RelayCacGt_Maker,
+        RelayComponentGt_Maker,
         ResistiveHeaterCacGt_Maker,
         ResistiveHeaterComponentGt_Maker,
         SimpleTempSensorCacGt_Maker,
@@ -91,8 +91,6 @@ def version_by_type_name() -> Dict[str, str]:
     """
 
     v: Dict[str, str] = {
-        "boolean.actuator.cac.gt": "000",
-        "boolean.actuator.component.gt": "000",
         "component.attribute.class.gt": "000",
         "component.gt": "000",
         "data.channel": "000",
@@ -116,6 +114,8 @@ def version_by_type_name() -> Dict[str, str]:
         "pipe.flow.sensor.cac.gt": "000",
         "pipe.flow.sensor.component.gt": "000",
         "power.watts": "000",
+        "relay.cac.gt": "000",
+        "relay.component.gt": "000",
         "resistive.heater.cac.gt": "000",
         "resistive.heater.component.gt": "000",
         "simple.temp.sensor.cac.gt": "000",
@@ -136,8 +136,6 @@ def status_by_versioned_type_name() -> Dict[str, str]:
     """
 
     v: Dict[str, str] = {
-        "boolean.actuator.cac.gt.000": "Active",
-        "boolean.actuator.component.gt.000": "Pending",
         "component.attribute.class.gt.000": "Active",
         "component.gt.000": "Active",
         "data.channel.000": "Active",
@@ -161,6 +159,8 @@ def status_by_versioned_type_name() -> Dict[str, str]:
         "pipe.flow.sensor.cac.gt.000": "Active",
         "pipe.flow.sensor.component.gt.000": "Active",
         "power.watts.000": "Active",
+        "relay.cac.gt.000": "Active",
+        "relay.component.gt.000": "Active",
         "resistive.heater.cac.gt.000": "Active",
         "resistive.heater.component.gt.000": "Active",
         "simple.temp.sensor.cac.gt.000": "Active",

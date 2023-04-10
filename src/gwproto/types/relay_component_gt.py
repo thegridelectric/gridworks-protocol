@@ -1,4 +1,4 @@
-"""Type boolean.actuator.component.gt, version 000"""
+"""Type relay.component.gt, version 000"""
 import json
 from typing import Any
 from typing import Dict
@@ -9,9 +9,7 @@ from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
 
-from gwproto.data_classes.components.boolean_actuator_component import (
-    BooleanActuatorComponent,
-)
+from gwproto.data_classes.components.relay_component import RelayComponent
 from gwproto.errors import MpSchemaError
 
 
@@ -50,8 +48,8 @@ def check_is_uuid_canonical_textual(v: str) -> None:
         raise ValueError(f"{v} word lengths not 8-4-4-4-12")
 
 
-class BooleanActuatorComponentGt(BaseModel):
-    """Type for tracking Boolean ActuatorComponents.
+class RelayComponentGt(BaseModel):
+    """Type for tracking Relay Components.
 
     GridWorks Spaceheat SCADA uses the GridWorks GNodeRegistry structures and abstractions for managing relational device data. The Component associated to a SpaceheatNode is part of this structure.
     [More info](https://g-node-registry.readthedocs.io/en/latest/component.html).
@@ -77,9 +75,9 @@ class BooleanActuatorComponentGt(BaseModel):
     )
     NormallyOpen: bool = Field(
         title="Normally Open",
-        description="Normally open relay default in the open position, meaning that when they're not in use, there is no contact between the circuits. When power is introduced, an electromagnet pulls the first circuit into contact with the second, thereby closing the circuit and allowing power to flow through",
+        description="Normally open relays default in the open position, meaning that when they're not in use, there is no contact between the circuits. When power is introduced, an electromagnet pulls the first circuit into contact with the second, thereby closing the circuit and allowing power to flow through",
     )
-    TypeName: Literal["boolean.actuator.component.gt"] = "boolean.actuator.component.gt"
+    TypeName: Literal["relay.component.gt"] = "relay.component.gt"
     Version: str = "000"
 
     @validator("ComponentId")
@@ -119,8 +117,8 @@ class BooleanActuatorComponentGt(BaseModel):
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
-class BooleanActuatorComponentGt_Maker:
-    type_name = "boolean.actuator.component.gt"
+class RelayComponentGt_Maker:
+    type_name = "relay.component.gt"
     version = "000"
 
     def __init__(
@@ -132,7 +130,7 @@ class BooleanActuatorComponentGt_Maker:
         hw_uid: Optional[str],
         normally_open: bool,
     ):
-        self.tuple = BooleanActuatorComponentGt(
+        self.tuple = RelayComponentGt(
             ComponentId=component_id,
             ComponentAttributeClassId=component_attribute_class_id,
             DisplayName=display_name,
@@ -143,14 +141,14 @@ class BooleanActuatorComponentGt_Maker:
         )
 
     @classmethod
-    def tuple_to_type(cls, tuple: BooleanActuatorComponentGt) -> str:
+    def tuple_to_type(cls, tuple: RelayComponentGt) -> str:
         """
         Given a Python class object, returns the serialized JSON type object
         """
         return tuple.as_type()
 
     @classmethod
-    def type_to_tuple(cls, t: str) -> BooleanActuatorComponentGt:
+    def type_to_tuple(cls, t: str) -> RelayComponentGt:
         """
         Given a serialized JSON type object, returns the Python class object
         """
@@ -163,7 +161,7 @@ class BooleanActuatorComponentGt_Maker:
         return cls.dict_to_tuple(d)
 
     @classmethod
-    def dict_to_tuple(cls, d: dict[str, Any]) -> BooleanActuatorComponentGt:
+    def dict_to_tuple(cls, d: dict[str, Any]) -> RelayComponentGt:
         d2 = dict(d)
         if "ComponentId" not in d2.keys():
             raise MpSchemaError(f"dict {d2} missing ComponentId")
@@ -180,7 +178,7 @@ class BooleanActuatorComponentGt_Maker:
         if "TypeName" not in d2.keys():
             raise MpSchemaError(f"dict {d2} missing TypeName")
 
-        return BooleanActuatorComponentGt(
+        return RelayComponentGt(
             ComponentId=d2["ComponentId"],
             ComponentAttributeClassId=d2["ComponentAttributeClassId"],
             DisplayName=d2["DisplayName"],
@@ -192,11 +190,11 @@ class BooleanActuatorComponentGt_Maker:
         )
 
     @classmethod
-    def tuple_to_dc(cls, t: BooleanActuatorComponentGt) -> BooleanActuatorComponent:
-        if t.ComponentId in BooleanActuatorComponent.by_id.keys():
-            dc = BooleanActuatorComponent.by_id[t.ComponentId]
+    def tuple_to_dc(cls, t: RelayComponentGt) -> RelayComponent:
+        if t.ComponentId in RelayComponent.by_id.keys():
+            dc = RelayComponent.by_id[t.ComponentId]
         else:
-            dc = BooleanActuatorComponent(
+            dc = RelayComponent(
                 component_id=t.ComponentId,
                 component_attribute_class_id=t.ComponentAttributeClassId,
                 display_name=t.DisplayName,
@@ -208,8 +206,8 @@ class BooleanActuatorComponentGt_Maker:
         return dc
 
     @classmethod
-    def dc_to_tuple(cls, dc: BooleanActuatorComponent) -> BooleanActuatorComponentGt:
-        t = BooleanActuatorComponentGt_Maker(
+    def dc_to_tuple(cls, dc: RelayComponent) -> RelayComponentGt:
+        t = RelayComponentGt_Maker(
             component_id=dc.component_id,
             component_attribute_class_id=dc.component_attribute_class_id,
             display_name=dc.display_name,
@@ -220,13 +218,13 @@ class BooleanActuatorComponentGt_Maker:
         return t
 
     @classmethod
-    def type_to_dc(cls, t: str) -> BooleanActuatorComponent:
+    def type_to_dc(cls, t: str) -> RelayComponent:
         return cls.tuple_to_dc(cls.type_to_tuple(t))
 
     @classmethod
-    def dc_to_type(cls, dc: BooleanActuatorComponent) -> str:
+    def dc_to_type(cls, dc: RelayComponent) -> str:
         return cls.dc_to_tuple(dc).as_type()
 
     @classmethod
-    def dict_to_dc(cls, d: dict[Any, str]) -> BooleanActuatorComponent:
+    def dict_to_dc(cls, d: dict[Any, str]) -> RelayComponent:
         return cls.tuple_to_dc(cls.dict_to_tuple(d))

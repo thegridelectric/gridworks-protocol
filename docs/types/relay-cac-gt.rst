@@ -1,8 +1,8 @@
-BooleanActuatorCacGt
+RelayCacGt
 ==========================
-Python pydantic class corresponding to  json type ```boolean.actuator.cac.gt```.
+Python pydantic class corresponding to  json type ```relay.cac.gt```.
 
-.. autoclass:: gwproto.types.BooleanActuatorCacGt
+.. autoclass:: gwproto.types.RelayCacGt
     :members:
 
 ****:
@@ -21,9 +21,9 @@ Python pydantic class corresponding to  json type ```boolean.actuator.cac.gt```.
 **TypicalResponseTimeMs**:
     - Description:
 
-.. autoclass:: gwproto.types.boolean_actuator_cac_gt.check_is_uuid_canonical_textual
+.. autoclass:: gwproto.types.relay_cac_gt.check_is_uuid_canonical_textual
     :members:
 
 
-.. autoclass:: gwproto.types.BooleanActuatorCacGt_Maker
+.. autoclass:: gwproto.types.RelayCacGt_Maker
     :members:

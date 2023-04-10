@@ -2,14 +2,6 @@
 Type API Specs
 ===============
 
-BooleanActuatorCacGt
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/boolean-actuator-cac-gt.json
-
-BooleanActuatorComponentGt
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/boolean-actuator-component-gt.json
-
 ComponentAttributeClassGt
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/component-attribute-class-gt.json
@@ -101,6 +93,14 @@ PipeFlowSensorComponentGt
 PowerWatts
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/power-watts.json
+
+RelayCacGt
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. literalinclude:: json/relay-cac-gt.json
+
+RelayComponentGt
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. literalinclude:: json/relay-component-gt.json
 
 ResistiveHeaterCacGt
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^

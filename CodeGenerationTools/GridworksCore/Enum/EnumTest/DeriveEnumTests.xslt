@@ -49,8 +49,7 @@ from gwproto.enums import </xsl:text><xsl:value-of select="$local-class-name"/><
 def test_</xsl:text> <xsl:value-of select="translate(LocalName,'.','_')"/>
     <xsl:text>() -> None:
 
-    assert set(</xsl:text><xsl:value-of select="$local-class-name"/><xsl:text>.values()) == set(
-        [
+    assert set(</xsl:text><xsl:value-of select="$local-class-name"/><xsl:text>.values()) == {
             </xsl:text>
     <xsl:for-each select="$airtable//EnumSymbols/EnumSymbol[(Enum = $enum-id)]">
     <xsl:sort select="Idx"/>
@@ -66,8 +65,7 @@ def test_</xsl:text> <xsl:value-of select="translate(LocalName,'.','_')"/>
             </xsl:text>
         </xsl:for-each>
     <xsl:text>
-        ]
-    )
+        }
 
     assert </xsl:text><xsl:value-of select="$local-class-name"/><xsl:text>.default() == </xsl:text>
     <xsl:value-of select="$local-class-name"/><xsl:text>.</xsl:text>

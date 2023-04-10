@@ -1,6 +1,6 @@
 {
   "gwapi": "001",
-  "type_name": "boolean.actuator.cac.gt",
+  "type_name": "relay.cac.gt",
   "version": "000",
   "owner": "gridworks@gridworks-consulting.com",
   "description": "Type for tracking Boolean Actuator ComponentAttributeClasses. GridWorks Spaceheat SCADA uses the GridWorks GNodeRegistry structures and abstractions for managing relational device data. The Cac, or ComponentAttributeClass, is part of this structure.",
@@ -128,7 +128,7 @@
     },
     "TypeName": {
       "type": "string",
-      "value": "boolean.actuator.cac.gt",
+      "value": "relay.cac.gt",
       "title": "The type name"
     },
     "Version": {

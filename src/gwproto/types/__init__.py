@@ -1,9 +1,5 @@
 """ List of all the schema types """
 
-from gwproto.types.boolean_actuator_cac_gt import BooleanActuatorCacGt
-from gwproto.types.boolean_actuator_cac_gt import BooleanActuatorCacGt_Maker
-from gwproto.types.boolean_actuator_component_gt import BooleanActuatorComponentGt
-from gwproto.types.boolean_actuator_component_gt import BooleanActuatorComponentGt_Maker
 from gwproto.types.component_attribute_class_gt import ComponentAttributeClassGt
 from gwproto.types.component_attribute_class_gt import ComponentAttributeClassGt_Maker
 from gwproto.types.component_gt import ComponentGt
@@ -56,6 +52,10 @@ from gwproto.types.pipe_flow_sensor_component_gt import PipeFlowSensorComponentG
 from gwproto.types.pipe_flow_sensor_component_gt import PipeFlowSensorComponentGt_Maker
 from gwproto.types.power_watts import PowerWatts
 from gwproto.types.power_watts import PowerWatts_Maker
+from gwproto.types.relay_cac_gt import RelayCacGt
+from gwproto.types.relay_cac_gt import RelayCacGt_Maker
+from gwproto.types.relay_component_gt import RelayComponentGt
+from gwproto.types.relay_component_gt import RelayComponentGt_Maker
 from gwproto.types.resistive_heater_cac_gt import ResistiveHeaterCacGt
 from gwproto.types.resistive_heater_cac_gt import ResistiveHeaterCacGt_Maker
 from gwproto.types.resistive_heater_component_gt import ResistiveHeaterComponentGt
@@ -77,10 +77,6 @@ from gwproto.types.telemetry_snapshot_spaceheat import TelemetrySnapshotSpacehea
 
 
 __all__ = [
-    "BooleanActuatorCacGt",
-    "BooleanActuatorCacGt_Maker",
-    "BooleanActuatorComponentGt",
-    "BooleanActuatorComponentGt_Maker",
     "ComponentAttributeClassGt",
     "ComponentAttributeClassGt_Maker",
     "ComponentGt",
@@ -127,6 +123,10 @@ __all__ = [
     "PipeFlowSensorComponentGt_Maker",
     "PowerWatts",
     "PowerWatts_Maker",
+    "RelayCacGt",
+    "RelayCacGt_Maker",
+    "RelayComponentGt",
+    "RelayComponentGt_Maker",
     "ResistiveHeaterCacGt",
     "ResistiveHeaterCacGt_Maker",
     "ResistiveHeaterComponentGt",

@@ -18,8 +18,6 @@ forth between type instances and Python objects.
    :maxdepth: 1
    :caption: TYPE SDKS
 
-    BooleanActuatorCacGt  <types/boolean-actuator-cac-gt>
-    BooleanActuatorComponentGt  <types/boolean-actuator-component-gt>
     ComponentAttributeClassGt  <types/component-attribute-class-gt>
     ComponentGt  <types/component-gt>
     DataChannel  <types/data-channel>
@@ -43,6 +41,8 @@ forth between type instances and Python objects.
     PipeFlowSensorCacGt  <types/pipe-flow-sensor-cac-gt>
     PipeFlowSensorComponentGt  <types/pipe-flow-sensor-component-gt>
     PowerWatts  <types/power-watts>
+    RelayCacGt  <types/relay-cac-gt>
+    RelayComponentGt  <types/relay-component-gt>
     ResistiveHeaterCacGt  <types/resistive-heater-cac-gt>
     ResistiveHeaterComponentGt  <types/resistive-heater-component-gt>
     SimpleTempSensorCacGt  <types/simple-temp-sensor-cac-gt>

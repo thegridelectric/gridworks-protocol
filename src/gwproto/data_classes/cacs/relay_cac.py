@@ -1,4 +1,4 @@
-"""BooleanActuatorCac definition"""
+"""RelayCac definition"""
 from typing import Dict
 from typing import Optional
 
@@ -7,8 +7,8 @@ from gwproto.enums import MakeModel
 from gwproto.enums import TelemetryName
 
 
-class BooleanActuatorCac(ComponentAttributeClass):
-    by_id: Dict[str, "BooleanActuatorCac"] = {}
+class RelayCac(ComponentAttributeClass):
+    by_id: Dict[str, "RelayCac"] = {}
 
     def __init__(
         self,
@@ -24,7 +24,7 @@ class BooleanActuatorCac(ComponentAttributeClass):
 
         self.typical_response_time_ms = typical_response_time_ms
         self.make_model = make_model
-        BooleanActuatorCac.by_id[self.component_attribute_class_id] = self
+        RelayCac.by_id[self.component_attribute_class_id] = self
         ComponentAttributeClass.by_id[self.component_attribute_class_id] = self
 
     def __repr__(self):

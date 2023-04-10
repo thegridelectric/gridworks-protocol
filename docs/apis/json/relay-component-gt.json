@@ -1,9 +1,9 @@
 {
   "gwapi": "001",
-  "type_name": "gt.boolean.actuator.component",
+  "type_name": "relay.component.gt",
   "version": "000",
   "owner": "gridworks@gridworks-consulting.com",
-  "description": "Type for tracking Boolean ActuatorComponents. GridWorks Spaceheat SCADA uses the GridWorks GNodeRegistry structures and abstractions for managing relational device data. The Component associated to a SpaceheatNode is part of this structure.",
+  "description": "Type for tracking Relay Components. GridWorks Spaceheat SCADA uses the GridWorks GNodeRegistry structures and abstractions for managing relational device data. The Component associated to a SpaceheatNode is part of this structure.",
   "url": "https://g-node-registry.readthedocs.io/en/latest/component.html",
   "formats": {
     "UuidCanonicalTextual": {
@@ -40,9 +40,15 @@
       "title": "",
       "required": false
     },
+    "NormallyOpen": {
+      "type": "boolean",
+      "title": "Normally Open",
+      "description": "Normally open relays default in the open position, meaning that when they're not in use, there is no contact between the circuits. When power is introduced, an electromagnet pulls the first circuit into contact with the second, thereby closing the circuit and allowing power to flow through",
+      "required": true
+    },
     "TypeName": {
       "type": "string",
-      "value": "gt.boolean.actuator.component",
+      "value": "relay.component.gt",
       "title": "The type name"
     },
     "Version": {

@@ -28,11 +28,11 @@ from gwproto.enums import ActorClass
 from gwproto.enums import Role
 from gwproto.enums import TelemetryName
 from gwproto.types import ElectricMeterCacGt_Maker
-from gwproto.types import GtBooleanActuatorCac_Maker
-from gwproto.types import GtBooleanActuatorComponent_Maker
 from gwproto.types import MultipurposeSensorCacGt_Maker
 from gwproto.types import PipeFlowSensorCacGt_Maker
 from gwproto.types import PipeFlowSensorComponentGt_Maker
+from gwproto.types import RelayCacGt_Maker
+from gwproto.types import RelayComponentGt_Maker
 from gwproto.types import ResistiveHeaterCacGt_Maker
 from gwproto.types import ResistiveHeaterComponentGt_Maker
 from gwproto.types import SimpleTempSensorCacGt_Maker
@@ -61,7 +61,7 @@ class LoadError:
 def load_cacs(layout: dict, raise_errors: bool = True) -> list[LoadError]:
     errors: list[LoadError] = []
     for type_name, maker_class in [
-        ("BooleanActuatorCacs", GtBooleanActuatorCac_Maker),
+        ("RelayCacs", RelayCacGt_Maker),
         ("ResistiveHeaterCacs", ResistiveHeaterCacGt_Maker),
         ("ElectricMeterCacs", ElectricMeterCacGt_Maker),
         ("PipeFlowSensorCacs", PipeFlowSensorCacGt_Maker),
@@ -90,7 +90,7 @@ def load_cacs(layout: dict, raise_errors: bool = True) -> list[LoadError]:
 def load_components(layout: dict, raise_errors: bool = True) -> list[LoadError]:
     errors: list[LoadError] = []
     for type_name, maker_class in [
-        ("BooleanActuatorComponents", GtBooleanActuatorComponent_Maker),
+        ("RelayComponents", RelayComponentGt_Maker),
         ("ResistiveHeaterComponents", ResistiveHeaterComponentGt_Maker),
         ("ElectricMeterComponents", ElectricMeterComponentGt_Maker),
         ("PipeFlowSensorComponents", PipeFlowSensorComponentGt_Maker),

@@ -1,4 +1,4 @@
-"""Type boolean.actuator.cac.gt, version 000"""
+"""Type relay.cac.gt, version 000"""
 import json
 from enum import auto
 from typing import Any
@@ -12,7 +12,7 @@ from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
 
-from gwproto.data_classes.cacs.boolean_actuator_cac import BooleanActuatorCac
+from gwproto.data_classes.cacs.relay_cac import RelayCac
 from gwproto.enums import MakeModel as EnumMakeModel
 from gwproto.errors import MpSchemaError
 from gwproto.message import as_enum
@@ -158,10 +158,11 @@ def check_is_uuid_canonical_textual(v: str) -> None:
         raise ValueError(f"{v} word lengths not 8-4-4-4-12")
 
 
-class BooleanActuatorCacGt(BaseModel):
-    """Type for tracking Boolean Actuator ComponentAttributeClasses.
+class RelayCacGt(BaseModel):
+    """Type for tracking Relay ComponentAttributeClasses.
 
-    GridWorks Spaceheat SCADA uses the GridWorks GNodeRegistry structures and abstractions for managing relational device data. The Cac, or ComponentAttributeClass, is part of this structure.
+    GridWorks Spaceheat SCADA uses the GridWorks GNodeRegistry structures and abstractions for
+    managing relational device data. The Cac, or ComponentAttributeClass, is part of this structure.
     [More info](https://g-node-registry.readthedocs.io/en/latest/component-attribute-class.html).
     """
 
@@ -178,7 +179,7 @@ class BooleanActuatorCacGt(BaseModel):
     TypicalResponseTimeMs: int = Field(
         title="TypicalResponseTimeMs",
     )
-    TypeName: Literal["boolean.actuator.cac.gt"] = "boolean.actuator.cac.gt"
+    TypeName: Literal["relay.cac.gt"] = "relay.cac.gt"
     Version: str = "000"
 
     @validator("ComponentAttributeClassId")
@@ -211,8 +212,8 @@ class BooleanActuatorCacGt(BaseModel):
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
-class BooleanActuatorCacGt_Maker:
-    type_name = "boolean.actuator.cac.gt"
+class RelayCacGt_Maker:
+    type_name = "relay.cac.gt"
     version = "000"
 
     def __init__(
@@ -222,7 +223,7 @@ class BooleanActuatorCacGt_Maker:
         display_name: Optional[str],
         typical_response_time_ms: int,
     ):
-        self.tuple = BooleanActuatorCacGt(
+        self.tuple = RelayCacGt(
             ComponentAttributeClassId=component_attribute_class_id,
             MakeModel=make_model,
             DisplayName=display_name,
@@ -231,14 +232,14 @@ class BooleanActuatorCacGt_Maker:
         )
 
     @classmethod
-    def tuple_to_type(cls, tuple: BooleanActuatorCacGt) -> str:
+    def tuple_to_type(cls, tuple: RelayCacGt) -> str:
         """
         Given a Python class object, returns the serialized JSON type object
         """
         return tuple.as_type()
 
     @classmethod
-    def type_to_tuple(cls, t: str) -> BooleanActuatorCacGt:
+    def type_to_tuple(cls, t: str) -> RelayCacGt:
         """
         Given a serialized JSON type object, returns the Python class object
         """
@@ -251,7 +252,7 @@ class BooleanActuatorCacGt_Maker:
         return cls.dict_to_tuple(d)
 
     @classmethod
-    def dict_to_tuple(cls, d: dict[str, Any]) -> BooleanActuatorCacGt:
+    def dict_to_tuple(cls, d: dict[str, Any]) -> RelayCacGt:
         d2 = dict(d)
         if "ComponentAttributeClassId" not in d2.keys():
             raise MpSchemaError(f"dict {d2} missing ComponentAttributeClassId")
@@ -268,7 +269,7 @@ class BooleanActuatorCacGt_Maker:
         if "TypeName" not in d2.keys():
             raise MpSchemaError(f"dict {d2} missing TypeName")
 
-        return BooleanActuatorCacGt(
+        return RelayCacGt(
             ComponentAttributeClassId=d2["ComponentAttributeClassId"],
             MakeModel=d2["MakeModel"],
             DisplayName=d2["DisplayName"],
@@ -278,11 +279,11 @@ class BooleanActuatorCacGt_Maker:
         )
 
     @classmethod
-    def tuple_to_dc(cls, t: BooleanActuatorCacGt) -> BooleanActuatorCac:
-        if t.ComponentAttributeClassId in BooleanActuatorCac.by_id.keys():
-            dc = BooleanActuatorCac.by_id[t.ComponentAttributeClassId]
+    def tuple_to_dc(cls, t: RelayCacGt) -> RelayCac:
+        if t.ComponentAttributeClassId in RelayCac.by_id.keys():
+            dc = RelayCac.by_id[t.ComponentAttributeClassId]
         else:
-            dc = BooleanActuatorCac(
+            dc = RelayCac(
                 component_attribute_class_id=t.ComponentAttributeClassId,
                 make_model=t.MakeModel,
                 display_name=t.DisplayName,
@@ -292,8 +293,8 @@ class BooleanActuatorCacGt_Maker:
         return dc
 
     @classmethod
-    def dc_to_tuple(cls, dc: BooleanActuatorCac) -> BooleanActuatorCacGt:
-        t = BooleanActuatorCacGt_Maker(
+    def dc_to_tuple(cls, dc: RelayCac) -> RelayCacGt:
+        t = RelayCacGt_Maker(
             component_attribute_class_id=dc.component_attribute_class_id,
             make_model=dc.make_model,
             display_name=dc.display_name,
@@ -302,13 +303,13 @@ class BooleanActuatorCacGt_Maker:
         return t
 
     @classmethod
-    def type_to_dc(cls, t: str) -> BooleanActuatorCac:
+    def type_to_dc(cls, t: str) -> RelayCac:
         return cls.tuple_to_dc(cls.type_to_tuple(t))
 
     @classmethod
-    def dc_to_type(cls, dc: BooleanActuatorCac) -> str:
+    def dc_to_type(cls, dc: RelayCac) -> str:
         return cls.dc_to_tuple(dc).as_type()
 
     @classmethod
-    def dict_to_dc(cls, d: dict[Any, str]) -> BooleanActuatorCac:
+    def dict_to_dc(cls, d: dict[Any, str]) -> RelayCac:
         return cls.tuple_to_dc(cls.dict_to_tuple(d))

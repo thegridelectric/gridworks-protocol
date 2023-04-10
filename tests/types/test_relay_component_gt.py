@@ -1,14 +1,14 @@
-"""Tests boolean.actuator.component.gt type, version 000"""
+"""Tests relay.component.gt type, version 000"""
 import json
 
 import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import MpSchemaError
-from gwproto.types import BooleanActuatorComponentGt_Maker as Maker
+from gwproto.types import RelayComponentGt_Maker as Maker
 
 
-def test_boolean_actuator_component_gt_generated() -> None:
+def test_relay_component_gt_generated() -> None:
     d = {
         "ComponentId": "798fe14a-4073-41eb-bce2-075906aee6bb",
         "ComponentAttributeClassId": "69f101fc-22e4-4caa-8103-50b8aeb66028",
@@ -16,7 +16,7 @@ def test_boolean_actuator_component_gt_generated() -> None:
         "Gpio": 0,
         "HwUid": "abc123",
         "NormallyOpen": True,
-        "TypeName": "boolean.actuator.component.gt",
+        "TypeName": "relay.component.gt",
         "Version": "000",
     }
 

@@ -992,17 +992,17 @@ by the concept of MarketType.</Description>
       <createdTime>2022-06-06T18:44:52Z</createdTime>
       <ProtocolCategory>Json</ProtocolCategory>
       <SchemaRootscopy>recPbLemXyDnvKcIc</SchemaRootscopy>
-      <DataClass>BooleanActuatorComponent</DataClass>
+      <DataClass>RelayComponent</DataClass>
       <MakeDataClass>true</MakeDataClass>
       <Status>Active</Status>
-      <AliasRoot>boolean.actuator.component.gt</AliasRoot>
+      <AliasRoot>relay.component.gt</AliasRoot>
       <Description>GridWorks Spaceheat SCADA uses the GridWorks GNodeRegistry structures and abstractions for managing relational device data. The Component associated to a SpaceheatNode is part of this structure.</Description>
       <UsedAsSubMessagein>BooleanActuatorComponents</UsedAsSubMessagein>
-      <Title>Type for tracking Boolean ActuatorComponents</Title>
+      <Title>Type for tracking Relay Components</Title>
       <IsComponent>true</IsComponent>
       <CurrentSemanticEnd>000</CurrentSemanticEnd>
       <Url>https://g-node-registry.readthedocs.io/en/latest/component.html</Url>
-      <Alias>boolean.actuator.component.gt</Alias>
+      <Alias>relay.component.gt</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
     </SchemaRoot>
     <SchemaRoot>
@@ -1515,7 +1515,7 @@ Shares the same purpose as gs.pwr, but is not designed to minimize bytes so come
       <Alias>gt.telemetry</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
     </SchemaRoot>
-    <SchemaRoot>itrqtp23VdHGZdkiu/recx4EL5mDebUhtzp</SchemaRoot>
+    <SchemaRoot>itroCzUO7RmOhCI03/recx4EL5mDebUhtzp</SchemaRoot>
     <SchemaRoot>
       <SchemaRootId>recxXnNUXYPwJi4ns</SchemaRootId>
       <createdTime>2023-02-14T13:12:20Z</createdTime>
@@ -1562,16 +1562,16 @@ Shares the same purpose as gs.pwr, but is not designed to minimize bytes so come
       <ProtocolCategory>Json</ProtocolCategory>
       <IsCac>true</IsCac>
       <SchemaRootscopy>reca2LF7P05qQmFJW</SchemaRootscopy>
-      <DataClass>BooleanActuatorCac</DataClass>
+      <DataClass>RelayCac</DataClass>
       <MakeDataClass>true</MakeDataClass>
       <Status>Active</Status>
-      <AliasRoot>boolean.actuator.cac.gt</AliasRoot>
+      <AliasRoot>relay.cac.gt</AliasRoot>
       <Description>GridWorks Spaceheat SCADA uses the GridWorks GNodeRegistry structures and abstractions for managing relational device data. The Cac, or ComponentAttributeClass, is part of this structure.</Description>
       <UsedAsSubMessagein>ComponentAttributeClass, BooleanActuatorCacs</UsedAsSubMessagein>
-      <Title>Type for tracking Boolean Actuator ComponentAttributeClasses</Title>
+      <Title>Type for tracking Relay ComponentAttributeClasses</Title>
       <CurrentSemanticEnd>000</CurrentSemanticEnd>
       <Url>https://g-node-registry.readthedocs.io/en/latest/component-attribute-class.html</Url>
-      <Alias>boolean.actuator.cac.gt</Alias>
+      <Alias>relay.cac.gt</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
     </SchemaRoot>
     <SchemaRoot>
@@ -2079,13 +2079,14 @@ Shares the same purpose as gs.pwr, but is not designed to minimize bytes so come
       <FiniteStringSetMembers>recc1TC8wyNJUO4Vq</FiniteStringSetMembers>
       <FiniteStringSetMembers>recBec6UbnZzyTdpG</FiniteStringSetMembers>
       <FiniteStringSetMembers>recIHpeeM6gwIE1Ec</FiniteStringSetMembers>
+      <FiniteStringSetMembers>recsgSJKZIgLynrjL</FiniteStringSetMembers>
       <PythonEnumNameStyle>UpperPython</PythonEnumNameStyle>
       <PropertyFormatRoot>SpaceheatActorClass</PropertyFormatRoot>
       <Url>https://gridworks-protocol.readthedocs.io/en/latest/actor-class.html</Url>
       <TypesThatUse>recUj3ZPKMsXanG88</TypesThatUse>
       <TypesThatUse>recEhzcpob8H7VuEF</TypesThatUse>
       <TypesThatUse>reccsu6ZeZHKoDqDy</TypesThatUse>
-      <Version>000</Version>
+      <Version>001</Version>
       <Description>Determines the code running Spaceheat Nodes supervised by Spaceheat SCADA software</Description>
       <ProtocolEnums>recyDSPjw1NYVGiOH</ProtocolEnums>
       <ProtocolEnums>recu25eXE4ralXooT</ProtocolEnums>
@@ -2097,10 +2098,10 @@ Shares the same purpose as gs.pwr, but is not designed to minimize bytes so come
       <SchemaAttributes>recYtyZl3uBr6N9Ey</SchemaAttributes>
       <SchemaAttributes>recXk1RFSZEvWMYii</SchemaAttributes>
       <SchemaAttributes>rec3JoWyUlqUfiTLp</SchemaAttributes>
-      <Alias>sh.actor.class.000</Alias>
+      <Alias>sh.actor.class.001</Alias>
       <DefaultSymbol>00000000</DefaultSymbol>
       <DefaultEnumValue>NoActor</DefaultEnumValue>
-      <PropertyFormatName>SpaceheatActorClass000</PropertyFormatName>
+      <PropertyFormatName>SpaceheatActorClass001</PropertyFormatName>
     </GtEnum>
     <GtEnum>
       <GtEnumId>recWX07Mlzf8djb6q</GtEnumId>
@@ -2908,7 +2909,7 @@ Shares the same purpose as gs.pwr, but is not designed to minimize bytes so come
       <LocalValue>Atn</LocalValue>
       <Enum>recQeMNisJZjsYXTl</Enum>
       <Url>https://gridworks.readthedocs.io/en/latest/atomic-t-node.html</Url>
-      <DisplayName>sh.actor.class.000__Atn</DisplayName>
+      <DisplayName>sh.actor.class.001__Atn</DisplayName>
     </EnumSymbol>
     <EnumSymbol>
       <EnumSymbolId>rec90WWRRGoXVDSFG</EnumSymbolId>
@@ -3021,7 +3022,7 @@ Shares the same purpose as gs.pwr, but is not designed to minimize bytes so come
       <LocalValue>MultipurposeSensor</LocalValue>
       <Enum>recQeMNisJZjsYXTl</Enum>
       <Url>https://gridworks-protocol.readthedocs.io/en/latest/multipurpose-sensor.html</Url>
-      <DisplayName>sh.actor.class.000__MultipurposeSensor</DisplayName>
+      <DisplayName>sh.actor.class.001__MultipurposeSensor</DisplayName>
     </EnumSymbol>
     <EnumSymbol>
       <EnumSymbolId>recBotb5JTDTQSfLs</EnumSymbolId>
@@ -3274,7 +3275,7 @@ Shares the same purpose as gs.pwr, but is not designed to minimize bytes so come
       <Version>000</Version>
       <LocalValue>Thermostat</LocalValue>
       <Enum>recQeMNisJZjsYXTl</Enum>
-      <DisplayName>sh.actor.class.000__Thermostat</DisplayName>
+      <DisplayName>sh.actor.class.001__Thermostat</DisplayName>
     </EnumSymbol>
     <EnumSymbol>
       <EnumSymbolId>recIT8TBlmotrGEdj</EnumSymbolId>
@@ -3503,12 +3504,12 @@ Shares the same purpose as gs.pwr, but is not designed to minimize bytes so come
       <EnumSymbolId>recOGGYynMVbu3Xi9</EnumSymbolId>
       <createdTime>2022-07-20T21:02:15Z</createdTime>
       <Symbol>fddd0064</Symbol>
-      <Description>A SpaceheatNode representing an electric relay, that can be turned off (open circuit) or on (closed circuit). </Description>
+      <Description>A SpaceheatNode representing a generic boolean actuator capable of turning on (closing a circuit) or turning off (opening a circuit).</Description>
       <Idx>3</Idx>
       <Version>000</Version>
       <LocalValue>BooleanActuator</LocalValue>
       <Enum>recQeMNisJZjsYXTl</Enum>
-      <DisplayName>sh.actor.class.000__BooleanActuator</DisplayName>
+      <DisplayName>sh.actor.class.001__BooleanActuator</DisplayName>
     </EnumSymbol>
     <EnumSymbol>
       <EnumSymbolId>recOVz3BfaUEoVjbv</EnumSymbolId>
@@ -3651,7 +3652,7 @@ Shares the same purpose as gs.pwr, but is not designed to minimize bytes so come
       <Enum>recounhEj97w5SfDm</Enum>
       <DisplayName>market.quantity.unit.000__AvgkW</DisplayName>
     </EnumSymbol>
-    <EnumSymbol>itr99tq63ogVO4ULL/recRYMQ5xAzlYZafa</EnumSymbol>
+    <EnumSymbol>itrXUA84T0mWm2ABX/recRYMQ5xAzlYZafa</EnumSymbol>
     <EnumSymbol>
       <EnumSymbolId>recRhxuG4B3RCPPqB</EnumSymbolId>
       <createdTime>2022-06-23T18:00:39Z</createdTime>
@@ -3909,7 +3910,7 @@ Shares the same purpose as gs.pwr, but is not designed to minimize bytes so come
     <EnumSymbol>
       <EnumSymbolId>recZ63BUBooCLKXku</EnumSymbolId>
       <createdTime>2022-07-20T21:02:24Z</createdTime>
-      <DisplayName>sh.actor.class.000__SimpleSensor</DisplayName>
+      <DisplayName>sh.actor.class.001__SimpleSensor</DisplayName>
       <LocalValue>SimpleSensor</LocalValue>
       <Enum>recQeMNisJZjsYXTl</Enum>
       <Symbol>dae4b2f0</Symbol>
@@ -3986,7 +3987,7 @@ Shares the same purpose as gs.pwr, but is not designed to minimize bytes so come
     <EnumSymbol>
       <EnumSymbolId>recaZld1o7mqNRDS9</EnumSymbolId>
       <createdTime>2022-07-20T21:02:30Z</createdTime>
-      <DisplayName>sh.actor.class.000__NoActor</DisplayName>
+      <DisplayName>sh.actor.class.001__NoActor</DisplayName>
       <LocalValue>NoActor</LocalValue>
       <Enum>recQeMNisJZjsYXTl</Enum>
       <Symbol>00000000</Symbol>
@@ -4020,7 +4021,7 @@ Shares the same purpose as gs.pwr, but is not designed to minimize bytes so come
     <EnumSymbol>
       <EnumSymbolId>recc1TC8wyNJUO4Vq</EnumSymbolId>
       <createdTime>2022-07-20T21:02:34Z</createdTime>
-      <DisplayName>sh.actor.class.000__HomeAlone</DisplayName>
+      <DisplayName>sh.actor.class.001__HomeAlone</DisplayName>
       <LocalValue>HomeAlone</LocalValue>
       <Enum>recQeMNisJZjsYXTl</Enum>
       <Symbol>32d3d19f</Symbol>
@@ -4657,7 +4658,7 @@ Shares the same purpose as gs.pwr, but is not designed to minimize bytes so come
       <Symbol>99a5f20d</Symbol>
       <Idx>6</Idx>
     </EnumSymbol>
-    <EnumSymbol>itr99tq63ogVO4ULL/recsXsCs2syjI8IBg</EnumSymbol>
+    <EnumSymbol>itrXUA84T0mWm2ABX/recsXsCs2syjI8IBg</EnumSymbol>
     <EnumSymbol>
       <EnumSymbolId>recseefFsB6BWwTQj</EnumSymbolId>
       <createdTime>2022-06-23T16:27:43Z</createdTime>
@@ -4667,6 +4668,17 @@ Shares the same purpose as gs.pwr, but is not designed to minimize bytes so come
       <Symbol>ae2d4cd8</Symbol>
       <Idx>3</Idx>
       <Version>000</Version>
+    </EnumSymbol>
+    <EnumSymbol>
+      <EnumSymbolId>recsgSJKZIgLynrjL</EnumSymbolId>
+      <createdTime>2023-04-10T11:14:08Z</createdTime>
+      <DisplayName>sh.actor.class.001__Relay</DisplayName>
+      <LocalValue>Relay</LocalValue>
+      <Enum>recQeMNisJZjsYXTl</Enum>
+      <Symbol>311835f6</Symbol>
+      <Description>A SpaceheatNode representing an electric relay</Description>
+      <Idx>9</Idx>
+      <Version>001</Version>
     </EnumSymbol>
     <EnumSymbol>
       <EnumSymbolId>rectV4strhNnQayZ6</EnumSymbolId>
@@ -4815,7 +4827,7 @@ Shares the same purpose as gs.pwr, but is not designed to minimize bytes so come
     <EnumSymbol>
       <EnumSymbolId>recy5LK2PQpxG2nBl</EnumSymbolId>
       <createdTime>2022-07-20T21:02:22Z</createdTime>
-      <DisplayName>sh.actor.class.000__Scada</DisplayName>
+      <DisplayName>sh.actor.class.001__Scada</DisplayName>
       <LocalValue>Scada</LocalValue>
       <Enum>recQeMNisJZjsYXTl</Enum>
       <Symbol>6d37aa41</Symbol>
@@ -4826,7 +4838,7 @@ Shares the same purpose as gs.pwr, but is not designed to minimize bytes so come
     <EnumSymbol>
       <EnumSymbolId>recyHL0VJtn5jmtIW</EnumSymbolId>
       <createdTime>2022-07-20T21:02:18Z</createdTime>
-      <DisplayName>sh.actor.class.000__PowerMeter</DisplayName>
+      <DisplayName>sh.actor.class.001__PowerMeter</DisplayName>
       <LocalValue>PowerMeter</LocalValue>
       <Enum>recQeMNisJZjsYXTl</Enum>
       <Symbol>2ea112b9</Symbol>
@@ -6540,26 +6552,26 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <SchemaAttributes>recUc59QIjyPi1Xpl</SchemaAttributes>
       <PropertyFormatsUsed>rec24qjC90m0f4Kvl</PropertyFormatsUsed>
       <SchemaRoot>recdbl99ZoQqyOhS7</SchemaRoot>
-      <PreStatus>Pending</PreStatus>
+      <PreStatus>Active</PreStatus>
       <ProtocolTypes>recxelQn6OCbkk5A5</ProtocolTypes>
       <ProtocolTypes>recZBrVC3qx5dJ9B0</ProtocolTypes>
       <ProtocolTypes>recxgiw8kmcghenPd</ProtocolTypes>
       <DataClassIdField>ComponentId</DataClassIdField>
-      <Alias>boolean.actuator.component.gt.000</Alias>
+      <Alias>relay.component.gt.000</Alias>
       <RootStatus>Active</RootStatus>
       <ProtocolCategory>Json</ProtocolCategory>
       <MakeDataClass>true</MakeDataClass>
-      <DataClass>BooleanActuatorComponent</DataClass>
+      <DataClass>RelayComponent</DataClass>
       <IsCac />
       <IsComponent>true</IsComponent>
       <ConsistencyCheck>1</ConsistencyCheck>
       <Description>GridWorks Spaceheat SCADA uses the GridWorks GNodeRegistry structures and abstractions for managing relational device data. The Component associated to a SpaceheatNode is part of this structure.</Description>
-      <AliasRoot>boolean.actuator.component.gt</AliasRoot>
+      <AliasRoot>relay.component.gt</AliasRoot>
       <RootCurrentSemanticEnd>000</RootCurrentSemanticEnd>
       <IsCurrent>1</IsCurrent>
-      <Status>Pending</Status>
+      <Status>Active</Status>
       <InGwProto />
-      <Title>Type for tracking Boolean ActuatorComponents</Title>
+      <Title>Type for tracking Relay Components</Title>
       <Url>https://g-node-registry.readthedocs.io/en/latest/component.html</Url>
       <Protocols>scada</Protocols>
       <Protocols>newatn</Protocols>
@@ -6762,12 +6774,12 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
     <Schema>
       <SchemaId>recRzt4GyUgwjJy3l</SchemaId>
       <createdTime>2023-04-09T21:06:47Z</createdTime>
+      <SemanticEnd>001</SemanticEnd>
+      <PropertyFormatsUsed>rec24qjC90m0f4Kvl</PropertyFormatsUsed>
       <Alias>.001</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
       <IsCurrent>0</IsCurrent>
       <Status>Deprecated</Status>
-      <PropertyFormatsUsed>rec24qjC90m0f4Kvl</PropertyFormatsUsed>
-      <SemanticEnd>001</SemanticEnd>
     </Schema>
     <Schema>
       <SchemaId>recT4SSkJ18pz5YoZ</SchemaId>
@@ -7173,21 +7185,21 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <ProtocolTypes>recMWNrvkQjOIdOjQ</ProtocolTypes>
       <ProtocolTypes>reco01YhMk6anEqXo</ProtocolTypes>
       <DataClassIdField>ComponentAttributeClassId</DataClassIdField>
-      <Alias>boolean.actuator.cac.gt.000</Alias>
+      <Alias>relay.cac.gt.000</Alias>
       <RootStatus>Active</RootStatus>
       <ProtocolCategory>Json</ProtocolCategory>
       <MakeDataClass>true</MakeDataClass>
-      <DataClass>BooleanActuatorCac</DataClass>
+      <DataClass>RelayCac</DataClass>
       <IsCac>true</IsCac>
       <IsComponent />
       <ConsistencyCheck>1</ConsistencyCheck>
       <Description>GridWorks Spaceheat SCADA uses the GridWorks GNodeRegistry structures and abstractions for managing relational device data. The Cac, or ComponentAttributeClass, is part of this structure.</Description>
-      <AliasRoot>boolean.actuator.cac.gt</AliasRoot>
+      <AliasRoot>relay.cac.gt</AliasRoot>
       <RootCurrentSemanticEnd>000</RootCurrentSemanticEnd>
       <IsCurrent>1</IsCurrent>
       <Status>Active</Status>
       <InGwProto />
-      <Title>Type for tracking Boolean Actuator ComponentAttributeClasses</Title>
+      <Title>Type for tracking Relay ComponentAttributeClasses</Title>
       <Url>https://g-node-registry.readthedocs.io/en/latest/component-attribute-class.html</Url>
       <Protocols>newatn</Protocols>
       <Protocols>scada</Protocols>
@@ -8089,7 +8101,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Status>Deprecated</Status>
       <InGwProto>true</InGwProto>
     </Schema>
-    <Schema>itrLHi18VZyycfjXv/recm2rM5o9GxgCqbL</Schema>
+    <Schema>itrmsOsvlYd4gnFzo/recm2rM5o9GxgCqbL</Schema>
     <Schema>
       <SchemaId>recm57e2rjMmC2c6n</SchemaId>
       <createdTime>2022-06-14T10:58:01Z</createdTime>
@@ -9647,12 +9659,12 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <EnumLocalName>actor.class</EnumLocalName>
       <IsEnum>true</IsEnum>
       <IsType>false</IsType>
-      <EnumName>sh.actor.class.000</EnumName>
+      <EnumName>sh.actor.class.001</EnumName>
       <DefaultEnumValue>NoActor</DefaultEnumValue>
       <PythonEnumNameStyle>UpperPython</PythonEnumNameStyle>
       <TypeInPayload>String</TypeInPayload>
-      <Format>SpaceheatActorClass000</Format>
-      <EnumPropertyFormat>SpaceheatActorClass000</EnumPropertyFormat>
+      <Format>SpaceheatActorClass001</Format>
+      <EnumPropertyFormat>SpaceheatActorClass001</EnumPropertyFormat>
     </SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>rec3MAw2y2MewO5VK</SchemaAttributeId>
@@ -10534,7 +10546,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsType>false</IsType>
       <TypeInPayload>Number</TypeInPayload>
     </SchemaAttribute>
-    <SchemaAttribute>itrCoO2Iu9SRS6VRI/rec9XvWitA9d8vD2l</SchemaAttribute>
+    <SchemaAttribute>itrl5NjSxG6LGJS6d/rec9XvWitA9d8vD2l</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>rec9fsScoo91bMhGw</SchemaAttributeId>
       <createdTime>2023-01-28T16:43:58Z</createdTime>
@@ -12149,7 +12161,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <PydanticFormat>PositiveInteger</PydanticFormat>
       <TypeInPayload>Integer</TypeInPayload>
     </SchemaAttribute>
-    <SchemaAttribute>itrCoO2Iu9SRS6VRI/recIhSSpqIviBUW64</SchemaAttribute>
+    <SchemaAttribute>itrl5NjSxG6LGJS6d/recIhSSpqIviBUW64</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recIkJy1G5tzWXqbs</SchemaAttributeId>
       <createdTime>2022-11-09T23:00:57Z</createdTime>
@@ -13750,7 +13762,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Format>MarketQuantityUnit000</Format>
       <EnumPropertyFormat>MarketQuantityUnit000</EnumPropertyFormat>
     </SchemaAttribute>
-    <SchemaAttribute>itrCoO2Iu9SRS6VRI/recREgyk5HQKEtSMJ</SchemaAttribute>
+    <SchemaAttribute>itrl5NjSxG6LGJS6d/recREgyk5HQKEtSMJ</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recRMYT3frXP98k2q</SchemaAttributeId>
       <createdTime>2022-11-04T13:44:57Z</createdTime>
@@ -14426,6 +14438,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <PrimitiveType>Boolean</PrimitiveType>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
+      <TestValue>True</TestValue>
       <Schema>recPbLemXyDnvKcIc</Schema>
       <Description>Normally open relays default in the open position, meaning that when they're not in use, there is no contact between the circuits. When power is introduced, an electromagnet pulls the first circuit into contact with the second, thereby closing the circuit and allowing power to flow through</Description>
       <Idx>5</Idx>
@@ -14988,13 +15001,13 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsType>false</IsType>
       <TestValue>"638bf97b"</TestValue>
       <Schema>recEhzcpob8H7VuEF</Schema>
-      <EnumName>sh.actor.class.000</EnumName>
+      <EnumName>sh.actor.class.001</EnumName>
       <DefaultEnumValue>NoActor</DefaultEnumValue>
       <Idx>2</Idx>
       <PythonEnumNameStyle>UpperPython</PythonEnumNameStyle>
       <TypeInPayload>String</TypeInPayload>
-      <Format>SpaceheatActorClass000</Format>
-      <EnumPropertyFormat>SpaceheatActorClass000</EnumPropertyFormat>
+      <Format>SpaceheatActorClass001</Format>
+      <EnumPropertyFormat>SpaceheatActorClass001</EnumPropertyFormat>
     </SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recXr4oGZuc4Rse9N</SchemaAttributeId>
@@ -15156,13 +15169,13 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsType>false</IsType>
       <TestValue>"638bf97b"</TestValue>
       <Schema>recUj3ZPKMsXanG88</Schema>
-      <EnumName>sh.actor.class.000</EnumName>
+      <EnumName>sh.actor.class.001</EnumName>
       <DefaultEnumValue>NoActor</DefaultEnumValue>
       <Idx>2</Idx>
       <PythonEnumNameStyle>UpperPython</PythonEnumNameStyle>
       <TypeInPayload>String</TypeInPayload>
-      <Format>SpaceheatActorClass000</Format>
-      <EnumPropertyFormat>SpaceheatActorClass000</EnumPropertyFormat>
+      <Format>SpaceheatActorClass001</Format>
+      <EnumPropertyFormat>SpaceheatActorClass001</EnumPropertyFormat>
     </SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recZ6Qnf2ivCfWkSG</SchemaAttributeId>
@@ -15369,7 +15382,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <DefaultValue>240</DefaultValue>
       <TypeInPayload>Integer</TypeInPayload>
     </SchemaAttribute>
-    <SchemaAttribute>itrCoO2Iu9SRS6VRI/reca6fj3KeJFrWBbK</SchemaAttribute>
+    <SchemaAttribute>itrl5NjSxG6LGJS6d/reca6fj3KeJFrWBbK</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recaYqACGpgpO40W8</SchemaAttributeId>
       <createdTime>2023-01-16T17:19:44Z</createdTime>
@@ -16932,7 +16945,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Idx>4</Idx>
       <TypeInPayload>String</TypeInPayload>
     </SchemaAttribute>
-    <SchemaAttribute>itrCoO2Iu9SRS6VRI/reci7Ga0o0Ubtlk5g</SchemaAttribute>
+    <SchemaAttribute>itrl5NjSxG6LGJS6d/reci7Ga0o0Ubtlk5g</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>reci7qQs2JCeyRbV7</SchemaAttributeId>
       <createdTime>2023-03-25T18:46:49Z</createdTime>
@@ -18520,7 +18533,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Idx>1</Idx>
       <TypeInPayload>Integer</TypeInPayload>
     </SchemaAttribute>
-    <SchemaAttribute>itrCoO2Iu9SRS6VRI/recqbPC3JOFtb5oXx</SchemaAttribute>
+    <SchemaAttribute>itrl5NjSxG6LGJS6d/recqbPC3JOFtb5oXx</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recqk08O9ID51tC31</SchemaAttributeId>
       <createdTime>2023-01-28T16:43:01Z</createdTime>
@@ -22117,9 +22130,9 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <createdTime>2022-12-27T15:56:38Z</createdTime>
       <Protocol>recvaW2RuHMh5mwwR</Protocol>
       <Type>reca2LF7P05qQmFJW</Type>
-      <Name>newatn boolean.actuator.cac.gt.000</Name>
+      <Name>newatn relay.cac.gt.000</Name>
       <ProtocolName>newatn</ProtocolName>
-      <TypeName>boolean.actuator.cac.gt.000</TypeName>
+      <TypeName>relay.cac.gt.000</TypeName>
       <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
@@ -22520,9 +22533,9 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <createdTime>2022-12-27T15:56:53Z</createdTime>
       <Protocol>recdu3DxzzmNH2eNq</Protocol>
       <Type>reca2LF7P05qQmFJW</Type>
-      <Name>scada boolean.actuator.cac.gt.000</Name>
+      <Name>scada relay.cac.gt.000</Name>
       <ProtocolName>scada</ProtocolName>
-      <TypeName>boolean.actuator.cac.gt.000</TypeName>
+      <TypeName>relay.cac.gt.000</TypeName>
       <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
@@ -22651,7 +22664,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <TypeName>basegnodes.broadcast.000</TypeName>
       <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
-    <ProtocolType>itr2hTh8CrqVhVUOa/recRLpRImAACQhmSj</ProtocolType>
+    <ProtocolType>itrlCl3rj8BpTDsN7/recRLpRImAACQhmSj</ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recRONwOhclu8u3Ef</ProtocolTypeId>
       <createdTime>2023-04-03T20:40:05Z</createdTime>
@@ -22887,12 +22900,12 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
     <ProtocolType>
       <ProtocolTypeId>recZBrVC3qx5dJ9B0</ProtocolTypeId>
       <createdTime>2022-12-27T15:55:43Z</createdTime>
-      <Name>newatn boolean.actuator.component.gt.000</Name>
+      <Name>newatn relay.component.gt.000</Name>
       <Protocol>recvaW2RuHMh5mwwR</Protocol>
       <ProtocolName>newatn</ProtocolName>
       <Type>recPbLemXyDnvKcIc</Type>
-      <TypeName>boolean.actuator.component.gt.000</TypeName>
-      <TypeStatus>Pending</TypeStatus>
+      <TypeName>relay.component.gt.000</TypeName>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recZCRfLe9nDmrRAU</ProtocolTypeId>
@@ -23420,11 +23433,11 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
     <ProtocolType>
       <ProtocolTypeId>reco01YhMk6anEqXo</ProtocolTypeId>
       <createdTime>2023-04-03T20:38:24Z</createdTime>
-      <Name>gwproto boolean.actuator.cac.gt.000</Name>
+      <Name>gwproto relay.cac.gt.000</Name>
       <Protocol>rec5aZ8ud9lQDmlBu</Protocol>
       <ProtocolName>gwproto</ProtocolName>
       <Type>reca2LF7P05qQmFJW</Type>
-      <TypeName>boolean.actuator.cac.gt.000</TypeName>
+      <TypeName>relay.cac.gt.000</TypeName>
       <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
@@ -23602,7 +23615,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <TypeName>market.type.gt.000</TypeName>
       <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
-    <ProtocolType>itr2hTh8CrqVhVUOa/rectD1KxAzqJILPfu</ProtocolType>
+    <ProtocolType>itrlCl3rj8BpTDsN7/rectD1KxAzqJILPfu</ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rectQ3NbkFd9nWXGO</ProtocolTypeId>
       <createdTime>2023-02-20T19:19:42Z</createdTime>
@@ -23756,22 +23769,22 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
     <ProtocolType>
       <ProtocolTypeId>recxelQn6OCbkk5A5</ProtocolTypeId>
       <createdTime>2022-12-27T15:55:26Z</createdTime>
-      <Name>scada boolean.actuator.component.gt.000</Name>
+      <Name>scada relay.component.gt.000</Name>
       <Protocol>recdu3DxzzmNH2eNq</Protocol>
       <ProtocolName>scada</ProtocolName>
       <Type>recPbLemXyDnvKcIc</Type>
-      <TypeName>boolean.actuator.component.gt.000</TypeName>
-      <TypeStatus>Pending</TypeStatus>
+      <TypeName>relay.component.gt.000</TypeName>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recxgiw8kmcghenPd</ProtocolTypeId>
       <createdTime>2023-04-03T20:38:27Z</createdTime>
-      <Name>gwproto boolean.actuator.component.gt.000</Name>
+      <Name>gwproto relay.component.gt.000</Name>
       <Protocol>rec5aZ8ud9lQDmlBu</Protocol>
       <ProtocolName>gwproto</ProtocolName>
       <Type>recPbLemXyDnvKcIc</Type>
-      <TypeName>boolean.actuator.component.gt.000</TypeName>
-      <TypeStatus>Pending</TypeStatus>
+      <TypeName>relay.component.gt.000</TypeName>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recxtr4LhX2Ixojmg</ProtocolTypeId>
@@ -24536,9 +24549,9 @@ characterized electrical device, using the meter described, at the location desc
       <createdTime>2023-04-03T23:40:21Z</createdTime>
       <Enum>recQeMNisJZjsYXTl</Enum>
       <Protocol>rec5aZ8ud9lQDmlBu</Protocol>
-      <Name>gwproto sh.actor.class.000</Name>
+      <Name>gwproto sh.actor.class.001</Name>
       <ProtocolName>gwproto</ProtocolName>
-      <EnumName>sh.actor.class.000</EnumName>
+      <EnumName>sh.actor.class.001</EnumName>
       <LocalEnumName>actor.class</LocalEnumName>
     </ProtocolEnum>
     <ProtocolEnum>
@@ -24804,9 +24817,9 @@ characterized electrical device, using the meter described, at the location desc
       <createdTime>2023-01-23T13:49:24Z</createdTime>
       <Enum>recQeMNisJZjsYXTl</Enum>
       <Protocol>recHY8DLO7gBfWjtC</Protocol>
-      <Name>satn sh.actor.class.000</Name>
+      <Name>satn sh.actor.class.001</Name>
       <ProtocolName>satn</ProtocolName>
-      <EnumName>sh.actor.class.000</EnumName>
+      <EnumName>sh.actor.class.001</EnumName>
       <LocalEnumName>actor.class</LocalEnumName>
     </ProtocolEnum>
     <ProtocolEnum>
@@ -24994,9 +25007,9 @@ characterized electrical device, using the meter described, at the location desc
       <createdTime>2022-12-27T15:32:46Z</createdTime>
       <Enum>recQeMNisJZjsYXTl</Enum>
       <Protocol>recdu3DxzzmNH2eNq</Protocol>
-      <Name>scada sh.actor.class.000</Name>
+      <Name>scada sh.actor.class.001</Name>
       <ProtocolName>scada</ProtocolName>
-      <EnumName>sh.actor.class.000</EnumName>
+      <EnumName>sh.actor.class.001</EnumName>
       <LocalEnumName>actor.class</LocalEnumName>
     </ProtocolEnum>
     <ProtocolEnum>
@@ -25034,9 +25047,9 @@ characterized electrical device, using the meter described, at the location desc
       <createdTime>2022-12-27T15:32:02Z</createdTime>
       <Enum>recQeMNisJZjsYXTl</Enum>
       <Protocol>rec3nJaxOMLIKJoNY</Protocol>
-      <Name>gwatn sh.actor.class.000</Name>
+      <Name>gwatn sh.actor.class.001</Name>
       <ProtocolName>gwatn</ProtocolName>
-      <EnumName>sh.actor.class.000</EnumName>
+      <EnumName>sh.actor.class.001</EnumName>
       <LocalEnumName>actor.class</LocalEnumName>
     </ProtocolEnum>
     <ProtocolEnum>

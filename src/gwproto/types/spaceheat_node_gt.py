@@ -31,6 +31,7 @@ class ShActorClass000SchemaEnum:
         "dae4b2f0",
         "7c483ad0",
         "4a9c1785",
+        "311835f6",
     ]
 
     @classmethod
@@ -50,6 +51,7 @@ class ShActorClass000(StrEnum):
     SimpleSensor = auto()
     MultipurposeSensor = auto()
     Thermostat = auto()
+    Relay = auto()
 
     @classmethod
     def default(cls) -> "ShActorClass000":
@@ -87,6 +89,7 @@ class ActorClassMap:
         "dae4b2f0": ShActorClass000.SimpleSensor,
         "7c483ad0": ShActorClass000.MultipurposeSensor,
         "4a9c1785": ShActorClass000.Thermostat,
+        "311835f6": ShActorClass000.Relay,
     }
 
     versioned_enum_to_type_dict: Dict[ShActorClass000, str] = {
@@ -99,6 +102,7 @@ class ActorClassMap:
         ShActorClass000.SimpleSensor: "dae4b2f0",
         ShActorClass000.MultipurposeSensor: "7c483ad0",
         ShActorClass000.Thermostat: "4a9c1785",
+        ShActorClass000.Relay: "311835f6",
     }
 
 

@@ -1,14 +1,14 @@
-"""BooleanActuatorComponent definition"""
+"""RelayComponent definition"""
 from typing import Dict
 from typing import Optional
 
-from gwproto.data_classes.cacs.boolean_actuator_cac import BooleanActuatorCac
+from gwproto.data_classes.cacs.relay_cac import RelayCac
 from gwproto.data_classes.component import Component
 from gwproto.enums import MakeModel
 
 
-class BooleanActuatorComponent(Component):
-    by_id: Dict[str, "BooleanActuatorComponent"] = {}
+class RelayComponent(Component):
+    by_id: Dict[str, "RelayComponent"] = {}
 
     def __init__(
         self,
@@ -28,12 +28,12 @@ class BooleanActuatorComponent(Component):
         self.normally_open = normally_open
         self.gpio = gpio
 
-        BooleanActuatorComponent.by_id[self.component_id] = self
+        RelayComponent.by_id[self.component_id] = self
         Component.by_id[self.component_id] = self
 
     @property
-    def cac(self) -> BooleanActuatorCac:
-        return BooleanActuatorCac.by_id[self.component_attribute_class_id]
+    def cac(self) -> RelayCac:
+        return RelayCac.by_id[self.component_attribute_class_id]
 
     @property
     def make_model(self) -> MakeModel:

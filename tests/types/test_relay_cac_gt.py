@@ -1,4 +1,4 @@
-"""Tests boolean.actuator.cac.gt type, version 000"""
+"""Tests relay.cac.gt type, version 000"""
 import json
 
 import pytest
@@ -6,7 +6,7 @@ from pydantic import ValidationError
 
 from gwproto.enums import MakeModel
 from gwproto.errors import MpSchemaError
-from gwproto.types import BooleanActuatorCacGt_Maker as Maker
+from gwproto.types import RelayCacGt_Maker as Maker
 
 
 def test_gt_boolean_actuator_cac_generated() -> None:
@@ -15,7 +15,7 @@ def test_gt_boolean_actuator_cac_generated() -> None:
         "MakeModelGtEnumSymbol": "9cc57878",
         "DisplayName": "Gridworks Simulated Boolean Actuator",
         "TypicalResponseTimeMs": 400,
-        "TypeName": "boolean.actuator.cac.gt",
+        "TypeName": "relay.cac.gt",
         "Version": "000",
     }
 

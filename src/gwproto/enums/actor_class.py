@@ -21,7 +21,6 @@ class ActorClass(StrEnum):
       * SimpleSensor (dae4b2f0, 000): A SpaceheatNode representing a sensor that measures a single category of quantity (for example, temperature) for a single object (for example, on a pipe).. [More Info](https://gridworks-protocol.readthedocs.io/en/latest/simple-sensor.html).
       * MultipurposeSensor (7c483ad0, 000): A sensor that either reads multiple kinds of readings from the same sensing device (for example reads current and voltage), reads multiple different objects (temperature from two different thermisters) or both.. [More Info](https://gridworks-protocol.readthedocs.io/en/latest/multipurpose-sensor.html).
       * Thermostat (4a9c1785, 000): A SpaceheatNode representing a thermostat.
-      * Relay (311835f6, 001): A SpaceheatNode representing an electric relay
     """
     NoActor = auto()
     Scada = auto()
@@ -32,7 +31,6 @@ class ActorClass(StrEnum):
     SimpleSensor = auto()
     MultipurposeSensor = auto()
     Thermostat = auto()
-    Relay = auto()
     
     @classmethod
     def default(cls) -> "ActorClass":

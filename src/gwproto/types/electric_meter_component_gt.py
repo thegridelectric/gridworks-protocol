@@ -14,7 +14,7 @@ from pydantic import validator
 from gwproto.data_classes.components.electric_meter_component import (
     ElectricMeterComponent,
 )
-from gwproto.errors import MpSchemaError
+from gwproto.errors import SchemaError
 from gwproto.types.egauge_io import EgaugeIo
 from gwproto.types.egauge_io import EgaugeIo_Maker
 from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
@@ -253,28 +253,28 @@ class ElectricMeterComponentGt_Maker:
         try:
             d = json.loads(t)
         except TypeError:
-            raise MpSchemaError("Type must be string or bytes!")
+            raise SchemaError("Type must be string or bytes!")
         if not isinstance(d, dict):
-            raise MpSchemaError(f"Deserializing {t} must result in dict!")
+            raise SchemaError(f"Deserializing {t} must result in dict!")
         return cls.dict_to_tuple(d)
 
     @classmethod
     def dict_to_tuple(cls, d: dict[str, Any]) -> ElectricMeterComponentGt:
         d2 = dict(d)
         if "ComponentId" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing ComponentId")
+            raise SchemaError(f"dict {d2} missing ComponentId")
         if "ComponentAttributeClassId" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing ComponentAttributeClassId")
+            raise SchemaError(f"dict {d2} missing ComponentAttributeClassId")
         if "DisplayName" not in d2.keys():
             d2["DisplayName"] = None
         if "ConfigList" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing ConfigList")
+            raise SchemaError(f"dict {d2} missing ConfigList")
         config_list = []
         if not isinstance(d2["ConfigList"], List):
-            raise MpSchemaError("ConfigList must be a List!")
+            raise SchemaError("ConfigList must be a List!")
         for elt in d2["ConfigList"]:
             if not isinstance(elt, dict):
-                raise MpSchemaError(
+                raise SchemaError(
                     f"elt {elt} of ConfigList must be "
                     "TelemetryReportingConfig but not even a dict!"
                 )
@@ -287,22 +287,22 @@ class ElectricMeterComponentGt_Maker:
         if "ModbusPort" not in d2.keys():
             d2["ModbusPort"] = None
         if "EgaugeIoList" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing EgaugeIoList")
+            raise SchemaError(f"dict {d2} missing EgaugeIoList")
         if "EgaugeIoList" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing EgaugeIoList")
+            raise SchemaError(f"dict {d2} missing EgaugeIoList")
         egauge_io_list = []
         if not isinstance(d2["EgaugeIoList"], List):
-            raise MpSchemaError("EgaugeIoList must be a List!")
+            raise SchemaError("EgaugeIoList must be a List!")
         for elt in d2["EgaugeIoList"]:
             if not isinstance(elt, dict):
-                raise MpSchemaError(
+                raise SchemaError(
                     f"elt {elt} of EgaugeIoList must be "
                     "EgaugeIo but not even a dict!"
                 )
             egauge_io_list.append(EgaugeIo_Maker.dict_to_tuple(elt))
         d2["EgaugeIoList"] = egauge_io_list
         if "TypeName" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing TypeName")
+            raise SchemaError(f"dict {d2} missing TypeName")
 
         return ElectricMeterComponentGt(
             ComponentId=d2["ComponentId"],

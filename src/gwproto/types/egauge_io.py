@@ -8,7 +8,7 @@ from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
 
-from gwproto.errors import MpSchemaError
+from gwproto.errors import SchemaError
 from gwproto.types.egauge_register_config import EgaugeRegisterConfig
 from gwproto.types.egauge_register_config import EgaugeRegisterConfig_Maker
 from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
@@ -76,32 +76,32 @@ class EgaugeIo_Maker:
         try:
             d = json.loads(t)
         except TypeError:
-            raise MpSchemaError("Type must be string or bytes!")
+            raise SchemaError("Type must be string or bytes!")
         if not isinstance(d, dict):
-            raise MpSchemaError(f"Deserializing {t} must result in dict!")
+            raise SchemaError(f"Deserializing {t} must result in dict!")
         return cls.dict_to_tuple(d)
 
     @classmethod
     def dict_to_tuple(cls, d: dict[str, Any]) -> EgaugeIo:
         d2 = dict(d)
         if "InputConfig" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing InputConfig")
+            raise SchemaError(f"dict {d2} missing InputConfig")
         if not isinstance(d2["InputConfig"], dict):
-            raise MpSchemaError(
+            raise SchemaError(
                 f"d['InputConfig'] {d2['InputConfig']} must be a EgaugeRegisterConfig!"
             )
         input_config = EgaugeRegisterConfig_Maker.dict_to_tuple(d2["InputConfig"])
         d2["InputConfig"] = input_config
         if "OutputConfig" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing OutputConfig")
+            raise SchemaError(f"dict {d2} missing OutputConfig")
         if not isinstance(d2["OutputConfig"], dict):
-            raise MpSchemaError(
+            raise SchemaError(
                 f"d['OutputConfig'] {d2['OutputConfig']} must be a TelemetryReportingConfig!"
             )
         output_config = TelemetryReportingConfig_Maker.dict_to_tuple(d2["OutputConfig"])
         d2["OutputConfig"] = output_config
         if "TypeName" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing TypeName")
+            raise SchemaError(f"dict {d2} missing TypeName")
 
         return EgaugeIo(
             InputConfig=d2["InputConfig"],

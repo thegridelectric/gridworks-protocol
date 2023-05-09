@@ -16,7 +16,7 @@ from gwproto.data_classes.cacs.simple_temp_sensor_cac import SimpleTempSensorCac
 from gwproto.enums import MakeModel as EnumMakeModel
 from gwproto.enums import TelemetryName as EnumTelemetryName
 from gwproto.enums import Unit
-from gwproto.errors import MpSchemaError
+from gwproto.errors import SchemaError
 from gwproto.message import as_enum
 
 
@@ -73,7 +73,7 @@ class TelemetryNameMap:
     @classmethod
     def type_to_local(cls, symbol: str) -> EnumTelemetryName:
         if not SpaceheatTelemetryName000SchemaEnum.is_symbol(symbol):
-            raise MpSchemaError(
+            raise SchemaError(
                 f"{symbol} must belong to SpaceheatTelemetryName000 symbols"
             )
         versioned_enum = cls.type_to_versioned_enum_dict[symbol]
@@ -82,7 +82,7 @@ class TelemetryNameMap:
     @classmethod
     def local_to_type(cls, telemetry_name: EnumTelemetryName) -> str:
         if not isinstance(telemetry_name, EnumTelemetryName):
-            raise MpSchemaError(f"{telemetry_name} must be of type {EnumTelemetryName}")
+            raise SchemaError(f"{telemetry_name} must be of type {EnumTelemetryName}")
         versioned_enum = as_enum(
             telemetry_name,
             SpaceheatTelemetryName000,
@@ -178,16 +178,14 @@ class MakeModelMap:
     @classmethod
     def type_to_local(cls, symbol: str) -> EnumMakeModel:
         if not SpaceheatMakeModel000SchemaEnum.is_symbol(symbol):
-            raise MpSchemaError(
-                f"{symbol} must belong to SpaceheatMakeModel000 symbols"
-            )
+            raise SchemaError(f"{symbol} must belong to SpaceheatMakeModel000 symbols")
         versioned_enum = cls.type_to_versioned_enum_dict[symbol]
         return as_enum(versioned_enum, EnumMakeModel, EnumMakeModel.default())
 
     @classmethod
     def local_to_type(cls, make_model: EnumMakeModel) -> str:
         if not isinstance(make_model, EnumMakeModel):
-            raise MpSchemaError(f"{make_model} must be of type {EnumMakeModel}")
+            raise SchemaError(f"{make_model} must be of type {EnumMakeModel}")
         versioned_enum = as_enum(
             make_model, SpaceheatMakeModel000, SpaceheatMakeModel000.default()
         )
@@ -275,14 +273,14 @@ class UnitMap:
     @classmethod
     def type_to_local(cls, symbol: str) -> Unit:
         if not SpaceheatUnit000SchemaEnum.is_symbol(symbol):
-            raise MpSchemaError(f"{symbol} must belong to SpaceheatUnit000 symbols")
+            raise SchemaError(f"{symbol} must belong to SpaceheatUnit000 symbols")
         versioned_enum = cls.type_to_versioned_enum_dict[symbol]
         return as_enum(versioned_enum, Unit, Unit.default())
 
     @classmethod
     def local_to_type(cls, unit: Unit) -> str:
         if not isinstance(unit, Unit):
-            raise MpSchemaError(f"{unit} must be of type {Unit}")
+            raise SchemaError(f"{unit} must be of type {Unit}")
         versioned_enum = as_enum(unit, SpaceheatUnit000, SpaceheatUnit000.default())
         return cls.versioned_enum_to_type_dict[versioned_enum]
 
@@ -476,34 +474,34 @@ class SimpleTempSensorCacGt_Maker:
         try:
             d = json.loads(t)
         except TypeError:
-            raise MpSchemaError("Type must be string or bytes!")
+            raise SchemaError("Type must be string or bytes!")
         if not isinstance(d, dict):
-            raise MpSchemaError(f"Deserializing {t} must result in dict!")
+            raise SchemaError(f"Deserializing {t} must result in dict!")
         return cls.dict_to_tuple(d)
 
     @classmethod
     def dict_to_tuple(cls, d: dict[str, Any]) -> SimpleTempSensorCacGt:
         d2 = dict(d)
         if "ComponentAttributeClassId" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing ComponentAttributeClassId")
+            raise SchemaError(f"dict {d2} missing ComponentAttributeClassId")
         if "MakeModelGtEnumSymbol" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing MakeModelGtEnumSymbol")
+            raise SchemaError(f"dict {d2} missing MakeModelGtEnumSymbol")
         if d2["MakeModelGtEnumSymbol"] in SpaceheatMakeModel000SchemaEnum.symbols:
             d2["MakeModel"] = MakeModelMap.type_to_local(d2["MakeModelGtEnumSymbol"])
         else:
             d2["MakeModel"] = EnumMakeModel.default()
         if "TypicalResponseTimeMs" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing TypicalResponseTimeMs")
+            raise SchemaError(f"dict {d2} missing TypicalResponseTimeMs")
         if "Exponent" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing Exponent")
+            raise SchemaError(f"dict {d2} missing Exponent")
         if "TempUnitGtEnumSymbol" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing TempUnitGtEnumSymbol")
+            raise SchemaError(f"dict {d2} missing TempUnitGtEnumSymbol")
         if d2["TempUnitGtEnumSymbol"] in SpaceheatUnit000SchemaEnum.symbols:
             d2["TempUnit"] = UnitMap.type_to_local(d2["TempUnitGtEnumSymbol"])
         else:
             d2["TempUnit"] = Unit.default()
         if "TelemetryNameGtEnumSymbol" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing TelemetryNameGtEnumSymbol")
+            raise SchemaError(f"dict {d2} missing TelemetryNameGtEnumSymbol")
         if (
             d2["TelemetryNameGtEnumSymbol"]
             in SpaceheatTelemetryName000SchemaEnum.symbols
@@ -518,7 +516,7 @@ class SimpleTempSensorCacGt_Maker:
         if "CommsMethod" not in d2.keys():
             d2["CommsMethod"] = None
         if "TypeName" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing TypeName")
+            raise SchemaError(f"dict {d2} missing TypeName")
 
         return SimpleTempSensorCacGt(
             ComponentAttributeClassId=d2["ComponentAttributeClassId"],

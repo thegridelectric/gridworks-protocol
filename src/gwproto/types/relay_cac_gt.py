@@ -14,7 +14,7 @@ from pydantic import validator
 
 from gwproto.data_classes.cacs.relay_cac import RelayCac
 from gwproto.enums import MakeModel as EnumMakeModel
-from gwproto.errors import MpSchemaError
+from gwproto.errors import SchemaError
 from gwproto.message import as_enum
 
 
@@ -73,16 +73,14 @@ class MakeModelMap:
     @classmethod
     def type_to_local(cls, symbol: str) -> EnumMakeModel:
         if not SpaceheatMakeModel000SchemaEnum.is_symbol(symbol):
-            raise MpSchemaError(
-                f"{symbol} must belong to SpaceheatMakeModel000 symbols"
-            )
+            raise SchemaError(f"{symbol} must belong to SpaceheatMakeModel000 symbols")
         versioned_enum = cls.type_to_versioned_enum_dict[symbol]
         return as_enum(versioned_enum, EnumMakeModel, EnumMakeModel.default())
 
     @classmethod
     def local_to_type(cls, make_model: EnumMakeModel) -> str:
         if not isinstance(make_model, EnumMakeModel):
-            raise MpSchemaError(f"{make_model} must be of type {EnumMakeModel}")
+            raise SchemaError(f"{make_model} must be of type {EnumMakeModel}")
         versioned_enum = as_enum(
             make_model, SpaceheatMakeModel000, SpaceheatMakeModel000.default()
         )
@@ -246,18 +244,18 @@ class RelayCacGt_Maker:
         try:
             d = json.loads(t)
         except TypeError:
-            raise MpSchemaError("Type must be string or bytes!")
+            raise SchemaError("Type must be string or bytes!")
         if not isinstance(d, dict):
-            raise MpSchemaError(f"Deserializing {t} must result in dict!")
+            raise SchemaError(f"Deserializing {t} must result in dict!")
         return cls.dict_to_tuple(d)
 
     @classmethod
     def dict_to_tuple(cls, d: dict[str, Any]) -> RelayCacGt:
         d2 = dict(d)
         if "ComponentAttributeClassId" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing ComponentAttributeClassId")
+            raise SchemaError(f"dict {d2} missing ComponentAttributeClassId")
         if "MakeModelGtEnumSymbol" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing MakeModelGtEnumSymbol")
+            raise SchemaError(f"dict {d2} missing MakeModelGtEnumSymbol")
         if d2["MakeModelGtEnumSymbol"] in SpaceheatMakeModel000SchemaEnum.symbols:
             d2["MakeModel"] = MakeModelMap.type_to_local(d2["MakeModelGtEnumSymbol"])
         else:
@@ -265,9 +263,9 @@ class RelayCacGt_Maker:
         if "DisplayName" not in d2.keys():
             d2["DisplayName"] = None
         if "TypicalResponseTimeMs" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing TypicalResponseTimeMs")
+            raise SchemaError(f"dict {d2} missing TypicalResponseTimeMs")
         if "TypeName" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing TypeName")
+            raise SchemaError(f"dict {d2} missing TypeName")
 
         return RelayCacGt(
             ComponentAttributeClassId=d2["ComponentAttributeClassId"],

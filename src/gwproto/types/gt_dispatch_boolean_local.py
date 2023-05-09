@@ -8,7 +8,7 @@ from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
 
-from gwproto.errors import MpSchemaError
+from gwproto.errors import SchemaError
 
 
 def check_is_left_right_dot(v: str) -> None:
@@ -153,24 +153,24 @@ class GtDispatchBooleanLocal_Maker:
         try:
             d = json.loads(t)
         except TypeError:
-            raise MpSchemaError("Type must be string or bytes!")
+            raise SchemaError("Type must be string or bytes!")
         if not isinstance(d, dict):
-            raise MpSchemaError(f"Deserializing {t} must result in dict!")
+            raise SchemaError(f"Deserializing {t} must result in dict!")
         return cls.dict_to_tuple(d)
 
     @classmethod
     def dict_to_tuple(cls, d: dict[str, Any]) -> GtDispatchBooleanLocal:
         d2 = dict(d)
         if "RelayState" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing RelayState")
+            raise SchemaError(f"dict {d2} missing RelayState")
         if "AboutNodeName" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing AboutNodeName")
+            raise SchemaError(f"dict {d2} missing AboutNodeName")
         if "FromNodeName" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing FromNodeName")
+            raise SchemaError(f"dict {d2} missing FromNodeName")
         if "SendTimeUnixMs" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing SendTimeUnixMs")
+            raise SchemaError(f"dict {d2} missing SendTimeUnixMs")
         if "TypeName" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing TypeName")
+            raise SchemaError(f"dict {d2} missing TypeName")
 
         return GtDispatchBooleanLocal(
             RelayState=d2["RelayState"],

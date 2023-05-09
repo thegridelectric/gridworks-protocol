@@ -14,7 +14,7 @@ from gwproto.decoders import PydanticDecoder
 from gwproto.decoders import create_message_payload_discriminator
 from gwproto.decoders import get_pydantic_literal_type_name
 from gwproto.decoders import pydantic_named_types
-from gwproto.errors import MpSchemaError
+from gwproto.errors import SchemaError
 from gwproto.message import Header
 from gwproto.message import Message
 from gwproto.message import as_enum
@@ -38,7 +38,7 @@ __all__ = [
     "Message",
     "messages",
     "MessageDiscriminator",
-    "MpSchemaError",
+    "SchemaError",
     "MQTTCodec",
     "MQTTTopic",
     "OneDecoderExtractor",

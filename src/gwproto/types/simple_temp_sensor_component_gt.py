@@ -12,7 +12,7 @@ from pydantic import validator
 from gwproto.data_classes.components.simple_temp_sensor_component import (
     SimpleTempSensorComponent,
 )
-from gwproto.errors import MpSchemaError
+from gwproto.errors import SchemaError
 
 
 def check_is_uuid_canonical_textual(v: str) -> None:
@@ -155,18 +155,18 @@ class SimpleTempSensorComponentGt_Maker:
         try:
             d = json.loads(t)
         except TypeError:
-            raise MpSchemaError("Type must be string or bytes!")
+            raise SchemaError("Type must be string or bytes!")
         if not isinstance(d, dict):
-            raise MpSchemaError(f"Deserializing {t} must result in dict!")
+            raise SchemaError(f"Deserializing {t} must result in dict!")
         return cls.dict_to_tuple(d)
 
     @classmethod
     def dict_to_tuple(cls, d: dict[str, Any]) -> SimpleTempSensorComponentGt:
         d2 = dict(d)
         if "ComponentId" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing ComponentId")
+            raise SchemaError(f"dict {d2} missing ComponentId")
         if "ComponentAttributeClassId" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing ComponentAttributeClassId")
+            raise SchemaError(f"dict {d2} missing ComponentAttributeClassId")
         if "DisplayName" not in d2.keys():
             d2["DisplayName"] = None
         if "HwUid" not in d2.keys():
@@ -174,7 +174,7 @@ class SimpleTempSensorComponentGt_Maker:
         if "Channel" not in d2.keys():
             d2["Channel"] = None
         if "TypeName" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing TypeName")
+            raise SchemaError(f"dict {d2} missing TypeName")
 
         return SimpleTempSensorComponentGt(
             ComponentId=d2["ComponentId"],

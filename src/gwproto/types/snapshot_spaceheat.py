@@ -8,7 +8,7 @@ from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
 
-from gwproto.errors import MpSchemaError
+from gwproto.errors import SchemaError
 from gwproto.types.telemetry_snapshot_spaceheat import TelemetrySnapshotSpaceheat
 from gwproto.types.telemetry_snapshot_spaceheat import TelemetrySnapshotSpaceheat_Maker
 
@@ -156,28 +156,28 @@ class SnapshotSpaceheat_Maker:
         try:
             d = json.loads(t)
         except TypeError:
-            raise MpSchemaError("Type must be string or bytes!")
+            raise SchemaError("Type must be string or bytes!")
         if not isinstance(d, dict):
-            raise MpSchemaError(f"Deserializing {t} must result in dict!")
+            raise SchemaError(f"Deserializing {t} must result in dict!")
         return cls.dict_to_tuple(d)
 
     @classmethod
     def dict_to_tuple(cls, d: dict[str, Any]) -> SnapshotSpaceheat:
         d2 = dict(d)
         if "FromGNodeAlias" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing FromGNodeAlias")
+            raise SchemaError(f"dict {d2} missing FromGNodeAlias")
         if "FromGNodeInstanceId" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing FromGNodeInstanceId")
+            raise SchemaError(f"dict {d2} missing FromGNodeInstanceId")
         if "Snapshot" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing Snapshot")
+            raise SchemaError(f"dict {d2} missing Snapshot")
         if not isinstance(d2["Snapshot"], dict):
-            raise MpSchemaError(
+            raise SchemaError(
                 f"d['Snapshot'] {d2['Snapshot']} must be a TelemetrySnapshotSpaceheat!"
             )
         snapshot = TelemetrySnapshotSpaceheat_Maker.dict_to_tuple(d2["Snapshot"])
         d2["Snapshot"] = snapshot
         if "TypeName" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing TypeName")
+            raise SchemaError(f"dict {d2} missing TypeName")
 
         return SnapshotSpaceheat(
             FromGNodeAlias=d2["FromGNodeAlias"],

@@ -108,7 +108,7 @@ from gwproto.data_classes.</xsl:text>
 
 
 <xsl:text>
-from gwproto.errors import MpSchemaError</xsl:text>
+from gwproto.errors import SchemaError</xsl:text>
 
 <xsl:for-each select="$airtable//SchemaAttributes/SchemaAttribute[(Schema = $schema-id)]">
 
@@ -228,7 +228,7 @@ class </xsl:text><xsl:value-of select="$enum-local-name"/><xsl:text>Map:
     <xsl:value-of select="$enum-local-name"/>
     <xsl:text>:
         if not </xsl:text><xsl:value-of select="$enum-name"/><xsl:text>SchemaEnum.is_symbol(symbol):
-            raise MpSchemaError(
+            raise SchemaError(
                 f"{symbol} must belong to </xsl:text><xsl:value-of select="$enum-name"/>
                 <xsl:text> symbols"
             )
@@ -245,7 +245,7 @@ class </xsl:text><xsl:value-of select="$enum-local-name"/><xsl:text>Map:
         if not isinstance(</xsl:text>
         <xsl:value-of select="translate(LocalName,'.','_')"/><xsl:text>, </xsl:text>
         <xsl:value-of select="$enum-local-name"/><xsl:text>):
-            raise MpSchemaError(f"{</xsl:text>
+            raise SchemaError(f"{</xsl:text>
                 <xsl:value-of select="translate(LocalName,'.','_')"/><xsl:text>} must be of type {</xsl:text>
                     <xsl:value-of select="$enum-local-name"/><xsl:text>}")
         versioned_enum = as_enum(</xsl:text>
@@ -1525,9 +1525,9 @@ class </xsl:text>
         try:
             d = json.loads(t)
         except TypeError:
-            raise MpSchemaError("Type must be string or bytes!")
+            raise SchemaError("Type must be string or bytes!")
         if not isinstance(d, dict):
-            raise MpSchemaError(f"Deserializing {t} must result in dict!")
+            raise SchemaError(f"Deserializing {t} must result in dict!")
         return cls.dict_to_tuple(d)
 
     @classmethod
@@ -1540,7 +1540,7 @@ class </xsl:text>
 <xsl:if test = "(IsRequired = 'true') and (IsPrimitive='true')">
 <xsl:text>
         if "</xsl:text><xsl:value-of select="Value"/><xsl:text>" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing </xsl:text>
+            raise SchemaError(f"dict {d2} missing </xsl:text>
             <xsl:value-of select="Value"/>
             <xsl:text>")</xsl:text>
 
@@ -1550,12 +1550,12 @@ class </xsl:text>
 <xsl:if test="(IsRequired = 'true') and (IsType = 'true') and not (IsList = 'true')">
 <xsl:text>
         if "</xsl:text><xsl:value-of select="Value"/><xsl:text>" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing </xsl:text>
+            raise SchemaError(f"dict {d2} missing </xsl:text>
             <xsl:value-of select="Value"/>
             <xsl:text>")
         if not isinstance(d2["</xsl:text><xsl:value-of select="Value"/>
         <xsl:text>"], dict):
-            raise MpSchemaError(f"d['</xsl:text>
+            raise SchemaError(f"d['</xsl:text>
             <xsl:value-of select="Value"/>
             <xsl:text>'] {d2['</xsl:text><xsl:value-of select="Value"/>
             <xsl:text>']} must be a </xsl:text>
@@ -1586,7 +1586,7 @@ class </xsl:text>
 <xsl:if test="(IsType = 'true') and (IsList = 'true')">
     <xsl:text>
         if "</xsl:text><xsl:value-of select="Value"/><xsl:text>" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing </xsl:text>
+            raise SchemaError(f"dict {d2} missing </xsl:text>
             <xsl:value-of select="Value"/>
             <xsl:text>")
         </xsl:text>
@@ -1597,14 +1597,14 @@ class </xsl:text>
         if not isinstance(d2["</xsl:text>
         <xsl:value-of select="Value"/>
         <xsl:text>"], List):
-            raise MpSchemaError("</xsl:text>
+            raise SchemaError("</xsl:text>
                 <xsl:value-of select="Value"/>
                 <xsl:text> must be a List!")
         for elt in d2["</xsl:text>
         <xsl:value-of select="Value"/>
         <xsl:text>"]:
             if not isinstance(elt, dict):
-                raise MpSchemaError(
+                raise SchemaError(
                     f"elt {elt} of </xsl:text>
                     <xsl:value-of select="Value"/>
                     <xsl:text> must be "
@@ -1641,7 +1641,7 @@ class </xsl:text>
         <xsl:call-template name="nt-case">
             <xsl:with-param name="mp-schema-text" select="Value" />
         </xsl:call-template><xsl:text>GtEnumSymbol" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing </xsl:text>
+            raise SchemaError(f"dict {d2} missing </xsl:text>
             <xsl:call-template name="nt-case">
             <xsl:with-param name="mp-schema-text" select="Value" />
         </xsl:call-template>
@@ -1679,7 +1679,7 @@ class </xsl:text>
         if "</xsl:text>
         <xsl:value-of select="Value"/>
         <xsl:text>" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing </xsl:text>
+            raise SchemaError(f"dict {d2} missing </xsl:text>
         <xsl:value-of select="Value"/>
         <xsl:text>")
         </xsl:text>
@@ -1690,7 +1690,7 @@ class </xsl:text>
         if not isinstance(d2["</xsl:text>
             <xsl:value-of select="Value"/>
             <xsl:text>"], List):
-                raise MpSchemaError("</xsl:text>
+                raise SchemaError("</xsl:text>
                     <xsl:value-of select="Value"/>
                     <xsl:text> must be a List!")
         for elt in d2["</xsl:text>
@@ -1735,7 +1735,7 @@ class </xsl:text>
 </xsl:for-each>
 <xsl:text>
         if "TypeName" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing TypeName")
+            raise SchemaError(f"dict {d2} missing TypeName")
 
         return </xsl:text><xsl:value-of select="$class-name"/><xsl:text>(
             </xsl:text>

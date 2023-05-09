@@ -13,7 +13,7 @@ from pydantic import root_validator
 from pydantic import validator
 
 from gwproto.enums import TelemetryName
-from gwproto.errors import MpSchemaError
+from gwproto.errors import SchemaError
 from gwproto.message import as_enum
 
 
@@ -70,7 +70,7 @@ class TelemetryNameMap:
     @classmethod
     def type_to_local(cls, symbol: str) -> TelemetryName:
         if not SpaceheatTelemetryName000SchemaEnum.is_symbol(symbol):
-            raise MpSchemaError(
+            raise SchemaError(
                 f"{symbol} must belong to SpaceheatTelemetryName000 symbols"
             )
         versioned_enum = cls.type_to_versioned_enum_dict[symbol]
@@ -79,7 +79,7 @@ class TelemetryNameMap:
     @classmethod
     def local_to_type(cls, telemetry_name: TelemetryName) -> str:
         if not isinstance(telemetry_name, TelemetryName):
-            raise MpSchemaError(f"{telemetry_name} must be of type {TelemetryName}")
+            raise SchemaError(f"{telemetry_name} must be of type {TelemetryName}")
         versioned_enum = as_enum(
             telemetry_name,
             SpaceheatTelemetryName000,
@@ -292,25 +292,25 @@ class TelemetrySnapshotSpaceheat_Maker:
         try:
             d = json.loads(t)
         except TypeError:
-            raise MpSchemaError("Type must be string or bytes!")
+            raise SchemaError("Type must be string or bytes!")
         if not isinstance(d, dict):
-            raise MpSchemaError(f"Deserializing {t} must result in dict!")
+            raise SchemaError(f"Deserializing {t} must result in dict!")
         return cls.dict_to_tuple(d)
 
     @classmethod
     def dict_to_tuple(cls, d: dict[str, Any]) -> TelemetrySnapshotSpaceheat:
         d2 = dict(d)
         if "ReportTimeUnixMs" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing ReportTimeUnixMs")
+            raise SchemaError(f"dict {d2} missing ReportTimeUnixMs")
         if "AboutNodeAliasList" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing AboutNodeAliasList")
+            raise SchemaError(f"dict {d2} missing AboutNodeAliasList")
         if "ValueList" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing ValueList")
+            raise SchemaError(f"dict {d2} missing ValueList")
         if "TelemetryNameList" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing TelemetryNameList")
+            raise SchemaError(f"dict {d2} missing TelemetryNameList")
         telemetry_name_list = []
         if not isinstance(d2["TelemetryNameList"], List):
-            raise MpSchemaError("TelemetryNameList must be a List!")
+            raise SchemaError("TelemetryNameList must be a List!")
         for elt in d2["TelemetryNameList"]:
             if elt in SpaceheatTelemetryName000SchemaEnum.symbols:
                 v = TelemetryNameMap.type_to_local(elt)
@@ -320,7 +320,7 @@ class TelemetrySnapshotSpaceheat_Maker:
             telemetry_name_list.append(v)
         d2["TelemetryNameList"] = telemetry_name_list
         if "TypeName" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing TypeName")
+            raise SchemaError(f"dict {d2} missing TypeName")
 
         return TelemetrySnapshotSpaceheat(
             ReportTimeUnixMs=d2["ReportTimeUnixMs"],

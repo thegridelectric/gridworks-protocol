@@ -8,7 +8,7 @@ from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
 
-from gwproto.errors import MpSchemaError
+from gwproto.errors import SchemaError
 
 
 class EgaugeRegisterConfig(BaseModel):
@@ -90,28 +90,28 @@ class EgaugeRegisterConfig_Maker:
         try:
             d = json.loads(t)
         except TypeError:
-            raise MpSchemaError("Type must be string or bytes!")
+            raise SchemaError("Type must be string or bytes!")
         if not isinstance(d, dict):
-            raise MpSchemaError(f"Deserializing {t} must result in dict!")
+            raise SchemaError(f"Deserializing {t} must result in dict!")
         return cls.dict_to_tuple(d)
 
     @classmethod
     def dict_to_tuple(cls, d: dict[str, Any]) -> EgaugeRegisterConfig:
         d2 = dict(d)
         if "Address" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing Address")
+            raise SchemaError(f"dict {d2} missing Address")
         if "Name" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing Name")
+            raise SchemaError(f"dict {d2} missing Name")
         if "Description" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing Description")
+            raise SchemaError(f"dict {d2} missing Description")
         if "Type" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing Type")
+            raise SchemaError(f"dict {d2} missing Type")
         if "Denominator" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing Denominator")
+            raise SchemaError(f"dict {d2} missing Denominator")
         if "Unit" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing Unit")
+            raise SchemaError(f"dict {d2} missing Unit")
         if "TypeName" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing TypeName")
+            raise SchemaError(f"dict {d2} missing TypeName")
 
         return EgaugeRegisterConfig(
             Address=d2["Address"],

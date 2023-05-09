@@ -15,7 +15,7 @@ from pydantic import validator
 from gwproto.data_classes.sh_node import ShNode
 from gwproto.enums import ActorClass as EnumActorClass
 from gwproto.enums import Role as EnumRole
-from gwproto.errors import MpSchemaError
+from gwproto.errors import SchemaError
 from gwproto.message import as_enum
 
 
@@ -64,14 +64,14 @@ class ActorClassMap:
     @classmethod
     def type_to_local(cls, symbol: str) -> EnumActorClass:
         if not ShActorClass000SchemaEnum.is_symbol(symbol):
-            raise MpSchemaError(f"{symbol} must belong to ShActorClass000 symbols")
+            raise SchemaError(f"{symbol} must belong to ShActorClass000 symbols")
         versioned_enum = cls.type_to_versioned_enum_dict[symbol]
         return as_enum(versioned_enum, EnumActorClass, EnumActorClass.default())
 
     @classmethod
     def local_to_type(cls, actor_class: EnumActorClass) -> str:
         if not isinstance(actor_class, EnumActorClass):
-            raise MpSchemaError(f"{actor_class} must be of type {EnumActorClass}")
+            raise SchemaError(f"{actor_class} must be of type {EnumActorClass}")
         versioned_enum = as_enum(
             actor_class, ShActorClass000, ShActorClass000.default()
         )
@@ -169,14 +169,14 @@ class RoleMap:
     @classmethod
     def type_to_local(cls, symbol: str) -> EnumRole:
         if not ShNodeRole000SchemaEnum.is_symbol(symbol):
-            raise MpSchemaError(f"{symbol} must belong to ShNodeRole000 symbols")
+            raise SchemaError(f"{symbol} must belong to ShNodeRole000 symbols")
         versioned_enum = cls.type_to_versioned_enum_dict[symbol]
         return as_enum(versioned_enum, EnumRole, EnumRole.default())
 
     @classmethod
     def local_to_type(cls, role: EnumRole) -> str:
         if not isinstance(role, EnumRole):
-            raise MpSchemaError(f"{role} must be of type {EnumRole}")
+            raise SchemaError(f"{role} must be of type {EnumRole}")
         versioned_enum = as_enum(role, ShNodeRole000, ShNodeRole000.default())
         return cls.versioned_enum_to_type_dict[versioned_enum]
 
@@ -449,26 +449,26 @@ class SpaceheatNodeGt_Maker:
         try:
             d = json.loads(t)
         except TypeError:
-            raise MpSchemaError("Type must be string or bytes!")
+            raise SchemaError("Type must be string or bytes!")
         if not isinstance(d, dict):
-            raise MpSchemaError(f"Deserializing {t} must result in dict!")
+            raise SchemaError(f"Deserializing {t} must result in dict!")
         return cls.dict_to_tuple(d)
 
     @classmethod
     def dict_to_tuple(cls, d: dict[str, Any]) -> SpaceheatNodeGt:
         d2 = dict(d)
         if "ShNodeId" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing ShNodeId")
+            raise SchemaError(f"dict {d2} missing ShNodeId")
         if "Alias" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing Alias")
+            raise SchemaError(f"dict {d2} missing Alias")
         if "ActorClassGtEnumSymbol" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing ActorClassGtEnumSymbol")
+            raise SchemaError(f"dict {d2} missing ActorClassGtEnumSymbol")
         if d2["ActorClassGtEnumSymbol"] in ShActorClass000SchemaEnum.symbols:
             d2["ActorClass"] = ActorClassMap.type_to_local(d2["ActorClassGtEnumSymbol"])
         else:
             d2["ActorClass"] = EnumActorClass.default()
         if "RoleGtEnumSymbol" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing RoleGtEnumSymbol")
+            raise SchemaError(f"dict {d2} missing RoleGtEnumSymbol")
         if d2["RoleGtEnumSymbol"] in ShNodeRole000SchemaEnum.symbols:
             d2["Role"] = RoleMap.type_to_local(d2["RoleGtEnumSymbol"])
         else:
@@ -486,7 +486,7 @@ class SpaceheatNodeGt_Maker:
         if "InPowerMetering" not in d2.keys():
             d2["InPowerMetering"] = None
         if "TypeName" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing TypeName")
+            raise SchemaError(f"dict {d2} missing TypeName")
 
         return SpaceheatNodeGt(
             ShNodeId=d2["ShNodeId"],

@@ -16,7 +16,7 @@ from gwproto.data_classes.cacs.electric_meter_cac import ElectricMeterCac
 from gwproto.enums import LocalCommInterface
 from gwproto.enums import MakeModel as EnumMakeModel
 from gwproto.enums import TelemetryName
-from gwproto.errors import MpSchemaError
+from gwproto.errors import SchemaError
 from gwproto.message import as_enum
 
 
@@ -73,7 +73,7 @@ class TelemetryNameMap:
     @classmethod
     def type_to_local(cls, symbol: str) -> TelemetryName:
         if not SpaceheatTelemetryName000SchemaEnum.is_symbol(symbol):
-            raise MpSchemaError(
+            raise SchemaError(
                 f"{symbol} must belong to SpaceheatTelemetryName000 symbols"
             )
         versioned_enum = cls.type_to_versioned_enum_dict[symbol]
@@ -82,7 +82,7 @@ class TelemetryNameMap:
     @classmethod
     def local_to_type(cls, telemetry_name: TelemetryName) -> str:
         if not isinstance(telemetry_name, TelemetryName):
-            raise MpSchemaError(f"{telemetry_name} must be of type {TelemetryName}")
+            raise SchemaError(f"{telemetry_name} must be of type {TelemetryName}")
         versioned_enum = as_enum(
             telemetry_name,
             SpaceheatTelemetryName000,
@@ -168,16 +168,14 @@ class LocalCommInterfaceMap:
     @classmethod
     def type_to_local(cls, symbol: str) -> LocalCommInterface:
         if not LocalCommInterface000SchemaEnum.is_symbol(symbol):
-            raise MpSchemaError(
-                f"{symbol} must belong to LocalCommInterface000 symbols"
-            )
+            raise SchemaError(f"{symbol} must belong to LocalCommInterface000 symbols")
         versioned_enum = cls.type_to_versioned_enum_dict[symbol]
         return as_enum(versioned_enum, LocalCommInterface, LocalCommInterface.default())
 
     @classmethod
     def local_to_type(cls, local_comm_interface: LocalCommInterface) -> str:
         if not isinstance(local_comm_interface, LocalCommInterface):
-            raise MpSchemaError(
+            raise SchemaError(
                 f"{local_comm_interface} must be of type {LocalCommInterface}"
             )
         versioned_enum = as_enum(
@@ -265,16 +263,14 @@ class MakeModelMap:
     @classmethod
     def type_to_local(cls, symbol: str) -> EnumMakeModel:
         if not SpaceheatMakeModel000SchemaEnum.is_symbol(symbol):
-            raise MpSchemaError(
-                f"{symbol} must belong to SpaceheatMakeModel000 symbols"
-            )
+            raise SchemaError(f"{symbol} must belong to SpaceheatMakeModel000 symbols")
         versioned_enum = cls.type_to_versioned_enum_dict[symbol]
         return as_enum(versioned_enum, EnumMakeModel, EnumMakeModel.default())
 
     @classmethod
     def local_to_type(cls, make_model: EnumMakeModel) -> str:
         if not isinstance(make_model, EnumMakeModel):
-            raise MpSchemaError(f"{make_model} must be of type {EnumMakeModel}")
+            raise SchemaError(f"{make_model} must be of type {EnumMakeModel}")
         versioned_enum = as_enum(
             make_model, SpaceheatMakeModel000, SpaceheatMakeModel000.default()
         )
@@ -482,18 +478,18 @@ class ElectricMeterCacGt_Maker:
         try:
             d = json.loads(t)
         except TypeError:
-            raise MpSchemaError("Type must be string or bytes!")
+            raise SchemaError("Type must be string or bytes!")
         if not isinstance(d, dict):
-            raise MpSchemaError(f"Deserializing {t} must result in dict!")
+            raise SchemaError(f"Deserializing {t} must result in dict!")
         return cls.dict_to_tuple(d)
 
     @classmethod
     def dict_to_tuple(cls, d: dict[str, Any]) -> ElectricMeterCacGt:
         d2 = dict(d)
         if "ComponentAttributeClassId" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing ComponentAttributeClassId")
+            raise SchemaError(f"dict {d2} missing ComponentAttributeClassId")
         if "MakeModelGtEnumSymbol" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing MakeModelGtEnumSymbol")
+            raise SchemaError(f"dict {d2} missing MakeModelGtEnumSymbol")
         if d2["MakeModelGtEnumSymbol"] in SpaceheatMakeModel000SchemaEnum.symbols:
             d2["MakeModel"] = MakeModelMap.type_to_local(d2["MakeModelGtEnumSymbol"])
         else:
@@ -501,10 +497,10 @@ class ElectricMeterCacGt_Maker:
         if "DisplayName" not in d2.keys():
             d2["DisplayName"] = None
         if "TelemetryNameList" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing TelemetryNameList")
+            raise SchemaError(f"dict {d2} missing TelemetryNameList")
         telemetry_name_list = []
         if not isinstance(d2["TelemetryNameList"], List):
-            raise MpSchemaError("TelemetryNameList must be a List!")
+            raise SchemaError("TelemetryNameList must be a List!")
         for elt in d2["TelemetryNameList"]:
             if elt in SpaceheatTelemetryName000SchemaEnum.symbols:
                 v = TelemetryNameMap.type_to_local(elt)
@@ -514,9 +510,9 @@ class ElectricMeterCacGt_Maker:
             telemetry_name_list.append(v)
         d2["TelemetryNameList"] = telemetry_name_list
         if "PollPeriodMs" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing PollPeriodMs")
+            raise SchemaError(f"dict {d2} missing PollPeriodMs")
         if "InterfaceGtEnumSymbol" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing InterfaceGtEnumSymbol")
+            raise SchemaError(f"dict {d2} missing InterfaceGtEnumSymbol")
         if d2["InterfaceGtEnumSymbol"] in LocalCommInterface000SchemaEnum.symbols:
             d2["Interface"] = LocalCommInterfaceMap.type_to_local(
                 d2["InterfaceGtEnumSymbol"]
@@ -526,7 +522,7 @@ class ElectricMeterCacGt_Maker:
         if "DefaultBaud" not in d2.keys():
             d2["DefaultBaud"] = None
         if "TypeName" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing TypeName")
+            raise SchemaError(f"dict {d2} missing TypeName")
 
         return ElectricMeterCacGt(
             ComponentAttributeClassId=d2["ComponentAttributeClassId"],

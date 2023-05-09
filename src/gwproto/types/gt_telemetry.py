@@ -12,7 +12,7 @@ from pydantic import Field
 from pydantic import validator
 
 from gwproto.enums import TelemetryName
-from gwproto.errors import MpSchemaError
+from gwproto.errors import SchemaError
 from gwproto.message import as_enum
 
 
@@ -69,7 +69,7 @@ class TelemetryNameMap:
     @classmethod
     def type_to_local(cls, symbol: str) -> TelemetryName:
         if not SpaceheatTelemetryName000SchemaEnum.is_symbol(symbol):
-            raise MpSchemaError(
+            raise SchemaError(
                 f"{symbol} must belong to SpaceheatTelemetryName000 symbols"
             )
         versioned_enum = cls.type_to_versioned_enum_dict[symbol]
@@ -78,7 +78,7 @@ class TelemetryNameMap:
     @classmethod
     def local_to_type(cls, telemetry_name: TelemetryName) -> str:
         if not isinstance(telemetry_name, TelemetryName):
-            raise MpSchemaError(f"{telemetry_name} must be of type {TelemetryName}")
+            raise SchemaError(f"{telemetry_name} must be of type {TelemetryName}")
         versioned_enum = as_enum(
             telemetry_name,
             SpaceheatTelemetryName000,
@@ -218,28 +218,28 @@ class GtTelemetry_Maker:
         try:
             d = json.loads(t)
         except TypeError:
-            raise MpSchemaError("Type must be string or bytes!")
+            raise SchemaError("Type must be string or bytes!")
         if not isinstance(d, dict):
-            raise MpSchemaError(f"Deserializing {t} must result in dict!")
+            raise SchemaError(f"Deserializing {t} must result in dict!")
         return cls.dict_to_tuple(d)
 
     @classmethod
     def dict_to_tuple(cls, d: dict[str, Any]) -> GtTelemetry:
         d2 = dict(d)
         if "ScadaReadTimeUnixMs" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing ScadaReadTimeUnixMs")
+            raise SchemaError(f"dict {d2} missing ScadaReadTimeUnixMs")
         if "Value" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing Value")
+            raise SchemaError(f"dict {d2} missing Value")
         if "NameGtEnumSymbol" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing NameGtEnumSymbol")
+            raise SchemaError(f"dict {d2} missing NameGtEnumSymbol")
         if d2["NameGtEnumSymbol"] in SpaceheatTelemetryName000SchemaEnum.symbols:
             d2["Name"] = TelemetryNameMap.type_to_local(d2["NameGtEnumSymbol"])
         else:
             d2["Name"] = TelemetryName.default()
         if "Exponent" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing Exponent")
+            raise SchemaError(f"dict {d2} missing Exponent")
         if "TypeName" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing TypeName")
+            raise SchemaError(f"dict {d2} missing TypeName")
 
         return GtTelemetry(
             ScadaReadTimeUnixMs=d2["ScadaReadTimeUnixMs"],

@@ -52,7 +52,7 @@ import json
 import pytest
 from pydantic import ValidationError
 
-from gwproto.errors import MpSchemaError
+from gwproto.errors import SchemaError
 from gwproto.types import </xsl:text>
 <xsl:value-of select="$class-name"/><xsl:text>_Maker as Maker</xsl:text>
 <xsl:for-each select="$airtable//GtEnums/GtEnum[(normalize-space(Alias) !='')  and (count(TypesThatUse[text()=$schema-id])>0)]">
@@ -96,10 +96,10 @@ def test_</xsl:text><xsl:value-of select="translate($type-name,'.','_')"/>
         "Version": "</xsl:text><xsl:value-of select="SemanticEnd"/><xsl:text>",
     }
 
-    with pytest.raises(MpSchemaError):
+    with pytest.raises(SchemaError):
         Maker.type_to_tuple(d)
 
-    with pytest.raises(MpSchemaError):
+    with pytest.raises(SchemaError):
         Maker.type_to_tuple('"not a dict"')
 
     # Test type_to_tuple
@@ -139,12 +139,12 @@ def test_</xsl:text><xsl:value-of select="translate($type-name,'.','_')"/>
     </xsl:text>
     </xsl:if>
     <xsl:text>######################################
-    # MpSchemaError raised if missing a required attribute
+    # SchemaError raised if missing a required attribute
     ######################################
 
     d2 = dict(d)
     del d2["TypeName"]
-    with pytest.raises(MpSchemaError):
+    with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
     </xsl:text>
@@ -157,7 +157,7 @@ def test_</xsl:text><xsl:value-of select="translate($type-name,'.','_')"/>
     <xsl:text>d2 = dict(d)
     del d2["</xsl:text>
     <xsl:value-of  select="Value"/><xsl:text>"]
-    with pytest.raises(MpSchemaError):
+    with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
     </xsl:text>
@@ -168,7 +168,7 @@ def test_</xsl:text><xsl:value-of select="translate($type-name,'.','_')"/>
     <xsl:text>d2 = dict(d)
     del d2["</xsl:text>
     <xsl:value-of  select="Value"/><xsl:text>GtEnumSymbol"]
-    with pytest.raises(MpSchemaError):
+    with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
     </xsl:text>
@@ -269,17 +269,17 @@ def test_</xsl:text><xsl:value-of select="translate($type-name,'.','_')"/>
 
     d2  = dict(d, </xsl:text>
     <xsl:value-of  select="Value"/><xsl:text>="Not a list.")
-    with pytest.raises(MpSchemaError):
+    with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
     d2  = dict(d, </xsl:text>
     <xsl:value-of  select="Value"/><xsl:text>=["Not a list of dicts"])
-    with pytest.raises(MpSchemaError):
+    with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
     d2  = dict(d, </xsl:text>
     <xsl:value-of  select="Value"/><xsl:text>= [{"Failed": "Not a GtSimpleSingleStatus"}])
-    with pytest.raises(MpSchemaError):
+    with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)</xsl:text>
         </xsl:if>
 
@@ -288,7 +288,7 @@ def test_</xsl:text><xsl:value-of select="translate($type-name,'.','_')"/>
     <xsl:text>
 
     ######################################
-    # MpSchemaError raised if TypeName is incorrect
+    # SchemaError raised if TypeName is incorrect
     ######################################
 
     d2 = dict(d, TypeName="not the type alias")
@@ -299,7 +299,7 @@ def test_</xsl:text><xsl:value-of select="translate($type-name,'.','_')"/>
 
 <xsl:text>
     ######################################
-    # MpSchemaError raised if primitive attributes do not have appropriate property_format
+    # SchemaError raised if primitive attributes do not have appropriate property_format
     ######################################</xsl:text>
 
     <xsl:for-each select="$airtable//SchemaAttributes/SchemaAttribute[(Schema = $schema-id) and (normalize-space(PrimitiveFormatFail1) != '')]">

@@ -8,7 +8,7 @@ from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
 
-from gwproto.errors import MpSchemaError
+from gwproto.errors import SchemaError
 
 
 def check_is_uuid_canonical_textual(v: str) -> None:
@@ -252,30 +252,30 @@ class HeartbeatB_Maker:
         try:
             d = json.loads(t)
         except TypeError:
-            raise MpSchemaError("Type must be string or bytes!")
+            raise SchemaError("Type must be string or bytes!")
         if not isinstance(d, dict):
-            raise MpSchemaError(f"Deserializing {t} must result in dict!")
+            raise SchemaError(f"Deserializing {t} must result in dict!")
         return cls.dict_to_tuple(d)
 
     @classmethod
     def dict_to_tuple(cls, d: dict[str, Any]) -> HeartbeatB:
         d2 = dict(d)
         if "FromGNodeAlias" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing FromGNodeAlias")
+            raise SchemaError(f"dict {d2} missing FromGNodeAlias")
         if "FromGNodeInstanceId" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing FromGNodeInstanceId")
+            raise SchemaError(f"dict {d2} missing FromGNodeInstanceId")
         if "MyHex" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing MyHex")
+            raise SchemaError(f"dict {d2} missing MyHex")
         if "YourLastHex" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing YourLastHex")
+            raise SchemaError(f"dict {d2} missing YourLastHex")
         if "LastReceivedTimeUnixMs" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing LastReceivedTimeUnixMs")
+            raise SchemaError(f"dict {d2} missing LastReceivedTimeUnixMs")
         if "SendTimeUnixMs" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing SendTimeUnixMs")
+            raise SchemaError(f"dict {d2} missing SendTimeUnixMs")
         if "StartingOver" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing StartingOver")
+            raise SchemaError(f"dict {d2} missing StartingOver")
         if "TypeName" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing TypeName")
+            raise SchemaError(f"dict {d2} missing TypeName")
 
         return HeartbeatB(
             FromGNodeAlias=d2["FromGNodeAlias"],

@@ -14,7 +14,7 @@ from gwproto.data_classes.components.multipurpose_sensor_component import (
     MultipurposeSensorComponent,
 )
 from gwproto.enums import TelemetryName
-from gwproto.errors import MpSchemaError
+from gwproto.errors import SchemaError
 from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
 from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig_Maker
 
@@ -205,28 +205,28 @@ class MultipurposeSensorComponentGt_Maker:
         try:
             d = json.loads(t)
         except TypeError:
-            raise MpSchemaError("Type must be string or bytes!")
+            raise SchemaError("Type must be string or bytes!")
         if not isinstance(d, dict):
-            raise MpSchemaError(f"Deserializing {t} must result in dict!")
+            raise SchemaError(f"Deserializing {t} must result in dict!")
         return cls.dict_to_tuple(d)
 
     @classmethod
     def dict_to_tuple(cls, d: dict[str, Any]) -> MultipurposeSensorComponentGt:
         d2 = dict(d)
         if "ComponentId" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing ComponentId")
+            raise SchemaError(f"dict {d2} missing ComponentId")
         if "ComponentAttributeClassId" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing ComponentAttributeClassId")
+            raise SchemaError(f"dict {d2} missing ComponentAttributeClassId")
         if "ChannelList" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing ChannelList")
+            raise SchemaError(f"dict {d2} missing ChannelList")
         if "ConfigList" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing ConfigList")
+            raise SchemaError(f"dict {d2} missing ConfigList")
         config_list = []
         if not isinstance(d2["ConfigList"], List):
-            raise MpSchemaError("ConfigList must be a List!")
+            raise SchemaError("ConfigList must be a List!")
         for elt in d2["ConfigList"]:
             if not isinstance(elt, dict):
-                raise MpSchemaError(
+                raise SchemaError(
                     f"elt {elt} of ConfigList must be "
                     "TelemetryReportingConfig but not even a dict!"
                 )
@@ -237,7 +237,7 @@ class MultipurposeSensorComponentGt_Maker:
         if "DisplayName" not in d2.keys():
             d2["DisplayName"] = None
         if "TypeName" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing TypeName")
+            raise SchemaError(f"dict {d2} missing TypeName")
 
         return MultipurposeSensorComponentGt(
             ComponentId=d2["ComponentId"],

@@ -8,7 +8,7 @@ from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
 
-from gwproto.errors import MpSchemaError
+from gwproto.errors import SchemaError
 
 
 def check_is_uuid_canonical_textual(v: str) -> None:
@@ -220,28 +220,28 @@ class GtDispatchBoolean_Maker:
         try:
             d = json.loads(t)
         except TypeError:
-            raise MpSchemaError("Type must be string or bytes!")
+            raise SchemaError("Type must be string or bytes!")
         if not isinstance(d, dict):
-            raise MpSchemaError(f"Deserializing {t} must result in dict!")
+            raise SchemaError(f"Deserializing {t} must result in dict!")
         return cls.dict_to_tuple(d)
 
     @classmethod
     def dict_to_tuple(cls, d: dict[str, Any]) -> GtDispatchBoolean:
         d2 = dict(d)
         if "AboutNodeName" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing AboutNodeName")
+            raise SchemaError(f"dict {d2} missing AboutNodeName")
         if "ToGNodeAlias" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing ToGNodeAlias")
+            raise SchemaError(f"dict {d2} missing ToGNodeAlias")
         if "FromGNodeAlias" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing FromGNodeAlias")
+            raise SchemaError(f"dict {d2} missing FromGNodeAlias")
         if "FromGNodeInstanceId" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing FromGNodeInstanceId")
+            raise SchemaError(f"dict {d2} missing FromGNodeInstanceId")
         if "RelayState" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing RelayState")
+            raise SchemaError(f"dict {d2} missing RelayState")
         if "SendTimeUnixMs" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing SendTimeUnixMs")
+            raise SchemaError(f"dict {d2} missing SendTimeUnixMs")
         if "TypeName" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing TypeName")
+            raise SchemaError(f"dict {d2} missing TypeName")
 
         return GtDispatchBoolean(
             AboutNodeName=d2["AboutNodeName"],

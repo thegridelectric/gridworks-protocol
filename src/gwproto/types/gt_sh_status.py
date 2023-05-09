@@ -9,7 +9,7 @@ from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
 
-from gwproto.errors import MpSchemaError
+from gwproto.errors import SchemaError
 from gwproto.types.gt_sh_booleanactuator_cmd_status import GtShBooleanactuatorCmdStatus
 from gwproto.types.gt_sh_booleanactuator_cmd_status import (
     GtShBooleanactuatorCmdStatus_Maker,
@@ -293,32 +293,32 @@ class GtShStatus_Maker:
         try:
             d = json.loads(t)
         except TypeError:
-            raise MpSchemaError("Type must be string or bytes!")
+            raise SchemaError("Type must be string or bytes!")
         if not isinstance(d, dict):
-            raise MpSchemaError(f"Deserializing {t} must result in dict!")
+            raise SchemaError(f"Deserializing {t} must result in dict!")
         return cls.dict_to_tuple(d)
 
     @classmethod
     def dict_to_tuple(cls, d: dict[str, Any]) -> GtShStatus:
         d2 = dict(d)
         if "FromGNodeAlias" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing FromGNodeAlias")
+            raise SchemaError(f"dict {d2} missing FromGNodeAlias")
         if "FromGNodeId" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing FromGNodeId")
+            raise SchemaError(f"dict {d2} missing FromGNodeId")
         if "AboutGNodeAlias" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing AboutGNodeAlias")
+            raise SchemaError(f"dict {d2} missing AboutGNodeAlias")
         if "SlotStartUnixS" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing SlotStartUnixS")
+            raise SchemaError(f"dict {d2} missing SlotStartUnixS")
         if "ReportingPeriodS" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing ReportingPeriodS")
+            raise SchemaError(f"dict {d2} missing ReportingPeriodS")
         if "SimpleTelemetryList" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing SimpleTelemetryList")
+            raise SchemaError(f"dict {d2} missing SimpleTelemetryList")
         simple_telemetry_list = []
         if not isinstance(d2["SimpleTelemetryList"], List):
-            raise MpSchemaError("SimpleTelemetryList must be a List!")
+            raise SchemaError("SimpleTelemetryList must be a List!")
         for elt in d2["SimpleTelemetryList"]:
             if not isinstance(elt, dict):
-                raise MpSchemaError(
+                raise SchemaError(
                     f"elt {elt} of SimpleTelemetryList must be "
                     "GtShSimpleTelemetryStatus but not even a dict!"
                 )
@@ -327,13 +327,13 @@ class GtShStatus_Maker:
             )
         d2["SimpleTelemetryList"] = simple_telemetry_list
         if "MultipurposeTelemetryList" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing MultipurposeTelemetryList")
+            raise SchemaError(f"dict {d2} missing MultipurposeTelemetryList")
         multipurpose_telemetry_list = []
         if not isinstance(d2["MultipurposeTelemetryList"], List):
-            raise MpSchemaError("MultipurposeTelemetryList must be a List!")
+            raise SchemaError("MultipurposeTelemetryList must be a List!")
         for elt in d2["MultipurposeTelemetryList"]:
             if not isinstance(elt, dict):
-                raise MpSchemaError(
+                raise SchemaError(
                     f"elt {elt} of MultipurposeTelemetryList must be "
                     "GtShMultipurposeTelemetryStatus but not even a dict!"
                 )
@@ -342,13 +342,13 @@ class GtShStatus_Maker:
             )
         d2["MultipurposeTelemetryList"] = multipurpose_telemetry_list
         if "BooleanactuatorCmdList" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing BooleanactuatorCmdList")
+            raise SchemaError(f"dict {d2} missing BooleanactuatorCmdList")
         booleanactuator_cmd_list = []
         if not isinstance(d2["BooleanactuatorCmdList"], List):
-            raise MpSchemaError("BooleanactuatorCmdList must be a List!")
+            raise SchemaError("BooleanactuatorCmdList must be a List!")
         for elt in d2["BooleanactuatorCmdList"]:
             if not isinstance(elt, dict):
-                raise MpSchemaError(
+                raise SchemaError(
                     f"elt {elt} of BooleanactuatorCmdList must be "
                     "GtShBooleanactuatorCmdStatus but not even a dict!"
                 )
@@ -357,9 +357,9 @@ class GtShStatus_Maker:
             )
         d2["BooleanactuatorCmdList"] = booleanactuator_cmd_list
         if "StatusUid" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing StatusUid")
+            raise SchemaError(f"dict {d2} missing StatusUid")
         if "TypeName" not in d2.keys():
-            raise MpSchemaError(f"dict {d2} missing TypeName")
+            raise SchemaError(f"dict {d2} missing TypeName")
 
         return GtShStatus(
             FromGNodeAlias=d2["FromGNodeAlias"],

@@ -894,14 +894,14 @@ test = ["objgraph", "psutil"]
 
 [[package]]
 name = "gridworks"
-version = "0.2.2"
+version = "0.2.3"
 description = "Gridworks"
 category = "main"
 optional = false
 python-versions = ">=3.10,<4.0"
 files = [
-    {file = "gridworks-0.2.2-py3-none-any.whl", hash = "sha256:50456eb7f935db0d678c90c9dff7469b0e02059627fe18d6dd83c89f353f25da"},
-    {file = "gridworks-0.2.2.tar.gz", hash = "sha256:45e2f67b87f09df55db2398df8af03880095f6f11605b81038b3437b4cac16e5"},
+    {file = "gridworks-0.2.3-py3-none-any.whl", hash = "sha256:4cb6f89ed384947090992a7881c1fb46117b1770d35c9a3f2da926e468f3d8ba"},
+    {file = "gridworks-0.2.3.tar.gz", hash = "sha256:bc52fd5c2d03ad2ac03bced39c2564d48e70e131143ceaa08a305d2d09fdb271"},
 ]
 
 [package.dependencies]
@@ -3086,4 +3086,4 @@ tests-strict = ["codecov (==2.0.15)", "pytest (==4.6.0)", "pytest (==4.6.0)", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10, <4.0"
-content-hash = "03ba4fbc704a697b6e8e8d0a1651603e922a2b14f5393ca697e63a6e1f21eba6"
+content-hash = "ac45eedc3029223939cd0a161a94bea958d1cb8aa180e0cc66d45b897710bba2"

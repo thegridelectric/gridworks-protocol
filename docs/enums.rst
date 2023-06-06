@@ -1,5 +1,5 @@
-GridWorks Enums
+Gwproto Enums
 ================
 
-.. automodule:: gridworks.enums
+.. automodule:: gwproto.enums
     :members:

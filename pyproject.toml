@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gridworks-protocol"
-version = "0.5.3"
+version = "0.5.4"
 description = "Gridworks Protocol"
 authors = ["Jessica Millar <jmillar@gridworks-consulting.com>"]
 license = "MIT"
@@ -23,7 +23,7 @@ python = ">=3.10, <4.0"
 pydantic = "^1.10.2"
 pendulum = "^2.1.2"
 fastapi-utils = "^0.2.1"
-gridworks = "0.2.5"
+gridworks = "^0.2.6"
 
 [tool.poetry.dev-dependencies]
 Pygments = ">=2.10.0"

@@ -1,4 +1,4 @@
-"""Tests for schema enum spaceheat.make.model.000"""
+"""Tests for schema enum spaceheat.make.model.001"""
 from gwproto.enums import MakeModel
 
 
@@ -8,8 +8,12 @@ def test_make_model() -> None:
         "EGAUGE__4030",
         "GRIDWORKS__SIMTSNAP1",
         "ATLAS__EZFLO",
-        "MAGNELAB__SCT0300050",
+        "HUBITAT__C7__LAN1",
+        "GRIDWORKS__TANK_MODULE_1",
+        "FIBARO__ANALOG_TEMP_SENSOR",
+        "AMPHENOL__NTC_10K_THERMISTOR_MA100GG103BN",
         "YHDC__SCT013100",
+        "MAGNELAB__SCT0300050",
         "NCD__PR814SPST",
         "ADAFRUIT__642",
         "GRIDWORKS__TSNAP1",

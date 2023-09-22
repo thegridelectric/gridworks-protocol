@@ -8,10 +8,10 @@ from gwproto.enums.unit import Unit
 
 
 __all__ = [
-    "LocalCommInterface",
     "ActorClass",
-    "Role",
+    "LocalCommInterface",
     "MakeModel",
+    "Role",
     "TelemetryName",
     "Unit",
 ]

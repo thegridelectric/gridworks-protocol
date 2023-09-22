@@ -1,4 +1,4 @@
-"""Tests for schema enum sh.actor.class.001"""
+"""Tests for schema enum sh.actor.class.000"""
 from gwproto.enums import ActorClass
 
 

@@ -24,6 +24,10 @@ from gwproto.data_classes.components.electric_meter_component import (
 from gwproto.data_classes.errors import DataClassLoadingError
 from gwproto.data_classes.sh_node import ShNode
 from gwproto.data_classes.telemetry_tuple import TelemetryTuple
+from gwproto.default_decoders import CacDecoder
+from gwproto.default_decoders import ComponentDecoder
+from gwproto.default_decoders import default_cac_decoder
+from gwproto.default_decoders import default_component_decoder
 from gwproto.enums import ActorClass
 from gwproto.enums import Role
 from gwproto.enums import TelemetryName
@@ -58,8 +62,15 @@ class LoadError:
     exception: Exception
 
 
-def load_cacs(layout: dict, raise_errors: bool = True) -> list[LoadError]:
-    errors: list[LoadError] = []
+def load_cacs(
+    layout: dict,
+    raise_errors: bool = True,
+    errors: Optional[list[LoadError]] = None,
+    cac_decoder: Optional[CacDecoder] = None,
+) -> dict:
+    if errors is None:
+        errors: list[LoadError] = []
+    cacs = dict()
     for type_name, maker_class in [
         ("RelayCacs", RelayCacGt_Maker),
         ("ResistiveHeaterCacs", ResistiveHeaterCacGt_Maker),
@@ -68,27 +79,41 @@ def load_cacs(layout: dict, raise_errors: bool = True) -> list[LoadError]:
         ("MultipurposeSensorCacs", MultipurposeSensorCacGt_Maker),
         ("SimpleTempSensorCacs", SimpleTempSensorCacGt_Maker),
     ]:
-        for d in layout[type_name]:
+        for d in layout.get(type_name, {}):
             try:
-                maker_class.dict_to_dc(d)
+                cacs[d["ComponentAttributeClassId"]] = maker_class.dict_to_dc(d)
             except Exception as e:
                 if raise_errors:
                     raise e
                 errors.append(LoadError(type_name, d, e))
-    for d in layout["OtherCacs"]:
+    if cac_decoder is None:
+        cac_decoder = default_cac_decoder
+    for d in layout.get("OtherCacs", {}):
+        cac_type = d.get("TypeName", "")
         try:
-            ComponentAttributeClass(
-                component_attribute_class_id=d["ComponentAttributeClassId"]
-            )
+            if cac_type and cac_type in cac_decoder:
+                cac = cac_decoder.decode_to_data_class(d)
+            else:
+                cac = ComponentAttributeClass(
+                    component_attribute_class_id=d["ComponentAttributeClassId"]
+                )
+            cacs[d["ComponentAttributeClassId"]] = cac
         except Exception as e:
             if raise_errors:
                 raise e
             errors.append(LoadError("OtherCacs", d, e))
-    return errors
+    return cacs
 
 
-def load_components(layout: dict, raise_errors: bool = True) -> list[LoadError]:
-    errors: list[LoadError] = []
+def load_components(
+    layout: dict,
+    raise_errors: bool = True,
+    errors: Optional[list[LoadError]] = None,
+    component_decoder: Optional[ComponentDecoder] = None,
+) -> dict:
+    if errors is None:
+        errors: list[LoadError] = []
+    components = dict()
     for type_name, maker_class in [
         ("RelayComponents", RelayComponentGt_Maker),
         ("ResistiveHeaterComponents", ResistiveHeaterComponentGt_Maker),
@@ -99,20 +124,26 @@ def load_components(layout: dict, raise_errors: bool = True) -> list[LoadError]:
     ]:
         for d in layout[type_name]:
             try:
-                maker_class.dict_to_dc(d)
+                components[d["ComponentId"]] = maker_class.dict_to_dc(d)
             except Exception as e:
                 if raise_errors:
                     raise e
                 errors.append(LoadError(type_name, d, e))
-        for camel in layout["OtherComponents"]:
-            try:
-                snake_dict = {camel_to_snake(k): v for k, v in camel.items()}
-                Component(**snake_dict)
-            except Exception as e:
-                if raise_errors:
-                    raise e
-                errors.append(LoadError(type_name, camel, e))
-    return errors
+    if component_decoder is None:
+        component_decoder = default_component_decoder
+    for d in layout["OtherComponents"]:
+        component_type = d.get("TypeName", "")
+        try:
+            if component_type and component_type in component_decoder:
+                component = component_decoder.decode_to_data_class(d)
+            else:
+                component = Component(**{camel_to_snake(k): v for k, v in d.items()})
+            components[d["ComponentId"]] = component
+        except Exception as e:
+            if raise_errors:
+                raise e
+            errors.append(LoadError(type_name, d, e))
+    return components
 
 
 class HardwareLayout:
@@ -121,13 +152,23 @@ class HardwareLayout:
     components: dict[str, Component]
     nodes: dict[str, ShNode]
 
-    def __init__(self, layout: dict, included_node_names: Optional[set[str]] = None):
+    def __init__(
+        self,
+        layout: dict,
+        included_node_names: Optional[set[str]] = None,
+        cacs: Optional[dict] = None,
+        components: Optional[dict] = None,
+    ):
         self.layout = copy.deepcopy(layout)
-        self.cacs = dict(ComponentAttributeClass.by_id)
-        self.components = dict(Component.by_id)
+        if cacs is None:
+            cacs = ComponentAttributeClass.by_id
+        self.cacs = dict(cacs)
+        if components is None:
+            components = Component.by_id
+        self.components = dict(components)
         self.nodes = {
             node_dict["Alias"]: SpaceheatNodeGt_Maker.dict_to_dc(node_dict)
-            for node_dict in self.layout["ShNodes"]
+            for node_dict in self.layout.get("ShNodes", [])
             if included_node_names is None or node_dict["Alias"] in included_node_names
         }
 
@@ -138,6 +179,8 @@ class HardwareLayout:
         included_node_names: Optional[set[str]] = None,
         raise_errors: bool = True,
         errors: Optional[list[LoadError]] = None,
+        cac_decoder: Optional[CacDecoder] = None,
+        component_decorder: Optional[ComponentDecoder] = None,
     ) -> "HardwareLayout":
         with Path(layout_path).open() as f:
             layout: dict = json.loads(f.read())
@@ -146,6 +189,8 @@ class HardwareLayout:
             included_node_names=included_node_names,
             raise_errors=raise_errors,
             errors=errors,
+            cac_decoder=cac_decoder,
+            component_decorder=component_decorder,
         )
 
     @classmethod
@@ -155,12 +200,29 @@ class HardwareLayout:
         included_node_names: Optional[set[str]] = None,
         raise_errors: bool = True,
         errors: Optional[list[LoadError]] = None,
+        cac_decoder: Optional[CacDecoder] = None,
+        component_decorder: Optional[ComponentDecoder] = None,
     ) -> "HardwareLayout":
         if errors is None:
-            errors = []
-        errors.extend(load_cacs(layout=layout, raise_errors=raise_errors))
-        errors.extend(load_components(layout=layout, raise_errors=raise_errors))
-        return HardwareLayout(layout, included_node_names=included_node_names)
+            errors: list[LoadError] = []
+        cacs = load_cacs(
+            layout=layout,
+            raise_errors=raise_errors,
+            errors=errors,
+            cac_decoder=cac_decoder,
+        )
+        components = load_components(
+            layout=layout,
+            raise_errors=raise_errors,
+            errors=errors,
+            component_decoder=component_decorder,
+        )
+        return HardwareLayout(
+            layout,
+            included_node_names=included_node_names,
+            cacs=cacs,
+            components=components,
+        )
 
     def node(self, alias: str, default: Any = None) -> ShNode:
         return self.nodes.get(alias, default)

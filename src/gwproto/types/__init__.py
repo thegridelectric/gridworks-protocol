@@ -12,6 +12,14 @@ from gwproto.types.egauge_register_config import EgaugeRegisterConfig
 from gwproto.types.egauge_register_config import EgaugeRegisterConfig_Maker
 from gwproto.types.electric_meter_cac_gt import ElectricMeterCacGt
 from gwproto.types.electric_meter_cac_gt import ElectricMeterCacGt_Maker
+from gwproto.types.fibaro_tank_temp_sensor_cac_gt import FibaroTankTempSensorCacGt
+from gwproto.types.fibaro_tank_temp_sensor_cac_gt import FibaroTankTempSensorCacGt_Maker
+from gwproto.types.fibaro_tank_temp_sensor_component_gt import (
+    FibaroTankTempSensorComponentGt,
+)
+from gwproto.types.fibaro_tank_temp_sensor_component_gt import (
+    FibaroTankTempSensorComponentGt_Maker,
+)
 from gwproto.types.gt_dispatch_boolean import GtDispatchBoolean
 from gwproto.types.gt_dispatch_boolean import GtDispatchBoolean_Maker
 from gwproto.types.gt_dispatch_boolean_local import GtDispatchBooleanLocal
@@ -60,6 +68,16 @@ from gwproto.types.resistive_heater_cac_gt import ResistiveHeaterCacGt
 from gwproto.types.resistive_heater_cac_gt import ResistiveHeaterCacGt_Maker
 from gwproto.types.resistive_heater_component_gt import ResistiveHeaterComponentGt
 from gwproto.types.resistive_heater_component_gt import ResistiveHeaterComponentGt_Maker
+from gwproto.types.rest_poller_cac_gt import RESTPollerCacGt
+from gwproto.types.rest_poller_cac_gt import RESTPollerCacGt_Maker
+from gwproto.types.rest_poller_component_gt import RESTPollerComponentGt
+from gwproto.types.rest_poller_component_gt import RESTPollerComponentGt_Maker
+from gwproto.types.rest_poller_gt import AioHttpClientTimeout
+from gwproto.types.rest_poller_gt import RequestArgs
+from gwproto.types.rest_poller_gt import RESTPollerSettings
+from gwproto.types.rest_poller_gt import SessionArgs
+from gwproto.types.rest_poller_gt import URLArgs
+from gwproto.types.rest_poller_gt import URLConfig
 from gwproto.types.simple_temp_sensor_cac_gt import SimpleTempSensorCacGt
 from gwproto.types.simple_temp_sensor_cac_gt import SimpleTempSensorCacGt_Maker
 from gwproto.types.simple_temp_sensor_component_gt import SimpleTempSensorComponentGt
@@ -77,6 +95,7 @@ from gwproto.types.telemetry_snapshot_spaceheat import TelemetrySnapshotSpacehea
 
 
 __all__ = [
+    "AioHttpClientTimeout",
     "ComponentAttributeClassGt",
     "ComponentAttributeClassGt_Maker",
     "ComponentGt",
@@ -91,6 +110,10 @@ __all__ = [
     "ElectricMeterCacGt_Maker",
     # "ElectricMeterComponentGt",
     # "ElectricMeterComponentGt_Maker",
+    "FibaroTankTempSensorCacGt",
+    "FibaroTankTempSensorCacGt_Maker",
+    "FibaroTankTempSensorComponentGt",
+    "FibaroTankTempSensorComponentGt_Maker",
     "GtDispatchBoolean",
     "GtDispatchBoolean_Maker",
     "GtDispatchBooleanLocal",
@@ -127,10 +150,19 @@ __all__ = [
     "RelayCacGt_Maker",
     "RelayComponentGt",
     "RelayComponentGt_Maker",
+    "RequestArgs",
     "ResistiveHeaterCacGt",
     "ResistiveHeaterCacGt_Maker",
     "ResistiveHeaterComponentGt",
     "ResistiveHeaterComponentGt_Maker",
+    "RESTPollerSettings",
+    "RESTPollerCacGt",
+    "RESTPollerCacGt_Maker",
+    "RESTPollerComponentGt",
+    "RESTPollerComponentGt_Maker",
+    "RelayComponentGt",
+    "RelayComponentGt_Maker",
+    "SessionArgs",
     "SimpleTempSensorCacGt",
     "SimpleTempSensorCacGt_Maker",
     "SimpleTempSensorComponentGt",
@@ -143,4 +175,6 @@ __all__ = [
     "TelemetryReportingConfig_Maker",
     "TelemetrySnapshotSpaceheat",
     "TelemetrySnapshotSpaceheat_Maker",
+    "URLArgs",
+    "URLConfig",
 ]

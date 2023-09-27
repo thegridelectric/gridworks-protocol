@@ -30,7 +30,8 @@ class ShActorClass000SchemaEnum:
         "b103058f",
         "dae4b2f0",
         "7c483ad0",
-        "4a9c1785",
+        "0401b27e",
+        "e2877329",
     ]
 
     @classmethod
@@ -50,6 +51,8 @@ class ShActorClass000(StrEnum):
     SimpleSensor = auto()
     MultipurposeSensor = auto()
     Thermostat = auto()
+    HubitatTelemetryReader = auto()
+    FibaroTankTempSensor = auto()
 
     @classmethod
     def default(cls) -> "ShActorClass000":
@@ -87,6 +90,8 @@ class ActorClassMap:
         "dae4b2f0": ShActorClass000.SimpleSensor,
         "7c483ad0": ShActorClass000.MultipurposeSensor,
         "4a9c1785": ShActorClass000.Thermostat,
+        "0401b27e": ShActorClass000.HubitatTelemetryReader,
+        "e2877329": ShActorClass000.FibaroTankTempSensor,
     }
 
     versioned_enum_to_type_dict: Dict[ShActorClass000, str] = {
@@ -99,6 +104,8 @@ class ActorClassMap:
         ShActorClass000.SimpleSensor: "dae4b2f0",
         ShActorClass000.MultipurposeSensor: "7c483ad0",
         ShActorClass000.Thermostat: "4a9c1785",
+        ShActorClass000.HubitatTelemetryReader: "0401b27e",
+        ShActorClass000.FibaroTankTempSensor: "e2877329",
     }
 
 

@@ -12,13 +12,13 @@ from gwproto.types.egauge_register_config import EgaugeRegisterConfig
 from gwproto.types.egauge_register_config import EgaugeRegisterConfig_Maker
 from gwproto.types.electric_meter_cac_gt import ElectricMeterCacGt
 from gwproto.types.electric_meter_cac_gt import ElectricMeterCacGt_Maker
-from gwproto.types.fibaro_tank_temp_sensor_cac_gt import FibaroTankTempSensorCacGt
-from gwproto.types.fibaro_tank_temp_sensor_cac_gt import FibaroTankTempSensorCacGt_Maker
-from gwproto.types.fibaro_tank_temp_sensor_component_gt import (
-    FibaroTankTempSensorComponentGt,
+from gwproto.types.fibaro_smart_implant_cac_gt import FibaroSmartImplantCacGt
+from gwproto.types.fibaro_smart_implant_cac_gt import FibaroSmartImplantCacGt_Maker
+from gwproto.types.fibaro_smart_implant_component_gt import (
+    FibaroSmartImplantComponentGt,
 )
-from gwproto.types.fibaro_tank_temp_sensor_component_gt import (
-    FibaroTankTempSensorComponentGt_Maker,
+from gwproto.types.fibaro_smart_implant_component_gt import (
+    FibaroSmartImplantComponentGt_Maker,
 )
 from gwproto.types.gt_dispatch_boolean import GtDispatchBoolean
 from gwproto.types.gt_dispatch_boolean import GtDispatchBoolean_Maker
@@ -52,6 +52,18 @@ from gwproto.types.gt_telemetry import GtTelemetry
 from gwproto.types.gt_telemetry import GtTelemetry_Maker
 from gwproto.types.heartbeat_b import HeartbeatB
 from gwproto.types.heartbeat_b import HeartbeatB_Maker
+from gwproto.types.hubitat_cac_gt import HubitatCacGt
+from gwproto.types.hubitat_cac_gt import HubitatCacGt_Maker
+from gwproto.types.hubitat_component_gt import HubitatComponentGt
+from gwproto.types.hubitat_component_gt import HubitatComponentGt_Maker
+from gwproto.types.hubitat_component_gt import HubitatRESTResolutionSettings
+from gwproto.types.hubitat_tank_cac_gt import HubitatTankCacGt
+from gwproto.types.hubitat_tank_cac_gt import HubitatTankCacGt_Maker
+from gwproto.types.hubitat_tank_component_gt import HubitatTankComponentGt
+from gwproto.types.hubitat_tank_component_gt import HubitatTankComponentGt_Maker
+from gwproto.types.hubitat_tank_gt import FibaroTempSensorSettings
+from gwproto.types.hubitat_tank_gt import FibaroTempSensorSettingsGt
+from gwproto.types.hubitat_tank_gt import HubitatTankSettingsGt
 from gwproto.types.multipurpose_sensor_cac_gt import MultipurposeSensorCacGt
 from gwproto.types.multipurpose_sensor_cac_gt import MultipurposeSensorCacGt_Maker
 from gwproto.types.pipe_flow_sensor_cac_gt import PipeFlowSensorCacGt
@@ -110,10 +122,12 @@ __all__ = [
     "ElectricMeterCacGt_Maker",
     # "ElectricMeterComponentGt",
     # "ElectricMeterComponentGt_Maker",
-    "FibaroTankTempSensorCacGt",
-    "FibaroTankTempSensorCacGt_Maker",
-    "FibaroTankTempSensorComponentGt",
-    "FibaroTankTempSensorComponentGt_Maker",
+    "FibaroTempSensorSettingsGt",
+    "FibaroTempSensorSettings",
+    "FibaroSmartImplantCacGt",
+    "FibaroSmartImplantCacGt_Maker",
+    "FibaroSmartImplantComponentGt",
+    "FibaroSmartImplantComponentGt_Maker",
     "GtDispatchBoolean",
     "GtDispatchBoolean_Maker",
     "GtDispatchBooleanLocal",
@@ -136,6 +150,16 @@ __all__ = [
     "GtTelemetry_Maker",
     "HeartbeatB",
     "HeartbeatB_Maker",
+    "HubitatCacGt",
+    "HubitatCacGt_Maker",
+    "HubitatComponentGt",
+    "HubitatComponentGt_Maker",
+    "HubitatRESTResolutionSettings",
+    "HubitatTankCacGt",
+    "HubitatTankCacGt_Maker",
+    "HubitatTankComponentGt",
+    "HubitatTankComponentGt_Maker",
+    "HubitatTankSettingsGt",
     "MultipurposeSensorCacGt",
     "MultipurposeSensorCacGt_Maker",
     # "MultipurposeSensorComponentGt",

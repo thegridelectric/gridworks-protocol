@@ -3,6 +3,14 @@ import typing
 from typing import Type
 from typing import TypeVar
 
+import gwproto.types.fibaro_smart_implant_cac_gt
+import gwproto.types.fibaro_smart_implant_component_gt
+import gwproto.types.hubitat_cac_gt
+import gwproto.types.hubitat_component_gt
+import gwproto.types.hubitat_tank_cac_gt
+import gwproto.types.hubitat_tank_component_gt
+import gwproto.types.rest_poller_cac_gt
+import gwproto.types.rest_poller_component_gt
 from gwproto.data_classes.component import Component
 from gwproto.data_classes.component_attribute_class import ComponentAttributeClass
 from gwproto.decoders import PydanticTypeNameDecoder
@@ -71,15 +79,19 @@ class ComponentDecoder(PydanticTypeNameDecoder):
 default_cac_decoder = CacDecoder(
     model_name="DefaultCacDecoder",
     module_names=[
+        "gwproto.types.fibaro_smart_implant_cac_gt",
+        "gwproto.types.hubitat_cac_gt",
+        "gwproto.types.hubitat_tank_cac_gt",
         "gwproto.types.rest_poller_cac_gt",
-        "gwproto.types.fibaro_tank_temp_sensor_cac_gt",
     ],
 )
 
 default_component_decoder = ComponentDecoder(
     model_name="DefaultComponentDecoder",
     module_names=[
+        "gwproto.types.fibaro_smart_implant_component_gt",
+        "gwproto.types.hubitat_component_gt",
+        "gwproto.types.hubitat_tank_component_gt",
         "gwproto.types.rest_poller_component_gt",
-        "gwproto.types.fibaro_tank_temp_sensor_component_gt",
     ],
 )

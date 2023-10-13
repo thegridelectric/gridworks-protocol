@@ -32,7 +32,7 @@ class ActorClass(StrEnum):
     MultipurposeSensor = auto()
     Thermostat = auto()
     HubitatTelemetryReader = auto()
-    FibaroTankTempSensor = auto()
+    HubitatTankModule = auto()
 
     @classmethod
     def default(cls) -> "ActorClass":

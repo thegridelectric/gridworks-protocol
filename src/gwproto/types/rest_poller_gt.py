@@ -2,6 +2,7 @@
 REST commands into a message posted to main processing thread.
 
 """
+from functools import cached_property
 from typing import Literal
 from typing import Optional
 from typing import Tuple
@@ -93,7 +94,7 @@ class URLConfig(BaseModel):
         return self.make_url(self)
 
     @classmethod
-    def make_url(cls, url_config: "URLConfig") -> Optional[yarl.URL]:
+    def make_url_args(cls, url_config: "URLConfig") -> Optional[dict]:
         if url_config is None:
             return None
 
@@ -113,7 +114,15 @@ class URLConfig(BaseModel):
             if url_config.url_path_args:
                 path = path.format(**url_config.url_path_args)
             url_args["path"] = path
-        return yarl.URL.build(**url_args)
+
+        return url_args
+
+    @classmethod
+    def make_url(cls, url_config: "URLConfig") -> Optional[yarl.URL]:
+        args = URLConfig.make_url_args(url_config)
+        if args:
+            return yarl.URL.build(**args)
+        return None
 
 
 class AioHttpClientTimeout(BaseModel):
@@ -157,9 +166,43 @@ class RESTPollerSettings(BaseModel):
     request: RequestArgs = RequestArgs()
     poll_period_seconds: float = 60
 
+    def url_args(self) -> dict:
+        session_args = URLConfig.make_url_args(self.session.base_url)
+        request_args = URLConfig.make_url_args(self.request.url)
+        if session_args is None and request_args is None:
+            if session_args is None and request_args is None:
+                raise ValueError(
+                    "Neither session.base_url nor request.url produces a URL"
+                )
+        if session_args is not None:
+            url_args = session_args
+            if request_args is not None:
+                url_args.update(request_args)
+        else:
+            url_args = request_args
+        return url_args
+
+    @cached_property
+    def url(self) -> yarl.URL:
+        if self.session.base_url is None and self.request.url is None:
+            raise ValueError("Neither session.base_url nor request.url produces a URL")
+        session_args = URLConfig.make_url_args(self.session.base_url)
+        request_args = URLConfig.make_url_args(self.request.url)
+        if session_args is not None:
+            url_args = session_args
+            if request_args is not None:
+                url_args.update(request_args)
+        else:
+            url_args = request_args
+        return yarl.URL.build(**url_args)
+
+    def clear_property_cache(self):
+        del self.__dict__["url"]
+
     class Config:
         alias_generator = snake_to_camel
         allow_population_by_field_name = True
+        keep_untouched = (cached_property,)
 
     @root_validator(skip_on_failure=True)
     def post_root_validator(cls, values: dict) -> dict:

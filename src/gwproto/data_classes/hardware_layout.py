@@ -22,6 +22,7 @@ from gwproto.data_classes.components.electric_meter_component import (
     ElectricMeterComponent,
 )
 from gwproto.data_classes.errors import DataClassLoadingError
+from gwproto.data_classes.resolver import ComponentResolver
 from gwproto.data_classes.sh_node import ShNode
 from gwproto.data_classes.telemetry_tuple import TelemetryTuple
 from gwproto.default_decoders import CacDecoder
@@ -188,6 +189,26 @@ class HardwareLayout:
         if nodes is None:
             nodes = ShNode.by_id
         self.nodes = dict(nodes)
+        self._resolve()
+
+    def _resolve(self):
+        for node in self.nodes.values():
+            component = node.component
+            if isinstance(component, ComponentResolver):
+                component.resolve(
+                    node.alias,
+                    self.nodes,
+                    self.components,
+                )
+        self.clear_property_cache()
+
+    def clear_property_cache(self):
+        for cached_prop_name in [
+            prop_name
+            for prop_name in type(self).__dict__
+            if isinstance(type(self).__dict__[prop_name], cached_property)
+        ]:
+            self.__dict__.pop(cached_prop_name, None)
 
     @classmethod
     def load(
@@ -429,23 +450,24 @@ class HardwareLayout:
 
     @cached_property
     def all_multipurpose_telemetry_tuples(self) -> List[TelemetryTuple]:
-        all_nodes = list(self.nodes.values())
         multi_nodes = list(
             filter(
                 lambda x: (
-                    x.actor_class == ActorClass.MultipurposeSensor
+                    (
+                        x.actor_class == ActorClass.MultipurposeSensor
+                        or x.actor_class == ActorClass.HubitatTankModule
+                    )
                     and hasattr(x.component, "config_list")
                 ),
-                all_nodes,
+                self.nodes.values(),
             )
         )
         telemetry_tuples = []
         for node in multi_nodes:
             for config in getattr(node.component, "config_list"):
-                about_node = self.node(config.AboutNodeName)
                 telemetry_tuples.append(
                     TelemetryTuple(
-                        AboutNode=about_node,
+                        AboutNode=self.node(config.AboutNodeName),
                         SensorNode=node,
                         TelemetryName=config.TelemetryName,
                     )

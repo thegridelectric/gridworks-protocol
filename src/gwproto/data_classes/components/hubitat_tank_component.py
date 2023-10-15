@@ -4,17 +4,18 @@ import yarl
 
 from gwproto.data_classes.component import Component
 from gwproto.data_classes.components.hubitat_component import HubitatComponent
+from gwproto.data_classes.resolver import ComponentResolver
 from gwproto.data_classes.sh_node import ShNode
 from gwproto.types.hubitat_component_gt import HubitatComponentGt
 from gwproto.types.hubitat_component_gt import HubitatRESTResolutionSettings
 from gwproto.types.hubitat_gt import HubitatGt
-from gwproto.types.hubitat_tank_gt import DEFAULT_SENSOR_NODE_NAME_FORMAT
 from gwproto.types.hubitat_tank_gt import FibaroTempSensorSettings
 from gwproto.types.hubitat_tank_gt import FibaroTempSensorSettingsGt
 from gwproto.types.hubitat_tank_gt import HubitatTankSettingsGt
+from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
 
 
-class HubitatTankComponent(Component):
+class HubitatTankComponent(Component, ComponentResolver):
     hubitat: HubitatComponentGt
     devices_gt: list[FibaroTempSensorSettingsGt]
     devices: list[FibaroTempSensorSettings] = []
@@ -52,9 +53,8 @@ class HubitatTankComponent(Component):
     def resolve(
         self,
         tank_node_name: str,
-        components: dict[str, Component],
         nodes: dict[str, ShNode],
-        node_name_format=DEFAULT_SENSOR_NODE_NAME_FORMAT,
+        components: dict[str, Component],
     ):
         hubitat_component = components.get(self.hubitat.ComponentId, None)
         if hubitat_component is None:
@@ -76,7 +76,6 @@ class HubitatTankComponent(Component):
                 tank_name=tank_node_name,
                 settings_gt=device_gt,
                 hubitat=hubitat_settings,
-                node_name_format=node_name_format,
             )
             for device_gt in self.devices_gt
             if device_gt.enabled
@@ -96,3 +95,17 @@ class HubitatTankComponent(Component):
         for device in self.devices:
             urls[device.node_name] = device.url
         return urls
+
+    @property
+    def config_list(self) -> list[TelemetryReportingConfig]:
+        return [
+            TelemetryReportingConfig(
+                TelemetryName=device.telemetry_name,
+                AboutNodeName=device.node_name,
+                ReportOnChange=False,
+                SamplePeriodS=int(device.rest.poll_period_seconds),
+                Exponent=device.exponent,
+                Unit=device.unit,
+            )
+            for device in self.devices
+        ]

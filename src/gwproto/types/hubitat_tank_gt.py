@@ -10,12 +10,14 @@ from pydantic import conint
 from pydantic import validator
 
 from gwproto.enums import TelemetryName as EnumTelemetryName
-from gwproto.types.data_channel import TelemetryNameMap
+from gwproto.enums import Unit as EnumUnit
 from gwproto.types.hubitat_component_gt import HubitatRESTResolutionSettings
 from gwproto.types.rest_poller_gt import RequestArgs
 from gwproto.types.rest_poller_gt import RESTPollerSettings
 from gwproto.types.rest_poller_gt import URLArgs
 from gwproto.types.rest_poller_gt import URLConfig
+from gwproto.types.simple_temp_sensor_cac_gt import TelemetryNameMap
+from gwproto.types.simple_temp_sensor_cac_gt import UnitMap
 from gwproto.utils import snake_to_camel
 
 
@@ -34,6 +36,7 @@ class FibaroTempSensorSettingsGt(BaseModel):
     analog_input_id: conint(ge=1, le=2)
     exponent: int = 1
     telemetry_name_gt_enum_symbol: str = "c89d0ba1"
+    temp_unit_gt_enum_symbol: str = "ec14bd47"
     enabled: bool = True
     rest: Optional[RESTPollerSettings] = None
 
@@ -46,6 +49,12 @@ class FibaroTempSensorSettingsGt(BaseModel):
     def _check_telemetry_name_symbol(cls, v: str) -> str:
         if v not in TelemetryNameMap.type_to_versioned_enum_dict:
             v = TelemetryNameMap.local_to_type(EnumTelemetryName.default())
+        return v
+
+    @validator("temp_unit_gt_enum_symbol")
+    def _checktemp_unit_gt_enum_symbol(cls, v: str) -> str:
+        if v not in UnitMap.type_to_versioned_enum_dict:
+            v = UnitMap.local_to_type(EnumUnit.default())
         return v
 
 
@@ -72,6 +81,12 @@ class FibaroTempSensorSettings(FibaroTempSensorSettingsGt):
     def telemetry_name(self) -> EnumTelemetryName:
         return TelemetryNameMap.type_to_local(
             self.telemetry_name_gt_enum_symbol,
+        )
+
+    @property
+    def unit(self) -> EnumUnit:
+        return UnitMap.type_to_local(
+            self.temp_unit_gt_enum_symbol,
         )
 
     @cached_property

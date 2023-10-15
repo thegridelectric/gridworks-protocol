@@ -103,57 +103,6 @@ class FibaroTempSensorSettings(FibaroTempSensorSettingsGt):
         ]:
             self.__dict__.pop(prop, None)
 
-    def validate_url(self, hubitat: HubitatRESTResolutionSettings):
-        url_str = ""
-        try:
-            url_str = str(self.rest.url)
-
-            # check host
-            if hubitat.component_gt.Host != self.rest.url.host:
-                raise ValueError(
-                    "ERROR host expected to be "
-                    f"{hubitat.component_gt.Host} but host in url is "
-                    f"{self.rest.url.host}, from url: <{url_str}>"
-                )
-
-            # check api_id
-            if hubitat.component_gt.MakerApiId != self.api_id:
-                raise ValueError(
-                    "ERROR api_id expected to be "
-                    f"{hubitat.component_gt.MakerApiId} but api_id in url is "
-                    f"{self.api_id}, from url: <{url_str}>"
-                )
-
-            # check device_id
-            id_match = HUBITAT_ID_REGEX.match(url_str)
-            if not id_match:
-                raise ValueError(
-                    f"ERROR. ID regex <{HUBITAT_ID_REGEX.pattern}> failed to match "
-                    f" url <{url_str}>"
-                )
-            found_device_id = int(id_match.group("device_id"))
-            if self.device_id != found_device_id:
-                raise ValueError(
-                    "ERROR explicit device_id is "
-                    f"{self.device_id} but device in url is "
-                    f"{found_device_id}, from url: <{url_str}>"
-                )
-
-            # check token match
-            if hubitat.component_gt.AccessToken != self.access_token:
-                raise ValueError(
-                    "ERROR explicit access_token is "
-                    f"{hubitat.component_gt.AccessToken} but device in url is "
-                    f"{self.access_token}, from url: <{url_str}>"
-                )
-
-        except BaseException as e:
-            if isinstance(e, ValueError):
-                raise e
-            raise ValueError(
-                f"ERROR in FibaroTempSensorSettings.validate_url() for url <{url_str}>"
-            ) from e
-
     def resolve_rest(
         self,
         hubitat: HubitatRESTResolutionSettings,
@@ -188,24 +137,24 @@ class FibaroTempSensorSettings(FibaroTempSensorSettingsGt):
         self.rest.clear_property_cache()
 
         # Verify new URL produced by combining any inline REST configuration
-        # with hubitate configuration is valid.
+        # with hubitat configuration is valid.
         url_str = ""
         try:
             url_str = str(self.rest.url)
-
+            hubitat_gt = hubitat.component_gt.Hubitat
             # check host
-            if hubitat.component_gt.Host != self.rest.url.host:
+            if hubitat_gt.Host != self.rest.url.host:
                 raise ValueError(
                     "ERROR host expected to be "
-                    f"{hubitat.component_gt.Host} but host in url is "
+                    f"{hubitat_gt.Host} but host in url is "
                     f"{self.rest.url.host}, from url: <{url_str}>"
                 )
 
             # check api_id
-            if hubitat.component_gt.MakerApiId != self.api_id:
+            if hubitat_gt.MakerApiId != self.api_id:
                 raise ValueError(
                     "ERROR api_id expected to be "
-                    f"{hubitat.component_gt.MakerApiId} but api_id in url is "
+                    f"{hubitat_gt.MakerApiId} but api_id in url is "
                     f"{self.api_id}, from url: <{url_str}>"
                 )
 
@@ -225,10 +174,10 @@ class FibaroTempSensorSettings(FibaroTempSensorSettingsGt):
                 )
 
             # check token match
-            if hubitat.component_gt.AccessToken != self.access_token:
+            if hubitat_gt.AccessToken != self.access_token:
                 raise ValueError(
                     "ERROR explicit access_token is "
-                    f"{hubitat.component_gt.AccessToken} but device in url is "
+                    f"{hubitat_gt.AccessToken} but device in url is "
                     f"{self.access_token}, from url: <{url_str}>"
                 )
 

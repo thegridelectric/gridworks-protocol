@@ -1,32 +1,29 @@
 from typing import Optional
 
+import yarl
+
 from gwproto.data_classes.component import Component
+from gwproto.types.hubitat_gt import HubitatGt
 
 
 class HubitatComponent(Component):
-    host: str
-    maker_api_id: int
-    access_token: str
-    mac_address: str
+    hubitat_gt: HubitatGt
 
     def __init__(
         self,
         component_id: str,
         component_attribute_class_id: str,
-        host: str,
-        maker_api_id: int,
-        access_token: str,
-        mac_address: str,
+        hubitat_gt: HubitatGt,
         display_name: Optional[str] = None,
         hw_uid: Optional[str] = None,
     ):
-        self.host = host
-        self.maker_api_id = maker_api_id
-        self.access_token = access_token
-        self.mac_address = mac_address
+        self.hubitat_gt = hubitat_gt
         super().__init__(
             component_id=component_id,
             component_attribute_class_id=component_attribute_class_id,
             display_name=display_name,
             hw_uid=hw_uid,
         )
+
+    def urls(self) -> dict[str, Optional[yarl.URL]]:
+        return self.hubitat_gt.urls()

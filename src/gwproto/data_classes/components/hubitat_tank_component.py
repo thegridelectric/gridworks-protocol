@@ -1,10 +1,13 @@
 from typing import Optional
 
+import yarl
+
 from gwproto.data_classes.component import Component
 from gwproto.data_classes.components.hubitat_component import HubitatComponent
 from gwproto.data_classes.sh_node import ShNode
 from gwproto.types.hubitat_component_gt import HubitatComponentGt
 from gwproto.types.hubitat_component_gt import HubitatRESTResolutionSettings
+from gwproto.types.hubitat_gt import HubitatGt
 from gwproto.types.hubitat_tank_gt import DEFAULT_SENSOR_NODE_NAME_FORMAT
 from gwproto.types.hubitat_tank_gt import FibaroTempSensorSettings
 from gwproto.types.hubitat_tank_gt import FibaroTempSensorSettingsGt
@@ -31,10 +34,12 @@ class HubitatTankComponent(Component):
         self.hubitat = HubitatComponentGt(
             ComponentId=tank_gt.hubitat_component_id,
             ComponentAttributeClassId="00000000-0000-0000-0000-000000000000",
-            Host="",
-            MakerApiId=-1,
-            AccessToken="",
-            MacAddress="000000000000",
+            Hubitat=HubitatGt(
+                Host="",
+                MakerApiId=-1,
+                AccessToken="",
+                MacAddress="000000000000",
+            ),
         )
         self.devices_gt = list(tank_gt.devices)
         super().__init__(
@@ -85,3 +90,9 @@ class HubitatTankComponent(Component):
         # with the actual hubitat component containing data.
         self.hubitat = hubitat_component_gt
         self.devices = devices
+
+    def urls(self) -> dict[str, Optional[yarl.URL]]:
+        urls = self.hubitat.urls()
+        for device in self.devices:
+            urls[device.node_name] = device.url
+        return urls

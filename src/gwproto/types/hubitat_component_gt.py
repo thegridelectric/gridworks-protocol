@@ -3,25 +3,20 @@ import typing
 from typing import Any
 from typing import Dict
 from typing import Literal
+from typing import Optional
 
-from gridworks.property_format import predicate_validator
+import yarl
 
 from gwproto.data_classes.component import Component
 from gwproto.data_classes.components.hubitat_component import HubitatComponent
 from gwproto.types.component_gt import ComponentGt
-from gwproto.types.rest_poller_gt import URLArgs
+from gwproto.types.hubitat_gt import HubitatGt
 from gwproto.types.rest_poller_gt import URLConfig
-from gwproto.utils import has_mac_address_format
 
 
 class HubitatComponentGt(ComponentGt):
-    Host: str
-    MakerApiId: int
-    AccessToken: str
-    MacAddress: str
+    Hubitat: HubitatGt
     TypeName: Literal["hubitat.component.gt"] = "hubitat.component.gt"
-
-    _is_mac_address = predicate_validator("MacAddress", has_mac_address_format)
 
     def as_dict(self) -> Dict[str, Any]:
         return self.dict(exclude_unset=True)
@@ -33,40 +28,22 @@ class HubitatComponentGt(ComponentGt):
         return hash((type(self),) + tuple(self.__dict__.values()))
 
     def url_config(self) -> URLConfig:
-        return URLConfig(
-            url_args=URLArgs(
-                scheme="http",
-                host=self.Host,
-                query=[("access_token", self.AccessToken)],
-            ),
-            url_path_format="/apps/api/{app_id}",
-            url_path_args={"app_id": self.MakerApiId},
-        )
+        return self.Hubitat.url_config()
 
     def maker_api_url_config(self) -> URLConfig:
-        config = self.url_config()
-        if config.url_args.query is None:
-            config.url_args.query = []
-        config.url_args.query.append(("access_token", self.AccessToken))
-        if config.url_path_format is None:
-            config.url_path_format = ""
-        config.url_path_format += "/apps/api/{app_id}"
-        if config.url_path_args is None:
-            config.url_path_args = {}
-        config.url_path_args.update({"app_id": self.MakerApiId})
-        return config
+        return self.Hubitat.maker_api_url_config()
+
+    def urls(self) -> dict[str, Optional[yarl.URL]]:
+        return self.Hubitat.urls()
 
     @classmethod
     def from_data_class(cls, component: HubitatComponent) -> "HubitatComponentGt":
         return HubitatComponentGt(
             ComponentId=component.component_id,
             ComponentAttributeClassId=component.component_attribute_class_id,
-            Host=component.host,
-            MakerApiId=component.maker_api_id,
-            AccessToken=component.access_token,
+            Hubitat=component.hubitat_gt,
             DisplayName=component.display_name,
             HwUid=component.hw_uid,
-            MacAddress=component.mac_address,
         )
 
     def to_data_class(self) -> HubitatComponent:
@@ -76,12 +53,9 @@ class HubitatComponentGt(ComponentGt):
         return HubitatComponent(
             component_id=self.ComponentId,
             component_attribute_class_id=self.ComponentAttributeClassId,
-            host=self.Host,
-            maker_api_id=self.MakerApiId,
-            access_token=self.AccessToken,
+            hubitat_gt=self.Hubitat,
             display_name=self.DisplayName,
             hw_uid=self.HwUid,
-            mac_address=self.MacAddress,
         )
 
 

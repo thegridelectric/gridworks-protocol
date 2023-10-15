@@ -4,18 +4,24 @@ from typing import Any
 from typing import Dict
 from typing import Literal
 
+from gridworks.property_format import predicate_validator
+
 from gwproto.data_classes.component import Component
 from gwproto.data_classes.components.hubitat_component import HubitatComponent
 from gwproto.types.component_gt import ComponentGt
 from gwproto.types.rest_poller_gt import URLArgs
 from gwproto.types.rest_poller_gt import URLConfig
+from gwproto.utils import has_mac_address_format
 
 
 class HubitatComponentGt(ComponentGt):
     Host: str
     MakerApiId: int
     AccessToken: str
+    MacAddress: str
     TypeName: Literal["hubitat.component.gt"] = "hubitat.component.gt"
+
+    _is_mac_address = predicate_validator("MacAddress", has_mac_address_format)
 
     def as_dict(self) -> Dict[str, Any]:
         return self.dict(exclude_unset=True)
@@ -60,6 +66,7 @@ class HubitatComponentGt(ComponentGt):
             AccessToken=component.access_token,
             DisplayName=component.display_name,
             HwUid=component.hw_uid,
+            MacAddress=component.mac_address,
         )
 
     def to_data_class(self) -> HubitatComponent:
@@ -74,6 +81,7 @@ class HubitatComponentGt(ComponentGt):
             access_token=self.AccessToken,
             display_name=self.DisplayName,
             hw_uid=self.HwUid,
+            mac_address=self.MacAddress,
         )
 
 

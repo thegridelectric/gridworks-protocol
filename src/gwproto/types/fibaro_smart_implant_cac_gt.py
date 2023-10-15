@@ -5,6 +5,7 @@ from typing import Literal
 
 from pydantic import UUID4
 from pydantic import BaseModel
+from pydantic import Extra
 from pydantic import validator
 
 from gwproto.data_classes.cacs.fibaro_smart_implant_cac import FibaroSmartImplantCac
@@ -14,8 +15,12 @@ from gwproto.data_classes.component_attribute_class import ComponentAttributeCla
 class FibaroSmartImplantCacGt(BaseModel):
     ComponentAttributeClassId: str
     DisplayName: typing.Optional[str] = None
+    Model: str = ""
     TypeName: Literal["fibaro.smart.implant.cac.gt"] = "fibaro.smart.implant.cac.gt"
     Version: str = "000"
+
+    class Config:
+        extra = Extra.allow
 
     @validator("ComponentAttributeClassId")
     def _check_component_attribute_class_id(cls, v: str) -> str:

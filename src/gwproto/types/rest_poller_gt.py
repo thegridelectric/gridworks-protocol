@@ -152,7 +152,7 @@ class RequestArgs(BaseModel):
     params: Optional[dict] = None
     data: Optional[dict | list | tuple] = None
     headers: Optional[dict] = None
-    timeout: Optional[AioHttpClientTimeout] = None
+    timeout: AioHttpClientTimeout = None
     ssl: Optional[bool] = None
 
     class Config:
@@ -197,7 +197,7 @@ class RESTPollerSettings(BaseModel):
         return yarl.URL.build(**url_args)
 
     def clear_property_cache(self):
-        del self.__dict__["url"]
+        self.__dict__.pop("url", None)
 
     class Config:
         alias_generator = snake_to_camel

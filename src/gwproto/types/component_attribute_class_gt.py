@@ -68,7 +68,7 @@ class ComponentAttributeClassGt(BaseModel):
             check_is_uuid_canonical_textual(v)
         except ValueError as e:
             raise ValueError(
-                f"ComponentAttributeClassId failed UuidCanonicalTextual format validation: {e}"
+                f"ComponentAttributeClassId <{v}> failed UuidCanonicalTextual format validation: {e}"
             )
         return v
 

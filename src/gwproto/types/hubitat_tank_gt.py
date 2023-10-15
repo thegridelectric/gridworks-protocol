@@ -32,8 +32,9 @@ class FibaroTempSensorSettingsGt(BaseModel):
     device_id: int
     fibaro_component_id: str
     analog_input_id: conint(ge=1, le=2)
-    exponent: int
-    telemetry_name_gt_enum_symbol: str
+    exponent: int = 1
+    telemetry_name_gt_enum_symbol: str = "c89d0ba1"
+    enabled: bool = True
     rest: Optional[RESTPollerSettings] = None
 
     class Config:
@@ -59,15 +60,12 @@ class FibaroTempSensorSettings(FibaroTempSensorSettingsGt):
 
     @validator("rest")
     def _collapse_rest_url(cls, v: Optional[RESTPollerSettings]):
-        if v is None:
-            raise ValueError(
-                "rest configuration must specified for FibaroTempSensorSettings"
-            )
-        # Collapse session.base_url and request.url into
-        # request.url.
-        collapsed_url = v.url
-        v.session.base_url = URLConfig()
-        v.request.url.url_args = URLArgs.from_url(collapsed_url)
+        if v is not None:
+            # Collapse session.base_url and request.url into
+            # request.url.
+            collapsed_url = v.url
+            v.session.base_url = URLConfig()
+            v.request.url.url_args = URLArgs.from_url(collapsed_url)
         return v
 
     @property
@@ -96,11 +94,14 @@ class FibaroTempSensorSettings(FibaroTempSensorSettingsGt):
         return None
 
     def clear_property_cache(self):
-        del self.__dict__["url"]
-        del self.__dict__["api_id"]
-        del self.__dict__["access_token"]
         if self.rest is not None:
             self.rest.clear_property_cache()
+        for prop in [
+            "url",
+            "api_id",
+            "access_token",
+        ]:
+            self.__dict__.pop(prop, None)
 
     def validate_url(self, hubitat: HubitatRESTResolutionSettings):
         url_str = ""

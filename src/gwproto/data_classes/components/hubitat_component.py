@@ -7,6 +7,7 @@ class HubitatComponent(Component):
     host: str
     maker_api_id: int
     access_token: str
+    mac_address: str
 
     def __init__(
         self,
@@ -15,12 +16,14 @@ class HubitatComponent(Component):
         host: str,
         maker_api_id: int,
         access_token: str,
+        mac_address: str,
         display_name: Optional[str] = None,
         hw_uid: Optional[str] = None,
     ):
         self.host = host
         self.maker_api_id = maker_api_id
         self.access_token = access_token
+        self.mac_address = mac_address
         super().__init__(
             component_id=component_id,
             component_attribute_class_id=component_attribute_class_id,

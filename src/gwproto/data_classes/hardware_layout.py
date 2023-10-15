@@ -88,7 +88,7 @@ def load_cacs(
                 errors.append(LoadError(type_name, d, e))
     if cac_decoder is None:
         cac_decoder = default_cac_decoder
-    for d in layout.get("OtherCacs", {}):
+    for d in layout.get("OtherCacs", []):
         cac_type = d.get("TypeName", "")
         try:
             if cac_type and cac_type in cac_decoder:
@@ -142,8 +142,27 @@ def load_components(
         except Exception as e:
             if raise_errors:
                 raise e
-            errors.append(LoadError(type_name, d, e))
+            errors.append(LoadError("OtherComponents", d, e))
     return components
+
+
+def load_nodes(
+    layout: dict,
+    raise_errors: bool = True,
+    errors: Optional[list[LoadError]] = None,
+    included_node_names: Optional[set[str]] = None,
+) -> dict:
+    nodes = {}
+    for d in layout.get("ShNodes", []):
+        try:
+            node_name = d["Alias"]
+            if included_node_names is None or node_name in included_node_names:
+                nodes[node_name] = SpaceheatNodeGt_Maker.dict_to_dc(d)
+        except Exception as e:
+            if raise_errors:
+                raise e
+            errors.append(LoadError("ShNode", d, e))
+    return nodes
 
 
 class HardwareLayout:
@@ -155,9 +174,9 @@ class HardwareLayout:
     def __init__(
         self,
         layout: dict,
-        included_node_names: Optional[set[str]] = None,
-        cacs: Optional[dict] = None,
-        components: Optional[dict] = None,
+        cacs: Optional[dict[str, ComponentAttributeClass]] = None,
+        components: Optional[dict[str, Component]] = None,
+        nodes: Optional[dict[str, ShNode]] = None,
     ):
         self.layout = copy.deepcopy(layout)
         if cacs is None:
@@ -166,11 +185,9 @@ class HardwareLayout:
         if components is None:
             components = Component.by_id
         self.components = dict(components)
-        self.nodes = {
-            node_dict["Alias"]: SpaceheatNodeGt_Maker.dict_to_dc(node_dict)
-            for node_dict in self.layout.get("ShNodes", [])
-            if included_node_names is None or node_dict["Alias"] in included_node_names
-        }
+        if nodes is None:
+            nodes = ShNode.by_id
+        self.nodes = dict(nodes)
 
     @classmethod
     def load(
@@ -205,23 +222,26 @@ class HardwareLayout:
     ) -> "HardwareLayout":
         if errors is None:
             errors: list[LoadError] = []
-        cacs = load_cacs(
-            layout=layout,
-            raise_errors=raise_errors,
-            errors=errors,
-            cac_decoder=cac_decoder,
-        )
-        components = load_components(
-            layout=layout,
-            raise_errors=raise_errors,
-            errors=errors,
-            component_decoder=component_decorder,
-        )
         return HardwareLayout(
             layout,
-            included_node_names=included_node_names,
-            cacs=cacs,
-            components=components,
+            cacs=load_cacs(
+                layout=layout,
+                raise_errors=raise_errors,
+                errors=errors,
+                cac_decoder=cac_decoder,
+            ),
+            components=load_components(
+                layout=layout,
+                raise_errors=raise_errors,
+                errors=errors,
+                component_decoder=component_decorder,
+            ),
+            nodes=load_nodes(
+                layout=layout,
+                raise_errors=raise_errors,
+                errors=errors,
+                included_node_names=included_node_names,
+            ),
         )
 
     def node(self, alias: str, default: Any = None) -> ShNode:

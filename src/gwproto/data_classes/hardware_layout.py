@@ -166,6 +166,33 @@ def load_nodes(
     return nodes
 
 
+def resolve_links(
+    nodes: dict[str, ShNode] = None,
+    components: dict[str, Component] = None,
+    raise_errors: bool = True,
+    errors: Optional[list[LoadError]] = None,
+) -> None:
+    for node_name, node in nodes.items():
+        d = dict(node=dict(name=node_name, node=node))
+        try:
+            if node.component_id is not None:
+                component = components.get(node.component_id, None)
+                if component is None:
+                    raise DataClassLoadingError(
+                        f"{node.alias} component {node.component_id} not loaded!"
+                    )
+                if isinstance(component, ComponentResolver):
+                    component.resolve(
+                        node.alias,
+                        nodes,
+                        components,
+                    )
+        except Exception as e:
+            if raise_errors:
+                raise e
+            errors.append(LoadError("ShNode", d, e))
+
+
 class HardwareLayout:
     layout: dict
     cacs: dict[str, ComponentAttributeClass]
@@ -189,18 +216,6 @@ class HardwareLayout:
         if nodes is None:
             nodes = ShNode.by_id
         self.nodes = dict(nodes)
-        self._resolve()
-
-    def _resolve(self):
-        for node in self.nodes.values():
-            component = node.component
-            if isinstance(component, ComponentResolver):
-                component.resolve(
-                    node.alias,
-                    self.nodes,
-                    self.components,
-                )
-        self.clear_property_cache()
 
     def clear_property_cache(self):
         for cached_prop_name in [
@@ -218,7 +233,7 @@ class HardwareLayout:
         raise_errors: bool = True,
         errors: Optional[list[LoadError]] = None,
         cac_decoder: Optional[CacDecoder] = None,
-        component_decorder: Optional[ComponentDecoder] = None,
+        component_decoder: Optional[ComponentDecoder] = None,
     ) -> "HardwareLayout":
         with Path(layout_path).open() as f:
             layout: dict = json.loads(f.read())
@@ -228,7 +243,7 @@ class HardwareLayout:
             raise_errors=raise_errors,
             errors=errors,
             cac_decoder=cac_decoder,
-            component_decorder=component_decorder,
+            component_decoder=component_decoder,
         )
 
     @classmethod
@@ -239,12 +254,11 @@ class HardwareLayout:
         raise_errors: bool = True,
         errors: Optional[list[LoadError]] = None,
         cac_decoder: Optional[CacDecoder] = None,
-        component_decorder: Optional[ComponentDecoder] = None,
+        component_decoder: Optional[ComponentDecoder] = None,
     ) -> "HardwareLayout":
         if errors is None:
             errors: list[LoadError] = []
-        return HardwareLayout(
-            layout,
+        load_args = dict(
             cacs=load_cacs(
                 layout=layout,
                 raise_errors=raise_errors,
@@ -255,7 +269,7 @@ class HardwareLayout:
                 layout=layout,
                 raise_errors=raise_errors,
                 errors=errors,
-                component_decoder=component_decorder,
+                component_decoder=component_decoder,
             ),
             nodes=load_nodes(
                 layout=layout,
@@ -264,6 +278,13 @@ class HardwareLayout:
                 included_node_names=included_node_names,
             ),
         )
+        resolve_links(
+            load_args["nodes"],
+            load_args["components"],
+            raise_errors=raise_errors,
+            errors=errors,
+        )
+        return HardwareLayout(layout, **load_args)
 
     def node(self, alias: str, default: Any = None) -> ShNode:
         return self.nodes.get(alias, default)

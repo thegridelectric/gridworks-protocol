@@ -80,7 +80,7 @@ def load_cacs(
         ("MultipurposeSensorCacs", MultipurposeSensorCacGt_Maker),
         ("SimpleTempSensorCacs", SimpleTempSensorCacGt_Maker),
     ]:
-        for d in layout.get(type_name, {}):
+        for d in layout.get(type_name, []):
             try:
                 cacs[d["ComponentAttributeClassId"]] = maker_class.dict_to_dc(d)
             except Exception as e:
@@ -123,7 +123,7 @@ def load_components(
         ("MultipurposeSensorComponents", MultipurposeSensorComponentGt_Maker),
         ("SimpleTempSensorComponents", SimpleTempSensorComponentGt_Maker),
     ]:
-        for d in layout[type_name]:
+        for d in layout.get(type_name, []):
             try:
                 components[d["ComponentId"]] = maker_class.dict_to_dc(d)
             except Exception as e:

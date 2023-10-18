@@ -3,34 +3,20 @@ import typing
 from typing import Any
 from typing import Literal
 
-from pydantic import UUID4
-from pydantic import BaseModel
 from pydantic import Extra
-from pydantic import validator
 
 from gwproto.data_classes.cacs.fibaro_smart_implant_cac import FibaroSmartImplantCac
 from gwproto.data_classes.component_attribute_class import ComponentAttributeClass
+from gwproto.types import ComponentAttributeClassGt
 
 
-class FibaroSmartImplantCacGt(BaseModel):
-    ComponentAttributeClassId: str
-    DisplayName: typing.Optional[str] = None
+class FibaroSmartImplantCacGt(ComponentAttributeClassGt):
     Model: str = ""
     TypeName: Literal["fibaro.smart.implant.cac.gt"] = "fibaro.smart.implant.cac.gt"
     Version: str = "000"
 
     class Config:
         extra = Extra.allow
-
-    @validator("ComponentAttributeClassId")
-    def _check_component_attribute_class_id(cls, v: str) -> str:
-        return str(UUID4(v))
-
-    def as_dict(self) -> typing.Dict[str, Any]:
-        return self.dict(exclude_unset=True)
-
-    def as_type(self) -> str:
-        return json.dumps(self.as_dict())
 
     @classmethod
     def from_data_class(cls, cac: FibaroSmartImplantCac) -> "FibaroSmartImplantCacGt":

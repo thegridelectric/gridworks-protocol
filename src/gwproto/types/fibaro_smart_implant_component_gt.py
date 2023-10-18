@@ -1,7 +1,6 @@
 import json
 import typing
 from typing import Any
-from typing import Dict
 
 from gwproto.data_classes.component import Component
 from gwproto.data_classes.components.fibaro_smart_implant_component import (
@@ -15,12 +14,6 @@ class FibaroSmartImplantComponentGt(ComponentGt):
     TypeName: typing.Literal[
         "fibaro.smart.implant.component.gt"
     ] = "fibaro.smart.implant.component.gt"
-
-    def as_dict(self) -> Dict[str, Any]:
-        return self.dict(exclude_unset=True)
-
-    def as_type(self) -> str:
-        return json.dumps(self.as_dict())
 
     def __hash__(self):
         return hash((type(self),) + tuple(self.__dict__.values()))

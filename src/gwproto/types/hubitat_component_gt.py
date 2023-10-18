@@ -18,12 +18,6 @@ class HubitatComponentGt(ComponentGt):
     Hubitat: HubitatGt
     TypeName: Literal["hubitat.component.gt"] = "hubitat.component.gt"
 
-    def as_dict(self) -> Dict[str, Any]:
-        return self.dict(exclude_unset=True)
-
-    def as_type(self) -> str:
-        return json.dumps(self.as_dict())
-
     def __hash__(self):
         return hash((type(self),) + tuple(self.__dict__.values()))
 

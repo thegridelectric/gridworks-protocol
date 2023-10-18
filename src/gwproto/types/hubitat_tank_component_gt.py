@@ -2,7 +2,6 @@ import copy
 import json
 import typing
 from typing import Any
-from typing import Dict
 from typing import Literal
 
 from gwproto.data_classes.component import Component
@@ -14,12 +13,6 @@ from gwproto.types.hubitat_tank_gt import HubitatTankSettingsGt
 class HubitatTankComponentGt(ComponentGt):
     Tank: HubitatTankSettingsGt
     TypeName: Literal["hubitat.tank.component.gt"] = "hubitat.tank.component.gt"
-
-    def as_dict(self) -> Dict[str, Any]:
-        return self.dict(exclude_unset=True)
-
-    def as_type(self) -> str:
-        return json.dumps(self.as_dict())
 
     def __hash__(self):
         return hash((type(self),) + tuple(self.__dict__.values()))

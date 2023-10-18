@@ -22,7 +22,7 @@ from gwproto.utils import snake_to_camel
 
 
 HUBITAT_ID_REGEX = re.compile(
-    r".*/apps/api/(?P<api_id>\d+)/devices/(?P<device_id>\d+).*?"
+    r".*/apps/api/(?P<api_id>-?\d+)/devices/(?P<device_id>-?\d+).*?"
 )
 HUBITAT_ACCESS_TOKEN_REGEX = re.compile(
     r".*\?.*access_token=(?P<access_token>[a-fA-F0-9\-]+).*"
@@ -200,8 +200,10 @@ class FibaroTempSensorSettings(FibaroTempSensorSettingsGt):
             if isinstance(e, ValueError):
                 raise e
             raise ValueError(
-                f"ERROR in FibaroTempSensorSettings.validate_url() for url <{url_str}>"
+                f"ERROR in FibaroTempSensorSettings.validate_url() for url <{url_str}>\n"
+                f"  {type(e)}  <{e}>"
             ) from e
+            raise e
 
     @classmethod
     def create(

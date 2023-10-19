@@ -34,6 +34,7 @@ class FibaroTempSensorSettingsGt(BaseModel):
     device_id: int
     fibaro_component_id: str
     analog_input_id: conint(ge=1, le=2)
+    tank_label: str = ""
     exponent: int = 1
     telemetry_name_gt_enum_symbol: str = "c89d0ba1"
     temp_unit_gt_enum_symbol: str = "ec14bd47"
@@ -153,57 +154,46 @@ class FibaroTempSensorSettings(FibaroTempSensorSettingsGt):
 
         # Verify new URL produced by combining any inline REST configuration
         # with hubitat configuration is valid.
-        url_str = ""
-        try:
-            url_str = str(self.rest.url)
-            hubitat_gt = hubitat.component_gt.Hubitat
-            # check host
-            if hubitat_gt.Host != self.rest.url.host:
-                raise ValueError(
-                    "ERROR host expected to be "
-                    f"{hubitat_gt.Host} but host in url is "
-                    f"{self.rest.url.host}, from url: <{url_str}>"
-                )
-
-            # check api_id
-            if hubitat_gt.MakerApiId != self.api_id:
-                raise ValueError(
-                    "ERROR api_id expected to be "
-                    f"{hubitat_gt.MakerApiId} but api_id in url is "
-                    f"{self.api_id}, from url: <{url_str}>"
-                )
-
-            # check device_id
-            id_match = HUBITAT_ID_REGEX.match(url_str)
-            if not id_match:
-                raise ValueError(
-                    f"ERROR. ID regex <{HUBITAT_ID_REGEX.pattern}> failed to match "
-                    f" url <{url_str}>"
-                )
-            found_device_id = int(id_match.group("device_id"))
-            if self.device_id != found_device_id:
-                raise ValueError(
-                    "ERROR explicit device_id is "
-                    f"{self.device_id} but device in url is "
-                    f"{found_device_id}, from url: <{url_str}>"
-                )
-
-            # check token match
-            if hubitat_gt.AccessToken != self.access_token:
-                raise ValueError(
-                    "ERROR explicit access_token is "
-                    f"{hubitat_gt.AccessToken} but device in url is "
-                    f"{self.access_token}, from url: <{url_str}>"
-                )
-
-        except BaseException as e:
-            if isinstance(e, ValueError):
-                raise e
+        url_str = str(self.rest.url)
+        hubitat_gt = hubitat.component_gt.Hubitat
+        # check host
+        if hubitat_gt.Host != self.rest.url.host:
             raise ValueError(
-                f"ERROR in FibaroTempSensorSettings.validate_url() for url <{url_str}>\n"
-                f"  {type(e)}  <{e}>"
-            ) from e
-            raise e
+                "ERROR host expected to be "
+                f"{hubitat_gt.Host} but host in url is "
+                f"{self.rest.url.host}, from url: <{url_str}>"
+            )
+
+        # check api_id
+        if hubitat_gt.MakerApiId != self.api_id:
+            raise ValueError(
+                "ERROR api_id expected to be "
+                f"{hubitat_gt.MakerApiId} but api_id in url is "
+                f"{self.api_id}, from url: <{url_str}>"
+            )
+
+        # check device_id
+        id_match = HUBITAT_ID_REGEX.match(url_str)
+        if not id_match:
+            raise ValueError(
+                f"ERROR. ID regex <{HUBITAT_ID_REGEX.pattern}> failed to match "
+                f" url <{url_str}>"
+            )
+        found_device_id = int(id_match.group("device_id"))
+        if self.device_id != found_device_id:
+            raise ValueError(
+                "ERROR explicit device_id is "
+                f"{self.device_id} but device in url is "
+                f"{found_device_id}, from url: <{url_str}>"
+            )
+
+        # check token match
+        if hubitat_gt.AccessToken != self.access_token:
+            raise ValueError(
+                "ERROR explicit access_token is "
+                f"{hubitat_gt.AccessToken} but device in url is "
+                f"{self.access_token}, from url: <{url_str}>"
+            )
 
     @classmethod
     def create(
@@ -224,8 +214,12 @@ class FibaroTempSensorSettings(FibaroTempSensorSettingsGt):
         return settings
 
 
+DEFAULT_TANK_MODULE_VOLTAGE = 23.7
+
+
 class HubitatTankSettingsGt(BaseModel):
     hubitat_component_id: str
+    sensor_supply_voltage: float = DEFAULT_TANK_MODULE_VOLTAGE
     devices: list[FibaroTempSensorSettingsGt] = []
 
     class Config:

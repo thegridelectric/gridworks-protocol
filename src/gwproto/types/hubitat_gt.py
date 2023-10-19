@@ -38,8 +38,17 @@ class HubitatGt(BaseModel):
         config.url_path_args.update({"app_id": self.MakerApiId})
         return config
 
+    def devices_url_config(self) -> URLConfig:
+        config = self.maker_api_url_config()
+        config.url_path_format += "/devices"
+        return config
+
     def url_configs(self) -> dict[str, URLConfig]:
-        return dict(base=self.url_config(), maker_api=self.maker_api_url_config())
+        return dict(
+            base=self.url_config(),
+            maker_api=self.maker_api_url_config(),
+            devices=self.devices_url_config(),
+        )
 
     def urls(self) -> dict[str, Optional[yarl.URL]]:
         return {

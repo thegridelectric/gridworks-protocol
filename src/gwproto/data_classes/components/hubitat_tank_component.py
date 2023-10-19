@@ -17,6 +17,7 @@ from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
 
 class HubitatTankComponent(Component, ComponentResolver):
     hubitat: HubitatComponentGt
+    sensor_supply_voltage: float
     devices_gt: list[FibaroTempSensorSettingsGt]
     devices: list[FibaroTempSensorSettings] = []
 
@@ -42,6 +43,7 @@ class HubitatTankComponent(Component, ComponentResolver):
                 MacAddress="000000000000",
             ),
         )
+        self.sensor_supply_voltage = tank_gt.sensor_supply_voltage
         self.devices_gt = list(tank_gt.devices)
         super().__init__(
             display_name=display_name,

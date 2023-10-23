@@ -161,10 +161,38 @@ class RequestArgs(BaseModel):
         allow_population_by_field_name = True
 
 
+class ErrorResponse(BaseModel):
+    error_for_http_status: bool = True
+    raise_exception: bool = False
+    report: bool = True
+
+    class Config:
+        extra = Extra.allow
+        alias_generator = snake_to_camel
+        allow_population_by_field_name = True
+
+
+class ErrorResponses(BaseModel):
+    request: ErrorResponse = ErrorResponse()
+    convert: ErrorResponse = ErrorResponse()
+
+    class Config:
+        extra = Extra.allow
+        alias_generator = snake_to_camel
+        allow_population_by_field_name = True
+
+
 class RESTPollerSettings(BaseModel):
     session: SessionArgs = SessionArgs()
     request: RequestArgs = RequestArgs()
     poll_period_seconds: float = 60
+    errors: ErrorResponses = ErrorResponses()
+
+    class Config:
+        extra = Extra.allow
+        alias_generator = snake_to_camel
+        allow_population_by_field_name = True
+        keep_untouched = (cached_property,)
 
     def url_args(self) -> dict:
         session_args = URLConfig.make_url_args(self.session.base_url)
@@ -198,11 +226,6 @@ class RESTPollerSettings(BaseModel):
 
     def clear_property_cache(self):
         self.__dict__.pop("url", None)
-
-    class Config:
-        alias_generator = snake_to_camel
-        allow_population_by_field_name = True
-        keep_untouched = (cached_property,)
 
     @root_validator(skip_on_failure=True)
     def post_root_validator(cls, values: dict) -> dict:

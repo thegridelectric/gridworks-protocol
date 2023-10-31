@@ -12,6 +12,14 @@ from gwproto.types.egauge_register_config import EgaugeRegisterConfig
 from gwproto.types.egauge_register_config import EgaugeRegisterConfig_Maker
 from gwproto.types.electric_meter_cac_gt import ElectricMeterCacGt
 from gwproto.types.electric_meter_cac_gt import ElectricMeterCacGt_Maker
+from gwproto.types.fibaro_smart_implant_cac_gt import FibaroSmartImplantCacGt
+from gwproto.types.fibaro_smart_implant_cac_gt import FibaroSmartImplantCacGt_Maker
+from gwproto.types.fibaro_smart_implant_component_gt import (
+    FibaroSmartImplantComponentGt,
+)
+from gwproto.types.fibaro_smart_implant_component_gt import (
+    FibaroSmartImplantComponentGt_Maker,
+)
 from gwproto.types.gt_dispatch_boolean import GtDispatchBoolean
 from gwproto.types.gt_dispatch_boolean import GtDispatchBoolean_Maker
 from gwproto.types.gt_dispatch_boolean_local import GtDispatchBooleanLocal
@@ -44,6 +52,18 @@ from gwproto.types.gt_telemetry import GtTelemetry
 from gwproto.types.gt_telemetry import GtTelemetry_Maker
 from gwproto.types.heartbeat_b import HeartbeatB
 from gwproto.types.heartbeat_b import HeartbeatB_Maker
+from gwproto.types.hubitat_cac_gt import HubitatCacGt
+from gwproto.types.hubitat_cac_gt import HubitatCacGt_Maker
+from gwproto.types.hubitat_component_gt import HubitatComponentGt
+from gwproto.types.hubitat_component_gt import HubitatComponentGt_Maker
+from gwproto.types.hubitat_component_gt import HubitatRESTResolutionSettings
+from gwproto.types.hubitat_tank_cac_gt import HubitatTankCacGt
+from gwproto.types.hubitat_tank_cac_gt import HubitatTankCacGt_Maker
+from gwproto.types.hubitat_tank_component_gt import HubitatTankComponentGt
+from gwproto.types.hubitat_tank_component_gt import HubitatTankComponentGt_Maker
+from gwproto.types.hubitat_tank_gt import FibaroTempSensorSettings
+from gwproto.types.hubitat_tank_gt import FibaroTempSensorSettingsGt
+from gwproto.types.hubitat_tank_gt import HubitatTankSettingsGt
 from gwproto.types.multipurpose_sensor_cac_gt import MultipurposeSensorCacGt
 from gwproto.types.multipurpose_sensor_cac_gt import MultipurposeSensorCacGt_Maker
 from gwproto.types.pipe_flow_sensor_cac_gt import PipeFlowSensorCacGt
@@ -60,6 +80,16 @@ from gwproto.types.resistive_heater_cac_gt import ResistiveHeaterCacGt
 from gwproto.types.resistive_heater_cac_gt import ResistiveHeaterCacGt_Maker
 from gwproto.types.resistive_heater_component_gt import ResistiveHeaterComponentGt
 from gwproto.types.resistive_heater_component_gt import ResistiveHeaterComponentGt_Maker
+from gwproto.types.rest_poller_cac_gt import RESTPollerCacGt
+from gwproto.types.rest_poller_cac_gt import RESTPollerCacGt_Maker
+from gwproto.types.rest_poller_component_gt import RESTPollerComponentGt
+from gwproto.types.rest_poller_component_gt import RESTPollerComponentGt_Maker
+from gwproto.types.rest_poller_gt import AioHttpClientTimeout
+from gwproto.types.rest_poller_gt import RequestArgs
+from gwproto.types.rest_poller_gt import RESTPollerSettings
+from gwproto.types.rest_poller_gt import SessionArgs
+from gwproto.types.rest_poller_gt import URLArgs
+from gwproto.types.rest_poller_gt import URLConfig
 from gwproto.types.simple_temp_sensor_cac_gt import SimpleTempSensorCacGt
 from gwproto.types.simple_temp_sensor_cac_gt import SimpleTempSensorCacGt_Maker
 from gwproto.types.simple_temp_sensor_component_gt import SimpleTempSensorComponentGt
@@ -77,6 +107,7 @@ from gwproto.types.telemetry_snapshot_spaceheat import TelemetrySnapshotSpacehea
 
 
 __all__ = [
+    "AioHttpClientTimeout",
     "ComponentAttributeClassGt",
     "ComponentAttributeClassGt_Maker",
     "ComponentGt",
@@ -91,6 +122,12 @@ __all__ = [
     "ElectricMeterCacGt_Maker",
     # "ElectricMeterComponentGt",
     # "ElectricMeterComponentGt_Maker",
+    "FibaroTempSensorSettingsGt",
+    "FibaroTempSensorSettings",
+    "FibaroSmartImplantCacGt",
+    "FibaroSmartImplantCacGt_Maker",
+    "FibaroSmartImplantComponentGt",
+    "FibaroSmartImplantComponentGt_Maker",
     "GtDispatchBoolean",
     "GtDispatchBoolean_Maker",
     "GtDispatchBooleanLocal",
@@ -113,6 +150,16 @@ __all__ = [
     "GtTelemetry_Maker",
     "HeartbeatB",
     "HeartbeatB_Maker",
+    "HubitatCacGt",
+    "HubitatCacGt_Maker",
+    "HubitatComponentGt",
+    "HubitatComponentGt_Maker",
+    "HubitatRESTResolutionSettings",
+    "HubitatTankCacGt",
+    "HubitatTankCacGt_Maker",
+    "HubitatTankComponentGt",
+    "HubitatTankComponentGt_Maker",
+    "HubitatTankSettingsGt",
     "MultipurposeSensorCacGt",
     "MultipurposeSensorCacGt_Maker",
     # "MultipurposeSensorComponentGt",
@@ -127,10 +174,19 @@ __all__ = [
     "RelayCacGt_Maker",
     "RelayComponentGt",
     "RelayComponentGt_Maker",
+    "RequestArgs",
     "ResistiveHeaterCacGt",
     "ResistiveHeaterCacGt_Maker",
     "ResistiveHeaterComponentGt",
     "ResistiveHeaterComponentGt_Maker",
+    "RESTPollerSettings",
+    "RESTPollerCacGt",
+    "RESTPollerCacGt_Maker",
+    "RESTPollerComponentGt",
+    "RESTPollerComponentGt_Maker",
+    "RelayComponentGt",
+    "RelayComponentGt_Maker",
+    "SessionArgs",
     "SimpleTempSensorCacGt",
     "SimpleTempSensorCacGt_Maker",
     "SimpleTempSensorComponentGt",
@@ -143,4 +199,6 @@ __all__ = [
     "TelemetryReportingConfig_Maker",
     "TelemetrySnapshotSpaceheat",
     "TelemetrySnapshotSpaceheat_Maker",
+    "URLArgs",
+    "URLConfig",
 ]

@@ -1,6 +1,7 @@
 import abc
 import inspect
 import json
+import re
 import sys
 from abc import abstractmethod
 from dataclasses import dataclass
@@ -286,6 +287,7 @@ def pydantic_named_types(
     module_names: str | Sequence[str],
     modules: Optional[Sequence[Any]] = None,
     type_name_field: str = DEFAULT_TYPE_NAME_FIELD,
+    type_name_regex: Optional[re.Pattern] = None,
 ) -> list[Any]:
     if isinstance(module_names, str):
         module_names = [module_names]
@@ -315,6 +317,9 @@ def pydantic_named_types(
                         f"for {module_class} already seen for "
                         f"class {type_names[type_name]}"
                     )
+                if type_name_regex is not None:
+                    if not type_name_regex.match(type_name):
+                        continue
                 type_names[type_name] = module_class
                 named_types.append(module_class)
     return named_types
@@ -326,8 +331,14 @@ def create_message_payload_discriminator(
     modules: Optional[Sequence[Any]] = None,
     explicit_types: Optional[Sequence[Any]] = None,
     type_name_field: str = DEFAULT_TYPE_NAME_FIELD,
+    type_name_regex: Optional[re.Pattern] = None,
 ) -> Type[MessageDiscriminator]:
-    used_types = pydantic_named_types(module_names=module_names, modules=modules)
+    used_types = pydantic_named_types(
+        module_names=module_names,
+        modules=modules,
+        type_name_field=type_name_field,
+        type_name_regex=type_name_regex,
+    )
     if explicit_types is not None:
         used_types.extend(explicit_types)
     return create_model(
@@ -338,3 +349,76 @@ def create_message_payload_discriminator(
             Field(..., discriminator=type_name_field),
         ),
     )
+
+
+def create_discriminator(
+    model_name: str,
+    module_names: str | Sequence[str] = "",
+    modules: Optional[Sequence[Any]] = None,
+    explicit_types: Optional[Sequence[Any]] = None,
+    type_name_field: str = DEFAULT_TYPE_NAME_FIELD,
+    type_name_regex: Optional[re.Pattern] = None,
+    payload_field_name="Payload",
+) -> BaseModel:
+    used_types = pydantic_named_types(
+        module_names=module_names,
+        modules=modules,
+        type_name_field=type_name_field,
+        type_name_regex=type_name_regex,
+    )
+    if explicit_types is not None:
+        used_types.extend(explicit_types)
+    if len(used_types) == 1:
+        payload_field_type = (
+            used_types[0],
+            Field(...),
+        )
+    else:
+        payload_field_type = (
+            Union[tuple(used_types)],
+            Field(..., discriminator=type_name_field),
+        )
+    payload_field_kwargs = {payload_field_name: payload_field_type}
+    return create_model(model_name, **payload_field_kwargs)
+
+
+class PydanticTypeNameDecoder(Decoder):
+    loader: BaseModel
+    payload_field_name: str
+    contains: set[str]
+
+    def __init__(
+        self,
+        model_name: str,
+        *,
+        module_names: str | Sequence[str] = "",
+        modules: Optional[Sequence[Any]] = None,
+        explicit_types: Optional[Sequence[Any]] = None,
+        type_name_field: str = DEFAULT_TYPE_NAME_FIELD,
+        type_name_regex: Optional[re.Pattern] = None,
+        payload_field_name="Payload",
+    ):
+        self.payload_field_name = payload_field_name
+        self.loader = create_discriminator(
+            model_name=model_name,
+            module_names=module_names,
+            modules=modules,
+            explicit_types=explicit_types,
+            type_name_field=type_name_field,
+            type_name_regex=type_name_regex,
+            payload_field_name=payload_field_name,
+        )
+        payload_field = self.loader.__fields__[self.payload_field_name]
+        if payload_field.sub_fields_mapping is not None:
+            self.contains = set(payload_field.sub_fields_mapping.keys())
+        else:
+            self.contains = {payload_field.type_.__fields__["TypeName"].default}
+
+    def __contains__(self, type_name: str) -> bool:
+        return type_name in self.contains
+
+    def decode_obj(self, data: dict) -> BaseModel:
+        return getattr(
+            self.loader.parse_obj({self.payload_field_name: data}),
+            self.payload_field_name,
+        )

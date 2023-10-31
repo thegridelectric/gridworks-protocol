@@ -68,15 +68,14 @@ class ComponentAttributeClassGt(BaseModel):
             check_is_uuid_canonical_textual(v)
         except ValueError as e:
             raise ValueError(
-                f"ComponentAttributeClassId failed UuidCanonicalTextual format validation: {e}"
+                f"ComponentAttributeClassId <{v}> failed UuidCanonicalTextual format validation: {e}"
             )
         return v
 
     def as_dict(self) -> Dict[str, Any]:
-        d = self.dict()
-        if d["DisplayName"] is None:
-            del d["DisplayName"]
-        return d
+        return self.dict(
+            include=self.__fields_set__ | {"TypeName"},
+        )
 
     def as_type(self) -> str:
         return json.dumps(self.as_dict())

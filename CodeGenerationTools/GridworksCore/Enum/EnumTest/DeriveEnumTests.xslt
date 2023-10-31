@@ -34,6 +34,7 @@
                             <xsl:with-param name="mp-schema-text" select="LocalName" />
                         </xsl:call-template>
                     </xsl:variable>
+                     <xsl:variable name="current-version" select="Version" />
                     <FileSetFile>
                                 <xsl:element name="RelativePath"><xsl:text>../../../../tests/enums/</xsl:text>
                                 <xsl:value-of select="translate(LocalName,'.','_')"/><xsl:text>_test.py</xsl:text></xsl:element>
@@ -51,8 +52,8 @@ def test_</xsl:text> <xsl:value-of select="translate(LocalName,'.','_')"/>
 
     assert set(</xsl:text><xsl:value-of select="$local-class-name"/><xsl:text>.values()) == {
             </xsl:text>
-    <xsl:for-each select="$airtable//EnumSymbols/EnumSymbol[(Enum = $enum-id)]">
-    <xsl:sort select="Idx"/>
+    <xsl:for-each select="$airtable//EnumSymbols/EnumSymbol[(Enum = $enum-id) and (Version &lt;= $current-version)]">
+     <xsl:sort select="Idx" data-type="number"/>
         <xsl:text>"</xsl:text>
         <xsl:if test="$enum-name-style = 'Upper'">
             <xsl:value-of select="translate(translate(LocalValue,'-',''),$lcletters, $ucletters)"/>

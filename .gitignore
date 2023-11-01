@@ -13,8 +13,12 @@ hacking
 .idea
 scratch.*
 cook.sh
+.vscode
 
 
 # Code generation airtable
+CodeGenerationTools/GridworksCore/aicapture.json
 CodeGenerationTools/GridworksCore/SassyMQ/
 CodeGenerationTools/GridworksCore/.ssotme/**/*.zfs
+CodeGenerationTools/GridworksCore/SMQL/SassyMQLexicon.smql
+CodeGenerationTools/GridworksCore/aicapture.json

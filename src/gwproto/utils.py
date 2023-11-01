@@ -89,3 +89,14 @@ def all_equal(iterator: Any) -> bool:
     except StopIteration:
         return True
     return all(first == x for x in iterator)
+
+
+# def predicate_validator(
+#     field_name: str, predicate: Callable[[Any], bool], error_format: str = "", **kwargs
+# ) -> classmethod:  # type: ignore
+
+MAC_REGEX = re.compile("[0-9a-f]{2}([-:]?)[0-9a-f]{2}(\\1[0-9a-f]{2}){4}$")
+
+
+def has_mac_address_format(mac_str: str) -> bool:
+    return bool(MAC_REGEX.match(mac_str.lower()))

@@ -190,6 +190,10 @@ class PipeFlowSensorComponentGt_Maker:
             DisplayName=d2["DisplayName"],
             HwUid=d2["HwUid"],
             TypeName=d2["TypeName"],
+            PollPeriodS=d2.get(
+                "PollPeriodS",
+                PipeFlowSensorComponentGt.__fields__["PollPeriodS"].default,
+            ),
             Version="000",
         )
 
@@ -203,6 +207,7 @@ class PipeFlowSensorComponentGt_Maker:
                 component_attribute_class_id=t.ComponentAttributeClassId,
                 i2c_address=t.I2cAddress,
                 conversion_factor=t.ConversionFactor,
+                poll_period_s=t.PollPeriodS,
                 display_name=t.DisplayName,
                 hw_uid=t.HwUid,
             )

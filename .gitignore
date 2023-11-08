@@ -17,4 +17,5 @@ cook.sh
 
 # Code generation airtable
 CodeGenerationTools/GridworksCore/SassyMQ/
+CodeGenerationTools/GridworksCore/SMQL
 CodeGenerationTools/GridworksCore/.ssotme/**/*.zfs

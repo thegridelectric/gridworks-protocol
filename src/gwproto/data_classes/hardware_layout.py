@@ -52,25 +52,25 @@ from gwproto.types.multipurpose_sensor_component_gt import (
 snake_add_underscore_to_camel_pattern = re.compile(r"(?<!^)(?=[A-Z])")
 
 
-def camel_to_snake(name):
+def camel_to_snake(name: str) -> str:
     return snake_add_underscore_to_camel_pattern.sub("_", name).lower()
 
 
 @dataclass
 class LoadError:
     type_name: str
-    src_dict: dict
+    src_dict: dict[Any, Any]
     exception: Exception
 
 
 def load_cacs(
-    layout: dict,
+    layout: dict[str, Any],
     raise_errors: bool = True,
     errors: Optional[list[LoadError]] = None,
     cac_decoder: Optional[CacDecoder] = None,
-) -> dict:
+) -> dict[str, Any]:
     if errors is None:
-        errors: list[LoadError] = []
+        errors = []
     cacs = dict()
     for type_name, maker_class in [
         ("RelayCacs", RelayCacGt_Maker),
@@ -82,7 +82,11 @@ def load_cacs(
     ]:
         for d in layout.get(type_name, []):
             try:
-                cacs[d["ComponentAttributeClassId"]] = maker_class.dict_to_dc(d)
+                cacs[
+                    d["ComponentAttributeClassId"]
+                ] = maker_class.dict_to_dc(  # type:ignore[attr-defined]
+                    d
+                )
             except Exception as e:
                 if raise_errors:
                     raise e
@@ -107,13 +111,13 @@ def load_cacs(
 
 
 def load_components(
-    layout: dict,
+    layout: dict[Any, Any],
     raise_errors: bool = True,
     errors: Optional[list[LoadError]] = None,
     component_decoder: Optional[ComponentDecoder] = None,
-) -> dict:
+) -> dict[Any, Any]:
     if errors is None:
-        errors: list[LoadError] = []
+        errors = []
     components = dict()
     for type_name, maker_class in [
         ("RelayComponents", RelayComponentGt_Maker),
@@ -125,7 +129,11 @@ def load_components(
     ]:
         for d in layout.get(type_name, []):
             try:
-                components[d["ComponentId"]] = maker_class.dict_to_dc(d)
+                components[
+                    d["ComponentId"]
+                ] = maker_class.dict_to_dc(  # type:ignore[attr-defined]
+                    d
+                )
             except Exception as e:
                 if raise_errors:
                     raise e
@@ -148,12 +156,14 @@ def load_components(
 
 
 def load_nodes(
-    layout: dict,
+    layout: dict[Any, Any],
     raise_errors: bool = True,
     errors: Optional[list[LoadError]] = None,
     included_node_names: Optional[set[str]] = None,
-) -> dict:
+) -> dict[Any, Any]:
     nodes = {}
+    if errors is None:
+        errors = []
     for d in layout.get("ShNodes", []):
         try:
             node_name = d["Alias"]
@@ -167,11 +177,13 @@ def load_nodes(
 
 
 def resolve_links(
-    nodes: dict[str, ShNode] = None,
-    components: dict[str, Component] = None,
+    nodes: dict[str, ShNode],
+    components: dict[str, Component],
     raise_errors: bool = True,
     errors: Optional[list[LoadError]] = None,
 ) -> None:
+    if errors is None:
+        errors = []
     for node_name, node in nodes.items():
         d = dict(node=dict(name=node_name, node=node))
         try:
@@ -194,14 +206,14 @@ def resolve_links(
 
 
 class HardwareLayout:
-    layout: dict
+    layout: dict[Any, Any]
     cacs: dict[str, ComponentAttributeClass]
     components: dict[str, Component]
     nodes: dict[str, ShNode]
 
     def __init__(
         self,
-        layout: dict,
+        layout: dict[Any, Any],
         cacs: Optional[dict[str, ComponentAttributeClass]] = None,
         components: Optional[dict[str, Component]] = None,
         nodes: Optional[dict[str, ShNode]] = None,
@@ -217,7 +229,7 @@ class HardwareLayout:
             nodes = ShNode.by_id
         self.nodes = dict(nodes)
 
-    def clear_property_cache(self):
+    def clear_property_cache(self) -> None:
         for cached_prop_name in [
             prop_name
             for prop_name in type(self).__dict__
@@ -236,7 +248,7 @@ class HardwareLayout:
         component_decoder: Optional[ComponentDecoder] = None,
     ) -> "HardwareLayout":
         with Path(layout_path).open() as f:
-            layout: dict = json.loads(f.read())
+            layout = json.loads(f.read())
         return cls.load_dict(
             layout,
             included_node_names=included_node_names,
@@ -249,7 +261,7 @@ class HardwareLayout:
     @classmethod
     def load_dict(
         cls,
-        layout: dict,
+        layout: dict[Any, Any],
         included_node_names: Optional[set[str]] = None,
         raise_errors: bool = True,
         errors: Optional[list[LoadError]] = None,
@@ -257,7 +269,7 @@ class HardwareLayout:
         component_decoder: Optional[ComponentDecoder] = None,
     ) -> "HardwareLayout":
         if errors is None:
-            errors: list[LoadError] = []
+            errors = []
         load_args = dict(
             cacs=load_cacs(
                 layout=layout,
@@ -296,16 +308,24 @@ class HardwareLayout:
         return self.cac_from_component(self.component(alias))
 
     def component_from_node(self, node: Optional[ShNode]) -> Optional[Component]:
-        return self.components.get(
-            node.component_id if node is not None else None, None
+        return (
+            self.components.get(
+                node.component_id if node.component_id is not None else "", None
+            )
+            if node is not None
+            else None
         )
 
     def cac_from_component(
         self, component: Optional[Component]
     ) -> Optional[ComponentAttributeClass]:
-        return self.cacs.get(
-            component.component_attribute_class_id if component is not None else None,
-            None,
+        return (
+            self.cacs.get(
+                component.component_attribute_class_id if component is not None else "",
+                None,
+            )
+            if component is not None
+            else None
         )
 
     @classmethod
@@ -331,36 +351,36 @@ class HardwareLayout:
         return list(filter(lambda x: x.alias.startswith(alias), self.nodes.values()))
 
     @cached_property
-    def atn_g_node_alias(self):
-        return self.layout["MyAtomicTNodeGNode"]["Alias"]
+    def atn_g_node_alias(self) -> str:
+        return self.layout["MyAtomicTNodeGNode"]["Alias"]  # type: ignore[no-any-return]
 
     @cached_property
-    def atn_g_node_instance_id(self):
-        return self.layout["MyAtomicTNodeGNode"]["GNodeId"]
+    def atn_g_node_instance_id(self) -> str:
+        return self.layout["MyAtomicTNodeGNode"]["GNodeId"]  # type: ignore[no-any-return]
 
     @cached_property
-    def atn_g_node_id(self):
-        return self.layout["MyAtomicTNodeGNode"]["GNodeId"]
+    def atn_g_node_id(self) -> str:
+        return self.layout["MyAtomicTNodeGNode"]["GNodeId"]  # type: ignore[no-any-return]
 
     @cached_property
-    def terminal_asset_g_node_alias(self):
+    def terminal_asset_g_node_alias(self) -> str:
         my_atn_as_dict = self.layout["MyTerminalAssetGNode"]
-        return my_atn_as_dict["Alias"]
+        return my_atn_as_dict["Alias"]  # type: ignore[no-any-return]
 
     @cached_property
-    def terminal_asset_g_node_id(self):
+    def terminal_asset_g_node_id(self) -> str:
         my_atn_as_dict = self.layout["MyTerminalAssetGNode"]
-        return my_atn_as_dict["GNodeId"]
+        return my_atn_as_dict["GNodeId"]  # type: ignore[no-any-return]
 
     @cached_property
-    def scada_g_node_alias(self):
+    def scada_g_node_alias(self) -> str:
         my_scada_as_dict = self.layout["MyScadaGNode"]
-        return my_scada_as_dict["Alias"]
+        return my_scada_as_dict["Alias"]  # type: ignore[no-any-return]
 
     @cached_property
-    def scada_g_node_id(self):
+    def scada_g_node_id(self) -> str:
         my_scada_as_dict = self.layout["MyScadaGNode"]
-        return my_scada_as_dict["GNodeId"]
+        return my_scada_as_dict["GNodeId"]  # type: ignore[no-any-return]
 
     @cached_property
     def all_telemetry_tuples_for_agg_power_metering(self) -> List[TelemetryTuple]:
@@ -420,9 +440,7 @@ class HardwareLayout:
                 f"ERROR. power_meter_component cac {self.power_meter_component.component_attribute_class}"
                 f" / {type(self.power_meter_component.component_attribute_class)} is not an ElectricMeterCac"
             )
-        return typing.cast(
-            ElectricMeterCac, self.power_meter_node.component.component_attribute_class
-        )
+        return self.power_meter_node.component.component_attribute_class  # type: ignore[union-attr, return-value]
 
     @cached_property
     def all_resistive_heaters(self) -> List[ShNode]:

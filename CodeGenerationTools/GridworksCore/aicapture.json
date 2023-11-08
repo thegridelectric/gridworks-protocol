@@ -32,18 +32,7 @@
       "ProjectTranspilerId": "53b850fc-d424-44fc-8797-769a7657bbf7",
       "Name": "SSoT",
       "RelativePath": "",
-      "CommandLine": "effortless/ssot"
-    },
-    {
-      "MatchedTranspiler": {
-        "TranspilerId": "19d8142a-2f4d-46ac-9de6-77441f233192",
-        "Name": "AirtableToXml",
-        "Description": "Extracts the contents of an airtable base as a single Xml file."
-      },
-      "ProjectTranspilerId": "4c3ac21a-bd4e-413c-8f71-0bdb35562ed2",
-      "Name": "AirtableToXml",
-      "RelativePath": "/SSoT",
-      "CommandLine": "airtable/airtable-to-xml -p baseId=appgibWM6WZW20bBx -i Entities.json -w 120000"
+      "CommandLine": "effortless/ssot -p ssot-key=IuUqkLn41mZ8TS"
     },
     {
       "MatchedTranspiler": {

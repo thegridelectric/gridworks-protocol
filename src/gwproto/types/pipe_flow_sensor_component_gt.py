@@ -79,6 +79,10 @@ class PipeFlowSensorComponentGt(BaseModel):
         title="HwUid",
         default=None,
     )
+    PollPeriodS: Optional[float] = Field(
+        title="HwUid",
+        default=5.0,
+    )
     TypeName: Literal["pipe.flow.sensor.component.gt"] = "pipe.flow.sensor.component.gt"
     Version: str = "000"
 

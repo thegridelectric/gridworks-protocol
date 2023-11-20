@@ -32,6 +32,7 @@ class ShActorClass000SchemaEnum:
         "7c483ad0",
         "0401b27e",
         "e2877329",
+        "00000100",
     ]
 
     @classmethod
@@ -53,6 +54,7 @@ class ShActorClass000(StrEnum):
     Thermostat = auto()
     HubitatTelemetryReader = auto()
     HubitatTankModule = auto()
+    HubitatPoller = auto()
 
     @classmethod
     def default(cls) -> "ShActorClass000":
@@ -92,6 +94,7 @@ class ActorClassMap:
         "4a9c1785": ShActorClass000.Thermostat,
         "0401b27e": ShActorClass000.HubitatTelemetryReader,
         "e2877329": ShActorClass000.HubitatTankModule,
+        "00000100": ShActorClass000.HubitatPoller,
     }
 
     versioned_enum_to_type_dict: Dict[ShActorClass000, str] = {
@@ -106,6 +109,7 @@ class ActorClassMap:
         ShActorClass000.Thermostat: "4a9c1785",
         ShActorClass000.HubitatTelemetryReader: "0401b27e",
         ShActorClass000.HubitatTankModule: "e2877329",
+        ShActorClass000.HubitatPoller: "00000100",
     }
 
 
@@ -132,6 +136,7 @@ class ShNodeRole000SchemaEnum:
         "b0eaf2ba",
         "661d7e73",
         "dd975b31",
+        "00000d00",
     ]
 
     @classmethod
@@ -162,6 +167,7 @@ class ShNodeRole000(StrEnum):
     CirculatorPump = auto()
     MultiChannelAnalogTempSensor = auto()
     Outdoors = auto()
+    ThermostatHeatingSetPoint = auto()
 
     @classmethod
     def default(cls) -> "ShNodeRole000":
@@ -208,6 +214,7 @@ class RoleMap:
         "b0eaf2ba": ShNodeRole000.CirculatorPump,
         "661d7e73": ShNodeRole000.MultiChannelAnalogTempSensor,
         "dd975b31": ShNodeRole000.Outdoors,
+        "00000d00": ShNodeRole000.ThermostatHeatingSetPoint,
     }
 
     versioned_enum_to_type_dict: Dict[ShNodeRole000, str] = {
@@ -231,6 +238,7 @@ class RoleMap:
         ShNodeRole000.CirculatorPump: "b0eaf2ba",
         ShNodeRole000.MultiChannelAnalogTempSensor: "661d7e73",
         ShNodeRole000.Outdoors: "dd975b31",
+        ShNodeRole000.ThermostatHeatingSetPoint: "00000d00",
     }
 
 

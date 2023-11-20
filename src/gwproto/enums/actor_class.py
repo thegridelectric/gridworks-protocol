@@ -33,6 +33,7 @@ class ActorClass(StrEnum):
     Thermostat = auto()
     HubitatTelemetryReader = auto()
     HubitatTankModule = auto()
+    HubitatPoller = auto()
 
     @classmethod
     def default(cls) -> "ActorClass":
@@ -46,4 +47,4 @@ class ActorClass(StrEnum):
         """
         Returns enum choices
         """
-        return [elt.value for elt in cls]
+        return [elt.value for elt in cls] # noqa

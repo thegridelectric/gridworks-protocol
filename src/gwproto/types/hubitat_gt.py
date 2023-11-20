@@ -55,3 +55,12 @@ class HubitatGt(BaseModel):
             name: URLConfig.make_url(config)
             for name, config in self.url_configs().items()
         }
+
+    def refresh_url_config(self, device_id: int) -> URLConfig:
+        config = self.maker_api_url_config()
+        config.url_path_format += "/devices/{device_id}/refresh"
+        config.url_path_args["device_id"] = device_id
+        return config
+
+    def refresh_url(self, device_id: int) -> yarl.URL:
+        return URLConfig.make_url(self.refresh_url_config(device_id))

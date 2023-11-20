@@ -3,12 +3,10 @@ from typing import Optional
 import yarl
 
 from gwproto.data_classes.component import Component
-from gwproto.data_classes.components.hubitat_component import HubitatComponent
 from gwproto.data_classes.resolver import ComponentResolver
 from gwproto.data_classes.sh_node import ShNode
 from gwproto.types.hubitat_component_gt import HubitatComponentGt
 from gwproto.types.hubitat_component_gt import HubitatRESTResolutionSettings
-from gwproto.types.hubitat_gt import HubitatGt
 from gwproto.types.hubitat_tank_gt import FibaroTempSensorSettings
 from gwproto.types.hubitat_tank_gt import FibaroTempSensorSettingsGt
 from gwproto.types.hubitat_tank_gt import HubitatTankSettingsGt
@@ -33,16 +31,7 @@ class HubitatTankComponent(Component, ComponentResolver):
         # of the hubitat; the actual component data will be resolved
         # when resolve() is called; Here in the constructor we cannot
         # rely on the actual HubitatComponentGt existing yet.
-        self.hubitat = HubitatComponentGt(
-            ComponentId=tank_gt.hubitat_component_id,
-            ComponentAttributeClassId="00000000-0000-0000-0000-000000000000",
-            Hubitat=HubitatGt(
-                Host="",
-                MakerApiId=-1,
-                AccessToken="",
-                MacAddress="000000000000",
-            ),
-        )
+        self.hubitat = HubitatComponentGt.make_stub(tank_gt.hubitat_component_id)
         self.sensor_supply_voltage = tank_gt.sensor_supply_voltage
         self.devices_gt = list(tank_gt.devices)
         super().__init__(
@@ -58,20 +47,9 @@ class HubitatTankComponent(Component, ComponentResolver):
         nodes: dict[str, ShNode],
         components: dict[str, Component],
     ):
-        hubitat_component = components.get(self.hubitat.ComponentId, None)
-        if hubitat_component is None:
-            raise ValueError(
-                "ERROR. No component found for "
-                f"HubitatTankComponent.hubitat.CompnentId {self.hubitat.ComponentId}"
-            )
-        if not isinstance(hubitat_component, HubitatComponent):
-            raise ValueError(
-                "ERROR. Referenced hubitat component has type "
-                f"{type(hubitat_component)}; "
-                "must be instance of HubitatComponent. "
-                f"Hubitat component id: {self.hubitat.ComponentId}"
-            )
-        hubitat_component_gt = HubitatComponentGt.from_data_class(hubitat_component)
+        hubitat_component_gt = HubitatComponentGt.from_component_id(
+            self.hubitat.ComponentId, components
+        )
         hubitat_settings = HubitatRESTResolutionSettings(hubitat_component_gt)
         devices = [
             FibaroTempSensorSettings.create(

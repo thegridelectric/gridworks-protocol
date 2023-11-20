@@ -24,6 +24,7 @@ def test_role() -> None:
         "DedicatedThermalStore",
         "TankWaterTempSensor",
         "PipeTempSensor",
+        "ThermostatHeatingSetPoint",
     }
 
     assert Role.default() == Role.Unknown

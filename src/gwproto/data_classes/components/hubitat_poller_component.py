@@ -1,5 +1,7 @@
 from typing import Optional
 
+import yarl
+
 from gwproto.data_classes.component import Component
 from gwproto.data_classes.resolver import ComponentResolver
 from gwproto.data_classes.sh_node import ShNode
@@ -65,6 +67,12 @@ class HubitatPollerComponent(Component, ComponentResolver):
                 url=self.hubitat_gt.refresh_url_config(self.poller_gt.device_id)
             )
         )
+
+    def urls(self) -> dict[str, Optional[yarl.URL]]:
+        urls = self.hubitat_gt.urls()
+        for attribute in self.poller_gt.attributes:
+            urls[attribute.node_name] = self.rest.url
+        return urls
 
     @property
     def config_list(self) -> list[TelemetryReportingConfig]:

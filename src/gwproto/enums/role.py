@@ -53,6 +53,7 @@ class Role(StrEnum):
     CirculatorPump = auto()
     MultiChannelAnalogTempSensor = auto()
     Outdoors = auto()
+    ThermostatHeatingSetPoint = auto()
     
     @classmethod
     def default(cls) -> "Role":

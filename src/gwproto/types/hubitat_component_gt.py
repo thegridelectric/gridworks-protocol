@@ -1,7 +1,6 @@
 import json
 import typing
 from typing import Any
-from typing import Dict
 from typing import Literal
 from typing import Optional
 
@@ -30,6 +29,12 @@ class HubitatComponentGt(ComponentGt):
     def urls(self) -> dict[str, Optional[yarl.URL]]:
         return self.Hubitat.urls()
 
+    def refresh_url_config(self, device_id: int) -> URLConfig:
+        return self.Hubitat.refresh_url_config(device_id)
+
+    def refresh_url(self, device_id: int) -> yarl.URL:
+        return self.Hubitat.refresh_url(device_id)
+
     @classmethod
     def from_data_class(cls, component: HubitatComponent) -> "HubitatComponentGt":
         return HubitatComponentGt(
@@ -51,6 +56,38 @@ class HubitatComponentGt(ComponentGt):
             display_name=self.DisplayName,
             hw_uid=self.HwUid,
         )
+
+    @classmethod
+    def make_stub(cls, component_id):
+        return HubitatComponentGt(
+            ComponentId=component_id,
+            ComponentAttributeClassId="00000000-0000-0000-0000-000000000000",
+            Hubitat=HubitatGt(
+                Host="",
+                MakerApiId=-1,
+                AccessToken="",
+                MacAddress="000000000000",
+            ),
+        )
+
+    @classmethod
+    def from_component_id(
+        cls, component_id: str, components: dict[str, Component]
+    ) -> "HubitatComponentGt":
+        hubitat_component = components.get(component_id, None)
+        if hubitat_component is None:
+            raise ValueError(
+                "ERROR. No component found for "
+                f"HubitatTankComponent.hubitat.CompnentId {component_id}"
+            )
+        if not isinstance(hubitat_component, HubitatComponent):
+            raise ValueError(
+                "ERROR. Referenced hubitat component has type "
+                f"{type(hubitat_component)}; "
+                "must be instance of HubitatComponent. "
+                f"Hubitat component id: {component_id}"
+            )
+        return HubitatComponentGt.from_data_class(hubitat_component)
 
 
 class HubitatRESTResolutionSettings:

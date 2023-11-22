@@ -495,6 +495,7 @@ class HardwareLayout:
                     (
                         x.actor_class == ActorClass.MultipurposeSensor
                         or x.actor_class == ActorClass.HubitatTankModule
+                        or x.actor_class == ActorClass.HubitatPoller
                     )
                     and hasattr(x.component, "config_list")
                 ),

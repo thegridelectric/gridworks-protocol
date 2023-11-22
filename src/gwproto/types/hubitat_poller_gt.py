@@ -48,6 +48,7 @@ class HubitatPollerGt(BaseModel):
     device_id: int
     attributes: list[MakerAPIAttributeGt] = []
     enabled: bool = True
+    poll_period_seconds: float = 60
 
     class Config:
         extra = Extra.allow

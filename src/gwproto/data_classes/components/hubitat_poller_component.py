@@ -65,7 +65,8 @@ class HubitatPollerComponent(Component, ComponentResolver):
         self._rest = RESTPollerSettings(
             request=RequestArgs(
                 url=self.hubitat_gt.refresh_url_config(self.poller_gt.device_id)
-            )
+            ),
+            poll_period_seconds=self.poller_gt.poll_period_seconds,
         )
 
     def urls(self) -> dict[str, Optional[yarl.URL]]:

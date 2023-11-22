@@ -57,6 +57,10 @@ from gwproto.types.hubitat_cac_gt import HubitatCacGt_Maker
 from gwproto.types.hubitat_component_gt import HubitatComponentGt
 from gwproto.types.hubitat_component_gt import HubitatComponentGt_Maker
 from gwproto.types.hubitat_component_gt import HubitatRESTResolutionSettings
+from gwproto.types.hubitat_poller_cac_gt import HubitatPollerCacGt
+from gwproto.types.hubitat_poller_component_gt import HubitatPollerComponentGt
+from gwproto.types.hubitat_poller_gt import HubitatPollerGt
+from gwproto.types.hubitat_poller_gt import MakerAPIAttributeGt
 from gwproto.types.hubitat_tank_cac_gt import HubitatTankCacGt
 from gwproto.types.hubitat_tank_cac_gt import HubitatTankCacGt_Maker
 from gwproto.types.hubitat_tank_component_gt import HubitatTankComponentGt
@@ -154,12 +158,16 @@ __all__ = [
     "HubitatCacGt_Maker",
     "HubitatComponentGt",
     "HubitatComponentGt_Maker",
+    "HubitatPollerCacGt",
+    "HubitatPollerComponentGt",
+    "HubitatPollerGt",
     "HubitatRESTResolutionSettings",
     "HubitatTankCacGt",
     "HubitatTankCacGt_Maker",
     "HubitatTankComponentGt",
     "HubitatTankComponentGt_Maker",
     "HubitatTankSettingsGt",
+    "MakerAPIAttributeGt",
     "MultipurposeSensorCacGt",
     "MultipurposeSensorCacGt_Maker",
     # "MultipurposeSensorComponentGt",

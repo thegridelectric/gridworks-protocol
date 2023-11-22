@@ -13,7 +13,7 @@ class MakerAPIAttributeGt(BaseModel):
     attribute_name: str
     node_name: str
     telemetry_name_gt_enum_symbol: str = "c89d0ba1"
-    temp_unit_gt_enum_symbol: str = "ec14bd47"
+    unit_gt_enum_symbol: str = "ec14bd47"
     exponent: int = 3
     enabled: bool = True
     report_missing: bool = True
@@ -28,7 +28,7 @@ class MakerAPIAttributeGt(BaseModel):
     @property
     def unit(self) -> EnumUnit:
         return UnitMap.type_to_local(
-            self.temp_unit_gt_enum_symbol,
+            self.unit_gt_enum_symbol,
         )
 
     class Config:

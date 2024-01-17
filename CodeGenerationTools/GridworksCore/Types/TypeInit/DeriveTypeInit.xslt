@@ -25,29 +25,33 @@
                 <OverwriteMode>Always</OverwriteMode>
                 <xsl:element name="FileContents">
 <xsl:text>
-""" List of all the schema types """
+""" List of all the types """
 </xsl:text>
 <xsl:for-each select="$airtable//ProtocolTypes/ProtocolType[(normalize-space(ProtocolName) ='gwproto')]">
-<xsl:sort select="TypeName" data-type="text"/>
-<xsl:variable name="schema-id" select="Type"/>
-<xsl:for-each select="$airtable//Schemas/Schema[(SchemaId = $schema-id)  and (Status = 'Active' or Status = 'Pending') and (ProtocolCategory = 'Json' or ProtocolCategory = 'GwAlgoSerial') and not (NotInInit='true')]">
+<xsl:sort select="VersionedTypeName" data-type="text"/>
+<xsl:variable name="versioned-type-id" select="VersionedType"/>
+<xsl:for-each select="$airtable//VersionedTypes/VersionedType[(VersionedTypeId = $versioned-type-id)  and (Status = 'Active' or Status = 'Pending') and (ProtocolCategory = 'Json' or ProtocolCategory = 'GwAlgoSerial') and not (NotInInit='true')]">
 
-<xsl:variable name="local-alias" select="AliasRoot" />
+<xsl:variable name="python-class-name">
+<xsl:if test="(normalize-space(PythonClassName) ='')">
+<xsl:call-template name="nt-case"> 
+    <xsl:with-param name="type-name-text" select="TypeName" />
+</xsl:call-template>
+</xsl:if>
+<xsl:if test="(normalize-space(PythonClassName) != '')">
+<xsl:value-of select="normalize-space(PythonClassName)" />
+</xsl:if>
+</xsl:variable>
 
 <xsl:text>
 from gwproto.types.</xsl:text>
-<xsl:value-of select="translate(AliasRoot,'.','_')"/>
+<xsl:value-of select="translate(TypeName,'.','_')"/>
 <xsl:text> import </xsl:text>
-<xsl:call-template name="nt-case">
-    <xsl:with-param name="mp-schema-text" select="AliasRoot" />
-</xsl:call-template>
+<xsl:value-of select="$python-class-name"/>
 <xsl:text>
 from gwproto.types.</xsl:text>
-<xsl:value-of select="translate(AliasRoot,'.','_')"/>
-<xsl:text> import </xsl:text>
-<xsl:call-template name="nt-case">
-    <xsl:with-param name="mp-schema-text" select="AliasRoot" />
-</xsl:call-template>
+<xsl:value-of select="translate(TypeName,'.','_')"/>
+<xsl:text> import </xsl:text><xsl:value-of select="$python-class-name"/>
 <xsl:text>_Maker</xsl:text>
 </xsl:for-each>
 </xsl:for-each>
@@ -56,10 +60,21 @@ from gwproto.types.</xsl:text>
 
 __all__ = [</xsl:text>
 <xsl:for-each select="$airtable//ProtocolTypes/ProtocolType[(normalize-space(ProtocolName) ='gwproto')]">
-<xsl:sort select="TypeName" data-type="text"/>
-<xsl:variable name="schema-id" select="Type"/>
-<xsl:for-each select="$airtable//Schemas/Schema[(SchemaId = $schema-id)  and (Status = 'Active' or Status = 'Pending') and (ProtocolCategory = 'Json' or ProtocolCategory = 'GwAlgoSerial')]">
-<xsl:variable name="local-alias" select="AliasRoot" />
+<xsl:sort select="VersionedTypeName" data-type="text"/>
+<xsl:variable name="versioned-type-id" select="VersionedType"/>
+<xsl:for-each select="$airtable//VersionedTypes/VersionedType[(VersionedTypeId = $versioned-type-id)  and (Status = 'Active' or Status = 'Pending') and (ProtocolCategory = 'Json' or ProtocolCategory = 'GwAlgoSerial')]">
+
+<xsl:variable name="python-class-name">
+<xsl:if test="(normalize-space(PythonClassName) ='')">
+<xsl:call-template name="nt-case"> 
+    <xsl:with-param name="type-name-text" select="TypeName" />
+</xsl:call-template>
+</xsl:if>
+<xsl:if test="(normalize-space(PythonClassName) != '')">
+<xsl:value-of select="normalize-space(PythonClassName)" />
+</xsl:if>
+</xsl:variable>
+
 <xsl:if test="not(NotInInit='true')">
 <xsl:text>
     "</xsl:text>
@@ -68,9 +83,7 @@ __all__ = [</xsl:text>
 <xsl:text>
     # "</xsl:text>
 </xsl:if>
-    <xsl:call-template name="nt-case">
-        <xsl:with-param name="mp-schema-text" select="AliasRoot" />
-    </xsl:call-template>
+    <xsl:value-of select="$python-class-name"/>
     <xsl:text>",</xsl:text>
 <xsl:if test="not(NotInInit='true')">
 <xsl:text>
@@ -80,9 +93,7 @@ __all__ = [</xsl:text>
 <xsl:text>
     # "</xsl:text>
 </xsl:if>
-    <xsl:call-template name="nt-case">
-        <xsl:with-param name="mp-schema-text" select="AliasRoot" />
-    </xsl:call-template>
+    <xsl:value-of select="$python-class-name"/>
     <xsl:text>_Maker",</xsl:text>
 </xsl:for-each>
 </xsl:for-each>

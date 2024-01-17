@@ -20,42 +20,27 @@
         <FileSet>
 
             <FileSetFile>
-                    <xsl:element name="RelativePath"><xsl:text>../../../../../../docs/sdk-types.rst</xsl:text></xsl:element>
+                    <xsl:element name="RelativePath"><xsl:text>../../../../../../docs/asls/types.rst</xsl:text></xsl:element>
 
                 <OverwriteMode>Always</OverwriteMode>
                 <xsl:element name="FileContents">
 <xsl:text>
+Type Application Shared Language (ASL) Specifications
+===============
 
-SDK for `gridworks-protocol &lt;https://pypi.org/project/gridworks-protocol/&gt;`_  Types
-===========================================================================
-
-The Python classes enumerated below provide an interpretation of gridworks-protocol
-type instances (serialized JSON) as Python objects. Types are the building
-blocks for all GridWorks APIs. You can read more about how they work
-`here &lt;https://gridworks.readthedocs.io/en/latest/api-sdk-abi.html&gt;`_, and
-examine their API specifications `here &lt;apis/types.html&gt;`_.
-The Python classes below also come with methods for translating back and
-forth between type instances and Python objects.
-
-
-.. automodule:: gwproto.types
-
-.. toctree::
-   :maxdepth: 1
-   :caption: TYPE SDKS
-
-    </xsl:text>
+</xsl:text>
 <xsl:for-each select="$airtable//ProtocolTypes/ProtocolType[(normalize-space(ProtocolName) ='gwproto')]">
 <xsl:sort select="VersionedTypeName" data-type="text"/>
 <xsl:variable name="versioned-type-id" select="VersionedType"/>
 <xsl:for-each select="$airtable//VersionedTypes/VersionedType[(VersionedTypeId = $versioned-type-id)  and (Status = 'Active' or Status = 'Pending') and (ProtocolCategory = 'Json' or ProtocolCategory = 'GwAlgoSerial')]">
-<xsl:call-template name="nt-case">
-    <xsl:with-param name="type-name-text" select="TypeName" />
-</xsl:call-template>
-<xsl:text>  &lt;types/</xsl:text>
+<xsl:value-of select="VersionedTypeName" />
+<xsl:text>
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. literalinclude:: json/</xsl:text>
 <xsl:value-of select="translate(TypeName,'.','-')"/>
-<xsl:text>&gt;
-    </xsl:text>
+<xsl:text>.json
+
+</xsl:text>
 
 </xsl:for-each>
 </xsl:for-each>

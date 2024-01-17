@@ -20,28 +20,24 @@
         <FileSet>
 
             <FileSetFile>
-                    <xsl:element name="RelativePath"><xsl:text>../../../../../../docs/apis/types.rst</xsl:text></xsl:element>
+                    <xsl:element name="RelativePath"><xsl:text>../../../../../docs/asls/enums.rst</xsl:text></xsl:element>
 
                 <OverwriteMode>Always</OverwriteMode>
                 <xsl:element name="FileContents">
 <xsl:text>
-Type API Specs
+Enum Application Shared Language (ASL) Specifications
 ===============
 
 </xsl:text>
-<xsl:for-each select="$airtable//ProtocolTypes/ProtocolType[(normalize-space(ProtocolName) ='gwproto')]">
-<xsl:sort select="TypeName" data-type="text"/>
-<xsl:variable name="schema-id" select="Type"/>
-<xsl:for-each select="$airtable//Schemas/Schema[(SchemaId = $schema-id)  and (Status = 'Active' or Status = 'Pending') and (ProtocolCategory = 'Json' or ProtocolCategory = 'GwAlgoSerial')]">
-<xsl:variable name="local-alias" select="AliasRoot" />
-
-<xsl:call-template name="nt-case">
-    <xsl:with-param name="mp-schema-text" select="AliasRoot" />
-</xsl:call-template>
+<xsl:for-each select="$airtable//ProtocolEnums/ProtocolEnum[(normalize-space(ProtocolName) ='gwproto')]">
+<xsl:sort select="VersionedTypeName" data-type="text"/>
+<xsl:variable name="versioned-enum-id" select="VersionedEnum"/>
+<xsl:for-each select="$airtable//VersionedEnums/VersionedEnum[(VersionedEnumId = $versioned-enum-id)  and (Status = 'Active' or Status = 'Pending')]">
+<xsl:value-of select="VersionedEnumName" />
 <xsl:text>
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/</xsl:text>
-<xsl:value-of select="translate(AliasRoot,'.','-')"/>
+<xsl:value-of select="translate(EnumName,'.','-')"/>
 <xsl:text>.json
 
 </xsl:text>

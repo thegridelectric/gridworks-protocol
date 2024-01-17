@@ -102,7 +102,7 @@ def test_telemetry_reporting_config_generated() -> None:
     del d2["NameplateMaxValue"]
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
-    
+
     del d2["AsyncReportThreshold"]
     Maker.dict_to_tuple(d2)
 

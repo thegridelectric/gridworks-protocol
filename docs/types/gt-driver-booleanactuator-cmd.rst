@@ -6,15 +6,15 @@ Python pydantic class corresponding to json type `gt.driver.booleanactuator.cmd`
     :members:
 
 **RelayState**:
-    - Description: 
+    - Description:
     - Format: Bit
 
 **ShNodeAlias**:
-    - Description: 
+    - Description:
     - Format: LeftRightDot
 
 **CommandTimeUnixMs**:
-    - Description: 
+    - Description:
     - Format: ReasonableUnixTimeMs
 
 **TypeName**:
@@ -39,4 +39,3 @@ Python pydantic class corresponding to json type `gt.driver.booleanactuator.cmd`
 
 .. autoclass:: gwproto.types.GtDriverBooleanactuatorCmd_Maker
     :members:
-

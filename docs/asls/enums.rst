@@ -25,4 +25,3 @@ sh.actor.class.001
 spaceheat.telemetry.name.001
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/spaceheat-telemetry-name.json
-

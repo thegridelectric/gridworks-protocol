@@ -6,19 +6,19 @@ Python pydantic class corresponding to json type `gt.dispatch.boolean`, version 
     :members:
 
 **AboutNodeName**:
-    - Description: The Spaceheat Node getting dispatched. 
+    - Description: The Spaceheat Node getting dispatched.
     - Format: LeftRightDot
 
 **ToGNodeAlias**:
-    - Description: GNodeAlias of the SCADA. 
+    - Description: GNodeAlias of the SCADA.
     - Format: LeftRightDot
 
 **FromGNodeAlias**:
-    - Description: GNodeAlias of AtomicTNode. 
+    - Description: GNodeAlias of AtomicTNode.
     - Format: LeftRightDot
 
 **FromGNodeInstanceId**:
-    - Description: GNodeInstance of the AtomicTNode. 
+    - Description: GNodeInstance of the AtomicTNode.
     - Format: UuidCanonicalTextual
 
 **RelayState**:
@@ -26,7 +26,7 @@ Python pydantic class corresponding to json type `gt.dispatch.boolean`, version 
     - Format: Bit
 
 **SendTimeUnixMs**:
-    - Description: Time the AtomicTNode sends the dispatch, by its clock. 
+    - Description: Time the AtomicTNode sends the dispatch, by its clock.
     - Format: ReasonableUnixTimeMs
 
 **TypeName**:
@@ -55,4 +55,3 @@ Python pydantic class corresponding to json type `gt.dispatch.boolean`, version 
 
 .. autoclass:: gwproto.types.GtDispatchBoolean_Maker
     :members:
-

@@ -5,30 +5,28 @@ from gwproto.enums import Role
 
 
 def test_role() -> None:
-    assert set(Role.values()) == set(
-        [
-            "Unknown",
-            "Scada",
-            "HomeAlone",
-            "Atn",
-            "PowerMeter",
-            "BoostElement",
-            "BooleanActuator",
-            "DedicatedThermalStore",
-            "TankWaterTempSensor",
-            "PipeTempSensor",
-            "RoomTempSensor",
-            "OutdoorTempSensor",
-            "PipeFlowMeter",
-            "HeatedSpace",
-            "HydronicPipe",
-            "BaseboardRadiator",
-            "RadiatorFan",
-            "CirculatorPump",
-            "MultiChannelAnalogTempSensor",
-            "Outdoors",
-        ]
-    )
+    assert set(Role.values()) == {
+        "Unknown",
+        "Scada",
+        "HomeAlone",
+        "Atn",
+        "PowerMeter",
+        "BoostElement",
+        "BooleanActuator",
+        "DedicatedThermalStore",
+        "TankWaterTempSensor",
+        "PipeTempSensor",
+        "RoomTempSensor",
+        "OutdoorTempSensor",
+        "PipeFlowMeter",
+        "HeatedSpace",
+        "HydronicPipe",
+        "BaseboardRadiator",
+        "RadiatorFan",
+        "CirculatorPump",
+        "MultiChannelAnalogTempSensor",
+        "Outdoors",
+    }
 
     assert Role.default() == Role.Unknown
     assert Role.enum_name() == "sh.node.role"

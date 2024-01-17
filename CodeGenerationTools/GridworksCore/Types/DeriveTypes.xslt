@@ -27,7 +27,7 @@
                 <xsl:variable name="versioned-type-name" select="VersionedTypeName"/>
                 <xsl:variable name="python-class-name">
                     <xsl:if test="(normalize-space(PythonClassName) ='')">
-                    <xsl:call-template name="nt-case"> 
+                    <xsl:call-template name="nt-case">
                         <xsl:with-param name="type-name-text" select="TypeName" />
                     </xsl:call-template>
                     </xsl:if>
@@ -180,25 +180,25 @@ class </xsl:text>
 <xsl:text>(BaseModel):
     """
     </xsl:text>
-    <!-- One line title, if it exists --> 
+    <!-- One line title, if it exists -->
     <xsl:if test="(normalize-space(Title) != '')">
         <xsl:value-of select="Title"/>
-            <!-- With a space before the Description (if description exists)--> 
+            <!-- With a space before the Description (if description exists)-->
             <xsl:if test="(normalize-space(Description) != '')">
                 <xsl:text>.
 
     </xsl:text>
-            </xsl:if>  
+            </xsl:if>
     </xsl:if>
 
-    <!-- Type Description, wrapped, if it exists --> 
+    <!-- Type Description, wrapped, if it exists -->
     <xsl:if test="(normalize-space(Description) != '')">
     <xsl:call-template name="wrap-text">
         <xsl:with-param name="text" select="normalize-space(Description)"/>
         <xsl:with-param name="indent-spaces" select="4"/>
     </xsl:call-template>
     </xsl:if>
-    
+
     <xsl:if test="(normalize-space(Url) != '')">
     <xsl:text>
 
@@ -228,7 +228,7 @@ class </xsl:text>
         </xsl:if>
         <xsl:call-template name="nt-case">
                         <xsl:with-param name="type-name-text" select="EnumLocalName" />
-        </xsl:call-template> 
+        </xsl:call-template>
     </xsl:if>
 </xsl:variable>
 
@@ -351,7 +351,7 @@ class </xsl:text>
 
 <!-- SETTING DEFAULT VALUE FOR ATTRIBUTE IN CLASS DECLARATION -->
     <xsl:choose>
-    
+
     <!-- If the attribute is not required, choose the default to always be none-->
     <xsl:when test= "not (IsRequired = 'true')">
     <xsl:text>
@@ -393,7 +393,7 @@ class </xsl:text>
     <xsl:for-each select="$airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id)]">
     <xsl:sort select="Idx" data-type="number"/>
     <xsl:variable name="type-attribute-id" select="TypeAttributeId" />
-    
+
     <xsl:variable name="enum-class-name">
         <xsl:if test = "(IsEnum = 'true')">
             <xsl:if test="UseEnumAlias = 'true'">
@@ -401,7 +401,7 @@ class </xsl:text>
             </xsl:if>
             <xsl:call-template name="nt-case">
                             <xsl:with-param name="type-name-text" select="EnumLocalName" />
-            </xsl:call-template> 
+            </xsl:call-template>
         </xsl:if>
     </xsl:variable>
 
@@ -464,7 +464,7 @@ class </xsl:text>
     <xsl:text>
 
     @validator("</xsl:text><xsl:value-of select="$attribute-name"/><xsl:text>"</xsl:text>
-    
+
     <xsl:if test="PreValidateFormat='true'">
     <xsl:text>, pre=True</xsl:text>
     </xsl:if>
@@ -541,19 +541,19 @@ class </xsl:text>
         </xsl:if>
 
 
-        
+
         <xsl:if test="not(IsRequired = 'true')">
                 <xsl:text>
         if v is None:
             return v</xsl:text>
         </xsl:if>
-    
+
         <xsl:if test="count($airtable//TypeAxioms/TypeAxiom[(normalize-space(SinglePropertyAxiom)=$type-attribute-id)]) > 0">
         <xsl:text>
         ...
         # TODO: Implement Axiom(s)</xsl:text>
         </xsl:if>
-        
+
         <xsl:choose>
 
         <!-- Format needs validating; not a list-->
@@ -773,7 +773,7 @@ class </xsl:text>
             <xsl:value-of select="Value"/>
             <xsl:text>.as_dict()</xsl:text>
         </xsl:when>
-        
+
 
         <!-- (required) as_dict: List of Types -->
         <xsl:when test="(IsType = 'true') and (normalize-space(SubTypeDataClass) = '' or IsList='true') and (IsList = 'true')">
@@ -954,7 +954,7 @@ class </xsl:text>
         </xsl:if>
         <xsl:call-template name="nt-case">
                         <xsl:with-param name="type-name-text" select="EnumLocalName" />
-        </xsl:call-template> 
+        </xsl:call-template>
     </xsl:if>
 </xsl:variable>
 
@@ -1004,7 +1004,7 @@ class </xsl:text>
     </xsl:if>
 </xsl:variable>
 
-        
+
         <!-- python case version of attribute names in init-->
         <xsl:call-template name="python-case">
             <xsl:with-param name="camel-case-text" select="$attribute-name"  />
@@ -1023,7 +1023,7 @@ class </xsl:text>
         </xsl:otherwise>
         </xsl:choose>
 
-        
+
         </xsl:for-each>
     <xsl:text>
     ):
@@ -1098,7 +1098,7 @@ class </xsl:text>
           - Types: recursively validates and deserializes sub-types.
 
         Note that if a required attribute with a default value is missing in a dict, this method will
-        raise a SchemaError. This differs from the pydantic BaseModel practice of auto-completing 
+        raise a SchemaError. This differs from the pydantic BaseModel practice of auto-completing
         missing attributes with default values when they exist.
 
         Args:
@@ -1284,7 +1284,7 @@ class </xsl:text>
     <xsl:text>
         if "</xsl:text><xsl:value-of select="Value"/><xsl:text>" in d2.keys():
             </xsl:text>
-        
+
         <xsl:choose>
 
         <!-- (Is required) INNER LOOP dict_to_tuple: Single Enum -->
@@ -1334,7 +1334,7 @@ class </xsl:text>
          <!-- Completing OPTIONAL inner loop choose-->
         <xsl:otherwise></xsl:otherwise>
         </xsl:choose>
-    
+
     </xsl:otherwise>
     </xsl:choose>
 
@@ -1348,7 +1348,7 @@ class </xsl:text>
         <xsl:if test="not(normalize-space(SubTypeDataClass) = '') and not(IsList='true')">
         <xsl:text>Id</xsl:text>
         </xsl:if>
-        
+
 
         <xsl:text>" not in d2.keys():
             raise SchemaError(f"dict missing </xsl:text><xsl:value-of select="Value"/><xsl:text>: &lt;{d2}>")</xsl:text>
@@ -1544,7 +1544,7 @@ def check_is_algo_address_string_format(v: str) -> None:
 def check_is_algo_msg_pack_encoded(v: str) -> None:
     """
     AlgoMSgPackEncoded format: the format of a transaction sent to
-    the Algorand blockchain. Error is not thrown with 
+    the Algorand blockchain. Error is not thrown with
     algosdk.encoding.future_msg_decode(candidate)
 
     Raises:
@@ -1565,9 +1565,9 @@ def check_is_bit(v: int) -> None:
     """
     Checks Bit format
 
-    Bit format: The value must be the integer 0 or the integer 1.  
-    
-    Will not attempt to first interpret as an integer. For example, 
+    Bit format: The value must be the integer 0 or the integer 1.
+
+    Will not attempt to first interpret as an integer. For example,
     1.3 will not be interpreted as 1 but will raise an error.
 
     Args:
@@ -1611,8 +1611,8 @@ def check_is_hex_char(v: str) -> None:
 
 def check_is_iso_format(v: str) -> None:
     """
-    Example: '2024-01-10T15:30:45.123456-05:00'  The string does not 
-    need to include microseconds. 
+    Example: '2024-01-10T15:30:45.123456-05:00'  The string does not
+    need to include microseconds.
     """
     import datetime
 
@@ -1622,7 +1622,7 @@ def check_is_iso_format(v: str) -> None:
         raise ValueError(f"&lt;{v}> is not IsoFormat")</xsl:text>
     </xsl:when>
 
-        
+
     <xsl:when test="Name='LeftRightDot'">
     <xsl:text>
 
@@ -1725,9 +1725,9 @@ def check_is_market_slot_name_lrd_format(v: str) -> None:
 
 def check_is_non_negative_integer(v: int) -> None:
     """
-    Must be non-negative when interpreted as an integer. Interpretation 
-    as an integer follows the pydantic rules for this - which will round 
-    down rational numbers. So 0 is fine, and 1.7 will be interpreted as 
+    Must be non-negative when interpreted as an integer. Interpretation
+    as an integer follows the pydantic rules for this - which will round
+    down rational numbers. So 0 is fine, and 1.7 will be interpreted as
     1 and is also fine.
 
     Args:
@@ -1930,6 +1930,8 @@ def check_is_world_instance_name_format(v: str) -> None:
 </xsl:for-each>
 </xsl:if>
 
+<!-- Add newline at EOF for git and pre-commit-->
+<xsl:text>&#10;</xsl:text>
 
                         </xsl:element>
                      </FileSetFile>

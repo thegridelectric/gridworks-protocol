@@ -10,13 +10,13 @@ Python pydantic class corresponding to json type `pipe.flow.sensor.cac.gt`, vers
     - Format: UuidCanonicalTextual
 
 **MakeModel**:
-    - Description: 
+    - Description:
 
 **DisplayName**:
     - Description: Sample: Atlas Scientific EZO FLO i2c
 
 **CommsMethod**:
-    - Description: 
+    - Description:
 
 **TypeName**:
     - Description: All GridWorks Versioned Types have a fixed TypeName, which is a string of lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character, and final word NOT all Hindu-Arabic numerals.
@@ -32,4 +32,3 @@ Python pydantic class corresponding to json type `pipe.flow.sensor.cac.gt`, vers
 
 .. autoclass:: gwproto.types.PipeFlowSensorCacGt_Maker
     :members:
-

@@ -6,21 +6,21 @@ Python pydantic class corresponding to json type `multipurpose.sensor.component.
     :members:
 
 **ComponentId**:
-    - Description: Component Id. Primary GridWorks identifier for a specific physical instance of a MultipurposeSensor (perhaps only the 12-channel analog temp sensor), and also as a more generic Component. 
+    - Description: Component Id. Primary GridWorks identifier for a specific physical instance of a MultipurposeSensor (perhaps only the 12-channel analog temp sensor), and also as a more generic Component.
     - Format: UuidCanonicalTextual
 
 **ComponentAttributeClassId**:
-    - Description: ComponentAttributeClassId. Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry. 
+    - Description: ComponentAttributeClassId. Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry.
     - Format: UuidCanonicalTextual
 
 **ChannelList**:
-    - Description: 
+    - Description:
 
 **ConfigList**:
-    - Description: 
+    - Description:
 
 **HwUid**:
-    - Description: Hardware Unique Id. 
+    - Description: Hardware Unique Id.
 
 **DisplayName**:
     - Description: Sample: Oak Multipurpose Temp Sensor Component <100>
@@ -43,4 +43,3 @@ Python pydantic class corresponding to json type `multipurpose.sensor.component.
 
 .. autoclass:: gwproto.types.MultipurposeSensorComponentGt_Maker
     :members:
-

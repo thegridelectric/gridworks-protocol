@@ -5,30 +5,28 @@ from gwproto.enums import MakeModel
 
 
 def test_make_model() -> None:
-    assert set(MakeModel.values()) == set(
-        [
-            "UNKNOWNMAKE__UNKNOWNMODEL",
-            "EGAUGE__4030",
-            "NCD__PR814SPST",
-            "ADAFRUIT__642",
-            "GRIDWORKS__TSNAP1",
-            "GRIDWORKS__WATERTEMPHIGHPRECISION",
-            "GRIDWORKS__SIMPM1",
-            "SCHNEIDERELECTRIC__IEM3455",
-            "GRIDWORKS__SIMBOOL30AMPRELAY",
-            "OPENENERGY__EMONPI",
-            "GRIDWORKS__SIMTSNAP1",
-            "ATLAS__EZFLO",
-            "HUBITAT__C7__LAN1",
-            "GRIDWORKS__TANK_MODULE_1",
-            "FIBARO__ANALOG_TEMP_SENSOR",
-            "AMPHENOL__NTC_10K_THERMISTOR_MA100GG103BN",
-            "YHDC__SCT013100",
-            "MAGNELAB__SCT0300050",
-            "GRIDWORKS__MULTITEMP1",
-            "KRIDA__EMR16I2CV3",
-        ]
-    )
+    assert set(MakeModel.values()) == {
+        "UNKNOWNMAKE__UNKNOWNMODEL",
+        "EGAUGE__4030",
+        "NCD__PR814SPST",
+        "ADAFRUIT__642",
+        "GRIDWORKS__TSNAP1",
+        "GRIDWORKS__WATERTEMPHIGHPRECISION",
+        "GRIDWORKS__SIMPM1",
+        "SCHNEIDERELECTRIC__IEM3455",
+        "GRIDWORKS__SIMBOOL30AMPRELAY",
+        "OPENENERGY__EMONPI",
+        "GRIDWORKS__SIMTSNAP1",
+        "ATLAS__EZFLO",
+        "HUBITAT__C7__LAN1",
+        "GRIDWORKS__TANK_MODULE_1",
+        "FIBARO__ANALOG_TEMP_SENSOR",
+        "AMPHENOL__NTC_10K_THERMISTOR_MA100GG103BN",
+        "YHDC__SCT013100",
+        "MAGNELAB__SCT0300050",
+        "GRIDWORKS__MULTITEMP1",
+        "KRIDA__EMR16I2CV3",
+    }
 
     assert MakeModel.default() == MakeModel.UNKNOWNMAKE__UNKNOWNMODEL
     assert MakeModel.enum_name() == "spaceheat.make.model"

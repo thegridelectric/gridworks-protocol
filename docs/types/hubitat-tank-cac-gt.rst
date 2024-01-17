@@ -22,4 +22,3 @@ Python pydantic class corresponding to json type `hubitat.tank.cac.gt`, version 
 
 .. autoclass:: gwproto.types.HubitatTankCacGt_Maker
     :members:
-

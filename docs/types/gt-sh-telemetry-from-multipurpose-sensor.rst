@@ -6,7 +6,7 @@ Python pydantic class corresponding to json type `gt.sh.telemetry.from.multipurp
     :members:
 
 **ScadaReadTimeUnixMs**:
-    - Description: ScadaReadTime in Unix MilliSeconds. 
+    - Description: ScadaReadTime in Unix MilliSeconds.
     - Format: ReasonableUnixTimeMs
 
 **AboutNodeAliasList**:
@@ -17,7 +17,7 @@ Python pydantic class corresponding to json type `gt.sh.telemetry.from.multipurp
     - Description: TelemetryNameList. List of the TelemetryNames. The nth name in this list indicates the TelemetryName of the nth alias in the AboutNodeAliasList.
 
 **ValueList**:
-    - Description: ValueList. 
+    - Description: ValueList.
 
 **TypeName**:
     - Description: All GridWorks Versioned Types have a fixed TypeName, which is a string of lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character, and final word NOT all Hindu-Arabic numerals.
@@ -37,4 +37,3 @@ Python pydantic class corresponding to json type `gt.sh.telemetry.from.multipurp
 
 .. autoclass:: gwproto.types.GtShTelemetryFromMultipurposeSensor_Maker
     :members:
-

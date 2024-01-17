@@ -168,7 +168,7 @@
       <LocalValue>Amphenol__NTC_10K_Thermistor_MA100GG103BN</LocalValue>
       <Enum>recLQWqTvGwSz2GcN</Enum>
       <Symbol>46f21cd5</Symbol>
-      <Description>A small gauge, low-cost, rapid response 
+      <Description>A small gauge, low-cost, rapid response
           NTC 10K Thermistor designed for medical applications.</Description>
       <Idx>15</Idx>
       <Version>001</Version>
@@ -193,9 +193,9 @@
       <LocalValue>WorldA</LocalValue>
       <Enum>recyOOpe9zHor9FIY</Enum>
       <Symbol>642c83d3</Symbol>
-      <Description>Authority on GNodeInstances, and their private keys. Maintains a FastAPI used 
+      <Description>Authority on GNodeInstances, and their private keys. Maintains a FastAPI used
         for relational information about backoffice information held locally
-        and/or in the GNodeRegistry/GNodeFactory. 
+        and/or in the GNodeRegistry/GNodeFactory.
         [More Info](https://gridworks.readthedocs.io/en/latest/world-role.html)</Description>
       <Idx>1</Idx>
       <Version>000</Version>
@@ -383,9 +383,9 @@
       <LocalValue>VersantA1StorageHeatTariff</LocalValue>
       <Enum>rec4S3L3NZiPihbLi</Enum>
       <Symbol>2127aba6</Symbol>
-      <Description>Versant is a utility serving customers in Maine, and in particular serves much of the area behind the Keene Rd Constraint in the [GridWorks Millinocket Demo](https://gridworks.readthedocs.io/en/latest/millinocket-demo.html#background). Alternately known as the 'Home Eco Rate With Bonus Meter, Time-of-Use.'  Look for rate A1 in Versant 
-[rate schedules](https://www.versantpower.com/residential/rates/rates-schedules/); 
-details are also available [here](https://drive.google.com/drive/u/0/folders/1mhIeNj2JWVyIJrQnSHmBDOkBpNnRRVKB). 
+      <Description>Versant is a utility serving customers in Maine, and in particular serves much of the area behind the Keene Rd Constraint in the [GridWorks Millinocket Demo](https://gridworks.readthedocs.io/en/latest/millinocket-demo.html#background). Alternately known as the 'Home Eco Rate With Bonus Meter, Time-of-Use.'  Look for rate A1 in Versant
+[rate schedules](https://www.versantpower.com/residential/rates/rates-schedules/);
+details are also available [here](https://drive.google.com/drive/u/0/folders/1mhIeNj2JWVyIJrQnSHmBDOkBpNnRRVKB).
 
 More:
 Service under this rate will be available to residential customers with thermal energy storage devices, electric battery storage devices, and/or vehicle chargers who agree to install a second metered point of delivery. The customer will be subject to inspections to ensure that the thermal storage device, electric battery storage device, and electric vehicle charger(s) are sized appropriately for residential use. If the thermal storage device, electric battery storage device, and electric vehicle charger(s) do not pass Company inspection, then the service will be denied. Service will be single-phase, alternating current, 60 hertz, at one standard secondary distribution voltage. Customers taking service under this rate schedule are responsible for paying both Distribution Service and Stranded Cost.
@@ -976,7 +976,7 @@ See attached csv for instantiation of this rate as an 8760.</Description>
       <Enum>recyOOpe9zHor9FIY</Enum>
       <Symbol>4bb2cf7e</Symbol>
       <Description>A simple supervisor that monitors its supervised AtomicTNode GNode strategies
-                via a heartbeat health check. 
+                via a heartbeat health check.
                 [More Info](https://gridworks.readthedocs.io/en/latest/supervisor.html)</Description>
       <Idx>1</Idx>
       <Version>000</Version>
@@ -1252,13 +1252,13 @@ See attached csv for instantiation of this rate as an 8760.</Description>
       <LocalValue>Fibaro__Analog_Temp_Sensor</LocalValue>
       <Enum>recLQWqTvGwSz2GcN</Enum>
       <Symbol>1f19839d</Symbol>
-      <Description>This enum refers to a Fibaro FGBS-222 home automation 
-          device that has been configured in a specific way. This includes (1) being attached to two 
+      <Description>This enum refers to a Fibaro FGBS-222 home automation
+          device that has been configured in a specific way. This includes (1) being attached to two
           10K NTC thermistors and a specific voltage divider circuit that specifies its temperature
-          as a function of voltage and (2) one of its potential free outputs being in-line with 
-          the power of a partner Fibaro, so that it can power cycle its partner (because there are 
+          as a function of voltage and (2) one of its potential free outputs being in-line with
+          the power of a partner Fibaro, so that it can power cycle its partner (because there are
           reports of Fibaros no longer reporting temp change after weeks or months until power cylced).
-          The Fibaro itself is a tiny (29 X 18 X 13 mm) Z-Wave device powered on 9-30V DC that can read 
+          The Fibaro itself is a tiny (29 X 18 X 13 mm) Z-Wave device powered on 9-30V DC that can read
           up to 6 1-wire DS18B20 temp sensors, 2 0-10V analog inputs and also has 2 potential free outputs.</Description>
       <Idx>14</Idx>
       <Version>001</Version>
@@ -1579,9 +1579,9 @@ See attached csv for instantiation of this rate as an 8760.</Description>
       <LocalValue>VersantATariff</LocalValue>
       <Enum>rec4S3L3NZiPihbLi</Enum>
       <Symbol>ea5c675a</Symbol>
-      <Description>Versant is a utility serving customers in Maine, and in particular serves much of the area behind the Keene Rd Constraint in the [GridWorks Millinocket Demo](https://gridworks.readthedocs.io/en/latest/millinocket-demo.html#background). 
+      <Description>Versant is a utility serving customers in Maine, and in particular serves much of the area behind the Keene Rd Constraint in the [GridWorks Millinocket Demo](https://gridworks.readthedocs.io/en/latest/millinocket-demo.html#background).
 
-The A Tariff is their standard residential tariff. Look for rate A in Versant 
+The A Tariff is their standard residential tariff. Look for rate A in Versant
 [rate schedules](https://www.versantpower.com/residential/rates/rates-schedules/)</Description>
       <Idx>2</Idx>
       <Version>000</Version>
@@ -1639,8 +1639,8 @@ The A Tariff is their standard residential tariff. Look for rate A in Versant
       <Symbol>4d649420</Symbol>
       <Description>This refers to a Hubitat C7 that has been configured
           in a specific way with respect to the APIs it presents on the Local Area Network. The
-          Hubitat C7 is a home automation hub that supports building ZigBee and ZWave meshes, 
-          plugs into Ethernet, has a reasonable user interface and has an active community of 
+          Hubitat C7 is a home automation hub that supports building ZigBee and ZWave meshes,
+          plugs into Ethernet, has a reasonable user interface and has an active community of
           open-source developers who create drivers and package managers for devices, and supports
           the creation of various types of APIs on the Local Area Network.</Description>
       <Idx>12</Idx>
@@ -1935,10 +1935,10 @@ The A Tariff is their standard residential tariff. Look for rate A in Versant
       <LocalValue>GridWorks__Tank_Module_1</LocalValue>
       <Enum>recLQWqTvGwSz2GcN</Enum>
       <Symbol>bd759051</Symbol>
-      <Description>This refers to a small module designed and 
-          assembled by GridWorks that is meant to be mounted to the side of a hot water tank. It 
-          requires 24V DC and has 4 temperature sensors coming out of it labeled 1, 2, 3 and 4. 
-          It is meant to provide temperature readings (taken within a half a second of each other) 
+      <Description>This refers to a small module designed and
+          assembled by GridWorks that is meant to be mounted to the side of a hot water tank. It
+          requires 24V DC and has 4 temperature sensors coming out of it labeled 1, 2, 3 and 4.
+          It is meant to provide temperature readings (taken within a half a second of each other)
           of all 4 of its sensors once a minute.</Description>
       <Idx>13</Idx>
       <Version>001</Version>
@@ -2038,7 +2038,7 @@ The A Tariff is their standard residential tariff. Look for rate A in Versant
       <LocalValue>GridWorks__MultiTemp1</LocalValue>
       <Enum>recLQWqTvGwSz2GcN</Enum>
       <Symbol>bb31d136</Symbol>
-      <Description>GridWorks Analog temperature sensor that has 12 channels  (labeled 1-12) to read 12 10K NTC Thermistors. It is comprised of 3 NCD ADS 1115 I2C temperature sensors with I2C Addresses 0x4b, 0x48, 0x49. 
+      <Description>GridWorks Analog temperature sensor that has 12 channels  (labeled 1-12) to read 12 10K NTC Thermistors. It is comprised of 3 NCD ADS 1115 I2C temperature sensors with I2C Addresses 0x4b, 0x48, 0x49.
 </Description>
       <Idx>19</Idx>
       <Version>001</Version>
@@ -6694,7 +6694,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <PrimitiveFormatId>recopFBsq4TmG87Op</PrimitiveFormatId>
       <TestValue>'7QQT4GN3ZPAQEFCNWF5BMF7NULVK3CWICZVT4GM3BQRISD52YEDLWJ4MII'</TestValue>
       <VersionedType>recPf7eAhpge7kvO7</VersionedType>
-      <Description>The Algoand address for the TaValidator who validated the location, 
+      <Description>The Algoand address for the TaValidator who validated the location,
         metering and type of the Transactive Device.</Description>
       <Idx>2</Idx>
       <Url>https://gridworks.readthedocs.io/en/latest/ta-validator.html</Url>
@@ -10877,7 +10877,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Value>CertificateType</Value>
       <IsRequired>true</IsRequired>
       <VersionedType>recUtSmERYdWUVAPm</VersionedType>
-      <Description>Determines if TaDeed and TaTradingRights are Algorand Standard 
+      <Description>Determines if TaDeed and TaTradingRights are Algorand Standard
         Assets or Algorand Smart Signatures.</Description>
       <Idx>4</Idx>
       <Enum>recCQyaQ1Oq0MlT20</Enum>
@@ -13822,7 +13822,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsType>false</IsType>
       <TestValue>'gqRtc2lng6ZzdWJzaWeSgaJwa8Qgi1hzb1WaDzF+215cR8xmiRfUQMrnjqHtQV5PiFBAUtmConBrxCD8IT4Zu8vBAhRNsXoWF+2i6q2KyBZrPhmbDCKJD7rBBqFzxEAEp8UcTEJSyTmgw96/mCnNHKfhkdYMCD5jxWejHRmPCrR8U9z/FBVsoCGbjDTTk2L1k7n/eVlumEk/M1KSe48Jo3RocgKhdgGjdHhuiaRhcGFyhaJhbq9Nb2xseSBNZXRlcm1haWSiYXXZKWh0dHA6Ly9sb2NhbGhvc3Q6NTAwMC9tb2xseWNvL3doby13ZS1hcmUvoW3EIItYc29Vmg8xftteXEfMZokX1EDK546h7UFeT4hQQFLZoXQBonVupVZMRFRSo2ZlZc0D6KJmdlGjZ2VuqnNhbmRuZXQtdjGiZ2jEIC/iF+bI4LU6UTgG4SIxyD10PS0/vNAEa93OC5SVRFn6omx2zQQ5pG5vdGXEK01vbGx5IEluYyBUZWxlbWV0cnkgU3VydmV5b3JzIGFuZCBQdXJ2ZXlvcnOjc25kxCDHZxhdCT2TxxxZlZ/H5mIku1s4ulDm3EmU6dYKXCWEB6R0eXBlpGFjZmc='</TestValue>
       <VersionedType>recPf7eAhpge7kvO7</VersionedType>
-      <Description>The half-signed multi transaction for transferring the TaDeed to the 
+      <Description>The half-signed multi transaction for transferring the TaDeed to the
         TaDaemon.</Description>
       <Idx>5</Idx>
       <TypeInPayload>String</TypeInPayload>
@@ -17194,7 +17194,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsType>false</IsType>
       <TestValue>'7QQT4GN3ZPAQEFCNWF5BMF7NULVK3CWICZVT4GM3BQRISD52YEDLWJ4MII'</TestValue>
       <VersionedType>recPf7eAhpge7kvO7</VersionedType>
-      <Description>The Algorand address of the entity owning the Transactive Device, and 
+      <Description>The Algorand address of the entity owning the Transactive Device, and
         thus also the TerminalAsset            </Description>
       <Idx>4</Idx>
       <TypeInPayload>String</TypeInPayload>
@@ -17568,8 +17568,8 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsType>false</IsType>
       <TestValue>'7QQT4GN3ZPAQEFCNWF5BMF7NULVK3CWICZVT4GM3BQRISD52YEDLWJ4MII'</TestValue>
       <VersionedType>recPf7eAhpge7kvO7</VersionedType>
-      <Description>The Algorand address for the TaDaemon which will own the TaDeed 
-         and initially the TaTradingRights), as well as holding funds on 
+      <Description>The Algorand address for the TaDaemon which will own the TaDeed
+         and initially the TaTradingRights), as well as holding funds on
         behalf of the TaOwner.</Description>
       <Idx>3</Idx>
       <TypeInPayload>String</TypeInPayload>
@@ -21600,7 +21600,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeAxiomId>rec41IGqMHOcsZEXl</TypeAxiomId>
       <createdTime>2022-09-22T04:46:38Z</createdTime>
       <Name>initial.tadeed.algo.create.000 Type Axiom 1</Name>
-      <Description>Decoded HalfSignedDeedCreationMtx must have type MultisigTransaction from the 
+      <Description>Decoded HalfSignedDeedCreationMtx must have type MultisigTransaction from the
         2-sig MultiAccount  [GnfAdminAddr, ValidatorAddr].</Description>
       <AxiomNumber>1</AxiomNumber>
       <Title>Is correct Multisig</Title>
@@ -21645,7 +21645,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeAxiomId>rec5UAG6BF4erNNSB</TypeAxiomId>
       <createdTime>2023-12-11T16:36:02Z</createdTime>
       <Name>hubitat.component.gt.000 Type Axiom 1</Name>
-      <Description>Mac Address format is 6 pairs of double hex digits separated by colons, agnostic to caps.  -  e.g. '34:E1:D1:81:37:82' and '34:e1:d1:81:37:82' both satisfy this property. This works in python: 
+      <Description>Mac Address format is 6 pairs of double hex digits separated by colons, agnostic to caps.  -  e.g. '34:E1:D1:81:37:82' and '34:e1:d1:81:37:82' both satisfy this property. This works in python:
 MAC_REGEX = re.compile('[0-9a-f]{2}([-:]?)[0-9a-f]{2}(\\1[0-9a-f]{2}){4}$') and then
 bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <AxiomNumber>1</AxiomNumber>
@@ -21773,7 +21773,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Name>initial.tadeed.algo.create.000 Type Axiom 2</Name>
       <Description>The transaction must create an Algorand Standard Asset
            - Total is 1
-           - UnitName is TADEED 
+           - UnitName is TADEED
            - Manager is GnfAdminAddr
            - AssetName has the following characteristics:
                  - length &lt;=  32 characters
@@ -21795,11 +21795,11 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Name>tavalidatorcert.algo.transfer.000 Type Axiom 2</Name>
       <Description> - The transaction must be the transfer of an Algorand Standard Asset
          -The sender must be the 2-sig Multi [GnfAdminAddr, TaValidatorAddr], which also created and owns the ASA
-         - It must be getting sent to the ValidatorAddr 
+         - It must be getting sent to the ValidatorAddr
          -The ASA must have:
            - Total = 1
-           - UnitName=VLDITR 
-           - GnfAdminAddr as manage 
+           - UnitName=VLDITR
+           - GnfAdminAddr as manage
            - AssetName not blank
         - The transfer amount must be 1</Description>
       <AxiomNumber>2</AxiomNumber>
@@ -21931,7 +21931,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeAxiomId>recIah41uCqR2IDJk</TypeAxiomId>
       <createdTime>2022-10-02T23:42:33Z</createdTime>
       <Name> Type Axiom 2</Name>
-      <Description> FORMATTING 
+      <Description> FORMATTING
         If they exist:
         - Alias must be a string of format LRD Alias
         - PrevAlias must be a string of format LRD Alias
@@ -21969,7 +21969,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeAxiomId>recKmoKIL8lpLdK2U</TypeAxiomId>
       <createdTime>2022-09-22T03:48:56Z</createdTime>
       <Name>tavalidatorcert.algo.transfer.000 Type Axiom 1</Name>
-      <Description>Decoded HalfSignedCertTransferMtx must have type MultisigTransaction from the 
+      <Description>Decoded HalfSignedCertTransferMtx must have type MultisigTransaction from the
         2-sig MultiAccount  [GnfAdminAddr, ValidatorAddr], signed by the ValidatorAddr</Description>
       <AxiomNumber>1</AxiomNumber>
       <Title>Is correct Multisig</Title>
@@ -21996,7 +21996,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeAxiomId>recLRRgeFOdFakOzR</TypeAxiomId>
       <createdTime>2023-01-11T22:03:21Z</createdTime>
       <Name>initial.tadeed.algo.transfer.000 Type Axiom 1</Name>
-      <Description>Decoded FirstDeedTransferMtx must have type MultisigTransaction from the 
+      <Description>Decoded FirstDeedTransferMtx must have type MultisigTransaction from the
         2-sig MultiAccount  [GnfAdminAddr, ValidatorAddr].</Description>
       <AxiomNumber>1</AxiomNumber>
       <Title>Is correct Multisig</Title>
@@ -22080,7 +22080,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeAxiomId>recQUUMz6KxDUEjWi</TypeAxiomId>
       <createdTime>2023-01-11T20:33:04Z</createdTime>
       <Name>initial.tadeed.algo.optin.002 Type Axiom 2</Name>
-      <Description>There is an ASA TaDeed created by and owned by the 2-sig MultiAccount [GnfAdminAddr, ValidatorAddr], 
+      <Description>There is an ASA TaDeed created by and owned by the 2-sig MultiAccount [GnfAdminAddr, ValidatorAddr],
         where the TaDeed's AssetName is equal to the payload's TerminalAssetAlias.</Description>
       <AxiomNumber>2</AxiomNumber>
       <Title>TaDeed consistency</Title>
@@ -22117,7 +22117,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeAxiomId>recSkcGAjBCP4uFPX</TypeAxiomId>
       <createdTime>2022-09-22T03:04:49Z</createdTime>
       <Name>tavalidatorcert.algo.create.000 Type Axiom 1</Name>
-      <Description>Decoded HalfSignedCertCreationMtx must have type MultisigTransaction from the 
+      <Description>Decoded HalfSignedCertCreationMtx must have type MultisigTransaction from the
         2-sig MultiAccount  [GnfAdminAddr, ValidatorAddr], signed by ValidatorAddr.</Description>
       <AxiomNumber>1</AxiomNumber>
       <Title>Is correct Multisig</Title>
@@ -22219,7 +22219,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeAxiomId>recZtIDTzQSfBVyMx</TypeAxiomId>
       <createdTime>2022-09-27T15:48:11Z</createdTime>
       <Name> Type Axiom 2</Name>
-      <Description> FORMATTING 
+      <Description> FORMATTING
         If they exist:
         - OwnershipDeedNftId must be an integer,
         - OwnershipDeedValidatorAddr must be a string of format AlgoAddressStringFormat
@@ -22371,7 +22371,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeAxiomId>recj13iYXBkX5UZr3</TypeAxiomId>
       <createdTime>2022-09-22T03:48:19Z</createdTime>
       <Name>tavalidatorcert.algo.transfer.000 Type Axiom 4</Name>
-      <Description>MultiAccount [GnfAdminAddr, ValidatorAddr] must have enough Algos to meet 
+      <Description>MultiAccount [GnfAdminAddr, ValidatorAddr] must have enough Algos to meet
         the GNodeFactory criterion.</Description>
       <AxiomNumber>4</AxiomNumber>
       <Title>TaValidator has sufficient Algos</Title>
@@ -22919,7 +22919,7 @@ by the concept of MarketType.</Description>
       <VersionedTypes>rec8uTC7GK5qgXzg9</VersionedTypes>
       <Description>GNodes are the building blocks of Gridworks. They have slowly-changing state
     that must be kept in sync across a distributed system. Therefore, they require
-    a global registry to act as Single Source of Truth (SSoT). This class is used for 
+    a global registry to act as Single Source of Truth (SSoT). This class is used for
     that SSoT to share information with actors about their GNodes, and the GNodes
     that they will observe and communicate with.</Description>
       <Title>Used to send and receive updates about GNodes</Title>
@@ -22972,7 +22972,7 @@ by the concept of MarketType.</Description>
       <ProtocolCategory>Json</ProtocolCategory>
       <ConsistencyCheck>1</ConsistencyCheck>
       <VersionedTypes>recacY2b5R2bByiAQ</VersionedTypes>
-      <Description>This is a legally binding contract for the bidder to consume or produce the quantity 
+      <Description>This is a legally binding contract for the bidder to consume or produce the quantity
     in its Bid consistent with the actual price.</Description>
       <Title>Bid acceptance sent from MarketMaker to a market partipant</Title>
       <Url>https://gridworks.readthedocs.io/en/latest/market-bid.html</Url>
@@ -23400,15 +23400,15 @@ by the concept of MarketType.</Description>
       <ProtocolCategory>Json</ProtocolCategory>
       <ConsistencyCheck>1</ConsistencyCheck>
       <VersionedTypes>recBEBBA0ctnOYQnC</VersionedTypes>
-      <Description>This is sent as an invitation to join the DispatchContract. Upon receipt of this, 
-    the AtomicTNode can check that the DispatchContract has finished the first part of 
-    its bootstrapping. This means it is well-funded, and also has the Scada Cert Id 
-    and the Scada Addr publicly available. The AtomicTNode can check these against 
-    the signature provided by the SCADA in its invitation. An AtomicTNode actor accepts 
-    the invitation by finishing the Dispatch Contract bootstrap (which it can only do 
-    if its Algorand Account holds the associated TaTradingRights certificate) and 
+      <Description>This is sent as an invitation to join the DispatchContract. Upon receipt of this,
+    the AtomicTNode can check that the DispatchContract has finished the first part of
+    its bootstrapping. This means it is well-funded, and also has the Scada Cert Id
+    and the Scada Addr publicly available. The AtomicTNode can check these against
+    the signature provided by the SCADA in its invitation. An AtomicTNode actor accepts
+    the invitation by finishing the Dispatch Contract bootstrap (which it can only do
+    if its Algorand Account holds the associated TaTradingRights certificate) and
     then responding to the SCADA via RabbitMQ with a dispatch.contract.confirmed payload.
-    
+
     https://gridworks.readthedocs.io/en/latest/dispatch-contract.html</Description>
       <Title>Sent from a Scada to its paired AtomicTNode on RabbitMQ</Title>
     </TypeBase>
@@ -23431,13 +23431,13 @@ by the concept of MarketType.</Description>
       <ConsistencyCheck>1</ConsistencyCheck>
       <VersionedTypes>recPf7eAhpge7kvO7</VersionedTypes>
       <Description>Once the TaValidator has done the initial on-site inspection of the Transactive
-    Device including its location and the type and quality  of its power and energy 
-    metering, the TaValidator lets the GNodeFactory know by sending this message. 
+    Device including its location and the type and quality  of its power and energy
+    metering, the TaValidator lets the GNodeFactory know by sending this message.
     Note the message also  includes the lat/lon of the Transactive Device. On
-    receiving and validating this message, the GNodeFactory will co-sign the 
+    receiving and validating this message, the GNodeFactory will co-sign the
     transfer and send the TaDeed to the TaDaemon address. In addition, the
-    GNodeFactory creates and sends a TaTradingRights certificate to the 
-    TaDaemon address. Only once the GNodeFactory has verified that the 
+    GNodeFactory creates and sends a TaTradingRights certificate to the
+    TaDaemon address. Only once the GNodeFactory has verified that the
     TaDaemon address owns the TaDeed and TaTradingRights will it change
     the GNodeStatus of the associated TerminalAsset from  Pending to Active.
     [GNodeStatus](https://gridworks.readthedocs.io/en/latest/g-node-status.html)
@@ -23446,7 +23446,7 @@ by the concept of MarketType.</Description>
     [TaValidator](https://gridworks.readthedocs.io/en/latest/ta-validator.html)
     [TerminalAsset](https://gridworks.readthedocs.io/en/latest/terminal-asset.html)
     [Transactive Device](https://gridworks.readthedocs.io/en/latest/transactive-device.html)
-    
+
     </Description>
       <Title>TaValidator sends to GNodeFactory after validating Transactive Device</Title>
     </TypeBase>
@@ -23558,7 +23558,7 @@ by the concept of MarketType.</Description>
       <ConsistencyCheck>1</ConsistencyCheck>
       <VersionedTypes>recV0KuDFayH4qGIl</VersionedTypes>
       <Description>One of the layers of abstraction connecting a GNode with a running app in
-    a Docker container.   
+    a Docker container.
 </Description>
       <Title>Used to send and receive updates about GNodeInstances</Title>
       <Url>https://gridworks.readthedocs.io/en/latest/g-node-instance.html</Url>
@@ -23591,7 +23591,7 @@ by the concept of MarketType.</Description>
       <ProtocolCategory>Json</ProtocolCategory>
       <ConsistencyCheck>1</ConsistencyCheck>
       <VersionedTypes>reccFZLsGTVhuzGsn</VersionedTypes>
-      <Description>Meant to be sent from a pending TaValidator  to the GNodeFactory (Gnf), to 
+      <Description>Meant to be sent from a pending TaValidator  to the GNodeFactory (Gnf), to
     initiate the process of certifying the pending TaValidator.</Description>
       <Title>Used for Step 1 of TaValidator certification</Title>
       <Url>https://gridworks.readthedocs.io/en/latest/ta-validator.html</Url>
@@ -23667,7 +23667,7 @@ by the concept of MarketType.</Description>
       <ProtocolCategory>Json</ProtocolCategory>
       <ConsistencyCheck>1</ConsistencyCheck>
       <VersionedTypes>rec3EIGuvfybwwFOK</VersionedTypes>
-      <Description>Used by a SCADA -&gt; Atn or Atn -&gt; AggregatedTNode to report real-time power of their TerminalAsset. Positive number means WITHDRAWAL from the grid - so generating electricity creates a negative number. This message is considered worse than useless to send after the first attempt, and does not require an ack. 
+      <Description>Used by a SCADA -&gt; Atn or Atn -&gt; AggregatedTNode to report real-time power of their TerminalAsset. Positive number means WITHDRAWAL from the grid - so generating electricity creates a negative number. This message is considered worse than useless to send after the first attempt, and does not require an ack.
 
 Shares the same purpose as gs.pwr, but is not designed to minimize bytes so comes in JSON format.</Description>
       <Title>Real-time power of TerminalAsset in Watts</Title>
@@ -23857,7 +23857,7 @@ Shares the same purpose as gs.pwr, but is not designed to minimize bytes so come
       <ProtocolCategory>Json</ProtocolCategory>
       <ConsistencyCheck>1</ConsistencyCheck>
       <VersionedTypes>rechKgkXf88R5dkGD</VersionedTypes>
-      <Description>Algo payload with report of last HeartbeatB sent to partner via Rabbit, to be sent to 
+      <Description>Algo payload with report of last HeartbeatB sent to partner via Rabbit, to be sent to
     DispatchContract on Algo blockchain</Description>
     </TypeBase>
     <TypeBase>
@@ -23901,11 +23901,11 @@ Shares the same purpose as gs.pwr, but is not designed to minimize bytes so come
       <ProtocolCategory>Json</ProtocolCategory>
       <ConsistencyCheck>1</ConsistencyCheck>
       <VersionedTypes>recy7fqBm5Cl94dnF</VersionedTypes>
-      <Description>Coefficients for a linear regression of avg power leaving a building as a function of weather: 
+      <Description>Coefficients for a linear regression of avg power leaving a building as a function of weather:
 
-PowerOut = Alpha + Beta * OutsideTempF 
+PowerOut = Alpha + Beta * OutsideTempF
 
-    These are an example of Slowly Varying State variables maintained for a thermal storage heating Terminal Asset by 
+    These are an example of Slowly Varying State variables maintained for a thermal storage heating Terminal Asset by
     its AtomicTNode and Scada.</Description>
       <Url>https://gridworks-atn.readthedocs.io/en/latest/data-categories.html#slowly-varying-state-variables</Url>
     </TypeBase>
@@ -23940,9 +23940,9 @@ PowerOut = Alpha + Beta * OutsideTempF
       <ProtocolCategory>Json</ProtocolCategory>
       <ConsistencyCheck>1</ConsistencyCheck>
       <VersionedTypes>rec8c4KjhwNmfrRYP</VersionedTypes>
-      <Description>A list of readings from a simple sensor for a Spaceheat SCADA. Designed as part of a status 
-    message sent from the SCADA to its AtomicTNode typically once every 5 minutes. The nth 
-    element of each of its two lists refer to the same reading (i.e. what the value is, 
+      <Description>A list of readings from a simple sensor for a Spaceheat SCADA. Designed as part of a status
+    message sent from the SCADA to its AtomicTNode typically once every 5 minutes. The nth
+    element of each of its two lists refer to the same reading (i.e. what the value is,
     when it was read).</Description>
       <ProtocolTypes>Unnamed record, Unnamed record</ProtocolTypes>
       <Title>Data read from a SimpleSensor run by a SpaceHeat SCADA</Title>
@@ -23955,7 +23955,7 @@ PowerOut = Alpha + Beta * OutsideTempF
       <ProtocolCategory>Json</ProtocolCategory>
       <ConsistencyCheck>1</ConsistencyCheck>
       <VersionedTypes>rec93KBYcwiqJ6OQy</VersionedTypes>
-      <Description>A set of readings made at the same time by a multipurpose sensor, sent by the 
+      <Description>A set of readings made at the same time by a multipurpose sensor, sent by the
     MultipurposeSensor SpaceheatNode actor to its SCADA.  The nth element of each of its
     three readings (what is getting read, what the value is, what the TelemetryNames are).</Description>
       <ProtocolTypes>Unnamed record</ProtocolTypes>
@@ -24044,7 +24044,7 @@ PowerOut = Alpha + Beta * OutsideTempF
       <ProtocolCategory>Json</ProtocolCategory>
       <ConsistencyCheck>1</ConsistencyCheck>
       <VersionedTypes>recO8OdobcISYms0B</VersionedTypes>
-      <Description>If this message is valid, the GNodeFactory co-signs and submits the TaDeed creation. In addition, the 
+      <Description>If this message is valid, the GNodeFactory co-signs and submits the TaDeed creation. In addition, the
     GnodeFactory creates a TerminalAsset with GNodeStatus pending.  For more information:
     [TaDeed](https://gridworks.readthedocs.io/en/latest/ta-deed.html)
     [TaValidator](https://gridworks.readthedocs.io/en/latest/ta-validator.html)</Description>
@@ -25043,7 +25043,7 @@ PowerOut = Alpha + Beta * OutsideTempF
       <IsCac />
       <IsComponent />
       <ConsistencyCheck>1</ConsistencyCheck>
-      <Description>Used by a SCADA -&gt; Atn or Atn -&gt; AggregatedTNode to report real-time power of their TerminalAsset. Positive number means WITHDRAWAL from the grid - so generating electricity creates a negative number. This message is considered worse than useless to send after the first attempt, and does not require an ack. 
+      <Description>Used by a SCADA -&gt; Atn or Atn -&gt; AggregatedTNode to report real-time power of their TerminalAsset. Positive number means WITHDRAWAL from the grid - so generating electricity creates a negative number. This message is considered worse than useless to send after the first attempt, and does not require an ack.
 
 Shares the same purpose as gs.pwr, but is not designed to minimize bytes so comes in JSON format.</Description>
       <BaseType>recjFoqZkvOjg0VXc</BaseType>
@@ -25343,9 +25343,9 @@ Shares the same purpose as gs.pwr, but is not designed to minimize bytes so come
       <IsCac />
       <IsComponent />
       <ConsistencyCheck>1</ConsistencyCheck>
-      <Description>A list of readings from a simple sensor for a Spaceheat SCADA. Designed as part of a status 
-    message sent from the SCADA to its AtomicTNode typically once every 5 minutes. The nth 
-    element of each of its two lists refer to the same reading (i.e. what the value is, 
+      <Description>A list of readings from a simple sensor for a Spaceheat SCADA. Designed as part of a status
+    message sent from the SCADA to its AtomicTNode typically once every 5 minutes. The nth
+    element of each of its two lists refer to the same reading (i.e. what the value is,
     when it was read).</Description>
       <BaseType>recwcEF6jm0pivW8K</BaseType>
       <TypeName>gt.sh.simple.telemetry.status</TypeName>
@@ -25391,7 +25391,7 @@ Shares the same purpose as gs.pwr, but is not designed to minimize bytes so come
       <ConsistencyCheck>1</ConsistencyCheck>
       <Description>GNodes are the building blocks of Gridworks. They have slowly-changing state
     that must be kept in sync across a distributed system. Therefore, they require
-    a global registry to act as Single Source of Truth (SSoT). This class is used for 
+    a global registry to act as Single Source of Truth (SSoT). This class is used for
     that SSoT to share information with actors about their GNodes, and the GNodes
     that they will observe and communicate with.</Description>
       <BaseType>recDnKXIasoP8ODSd</BaseType>
@@ -25433,7 +25433,7 @@ Shares the same purpose as gs.pwr, but is not designed to minimize bytes so come
       <IsCac />
       <IsComponent />
       <ConsistencyCheck>1</ConsistencyCheck>
-      <Description>A set of readings made at the same time by a multipurpose sensor, sent by the 
+      <Description>A set of readings made at the same time by a multipurpose sensor, sent by the
     MultipurposeSensor SpaceheatNode actor to its SCADA.  The nth element of each of its
     three readings (what is getting read, what the value is, what the TelemetryNames are).</Description>
       <BaseType>recx3kwLemvtMaT0t</BaseType>
@@ -25592,15 +25592,15 @@ Shares the same purpose as gs.pwr, but is not designed to minimize bytes so come
       <IsCac />
       <IsComponent />
       <ConsistencyCheck>1</ConsistencyCheck>
-      <Description>This is sent as an invitation to join the DispatchContract. Upon receipt of this, 
-    the AtomicTNode can check that the DispatchContract has finished the first part of 
-    its bootstrapping. This means it is well-funded, and also has the Scada Cert Id 
-    and the Scada Addr publicly available. The AtomicTNode can check these against 
-    the signature provided by the SCADA in its invitation. An AtomicTNode actor accepts 
-    the invitation by finishing the Dispatch Contract bootstrap (which it can only do 
-    if its Algorand Account holds the associated TaTradingRights certificate) and 
+      <Description>This is sent as an invitation to join the DispatchContract. Upon receipt of this,
+    the AtomicTNode can check that the DispatchContract has finished the first part of
+    its bootstrapping. This means it is well-funded, and also has the Scada Cert Id
+    and the Scada Addr publicly available. The AtomicTNode can check these against
+    the signature provided by the SCADA in its invitation. An AtomicTNode actor accepts
+    the invitation by finishing the Dispatch Contract bootstrap (which it can only do
+    if its Algorand Account holds the associated TaTradingRights certificate) and
     then responding to the SCADA via RabbitMQ with a dispatch.contract.confirmed payload.
-    
+
     https://gridworks.readthedocs.io/en/latest/dispatch-contract.html</Description>
       <BaseType>recbm5aHNmuHvaYKJ</BaseType>
       <TypeName>join.dispatch.contract</TypeName>
@@ -26449,7 +26449,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsCac />
       <IsComponent />
       <ConsistencyCheck>1</ConsistencyCheck>
-      <Description>If this message is valid, the GNodeFactory co-signs and submits the TaDeed creation. In addition, the 
+      <Description>If this message is valid, the GNodeFactory co-signs and submits the TaDeed creation. In addition, the
     GnodeFactory creates a TerminalAsset with GNodeStatus pending.  For more information:
     [TaDeed](https://gridworks.readthedocs.io/en/latest/ta-deed.html)
     [TaValidator](https://gridworks.readthedocs.io/en/latest/ta-validator.html)</Description>
@@ -26599,13 +26599,13 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsComponent />
       <ConsistencyCheck>1</ConsistencyCheck>
       <Description>Once the TaValidator has done the initial on-site inspection of the Transactive
-    Device including its location and the type and quality  of its power and energy 
-    metering, the TaValidator lets the GNodeFactory know by sending this message. 
+    Device including its location and the type and quality  of its power and energy
+    metering, the TaValidator lets the GNodeFactory know by sending this message.
     Note the message also  includes the lat/lon of the Transactive Device. On
-    receiving and validating this message, the GNodeFactory will co-sign the 
+    receiving and validating this message, the GNodeFactory will co-sign the
     transfer and send the TaDeed to the TaDaemon address. In addition, the
-    GNodeFactory creates and sends a TaTradingRights certificate to the 
-    TaDaemon address. Only once the GNodeFactory has verified that the 
+    GNodeFactory creates and sends a TaTradingRights certificate to the
+    TaDaemon address. Only once the GNodeFactory has verified that the
     TaDaemon address owns the TaDeed and TaTradingRights will it change
     the GNodeStatus of the associated TerminalAsset from  Pending to Active.
     [GNodeStatus](https://gridworks.readthedocs.io/en/latest/g-node-status.html)
@@ -26614,7 +26614,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
     [TaValidator](https://gridworks.readthedocs.io/en/latest/ta-validator.html)
     [TerminalAsset](https://gridworks.readthedocs.io/en/latest/terminal-asset.html)
     [Transactive Device](https://gridworks.readthedocs.io/en/latest/transactive-device.html)
-    
+
     </Description>
       <BaseType>reccq04oqFsHHPTlN</BaseType>
       <TypeName>initial.tadeed.algo.transfer</TypeName>
@@ -27051,7 +27051,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsComponent />
       <ConsistencyCheck>1</ConsistencyCheck>
       <Description>One of the layers of abstraction connecting a GNode with a running app in
-    a Docker container.   
+    a Docker container.
 </Description>
       <BaseType>recfTTPpGH16HQ9aY</BaseType>
       <TypeName>g.node.instance.gt</TypeName>
@@ -27268,7 +27268,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsCac />
       <IsComponent />
       <ConsistencyCheck>1</ConsistencyCheck>
-      <Description>This is a legally binding contract for the bidder to consume or produce the quantity 
+      <Description>This is a legally binding contract for the bidder to consume or produce the quantity
     in its Bid consistent with the actual price.</Description>
       <BaseType>recF3FhhkKiMKyjJZ</BaseType>
       <TypeName>accepted.bid</TypeName>
@@ -27533,7 +27533,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsCac />
       <IsComponent />
       <ConsistencyCheck>1</ConsistencyCheck>
-      <Description>Meant to be sent from a pending TaValidator  to the GNodeFactory (Gnf), to 
+      <Description>Meant to be sent from a pending TaValidator  to the GNodeFactory (Gnf), to
     initiate the process of certifying the pending TaValidator.</Description>
       <BaseType>rechCPLYrkc1asuPJ</BaseType>
       <TypeName>tavalidatorcert.algo.create</TypeName>
@@ -28037,7 +28037,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsCac />
       <IsComponent />
       <ConsistencyCheck>1</ConsistencyCheck>
-      <Description>Algo payload with report of last HeartbeatB sent to partner via Rabbit, to be sent to 
+      <Description>Algo payload with report of last HeartbeatB sent to partner via Rabbit, to be sent to
     DispatchContract on Algo blockchain</Description>
       <BaseType>recu1iYKh47xRDEt9</BaseType>
       <TypeName>heartbeat.algo.audit</TypeName>
@@ -29064,11 +29064,11 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsCac />
       <IsComponent />
       <ConsistencyCheck>1</ConsistencyCheck>
-      <Description>Coefficients for a linear regression of avg power leaving a building as a function of weather: 
+      <Description>Coefficients for a linear regression of avg power leaving a building as a function of weather:
 
-PowerOut = Alpha + Beta * OutsideTempF 
+PowerOut = Alpha + Beta * OutsideTempF
 
-    These are an example of Slowly Varying State variables maintained for a thermal storage heating Terminal Asset by 
+    These are an example of Slowly Varying State variables maintained for a thermal storage heating Terminal Asset by
     its AtomicTNode and Scada.</Description>
       <BaseType>recuzRX6RAVYBuYO4</BaseType>
       <TypeName>atn.outside.temp.regr.coeffs</TypeName>

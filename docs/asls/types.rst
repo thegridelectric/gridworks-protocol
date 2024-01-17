@@ -177,4 +177,3 @@ telemetry.reporting.config.000
 telemetry.snapshot.spaceheat.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/telemetry-snapshot-spaceheat.json
-

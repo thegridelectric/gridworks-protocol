@@ -6,21 +6,21 @@ Python pydantic class corresponding to json type `relay.component.gt`, version `
     :members:
 
 **ComponentId**:
-    - Description: Component Id. Primary GridWorks identifier for a specific physical instance of a Relay, and also as a more generic Component. 
+    - Description: Component Id. Primary GridWorks identifier for a specific physical instance of a Relay, and also as a more generic Component.
     - Format: UuidCanonicalTextual
 
 **ComponentAttributeClassId**:
-    - Description: ComponentAttributeClassId. Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry. 
+    - Description: ComponentAttributeClassId. Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry.
     - Format: UuidCanonicalTextual
 
 **DisplayName**:
-    - Description: 
+    - Description:
 
 **Gpio**:
-    - Description: 
+    - Description:
 
 **HwUid**:
-    - Description: Hardware Unique Id. 
+    - Description: Hardware Unique Id.
 
 **NormallyOpen**:
     - Description: Normally Open. Normally open relays default in the open position, meaning that when they're not in use, there is no contact between the circuits. When power is introduced, an electromagnet pulls the first circuit into contact with the second, thereby closing the circuit and allowing power to flow through
@@ -39,4 +39,3 @@ Python pydantic class corresponding to json type `relay.component.gt`, version `
 
 .. autoclass:: gwproto.types.RelayComponentGt_Maker
     :members:
-

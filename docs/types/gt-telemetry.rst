@@ -6,11 +6,11 @@ Python pydantic class corresponding to json type `gt.telemetry`, version `110`.
     :members:
 
 **ScadaReadTimeUnixMs**:
-    - Description: Scada Read Time in Unix Milliseconds. 
+    - Description: Scada Read Time in Unix Milliseconds.
     - Format: ReasonableUnixTimeMs
 
 **Value**:
-    - Description: Value. The value of the reading. 
+    - Description: Value. The value of the reading.
 
 **Name**:
     - Description: Name. The name of the Simple Sensing Spaceheat Node. This is both the AboutNodeName and FromNodeName for a data channel. The TelemetryName (and thus Units) are expected to be inferred by the Spaceheat Node. For example this is done initially in SCADA code according to whether the component of the Node is a PipeFlowSensorComponent, SimpleTempSensorComponent etc.
@@ -32,4 +32,3 @@ Python pydantic class corresponding to json type `gt.telemetry`, version `110`.
 
 .. autoclass:: gwproto.types.GtTelemetry_Maker
     :members:
-

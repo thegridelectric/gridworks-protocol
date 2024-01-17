@@ -10,4 +10,5 @@ isort ../../tests/enums/
 black ../../tests/types/
 isort ../../tests/types/
 
-
+black ../../src/gwproto/types/__init__.py
+black ../../src/gwproto/enums/__init__.py

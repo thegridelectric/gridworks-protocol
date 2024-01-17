@@ -10,10 +10,10 @@ Python pydantic class corresponding to json type `gt.sh.booleanactuator.cmd.stat
     - Format: LeftRightDot
 
 **RelayStateCommandList**:
-    - Description: List of RelayStateCommands. 
+    - Description: List of RelayStateCommands.
 
 **CommandTimeUnixMsList**:
-    - Description: List of Command Times. 
+    - Description: List of Command Times.
     - Format: ReasonableUnixTimeMs
 
 **TypeName**:
@@ -34,4 +34,3 @@ Python pydantic class corresponding to json type `gt.sh.booleanactuator.cmd.stat
 
 .. autoclass:: gwproto.types.GtShBooleanactuatorCmdStatus_Maker
     :members:
-

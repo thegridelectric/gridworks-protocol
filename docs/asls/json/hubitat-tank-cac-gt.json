@@ -1,40 +1,39 @@
 {
-    "gtr_asl": "001",
-    "type_name": "hubitat.tank.cac.gt",
-    "version": "000",
-    "owner": "gridworks@gridworks-consulting.com",
-    "description": "Hubitat Tank Component Attribute Class (GridWorks Type). A class of MakeModels for GridWorks tank temp sensor modules that use Hubitat hubs as part of the data collection.",
-    "url": "https://gridworks-protocol.readthedocs.io/en/latest/gridworks-tank-module-1.html",
-    "properties": {
-        "ComponentAttributeClassId": {
-            "type": "string",
-            "format": "UuidCanonicalTextual",
-            "title": "ComponentAttributeClassId",
-            "description": "Unique identifier for the device class (aka 'cac' or Component Attribute Class). Authority is maintained by the World Registry.",
-            "required":  true
-        },
-        "DisplayName": {
-            "type": "string",
-            "description": "Sample: GridWorks TankModule1",
-            "required":  false
-        },
-        "TypeName": {
-            "type": "string",
-            "value": "hubitat.tank.cac.gt",
-            "title": "The type name"
-        },
-        "Version": {
-            "type": "string",
-            "title": "The type version",
-            "default": "000",
-            "required": true
-        }
+  "gtr_asl": "001",
+  "type_name": "hubitat.tank.cac.gt",
+  "version": "000",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": "Hubitat Tank Component Attribute Class (GridWorks Type). A class of MakeModels for GridWorks tank temp sensor modules that use Hubitat hubs as part of the data collection.",
+  "url": "https://gridworks-protocol.readthedocs.io/en/latest/gridworks-tank-module-1.html",
+  "properties": {
+    "ComponentAttributeClassId": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "ComponentAttributeClassId",
+      "description": "Unique identifier for the device class (aka 'cac' or Component Attribute Class). Authority is maintained by the World Registry.",
+      "required": true
     },
-    "example": {
-      "ComponentAttributeClassId": "60ac199d-679a-49f7-9142-8ca3e6428a5f",
-      "DisplayName": "GridWorks TankModule1",
-      "TypeName": "hubitat.tank.cac.gt",
-      "Version": "000"
+    "DisplayName": {
+      "type": "string",
+      "description": "Sample: GridWorks TankModule1",
+      "required": false
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "hubitat.tank.cac.gt",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "000",
+      "required": true
     }
+  },
+  "example": {
+    "ComponentAttributeClassId": "60ac199d-679a-49f7-9142-8ca3e6428a5f",
+    "DisplayName": "GridWorks TankModule1",
+    "TypeName": "hubitat.tank.cac.gt",
+    "Version": "000"
+  }
 }
-

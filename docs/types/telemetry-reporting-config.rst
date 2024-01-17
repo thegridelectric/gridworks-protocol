@@ -6,29 +6,29 @@ Python pydantic class corresponding to json type `telemetry.reporting.config`, v
     :members:
 
 **TelemetryName**:
-    - Description: 
+    - Description:
 
 **AboutNodeName**:
     - Description: The name of the SpaceheatNode whose physical quantity is getting captured.
     - Format: LeftRightDot
 
 **ReportOnChange**:
-    - Description: 
+    - Description:
 
 **SamplePeriodS**:
-    - Description: 
+    - Description:
 
 **Exponent**:
     - Description: Exponent. Say the TelemetryName is WaterTempCTimes1000; this corresponds to units of Celsius.  To match the implication in the name, the Exponent should be 3, and a Value of 65300 would indicate 65.3 deg C
 
 **Unit**:
-    - Description: 
+    - Description:
 
 **AsyncReportThreshold**:
-    - Description: 
+    - Description:
 
 **NameplateMaxValue**:
-    - Description: 
+    - Description:
     - Format: PositiveInteger
 
 **TypeName**:
@@ -49,4 +49,3 @@ Python pydantic class corresponding to json type `telemetry.reporting.config`, v
 
 .. autoclass:: gwproto.types.TelemetryReportingConfig_Maker
     :members:
-

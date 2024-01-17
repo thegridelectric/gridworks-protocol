@@ -18,7 +18,7 @@ Python pydantic class corresponding to json type `gt.dispatch.boolean.local`, ve
     - Format: LeftRightDot
 
 **SendTimeUnixMs**:
-    - Description: Send Time in Unix Milliseconds. 
+    - Description: Send Time in Unix Milliseconds.
     - Format: ReasonableUnixTimeMs
 
 **TypeName**:
@@ -43,4 +43,3 @@ Python pydantic class corresponding to json type `gt.dispatch.boolean.local`, ve
 
 .. autoclass:: gwproto.types.GtDispatchBooleanLocal_Maker
     :members:
-

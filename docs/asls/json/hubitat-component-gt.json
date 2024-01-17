@@ -1,75 +1,74 @@
 {
-    "gtr_asl": "001",
-    "type_name": "hubitat.component.gt",
-    "version": "000",
-    "owner": "gridworks@gridworks-consulting.com",
-    "description": "Hubitat Component (GridWorks Type). Designed for specific Hubitat hubs. It extends the component.gt.000 type. Authority for the attributes of the component.gt.000 (ComponentId, ComponentAttributeClassId, DisplayName, HwUid) belongs to the WorldRegistry. The WorldRegistry is part of the GridWorks 'BackOffice' structure for managing relational device data . Notably, ComponentId and ComponentAttributeClass are both required and immutable. HwUid is optional but once it is set to a non-null value that is also immutable - it is meant to be an immutable identifier associated to a specific physical device, ideally one that can be read remotely by the SCADA and also by the naked eye. The DisplayName is mutable, with its current value in time governed by the WorldRegistry.",
-    "url": "https://gridworks-protocol.readthedocs.io/en/latest/iot-hubs.html",
-    "properties": {
-        "ComponentId": {
-            "type": "string",
-            "format": "UuidCanonicalTextual",
-            "title": "Component Id",
-            "description": "Primary GridWorks identifier for a specific physical instance of a Hubitat, and also as a more generic Component.",
-            "required":  true
-        },
-        "ComponentAttributeClassId": {
-            "type": "string",
-            "format": "UuidCanonicalTextual",
-            "title": "Unique identifier for HubitatCac object articulated by the hubitat.cac.gt.000 type.",
-            "description": "Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry.",
-            "required":  true
-        },
-        "Hubitat": {
-            "type": "dictDict",
-            "description": "Includes the information needed to access the MakerAPI of a Hubitat on the Local area network: Host, MakerApiID, AccessToken and MacAddress for the Hubitat.",
-            "required":  true
-        },
-        "DisplayName": {
-            "type": "string",
-            "description": "Sample: Oak Hubitat 81:37:82 (using the last 6 digits of the Hubitat MacId in the display name, as well as the short alias for the associated g node.)",
-            "required":  false
-        },
-        "HwUid": {
-            "type": "string",
-            "description": "Use the final 6 characters of the Hubitat mac address.",
-            "required":  false
-        },
-        "TypeName": {
-            "type": "string",
-            "value": "hubitat.component.gt",
-            "title": "The type name"
-        },
-        "Version": {
-            "type": "string",
-            "title": "The type version",
-            "default": "000",
-            "required": true
-        }
+  "gtr_asl": "001",
+  "type_name": "hubitat.component.gt",
+  "version": "000",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": "Hubitat Component (GridWorks Type). Designed for specific Hubitat hubs. It extends the component.gt.000 type. Authority for the attributes of the component.gt.000 (ComponentId, ComponentAttributeClassId, DisplayName, HwUid) belongs to the WorldRegistry. The WorldRegistry is part of the GridWorks 'BackOffice' structure for managing relational device data . Notably, ComponentId and ComponentAttributeClass are both required and immutable. HwUid is optional but once it is set to a non-null value that is also immutable - it is meant to be an immutable identifier associated to a specific physical device, ideally one that can be read remotely by the SCADA and also by the naked eye. The DisplayName is mutable, with its current value in time governed by the WorldRegistry.",
+  "url": "https://gridworks-protocol.readthedocs.io/en/latest/iot-hubs.html",
+  "properties": {
+    "ComponentId": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "Component Id",
+      "description": "Primary GridWorks identifier for a specific physical instance of a Hubitat, and also as a more generic Component.",
+      "required": true
     },
-    "axioms": {
-        "Axiom1": {
-            "title": "Hubitat.MacAddressId must have MacAddress format",
-            "description": "Mac Address format is 6 pairs of double hex digits separated by colons, agnostic to caps. - e.g. '34:E1:D1:81:37:82' and '34:e1:d1:81:37:82' both satisfy this property. This works in python: MAC_REGEX = re.compile('[0-9a-f]{2}([-:]?)[0-9a-f]{2}(\\1[0-9a-f]{2}){4}$') and then bool(MAC_REGEX.match(mac_str.lower()))"
-        },
-        "Axiom2": {
-            "title": "HwUid matches Hubitat MacAddress",
-            "description": "The HwUid must exist, and it must be lower alphanumeric versions of the last 6 digits of the Hubitat.MacAddressId with the colons taken out. For example, if the HubitatMacAddressId is '34:E1:D1:81:37:8A' then the HwUid must be '81378a'."
-        }
+    "ComponentAttributeClassId": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "Unique identifier for HubitatCac object articulated by the hubitat.cac.gt.000 type.",
+      "description": "Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry.",
+      "required": true
     },
-    "example": {
-      "ComponentAttributeClassId": "62528da5-b510-4ac2-82c1-3782842eae07",
-      "ComponentId": "48039704-7d45-4937-adda-0e362d13cef6",
-      "DisplayName": "Oak Hubitat 81:37:82",
-      "Hubitat": {
-        "AccessToken": "a8232144-abe9-4eed-bcfd-8f182600b8e7",
-        "Host": "hubitat-keene-oak.local",
-        "MacAddress": "34:E1:D1:81:37:82",
-        "MakerApiId": 2
-      },
-      "HwUid": "813782",
-      "TypeName": "hubitat.component.gt",
-      "Version": "000"
+    "Hubitat": {
+      "type": "dictDict",
+      "description": "Includes the information needed to access the MakerAPI of a Hubitat on the Local area network: Host, MakerApiID, AccessToken and MacAddress for the Hubitat.",
+      "required": true
+    },
+    "DisplayName": {
+      "type": "string",
+      "description": "Sample: Oak Hubitat 81:37:82 (using the last 6 digits of the Hubitat MacId in the display name, as well as the short alias for the associated g node.)",
+      "required": false
+    },
+    "HwUid": {
+      "type": "string",
+      "description": "Use the final 6 characters of the Hubitat mac address.",
+      "required": false
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "hubitat.component.gt",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "000",
+      "required": true
     }
+  },
+  "axioms": {
+    "Axiom1": {
+      "title": "Hubitat.MacAddressId must have MacAddress format",
+      "description": "Mac Address format is 6 pairs of double hex digits separated by colons, agnostic to caps. - e.g. '34:E1:D1:81:37:82' and '34:e1:d1:81:37:82' both satisfy this property. This works in python: MAC_REGEX = re.compile('[0-9a-f]{2}([-:]?)[0-9a-f]{2}(\\1[0-9a-f]{2}){4}$') and then bool(MAC_REGEX.match(mac_str.lower()))"
+    },
+    "Axiom2": {
+      "title": "HwUid matches Hubitat MacAddress",
+      "description": "The HwUid must exist, and it must be lower alphanumeric versions of the last 6 digits of the Hubitat.MacAddressId with the colons taken out. For example, if the HubitatMacAddressId is '34:E1:D1:81:37:8A' then the HwUid must be '81378a'."
+    }
+  },
+  "example": {
+    "ComponentAttributeClassId": "62528da5-b510-4ac2-82c1-3782842eae07",
+    "ComponentId": "48039704-7d45-4937-adda-0e362d13cef6",
+    "DisplayName": "Oak Hubitat 81:37:82",
+    "Hubitat": {
+      "AccessToken": "a8232144-abe9-4eed-bcfd-8f182600b8e7",
+      "Host": "hubitat-keene-oak.local",
+      "MacAddress": "34:E1:D1:81:37:82",
+      "MakerApiId": 2
+    },
+    "HwUid": "813782",
+    "TypeName": "hubitat.component.gt",
+    "Version": "000"
+  }
 }
-

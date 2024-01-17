@@ -1,51 +1,50 @@
 {
-    "gtr_asl": "001",
-    "type_name": "gt.sh.cli.atn.cmd",
-    "version": "110",
-    "owner": "gridworks@gridworks-consulting.com",
-    "description": "AtomicTNode CLI Command. This is a generic type mechanism for a crude command line interface on a SCADA, brokered by the AtomicTNode.",
-    "properties": {
-        "FromGNodeAlias": {
-            "type": "string",
-            "format": "LeftRightDot",
-            "title": "GNodeAlias",
-            "description": "Must be the SCADA's AtomicTNode.",
-            "required":  true
-        },
-        "SendSnapshot": {
-            "type": "boolean",
-            "description": "Asks SCADA to send back a snapshot. For this version of the type, nothing would happen if SendSnapshot were set to False. However, we include this in case additional variations are added later.",
-            "required":  true
-        },
-        "FromGNodeId": {
-            "type": "string",
-            "format": "UuidCanonicalTextual",
-            "title": "GNodeId",
-            "required":  true
-        },
-        "TypeName": {
-            "type": "string",
-            "value": "gt.sh.cli.atn.cmd",
-            "title": "The type name"
-        },
-        "Version": {
-            "type": "string",
-            "title": "The type version",
-            "default": "110",
-            "required": true
-        }
+  "gtr_asl": "001",
+  "type_name": "gt.sh.cli.atn.cmd",
+  "version": "110",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": "AtomicTNode CLI Command. This is a generic type mechanism for a crude command line interface on a SCADA, brokered by the AtomicTNode.",
+  "properties": {
+    "FromGNodeAlias": {
+      "type": "string",
+      "format": "LeftRightDot",
+      "title": "GNodeAlias",
+      "description": "Must be the SCADA's AtomicTNode.",
+      "required": true
     },
-    "formats": {
-        "UuidCanonicalTextual": {
-            "type": "string",
-            "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
-            "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"
-        },
-        "LeftRightDot": {
-            "type": "string",
-            "description": "Lowercase alphanumeric words separated by periods, with the most significant word (on the left) starting with an alphabet character.",
-            "example": "dw1.isone.me.freedom.apple"
-        }
+    "SendSnapshot": {
+      "type": "boolean",
+      "description": "Asks SCADA to send back a snapshot. For this version of the type, nothing would happen if SendSnapshot were set to False. However, we include this in case additional variations are added later.",
+      "required": true
+    },
+    "FromGNodeId": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "GNodeId",
+      "required": true
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "gt.sh.cli.atn.cmd",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "110",
+      "required": true
     }
+  },
+  "formats": {
+    "UuidCanonicalTextual": {
+      "type": "string",
+      "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
+      "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"
+    },
+    "LeftRightDot": {
+      "type": "string",
+      "description": "Lowercase alphanumeric words separated by periods, with the most significant word (on the left) starting with an alphabet character.",
+      "example": "dw1.isone.me.freedom.apple"
+    }
+  }
 }
-

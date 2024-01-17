@@ -5,22 +5,20 @@ from gwproto.enums import ActorClass
 
 
 def test_actor_class() -> None:
-    assert set(ActorClass.values()) == set(
-        [
-            "NoActor",
-            "Scada",
-            "HomeAlone",
-            "BooleanActuator",
-            "PowerMeter",
-            "Atn",
-            "SimpleSensor",
-            "MultipurposeSensor",
-            "Thermostat",
-            "HubitatTelemetryReader",
-            "HubitatTankModule",
-            "HubitatPoller",
-        ]
-    )
+    assert set(ActorClass.values()) == {
+        "NoActor",
+        "Scada",
+        "HomeAlone",
+        "BooleanActuator",
+        "PowerMeter",
+        "Atn",
+        "SimpleSensor",
+        "MultipurposeSensor",
+        "Thermostat",
+        "HubitatTelemetryReader",
+        "HubitatTankModule",
+        "HubitatPoller",
+    }
 
     assert ActorClass.default() == ActorClass.NoActor
     assert ActorClass.enum_name() == "sh.actor.class"

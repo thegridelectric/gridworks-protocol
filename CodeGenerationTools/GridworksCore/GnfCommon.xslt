@@ -35,16 +35,16 @@
     <xsl:param name="min-line-length" select="90"/>
     <xsl:param name="indent-spaces" select="4"/>
     <xsl:param name="index" select="1"/>
-    
+
     <xsl:variable name="allowed-chars" select="$min-line-length - $indent-spaces"/>
     <xsl:variable name="this-char" select="substring($text, 1, 1)"/>
-    
+
 
     <!-- Output the current character -->
     <xsl:value-of select="$this-char"/>
 
     <xsl:if test="string-length($text) > 1">
-    
+
     <xsl:variable name="next-char" select="substring($text, 2, 1)"/>
     <xsl:choose>
             <xsl:when test="$next-char = ' ' and $index > $allowed-chars">
@@ -108,13 +108,13 @@
     <xsl:value-of select="$this-char"/>
 
     <xsl:if test="string-length($text) > 1">
-    
+
     <xsl:variable name="next-char" select="substring($text, 2, 1)"/>
     <xsl:choose>
             <xsl:when test="$next-char = ' ' and $index > $allowed-chars">
                     <!-- When next character is a space and we are at or beyond a min line length, create carriage return -->
                     <xsl:text>&#xA;</xsl:text>
-                    
+
                     <!-- ... and insert the specified number of indent spaces -->
                     <xsl:call-template name="insert-spaces">
                         <xsl:with-param name="count" select="$indent-spaces"/>

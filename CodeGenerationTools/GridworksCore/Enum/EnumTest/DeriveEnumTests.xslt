@@ -47,12 +47,11 @@ from gwproto.enums import </xsl:text><xsl:value-of select="$local-class-name"/><
 
 def test_</xsl:text> <xsl:value-of select="translate(LocalName,'.','_')"/>
     <xsl:text>() -> None:
-    assert set(</xsl:text><xsl:value-of select="$local-class-name"/><xsl:text>.values()) == set(
-        [</xsl:text>
+    assert set(</xsl:text><xsl:value-of select="$local-class-name"/><xsl:text>.values()) == {</xsl:text>
     <xsl:for-each select="$airtable//EnumSymbols/EnumSymbol[(Enum = $enum-id) and (Version &lt;= $version)]">
     <xsl:sort select="Idx"  data-type="number"/>
         <xsl:text>
-            "</xsl:text>
+        "</xsl:text>
         <xsl:if test="$enum-name-style = 'Upper'">
             <xsl:value-of select="translate(translate(LocalValue,'-',''),$lcletters, $ucletters)"/>
         </xsl:if>
@@ -63,8 +62,7 @@ def test_</xsl:text> <xsl:value-of select="translate(LocalName,'.','_')"/>
         <xsl:text>",</xsl:text>
         </xsl:for-each>
     <xsl:text>
-        ]
-    )
+    }
 
     assert </xsl:text><xsl:value-of select="$local-class-name"/><xsl:text>.default() == </xsl:text>
     <xsl:value-of select="$local-class-name"/><xsl:text>.</xsl:text>
@@ -102,6 +100,9 @@ def test_</xsl:text> <xsl:value-of select="translate(LocalName,'.','_')"/>
     for value in </xsl:text><xsl:value-of select="$local-class-name"/><xsl:text>.values():
         symbol = </xsl:text><xsl:value-of select="$local-class-name"/><xsl:text>.value_to_symbol(value)
         assert </xsl:text><xsl:value-of select="$local-class-name"/><xsl:text>.symbol_to_value(symbol) == value</xsl:text>
+
+        <!-- Add newline at EOF for git and pre-commit-->
+        <xsl:text>&#10;</xsl:text>
 
 
                         </xsl:element>

@@ -21,12 +21,10 @@
 [pre-commit]: https://github.com/pre-commit/pre-commit
 [black]: https://github.com/psf/black
 
-
-GridWorks Protocol (gwproto) is a [Application Shared Language](https://gridwork-type-registry.readthedocs.io/en/latest/asls.html) 
+GridWorks Protocol (gwproto) is a [Application Shared Language](https://gridwork-type-registry.readthedocs.io/en/latest/asls.html)
 used by [SCADA](https://gridworks.readthedocs.io/en/latest/scada.html)/[AtomicTNode](https://gridworks.readthedocs.io/en/latest/atomic-t-node.html) actor pairs to communicate
-with each other as they work together to manage the Service Level Agreement for 
+with each other as they work together to manage the Service Level Agreement for
 [transactive devices](https://gridworks.readthedocs.io/en/latest/transactive-device.html) dedicated to residential thermal storage heating.
-
 
 ## Installation
 

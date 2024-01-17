@@ -1,38 +1,37 @@
 {
-    "gtr_asl": "001",
-    "type_name": "hubitat.poller.cac.gt",
-    "version": "000",
-    "owner": "gridworks@gridworks-consulting.com",
-    "description": "Hubitat Poller Cac (GridWorks Type). A class of devices - like a Honeywell Z-Wave T6 Thermostat - that can be polled through a Hubitat IoT hub.",
-    "properties": {
-        "ComponentAttributeClassId": {
-            "type": "string",
-            "description": "Unique identifier for the device class (aka 'cac' or Component Attribute Class). Authority is maintained by the World Registry.",
-            "required":  true
-        },
-        "DisplayName": {
-            "type": "string",
-            "description": "Sample: Honeywell T6 ZWave Thermostat",
-            "required":  false
-        },
-        "TypeName": {
-            "type": "string",
-            "value": "hubitat.poller.cac.gt",
-            "title": "The type name"
-        },
-        "Version": {
-            "type": "string",
-            "title": "The type version",
-            "default": "000",
-            "required": true
-        }
+  "gtr_asl": "001",
+  "type_name": "hubitat.poller.cac.gt",
+  "version": "000",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": "Hubitat Poller Cac (GridWorks Type). A class of devices - like a Honeywell Z-Wave T6 Thermostat - that can be polled through a Hubitat IoT hub.",
+  "properties": {
+    "ComponentAttributeClassId": {
+      "type": "string",
+      "description": "Unique identifier for the device class (aka 'cac' or Component Attribute Class). Authority is maintained by the World Registry.",
+      "required": true
     },
-    "formats": {
-        "UuidCanonicalTextual": {
-            "type": "string",
-            "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
-            "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"
-        }
+    "DisplayName": {
+      "type": "string",
+      "description": "Sample: Honeywell T6 ZWave Thermostat",
+      "required": false
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "hubitat.poller.cac.gt",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "000",
+      "required": true
     }
+  },
+  "formats": {
+    "UuidCanonicalTextual": {
+      "type": "string",
+      "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
+      "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"
+    }
+  }
 }
-

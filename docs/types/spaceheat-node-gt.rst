@@ -6,39 +6,39 @@ Python pydantic class corresponding to json type `spaceheat.node.gt`, version `1
     :members:
 
 **ShNodeId**:
-    - Description: 
+    - Description:
     - Format: UuidCanonicalTextual
 
 **Alias**:
-    - Description: 
+    - Description:
     - Format: LeftRightDot
 
 **ActorClass**:
-    - Description: 
+    - Description:
 
 **Role**:
-    - Description: 
+    - Description:
 
 **DisplayName**:
-    - Description: 
+    - Description:
 
 **ComponentId**:
     - Description: Unique identifier for Spaceheat Node's Component. Used if a Spaceheat Node is associated with a physical device.
     - Format: UuidCanonicalTextual
 
 **ReportingSamplePeriodS**:
-    - Description: 
+    - Description:
 
 **RatedVoltageV**:
-    - Description: 
+    - Description:
     - Format: PositiveInteger
 
 **TypicalVoltageV**:
-    - Description: 
+    - Description:
     - Format: PositiveInteger
 
 **InPowerMetering**:
-    - Description: 
+    - Description:
 
 **TypeName**:
     - Description: All GridWorks Versioned Types have a fixed TypeName, which is a string of lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character, and final word NOT all Hindu-Arabic numerals.
@@ -62,4 +62,3 @@ Python pydantic class corresponding to json type `spaceheat.node.gt`, version `1
 
 .. autoclass:: gwproto.types.SpaceheatNodeGt_Maker
     :members:
-

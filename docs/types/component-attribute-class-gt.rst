@@ -26,4 +26,3 @@ Python pydantic class corresponding to json type `component.attribute.class.gt`,
 
 .. autoclass:: gwproto.types.ComponentAttributeClassGt_Maker
     :members:
-

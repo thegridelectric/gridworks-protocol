@@ -24,7 +24,8 @@ except ImportError:
 
 
 package = "gwproto"
-python_versions = ["3.10", "3.11"]
+python_versions = ["3.11", "3.10"]
+
 nox.needs_version = ">= 2021.6.6"
 nox.options.sessions = (
     "pre-commit",
@@ -122,7 +123,7 @@ def precommit(session: Session) -> None:
     ]
     session.install(
         "black",
-        "darglint",
+        # "darglint",
         # "flake8",
         # "flake8-bandit",
         # "flake8-bugbear",

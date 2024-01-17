@@ -1,61 +1,60 @@
 {
-    "gtr_asl": "001",
-    "type_name": "egauge.register.config",
-    "version": "000",
-    "owner": "gridworks@gridworks-consulting.com",
-    "description": "Used to translate eGauge's Modbus Map. This type captures the information provided by eGauge in its modbus csv map, when reading current, power, energy, voltage, frequency etc from an eGauge 4030.",
-    "properties": {
-        "Address": {
-            "type": "integer",
-            "description": "EGauge's modbus holding address. Note that the EGauge modbus map for holding address 100 will be 30100 - the '+30000' indicates it is a holding address. We use the 4-digit address after the '3'.",
-            "required":  true
-        },
-        "Name": {
-            "type": "string",
-            "description": "The name assigned in the EGauge's modbus map. This is configured by the user (see URL)",
-            "required":  true
-        },
-        "Description": {
-            "type": "string",
-            "description": "Again, assigned by the EGauge modbus map. Is usually 'change in value'",
-            "required":  true
-        },
-        "Type": {
-            "type": "string",
-            "description": "EGauge's numerical data type. Typically our power measurements are f32 ( 32-bit floating-point number). The serial number & firmware are t16 (which work to treat as 16-bit unsigned integer) and timestamps are u32 (32-bit unsigned integer).",
-            "required":  true
-        },
-        "Denominator": {
-            "type": "integer",
-            "description": "Some of the modbus registers divide by 3.60E+06 (cumulative energy registers typically). For the power, current, voltage and phase angle the denominator is 1.",
-            "required":  true
-        },
-        "Unit": {
-            "type": "string",
-            "description": "The EGauge unit - typically A, Hz, or W.",
-            "required":  true
-        },
-        "TypeName": {
-            "type": "string",
-            "value": "egauge.register.config",
-            "title": "The type name"
-        },
-        "Version": {
-            "type": "string",
-            "title": "The type version",
-            "default": "000",
-            "required": true
-        }
+  "gtr_asl": "001",
+  "type_name": "egauge.register.config",
+  "version": "000",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": "Used to translate eGauge's Modbus Map. This type captures the information provided by eGauge in its modbus csv map, when reading current, power, energy, voltage, frequency etc from an eGauge 4030.",
+  "properties": {
+    "Address": {
+      "type": "integer",
+      "description": "EGauge's modbus holding address. Note that the EGauge modbus map for holding address 100 will be 30100 - the '+30000' indicates it is a holding address. We use the 4-digit address after the '3'.",
+      "required": true
     },
-    "example": {
-      "Address": 9016,
-      "Name": "house-panel-power",
-      "Description": "change in value",
-      "Type": "f32",
-      "Denominator": 1,
-      "Unit": "W",
-      "TypeName": "egauge.register.config",
-      "Version": "000"
+    "Name": {
+      "type": "string",
+      "description": "The name assigned in the EGauge's modbus map. This is configured by the user (see URL)",
+      "required": true
+    },
+    "Description": {
+      "type": "string",
+      "description": "Again, assigned by the EGauge modbus map. Is usually 'change in value'",
+      "required": true
+    },
+    "Type": {
+      "type": "string",
+      "description": "EGauge's numerical data type. Typically our power measurements are f32 ( 32-bit floating-point number). The serial number & firmware are t16 (which work to treat as 16-bit unsigned integer) and timestamps are u32 (32-bit unsigned integer).",
+      "required": true
+    },
+    "Denominator": {
+      "type": "integer",
+      "description": "Some of the modbus registers divide by 3.60E+06 (cumulative energy registers typically). For the power, current, voltage and phase angle the denominator is 1.",
+      "required": true
+    },
+    "Unit": {
+      "type": "string",
+      "description": "The EGauge unit - typically A, Hz, or W.",
+      "required": true
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "egauge.register.config",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "000",
+      "required": true
     }
+  },
+  "example": {
+    "Address": 9016,
+    "Name": "house-panel-power",
+    "Description": "change in value",
+    "Type": "f32",
+    "Denominator": 1,
+    "Unit": "W",
+    "TypeName": "egauge.register.config",
+    "Version": "000"
+  }
 }
-

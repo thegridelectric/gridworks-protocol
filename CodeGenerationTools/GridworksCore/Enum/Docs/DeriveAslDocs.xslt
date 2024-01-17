@@ -126,7 +126,7 @@
             </xsl:for-each>
             <xsl:text>
             },
-    "default_value": "</xsl:text> <xsl:value-of select="$default-enum-value"/> 
+    "default_value": "</xsl:text> <xsl:value-of select="$default-enum-value"/>
         <xsl:text>"
 }</xsl:text>
 

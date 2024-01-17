@@ -1,82 +1,81 @@
 {
-    "gtr_asl": "001",
-    "type_name": "multipurpose.sensor.cac.gt",
-    "version": "000",
-    "owner": "gridworks@gridworks-consulting.com",
-    "description": "Type for tracking Multipuprose Sensor ComponentAttributeClasses. GridWorks Spaceheat SCADA uses the GridWorks GNodeRegistry structures and abstractions for managing relational device data. The Cac, or ComponentAttributeClass, is part of this structure.",
-    "url": "https://g-node-registry.readthedocs.io/en/latest/component-attribute-class.html",
-    "properties": {
-        "ComponentAttributeClassId": {
-            "type": "string",
-            "format": "UuidCanonicalTextual",
-            "title": "ComponentAttributeClassId",
-            "description": "Unique identifier for the device class (aka 'cac' or Component Attribute Class). Authority is maintained by the World Registry.",
-            "required":  true
-        },
-        "MakeModel": {
-            "type": "string",
-            "format": "spaceheat.make.model",
-            "title": "MakeModel",
-            "description": "Meant to be enough to articulate any difference in how GridWorks code would interact with a device. Should be able to use this information to buy or build a device.",
-            "required":  true
-        },
-        "PollPeriodMs": {
-            "type": "integer",
-            "description": "Poll Period refers to the period of time between two readings by the local actor. This is in contrast to Capture Period, which refers to the period between readings that are sent up to the cloud (or otherwise saved for the long-term).",
-            "required":  true
-        },
-        "Exponent": {
-            "type": "integer",
-            "description": "Say the TelemetryName is WaterTempCTimes1000; this corresponds to units of Celsius. To match the implication in the name, the Exponent should be 3, and a Value of 65300 would indicate 65.3 deg C",
-            "required":  true
-        },
-        "TempUnit": {
-            "type": "string",
-            "format": "spaceheat.unit",
-            "title": "Temp Unit",
-            "required":  true
-        },
-        "TelemetryNameList": {
-            "type": "array",
-             "items": {
-                 "type": "string"
-             },
-            "format": "spaceheat.telemetry.name",
-            "title": "",
-            "required":  true
-        },
-        "MaxThermistors": {
-            "type": "integer",
-            "description": "The maximum number of temperature sensors this multipurpose sensor can read.",
-            "required":  false
-        },
-        "DisplayName": {
-            "type": "string",
-            "description": "Sample: GridWorks TSnap1.0 as 12-channel analog temp sensor",
-            "required":  false
-        },
-        "CommsMethod": {
-            "type": "string",
-            "required":  false
-        },
-        "TypeName": {
-            "type": "string",
-            "value": "multipurpose.sensor.cac.gt",
-            "title": "The type name"
-        },
-        "Version": {
-            "type": "string",
-            "title": "The type version",
-            "default": "000",
-            "required": true
-        }
+  "gtr_asl": "001",
+  "type_name": "multipurpose.sensor.cac.gt",
+  "version": "000",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": "Type for tracking Multipuprose Sensor ComponentAttributeClasses. GridWorks Spaceheat SCADA uses the GridWorks GNodeRegistry structures and abstractions for managing relational device data. The Cac, or ComponentAttributeClass, is part of this structure.",
+  "url": "https://g-node-registry.readthedocs.io/en/latest/component-attribute-class.html",
+  "properties": {
+    "ComponentAttributeClassId": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "ComponentAttributeClassId",
+      "description": "Unique identifier for the device class (aka 'cac' or Component Attribute Class). Authority is maintained by the World Registry.",
+      "required": true
     },
-    "formats": {
-        "UuidCanonicalTextual": {
-            "type": "string",
-            "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
-            "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"
-        }
+    "MakeModel": {
+      "type": "string",
+      "format": "spaceheat.make.model",
+      "title": "MakeModel",
+      "description": "Meant to be enough to articulate any difference in how GridWorks code would interact with a device. Should be able to use this information to buy or build a device.",
+      "required": true
+    },
+    "PollPeriodMs": {
+      "type": "integer",
+      "description": "Poll Period refers to the period of time between two readings by the local actor. This is in contrast to Capture Period, which refers to the period between readings that are sent up to the cloud (or otherwise saved for the long-term).",
+      "required": true
+    },
+    "Exponent": {
+      "type": "integer",
+      "description": "Say the TelemetryName is WaterTempCTimes1000; this corresponds to units of Celsius. To match the implication in the name, the Exponent should be 3, and a Value of 65300 would indicate 65.3 deg C",
+      "required": true
+    },
+    "TempUnit": {
+      "type": "string",
+      "format": "spaceheat.unit",
+      "title": "Temp Unit",
+      "required": true
+    },
+    "TelemetryNameList": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "format": "spaceheat.telemetry.name",
+      "title": "",
+      "required": true
+    },
+    "MaxThermistors": {
+      "type": "integer",
+      "description": "The maximum number of temperature sensors this multipurpose sensor can read.",
+      "required": false
+    },
+    "DisplayName": {
+      "type": "string",
+      "description": "Sample: GridWorks TSnap1.0 as 12-channel analog temp sensor",
+      "required": false
+    },
+    "CommsMethod": {
+      "type": "string",
+      "required": false
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "multipurpose.sensor.cac.gt",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "000",
+      "required": true
     }
+  },
+  "formats": {
+    "UuidCanonicalTextual": {
+      "type": "string",
+      "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
+      "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"
+    }
+  }
 }
-

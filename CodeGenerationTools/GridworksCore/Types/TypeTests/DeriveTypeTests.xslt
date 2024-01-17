@@ -177,7 +177,7 @@ def test_</xsl:text><xsl:value-of select="translate($type-name,'.','_')"/>
     </xsl:text>
     <xsl:for-each select="$airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id) and (IsRequired='true') ]">
     <xsl:sort select="Idx" data-type="number"/>
-    
+
     <xsl:if test = "((not (IsEnum = 'true')) or (IsList = 'true')) ">
 
 
@@ -188,7 +188,7 @@ def test_</xsl:text><xsl:value-of select="translate($type-name,'.','_')"/>
         <xsl:if test="not(normalize-space(SubTypeDataClass) = '') and not(IsList='true')">
         <xsl:text>Id</xsl:text>
         </xsl:if>
-    
+
     <xsl:text>"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
@@ -362,10 +362,8 @@ def test_</xsl:text><xsl:value-of select="translate($type-name,'.','_')"/>
     </xsl:if>
     </xsl:for-each>
 
-    <xsl:text>
-
-    # End of Test
-</xsl:text>
+<!-- Add newline at EOF for git and pre-commit-->
+<xsl:text>&#10;</xsl:text>
 </xsl:if>
 
                         </xsl:element>

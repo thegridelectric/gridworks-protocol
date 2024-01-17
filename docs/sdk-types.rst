@@ -62,4 +62,3 @@ forth between type instances and Python objects.
     TaDataChannels  <types/ta-data-channels>
     TelemetryReportingConfig  <types/telemetry-reporting-config>
     TelemetrySnapshotSpaceheat  <types/telemetry-snapshot-spaceheat>
-    

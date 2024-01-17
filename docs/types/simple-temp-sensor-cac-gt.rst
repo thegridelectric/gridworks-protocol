@@ -10,25 +10,25 @@ Python pydantic class corresponding to json type `simple.temp.sensor.cac.gt`, ve
     - Format: UuidCanonicalTextual
 
 **MakeModel**:
-    - Description: 
+    - Description:
 
 **TypicalResponseTimeMs**:
-    - Description: 
+    - Description:
 
 **Exponent**:
     - Description: Exponent. Say the TelemetryName is WaterTempCTimes1000; this corresponds to units of Celsius.  To match the implication in the name, the Exponent should be 3, and a Value of 65300 would indicate 65.3 deg C
 
 **TempUnit**:
-    - Description: 
+    - Description:
 
 **TelemetryName**:
-    - Description: 
+    - Description:
 
 **DisplayName**:
-    - Description: 
+    - Description:
 
 **CommsMethod**:
-    - Description: 
+    - Description:
 
 **TypeName**:
     - Description: All GridWorks Versioned Types have a fixed TypeName, which is a string of lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character, and final word NOT all Hindu-Arabic numerals.
@@ -44,4 +44,3 @@ Python pydantic class corresponding to json type `simple.temp.sensor.cac.gt`, ve
 
 .. autoclass:: gwproto.types.SimpleTempSensorCacGt_Maker
     :members:
-

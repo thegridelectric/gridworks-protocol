@@ -25,4 +25,3 @@ Python pydantic class corresponding to json type `hubitat.poller.cac.gt`, versio
 
 .. autoclass:: gwproto.types.HubitatPollerCacGt_Maker
     :members:
-

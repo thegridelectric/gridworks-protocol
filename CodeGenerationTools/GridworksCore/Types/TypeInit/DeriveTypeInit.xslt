@@ -34,7 +34,7 @@
 
 <xsl:variable name="python-class-name">
 <xsl:if test="(normalize-space(PythonClassName) ='')">
-<xsl:call-template name="nt-case"> 
+<xsl:call-template name="nt-case">
     <xsl:with-param name="type-name-text" select="TypeName" />
 </xsl:call-template>
 </xsl:if>
@@ -66,7 +66,7 @@ __all__ = [</xsl:text>
 
 <xsl:variable name="python-class-name">
 <xsl:if test="(normalize-space(PythonClassName) ='')">
-<xsl:call-template name="nt-case"> 
+<xsl:call-template name="nt-case">
     <xsl:with-param name="type-name-text" select="TypeName" />
 </xsl:call-template>
 </xsl:if>
@@ -98,11 +98,10 @@ __all__ = [</xsl:text>
 </xsl:for-each>
 </xsl:for-each>
 <xsl:text>
-]
+]</xsl:text>
 
-</xsl:text>
-
-
+<!-- Add newline at EOF for git and pre-commit-->
+<xsl:text>&#10;</xsl:text>
 
                 </xsl:element>
             </FileSetFile>

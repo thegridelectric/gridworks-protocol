@@ -49,7 +49,7 @@ class </xsl:text><xsl:value-of select="$enum-class-name"/>
 <xsl:text>(StrEnum):
     """
     </xsl:text>
-    <!-- Enum description, wrapped, if it exists --> 
+    <!-- Enum description, wrapped, if it exists -->
     <xsl:if test="(normalize-space(Description) != '')">
     <xsl:call-template name="wrap-text">
         <xsl:with-param name="text" select="normalize-space(Description)"/>
@@ -287,6 +287,8 @@ value_to_version = {</xsl:text>
 <xsl:text>
 }</xsl:text>
 
+<!-- Add newline at EOF for git and pre-commit-->
+<xsl:text>&#10;</xsl:text>
 
                         </xsl:element>
                      </FileSetFile>

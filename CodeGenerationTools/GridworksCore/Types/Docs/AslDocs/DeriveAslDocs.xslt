@@ -26,7 +26,7 @@
                 <xsl:variable name="versioned-type-name" select="VersionedTypeName"/>
                 <xsl:variable name="python-class-name">
                     <xsl:if test="(normalize-space(PythonClassName) ='')">
-                    <xsl:call-template name="nt-case"> 
+                    <xsl:call-template name="nt-case">
                         <xsl:with-param name="type-name-text" select="TypeName" />
                     </xsl:call-template>
                     </xsl:if>
@@ -51,11 +51,11 @@
                     <xsl:element name="FileContents">
 
 <xsl:text>{
-    "gtr_asl": "001",
-    "type_name": "</xsl:text><xsl:value-of select="$type-name"/><xsl:text>",
-    "version": "</xsl:text><xsl:value-of select="Version"/><xsl:text>",
-    "owner": "gridworks@gridworks-consulting.com",
-    "description": "</xsl:text><xsl:value-of select="Title"/>
+  "gtr_asl": "001",
+  "type_name": "</xsl:text><xsl:value-of select="$type-name"/><xsl:text>",
+  "version": "</xsl:text><xsl:value-of select="Version"/><xsl:text>",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": "</xsl:text><xsl:value-of select="Title"/>
     <xsl:if test="normalize-space(Description) !=''">
     <xsl:text>. </xsl:text>
     <xsl:value-of select="normalize-space(Description)"/>
@@ -63,23 +63,23 @@
 
     <xsl:if test="normalize-space(Url) !=''">
     <xsl:text>
-    "url": "</xsl:text>
+  "url": "</xsl:text>
     <xsl:value-of select="normalize-space(Url)"/>
     <xsl:text>",</xsl:text>
     </xsl:if>
     <xsl:text>
-    "properties": {</xsl:text>
+  "properties": {</xsl:text>
 
       <xsl:for-each select="$airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id)]">
       <xsl:sort select="Idx" data-type="number"/>
       <xsl:text>
-        "</xsl:text><xsl:value-of select="Value"/>
+    "</xsl:text><xsl:value-of select="Value"/>
          <xsl:if test="not(normalize-space(SubTypeDataClass) = '') and not(IsList='true')">
         <xsl:text>Id</xsl:text>
         </xsl:if>
-        
+
         <xsl:text>": {
-            "type": "</xsl:text>
+      "type": "</xsl:text>
         <xsl:choose>
         <xsl:when test="(normalize-space(SubTypeDataClass) = '') and not( IsList = 'true')">
         <xsl:call-template name="gwapi-type">
@@ -94,13 +94,13 @@
 
         <xsl:when test="(IsList = 'true')">
         <xsl:text>array",
-             "items": {
-                 "type": "</xsl:text>
+      "items": {
+        "type": "</xsl:text>
         <xsl:call-template name="gwapi-type">
             <xsl:with-param name="gw-type" select="TypeInPayload"/>
         </xsl:call-template>
         <xsl:text>"
-             },</xsl:text>
+      },</xsl:text>
         </xsl:when>
         <xsl:otherwise></xsl:otherwise>
         </xsl:choose>
@@ -109,17 +109,17 @@
 
         <xsl:when test="normalize-space(Format) !=''">
         <xsl:text>
-            "format": "</xsl:text>
+      "format": "</xsl:text>
         <xsl:value-of select="normalize-space(Format)"/>
          <xsl:text>",
-            "title": "</xsl:text>
+      "title": "</xsl:text>
             <xsl:value-of select="Title"/><xsl:text>",</xsl:text>
         </xsl:when>
 
          <xsl:when test="not(normalize-space(SubTypeDataClass) = '') and not(IsList='true')">
          <xsl:text>
-            "format": "UuidCanonicalTextual",
-            "title": "Unique identifier for </xsl:text>
+      "format": "UuidCanonicalTextual",
+      "title": "Unique identifier for </xsl:text>
             <xsl:value-of select="SubTypeDataClass"/>
             <xsl:text> object articulated by the </xsl:text>
             <xsl:value-of select="VersionedSubTypeName"/>
@@ -127,59 +127,59 @@
          </xsl:when>
          <xsl:otherwise></xsl:otherwise>
          </xsl:choose>
-         
-        
+
+
 
         <xsl:if test="normalize-space(Description) !=''">
         <xsl:text>
-            "description": "</xsl:text><xsl:value-of select="normalize-space(Description)"/><xsl:text>",</xsl:text>
+      "description": "</xsl:text><xsl:value-of select="normalize-space(Description)"/><xsl:text>",</xsl:text>
         </xsl:if>
 
         <xsl:text>
-            "required": </xsl:text>
+      "required": </xsl:text>
 
         <xsl:if test="IsRequired='true'">
-        <xsl:text> true</xsl:text>
+        <xsl:text>true</xsl:text>
         </xsl:if>
         <xsl:if test="not(IsRequired='true')">
-        <xsl:text> false</xsl:text>
+        <xsl:text>false</xsl:text>
         </xsl:if>
 
         <xsl:text>
-        },</xsl:text>
+    },</xsl:text>
 
       </xsl:for-each>
       <xsl:text>
-        "TypeName": {
-            "type": "string",
-            "value": "</xsl:text><xsl:value-of select="TypeName"/><xsl:text>",
-            "title": "The type name"
-        },
-        "Version": {
-            "type": "string",
-            "title": "The type version",
-            "default": "</xsl:text><xsl:value-of select="Version"/><xsl:text>",
-            "required": true
-        }
-    }</xsl:text>
+    "TypeName": {
+      "type": "string",
+      "value": "</xsl:text><xsl:value-of select="TypeName"/><xsl:text>",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "</xsl:text><xsl:value-of select="Version"/><xsl:text>",
+      "required": true
+    }
+  }</xsl:text>
 
     <xsl:if test="count($airtable//TypeAxioms/TypeAxiom[(normalize-space(VersionedTypeName)=$versioned-type-name)]) > 0">
     <xsl:text>,
-    "axioms": {</xsl:text>
+  "axioms": {</xsl:text>
     <xsl:for-each select="$airtable//TypeAxioms/TypeAxiom[(normalize-space(VersionedTypeName)=$versioned-type-name)]">
     <xsl:sort select="AxiomNumber" data-type="number"/>
     <xsl:text>
-        "Axiom</xsl:text><xsl:value-of select="AxiomNumber"/><xsl:text>": {
-            "title": "</xsl:text>
+    "Axiom</xsl:text><xsl:value-of select="AxiomNumber"/><xsl:text>": {
+      "title": "</xsl:text>
             <xsl:value-of select="Title"/><xsl:text>",
-            "description": "</xsl:text>
+      "description": "</xsl:text>
             <xsl:value-of select="normalize-space(Description)"/><xsl:text>"</xsl:text>
             <xsl:if test="normalize-space(Url)!=''">
             <xsl:text>,
-            "url": "</xsl:text><xsl:value-of select="normalize-space(Url)"/><xsl:text>"</xsl:text>
+      "url": "</xsl:text><xsl:value-of select="normalize-space(Url)"/><xsl:text>"</xsl:text>
             </xsl:if>
             <xsl:text>
-        }</xsl:text>
+    }</xsl:text>
 
     <xsl:if test="position() != count($airtable//TypeAxioms/TypeAxiom[(normalize-space(VersionedTypeName)=$versioned-type-name)])">
     <xsl:text>,</xsl:text>
@@ -187,41 +187,40 @@
     </xsl:for-each>
 
     <xsl:text>
-    }</xsl:text>
+  }</xsl:text>
     </xsl:if>
 
     <xsl:if test="normalize-space(Example) !=''">
     <xsl:text>,
-    "example": </xsl:text>
+  "example": </xsl:text>
     <xsl:value-of select="Example"/>
 
     </xsl:if>
         <xsl:if test="count(PropertyFormatsUsed)>0">
     <xsl:text>,
-    "formats": {</xsl:text>
+  "formats": {</xsl:text>
     <xsl:for-each select="$airtable//PropertyFormats/PropertyFormat[(normalize-space(Name) !='')  and (count(TypesThatUse[text()=$versioned-type-id])>0)]">
     <xsl:text>
-        "</xsl:text><xsl:value-of select="Name"/><xsl:text>": {
-            "type": "string",
-            "description": "</xsl:text>
+    "</xsl:text><xsl:value-of select="Name"/><xsl:text>": {
+      "type": "string",
+      "description": "</xsl:text>
             <xsl:value-of select="normalize-space(Description)"/>
             <xsl:text>",
-            "example": "</xsl:text>
+      "example": "</xsl:text>
             <xsl:value-of select="Example"/>
             <xsl:text>"
-        }</xsl:text>
+    }</xsl:text>
         <xsl:if test="position() != count($airtable//PropertyFormats/PropertyFormat[(normalize-space(Name) !='')  and (count(TypesThatUse[text()=$versioned-type-id])>0)])">
         <xsl:text>,</xsl:text>
         </xsl:if>
     </xsl:for-each>
     <xsl:text>
-    }</xsl:text>
+  }</xsl:text>
     </xsl:if>
 
 
     <xsl:text>
 }
-
 </xsl:text>
 
 

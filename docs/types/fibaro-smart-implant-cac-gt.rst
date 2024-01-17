@@ -10,7 +10,7 @@ Python pydantic class corresponding to json type `fibaro.smart.implant.cac.gt`, 
     - Format: UuidCanonicalTextual
 
 **Model**:
-    - Description: 
+    - Description:
 
 **DisplayName**:
     - Description: Sample: FGBS-222 v5.2
@@ -29,4 +29,3 @@ Python pydantic class corresponding to json type `fibaro.smart.implant.cac.gt`, 
 
 .. autoclass:: gwproto.types.FibaroSmartImplantCacGt_Maker
     :members:
-

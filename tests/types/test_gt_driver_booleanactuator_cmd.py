@@ -78,13 +78,17 @@ def test_gt_driver_booleanactuator_cmd_generated() -> None:
     # SchemaError raised if TypeName is incorrect
     ######################################
 
-    d2 = dict(d, TypeName="not the type alias")
+    d2 = dict(d, TypeName="not the type name")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
     ######################################
     # SchemaError raised if primitive attributes do not have appropriate property_format
     ######################################
+
+    d2 = dict(d, RelayState=2)
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
 
     d2 = dict(d, ShNodeAlias="a.b-h")
     with pytest.raises(ValidationError):

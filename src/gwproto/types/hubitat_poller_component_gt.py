@@ -13,6 +13,7 @@ from gwproto.types.hubitat_poller_gt import HubitatPollerGt
 class HubitatPollerComponentGt(ComponentGt):
     Poller: HubitatPollerGt
     TypeName: Literal["hubitat.poller.component.gt"] = "hubitat.poller.component.gt"
+    Version: Literal["000"] = "000"
 
     @classmethod
     def from_data_class(
@@ -37,3 +38,8 @@ class HubitatPollerComponentGt(ComponentGt):
             display_name=self.DisplayName,
             hw_uid=self.HwUid,
         )
+
+
+class HubitatPollerComponentGt_Maker:
+    type_name = "hubitat.poller.component.gt"
+    version = "000"

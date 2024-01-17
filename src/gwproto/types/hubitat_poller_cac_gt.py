@@ -10,7 +10,7 @@ from gwproto.types.component_attribute_class_gt import ComponentAttributeClassGt
 
 class HubitatPollerCacGt(ComponentAttributeClassGt):
     TypeName: Literal["hubitat.poller.cac.gt"] = "hubitat.poller.cac.gt"
-    Version: str = "000"
+    Version: Literal["000"] = "000"
 
     @classmethod
     def from_data_class(cls, cac: HubitatCac) -> "HubitatPollerCacGt":
@@ -30,3 +30,8 @@ class HubitatPollerCacGt(ComponentAttributeClassGt):
 
     def __hash__(self):
         return hash((type(self),) + tuple(self.__dict__.values()))
+
+
+class HubitatPollerCacGt_Maker:
+    type_name = "hubitat.poller.cac.gt"
+    version = "000"

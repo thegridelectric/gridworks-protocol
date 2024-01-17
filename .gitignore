@@ -13,7 +13,7 @@ hacking
 .idea
 scratch.*
 cook.sh
-
+.vscode
 
 # Code generation airtable
 CodeGenerationTools/GridworksCore/SassyMQ/

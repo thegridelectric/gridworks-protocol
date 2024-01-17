@@ -6,6 +6,7 @@ import json
 import typing
 from typing import Any
 from typing import Dict
+from typing import Literal
 from typing import Optional
 
 from pydantic import UUID4
@@ -23,7 +24,8 @@ class RESTPollerComponentGt(BaseModel):
     DisplayName: Optional[str] = None
     HwUid: Optional[str] = None
     Rest: RESTPollerSettings
-    TypeName: typing.Literal["rest.poller.component.gt"] = "rest.poller.component.gt"
+    TypeName: Literal["rest.poller.component.gt"] = "rest.poller.component.gt"
+    Version: Literal["000"] = "000"
 
     @validator("ComponentId")
     def _check_component_id(cls, v: str) -> str:

@@ -1,31 +1,33 @@
 DataChannel
 ==========================
-Python pydantic class corresponding to  json type ```data.channel```.
+Python pydantic class corresponding to json type `data.channel`, version `000`.
 
 .. autoclass:: gwproto.types.DataChannel
     :members:
 
 **DisplayName**:
-    - Description: Display Name
+    - Description: Display Name. This display name is the handle for the data channel. It is meant to be set by the person/people who will be analyzing time series data. It is only expected to be unique within the data channels associated to a specific Terminal Asset.
 
 **AboutName**:
-    - Description:
-    - Format: LeftRightDot
+    - Description: About Name. The name of the SpaceheatNode whose physical quantities are getting captured.
+    - Format: SpaceheatName
 
-**FromName**:
-    - Description:
-    - Format: LeftRightDot
+**CapturedByName**:
+    - Description: The name of the SpaceheatNode that is capturing the physical quantities (which can be AboutName but does not have to be).
+    - Format: SpaceheatName
 
 **TelemetryName**:
-    - Description:
+    - Description: The name of the physical quantity getting measured.
 
-**ExpectedMaxValue**:
-    - Description: Expected Max Value, if appropriate
+**TypeName**:
+    - Description: All GridWorks Versioned Types have a fixed TypeName, which is a string of lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character, and final word NOT all Hindu-Arabic numerals.
 
-**ExpectedMinValue**:
-    - Description: Expected Min Value, if appropriate
+**Version**:
+    - Description: All GridWorks Versioned Types have a fixed version, which is a string of three Hindu-Arabic numerals.
 
-.. autoclass:: gwproto.types.data_channel.check_is_left_right_dot
+
+
+.. autoclass:: gwproto.types.data_channel.check_is_spaceheat_name
     :members:
 
 

@@ -1,160 +1,60 @@
 """Type gt.telemetry, version 110"""
 import json
-from enum import auto
+import logging
 from typing import Any
 from typing import Dict
-from typing import List
 from typing import Literal
 
-from fastapi_utils.enums import StrEnum
 from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
 
 from gwproto.enums import TelemetryName
 from gwproto.errors import SchemaError
-from gwproto.message import as_enum
 
 
-class SpaceheatTelemetryName000SchemaEnum:
-    enum_name: str = "spaceheat.telemetry.name.000"
-    symbols: List[str] = [
-        "00000000",
-        "af39eec9",
-        "5a71d4b3",
-        "c89d0ba1",
-        "793505aa",
-        "d70cce28",
-        "ad19e79c",
-        "329a68c0",
-        "bb6fdd59",
-        "e0bb014b",
-        "337b8659",
-        "0f627faa",
-        "4c3f8c78",
-    ]
-
-    @classmethod
-    def is_symbol(cls, candidate: str) -> bool:
-        if candidate in cls.symbols:
-            return True
-        return False
-
-
-class SpaceheatTelemetryName000(StrEnum):
-    Unknown = auto()
-    PowerW = auto()
-    RelayState = auto()
-    WaterTempCTimes1000 = auto()
-    WaterTempFTimes1000 = auto()
-    GpmTimes100 = auto()
-    CurrentRmsMicroAmps = auto()
-    GallonsTimes100 = auto()
-    VoltageRmsMilliVolts = auto()
-    MilliWattHours = auto()
-    FrequencyMicroHz = auto()
-    AirTempCTimes1000 = auto()
-    AirTempFTimes1000 = auto()
-
-    @classmethod
-    def default(cls) -> "SpaceheatTelemetryName000":
-        return cls.Unknown
-
-    @classmethod
-    def values(cls) -> List[str]:
-        return [elt.value for elt in cls]
-
-
-class TelemetryNameMap:
-    @classmethod
-    def type_to_local(cls, symbol: str) -> TelemetryName:
-        if not SpaceheatTelemetryName000SchemaEnum.is_symbol(symbol):
-            raise SchemaError(
-                f"{symbol} must belong to SpaceheatTelemetryName000 symbols"
-            )
-        versioned_enum = cls.type_to_versioned_enum_dict[symbol]
-        return as_enum(versioned_enum, TelemetryName, TelemetryName.default())
-
-    @classmethod
-    def local_to_type(cls, telemetry_name: TelemetryName) -> str:
-        if not isinstance(telemetry_name, TelemetryName):
-            raise SchemaError(f"{telemetry_name} must be of type {TelemetryName}")
-        versioned_enum = as_enum(
-            telemetry_name,
-            SpaceheatTelemetryName000,
-            SpaceheatTelemetryName000.default(),
-        )
-        return cls.versioned_enum_to_type_dict[versioned_enum]
-
-    type_to_versioned_enum_dict: Dict[str, SpaceheatTelemetryName000] = {
-        "00000000": SpaceheatTelemetryName000.Unknown,
-        "af39eec9": SpaceheatTelemetryName000.PowerW,
-        "5a71d4b3": SpaceheatTelemetryName000.RelayState,
-        "c89d0ba1": SpaceheatTelemetryName000.WaterTempCTimes1000,
-        "793505aa": SpaceheatTelemetryName000.WaterTempFTimes1000,
-        "d70cce28": SpaceheatTelemetryName000.GpmTimes100,
-        "ad19e79c": SpaceheatTelemetryName000.CurrentRmsMicroAmps,
-        "329a68c0": SpaceheatTelemetryName000.GallonsTimes100,
-        "bb6fdd59": SpaceheatTelemetryName000.VoltageRmsMilliVolts,
-        "e0bb014b": SpaceheatTelemetryName000.MilliWattHours,
-        "337b8659": SpaceheatTelemetryName000.FrequencyMicroHz,
-        "0f627faa": SpaceheatTelemetryName000.AirTempCTimes1000,
-        "4c3f8c78": SpaceheatTelemetryName000.AirTempFTimes1000,
-    }
-
-    versioned_enum_to_type_dict: Dict[SpaceheatTelemetryName000, str] = {
-        SpaceheatTelemetryName000.Unknown: "00000000",
-        SpaceheatTelemetryName000.PowerW: "af39eec9",
-        SpaceheatTelemetryName000.RelayState: "5a71d4b3",
-        SpaceheatTelemetryName000.WaterTempCTimes1000: "c89d0ba1",
-        SpaceheatTelemetryName000.WaterTempFTimes1000: "793505aa",
-        SpaceheatTelemetryName000.GpmTimes100: "d70cce28",
-        SpaceheatTelemetryName000.CurrentRmsMicroAmps: "ad19e79c",
-        SpaceheatTelemetryName000.GallonsTimes100: "329a68c0",
-        SpaceheatTelemetryName000.VoltageRmsMilliVolts: "bb6fdd59",
-        SpaceheatTelemetryName000.MilliWattHours: "e0bb014b",
-        SpaceheatTelemetryName000.FrequencyMicroHz: "337b8659",
-        SpaceheatTelemetryName000.AirTempCTimes1000: "0f627faa",
-        SpaceheatTelemetryName000.AirTempFTimes1000: "4c3f8c78",
-    }
-
-
-def check_is_reasonable_unix_time_ms(v: int) -> None:
-    """Checks ReasonableUnixTimeMs format
-
-    ReasonableUnixTimeMs format: unix milliseconds between Jan 1 2000 and Jan 1 3000
-
-    Args:
-        v (int): the candidate
-
-    Raises:
-        ValueError: if v is not ReasonableUnixTimeMs format
-    """
-    import pendulum
-
-    if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp * 1000 > v:  # type: ignore[union-attr]
-        raise ValueError(f"{v} must be after Jan 1 2000")
-    if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp * 1000 < v:  # type: ignore[union-attr]
-        raise ValueError(f"{v} must be before Jan 1 3000")
+LOG_FORMAT = (
+    "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
+    "-35s %(lineno) -5d: %(message)s"
+)
+LOGGER = logging.getLogger(__name__)
 
 
 class GtTelemetry(BaseModel):
-    """ """
+    """
+    Data sent from a SimpleSensor to a SCADA.
+
+    This type is meant to be used by a SimpleSensor, where _what_ is doing the reading can be
+    conflated with _what_ is being read.
+    """
 
     ScadaReadTimeUnixMs: int = Field(
-        title="ScadaReadTimeUnixMs",
+        title="Scada Read Time in Unix Milliseconds",
     )
     Value: int = Field(
         title="Value",
+        description="The value of the reading.",
     )
     Name: TelemetryName = Field(
         title="Name",
+        description=(
+            "The name of the Simple Sensing Spaceheat Node. This is both the AboutNodeName and "
+            "FromNodeName for a data channel. The TelemetryName (and thus Units) are expected "
+            "to be inferred by the Spaceheat Node. For example this is done initially in SCADA "
+            "code according to whether the component of the Node is a PipeFlowSensorComponent, "
+            "SimpleTempSensorComponent etc."
+        ),
     )
     Exponent: int = Field(
         title="Exponent",
+        description=(
+            "Say the TelemetryName is WaterTempCTimes1000; this corresponds to units of Celsius. "
+            "To match the implication in the name, the Exponent should be 3, and a Value of 65300 "
+            "would indicate 65.3 deg C"
+        ),
     )
     TypeName: Literal["gt.telemetry"] = "gt.telemetry"
-    Version: str = "110"
+    Version: Literal["110"] = "110"
 
     @validator("ScadaReadTimeUnixMs")
     def _check_scada_read_time_unix_ms(cls, v: int) -> int:
@@ -166,19 +66,56 @@ class GtTelemetry(BaseModel):
             )
         return v
 
-    @validator("Name")
-    def _check_name(cls, v: TelemetryName) -> TelemetryName:
-        return as_enum(v, TelemetryName, TelemetryName.Unknown)
-
     def as_dict(self) -> Dict[str, Any]:
-        d = self.dict()
+        """
+        Translate the object into a dictionary representation that can be serialized into a
+        gt.telemetry.110 object.
+
+        This method prepares the object for serialization by the as_type method, creating a
+        dictionary with key-value pairs that follow the requirements for an instance of the
+        gt.telemetry.110 type. Unlike the standard python dict method,
+        it makes the following substantive changes:
+        - Enum Values: Translates between the values used locally by the actor to the symbol
+        sent in messages.
+        - Removes any key-value pairs where the value is None for a clearer message, especially
+        in cases with many optional attributes.
+
+        It also applies these changes recursively to sub-types.
+        """
+        d = {
+            key: value
+            for key, value in self.dict(
+                include=self.__fields_set__ | {"TypeName", "Version"}
+            ).items()
+            if value is not None
+        }
         del d["Name"]
-        Name = as_enum(self.Name, TelemetryName, TelemetryName.default())
-        d["NameGtEnumSymbol"] = TelemetryNameMap.local_to_type(Name)
+        d["NameGtEnumSymbol"] = TelemetryName.value_to_symbol(self.Name)
         return d
 
-    def as_type(self) -> str:
-        return json.dumps(self.as_dict())
+    def as_type(self) -> bytes:
+        """
+        Serialize to the gt.telemetry.110 representation.
+
+        Instances in the class are python-native representations of gt.telemetry.110
+        objects, while the actual gt.telemetry.110 object is the serialized UTF-8 byte
+        string designed for sending in a message.
+
+        This method calls the as_dict() method, which differs from the native python dict()
+        in the following key ways:
+        - Enum Values: Translates between the values used locally by the actor to the symbol
+        sent in messages.
+        - - Removes any key-value pairs where the value is None for a clearer message, especially
+        in cases with many optional attributes.
+
+        It also applies these changes recursively to sub-types.
+
+        Its near-inverse is GtTelemetry.type_to_tuple(). If the type (or any sub-types)
+        includes an enum, then the type_to_tuple will map an unrecognized symbol to the
+        default enum value. This is why these two methods are only 'near' inverses.
+        """
+        json_string = json.dumps(self.as_dict())
+        return json_string.encode("utf-8")
 
     def __hash__(self):
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
@@ -200,52 +137,89 @@ class GtTelemetry_Maker:
             Value=value,
             Name=name,
             Exponent=exponent,
-            #
         )
 
     @classmethod
-    def tuple_to_type(cls, tuple: GtTelemetry) -> str:
+    def tuple_to_type(cls, tuple: GtTelemetry) -> bytes:
         """
-        Given a Python class object, returns the serialized JSON type object
+        Given a Python class object, returns the serialized JSON type object.
         """
         return tuple.as_type()
 
     @classmethod
-    def type_to_tuple(cls, t: str) -> GtTelemetry:
+    def type_to_tuple(cls, t: bytes) -> GtTelemetry:
         """
-        Given a serialized JSON type object, returns the Python class object
+        Given a serialized JSON type object, returns the Python class object.
         """
         try:
             d = json.loads(t)
         except TypeError:
             raise SchemaError("Type must be string or bytes!")
         if not isinstance(d, dict):
-            raise SchemaError(f"Deserializing {t} must result in dict!")
+            raise SchemaError(f"Deserializing <{t}> must result in dict!")
         return cls.dict_to_tuple(d)
 
     @classmethod
     def dict_to_tuple(cls, d: dict[str, Any]) -> GtTelemetry:
+        """
+        Deserialize a dictionary representation of a gt.telemetry.110 message object
+        into a GtTelemetry python object for internal use.
+
+        This is the near-inverse of the GtTelemetry.as_dict() method:
+          - Enums: translates between the symbols sent in messages between actors and
+        the values used by the actors internally once they've deserialized the messages.
+          - Types: recursively validates and deserializes sub-types.
+
+        Note that if a required attribute with a default value is missing in a dict, this method will
+        raise a SchemaError. This differs from the pydantic BaseModel practice of auto-completing
+        missing attributes with default values when they exist.
+
+        Args:
+            d (dict): the dictionary resulting from json.loads(t) for a serialized JSON type object t.
+
+        Raises:
+           SchemaError: if the dict cannot be turned into a GtTelemetry object.
+
+        Returns:
+            GtTelemetry
+        """
         d2 = dict(d)
         if "ScadaReadTimeUnixMs" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing ScadaReadTimeUnixMs")
+            raise SchemaError(f"dict missing ScadaReadTimeUnixMs: <{d2}>")
         if "Value" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing Value")
+            raise SchemaError(f"dict missing Value: <{d2}>")
         if "NameGtEnumSymbol" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing NameGtEnumSymbol")
-        if d2["NameGtEnumSymbol"] in SpaceheatTelemetryName000SchemaEnum.symbols:
-            d2["Name"] = TelemetryNameMap.type_to_local(d2["NameGtEnumSymbol"])
-        else:
-            d2["Name"] = TelemetryName.default()
+            raise SchemaError(f"NameGtEnumSymbol missing from dict <{d2}>")
+        value = TelemetryName.symbol_to_value(d2["NameGtEnumSymbol"])
+        d2["Name"] = TelemetryName(value)
         if "Exponent" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing Exponent")
+            raise SchemaError(f"dict missing Exponent: <{d2}>")
         if "TypeName" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing TypeName")
+            raise SchemaError(f"TypeName missing from dict <{d2}>")
+        if "Version" not in d2.keys():
+            raise SchemaError(f"Version missing from dict <{d2}>")
+        if d2["Version"] != "110":
+            LOGGER.debug(
+                f"Attempting to interpret gt.telemetry version {d2['Version']} as version 110"
+            )
+            d2["Version"] = "110"
+        return GtTelemetry(**d2)
 
-        return GtTelemetry(
-            ScadaReadTimeUnixMs=d2["ScadaReadTimeUnixMs"],
-            Value=d2["Value"],
-            Name=d2["Name"],
-            Exponent=d2["Exponent"],
-            TypeName=d2["TypeName"],
-            Version="110",
-        )
+
+def check_is_reasonable_unix_time_ms(v: int) -> None:
+    """Checks ReasonableUnixTimeMs format
+
+    ReasonableUnixTimeMs format: unix milliseconds between Jan 1 2000 and Jan 1 3000
+
+    Args:
+        v (int): the candidate
+
+    Raises:
+        ValueError: if v is not ReasonableUnixTimeMs format
+    """
+    import pendulum
+
+    if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp * 1000 > v:  # type: ignore[attr-defined]
+        raise ValueError(f"<{v}> must be after Jan 1 2000")
+    if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp * 1000 < v:  # type: ignore[attr-defined]
+        raise ValueError(f"<{v}> must be before Jan 1 3000")

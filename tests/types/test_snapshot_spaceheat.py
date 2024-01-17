@@ -18,6 +18,7 @@ def test_snapshot_spaceheat_generated() -> None:
             "ReportTimeUnixMs": 1656363448000,
             "ValueList": [1],
             "TypeName": "telemetry.snapshot.spaceheat",
+            "Version": "000",
         },
         "TypeName": "snapshot.spaceheat",
         "Version": "000",
@@ -76,7 +77,7 @@ def test_snapshot_spaceheat_generated() -> None:
     # SchemaError raised if TypeName is incorrect
     ######################################
 
-    d2 = dict(d, TypeName="not the type alias")
+    d2 = dict(d, TypeName="not the type name")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 

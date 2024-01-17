@@ -16,9 +16,9 @@ class PipeFlowSensorComponent(Component):
         component_attribute_class_id: str,
         conversion_factor: float,
         i2c_address: int,
-        poll_period_s: Optional[float],
         display_name: Optional[str] = None,
         hw_uid: Optional[str] = None,
+        expected_max_gpm_times100: Optional[int] = None,
     ):
         super(self.__class__, self).__init__(
             display_name=display_name,
@@ -28,7 +28,7 @@ class PipeFlowSensorComponent(Component):
         )
         self.i2c_address = i2c_address
         self.conversion_factor = conversion_factor
-        self.poll_period_s = poll_period_s
+        self.expected_max_gpm_times100 = expected_max_gpm_times100
         PipeFlowSensorComponent.by_id[self.component_id] = self
         Component.by_id[self.component_id] = self
 

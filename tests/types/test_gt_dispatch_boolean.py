@@ -99,7 +99,7 @@ def test_gt_dispatch_boolean_generated() -> None:
     # SchemaError raised if TypeName is incorrect
     ######################################
 
-    d2 = dict(d, TypeName="not the type alias")
+    d2 = dict(d, TypeName="not the type name")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
@@ -120,6 +120,10 @@ def test_gt_dispatch_boolean_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d, FromGNodeInstanceId="d4be12d5-33ba-4f1f-b9e5")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, RelayState=2)
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 

@@ -9,7 +9,7 @@ from gwproto.errors import SchemaError
 from gwproto.types import RelayCacGt_Maker as Maker
 
 
-def test_gt_boolean_actuator_cac_generated() -> None:
+def test_relay_cac_gt_generated() -> None:
     d = {
         "ComponentAttributeClassId": "69f101fc-22e4-4caa-8103-50b8aeb66028",
         "MakeModelGtEnumSymbol": "9cc57878",
@@ -86,8 +86,8 @@ def test_gt_boolean_actuator_cac_generated() -> None:
     # Behavior on incorrect types
     ######################################
 
-    d2 = dict(d, MakeModelGtEnumSymbol="hi")
-    Maker.dict_to_tuple(d2).MakeModel = MakeModel.default()
+    d2 = dict(d, MakeModelGtEnumSymbol="unknown_symbol")
+    Maker.dict_to_tuple(d2).MakeModel == MakeModel.default()
 
     d2 = dict(d, TypicalResponseTimeMs="400.1")
     with pytest.raises(ValidationError):
@@ -97,7 +97,7 @@ def test_gt_boolean_actuator_cac_generated() -> None:
     # SchemaError raised if TypeName is incorrect
     ######################################
 
-    d2 = dict(d, TypeName="not the type alias")
+    d2 = dict(d, TypeName="not the type name")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 

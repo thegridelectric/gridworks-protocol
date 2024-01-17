@@ -1,6 +1,6 @@
 GtShSimpleTelemetryStatus
 ==========================
-Python pydantic class corresponding to  json type ```gt.sh.simple.telemetry.status```.
+Python pydantic class corresponding to json type `gt.sh.simple.telemetry.status`, version `100`.
 
 .. autoclass:: gwproto.types.GtShSimpleTelemetryStatus
     :members:
@@ -21,6 +21,14 @@ Python pydantic class corresponding to  json type ```gt.sh.simple.telemetry.stat
 **ReadTimeUnixMsList**:
     - Description: List of Read Times. The times that the SImpleSensor took the readings, in unix milliseconds
     - Format: ReasonableUnixTimeMs
+
+**TypeName**:
+    - Description: All GridWorks Versioned Types have a fixed TypeName, which is a string of lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character, and final word NOT all Hindu-Arabic numerals.
+
+**Version**:
+    - Description: All GridWorks Versioned Types have a fixed version, which is a string of three Hindu-Arabic numerals.
+
+
 
 .. autoclass:: gwproto.types.gt_sh_simple_telemetry_status.check_is_left_right_dot
     :members:

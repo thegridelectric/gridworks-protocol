@@ -1,0 +1,72 @@
+{
+  "gtr_asl": "001",
+  "type_name": "gt.sh.telemetry.from.multipurpose.sensor",
+  "version": "100",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": "Data sent from a MultipurposeSensor to a Spaceheat SCADA. A set of readings made at the same time by a multipurpose sensor, sent by the MultipurposeSensor SpaceheatNode actor to its SCADA. The nth element of each of its three readings (what is getting read, what the value is, what the TelemetryNames are).",
+  "url": "https://gridworks-protocol.readthedocs.io/en/latest/multipurpose-sensor.html",
+  "properties": {
+    "ScadaReadTimeUnixMs": {
+      "type": "integer",
+      "format": "ReasonableUnixTimeMs",
+      "title": "ScadaReadTime in Unix MilliSeconds",
+      "required": true
+    },
+    "AboutNodeAliasList": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "format": "LeftRightDot",
+      "title": "AboutNodeAliasList",
+      "description": "List of aliases of the SpaceHeat Nodes getting measured",
+      "required": true
+    },
+    "TelemetryNameList": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "format": "spaceheat.telemetry.name",
+      "title": "TelemetryNameList",
+      "description": "List of the TelemetryNames. The nth name in this list indicates the TelemetryName of the nth alias in the AboutNodeAliasList.",
+      "required": true
+    },
+    "ValueList": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "required": true
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "gt.sh.telemetry.from.multipurpose.sensor",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "100",
+      "required": true
+    }
+  },
+  "axioms": {
+    "Axiom1": {
+      "title": "ListLengthConsistency",
+      "description": "AboutNodeAliasList, ValueList and TelemetryNameList must all have the same length."
+    }
+  },
+  "formats": {
+    "LeftRightDot": {
+      "type": "string",
+      "description": "Lowercase alphanumeric words separated by periods, with the most significant word (on the left) starting with an alphabet character.",
+      "example": "dw1.isone.me.freedom.apple"
+    },
+    "ReasonableUnixTimeMs": {
+      "type": "string",
+      "description": "An integer reflecting unix time in MILLISECONDS between midnight Jan 1 2000 and midnight Jan 1 3000 UTC",
+      "example": "1702327940710"
+    }
+  }
+}

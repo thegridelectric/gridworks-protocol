@@ -1,0 +1,21 @@
+{
+  "gtr_asl": "001",
+  "type_name": "rest.poller.component.gt",
+  "version": "000",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": "REST Poller Component (GridWorks Type). Designed for generic REST Pollers (like Honeywell Z-Wave thermostats). It extends the component.gt.000 type. Authority for the attributes of the component.gt.000 (ComponentId, ComponentAttributeClassId, DisplayName, HwUid) belongs to the WorldRegistry. The WorldRegistry is part of the GridWorks 'BackOffice' structure for managing relational device data . Notably, ComponentId and ComponentAttributeClass are both required and immutable. HwUid is optional but once it is set to a non-null value that is also immutable - it is meant to be an immutable identifier associated to a specific physical device, ideally one that can be read remotely by the SCADA and also by the naked eye. The DisplayName is mutable, with its current value in time governed by the WorldRegistry.",
+  "url": "https://g-node-registry.readthedocs.io/en/latest/component.html",
+  "properties": {
+    "TypeName": {
+      "type": "string",
+      "value": "rest.poller.component.gt",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "000",
+      "required": true
+    }
+  }
+}

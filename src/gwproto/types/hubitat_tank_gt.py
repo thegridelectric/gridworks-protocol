@@ -9,15 +9,13 @@ from pydantic import Extra
 from pydantic import conint
 from pydantic import validator
 
-from gwproto.enums import TelemetryName as EnumTelemetryName
-from gwproto.enums import Unit as EnumUnit
+from gwproto.enums import TelemetryName
+from gwproto.enums import Unit
 from gwproto.types.hubitat_component_gt import HubitatRESTResolutionSettings
 from gwproto.types.rest_poller_gt import RequestArgs
 from gwproto.types.rest_poller_gt import RESTPollerSettings
 from gwproto.types.rest_poller_gt import URLArgs
 from gwproto.types.rest_poller_gt import URLConfig
-from gwproto.types.simple_temp_sensor_cac_gt import TelemetryNameMap
-from gwproto.types.simple_temp_sensor_cac_gt import UnitMap
 from gwproto.utils import snake_to_camel
 
 
@@ -48,14 +46,14 @@ class FibaroTempSensorSettingsGt(BaseModel):
 
     @validator("telemetry_name_gt_enum_symbol")
     def _check_telemetry_name_symbol(cls, v: str) -> str:
-        if v not in TelemetryNameMap.type_to_versioned_enum_dict:
-            v = TelemetryNameMap.local_to_type(EnumTelemetryName.default())
+        if v not in TelemetryName.symbols():
+            v = TelemetryName.value_to_symbol(TelemetryName.default())
         return v
 
     @validator("temp_unit_gt_enum_symbol")
     def _checktemp_unit_gt_enum_symbol(cls, v: str) -> str:
-        if v not in UnitMap.type_to_versioned_enum_dict:
-            v = UnitMap.local_to_type(EnumUnit.default())
+        if v not in Unit.symbols():
+            v = Unit.value_to_symbol(Unit.default())
         return v
 
 
@@ -66,7 +64,7 @@ class FibaroTempSensorSettings(FibaroTempSensorSettingsGt):
     node_name: str
 
     class Config:
-        keep_untouched = (cached_property, EnumTelemetryName)
+        keep_untouched = (cached_property, TelemetryName)
 
     @validator("rest")
     def _collapse_rest_url(cls, v: Optional[RESTPollerSettings]):
@@ -79,16 +77,14 @@ class FibaroTempSensorSettings(FibaroTempSensorSettingsGt):
         return v
 
     @property
-    def telemetry_name(self) -> EnumTelemetryName:
-        return TelemetryNameMap.type_to_local(
-            self.telemetry_name_gt_enum_symbol,
-        )
+    def telemetry_name(self) -> TelemetryName:
+        value = TelemetryName.symbol_to_value(self.telemetry_name_gt_enum_symbol)
+        return TelemetryName(value)
 
     @property
-    def unit(self) -> EnumUnit:
-        return UnitMap.type_to_local(
-            self.temp_unit_gt_enum_symbol,
-        )
+    def unit(self) -> Unit:
+        value = Unit.symbol_to_value(self.temp_unit_gt_enum_symbol)
+        return Unit(value)
 
     @cached_property
     def url(self) -> yarl.URL:

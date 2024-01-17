@@ -75,7 +75,7 @@ def test_component_attribute_class_gt_generated() -> None:
     # SchemaError raised if TypeName is incorrect
     ######################################
 
-    d2 = dict(d, TypeName="not the type alias")
+    d2 = dict(d, TypeName="not the type name")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 

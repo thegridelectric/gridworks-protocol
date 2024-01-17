@@ -1,13 +1,11 @@
 """Type resistive.heater.cac.gt, version 000"""
 import json
-from enum import auto
+import logging
 from typing import Any
 from typing import Dict
-from typing import List
 from typing import Literal
 from typing import Optional
 
-from fastapi_utils.enums import StrEnum
 from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
@@ -15,156 +13,31 @@ from pydantic import validator
 from gwproto.data_classes.cacs.resistive_heater_cac import ResistiveHeaterCac
 from gwproto.enums import MakeModel as EnumMakeModel
 from gwproto.errors import SchemaError
-from gwproto.message import as_enum
 
 
-class SpaceheatMakeModel000SchemaEnum:
-    enum_name: str = "spaceheat.make.model.000"
-    symbols: List[str] = [
-        "00000000",
-        "beb6d3fb",
-        "fabfa505",
-        "acd93fb3",
-        "d0178dc3",
-        "f8b497e8",
-        "076da322",
-        "d300635e",
-        "e81d74a8",
-        "c75d269f",
-        "3042c432",
-        "d0b0e375",
-        "a8d9a70d",
-        "08da3f7d",
-    ]
-
-    @classmethod
-    def is_symbol(cls, candidate: str) -> bool:
-        if candidate in cls.symbols:
-            return True
-        return False
-
-
-class SpaceheatMakeModel000(StrEnum):
-    UNKNOWNMAKE__UNKNOWNMODEL = auto()
-    EGAUGE__4030 = auto()
-    NCD__PR814SPST = auto()
-    ADAFRUIT__642 = auto()
-    GRIDWORKS__TSNAP1 = auto()
-    GRIDWORKS__WATERTEMPHIGHPRECISION = auto()
-    GRIDWORKS__SIMPM1 = auto()
-    SCHNEIDERELECTRIC__IEM3455 = auto()
-    GRIDWORKS__SIMBOOL30AMPRELAY = auto()
-    OPENENERGY__EMONPI = auto()
-    GRIDWORKS__SIMTSNAP1 = auto()
-    ATLAS__EZFLO = auto()
-    MAGNELAB__SCT0300050 = auto()
-    YHDC__SCT013100 = auto()
-
-    @classmethod
-    def default(cls) -> "SpaceheatMakeModel000":
-        return cls.UNKNOWNMAKE__UNKNOWNMODEL
-
-    @classmethod
-    def values(cls) -> List[str]:
-        return [elt.value for elt in cls]
-
-
-class MakeModelMap:
-    @classmethod
-    def type_to_local(cls, symbol: str) -> EnumMakeModel:
-        if not SpaceheatMakeModel000SchemaEnum.is_symbol(symbol):
-            raise SchemaError(f"{symbol} must belong to SpaceheatMakeModel000 symbols")
-        versioned_enum = cls.type_to_versioned_enum_dict[symbol]
-        return as_enum(versioned_enum, EnumMakeModel, EnumMakeModel.default())
-
-    @classmethod
-    def local_to_type(cls, make_model: EnumMakeModel) -> str:
-        if not isinstance(make_model, EnumMakeModel):
-            raise SchemaError(f"{make_model} must be of type {EnumMakeModel}")
-        versioned_enum = as_enum(
-            make_model, SpaceheatMakeModel000, SpaceheatMakeModel000.default()
-        )
-        return cls.versioned_enum_to_type_dict[versioned_enum]
-
-    type_to_versioned_enum_dict: Dict[str, SpaceheatMakeModel000] = {
-        "00000000": SpaceheatMakeModel000.UNKNOWNMAKE__UNKNOWNMODEL,
-        "beb6d3fb": SpaceheatMakeModel000.EGAUGE__4030,
-        "fabfa505": SpaceheatMakeModel000.NCD__PR814SPST,
-        "acd93fb3": SpaceheatMakeModel000.ADAFRUIT__642,
-        "d0178dc3": SpaceheatMakeModel000.GRIDWORKS__TSNAP1,
-        "f8b497e8": SpaceheatMakeModel000.GRIDWORKS__WATERTEMPHIGHPRECISION,
-        "076da322": SpaceheatMakeModel000.GRIDWORKS__SIMPM1,
-        "d300635e": SpaceheatMakeModel000.SCHNEIDERELECTRIC__IEM3455,
-        "e81d74a8": SpaceheatMakeModel000.GRIDWORKS__SIMBOOL30AMPRELAY,
-        "c75d269f": SpaceheatMakeModel000.OPENENERGY__EMONPI,
-        "3042c432": SpaceheatMakeModel000.GRIDWORKS__SIMTSNAP1,
-        "d0b0e375": SpaceheatMakeModel000.ATLAS__EZFLO,
-        "a8d9a70d": SpaceheatMakeModel000.MAGNELAB__SCT0300050,
-        "08da3f7d": SpaceheatMakeModel000.YHDC__SCT013100,
-    }
-
-    versioned_enum_to_type_dict: Dict[SpaceheatMakeModel000, str] = {
-        SpaceheatMakeModel000.UNKNOWNMAKE__UNKNOWNMODEL: "00000000",
-        SpaceheatMakeModel000.EGAUGE__4030: "beb6d3fb",
-        SpaceheatMakeModel000.NCD__PR814SPST: "fabfa505",
-        SpaceheatMakeModel000.ADAFRUIT__642: "acd93fb3",
-        SpaceheatMakeModel000.GRIDWORKS__TSNAP1: "d0178dc3",
-        SpaceheatMakeModel000.GRIDWORKS__WATERTEMPHIGHPRECISION: "f8b497e8",
-        SpaceheatMakeModel000.GRIDWORKS__SIMPM1: "076da322",
-        SpaceheatMakeModel000.SCHNEIDERELECTRIC__IEM3455: "d300635e",
-        SpaceheatMakeModel000.GRIDWORKS__SIMBOOL30AMPRELAY: "e81d74a8",
-        SpaceheatMakeModel000.OPENENERGY__EMONPI: "c75d269f",
-        SpaceheatMakeModel000.GRIDWORKS__SIMTSNAP1: "3042c432",
-        SpaceheatMakeModel000.ATLAS__EZFLO: "d0b0e375",
-        SpaceheatMakeModel000.MAGNELAB__SCT0300050: "a8d9a70d",
-        SpaceheatMakeModel000.YHDC__SCT013100: "08da3f7d",
-    }
-
-
-def check_is_uuid_canonical_textual(v: str) -> None:
-    """Checks UuidCanonicalTextual format
-
-    UuidCanonicalTextual format:  A string of hex words separated by hyphens
-    of length 8-4-4-4-12.
-
-    Args:
-        v (str): the candidate
-
-    Raises:
-        ValueError: if v is not UuidCanonicalTextual format
-    """
-    try:
-        x = v.split("-")
-    except AttributeError as e:
-        raise ValueError(f"Failed to split on -: {e}")
-    if len(x) != 5:
-        raise ValueError(f"{v} split by '-' did not have 5 words")
-    for hex_word in x:
-        try:
-            int(hex_word, 16)
-        except ValueError:
-            raise ValueError(f"Words of {v} are not all hex")
-    if len(x[0]) != 8:
-        raise ValueError(f"{v} word lengths not 8-4-4-4-12")
-    if len(x[1]) != 4:
-        raise ValueError(f"{v} word lengths not 8-4-4-4-12")
-    if len(x[2]) != 4:
-        raise ValueError(f"{v} word lengths not 8-4-4-4-12")
-    if len(x[3]) != 4:
-        raise ValueError(f"{v} word lengths not 8-4-4-4-12")
-    if len(x[4]) != 12:
-        raise ValueError(f"{v} word lengths not 8-4-4-4-12")
+LOG_FORMAT = (
+    "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
+    "-35s %(lineno) -5d: %(message)s"
+)
+LOGGER = logging.getLogger(__name__)
 
 
 class ResistiveHeaterCacGt(BaseModel):
-    """Type for tracking Resistive Heater ComponentAttributeClasses.
+    """
+    Type for tracking Resistive Heater ComponentAttributeClasses.
 
-    GridWorks Spaceheat SCADA uses the GridWorks GNodeRegistry structures and abstractions for managing relational device data. The Cac, or ComponentAttributeClass, is part of this structure.
-    [More info](https://g-node-registry.readthedocs.io/en/latest/component-attribute-class.html).
+    GridWorks Spaceheat SCADA uses the GridWorks GNodeRegistry structures and abstractions for
+    managing relational device data. The Cac, or ComponentAttributeClass, is part of this structure.
+
+    [More info](https://g-node-registry.readthedocs.io/en/latest/component-attribute-class.html)
     """
 
     ComponentAttributeClassId: str = Field(
         title="ComponentAttributeClassId",
+        description=(
+            "Unique identifier for the device class (aka 'cac' or Component Attribute Class). "
+            "Authority is maintained by the World Registry."
+        ),
     )
     MakeModel: EnumMakeModel = Field(
         title="MakeModel",
@@ -180,7 +53,7 @@ class ResistiveHeaterCacGt(BaseModel):
         title="RatedVoltageV",
     )
     TypeName: Literal["resistive.heater.cac.gt"] = "resistive.heater.cac.gt"
-    Version: str = "000"
+    Version: Literal["000"] = "000"
 
     @validator("ComponentAttributeClassId")
     def _check_component_attribute_class_id(cls, v: str) -> str:
@@ -192,21 +65,69 @@ class ResistiveHeaterCacGt(BaseModel):
             )
         return v
 
-    @validator("MakeModel")
-    def _check_make_model(cls, v: EnumMakeModel) -> EnumMakeModel:
-        return as_enum(v, EnumMakeModel, EnumMakeModel.UNKNOWNMAKE__UNKNOWNMODEL)
+    @validator("RatedVoltageV")
+    def _check_rated_voltage_v(cls, v: int) -> int:
+        try:
+            check_is_positive_integer(v)
+        except ValueError as e:
+            raise ValueError(
+                f"RatedVoltageV failed PositiveInteger format validation: {e}"
+            )
+        return v
 
     def as_dict(self) -> Dict[str, Any]:
-        d = self.dict()
+        """
+        Translate the object into a dictionary representation that can be serialized into a
+        resistive.heater.cac.gt.000 object.
+
+        This method prepares the object for serialization by the as_type method, creating a
+        dictionary with key-value pairs that follow the requirements for an instance of the
+        resistive.heater.cac.gt.000 type. Unlike the standard python dict method,
+        it makes the following substantive changes:
+        - Enum Values: Translates between the values used locally by the actor to the symbol
+        sent in messages.
+        - Removes any key-value pairs where the value is None for a clearer message, especially
+        in cases with many optional attributes.
+
+        It also applies these changes recursively to sub-types.
+        """
+        d = {
+            key: value
+            for key, value in self.dict(
+                include=self.__fields_set__ | {"TypeName", "Version"}
+            ).items()
+            if value is not None
+        }
         del d["MakeModel"]
-        MakeModel = as_enum(self.MakeModel, EnumMakeModel, EnumMakeModel.default())
-        d["MakeModelGtEnumSymbol"] = MakeModelMap.local_to_type(MakeModel)
-        if d["DisplayName"] is None:
-            del d["DisplayName"]
+        d["MakeModelGtEnumSymbol"] = EnumMakeModel.value_to_symbol(self.MakeModel)
         return d
 
-    def as_type(self) -> str:
-        return json.dumps(self.as_dict())
+    def as_type(self) -> bytes:
+        """
+        Serialize to the resistive.heater.cac.gt.000 representation.
+
+        Instances in the class are python-native representations of resistive.heater.cac.gt.000
+        objects, while the actual resistive.heater.cac.gt.000 object is the serialized UTF-8 byte
+        string designed for sending in a message.
+
+        This method calls the as_dict() method, which differs from the native python dict()
+        in the following key ways:
+        - Enum Values: Translates between the values used locally by the actor to the symbol
+        sent in messages.
+        - - Removes any key-value pairs where the value is None for a clearer message, especially
+        in cases with many optional attributes.
+
+        It also applies these changes recursively to sub-types.
+
+        Its near-inverse is ResistiveHeaterCacGt.type_to_tuple(). If the type (or any sub-types)
+        includes an enum, then the type_to_tuple will map an unrecognized symbol to the
+        default enum value. This is why these two methods are only 'near' inverses.
+        """
+        json_string = json.dumps(self.as_dict())
+        return json_string.encode("utf-8")
+
+    def __hash__(self):
+        return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
 class ResistiveHeaterCacGt_Maker:
@@ -227,61 +148,73 @@ class ResistiveHeaterCacGt_Maker:
             DisplayName=display_name,
             NameplateMaxPowerW=nameplate_max_power_w,
             RatedVoltageV=rated_voltage_v,
-            #
         )
 
     @classmethod
-    def tuple_to_type(cls, tuple: ResistiveHeaterCacGt) -> str:
+    def tuple_to_type(cls, tuple: ResistiveHeaterCacGt) -> bytes:
         """
-        Given a Python class object, returns the serialized JSON type object
+        Given a Python class object, returns the serialized JSON type object.
         """
         return tuple.as_type()
 
-    def __hash__(self):
-        return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
-
     @classmethod
-    def type_to_tuple(cls, t: str) -> ResistiveHeaterCacGt:
+    def type_to_tuple(cls, t: bytes) -> ResistiveHeaterCacGt:
         """
-        Given a serialized JSON type object, returns the Python class object
+        Given a serialized JSON type object, returns the Python class object.
         """
         try:
             d = json.loads(t)
         except TypeError:
             raise SchemaError("Type must be string or bytes!")
         if not isinstance(d, dict):
-            raise SchemaError(f"Deserializing {t} must result in dict!")
+            raise SchemaError(f"Deserializing <{t}> must result in dict!")
         return cls.dict_to_tuple(d)
 
     @classmethod
     def dict_to_tuple(cls, d: dict[str, Any]) -> ResistiveHeaterCacGt:
+        """
+        Deserialize a dictionary representation of a resistive.heater.cac.gt.000 message object
+        into a ResistiveHeaterCacGt python object for internal use.
+
+        This is the near-inverse of the ResistiveHeaterCacGt.as_dict() method:
+          - Enums: translates between the symbols sent in messages between actors and
+        the values used by the actors internally once they've deserialized the messages.
+          - Types: recursively validates and deserializes sub-types.
+
+        Note that if a required attribute with a default value is missing in a dict, this method will
+        raise a SchemaError. This differs from the pydantic BaseModel practice of auto-completing
+        missing attributes with default values when they exist.
+
+        Args:
+            d (dict): the dictionary resulting from json.loads(t) for a serialized JSON type object t.
+
+        Raises:
+           SchemaError: if the dict cannot be turned into a ResistiveHeaterCacGt object.
+
+        Returns:
+            ResistiveHeaterCacGt
+        """
         d2 = dict(d)
         if "ComponentAttributeClassId" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing ComponentAttributeClassId")
+            raise SchemaError(f"dict missing ComponentAttributeClassId: <{d2}>")
         if "MakeModelGtEnumSymbol" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing MakeModelGtEnumSymbol")
-        if d2["MakeModelGtEnumSymbol"] in SpaceheatMakeModel000SchemaEnum.symbols:
-            d2["MakeModel"] = MakeModelMap.type_to_local(d2["MakeModelGtEnumSymbol"])
-        else:
-            d2["MakeModel"] = EnumMakeModel.default()
-        if "DisplayName" not in d2.keys():
-            d2["DisplayName"] = None
+            raise SchemaError(f"MakeModelGtEnumSymbol missing from dict <{d2}>")
+        value = EnumMakeModel.symbol_to_value(d2["MakeModelGtEnumSymbol"])
+        d2["MakeModel"] = EnumMakeModel(value)
         if "NameplateMaxPowerW" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing NameplateMaxPowerW")
+            raise SchemaError(f"dict missing NameplateMaxPowerW: <{d2}>")
         if "RatedVoltageV" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing RatedVoltageV")
+            raise SchemaError(f"dict missing RatedVoltageV: <{d2}>")
         if "TypeName" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing TypeName")
-
-        return ResistiveHeaterCacGt(
-            ComponentAttributeClassId=d2["ComponentAttributeClassId"],
-            MakeModel=d2["MakeModel"],
-            DisplayName=d2["DisplayName"],
-            NameplateMaxPowerW=d2["NameplateMaxPowerW"],
-            RatedVoltageV=d2["RatedVoltageV"],
-            TypeName=d2["TypeName"],
-            Version="000",
-        )
+            raise SchemaError(f"TypeName missing from dict <{d2}>")
+        if "Version" not in d2.keys():
+            raise SchemaError(f"Version missing from dict <{d2}>")
+        if d2["Version"] != "000":
+            LOGGER.debug(
+                f"Attempting to interpret resistive.heater.cac.gt version {d2['Version']} as version 000"
+            )
+            d2["Version"] = "000"
+        return ResistiveHeaterCacGt(**d2)
 
     @classmethod
     def tuple_to_dc(cls, t: ResistiveHeaterCacGt) -> ResistiveHeaterCac:
@@ -295,7 +228,6 @@ class ResistiveHeaterCacGt_Maker:
                 nameplate_max_power_w=t.NameplateMaxPowerW,
                 rated_voltage_v=t.RatedVoltageV,
             )
-
         return dc
 
     @classmethod
@@ -320,3 +252,56 @@ class ResistiveHeaterCacGt_Maker:
     @classmethod
     def dict_to_dc(cls, d: dict[Any, str]) -> ResistiveHeaterCac:
         return cls.tuple_to_dc(cls.dict_to_tuple(d))
+
+
+def check_is_positive_integer(v: int) -> None:
+    """
+    Must be positive when interpreted as an integer. Interpretation as an
+    integer follows the pydantic rules for this - which will round down
+    rational numbers. So 1.7 will be interpreted as 1 and is also fine,
+    while 0.5 is interpreted as 0 and will raise an exception.
+
+    Args:
+        v (int): the candidate
+
+    Raises:
+        ValueError: if v < 1
+    """
+    v2 = int(v)
+    if v2 < 1:
+        raise ValueError(f"<{v}> is not PositiveInteger")
+
+
+def check_is_uuid_canonical_textual(v: str) -> None:
+    """Checks UuidCanonicalTextual format
+
+    UuidCanonicalTextual format:  A string of hex words separated by hyphens
+    of length 8-4-4-4-12.
+
+    Args:
+        v (str): the candidate
+
+    Raises:
+        ValueError: if v is not UuidCanonicalTextual format
+    """
+    try:
+        x = v.split("-")
+    except AttributeError as e:
+        raise ValueError(f"Failed to split on -: {e}")
+    if len(x) != 5:
+        raise ValueError(f"<{v}> split by '-' did not have 5 words")
+    for hex_word in x:
+        try:
+            int(hex_word, 16)
+        except ValueError:
+            raise ValueError(f"Words of <{v}> are not all hex")
+    if len(x[0]) != 8:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[1]) != 4:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[2]) != 4:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[3]) != 4:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[4]) != 12:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")

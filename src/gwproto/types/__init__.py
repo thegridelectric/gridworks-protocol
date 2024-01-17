@@ -1,4 +1,4 @@
-""" List of all the schema types """
+""" List of all the types """
 
 from gwproto.types.component_attribute_class_gt import ComponentAttributeClassGt
 from gwproto.types.component_attribute_class_gt import ComponentAttributeClassGt_Maker
@@ -56,18 +56,14 @@ from gwproto.types.hubitat_cac_gt import HubitatCacGt
 from gwproto.types.hubitat_cac_gt import HubitatCacGt_Maker
 from gwproto.types.hubitat_component_gt import HubitatComponentGt
 from gwproto.types.hubitat_component_gt import HubitatComponentGt_Maker
-from gwproto.types.hubitat_component_gt import HubitatRESTResolutionSettings
 from gwproto.types.hubitat_poller_cac_gt import HubitatPollerCacGt
+from gwproto.types.hubitat_poller_cac_gt import HubitatPollerCacGt_Maker
 from gwproto.types.hubitat_poller_component_gt import HubitatPollerComponentGt
-from gwproto.types.hubitat_poller_gt import HubitatPollerGt
-from gwproto.types.hubitat_poller_gt import MakerAPIAttributeGt
+from gwproto.types.hubitat_poller_component_gt import HubitatPollerComponentGt_Maker
 from gwproto.types.hubitat_tank_cac_gt import HubitatTankCacGt
 from gwproto.types.hubitat_tank_cac_gt import HubitatTankCacGt_Maker
 from gwproto.types.hubitat_tank_component_gt import HubitatTankComponentGt
 from gwproto.types.hubitat_tank_component_gt import HubitatTankComponentGt_Maker
-from gwproto.types.hubitat_tank_gt import FibaroTempSensorSettings
-from gwproto.types.hubitat_tank_gt import FibaroTempSensorSettingsGt
-from gwproto.types.hubitat_tank_gt import HubitatTankSettingsGt
 from gwproto.types.multipurpose_sensor_cac_gt import MultipurposeSensorCacGt
 from gwproto.types.multipurpose_sensor_cac_gt import MultipurposeSensorCacGt_Maker
 from gwproto.types.pipe_flow_sensor_cac_gt import PipeFlowSensorCacGt
@@ -88,12 +84,6 @@ from gwproto.types.rest_poller_cac_gt import RESTPollerCacGt
 from gwproto.types.rest_poller_cac_gt import RESTPollerCacGt_Maker
 from gwproto.types.rest_poller_component_gt import RESTPollerComponentGt
 from gwproto.types.rest_poller_component_gt import RESTPollerComponentGt_Maker
-from gwproto.types.rest_poller_gt import AioHttpClientTimeout
-from gwproto.types.rest_poller_gt import RequestArgs
-from gwproto.types.rest_poller_gt import RESTPollerSettings
-from gwproto.types.rest_poller_gt import SessionArgs
-from gwproto.types.rest_poller_gt import URLArgs
-from gwproto.types.rest_poller_gt import URLConfig
 from gwproto.types.simple_temp_sensor_cac_gt import SimpleTempSensorCacGt
 from gwproto.types.simple_temp_sensor_cac_gt import SimpleTempSensorCacGt_Maker
 from gwproto.types.simple_temp_sensor_component_gt import SimpleTempSensorComponentGt
@@ -104,6 +94,8 @@ from gwproto.types.snapshot_spaceheat import SnapshotSpaceheat
 from gwproto.types.snapshot_spaceheat import SnapshotSpaceheat_Maker
 from gwproto.types.spaceheat_node_gt import SpaceheatNodeGt
 from gwproto.types.spaceheat_node_gt import SpaceheatNodeGt_Maker
+from gwproto.types.ta_data_channels import TaDataChannels
+from gwproto.types.ta_data_channels import TaDataChannels_Maker
 from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
 from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig_Maker
 from gwproto.types.telemetry_snapshot_spaceheat import TelemetrySnapshotSpaceheat
@@ -111,7 +103,6 @@ from gwproto.types.telemetry_snapshot_spaceheat import TelemetrySnapshotSpacehea
 
 
 __all__ = [
-    "AioHttpClientTimeout",
     "ComponentAttributeClassGt",
     "ComponentAttributeClassGt_Maker",
     "ComponentGt",
@@ -126,8 +117,6 @@ __all__ = [
     "ElectricMeterCacGt_Maker",
     # "ElectricMeterComponentGt",
     # "ElectricMeterComponentGt_Maker",
-    "FibaroTempSensorSettingsGt",
-    "FibaroTempSensorSettings",
     "FibaroSmartImplantCacGt",
     "FibaroSmartImplantCacGt_Maker",
     "FibaroSmartImplantComponentGt",
@@ -159,15 +148,13 @@ __all__ = [
     "HubitatComponentGt",
     "HubitatComponentGt_Maker",
     "HubitatPollerCacGt",
+    "HubitatPollerCacGt_Maker",
     "HubitatPollerComponentGt",
-    "HubitatPollerGt",
-    "HubitatRESTResolutionSettings",
+    "HubitatPollerComponentGt_Maker",
     "HubitatTankCacGt",
     "HubitatTankCacGt_Maker",
     "HubitatTankComponentGt",
     "HubitatTankComponentGt_Maker",
-    "HubitatTankSettingsGt",
-    "MakerAPIAttributeGt",
     "MultipurposeSensorCacGt",
     "MultipurposeSensorCacGt_Maker",
     # "MultipurposeSensorComponentGt",
@@ -182,19 +169,14 @@ __all__ = [
     "RelayCacGt_Maker",
     "RelayComponentGt",
     "RelayComponentGt_Maker",
-    "RequestArgs",
     "ResistiveHeaterCacGt",
     "ResistiveHeaterCacGt_Maker",
     "ResistiveHeaterComponentGt",
     "ResistiveHeaterComponentGt_Maker",
-    "RESTPollerSettings",
     "RESTPollerCacGt",
     "RESTPollerCacGt_Maker",
     "RESTPollerComponentGt",
     "RESTPollerComponentGt_Maker",
-    "RelayComponentGt",
-    "RelayComponentGt_Maker",
-    "SessionArgs",
     "SimpleTempSensorCacGt",
     "SimpleTempSensorCacGt_Maker",
     "SimpleTempSensorComponentGt",
@@ -203,10 +185,10 @@ __all__ = [
     "SnapshotSpaceheat_Maker",
     "SpaceheatNodeGt",
     "SpaceheatNodeGt_Maker",
+    "TaDataChannels",
+    "TaDataChannels_Maker",
     "TelemetryReportingConfig",
     "TelemetryReportingConfig_Maker",
     "TelemetrySnapshotSpaceheat",
     "TelemetrySnapshotSpaceheat_Maker",
-    "URLArgs",
-    "URLConfig",
 ]

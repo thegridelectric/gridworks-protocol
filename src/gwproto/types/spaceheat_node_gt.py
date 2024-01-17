@@ -1,13 +1,11 @@
 """Type spaceheat.node.gt, version 100"""
 import json
-from enum import auto
+import logging
 from typing import Any
 from typing import Dict
-from typing import List
 from typing import Literal
 from typing import Optional
 
-from fastapi_utils.enums import StrEnum
 from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
@@ -16,301 +14,26 @@ from gwproto.data_classes.sh_node import ShNode
 from gwproto.enums import ActorClass as EnumActorClass
 from gwproto.enums import Role as EnumRole
 from gwproto.errors import SchemaError
-from gwproto.message import as_enum
 
 
-class ShActorClass000SchemaEnum:
-    enum_name: str = "sh.actor.class.000"
-    symbols: List[str] = [
-        "00000000",
-        "6d37aa41",
-        "32d3d19f",
-        "fddd0064",
-        "2ea112b9",
-        "b103058f",
-        "dae4b2f0",
-        "7c483ad0",
-        "0401b27e",
-        "e2877329",
-        "00000100",
-    ]
-
-    @classmethod
-    def is_symbol(cls, candidate: str) -> bool:
-        if candidate in cls.symbols:
-            return True
-        return False
-
-
-class ShActorClass000(StrEnum):
-    NoActor = auto()
-    Scada = auto()
-    HomeAlone = auto()
-    BooleanActuator = auto()
-    PowerMeter = auto()
-    Atn = auto()
-    SimpleSensor = auto()
-    MultipurposeSensor = auto()
-    Thermostat = auto()
-    HubitatTelemetryReader = auto()
-    HubitatTankModule = auto()
-    HubitatPoller = auto()
-
-    @classmethod
-    def default(cls) -> "ShActorClass000":
-        return cls.NoActor
-
-    @classmethod
-    def values(cls) -> List[str]:
-        return [elt.value for elt in cls]
-
-
-class ActorClassMap:
-    @classmethod
-    def type_to_local(cls, symbol: str) -> EnumActorClass:
-        if not ShActorClass000SchemaEnum.is_symbol(symbol):
-            raise SchemaError(f"{symbol} must belong to ShActorClass000 symbols")
-        versioned_enum = cls.type_to_versioned_enum_dict[symbol]
-        return as_enum(versioned_enum, EnumActorClass, EnumActorClass.default())
-
-    @classmethod
-    def local_to_type(cls, actor_class: EnumActorClass) -> str:
-        if not isinstance(actor_class, EnumActorClass):
-            raise SchemaError(f"{actor_class} must be of type {EnumActorClass}")
-        versioned_enum = as_enum(
-            actor_class, ShActorClass000, ShActorClass000.default()
-        )
-        return cls.versioned_enum_to_type_dict[versioned_enum]
-
-    type_to_versioned_enum_dict: Dict[str, ShActorClass000] = {
-        "00000000": ShActorClass000.NoActor,
-        "6d37aa41": ShActorClass000.Scada,
-        "32d3d19f": ShActorClass000.HomeAlone,
-        "fddd0064": ShActorClass000.BooleanActuator,
-        "2ea112b9": ShActorClass000.PowerMeter,
-        "b103058f": ShActorClass000.Atn,
-        "dae4b2f0": ShActorClass000.SimpleSensor,
-        "7c483ad0": ShActorClass000.MultipurposeSensor,
-        "4a9c1785": ShActorClass000.Thermostat,
-        "0401b27e": ShActorClass000.HubitatTelemetryReader,
-        "e2877329": ShActorClass000.HubitatTankModule,
-        "00000100": ShActorClass000.HubitatPoller,
-    }
-
-    versioned_enum_to_type_dict: Dict[ShActorClass000, str] = {
-        ShActorClass000.NoActor: "00000000",
-        ShActorClass000.Scada: "6d37aa41",
-        ShActorClass000.HomeAlone: "32d3d19f",
-        ShActorClass000.BooleanActuator: "fddd0064",
-        ShActorClass000.PowerMeter: "2ea112b9",
-        ShActorClass000.Atn: "b103058f",
-        ShActorClass000.SimpleSensor: "dae4b2f0",
-        ShActorClass000.MultipurposeSensor: "7c483ad0",
-        ShActorClass000.Thermostat: "4a9c1785",
-        ShActorClass000.HubitatTelemetryReader: "0401b27e",
-        ShActorClass000.HubitatTankModule: "e2877329",
-        ShActorClass000.HubitatPoller: "00000100",
-    }
-
-
-class ShNodeRole000SchemaEnum:
-    enum_name: str = "sh.node.role.000"
-    symbols: List[str] = [
-        "00000000",
-        "d0afb424",
-        "863e50d1",
-        "6ddff83b",
-        "9ac68b6e",
-        "99c5f326",
-        "57b788ee",
-        "3ecfe9b8",
-        "73308a1f",
-        "c480f612",
-        "fec74958",
-        "5938bf1f",
-        "ece3b600",
-        "65725f44",
-        "fe3cbdd5",
-        "05fdd645",
-        "6896109b",
-        "b0eaf2ba",
-        "661d7e73",
-        "dd975b31",
-        "00000d00",
-    ]
-
-    @classmethod
-    def is_symbol(cls, candidate: str) -> bool:
-        if candidate in cls.symbols:
-            return True
-        return False
-
-
-class ShNodeRole000(StrEnum):
-    Unknown = auto()
-    Scada = auto()
-    HomeAlone = auto()
-    Atn = auto()
-    PowerMeter = auto()
-    BoostElement = auto()
-    BooleanActuator = auto()
-    DedicatedThermalStore = auto()
-    TankWaterTempSensor = auto()
-    PipeTempSensor = auto()
-    RoomTempSensor = auto()
-    OutdoorTempSensor = auto()
-    PipeFlowMeter = auto()
-    HeatedSpace = auto()
-    HydronicPipe = auto()
-    BaseboardRadiator = auto()
-    RadiatorFan = auto()
-    CirculatorPump = auto()
-    MultiChannelAnalogTempSensor = auto()
-    Outdoors = auto()
-    ThermostatHeatingSetPoint = auto()
-
-    @classmethod
-    def default(cls) -> "ShNodeRole000":
-        return cls.Unknown
-
-    @classmethod
-    def values(cls) -> List[str]:
-        return [elt.value for elt in cls]
-
-
-class RoleMap:
-    @classmethod
-    def type_to_local(cls, symbol: str) -> EnumRole:
-        if not ShNodeRole000SchemaEnum.is_symbol(symbol):
-            raise SchemaError(f"{symbol} must belong to ShNodeRole000 symbols")
-        versioned_enum = cls.type_to_versioned_enum_dict[symbol]
-        return as_enum(versioned_enum, EnumRole, EnumRole.default())
-
-    @classmethod
-    def local_to_type(cls, role: EnumRole) -> str:
-        if not isinstance(role, EnumRole):
-            raise SchemaError(f"{role} must be of type {EnumRole}")
-        versioned_enum = as_enum(role, ShNodeRole000, ShNodeRole000.default())
-        return cls.versioned_enum_to_type_dict[versioned_enum]
-
-    type_to_versioned_enum_dict: Dict[str, ShNodeRole000] = {
-        "00000000": ShNodeRole000.Unknown,
-        "d0afb424": ShNodeRole000.Scada,
-        "863e50d1": ShNodeRole000.HomeAlone,
-        "6ddff83b": ShNodeRole000.Atn,
-        "9ac68b6e": ShNodeRole000.PowerMeter,
-        "99c5f326": ShNodeRole000.BoostElement,
-        "57b788ee": ShNodeRole000.BooleanActuator,
-        "3ecfe9b8": ShNodeRole000.DedicatedThermalStore,
-        "73308a1f": ShNodeRole000.TankWaterTempSensor,
-        "c480f612": ShNodeRole000.PipeTempSensor,
-        "fec74958": ShNodeRole000.RoomTempSensor,
-        "5938bf1f": ShNodeRole000.OutdoorTempSensor,
-        "ece3b600": ShNodeRole000.PipeFlowMeter,
-        "65725f44": ShNodeRole000.HeatedSpace,
-        "fe3cbdd5": ShNodeRole000.HydronicPipe,
-        "05fdd645": ShNodeRole000.BaseboardRadiator,
-        "6896109b": ShNodeRole000.RadiatorFan,
-        "b0eaf2ba": ShNodeRole000.CirculatorPump,
-        "661d7e73": ShNodeRole000.MultiChannelAnalogTempSensor,
-        "dd975b31": ShNodeRole000.Outdoors,
-        "00000d00": ShNodeRole000.ThermostatHeatingSetPoint,
-    }
-
-    versioned_enum_to_type_dict: Dict[ShNodeRole000, str] = {
-        ShNodeRole000.Unknown: "00000000",
-        ShNodeRole000.Scada: "d0afb424",
-        ShNodeRole000.HomeAlone: "863e50d1",
-        ShNodeRole000.Atn: "6ddff83b",
-        ShNodeRole000.PowerMeter: "9ac68b6e",
-        ShNodeRole000.BoostElement: "99c5f326",
-        ShNodeRole000.BooleanActuator: "57b788ee",
-        ShNodeRole000.DedicatedThermalStore: "3ecfe9b8",
-        ShNodeRole000.TankWaterTempSensor: "73308a1f",
-        ShNodeRole000.PipeTempSensor: "c480f612",
-        ShNodeRole000.RoomTempSensor: "fec74958",
-        ShNodeRole000.OutdoorTempSensor: "5938bf1f",
-        ShNodeRole000.PipeFlowMeter: "ece3b600",
-        ShNodeRole000.HeatedSpace: "65725f44",
-        ShNodeRole000.HydronicPipe: "fe3cbdd5",
-        ShNodeRole000.BaseboardRadiator: "05fdd645",
-        ShNodeRole000.RadiatorFan: "6896109b",
-        ShNodeRole000.CirculatorPump: "b0eaf2ba",
-        ShNodeRole000.MultiChannelAnalogTempSensor: "661d7e73",
-        ShNodeRole000.Outdoors: "dd975b31",
-        ShNodeRole000.ThermostatHeatingSetPoint: "00000d00",
-    }
-
-
-def check_is_uuid_canonical_textual(v: str) -> None:
-    """Checks UuidCanonicalTextual format
-
-    UuidCanonicalTextual format:  A string of hex words separated by hyphens
-    of length 8-4-4-4-12.
-
-    Args:
-        v (str): the candidate
-
-    Raises:
-        ValueError: if v is not UuidCanonicalTextual format
-    """
-    try:
-        x = v.split("-")
-    except AttributeError as e:
-        raise ValueError(f"Failed to split on -: {e}")
-    if len(x) != 5:
-        raise ValueError(f"{v} split by '-' did not have 5 words")
-    for hex_word in x:
-        try:
-            int(hex_word, 16)
-        except ValueError:
-            raise ValueError(f"Words of {v} are not all hex")
-    if len(x[0]) != 8:
-        raise ValueError(f"{v} word lengths not 8-4-4-4-12")
-    if len(x[1]) != 4:
-        raise ValueError(f"{v} word lengths not 8-4-4-4-12")
-    if len(x[2]) != 4:
-        raise ValueError(f"{v} word lengths not 8-4-4-4-12")
-    if len(x[3]) != 4:
-        raise ValueError(f"{v} word lengths not 8-4-4-4-12")
-    if len(x[4]) != 12:
-        raise ValueError(f"{v} word lengths not 8-4-4-4-12")
-
-
-def check_is_left_right_dot(v: str) -> None:
-    """Checks LeftRightDot Format
-
-    LeftRightDot format: Lowercase alphanumeric words separated by periods,
-    most significant word (on the left) starting with an alphabet character.
-
-    Args:
-        v (str): the candidate
-
-    Raises:
-        ValueError: if v is not LeftRightDot format
-    """
-    from typing import List
-
-    try:
-        x: List[str] = v.split(".")
-    except:
-        raise ValueError(f"Failed to seperate {v} into words with split'.'")
-    first_word = x[0]
-    first_char = first_word[0]
-    if not first_char.isalpha():
-        raise ValueError(f"Most significant word of {v} must start with alphabet char.")
-    for word in x:
-        if not word.isalnum():
-            raise ValueError(f"words of {v} split by by '.' must be alphanumeric.")
-    if not v.islower():
-        raise ValueError(f"All characters of {v} must be lowercase.")
+LOG_FORMAT = (
+    "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
+    "-35s %(lineno) -5d: %(message)s"
+)
+LOGGER = logging.getLogger(__name__)
 
 
 class SpaceheatNodeGt(BaseModel):
-    """Spaceheat Node.
+    """
+    Spaceheat Node.
 
-    Type for tracking information about a Spaceheat Node.
-    [More info](https://gridworks-protocol.readthedocs.io/en/latest/spaceheat-node.html).
+    A SpaceheatNode, or ShNode, is an organizing principal for the SCADA software. ShNodes can
+    represent both underlying physical objects (water tank), measurements of these objects (temperature
+    sensing at the top of a water tank), and actors within the code (an actor measuring multiple
+    temperatures, or an actor responsible for filtering/smoothing temperature data for the purposes
+    of thermostatic control).
+
+    [More info](https://gridworks-protocol.readthedocs.io/en/latest/spaceheat-node.html)
     """
 
     ShNodeId: str = Field(
@@ -330,7 +53,9 @@ class SpaceheatNodeGt(BaseModel):
         default=None,
     )
     ComponentId: Optional[str] = Field(
-        title="ComponentId",
+        title="Unique identifier for Spaceheat Node's Component",
+        description="Used if a Spaceheat Node is associated with a physical device.",
+        default=None,
     )
     ReportingSamplePeriodS: Optional[int] = Field(
         title="ReportingSamplePeriodS",
@@ -349,7 +74,7 @@ class SpaceheatNodeGt(BaseModel):
         default=None,
     )
     TypeName: Literal["spaceheat.node.gt"] = "spaceheat.node.gt"
-    Version: str = "100"
+    Version: Literal["100"] = "100"
 
     @validator("ShNodeId")
     def _check_sh_node_id(cls, v: str) -> str:
@@ -369,16 +94,8 @@ class SpaceheatNodeGt(BaseModel):
             raise ValueError(f"Alias failed LeftRightDot format validation: {e}")
         return v
 
-    @validator("ActorClass")
-    def _check_actor_class(cls, v: EnumActorClass) -> EnumActorClass:
-        return as_enum(v, EnumActorClass, EnumActorClass.NoActor)
-
-    @validator("Role")
-    def _check_role(cls, v: EnumRole) -> EnumRole:
-        return as_enum(v, EnumRole, EnumRole.Unknown)
-
     @validator("ComponentId")
-    def _check_component_id(cls, v: str) -> str:
+    def _check_component_id(cls, v: Optional[str]) -> Optional[str]:
         if v is None:
             return v
         try:
@@ -389,30 +106,82 @@ class SpaceheatNodeGt(BaseModel):
             )
         return v
 
+    @validator("RatedVoltageV")
+    def _check_rated_voltage_v(cls, v: Optional[int]) -> Optional[int]:
+        if v is None:
+            return v
+        try:
+            check_is_positive_integer(v)
+        except ValueError as e:
+            raise ValueError(
+                f"RatedVoltageV failed PositiveInteger format validation: {e}"
+            )
+        return v
+
+    @validator("TypicalVoltageV")
+    def _check_typical_voltage_v(cls, v: Optional[int]) -> Optional[int]:
+        if v is None:
+            return v
+        try:
+            check_is_positive_integer(v)
+        except ValueError as e:
+            raise ValueError(
+                f"TypicalVoltageV failed PositiveInteger format validation: {e}"
+            )
+        return v
+
     def as_dict(self) -> Dict[str, Any]:
-        d = self.dict()
+        """
+        Translate the object into a dictionary representation that can be serialized into a
+        spaceheat.node.gt.100 object.
+
+        This method prepares the object for serialization by the as_type method, creating a
+        dictionary with key-value pairs that follow the requirements for an instance of the
+        spaceheat.node.gt.100 type. Unlike the standard python dict method,
+        it makes the following substantive changes:
+        - Enum Values: Translates between the values used locally by the actor to the symbol
+        sent in messages.
+        - Removes any key-value pairs where the value is None for a clearer message, especially
+        in cases with many optional attributes.
+
+        It also applies these changes recursively to sub-types.
+        """
+        d = {
+            key: value
+            for key, value in self.dict(
+                include=self.__fields_set__ | {"TypeName", "Version"}
+            ).items()
+            if value is not None
+        }
         del d["ActorClass"]
-        ActorClass = as_enum(self.ActorClass, EnumActorClass, EnumActorClass.default())
-        d["ActorClassGtEnumSymbol"] = ActorClassMap.local_to_type(ActorClass)
+        d["ActorClassGtEnumSymbol"] = EnumActorClass.value_to_symbol(self.ActorClass)
         del d["Role"]
-        Role = as_enum(self.Role, EnumRole, EnumRole.default())
-        d["RoleGtEnumSymbol"] = RoleMap.local_to_type(Role)
-        if d["DisplayName"] is None:
-            del d["DisplayName"]
-        if d["ComponentId"] is None:
-            del d["ComponentId"]
-        if d["ReportingSamplePeriodS"] is None:
-            del d["ReportingSamplePeriodS"]
-        if d["RatedVoltageV"] is None:
-            del d["RatedVoltageV"]
-        if d["TypicalVoltageV"] is None:
-            del d["TypicalVoltageV"]
-        if d["InPowerMetering"] is None:
-            del d["InPowerMetering"]
+        d["RoleGtEnumSymbol"] = EnumRole.value_to_symbol(self.Role)
         return d
 
-    def as_type(self) -> str:
-        return json.dumps(self.as_dict())
+    def as_type(self) -> bytes:
+        """
+        Serialize to the spaceheat.node.gt.100 representation.
+
+        Instances in the class are python-native representations of spaceheat.node.gt.100
+        objects, while the actual spaceheat.node.gt.100 object is the serialized UTF-8 byte
+        string designed for sending in a message.
+
+        This method calls the as_dict() method, which differs from the native python dict()
+        in the following key ways:
+        - Enum Values: Translates between the values used locally by the actor to the symbol
+        sent in messages.
+        - - Removes any key-value pairs where the value is None for a clearer message, especially
+        in cases with many optional attributes.
+
+        It also applies these changes recursively to sub-types.
+
+        Its near-inverse is SpaceheatNodeGt.type_to_tuple(). If the type (or any sub-types)
+        includes an enum, then the type_to_tuple will map an unrecognized symbol to the
+        default enum value. This is why these two methods are only 'near' inverses.
+        """
+        json_string = json.dumps(self.as_dict())
+        return json_string.encode("utf-8")
 
     def __hash__(self):
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
@@ -446,77 +215,75 @@ class SpaceheatNodeGt_Maker:
             RatedVoltageV=rated_voltage_v,
             TypicalVoltageV=typical_voltage_v,
             InPowerMetering=in_power_metering,
-            #
         )
 
     @classmethod
-    def tuple_to_type(cls, tuple: SpaceheatNodeGt) -> str:
+    def tuple_to_type(cls, tuple: SpaceheatNodeGt) -> bytes:
         """
-        Given a Python class object, returns the serialized JSON type object
+        Given a Python class object, returns the serialized JSON type object.
         """
         return tuple.as_type()
 
     @classmethod
-    def type_to_tuple(cls, t: str) -> SpaceheatNodeGt:
+    def type_to_tuple(cls, t: bytes) -> SpaceheatNodeGt:
         """
-        Given a serialized JSON type object, returns the Python class object
+        Given a serialized JSON type object, returns the Python class object.
         """
         try:
             d = json.loads(t)
         except TypeError:
             raise SchemaError("Type must be string or bytes!")
         if not isinstance(d, dict):
-            raise SchemaError(f"Deserializing {t} must result in dict!")
+            raise SchemaError(f"Deserializing <{t}> must result in dict!")
         return cls.dict_to_tuple(d)
 
     @classmethod
     def dict_to_tuple(cls, d: dict[str, Any]) -> SpaceheatNodeGt:
+        """
+        Deserialize a dictionary representation of a spaceheat.node.gt.100 message object
+        into a SpaceheatNodeGt python object for internal use.
+
+        This is the near-inverse of the SpaceheatNodeGt.as_dict() method:
+          - Enums: translates between the symbols sent in messages between actors and
+        the values used by the actors internally once they've deserialized the messages.
+          - Types: recursively validates and deserializes sub-types.
+
+        Note that if a required attribute with a default value is missing in a dict, this method will
+        raise a SchemaError. This differs from the pydantic BaseModel practice of auto-completing
+        missing attributes with default values when they exist.
+
+        Args:
+            d (dict): the dictionary resulting from json.loads(t) for a serialized JSON type object t.
+
+        Raises:
+           SchemaError: if the dict cannot be turned into a SpaceheatNodeGt object.
+
+        Returns:
+            SpaceheatNodeGt
+        """
         d2 = dict(d)
         if "ShNodeId" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing ShNodeId")
+            raise SchemaError(f"dict missing ShNodeId: <{d2}>")
         if "Alias" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing Alias")
+            raise SchemaError(f"dict missing Alias: <{d2}>")
         if "ActorClassGtEnumSymbol" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing ActorClassGtEnumSymbol")
-        if d2["ActorClassGtEnumSymbol"] in ShActorClass000SchemaEnum.symbols:
-            d2["ActorClass"] = ActorClassMap.type_to_local(d2["ActorClassGtEnumSymbol"])
-        else:
-            d2["ActorClass"] = EnumActorClass.default()
+            raise SchemaError(f"ActorClassGtEnumSymbol missing from dict <{d2}>")
+        value = EnumActorClass.symbol_to_value(d2["ActorClassGtEnumSymbol"])
+        d2["ActorClass"] = EnumActorClass(value)
         if "RoleGtEnumSymbol" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing RoleGtEnumSymbol")
-        if d2["RoleGtEnumSymbol"] in ShNodeRole000SchemaEnum.symbols:
-            d2["Role"] = RoleMap.type_to_local(d2["RoleGtEnumSymbol"])
-        else:
-            d2["Role"] = EnumRole.default()
-        if "DisplayName" not in d2.keys():
-            d2["DisplayName"] = None
-        if "ComponentId" not in d2.keys():
-            d2["ComponentId"] = None
-        if "ReportingSamplePeriodS" not in d2.keys():
-            d2["ReportingSamplePeriodS"] = None
-        if "RatedVoltageV" not in d2.keys():
-            d2["RatedVoltageV"] = None
-        if "TypicalVoltageV" not in d2.keys():
-            d2["TypicalVoltageV"] = None
-        if "InPowerMetering" not in d2.keys():
-            d2["InPowerMetering"] = None
+            raise SchemaError(f"RoleGtEnumSymbol missing from dict <{d2}>")
+        value = EnumRole.symbol_to_value(d2["RoleGtEnumSymbol"])
+        d2["Role"] = EnumRole(value)
         if "TypeName" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing TypeName")
-
-        return SpaceheatNodeGt(
-            ShNodeId=d2["ShNodeId"],
-            Alias=d2["Alias"],
-            ActorClass=d2["ActorClass"],
-            Role=d2["Role"],
-            DisplayName=d2["DisplayName"],
-            ComponentId=d2["ComponentId"],
-            ReportingSamplePeriodS=d2["ReportingSamplePeriodS"],
-            RatedVoltageV=d2["RatedVoltageV"],
-            TypicalVoltageV=d2["TypicalVoltageV"],
-            InPowerMetering=d2["InPowerMetering"],
-            TypeName=d2["TypeName"],
-            Version="100",
-        )
+            raise SchemaError(f"TypeName missing from dict <{d2}>")
+        if "Version" not in d2.keys():
+            raise SchemaError(f"Version missing from dict <{d2}>")
+        if d2["Version"] != "100":
+            LOGGER.debug(
+                f"Attempting to interpret spaceheat.node.gt version {d2['Version']} as version 100"
+            )
+            d2["Version"] = "100"
+        return SpaceheatNodeGt(**d2)
 
     @classmethod
     def tuple_to_dc(cls, t: SpaceheatNodeGt) -> ShNode:
@@ -535,7 +302,6 @@ class SpaceheatNodeGt_Maker:
                 typical_voltage_v=t.TypicalVoltageV,
                 in_power_metering=t.InPowerMetering,
             )
-
         return dc
 
     @classmethod
@@ -565,3 +331,87 @@ class SpaceheatNodeGt_Maker:
     @classmethod
     def dict_to_dc(cls, d: dict[Any, str]) -> ShNode:
         return cls.tuple_to_dc(cls.dict_to_tuple(d))
+
+
+def check_is_left_right_dot(v: str) -> None:
+    """Checks LeftRightDot Format
+
+    LeftRightDot format: Lowercase alphanumeric words separated by periods, with
+    the most significant word (on the left) starting with an alphabet character.
+
+    Args:
+        v (str): the candidate
+
+    Raises:
+        ValueError: if v is not LeftRightDot format
+    """
+    from typing import List
+
+    try:
+        x: List[str] = v.split(".")
+    except:
+        raise ValueError(f"Failed to seperate <{v}> into words with split'.'")
+    first_word = x[0]
+    first_char = first_word[0]
+    if not first_char.isalpha():
+        raise ValueError(
+            f"Most significant word of <{v}> must start with alphabet char."
+        )
+    for word in x:
+        if not word.isalnum():
+            raise ValueError(f"words of <{v}> split by by '.' must be alphanumeric.")
+    if not v.islower():
+        raise ValueError(f"All characters of <{v}> must be lowercase.")
+
+
+def check_is_positive_integer(v: int) -> None:
+    """
+    Must be positive when interpreted as an integer. Interpretation as an
+    integer follows the pydantic rules for this - which will round down
+    rational numbers. So 1.7 will be interpreted as 1 and is also fine,
+    while 0.5 is interpreted as 0 and will raise an exception.
+
+    Args:
+        v (int): the candidate
+
+    Raises:
+        ValueError: if v < 1
+    """
+    v2 = int(v)
+    if v2 < 1:
+        raise ValueError(f"<{v}> is not PositiveInteger")
+
+
+def check_is_uuid_canonical_textual(v: str) -> None:
+    """Checks UuidCanonicalTextual format
+
+    UuidCanonicalTextual format:  A string of hex words separated by hyphens
+    of length 8-4-4-4-12.
+
+    Args:
+        v (str): the candidate
+
+    Raises:
+        ValueError: if v is not UuidCanonicalTextual format
+    """
+    try:
+        x = v.split("-")
+    except AttributeError as e:
+        raise ValueError(f"Failed to split on -: {e}")
+    if len(x) != 5:
+        raise ValueError(f"<{v}> split by '-' did not have 5 words")
+    for hex_word in x:
+        try:
+            int(hex_word, 16)
+        except ValueError:
+            raise ValueError(f"Words of <{v}> are not all hex")
+    if len(x[0]) != 8:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[1]) != 4:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[2]) != 4:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[3]) != 4:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[4]) != 12:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")

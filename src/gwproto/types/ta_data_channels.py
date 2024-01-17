@@ -1,8 +1,9 @@
-"""Type gt.dispatch.boolean, version 110"""
+"""Type ta.data.channels, version 000"""
 import json
 import logging
 from typing import Any
 from typing import Dict
+from typing import List
 from typing import Literal
 
 from pydantic import BaseModel
@@ -10,6 +11,8 @@ from pydantic import Field
 from pydantic import validator
 
 from gwproto.errors import SchemaError
+from gwproto.types.data_channel import DataChannel
+from gwproto.types.data_channel import DataChannel_Maker
 
 
 LOG_FORMAT = (
@@ -19,107 +22,92 @@ LOG_FORMAT = (
 LOGGER = logging.getLogger(__name__)
 
 
-class GtDispatchBoolean(BaseModel):
+class TaDataChannels(BaseModel):
     """
-    GridWorks Type Boolean Dispatch.
+    Terminal Asset Data Channels.
 
-    Boolean dispatch command designed to be sent from an AtomicTNode to a SCADA.
+    A list of data channels associated to a specific Terminal Asset.
     """
 
-    AboutNodeName: str = Field(
-        title="The Spaceheat Node getting dispatched",
-    )
-    ToGNodeAlias: str = Field(
-        title="GNodeAlias of the SCADA",
-        description="[More info](https://gridworks.readthedocs.io/en/latest/scada.html)",
-    )
-    FromGNodeAlias: str = Field(
-        title="GNodeAlias of AtomicTNode",
-        description="[More info](https://gridworks.readthedocs.io/en/latest/atomic-t-node.html)",
-    )
-    FromGNodeInstanceId: str = Field(
-        title="GNodeInstance of the AtomicTNode",
-    )
-    RelayState: int = Field(
-        title="Relay State (0 or 1)",
+    TerminalAssetGNodeAlias: str = Field(
+        title="GNodeAlias for the Terminal Asset",
         description=(
-            "A Relay State of `0` indicates the relay is OPEN (off). A Relay State of `1` indicates "
-            "the relay is CLOSED (on). Note that `0` means the relay is open whether or not the "
-            "relay is normally open or normally closed (For a normally open relay, the relay "
-            "is ENERGIZED when it is in state `0` and DE-ENERGIZED when it is in state `1`.)"
-            "[More info](https://gridworks.readthedocs.io/en/latest/relay-state.html)"
+            "The Alias of the Terminal Asset about which the time series data is providing information."
         ),
     )
-    SendTimeUnixMs: int = Field(
-        title="Time the AtomicTNode sends the dispatch, by its clock",
+    TerminalAssetGNodeId: str = Field(
+        title="GNodeId for the Terminal Asset",
+        description="The immutable unique identifier for the Terminal Asset.",
     )
-    TypeName: Literal["gt.dispatch.boolean"] = "gt.dispatch.boolean"
-    Version: Literal["110"] = "110"
+    TimeUnixS: int = Field(
+        title="TimeUnixS",
+        description="The time that this list of data channels was created",
+    )
+    Author: str = Field(
+        title="Author",
+        description="Author of this list of data channels.",
+    )
+    Channels: List[DataChannel] = Field(
+        title="The list of data channels",
+    )
+    Identifier: str = Field(
+        title="Identifier",
+        description=(
+            "Unique identifier for a specific instance of this type that can be used to establish "
+            "how time series csv's were constructed."
+        ),
+    )
+    TypeName: Literal["ta.data.channels"] = "ta.data.channels"
+    Version: Literal["000"] = "000"
 
-    @validator("AboutNodeName")
-    def _check_about_node_name(cls, v: str) -> str:
+    @validator("TerminalAssetGNodeAlias")
+    def _check_terminal_asset_g_node_alias(cls, v: str) -> str:
         try:
             check_is_left_right_dot(v)
         except ValueError as e:
             raise ValueError(
-                f"AboutNodeName failed LeftRightDot format validation: {e}"
+                f"TerminalAssetGNodeAlias failed LeftRightDot format validation: {e}"
             )
         return v
 
-    @validator("ToGNodeAlias")
-    def _check_to_g_node_alias(cls, v: str) -> str:
-        try:
-            check_is_left_right_dot(v)
-        except ValueError as e:
-            raise ValueError(f"ToGNodeAlias failed LeftRightDot format validation: {e}")
-        return v
-
-    @validator("FromGNodeAlias")
-    def _check_from_g_node_alias(cls, v: str) -> str:
-        try:
-            check_is_left_right_dot(v)
-        except ValueError as e:
-            raise ValueError(
-                f"FromGNodeAlias failed LeftRightDot format validation: {e}"
-            )
-        return v
-
-    @validator("FromGNodeInstanceId")
-    def _check_from_g_node_instance_id(cls, v: str) -> str:
+    @validator("TerminalAssetGNodeId")
+    def _check_terminal_asset_g_node_id(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
         except ValueError as e:
             raise ValueError(
-                f"FromGNodeInstanceId failed UuidCanonicalTextual format validation: {e}"
+                f"TerminalAssetGNodeId failed UuidCanonicalTextual format validation: {e}"
             )
         return v
 
-    @validator("RelayState", pre=True)
-    def _check_relay_state(cls, v: int) -> int:
+    @validator("TimeUnixS")
+    def _check_time_unix_s(cls, v: int) -> int:
         try:
-            check_is_bit(v)
-        except ValueError as e:
-            raise ValueError(f"RelayState failed Bit format validation: {e}")
-        return v
-
-    @validator("SendTimeUnixMs")
-    def _check_send_time_unix_ms(cls, v: int) -> int:
-        try:
-            check_is_reasonable_unix_time_ms(v)
+            check_is_reasonable_unix_time_s(v)
         except ValueError as e:
             raise ValueError(
-                f"SendTimeUnixMs failed ReasonableUnixTimeMs format validation: {e}"
+                f"TimeUnixS failed ReasonableUnixTimeS format validation: {e}"
+            )
+        return v
+
+    @validator("Identifier")
+    def _check_identifier(cls, v: str) -> str:
+        try:
+            check_is_uuid_canonical_textual(v)
+        except ValueError as e:
+            raise ValueError(
+                f"Identifier failed UuidCanonicalTextual format validation: {e}"
             )
         return v
 
     def as_dict(self) -> Dict[str, Any]:
         """
         Translate the object into a dictionary representation that can be serialized into a
-        gt.dispatch.boolean.110 object.
+        ta.data.channels.000 object.
 
         This method prepares the object for serialization by the as_type method, creating a
         dictionary with key-value pairs that follow the requirements for an instance of the
-        gt.dispatch.boolean.110 type. Unlike the standard python dict method,
+        ta.data.channels.000 type. Unlike the standard python dict method,
         it makes the following substantive changes:
         - Enum Values: Translates between the values used locally by the actor to the symbol
         sent in messages.
@@ -135,14 +123,19 @@ class GtDispatchBoolean(BaseModel):
             ).items()
             if value is not None
         }
+        # Recursively calling as_dict()
+        channels = []
+        for elt in self.Channels:
+            channels.append(elt.as_dict())
+        d["Channels"] = channels
         return d
 
     def as_type(self) -> bytes:
         """
-        Serialize to the gt.dispatch.boolean.110 representation.
+        Serialize to the ta.data.channels.000 representation.
 
-        Instances in the class are python-native representations of gt.dispatch.boolean.110
-        objects, while the actual gt.dispatch.boolean.110 object is the serialized UTF-8 byte
+        Instances in the class are python-native representations of ta.data.channels.000
+        objects, while the actual ta.data.channels.000 object is the serialized UTF-8 byte
         string designed for sending in a message.
 
         This method calls the as_dict() method, which differs from the native python dict()
@@ -154,7 +147,7 @@ class GtDispatchBoolean(BaseModel):
 
         It also applies these changes recursively to sub-types.
 
-        Its near-inverse is GtDispatchBoolean.type_to_tuple(). If the type (or any sub-types)
+        Its near-inverse is TaDataChannels.type_to_tuple(). If the type (or any sub-types)
         includes an enum, then the type_to_tuple will map an unrecognized symbol to the
         default enum value. This is why these two methods are only 'near' inverses.
         """
@@ -165,37 +158,37 @@ class GtDispatchBoolean(BaseModel):
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
-class GtDispatchBoolean_Maker:
-    type_name = "gt.dispatch.boolean"
-    version = "110"
+class TaDataChannels_Maker:
+    type_name = "ta.data.channels"
+    version = "000"
 
     def __init__(
         self,
-        about_node_name: str,
-        to_g_node_alias: str,
-        from_g_node_alias: str,
-        from_g_node_instance_id: str,
-        relay_state: int,
-        send_time_unix_ms: int,
+        terminal_asset_g_node_alias: str,
+        terminal_asset_g_node_id: str,
+        time_unix_s: int,
+        author: str,
+        channels: List[DataChannel],
+        identifier: str,
     ):
-        self.tuple = GtDispatchBoolean(
-            AboutNodeName=about_node_name,
-            ToGNodeAlias=to_g_node_alias,
-            FromGNodeAlias=from_g_node_alias,
-            FromGNodeInstanceId=from_g_node_instance_id,
-            RelayState=relay_state,
-            SendTimeUnixMs=send_time_unix_ms,
+        self.tuple = TaDataChannels(
+            TerminalAssetGNodeAlias=terminal_asset_g_node_alias,
+            TerminalAssetGNodeId=terminal_asset_g_node_id,
+            TimeUnixS=time_unix_s,
+            Author=author,
+            Channels=channels,
+            Identifier=identifier,
         )
 
     @classmethod
-    def tuple_to_type(cls, tuple: GtDispatchBoolean) -> bytes:
+    def tuple_to_type(cls, tuple: TaDataChannels) -> bytes:
         """
         Given a Python class object, returns the serialized JSON type object.
         """
         return tuple.as_type()
 
     @classmethod
-    def type_to_tuple(cls, t: bytes) -> GtDispatchBoolean:
+    def type_to_tuple(cls, t: bytes) -> TaDataChannels:
         """
         Given a serialized JSON type object, returns the Python class object.
         """
@@ -208,12 +201,12 @@ class GtDispatchBoolean_Maker:
         return cls.dict_to_tuple(d)
 
     @classmethod
-    def dict_to_tuple(cls, d: dict[str, Any]) -> GtDispatchBoolean:
+    def dict_to_tuple(cls, d: dict[str, Any]) -> TaDataChannels:
         """
-        Deserialize a dictionary representation of a gt.dispatch.boolean.110 message object
-        into a GtDispatchBoolean python object for internal use.
+        Deserialize a dictionary representation of a ta.data.channels.000 message object
+        into a TaDataChannels python object for internal use.
 
-        This is the near-inverse of the GtDispatchBoolean.as_dict() method:
+        This is the near-inverse of the TaDataChannels.as_dict() method:
           - Enums: translates between the symbols sent in messages between actors and
         the values used by the actors internally once they've deserialized the messages.
           - Types: recursively validates and deserializes sub-types.
@@ -226,53 +219,45 @@ class GtDispatchBoolean_Maker:
             d (dict): the dictionary resulting from json.loads(t) for a serialized JSON type object t.
 
         Raises:
-           SchemaError: if the dict cannot be turned into a GtDispatchBoolean object.
+           SchemaError: if the dict cannot be turned into a TaDataChannels object.
 
         Returns:
-            GtDispatchBoolean
+            TaDataChannels
         """
         d2 = dict(d)
-        if "AboutNodeName" not in d2.keys():
-            raise SchemaError(f"dict missing AboutNodeName: <{d2}>")
-        if "ToGNodeAlias" not in d2.keys():
-            raise SchemaError(f"dict missing ToGNodeAlias: <{d2}>")
-        if "FromGNodeAlias" not in d2.keys():
-            raise SchemaError(f"dict missing FromGNodeAlias: <{d2}>")
-        if "FromGNodeInstanceId" not in d2.keys():
-            raise SchemaError(f"dict missing FromGNodeInstanceId: <{d2}>")
-        if "RelayState" not in d2.keys():
-            raise SchemaError(f"dict missing RelayState: <{d2}>")
-        if "SendTimeUnixMs" not in d2.keys():
-            raise SchemaError(f"dict missing SendTimeUnixMs: <{d2}>")
+        if "TerminalAssetGNodeAlias" not in d2.keys():
+            raise SchemaError(f"dict missing TerminalAssetGNodeAlias: <{d2}>")
+        if "TerminalAssetGNodeId" not in d2.keys():
+            raise SchemaError(f"dict missing TerminalAssetGNodeId: <{d2}>")
+        if "TimeUnixS" not in d2.keys():
+            raise SchemaError(f"dict missing TimeUnixS: <{d2}>")
+        if "Author" not in d2.keys():
+            raise SchemaError(f"dict missing Author: <{d2}>")
+        if "Channels" not in d2.keys():
+            raise SchemaError(f"dict missing Channels: <{d2}>")
+        if not isinstance(d2["Channels"], List):
+            raise SchemaError(f"Channels <{d2['Channels']}> must be a List!")
+        channels = []
+        for elt in d2["Channels"]:
+            if not isinstance(elt, dict):
+                raise SchemaError(
+                    f"Channels <{d2['Channels']}> must be a List of DataChannel types"
+                )
+            t = DataChannel_Maker.dict_to_tuple(elt)
+            channels.append(t)
+        d2["Channels"] = channels
+        if "Identifier" not in d2.keys():
+            raise SchemaError(f"dict missing Identifier: <{d2}>")
         if "TypeName" not in d2.keys():
             raise SchemaError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():
             raise SchemaError(f"Version missing from dict <{d2}>")
-        if d2["Version"] != "110":
+        if d2["Version"] != "000":
             LOGGER.debug(
-                f"Attempting to interpret gt.dispatch.boolean version {d2['Version']} as version 110"
+                f"Attempting to interpret ta.data.channels version {d2['Version']} as version 000"
             )
-            d2["Version"] = "110"
-        return GtDispatchBoolean(**d2)
-
-
-def check_is_bit(v: int) -> None:
-    """
-    Checks Bit format
-
-    Bit format: The value must be the integer 0 or the integer 1.
-
-    Will not attempt to first interpret as an integer. For example,
-    1.3 will not be interpreted as 1 but will raise an error.
-
-    Args:
-        v (int): the candidate
-
-    Raises:
-        ValueError: if v is not 0 or 1
-    """
-    if not v in [0, 1]:
-        raise ValueError(f"<{v}> must be 0 or 1")
+            d2["Version"] = "000"
+        return TaDataChannels(**d2)
 
 
 def check_is_left_right_dot(v: str) -> None:
@@ -306,22 +291,22 @@ def check_is_left_right_dot(v: str) -> None:
         raise ValueError(f"All characters of <{v}> must be lowercase.")
 
 
-def check_is_reasonable_unix_time_ms(v: int) -> None:
-    """Checks ReasonableUnixTimeMs format
+def check_is_reasonable_unix_time_s(v: int) -> None:
+    """Checks ReasonableUnixTimeS format
 
-    ReasonableUnixTimeMs format: unix milliseconds between Jan 1 2000 and Jan 1 3000
+    ReasonableUnixTimeS format: unix seconds between Jan 1 2000 and Jan 1 3000
 
     Args:
         v (int): the candidate
 
     Raises:
-        ValueError: if v is not ReasonableUnixTimeMs format
+        ValueError: if v is not ReasonableUnixTimeS format
     """
     import pendulum
 
-    if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp * 1000 > v:  # type: ignore[attr-defined]
+    if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp > v:  # type: ignore[attr-defined]
         raise ValueError(f"<{v}> must be after Jan 1 2000")
-    if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp * 1000 < v:  # type: ignore[attr-defined]
+    if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp < v:  # type: ignore[attr-defined]
         raise ValueError(f"<{v}> must be before Jan 1 3000")
 
 

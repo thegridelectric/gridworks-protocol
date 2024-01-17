@@ -1,6 +1,7 @@
 import json
 import typing
 from typing import Any
+from typing import Literal
 
 from gwproto.data_classes.component import Component
 from gwproto.data_classes.components.fibaro_smart_implant_component import (
@@ -11,9 +12,10 @@ from gwproto.types import ComponentGt
 
 class FibaroSmartImplantComponentGt(ComponentGt):
     ZWaveDSK: str = ""
-    TypeName: typing.Literal[
+    TypeName: Literal[
         "fibaro.smart.implant.component.gt"
     ] = "fibaro.smart.implant.component.gt"
+    Version: Literal["000"] = "000"
 
     def __hash__(self):
         return hash((type(self),) + tuple(self.__dict__.values()))

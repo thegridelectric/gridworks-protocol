@@ -13,7 +13,7 @@ from gwproto.types import ComponentAttributeClassGt
 class FibaroSmartImplantCacGt(ComponentAttributeClassGt):
     Model: str = ""
     TypeName: Literal["fibaro.smart.implant.cac.gt"] = "fibaro.smart.implant.cac.gt"
-    Version: str = "000"
+    Version: Literal["000"] = "000"
 
     class Config:
         extra = Extra.allow

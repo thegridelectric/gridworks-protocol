@@ -9,7 +9,7 @@ from gwproto.types.component_attribute_class_gt import ComponentAttributeClassGt
 
 class HubitatCacGt(ComponentAttributeClassGt):
     TypeName: Literal["hubitat.cac.gt"] = "hubitat.cac.gt"
-    Version: str = "000"
+    Version: Literal["000"] = "000"
 
     @classmethod
     def from_data_class(cls, cac: HubitatCac) -> "HubitatCacGt":

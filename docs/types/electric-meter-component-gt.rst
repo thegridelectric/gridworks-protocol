@@ -1,39 +1,57 @@
 ElectricMeterComponentGt
 ==========================
-Python pydantic class corresponding to  json type ```electric.meter.component.gt```.
+Python pydantic class corresponding to json type `electric.meter.component.gt`, version `000`.
 
 .. autoclass:: gwproto.types.ElectricMeterComponentGt
     :members:
 
 **ComponentId**:
-    - Description:
+    - Description: Component Id. Primary GridWorks identifier for a specific physical instance of an  ElectricMeter, and also as a more generic Component. 
     - Format: UuidCanonicalTextual
 
 **ComponentAttributeClassId**:
-    - Description:
+    - Description: ComponentAttributeClassId. Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry. 
     - Format: UuidCanonicalTextual
 
 **DisplayName**:
-    - Description: Display Name for the Power Meter
+    - Description: Display Name for the Power Meter. Sample: Oak EGauge6074
 
 **ConfigList**:
-    - Description: List of Data Channel configs . This power meter will produce multiple data channels. Each data channel measures a certain quantities (like power, current) for certain ShNodes (like a boost element or heat pump).
+    - Description: List of Data Channel configs . This power meter will produce multiple data channels. Each data channel measures a certain quantities (like power, current) for certain ShNodes (like a boost element or heat pump). 
 
 **HwUid**:
-    - Description: Unique Hardware Id for the Power Meter
+    - Description: Unique Hardware Id for the Power Meter. For eGauge, use what comes back over modbus address 100.
 
 **ModbusHost**:
-    - Description: Host on LAN when power meter is modbus over Ethernet
+    - Description: Host on LAN when power meter is modbus over Ethernet. 
 
 **ModbusPort**:
-    - Description:
+    - Description: 
+    - Format: NonNegativeInteger
 
 **EgaugeIoList**:
     - Description: Bijecton from EGauge4030 input to ConfigList output. This should be empty unless the MakeModel of the corresponding component attribute class is EGauge 4030. The channels that can be read from an EGauge 4030 are configurable by the person who installs the device. The information is encapsulated in a modbus map provided by eGauge as a csv from a device-specific API. The EGaugeIoList maps the data from this map to the data that the SCADA expects to see.
+
+**TypeName**:
+    - Description: All GridWorks Versioned Types have a fixed TypeName, which is a string of lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character, and final word NOT all Hindu-Arabic numerals.
+
+**Version**:
+    - Description: All GridWorks Versioned Types have a fixed version, which is a string of three Hindu-Arabic numerals.
+
+
 
 .. autoclass:: gwproto.types.electric_meter_component_gt.check_is_uuid_canonical_textual
     :members:
 
 
+.. autoclass:: gwproto.types.electric_meter_component_gt.check_is_positive_integer
+    :members:
+
+
+.. autoclass:: gwproto.types.electric_meter_component_gt.check_is_non_negative_integer
+    :members:
+
+
 .. autoclass:: gwproto.types.ElectricMeterComponentGt_Maker
     :members:
+

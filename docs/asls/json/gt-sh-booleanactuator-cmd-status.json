@@ -1,0 +1,57 @@
+{
+    "gtr_asl": "001",
+    "type_name": "gt.sh.booleanactuator.cmd.status",
+    "version": "100",
+    "owner": "gridworks@gridworks-consulting.com",
+    "description": "Boolean  Actuator Driver Command Status Package. This is a subtype of the status message sent from a SCADA to its AtomicTNode. It contains a list of all the commands that a particular boolean actuator actor has reported as sending as actuation commands to its driver in the last transmission period (typically 5 minutes).",
+    "url": "https://gridworks.readthedocs.io/en/latest/relay-state.html",
+    "properties": {
+        "ShNodeAlias": {
+            "type": "string",
+            "format": "LeftRightDot",
+            "title": "SpaceheatNodeAlias",
+            "description": "The alias of the spaceheat node that is getting actuated. For example, `a.elt1.relay` would likely indicate the relay for a resistive element.",
+            "required":  true
+        },
+        "RelayStateCommandList": {
+            "type": "array",
+             "items": {
+                 "type": "integer"
+             },
+            "required":  true
+        },
+        "CommandTimeUnixMsList": {
+            "type": "array",
+             "items": {
+                 "type": "integer"
+             },
+            "format": "ReasonableUnixTimeMs",
+            "title": "List of Command Times",
+            "required":  true
+        },
+        "TypeName": {
+            "type": "string",
+            "value": "gt.sh.booleanactuator.cmd.status",
+            "title": "The type name"
+        },
+        "Version": {
+            "type": "string",
+            "title": "The type version",
+            "default": "100",
+            "required": true
+        }
+    },
+    "formats": {
+        "LeftRightDot": {
+            "type": "string",
+            "description": "Lowercase alphanumeric words separated by periods, with the most significant word (on the left) starting with an alphabet character.",
+            "example": "dw1.isone.me.freedom.apple"
+        },
+        "ReasonableUnixTimeMs": {
+            "type": "string",
+            "description": "An integer reflecting unix time in MILLISECONDS between midnight Jan 1 2000 and midnight Jan 1 3000 UTC",
+            "example": "1702327940710"
+        }
+    }
+}
+

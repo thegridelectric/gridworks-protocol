@@ -1,0 +1,78 @@
+{
+    "gtr_asl": "001",
+    "type_name": "ta.data.channels",
+    "version": "000",
+    "owner": "gridworks@gridworks-consulting.com",
+    "description": "Terminal Asset Data Channels. A list of data channels associated to a specific Terminal Asset.",
+    "properties": {
+        "TerminalAssetGNodeAlias": {
+            "type": "string",
+            "format": "LeftRightDot",
+            "title": "GNodeAlias for the Terminal Asset",
+            "description": "The Alias of the Terminal Asset about which the time series data is providing information.",
+            "required":  true
+        },
+        "TerminalAssetGNodeId": {
+            "type": "string",
+            "format": "UuidCanonicalTextual",
+            "title": "GNodeId for the Terminal Asset",
+            "description": "The immutable unique identifier for the Terminal Asset.",
+            "required":  true
+        },
+        "TimeUnixS": {
+            "type": "integer",
+            "format": "ReasonableUnixTimeS",
+            "title": "TimeUnixS",
+            "description": "The time that this list of data channels was created",
+            "required":  true
+        },
+        "Author": {
+            "type": "string",
+            "description": "Author of this list of data channels.",
+            "required":  true
+        },
+        "Channels": {
+            "type": "array",
+             "items": {
+                 "type": "data.channel.000"
+             },
+            "required":  true
+        },
+        "Identifier": {
+            "type": "string",
+            "format": "UuidCanonicalTextual",
+            "title": "Identifier",
+            "description": "Unique identifier for a specific instance of this type that can be used to establish how time series csv's were constructed.",
+            "required":  true
+        },
+        "TypeName": {
+            "type": "string",
+            "value": "ta.data.channels",
+            "title": "The type name"
+        },
+        "Version": {
+            "type": "string",
+            "title": "The type version",
+            "default": "000",
+            "required": true
+        }
+    },
+    "formats": {
+        "ReasonableUnixTimeS": {
+            "type": "string",
+            "description": "Integer reflecting unix time seconds between 1970 and 3000",
+            "example": ""
+        },
+        "UuidCanonicalTextual": {
+            "type": "string",
+            "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
+            "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"
+        },
+        "LeftRightDot": {
+            "type": "string",
+            "description": "Lowercase alphanumeric words separated by periods, with the most significant word (on the left) starting with an alphabet character.",
+            "example": "dw1.isone.me.freedom.apple"
+        }
+    }
+}
+

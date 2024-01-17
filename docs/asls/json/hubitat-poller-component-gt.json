@@ -1,0 +1,53 @@
+{
+    "gtr_asl": "001",
+    "type_name": "hubitat.poller.component.gt",
+    "version": "000",
+    "owner": "gridworks@gridworks-consulting.com",
+    "description": "Hubitat Poller Component (GridWorks Types). A specific instance of a Hubitat Poller Cac (like a Honeywell T6 Thermostat) - a device that can be polled through a Hubitat IoT hub.",
+    "properties": {
+        "ComponentId": {
+            "type": "string",
+            "required":  true
+        },
+        "ComponentAttributeClassId": {
+            "type": "string",
+            "format": "UuidCanonicalTextual",
+            "title": "Unique identifier for HubitatPollerCac object articulated by the hubitat.poller.cac.gt.000 type.",
+            "required":  true
+        },
+        "DisplayName": {
+            "type": "string",
+            "description": "Sample: Downstairs Thermostat",
+            "required":  false
+        },
+        "HwUid": {
+            "type": "string",
+            "description": "Unique Hardware Identifier",
+            "required":  false
+        },
+        "Poller": {
+            "type": "dictDict",
+            "description": "Includes hubitat_component_id (str), device_id (int), enabled (bool), poll_period_s (int) and attributes.",
+            "required":  true
+        },
+        "TypeName": {
+            "type": "string",
+            "value": "hubitat.poller.component.gt",
+            "title": "The type name"
+        },
+        "Version": {
+            "type": "string",
+            "title": "The type version",
+            "default": "000",
+            "required": true
+        }
+    },
+    "formats": {
+        "UuidCanonicalTextual": {
+            "type": "string",
+            "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
+            "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"
+        }
+    }
+}
+

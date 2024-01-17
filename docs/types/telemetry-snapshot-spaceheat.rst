@@ -1,6 +1,6 @@
 TelemetrySnapshotSpaceheat
 ==========================
-Python pydantic class corresponding to  json type ```telemetry.snapshot.spaceheat```.
+Python pydantic class corresponding to json type `telemetry.snapshot.spaceheat`, version `000`.
 
 .. autoclass:: gwproto.types.TelemetrySnapshotSpaceheat
     :members:
@@ -10,14 +10,22 @@ Python pydantic class corresponding to  json type ```telemetry.snapshot.spacehea
     - Format: ReasonableUnixTimeMs
 
 **AboutNodeAliasList**:
-    - Description: AboutNodeAliases. The list of Spaceheat nodes in the snapshot.
+    - Description: AboutNodeAliases. The list of Spaceheat nodes in the snapshot. 
     - Format: LeftRightDot
 
 **ValueList**:
-    - Description: ValueList
+    - Description: ValueList. 
 
 **TelemetryNameList**:
-    - Description:
+    - Description: 
+
+**TypeName**:
+    - Description: All GridWorks Versioned Types have a fixed TypeName, which is a string of lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character, and final word NOT all Hindu-Arabic numerals.
+
+**Version**:
+    - Description: All GridWorks Versioned Types have a fixed version, which is a string of three Hindu-Arabic numerals.
+
+
 
 .. autoclass:: gwproto.types.telemetry_snapshot_spaceheat.check_is_left_right_dot
     :members:
@@ -29,3 +37,4 @@ Python pydantic class corresponding to  json type ```telemetry.snapshot.spacehea
 
 .. autoclass:: gwproto.types.TelemetrySnapshotSpaceheat_Maker
     :members:
+

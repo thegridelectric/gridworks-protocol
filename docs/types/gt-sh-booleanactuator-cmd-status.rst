@@ -1,6 +1,6 @@
 GtShBooleanactuatorCmdStatus
 ==========================
-Python pydantic class corresponding to  json type ```gt.sh.booleanactuator.cmd.status```.
+Python pydantic class corresponding to json type `gt.sh.booleanactuator.cmd.status`, version `100`.
 
 .. autoclass:: gwproto.types.GtShBooleanactuatorCmdStatus
     :members:
@@ -10,11 +10,19 @@ Python pydantic class corresponding to  json type ```gt.sh.booleanactuator.cmd.s
     - Format: LeftRightDot
 
 **RelayStateCommandList**:
-    - Description: List of RelayStateCommands
+    - Description: List of RelayStateCommands. 
 
 **CommandTimeUnixMsList**:
-    - Description: List of Command Times
+    - Description: List of Command Times. 
     - Format: ReasonableUnixTimeMs
+
+**TypeName**:
+    - Description: All GridWorks Versioned Types have a fixed TypeName, which is a string of lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character, and final word NOT all Hindu-Arabic numerals.
+
+**Version**:
+    - Description: All GridWorks Versioned Types have a fixed version, which is a string of three Hindu-Arabic numerals.
+
+
 
 .. autoclass:: gwproto.types.gt_sh_booleanactuator_cmd_status.check_is_left_right_dot
     :members:
@@ -26,3 +34,4 @@ Python pydantic class corresponding to  json type ```gt.sh.booleanactuator.cmd.s
 
 .. autoclass:: gwproto.types.GtShBooleanactuatorCmdStatus_Maker
     :members:
+

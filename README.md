@@ -1,4 +1,4 @@
-# Gridworks Protocol
+# GridWorks Protocol
 
 [![PyPI](https://img.shields.io/pypi/v/gridworks-protocol.svg)][pypi_]
 [![Status](https://img.shields.io/pypi/status/gridworks-protocol.svg)][status]
@@ -21,13 +21,12 @@
 [pre-commit]: https://github.com/pre-commit/pre-commit
 [black]: https://github.com/psf/black
 
-## Features
 
-- TODO
+GridWorks Protocol (gwproto) is a [Application Shared Language](https://gridwork-type-registry.readthedocs.io/en/latest/asls.html) 
+used by [SCADA](https://gridworks.readthedocs.io/en/latest/scada.html)/[AtomicTNode](https://gridworks.readthedocs.io/en/latest/atomic-t-node.html) actor pairs to communicate
+with each other as they work together to manage the Service Level Agreement for 
+[transactive devices](https://gridworks.readthedocs.io/en/latest/transactive-device.html) dedicated to residential thermal storage heating.
 
-## Requirements
-
-- TODO
 
 ## Installation
 
@@ -39,7 +38,11 @@ $ pip install gridworks-protocol
 
 ## Usage
 
-Please see the [Command-line Reference] for details.
+When gridworks-protocol has been included as a package:
+
+```
+from gwproto.types import SpaceheatNodeGt
+```
 
 ## Contributing
 

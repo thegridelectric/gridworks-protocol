@@ -9,6 +9,14 @@ from gwproto.enums import Role
 
 
 class ShNode:
+    """
+    A SpaceheatNode, or ShNode, is an organizing principal for the SCADA software.
+    ShNodes can represent both underlying physical objects (water tank), measurements of these
+    objects (temperature sensing at the top of a water tank), and actors within the code
+    (an actor measuring multiple temperatures, or an actor responsible for filtering/smoothing
+    temperature data for the purposes of thermostatic control).
+    """
+
     by_id: Dict[str, "ShNode"] = {}
 
     def __init__(

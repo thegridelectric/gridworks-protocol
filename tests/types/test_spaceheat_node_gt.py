@@ -129,11 +129,11 @@ def test_spaceheat_node_gt_generated() -> None:
     # Behavior on incorrect types
     ######################################
 
-    d2 = dict(d, ActorClassGtEnumSymbol="hi")
-    Maker.dict_to_tuple(d2).ActorClass = ActorClass.default()
+    d2 = dict(d, ActorClassGtEnumSymbol="unknown_symbol")
+    Maker.dict_to_tuple(d2).ActorClass == ActorClass.default()
 
-    d2 = dict(d, RoleGtEnumSymbol="hi")
-    Maker.dict_to_tuple(d2).Role = Role.default()
+    d2 = dict(d, RoleGtEnumSymbol="unknown_symbol")
+    Maker.dict_to_tuple(d2).Role == Role.default()
 
     d2 = dict(d, ReportingSamplePeriodS="300.1")
     with pytest.raises(ValidationError):
@@ -155,7 +155,7 @@ def test_spaceheat_node_gt_generated() -> None:
     # SchemaError raised if TypeName is incorrect
     ######################################
 
-    d2 = dict(d, TypeName="not the type alias")
+    d2 = dict(d, TypeName="not the type name")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
@@ -168,6 +168,14 @@ def test_spaceheat_node_gt_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d, Alias="a.b-h")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, RatedVoltageV=0)
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, TypicalVoltageV=0)
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 

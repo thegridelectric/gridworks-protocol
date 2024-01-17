@@ -147,7 +147,7 @@ def test_electric_meter_component_gt_generated() -> None:
     # SchemaError raised if TypeName is incorrect
     ######################################
 
-    d2 = dict(d, TypeName="not the type alias")
+    d2 = dict(d, TypeName="not the type name")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
@@ -159,7 +159,7 @@ def test_electric_meter_component_gt_generated() -> None:
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, ComponentAttributeClassId="d4be12d5-33ba-4f1f-b9e5")
+    d2 = dict(d, ModbusPort=-1)
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 

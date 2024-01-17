@@ -1,21 +1,32 @@
-"""Tests gt.dispatch.boolean.local type, version 110"""
+"""Tests ta.data.channels type, version 000"""
 import json
 
 import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
-from gwproto.types import GtDispatchBooleanLocal_Maker as Maker
+from gwproto.types import TaDataChannels_Maker as Maker
 
 
-def test_gt_dispatch_boolean_local_generated() -> None:
+def test_ta_data_channels_generated() -> None:
     d = {
-        "RelayState": 1,
-        "AboutNodeName": "a.elt1.relay",
-        "FromNodeName": "a.s",
-        "SendTimeUnixMs": 1657025211851,
-        "TypeName": "gt.dispatch.boolean.local",
-        "Version": "110",
+        "TerminalAssetGNodeAlias": "hw1.isone.me.versant.keene.oak.ta",
+        "TerminalAssetGNodeId": "7e152072-c91b-49d2-9ebd-f4fe1b684d06",
+        "TimeUnixS": 1704142951,
+        "Author": "Jessica Millar",
+        "Channels": [
+            {
+                "DisplayName": "BoostPower",
+                "AboutName": "a.elt1",
+                "CapturedByName": "a.m",
+                "TelemetryNameGtEnumSymbol": "af39eec9",
+                "TypeName": "data.channel",
+                "Version": "000",
+            }
+        ],
+        "Identifier": "ba6558d8-2fe8-4174-ac16-c36f84367c50",
+        "TypeName": "ta.data.channels",
+        "Version": "000",
     }
 
     with pytest.raises(SchemaError):
@@ -33,10 +44,12 @@ def test_gt_dispatch_boolean_local_generated() -> None:
 
     # test Maker init
     t = Maker(
-        relay_state=gtuple.RelayState,
-        about_node_name=gtuple.AboutNodeName,
-        from_node_name=gtuple.FromNodeName,
-        send_time_unix_ms=gtuple.SendTimeUnixMs,
+        terminal_asset_g_node_alias=gtuple.TerminalAssetGNodeAlias,
+        terminal_asset_g_node_id=gtuple.TerminalAssetGNodeId,
+        time_unix_s=gtuple.TimeUnixS,
+        author=gtuple.Author,
+        channels=gtuple.Channels,
+        identifier=gtuple.Identifier,
     ).tuple
     assert t == gtuple
 
@@ -50,22 +63,32 @@ def test_gt_dispatch_boolean_local_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["RelayState"]
+    del d2["TerminalAssetGNodeAlias"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["AboutNodeName"]
+    del d2["TerminalAssetGNodeId"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["FromNodeName"]
+    del d2["TimeUnixS"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["SendTimeUnixMs"]
+    del d2["Author"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    del d2["Channels"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    del d2["Identifier"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -73,12 +96,20 @@ def test_gt_dispatch_boolean_local_generated() -> None:
     # Behavior on incorrect types
     ######################################
 
-    d2 = dict(d, RelayState="1.1")
+    d2 = dict(d, TimeUnixS="1704142951.1")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, SendTimeUnixMs="1657025211851.1")
-    with pytest.raises(ValidationError):
+    d2 = dict(d, Channels="Not a list.")
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, Channels=["Not a list of dicts"])
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, Channels=[{"Failed": "Not a GtSimpleSingleStatus"}])
+    with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
     ######################################
@@ -93,19 +124,19 @@ def test_gt_dispatch_boolean_local_generated() -> None:
     # SchemaError raised if primitive attributes do not have appropriate property_format
     ######################################
 
-    d2 = dict(d, RelayState=2)
+    d2 = dict(d, TerminalAssetGNodeAlias="a.b-h")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, AboutNodeName="a.b-h")
+    d2 = dict(d, TerminalAssetGNodeId="d4be12d5-33ba-4f1f-b9e5")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, FromNodeName="a.b-h")
+    d2 = dict(d, TimeUnixS=32503683600)
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, SendTimeUnixMs=1656245000)
+    d2 = dict(d, Identifier="d4be12d5-33ba-4f1f-b9e5")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 

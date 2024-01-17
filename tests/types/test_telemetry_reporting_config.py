@@ -94,21 +94,24 @@ def test_telemetry_reporting_config_generated() -> None:
     ######################################
 
     d2 = dict(d)
-    if "AsyncReportThreshold" in d2.keys():
-        del d2["AsyncReportThreshold"]
+    del d2["AsyncReportThreshold"]
     Maker.dict_to_tuple(d2)
 
+    # Test axiom 1: If AsyncReportThreshold exists, NameplateMaxValue must as well
     d2 = dict(d)
-    if "NameplateMaxValue" in d2.keys():
-        del d2["NameplateMaxValue"]
+    del d2["NameplateMaxValue"]
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+    
+    del d2["AsyncReportThreshold"]
     Maker.dict_to_tuple(d2)
 
     ######################################
     # Behavior on incorrect types
     ######################################
 
-    d2 = dict(d, TelemetryNameGtEnumSymbol="hi")
-    Maker.dict_to_tuple(d2).TelemetryName = TelemetryName.default()
+    d2 = dict(d, TelemetryNameGtEnumSymbol="unknown_symbol")
+    Maker.dict_to_tuple(d2).TelemetryName == TelemetryName.default()
 
     d2 = dict(d, ReportOnChange="this is not a boolean")
     with pytest.raises(ValidationError):
@@ -122,8 +125,8 @@ def test_telemetry_reporting_config_generated() -> None:
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, UnitGtEnumSymbol="hi")
-    Maker.dict_to_tuple(d2).Unit = Unit.default()
+    d2 = dict(d, UnitGtEnumSymbol="unknown_symbol")
+    Maker.dict_to_tuple(d2).Unit == Unit.default()
 
     d2 = dict(d, AsyncReportThreshold="this is not a float")
     with pytest.raises(ValidationError):
@@ -137,7 +140,7 @@ def test_telemetry_reporting_config_generated() -> None:
     # SchemaError raised if TypeName is incorrect
     ######################################
 
-    d2 = dict(d, TypeName="not the type alias")
+    d2 = dict(d, TypeName="not the type name")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
@@ -146,6 +149,10 @@ def test_telemetry_reporting_config_generated() -> None:
     ######################################
 
     d2 = dict(d, AboutNodeName="a.b-h")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, NameplateMaxValue=0)
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 

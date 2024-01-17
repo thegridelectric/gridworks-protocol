@@ -74,14 +74,14 @@ def test_gt_sh_simple_telemetry_status_generated() -> None:
     # Behavior on incorrect types
     ######################################
 
-    d2 = dict(d, TelemetryNameGtEnumSymbol="hi")
-    Maker.dict_to_tuple(d2).TelemetryName = TelemetryName.default()
+    d2 = dict(d, TelemetryNameGtEnumSymbol="unknown_symbol")
+    Maker.dict_to_tuple(d2).TelemetryName == TelemetryName.default()
 
     ######################################
     # SchemaError raised if TypeName is incorrect
     ######################################
 
-    d2 = dict(d, TypeName="not the type alias")
+    d2 = dict(d, TypeName="not the type name")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 

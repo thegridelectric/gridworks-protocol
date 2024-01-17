@@ -4,7 +4,6 @@ import json
 import pytest
 from pydantic import ValidationError
 
-from gwproto.enums import TelemetryName
 from gwproto.errors import SchemaError
 from gwproto.types.multipurpose_sensor_component_gt import (
     MultipurposeSensorComponentGt_Maker as Maker,
@@ -129,7 +128,7 @@ def test_multipurpose_sensor_component_gt_generated() -> None:
     # SchemaError raised if TypeName is incorrect
     ######################################
 
-    d2 = dict(d, TypeName="not the type alias")
+    d2 = dict(d, TypeName="not the type name")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
@@ -138,10 +137,6 @@ def test_multipurpose_sensor_component_gt_generated() -> None:
     ######################################
 
     d2 = dict(d, ComponentId="d4be12d5-33ba-4f1f-b9e5")
-    with pytest.raises(ValidationError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d, ComponentAttributeClassId="d4be12d5-33ba-4f1f-b9e5")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 

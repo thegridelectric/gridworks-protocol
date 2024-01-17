@@ -17,7 +17,7 @@ class RESTPollerCacGt(BaseModel):
     ComponentAttributeClassId: str
     DisplayName: Optional[str] = None
     TypeName: Literal["rest.poller.cac.gt"] = "rest.poller.cac.gt"
-    Version: str = "000"
+    Version: Literal["000"] = "000"
 
     @validator("ComponentAttributeClassId")
     def _check_component_attribute_class_id(cls, v: str) -> str:

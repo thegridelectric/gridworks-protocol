@@ -14,7 +14,7 @@ from gwproto.types import ElectricMeterCacGt_Maker as Maker
 def test_electric_meter_cac_gt_generated() -> None:
     d = {
         "ComponentAttributeClassId": "a3d298fb-a4ef-427a-939d-02cc9c9689c1",
-        "MakeModelGtEnumSymbol": "53129448",
+        "MakeModelGtEnumSymbol": "d300635e",
         "DisplayName": "Schneider Electric Iem3455 Power Meter",
         "TelemetryNameList": ["af39eec9"],
         "PollPeriodMs": 1000,
@@ -109,15 +109,15 @@ def test_electric_meter_cac_gt_generated() -> None:
     # Behavior on incorrect types
     ######################################
 
-    d2 = dict(d, MakeModelGtEnumSymbol="hi")
-    Maker.dict_to_tuple(d2).MakeModel = MakeModel.default()
+    d2 = dict(d, MakeModelGtEnumSymbol="unknown_symbol")
+    Maker.dict_to_tuple(d2).MakeModel == MakeModel.default()
 
     d2 = dict(d, PollPeriodMs="1000.1")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, InterfaceGtEnumSymbol="hi")
-    Maker.dict_to_tuple(d2).Interface = LocalCommInterface.default()
+    d2 = dict(d, InterfaceGtEnumSymbol="unknown_symbol")
+    Maker.dict_to_tuple(d2).Interface == LocalCommInterface.default()
 
     d2 = dict(d, DefaultBaud="9600.1")
     with pytest.raises(ValidationError):
@@ -127,7 +127,7 @@ def test_electric_meter_cac_gt_generated() -> None:
     # SchemaError raised if TypeName is incorrect
     ######################################
 
-    d2 = dict(d, TypeName="not the type alias")
+    d2 = dict(d, TypeName="not the type name")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 

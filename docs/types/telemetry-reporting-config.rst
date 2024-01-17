@@ -1,6 +1,6 @@
 TelemetryReportingConfig
 ==========================
-Python pydantic class corresponding to  json type ```telemetry.reporting.config```.
+Python pydantic class corresponding to json type `telemetry.reporting.config`, version `000`.
 
 .. autoclass:: gwproto.types.TelemetryReportingConfig
     :members:
@@ -9,7 +9,7 @@ Python pydantic class corresponding to  json type ```telemetry.reporting.config`
     - Description:
 
 **AboutNodeName**:
-    - Description:
+    - Description: The name of the SpaceheatNode whose physical quantity is getting captured.
     - Format: LeftRightDot
 
 **ReportOnChange**:
@@ -19,7 +19,7 @@ Python pydantic class corresponding to  json type ```telemetry.reporting.config`
     - Description:
 
 **Exponent**:
-    - Description:
+    - Description: Exponent. Say the TelemetryName is WaterTempCTimes1000; this corresponds to units of Celsius.  To match the implication in the name, the Exponent should be 3, and a Value of 65300 would indicate 65.3 deg C
 
 **Unit**:
     - Description:
@@ -29,6 +29,19 @@ Python pydantic class corresponding to  json type ```telemetry.reporting.config`
 
 **NameplateMaxValue**:
     - Description:
+    - Format: PositiveInteger
+
+**TypeName**:
+    - Description: All GridWorks Versioned Types have a fixed TypeName, which is a string of lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character, and final word NOT all Hindu-Arabic numerals.
+
+**Version**:
+    - Description: All GridWorks Versioned Types have a fixed version, which is a string of three Hindu-Arabic numerals.
+
+
+
+.. autoclass:: gwproto.types.telemetry_reporting_config.check_is_positive_integer
+    :members:
+
 
 .. autoclass:: gwproto.types.telemetry_reporting_config.check_is_left_right_dot
     :members:

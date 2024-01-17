@@ -25,6 +25,8 @@ forth between type instances and Python objects.
     EgaugeRegisterConfig  <types/egauge-register-config>
     ElectricMeterCacGt  <types/electric-meter-cac-gt>
     ElectricMeterComponentGt  <types/electric-meter-component-gt>
+    FibaroSmartImplantCacGt  <types/fibaro-smart-implant-cac-gt>
+    FibaroSmartImplantComponentGt  <types/fibaro-smart-implant-component-gt>
     GtDispatchBoolean  <types/gt-dispatch-boolean>
     GtDispatchBooleanLocal  <types/gt-dispatch-boolean-local>
     GtDriverBooleanactuatorCmd  <types/gt-driver-booleanactuator-cmd>
@@ -36,6 +38,12 @@ forth between type instances and Python objects.
     GtShTelemetryFromMultipurposeSensor  <types/gt-sh-telemetry-from-multipurpose-sensor>
     GtTelemetry  <types/gt-telemetry>
     HeartbeatB  <types/heartbeat-b>
+    HubitatCacGt  <types/hubitat-cac-gt>
+    HubitatComponentGt  <types/hubitat-component-gt>
+    HubitatPollerCacGt  <types/hubitat-poller-cac-gt>
+    HubitatPollerComponentGt  <types/hubitat-poller-component-gt>
+    HubitatTankCacGt  <types/hubitat-tank-cac-gt>
+    HubitatTankComponentGt  <types/hubitat-tank-component-gt>
     MultipurposeSensorCacGt  <types/multipurpose-sensor-cac-gt>
     MultipurposeSensorComponentGt  <types/multipurpose-sensor-component-gt>
     PipeFlowSensorCacGt  <types/pipe-flow-sensor-cac-gt>
@@ -45,9 +53,12 @@ forth between type instances and Python objects.
     RelayComponentGt  <types/relay-component-gt>
     ResistiveHeaterCacGt  <types/resistive-heater-cac-gt>
     ResistiveHeaterComponentGt  <types/resistive-heater-component-gt>
+    RestPollerCacGt  <types/rest-poller-cac-gt>
+    RestPollerComponentGt  <types/rest-poller-component-gt>
     SimpleTempSensorCacGt  <types/simple-temp-sensor-cac-gt>
     SimpleTempSensorComponentGt  <types/simple-temp-sensor-component-gt>
     SnapshotSpaceheat  <types/snapshot-spaceheat>
     SpaceheatNodeGt  <types/spaceheat-node-gt>
+    TaDataChannels  <types/ta-data-channels>
     TelemetryReportingConfig  <types/telemetry-reporting-config>
     TelemetrySnapshotSpaceheat  <types/telemetry-snapshot-spaceheat>

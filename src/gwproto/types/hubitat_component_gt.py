@@ -16,6 +16,7 @@ from gwproto.types.rest_poller_gt import URLConfig
 class HubitatComponentGt(ComponentGt):
     Hubitat: HubitatGt
     TypeName: Literal["hubitat.component.gt"] = "hubitat.component.gt"
+    Version: Literal["000"] = "000"
 
     def __hash__(self):
         return hash((type(self),) + tuple(self.__dict__.values()))

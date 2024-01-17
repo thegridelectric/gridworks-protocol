@@ -27,9 +27,10 @@ Installation
 .. toctree::
     :hidden:
     :maxdepth: 2
-    :caption: API docs
+    :caption: Application Shared Language (ASL) docs
 
-    Type APIs <apis/types>
+    Enums <asls/enums>
+    Types <asls/types>
 
 .. toctree::
     :hidden:

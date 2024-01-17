@@ -1,0 +1,46 @@
+{
+  "gtr_asl": "001",
+  "type_name": "component.attribute.class.gt",
+  "version": "000",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": "Component Attribute Class Gt. Authority for the attributes of the component.attribute.class.gt.000 belongs to the WorldRegistry. The WorldRegistry is part of the GridWorks 'BackOffice' structure for managing relational device data. Generally speaking, a component attribute class is meant to specify WHAT you might order from a plumbing supply store to 'get the same part.' The Component refers to something that will have a specific serial number.",
+  "url": "https://g-node-registry.readthedocs.io/en/latest/component-attribute-class.html",
+  "properties": {
+    "ComponentAttributeClassId": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "ComponentAttributeClassId",
+      "description": "Unique identifier for the device class (aka 'cac' or Component Attribute Class). This identifier is used to associate a make/model with a specific component (i.e. the component will point to its ComponentAttributeClassId).",
+      "required": true
+    },
+    "DisplayName": {
+      "type": "string",
+      "description": "Optional Mutable field to include manufacturer's model name. Note that several different models may be given the same spaceheat.make.model enum name.",
+      "required": false
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "component.attribute.class.gt",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "000",
+      "required": true
+    }
+  },
+  "example": {
+    "ComponentAttributeClassId": "683c193a-bf83-4491-a294-c0e32865a407",
+    "DisplayName": "Axeman Pressurized 150 Gallon Water Tank",
+    "TypeName": "component.attribute.class.gt",
+    "Version": "000"
+  },
+  "formats": {
+    "UuidCanonicalTextual": {
+      "type": "string",
+      "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
+      "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"
+    }
+  }
+}

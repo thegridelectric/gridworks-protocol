@@ -16,6 +16,7 @@ def test_pipe_flow_sensor_component_gt_generated() -> None:
         "ConversionFactor": 0.1328,
         "DisplayName": "Flow meter on pipe out of tank",
         "HwUid": "1234",
+        "ExpectedMaxGpmTimes100": 1000,
         "TypeName": "pipe.flow.sensor.component.gt",
         "Version": "000",
     }
@@ -41,6 +42,7 @@ def test_pipe_flow_sensor_component_gt_generated() -> None:
         conversion_factor=gtuple.ConversionFactor,
         display_name=gtuple.DisplayName,
         hw_uid=gtuple.HwUid,
+        expected_max_gpm_times100=gtuple.ExpectedMaxGpmTimes100,
     ).tuple
     assert t == gtuple
 
@@ -95,6 +97,11 @@ def test_pipe_flow_sensor_component_gt_generated() -> None:
         del d2["HwUid"]
     Maker.dict_to_tuple(d2)
 
+    d2 = dict(d)
+    if "ExpectedMaxGpmTimes100" in d2.keys():
+        del d2["ExpectedMaxGpmTimes100"]
+    Maker.dict_to_tuple(d2)
+
     ######################################
     # Behavior on incorrect types
     ######################################
@@ -107,11 +114,15 @@ def test_pipe_flow_sensor_component_gt_generated() -> None:
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
+    d2 = dict(d, ExpectedMaxGpmTimes100="1000.1")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
     ######################################
     # SchemaError raised if TypeName is incorrect
     ######################################
 
-    d2 = dict(d, TypeName="not the type alias")
+    d2 = dict(d, TypeName="not the type name")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
@@ -120,10 +131,6 @@ def test_pipe_flow_sensor_component_gt_generated() -> None:
     ######################################
 
     d2 = dict(d, ComponentId="d4be12d5-33ba-4f1f-b9e5")
-    with pytest.raises(ValidationError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d, ComponentAttributeClassId="d4be12d5-33ba-4f1f-b9e5")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 

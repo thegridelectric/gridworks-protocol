@@ -1,0 +1,31 @@
+{
+  "gtr_asl": "001",
+  "type_name": "rest.poller.cac.gt",
+  "version": "000",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": "REST Poller Cac (GridWorks Type). Type for devices that can be polled by SCADA software via a REST endpoint on the LAN. For example a HoneyWell ZWave thermostat that can queried via a IoT hub like a Hubitat C7.",
+  "properties": {
+    "ComponentAttributeClassId": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "ComponentAttributeClassId",
+      "description": "Unique identifier for the device class (aka 'cac' or Component Attribute Class). Authority is maintained by the World Registry.",
+      "required": true
+    },
+    "DisplayName": {
+      "type": "string",
+      "required": false
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "rest.poller.cac.gt",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "000",
+      "required": true
+    }
+  }
+}

@@ -1,6 +1,6 @@
 EgaugeIo
 ==========================
-Python pydantic class corresponding to  json type ```egauge.io```.
+Python pydantic class corresponding to json type `egauge.io`, version `000`.
 
 .. autoclass:: gwproto.types.EgaugeIo
     :members:
@@ -10,6 +10,14 @@ Python pydantic class corresponding to  json type ```egauge.io```.
 
 **OutputConfig**:
     - Description: Output config for the same channel . This is the data as the Scada proactor expects to consume it from the power meter driver proactor.
+
+**TypeName**:
+    - Description: All GridWorks Versioned Types have a fixed TypeName, which is a string of lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character, and final word NOT all Hindu-Arabic numerals.
+
+**Version**:
+    - Description: All GridWorks Versioned Types have a fixed version, which is a string of three Hindu-Arabic numerals.
+
+
 
 .. autoclass:: gwproto.types.EgaugeIo_Maker
     :members:

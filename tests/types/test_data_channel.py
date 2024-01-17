@@ -13,10 +13,8 @@ def test_data_channel_generated() -> None:
     d = {
         "DisplayName": "BoostPower",
         "AboutName": "a.elt1",
-        "FromName": "a.m",
+        "CapturedByName": "a.m",
         "TelemetryNameGtEnumSymbol": "af39eec9",
-        "ExpectedMaxValue": 3000,
-        "ExpectedMinValue": 0,
         "TypeName": "data.channel",
         "Version": "000",
     }
@@ -38,10 +36,8 @@ def test_data_channel_generated() -> None:
     t = Maker(
         display_name=gtuple.DisplayName,
         about_name=gtuple.AboutName,
-        from_name=gtuple.FromName,
+        captured_by_name=gtuple.CapturedByName,
         telemetry_name=gtuple.TelemetryName,
-        expected_max_value=gtuple.ExpectedMaxValue,
-        expected_min_value=gtuple.ExpectedMinValue,
     ).tuple
     assert t == gtuple
 
@@ -65,7 +61,7 @@ def test_data_channel_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["FromName"]
+    del d2["CapturedByName"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -75,39 +71,17 @@ def test_data_channel_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     ######################################
-    # Optional attributes can be removed from type
-    ######################################
-
-    d2 = dict(d)
-    if "ExpectedMaxValue" in d2.keys():
-        del d2["ExpectedMaxValue"]
-    Maker.dict_to_tuple(d2)
-
-    d2 = dict(d)
-    if "ExpectedMinValue" in d2.keys():
-        del d2["ExpectedMinValue"]
-    Maker.dict_to_tuple(d2)
-
-    ######################################
     # Behavior on incorrect types
     ######################################
 
-    d2 = dict(d, TelemetryNameGtEnumSymbol="hi")
-    Maker.dict_to_tuple(d2).TelemetryName = TelemetryName.default()
-
-    d2 = dict(d, ExpectedMaxValue=".1")
-    with pytest.raises(ValidationError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d, ExpectedMinValue=".1")
-    with pytest.raises(ValidationError):
-        Maker.dict_to_tuple(d2)
+    d2 = dict(d, TelemetryNameGtEnumSymbol="unknown_symbol")
+    Maker.dict_to_tuple(d2).TelemetryName == TelemetryName.default()
 
     ######################################
     # SchemaError raised if TypeName is incorrect
     ######################################
 
-    d2 = dict(d, TypeName="not the type alias")
+    d2 = dict(d, TypeName="not the type name")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
@@ -115,11 +89,11 @@ def test_data_channel_generated() -> None:
     # SchemaError raised if primitive attributes do not have appropriate property_format
     ######################################
 
-    d2 = dict(d, AboutName="a.b-h")
+    d2 = dict(d, AboutName="A.hot-stuff")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, FromName="a.b-h")
+    d2 = dict(d, CapturedByName="A.hot-stuff")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 

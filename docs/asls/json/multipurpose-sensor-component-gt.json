@@ -1,0 +1,105 @@
+{
+  "gtr_asl": "001",
+  "type_name": "multipurpose.sensor.component.gt",
+  "version": "000",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": "Type for tracking Multupurpose Sensor Components. This type was first designed to work with a 12-channel analog temp sensor built into the first generation GridWorks SCADA box (GSCADA 1). It extends the component.gt.000 type. Authority for the attributes of the component.gt.000 (ComponentId, ComponentAttributeClassId, DisplayName, HwUid) belongs to the WorldRegistry. The WorldRegistry is part of the GridWorks 'BackOffice' structure for managing relational device data . Notably, ComponentId and ComponentAttributeClass are both required and immutable. HwUid is optional but once it is set to a non-null value that is also immutable. The DisplayName is mutable, with its current value in time governed by the WorldRegistry.",
+  "url": "https://gridworks-protocol.readthedocs.io/en/latest/component.html",
+  "properties": {
+    "ComponentId": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "Component Id",
+      "description": "Primary GridWorks identifier for a specific physical instance of a MultipurposeSensor (perhaps only the 12-channel analog temp sensor), and also as a more generic Component.",
+      "required": true
+    },
+    "ComponentAttributeClassId": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "Unique identifier for MultipurposeSensorCac object articulated by the multipurpose.sensor.cac.gt.000 type.",
+      "description": "Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry.",
+      "required": true
+    },
+    "ChannelList": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "required": true
+    },
+    "ConfigList": {
+      "type": "array",
+      "items": {
+        "type": "telemetry.reporting.config.000"
+      },
+      "required": true
+    },
+    "HwUid": {
+      "type": "string",
+      "required": false
+    },
+    "DisplayName": {
+      "type": "string",
+      "description": "Sample: Oak Multipurpose Temp Sensor Component <100>",
+      "required": false
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "multipurpose.sensor.component.gt",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "000",
+      "required": true
+    }
+  },
+  "example": {
+    "ChannelList": [1, 2],
+    "ComponentAttributeClassId": "432073b8-4d2b-4e36-9229-73893f33f846",
+    "ComponentId": "109e0bde-2f04-4cd4-9e69-bb2732a368e2",
+    "ConfigList": [
+      {
+        "AboutNodeName": "a.dist.swt.temp",
+        "AsyncReportThreshold": 0.005,
+        "Exponent": 3,
+        "NameplateMaxValue": 100000,
+        "ReportOnChange": true,
+        "SamplePeriodS": 60,
+        "TelemetryNameGtEnumSymbol": "c89d0ba1",
+        "TypeName": "telemetry.reporting.config",
+        "UnitGtEnumSymbol": "ec14bd47",
+        "Version": "000"
+      },
+      {
+        "AboutNodeName": "a.dist.rwt.temp",
+        "AsyncReportThreshold": 0.005,
+        "Exponent": 3,
+        "NameplateMaxValue": 100000,
+        "ReportOnChange": true,
+        "SamplePeriodS": 60,
+        "TelemetryNameGtEnumSymbol": "c89d0ba1",
+        "TypeName": "telemetry.reporting.config",
+        "UnitGtEnumSymbol": "ec14bd47",
+        "Version": "000"
+      }
+    ],
+    "DisplayName": "Multipurpose Temp Sensor Component <100>",
+    "HwUid": "100",
+    "TypeName": "multipurpose.sensor.component.gt",
+    "Version": "000"
+  },
+  "formats": {
+    "UuidCanonicalTextual": {
+      "type": "string",
+      "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
+      "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"
+    },
+    "LeftRightDot": {
+      "type": "string",
+      "description": "Lowercase alphanumeric words separated by periods, with the most significant word (on the left) starting with an alphabet character.",
+      "example": "dw1.isone.me.freedom.apple"
+    }
+  }
+}

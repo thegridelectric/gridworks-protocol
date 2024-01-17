@@ -2,10 +2,8 @@ from pydantic import BaseModel
 from pydantic import Extra
 from pydantic import validator
 
-from gwproto.enums import TelemetryName as EnumTelemetryName
-from gwproto.enums import Unit as EnumUnit
-from gwproto.types.simple_temp_sensor_cac_gt import TelemetryNameMap
-from gwproto.types.simple_temp_sensor_cac_gt import UnitMap
+from gwproto.enums import TelemetryName
+from gwproto.enums import Unit
 from gwproto.utils import snake_to_camel
 
 
@@ -20,16 +18,18 @@ class MakerAPIAttributeGt(BaseModel):
     report_parse_error: bool = True
 
     @property
-    def telemetry_name(self) -> EnumTelemetryName:
-        return TelemetryNameMap.type_to_local(
+    def telemetry_name(self) -> TelemetryName:
+        value = TelemetryName.symbol_to_value(
             self.telemetry_name_gt_enum_symbol,
         )
+        return TelemetryName(value)
 
     @property
-    def unit(self) -> EnumUnit:
-        return UnitMap.type_to_local(
+    def unit(self) -> Unit:
+        value = Unit.symbol_to_value(
             self.unit_gt_enum_symbol,
         )
+        return Unit(value)
 
     class Config:
         extra = Extra.allow
@@ -38,8 +38,8 @@ class MakerAPIAttributeGt(BaseModel):
 
     @validator("telemetry_name_gt_enum_symbol")
     def _check_telemetry_name_symbol(cls, v: str) -> str:
-        if v not in TelemetryNameMap.type_to_versioned_enum_dict:
-            v = TelemetryNameMap.local_to_type(EnumTelemetryName.default())
+        if v not in TelemetryName.symbols():
+            v = TelemetryName.value_to_symbol(TelemetryName.default())
         return v
 
 

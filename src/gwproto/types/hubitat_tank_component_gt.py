@@ -13,6 +13,7 @@ from gwproto.types.hubitat_tank_gt import HubitatTankSettingsGt
 class HubitatTankComponentGt(ComponentGt):
     Tank: HubitatTankSettingsGt
     TypeName: Literal["hubitat.tank.component.gt"] = "hubitat.tank.component.gt"
+    Version: Literal["000"] = "000"
 
     def __hash__(self):
         return hash((type(self),) + tuple(self.__dict__.values()))

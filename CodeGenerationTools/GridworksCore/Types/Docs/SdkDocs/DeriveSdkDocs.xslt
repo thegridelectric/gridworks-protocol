@@ -20,18 +20,20 @@
         <FileSet>
             <FileSetFiles>
                 <xsl:for-each select="$airtable//ProtocolTypes/ProtocolType[(normalize-space(ProtocolName) ='gwproto')]">
-                <xsl:variable name="schema-id" select="Type"/>
-                <xsl:for-each select="$airtable//Schemas/Schema[(SchemaId = $schema-id)  and (Status = 'Active' or Status = 'Pending') and (ProtocolCategory = 'Json' or ProtocolCategory = 'GwAlgoSerial')]">
-                <xsl:variable name="type-name" select="AliasRoot"/>
+                <xsl:variable name="versioned-type-id" select="VersionedType"/>
+                <xsl:for-each select="$airtable//VersionedTypes/VersionedType[(VersionedTypeId = $versioned-type-id)  and (Status = 'Active' or Status = 'Pending') and (ProtocolCategory = 'Json' or ProtocolCategory = 'GwAlgoSerial')]">
+                <xsl:variable name="versioned-type-name" select="VersionedTypeName"/>
+                 <xsl:variable name="type-name" select="TypeName"/>
                 <xsl:variable name="class-name">
                     <xsl:call-template name="nt-case">
-                        <xsl:with-param name="mp-schema-text" select="$type-name" />
+                        <xsl:with-param name="type-name-text" select="$type-name" />
                     </xsl:call-template>
                 </xsl:variable>
+                <xsl:variable name="version" select="Version"/>
                 <xsl:variable name="overwrite-mode">
 
                     <xsl:if test="not (Status = 'Pending')">
-                    <xsl:text>Never</xsl:text>
+                    <xsl:text>Always</xsl:text>
                     </xsl:if>
                     <xsl:if test="(Status = 'Pending')">
                     <xsl:text>Always</xsl:text>
@@ -46,30 +48,54 @@
 
 <xsl:value-of select="$class-name"/><xsl:text>
 ==========================
-Python pydantic class corresponding to  json type ```</xsl:text>
-<xsl:value-of select="$type-name"/><xsl:text>```.
+Python pydantic class corresponding to json type `</xsl:text>
+<xsl:value-of select="$type-name"/><xsl:text>`, version `</xsl:text>
+<xsl:value-of select="Version"/><xsl:text>`.
 
 .. autoclass:: gwproto.types.</xsl:text><xsl:value-of select="$class-name"/><xsl:text>
     :members:</xsl:text>
-<xsl:for-each select="$airtable//SchemaAttributes/SchemaAttribute[(Schema = $schema-id)]">
+<xsl:for-each select="$airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id)]">
  <xsl:sort select="Idx" data-type="number"/>
 <xsl:text>
 
 **</xsl:text>
-<xsl:value-of select="Value"/><xsl:text>**:
-    - Description: </xsl:text><xsl:value-of select="Title"/>
+<xsl:value-of select="Value"/>
+  <xsl:if test="not(normalize-space(SubTypeDataClass) = '') and not(IsList='true')">
+        <xsl:text>Id</xsl:text>
+        </xsl:if>
+
+<xsl:text>**:
+    - Description: </xsl:text>
+    <xsl:if test="normalize-space(Title) !=''">
+    <xsl:value-of select="Title"/>
+     <xsl:text>. </xsl:text>
+    </xsl:if>
     <xsl:if test="normalize-space(Description) !=''">
-    <xsl:text>. </xsl:text>
     <xsl:value-of select="Description"/>
     </xsl:if>
 
-     <xsl:if test="normalize-space(PrimitiveFormat) !=''">
+     <xsl:choose>
+     <xsl:when test="normalize-space(PrimitiveType) !='' and normalize-space(Format) != ''">
      <xsl:text>
-    - Format: </xsl:text><xsl:value-of select="PrimitiveFormat"/>
-     </xsl:if>
+    - Format: </xsl:text><xsl:value-of select="Format"/>
+     </xsl:when>
+     <xsl:when test="not(normalize-space(SubTypeDataClass) = '') and not(IsList='true')">
+     <xsl:text>
+    - Format: UuidCanonicalTextual</xsl:text>
+     </xsl:when>
+     <xsl:otherwise></xsl:otherwise>
+     </xsl:choose>
 </xsl:for-each>
+<xsl:text>
 
-<xsl:for-each select="$airtable//PropertyFormats/PropertyFormat[(normalize-space(Name) !='')  and (count(TypesThatUse[text()=$schema-id])>0)]">
+**TypeName**:
+    - Description: All GridWorks Versioned Types have a fixed TypeName, which is a string of lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character, and final word NOT all Hindu-Arabic numerals.
+
+**Version**:
+    - Description: All GridWorks Versioned Types have a fixed version, which is a string of three Hindu-Arabic numerals.
+
+</xsl:text>
+<xsl:for-each select="$airtable//PropertyFormats/PropertyFormat[(normalize-space(Name) !='')  and (count(TypesThatUse[text()=$versioned-type-id])>0)]">
 
 <xsl:text>
 

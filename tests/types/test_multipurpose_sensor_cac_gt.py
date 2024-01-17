@@ -123,8 +123,8 @@ def test_multipurpose_sensor_cac_gt_generated() -> None:
     # Behavior on incorrect types
     ######################################
 
-    d2 = dict(d, MakeModelGtEnumSymbol="hi")
-    Maker.dict_to_tuple(d2).MakeModel = MakeModel.default()
+    d2 = dict(d, MakeModelGtEnumSymbol="unknown_symbol")
+    Maker.dict_to_tuple(d2).MakeModel == MakeModel.default()
 
     d2 = dict(d, PollPeriodMs="880.1")
     with pytest.raises(ValidationError):
@@ -134,8 +134,8 @@ def test_multipurpose_sensor_cac_gt_generated() -> None:
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, TempUnitGtEnumSymbol="hi")
-    Maker.dict_to_tuple(d2).TempUnit = Unit.default()
+    d2 = dict(d, TempUnitGtEnumSymbol="unknown_symbol")
+    Maker.dict_to_tuple(d2).TempUnit == Unit.default()
 
     d2 = dict(d, MaxThermistors="12.1")
     with pytest.raises(ValidationError):
@@ -145,7 +145,7 @@ def test_multipurpose_sensor_cac_gt_generated() -> None:
     # SchemaError raised if TypeName is incorrect
     ######################################
 
-    d2 = dict(d, TypeName="not the type alias")
+    d2 = dict(d, TypeName="not the type name")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 

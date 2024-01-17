@@ -170,6 +170,7 @@ class ElectricMeterComponentGt(BaseModel):
                 "Axiom 2: If EgaugeIoList has non-zero length then then the set of"
                 "output configs must equal ConfigList as a set"
             )
+        return v
 
     def as_dict(self) -> Dict[str, Any]:
         """

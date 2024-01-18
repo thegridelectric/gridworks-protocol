@@ -385,6 +385,12 @@ class </xsl:text>
     Version: Literal["</xsl:text>
 <xsl:value-of select="Version"/><xsl:text>"] = "</xsl:text><xsl:value-of select="Version"/><xsl:text>"</xsl:text>
 
+<xsl:if test="ExtraAllowed='true'"><xsl:text>
+
+    class Config:
+        extra = Extra.allow</xsl:text>
+</xsl:if>
+
 <!-- CONSTRUCTING VALIDATORS CONSTRUCTING VALIDATORS  CONSTRUCTING VALIDATORS  CONSTRUCTING VALIDATORS  CONSTRUCTING VALIDATORS -->
 <!-- CONSTRUCTING VALIDATORS CONSTRUCTING VALIDATORS  CONSTRUCTING VALIDATORS  CONSTRUCTING VALIDATORS  CONSTRUCTING VALIDATORS -->
 <!-- CONSTRUCTING VALIDATORS CONSTRUCTING VALIDATORS  CONSTRUCTING VALIDATORS  CONSTRUCTING VALIDATORS  CONSTRUCTING VALIDATORS -->
@@ -1159,7 +1165,11 @@ class </xsl:text>
             <xsl:with-param name="type-name-text" select="Value" />
         </xsl:call-template><xsl:text>"] = </xsl:text>
         <xsl:value-of select="$enum-class-name"/>
-        <xsl:text>(value)</xsl:text>
+        <xsl:text>(value)
+        del d2["</xsl:text>
+        <xsl:call-template name="nt-case">
+            <xsl:with-param name="type-name-text" select="Value" />
+        </xsl:call-template><xsl:text>GtEnumSymbol"]</xsl:text>
         </xsl:when>
 
         <!-- (Is required) INNER LOOP dict_to_tuple:  Enum List -->
@@ -1656,6 +1666,38 @@ def check_is_left_right_dot(v: str) -> None:
             raise ValueError(f"words of &lt;{v}> split by by '.' must be alphanumeric.")
     if not v.islower():
         raise ValueError(f"All characters of &lt;{v}> must be lowercase.")</xsl:text>
+
+    </xsl:when>
+
+
+    <xsl:when test="Name='LogStyleDateWithMillis'">
+    <xsl:text>
+
+
+def check_is_log_style_date_with_millis(v: str) -> None:
+    """Checks LogStyleDateWithMillis format
+
+    LogStyleDateWithMillis format:  YYYY-MM-DDTHH:mm:ss.SSS
+
+    Args:
+        v (str): the candidate
+
+    Raises:
+        ValueError: if v is not LogStyleDateWithMillis format. 
+        In particular the milliseconds must have exactly 3 digits.
+    """
+    from datetime import datetime
+    try:
+        datetime.fromisoformat(v)
+    except ValueError:
+        raise ValueError(f"{v} is not in LogStyleDateWithMillis format")
+    # The python fromisoformat allows for either 3 digits (milli) or 6 (micro)
+    # after the final period. Make sure its 3
+    milliseconds_part = v.split(".")[1]
+    if len(milliseconds_part) != 3:
+        raise ValueError(f"{v} is not in LogStyleDateWithMillis format."
+                            " Milliseconds must have exactly 3 digits")    
+    </xsl:text>
 
     </xsl:when>
 

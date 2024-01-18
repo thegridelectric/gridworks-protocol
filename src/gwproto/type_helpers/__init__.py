@@ -1,3 +1,4 @@
+from gwproto.types.hubitat_gt import HubitatGt
 from gwproto.types.hubitat_component_gt import HubitatRESTResolutionSettings
 from gwproto.types.hubitat_poller_gt import HubitatPollerGt
 from gwproto.types.hubitat_poller_gt import MakerAPIAttributeGt
@@ -16,6 +17,7 @@ __all__ = [
     "AioHttpClientTimeout",
     "FibaroTempSensorSettings",
     "FibaroTempSensorSettingsGt",
+    "HubitatGt",
     "HubitatPollerGt",
     "HubitatRESTResolutionSettings",
     "HubitatTankSettingsGt",

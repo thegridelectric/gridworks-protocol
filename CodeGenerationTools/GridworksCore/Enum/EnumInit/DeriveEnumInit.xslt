@@ -84,7 +84,7 @@ __all__ = [</xsl:text>
     <xsl:call-template name="nt-case">
         <xsl:with-param name="type-name-text" select="LocalEnumName" />
     </xsl:call-template>
-    <xsl:text>",   # [</xsl:text>
+    <xsl:text>",  # [</xsl:text>
     <xsl:value-of select="EnumName"/><xsl:text>.</xsl:text>
     <xsl:value-of select="EnumVersion"/>
     <xsl:text>](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#</xsl:text>

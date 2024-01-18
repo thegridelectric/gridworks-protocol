@@ -74,7 +74,7 @@
     </xsl:for-each>
 
     <xsl:text>],
-    "value_to_gt_symbol": {</xsl:text>
+    "value_to_symbol": {</xsl:text>
 
             <xsl:for-each select="$airtable//EnumSymbols/EnumSymbol[(Enum = $enum-id) and (Version &lt;= $version)]">
             <xsl:sort select="Idx" data-type="number"/>

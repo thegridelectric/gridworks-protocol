@@ -1,22 +1,20 @@
-"""Tests telemetry.snapshot.spaceheat type, version 000"""
+"""Tests telemetry.snapshot.spaceheat type, version 001"""
 import json
 
 import pytest
 from pydantic import ValidationError
 
-from gwproto.enums import TelemetryName
 from gwproto.errors import SchemaError
 from gwproto.types import TelemetrySnapshotSpaceheat_Maker as Maker
 
 
 def test_telemetry_snapshot_spaceheat_generated() -> None:
     d = {
-        "ReportTimeUnixMs": 1656363448000,
-        "AboutNodeAliasList": ["a.elt1.relay", "a.tank.temp0"],
+        "DataChannelList": ,
         "ValueList": [1, 66086],
-        "TelemetryNameList": ["5a71d4b3", "c89d0ba1"],
+        "ScadaReadTimeUnixMsList": [1656363448000, 1656363448500],
         "TypeName": "telemetry.snapshot.spaceheat",
-        "Version": "000",
+        "Version": "001",
     }
 
     with pytest.raises(SchemaError):
@@ -34,10 +32,10 @@ def test_telemetry_snapshot_spaceheat_generated() -> None:
 
     # test Maker init
     t = Maker(
-        report_time_unix_ms=gtuple.ReportTimeUnixMs,
-        about_node_alias_list=gtuple.AboutNodeAliasList,
+        data_channel_list=gtuple.DataChannelList,
         value_list=gtuple.ValueList,
-        telemetry_name_list=gtuple.TelemetryNameList,
+        scada_read_time_unix_ms_list=gtuple.ScadaReadTimeUnixMsList,
+        
     ).tuple
     assert t == gtuple
 
@@ -51,12 +49,7 @@ def test_telemetry_snapshot_spaceheat_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["ReportTimeUnixMs"]
-    with pytest.raises(SchemaError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d)
-    del d2["AboutNodeAliasList"]
+    del d2["DataChannelList"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -66,7 +59,7 @@ def test_telemetry_snapshot_spaceheat_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["TelemetryNameList"]
+    del d2["ScadaReadTimeUnixMsList"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -74,8 +67,16 @@ def test_telemetry_snapshot_spaceheat_generated() -> None:
     # Behavior on incorrect types
     ######################################
 
-    d2 = dict(d, ReportTimeUnixMs="1656363448000.1")
-    with pytest.raises(ValidationError):
+    d2  = dict(d, DataChannelList="Not a list.")
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2  = dict(d, DataChannelList=["Not a list of dicts"])
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2  = dict(d, DataChannelList= [{"Failed": "Not a GtSimpleSingleStatus"}])
+    with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
     ######################################
@@ -90,12 +91,6 @@ def test_telemetry_snapshot_spaceheat_generated() -> None:
     # SchemaError raised if primitive attributes do not have appropriate property_format
     ######################################
 
-    d2 = dict(d, ReportTimeUnixMs=1656245000)
+    d2 = dict(d, ScadaReadTimeUnixMsList=[1656245000])
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
-
-    d2 = dict(d, AboutNodeAliasList=["a.b-h"])
-    with pytest.raises(ValidationError):
-        Maker.dict_to_tuple(d2)
-
-    # End of Test

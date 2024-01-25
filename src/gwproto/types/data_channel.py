@@ -202,6 +202,7 @@ class DataChannel_Maker:
             raise SchemaError(f"TelemetryNameGtEnumSymbol missing from dict <{d2}>")
         value = EnumTelemetryName.symbol_to_value(d2["TelemetryNameGtEnumSymbol"])
         d2["TelemetryName"] = EnumTelemetryName(value)
+        del d2["TelemetryNameGtEnumSymbol"]
         if "TypeName" not in d2.keys():
             raise SchemaError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():

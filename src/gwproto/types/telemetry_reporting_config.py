@@ -1,4 +1,4 @@
-"""Type telemetry.reporting.config, version 000"""
+"""Type telemetry.reporting.config, version 001"""
 import json
 import logging
 from typing import Any
@@ -7,6 +7,7 @@ from typing import Literal
 from typing import Optional
 
 from pydantic import BaseModel
+from pydantic import Extra
 from pydantic import Field
 from pydantic import root_validator
 from pydantic import validator
@@ -26,18 +27,50 @@ LOGGER = logging.getLogger(__name__)
 class TelemetryReportingConfig(BaseModel):
     """ """
 
-    TelemetryName: EnumTelemetryName = Field(
-        title="TelemetryName",
-    )
     AboutNodeName: str = Field(
-        title="AboutNodeName",
-        description="The name of the SpaceheatNode whose physical quantity is getting captured.",
+        title="About Node Name",
+        description=(
+            "The name of the SpaceheatNode that is getting measured. Typically this node will "
+            "have a single data channel associated to it."
+        ),
     )
-    ReportOnChange: bool = Field(
-        title="ReportOnChange",
+    TelemetryName: EnumTelemetryName = Field(
+        title="Telemetry Name",
+        description="The Telemetry Name associated with this config.",
     )
-    SamplePeriodS: int = Field(
-        title="SamplePeriodS",
+    PollPeriodMs: int = Field(
+        title="Poll Period in Milliseconds",
+        description=(
+            "Poll Period refers to the period of time between two readings by the local actor. "
+            "This is in contrast to Capture Period, which refers to the period between readings "
+            "that are sent up to the cloud (or otherwise saved for the long-term)."
+            "[More info](https://gridworks-protocol.readthedocs.io/en/latest/data-polling-capturing-transmitting.rst)"
+        ),
+    )
+    CapturePeriodS: int = Field(
+        title="Capture Period Seconds",
+        description=(
+            "This telemetry data channel will capture data periodically, at this rate. It will "
+            "be shared (although not necessarily immediately) with the AtomicTNode. The capture "
+            "period must be longer than the poll period. If the channel is also capturing on "
+            "change, those asynchronous reports do not reset this period."
+        ),
+    )
+    AsyncCapture: bool = Field(
+        title="Asynchronous Capture",
+        description=(
+            "Set CaptureOnChange to true for asynchronous reporting of captured data, in addition "
+            "to the synchronous periodic capture reflected by the CapturePeriodS."
+        ),
+    )
+    AsyncCaptureDelta: Optional[int] = Field(
+        title="Asynchronous Capture Delta",
+        description=(
+            "Represents the threshold or minimum change in value required for asynchronous reporting "
+            "of telemetry data, assuming CaptureOnChange. For example, if TelemetryName is WaterTempCTimes1000 "
+            "and one wants 0.25 deg C to trigger a new capture, then this would be set to 250."
+        ),
+        default=None,
     )
     Exponent: int = Field(
         title="Exponent",
@@ -49,63 +82,82 @@ class TelemetryReportingConfig(BaseModel):
     )
     Unit: EnumUnit = Field(
         title="Unit",
-    )
-    AsyncReportThreshold: Optional[float] = Field(
-        title="AsyncReportThreshold",
-        default=None,
-    )
-    NameplateMaxValue: Optional[int] = Field(
-        title="NameplateMaxValue",
-        default=None,
+        description="Say TelemetryName is WaterTempCTimes1000. The unit would be Celcius.",
     )
     TypeName: Literal["telemetry.reporting.config"] = "telemetry.reporting.config"
-    Version: Literal["000"] = "000"
+    Version: Literal["001"] = "001"
+
+    class Config:
+        extra = Extra.allow
 
     @validator("AboutNodeName")
     def _check_about_node_name(cls, v: str) -> str:
         try:
-            check_is_left_right_dot(v)
+            check_is_spaceheat_name(v)
         except ValueError as e:
             raise ValueError(
-                f"AboutNodeName failed LeftRightDot format validation: {e}"
+                f"AboutNodeName failed SpaceheatName format validation: {e}"
             )
         return v
 
-    @validator("NameplateMaxValue")
-    def _check_nameplate_max_value(cls, v: Optional[int]) -> Optional[int]:
+    @validator("PollPeriodMs")
+    def _check_poll_period_ms(cls, v: int) -> int:
+        try:
+            check_is_positive_integer(v)
+        except ValueError as e:
+            raise ValueError(
+                f"PollPeriodMs failed PositiveInteger format validation: {e}"
+            )
+        return v
+
+    @validator("CapturePeriodS")
+    def _check_capture_period_s(cls, v: int) -> int:
+        try:
+            check_is_positive_integer(v)
+        except ValueError as e:
+            raise ValueError(
+                f"CapturePeriodS failed PositiveInteger format validation: {e}"
+            )
+        return v
+
+    @validator("AsyncCaptureDelta")
+    def _check_async_capture_delta(cls, v: Optional[int]) -> Optional[int]:
         if v is None:
             return v
         try:
             check_is_positive_integer(v)
         except ValueError as e:
             raise ValueError(
-                f"NameplateMaxValue failed PositiveInteger format validation: {e}"
+                f"AsyncCaptureDelta failed PositiveInteger format validation: {e}"
             )
         return v
 
     @root_validator
     def check_axiom_1(cls, v: dict) -> dict:
         """
-        Axiom 1: Async reporting consistency.
-        If AsyncReportThreshold exists, so does NameplateMaxValue
+        Axiom 1: Async Capture Consistency.
+        If ReportOnChange is true, then AsyncReportThreshold and NameplateMaxValue also exist.
         """
-        AsyncReportThreshold = v.get("AsyncReportThreshold", None)
-        NameplateMaxValue = v.get("NameplateMaxValue", None)
-        if AsyncReportThreshold is not None:
-            if NameplateMaxValue is None:
-                raise ValueError(
-                    f"Violates Axiom 1: If AsyncReportThreshold exists, so does NameplateMaxValue"
-                )
+        # TODO: Implement check for axiom 1"
+        return v
+
+    @root_validator
+    def check_axiom_2(cls, v: dict) -> dict:
+        """
+        Axiom 2: Capture and Polling Consistency.
+        CapturePeriodMs (CapturePeriodS * 1000) must be larger than PollPeriodMs. If CapturePeriodMs < 10 * PollPeriodMs then CapturePeriodMs must be a multiple of PollPeriodMs.
+        """
+        # TODO: Implement check for axiom 2"
         return v
 
     def as_dict(self) -> Dict[str, Any]:
         """
         Translate the object into a dictionary representation that can be serialized into a
-        telemetry.reporting.config.000 object.
+        telemetry.reporting.config.001 object.
 
         This method prepares the object for serialization by the as_type method, creating a
         dictionary with key-value pairs that follow the requirements for an instance of the
-        telemetry.reporting.config.000 type. Unlike the standard python dict method,
+        telemetry.reporting.config.001 type. Unlike the standard python dict method,
         it makes the following substantive changes:
         - Enum Values: Translates between the values used locally by the actor to the symbol
         sent in messages.
@@ -131,10 +183,10 @@ class TelemetryReportingConfig(BaseModel):
 
     def as_type(self) -> bytes:
         """
-        Serialize to the telemetry.reporting.config.000 representation.
+        Serialize to the telemetry.reporting.config.001 representation.
 
-        Instances in the class are python-native representations of telemetry.reporting.config.000
-        objects, while the actual telemetry.reporting.config.000 object is the serialized UTF-8 byte
+        Instances in the class are python-native representations of telemetry.reporting.config.001
+        objects, while the actual telemetry.reporting.config.001 object is the serialized UTF-8 byte
         string designed for sending in a message.
 
         This method calls the as_dict() method, which differs from the native python dict()
@@ -159,28 +211,28 @@ class TelemetryReportingConfig(BaseModel):
 
 class TelemetryReportingConfig_Maker:
     type_name = "telemetry.reporting.config"
-    version = "000"
+    version = "001"
 
     def __init__(
         self,
-        telemetry_name: EnumTelemetryName,
         about_node_name: str,
-        report_on_change: bool,
-        sample_period_s: int,
+        telemetry_name: EnumTelemetryName,
+        poll_period_ms: int,
+        capture_period_s: int,
+        async_capture: bool,
+        async_capture_delta: Optional[int],
         exponent: int,
         unit: EnumUnit,
-        async_report_threshold: Optional[float],
-        nameplate_max_value: Optional[int],
     ):
         self.tuple = TelemetryReportingConfig(
-            TelemetryName=telemetry_name,
             AboutNodeName=about_node_name,
-            ReportOnChange=report_on_change,
-            SamplePeriodS=sample_period_s,
+            TelemetryName=telemetry_name,
+            PollPeriodMs=poll_period_ms,
+            CapturePeriodS=capture_period_s,
+            AsyncCapture=async_capture,
+            AsyncCaptureDelta=async_capture_delta,
             Exponent=exponent,
             Unit=unit,
-            AsyncReportThreshold=async_report_threshold,
-            NameplateMaxValue=nameplate_max_value,
         )
 
     @classmethod
@@ -206,7 +258,7 @@ class TelemetryReportingConfig_Maker:
     @classmethod
     def dict_to_tuple(cls, d: dict[str, Any]) -> TelemetryReportingConfig:
         """
-        Deserialize a dictionary representation of a telemetry.reporting.config.000 message object
+        Deserialize a dictionary representation of a telemetry.reporting.config.001 message object
         into a TelemetryReportingConfig python object for internal use.
 
         This is the near-inverse of the TelemetryReportingConfig.as_dict() method:
@@ -228,63 +280,36 @@ class TelemetryReportingConfig_Maker:
             TelemetryReportingConfig
         """
         d2 = dict(d)
+        if "AboutNodeName" not in d2.keys():
+            raise SchemaError(f"dict missing AboutNodeName: <{d2}>")
         if "TelemetryNameGtEnumSymbol" not in d2.keys():
             raise SchemaError(f"TelemetryNameGtEnumSymbol missing from dict <{d2}>")
         value = EnumTelemetryName.symbol_to_value(d2["TelemetryNameGtEnumSymbol"])
         d2["TelemetryName"] = EnumTelemetryName(value)
-        if "AboutNodeName" not in d2.keys():
-            raise SchemaError(f"dict missing AboutNodeName: <{d2}>")
-        if "ReportOnChange" not in d2.keys():
-            raise SchemaError(f"dict missing ReportOnChange: <{d2}>")
-        if "SamplePeriodS" not in d2.keys():
-            raise SchemaError(f"dict missing SamplePeriodS: <{d2}>")
+        del d2["TelemetryNameGtEnumSymbol"]
+        if "PollPeriodMs" not in d2.keys():
+            raise SchemaError(f"dict missing PollPeriodMs: <{d2}>")
+        if "CapturePeriodS" not in d2.keys():
+            raise SchemaError(f"dict missing CapturePeriodS: <{d2}>")
+        if "AsyncCapture" not in d2.keys():
+            raise SchemaError(f"dict missing AsyncCapture: <{d2}>")
         if "Exponent" not in d2.keys():
             raise SchemaError(f"dict missing Exponent: <{d2}>")
         if "UnitGtEnumSymbol" not in d2.keys():
             raise SchemaError(f"UnitGtEnumSymbol missing from dict <{d2}>")
         value = EnumUnit.symbol_to_value(d2["UnitGtEnumSymbol"])
         d2["Unit"] = EnumUnit(value)
+        del d2["UnitGtEnumSymbol"]
         if "TypeName" not in d2.keys():
             raise SchemaError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():
             raise SchemaError(f"Version missing from dict <{d2}>")
-        if d2["Version"] != "000":
+        if d2["Version"] != "001":
             LOGGER.debug(
-                f"Attempting to interpret telemetry.reporting.config version {d2['Version']} as version 000"
+                f"Attempting to interpret telemetry.reporting.config version {d2['Version']} as version 001"
             )
-            d2["Version"] = "000"
+            d2["Version"] = "001"
         return TelemetryReportingConfig(**d2)
-
-
-def check_is_left_right_dot(v: str) -> None:
-    """Checks LeftRightDot Format
-
-    LeftRightDot format: Lowercase alphanumeric words separated by periods, with
-    the most significant word (on the left) starting with an alphabet character.
-
-    Args:
-        v (str): the candidate
-
-    Raises:
-        ValueError: if v is not LeftRightDot format
-    """
-    from typing import List
-
-    try:
-        x: List[str] = v.split(".")
-    except:
-        raise ValueError(f"Failed to seperate <{v}> into words with split'.'")
-    first_word = x[0]
-    first_char = first_word[0]
-    if not first_char.isalpha():
-        raise ValueError(
-            f"Most significant word of <{v}> must start with alphabet char."
-        )
-    for word in x:
-        if not word.isalnum():
-            raise ValueError(f"words of <{v}> split by by '.' must be alphanumeric.")
-    if not v.islower():
-        raise ValueError(f"All characters of <{v}> must be lowercase.")
 
 
 def check_is_positive_integer(v: int) -> None:
@@ -303,3 +328,38 @@ def check_is_positive_integer(v: int) -> None:
     v2 = int(v)
     if v2 < 1:
         raise ValueError(f"<{v}> is not PositiveInteger")
+
+
+def check_is_spaceheat_name(v: str) -> None:
+    """Check SpaceheatName Format.
+
+    Validates if the provided string adheres to the SpaceheatName format:
+    Lowercase words separated by periods, where word characters can be alphanumeric
+    or a hyphen, and the first word starts with an alphabet character.
+
+    Args:
+        candidate (str): The string to be validated.
+
+    Raises:
+        ValueError: If the provided string is not in SpaceheatName format.
+    """
+    from typing import List
+
+    try:
+        x: List[str] = v.split(".")
+    except:
+        raise ValueError(f"Failed to seperate <{v}> into words with split'.'")
+    first_word = x[0]
+    first_char = first_word[0]
+    if not first_char.isalpha():
+        raise ValueError(
+            f"Most significant word of <{v}> must start with alphabet char."
+        )
+    for word in x:
+        for char in word:
+            if not (char.isalnum() or char == "-"):
+                raise ValueError(
+                    f"words of <{v}> split by by '.' must be alphanumeric or hyphen."
+                )
+    if not v.islower():
+        raise ValueError(f"<{v}> must be lowercase.")

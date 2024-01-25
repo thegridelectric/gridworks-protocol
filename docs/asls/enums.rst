@@ -10,10 +10,6 @@ local.comm.interface.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/local-comm-interface.json
 
-sh.node.role.000
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/sh-node-role.json
-
 spaceheat.unit.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/spaceheat-unit.json
@@ -25,3 +21,4 @@ sh.actor.class.001
 spaceheat.telemetry.name.001
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/spaceheat-telemetry-name.json
+

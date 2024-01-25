@@ -1,16 +1,18 @@
 ComponentGt
 ==========================
-Python pydantic class corresponding to json type `component.gt`, version `000`.
+Python pydantic class corresponding to json type `component.gt`, version `001`.
 
 .. autoclass:: gwproto.types.ComponentGt
     :members:
 
+****:
+    - Description: 
+
 **ComponentId**:
-    - Description: Component Id. Primary identifier for components in all GridWorks registries.
-    - Format: UuidCanonicalTextual
+    - Description: 
 
 **ComponentAttributeClassId**:
-    - Description: ComponentAttributeClassId. Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry.
+    - Description: ComponentAttributeClassId. Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry. 
     - Format: UuidCanonicalTextual
 
 **DisplayName**:
@@ -27,9 +29,6 @@ Python pydantic class corresponding to json type `component.gt`, version `000`.
 
 
 
-.. autoclass:: gwproto.types.component_gt.check_is_uuid_canonical_textual
-    :members:
-
-
 .. autoclass:: gwproto.types.ComponentGt_Maker
     :members:
+

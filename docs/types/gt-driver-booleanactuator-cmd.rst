@@ -1,21 +1,9 @@
 GtDriverBooleanactuatorCmd
 ==========================
-Python pydantic class corresponding to json type `gt.driver.booleanactuator.cmd`, version `100`.
+Python pydantic class corresponding to json type `gt.driver.booleanactuator.cmd`, version `101`.
 
 .. autoclass:: gwproto.types.GtDriverBooleanactuatorCmd
     :members:
-
-**RelayState**:
-    - Description:
-    - Format: Bit
-
-**ShNodeAlias**:
-    - Description:
-    - Format: LeftRightDot
-
-**CommandTimeUnixMs**:
-    - Description:
-    - Format: ReasonableUnixTimeMs
 
 **TypeName**:
     - Description: All GridWorks Versioned Types have a fixed TypeName, which is a string of lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character, and final word NOT all Hindu-Arabic numerals.
@@ -25,11 +13,11 @@ Python pydantic class corresponding to json type `gt.driver.booleanactuator.cmd`
 
 
 
-.. autoclass:: gwproto.types.gt_driver_booleanactuator_cmd.check_is_bit
+.. autoclass:: gwproto.types.gt_driver_booleanactuator_cmd.check_is_spaceheat_name
     :members:
 
 
-.. autoclass:: gwproto.types.gt_driver_booleanactuator_cmd.check_is_left_right_dot
+.. autoclass:: gwproto.types.gt_driver_booleanactuator_cmd.check_is_bit
     :members:
 
 
@@ -39,3 +27,4 @@ Python pydantic class corresponding to json type `gt.driver.booleanactuator.cmd`
 
 .. autoclass:: gwproto.types.GtDriverBooleanactuatorCmd_Maker
     :members:
+

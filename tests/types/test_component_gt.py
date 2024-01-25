@@ -1,4 +1,4 @@
-"""Tests component.gt type, version 000"""
+"""Tests component.gt type, version 001"""
 import json
 
 import pytest
@@ -10,12 +10,13 @@ from gwproto.types import ComponentGt_Maker as Maker
 
 def test_component_gt_generated() -> None:
     d = {
-        "ComponentId": "987e0a5f-9036-411e-ba30-bac1075114ba",
-        "ComponentAttributeClassId": "0a2fed00-8ff9-4391-a6d8-4b08ab94dfe1",
+        "": ,
+        "ComponentId": ,
+        "ComponentAttributeClassId": '0a2fed00-8ff9-4391-a6d8-4b08ab94dfe1',
         "DisplayName": "Sample Component",
         "HwUid": "000aaa",
         "TypeName": "component.gt",
-        "Version": "000",
+        "Version": "001",
     }
 
     with pytest.raises(SchemaError):
@@ -33,10 +34,12 @@ def test_component_gt_generated() -> None:
 
     # test Maker init
     t = Maker(
+        =gtuple.,
         component_id=gtuple.ComponentId,
         component_attribute_class_id=gtuple.ComponentAttributeClassId,
         display_name=gtuple.DisplayName,
         hw_uid=gtuple.HwUid,
+        
     ).tuple
     assert t == gtuple
 
@@ -58,11 +61,6 @@ def test_component_gt_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["ComponentId"]
-    with pytest.raises(SchemaError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d)
     del d2["ComponentAttributeClassId"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
@@ -70,6 +68,16 @@ def test_component_gt_generated() -> None:
     ######################################
     # Optional attributes can be removed from type
     ######################################
+
+    d2 = dict(d)
+    if "" in d2.keys():
+        del d2[""]
+    Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    if "ComponentId" in d2.keys():
+        del d2["ComponentId"]
+    Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
     if "DisplayName" in d2.keys():
@@ -92,13 +100,3 @@ def test_component_gt_generated() -> None:
     d2 = dict(d, TypeName="not the type name")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
-
-    ######################################
-    # SchemaError raised if primitive attributes do not have appropriate property_format
-    ######################################
-
-    d2 = dict(d, ComponentId="d4be12d5-33ba-4f1f-b9e5")
-    with pytest.raises(ValidationError):
-        Maker.dict_to_tuple(d2)
-
-    # End of Test

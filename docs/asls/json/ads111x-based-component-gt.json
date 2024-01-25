@@ -1,0 +1,72 @@
+{
+  "gtr_asl": "001",
+  "type_name": "ads111x.based.component.gt",
+  "version": "000",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": "TI ADS111x Based Temp Sensing Component. Designed for specific instances of a temp sensor based on the Texas Instrument ADS111X series of chips used w 10K thermistors for reading temperature.",
+  "url": "https://drive.google.com/drive/u/0/folders/1oFvs4-kvwyzt220eYlFnwdzEgVCIbbt6",
+  "properties": {
+    "ComponentId": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "Component Id",
+      "description": "Primary GridWorks identifier for a specific physical instance of a MultipurposeSensor (perhaps only the 12-channel analog temp sensor), and also as a more generic Component.",
+      "required": true
+    },
+    "ComponentAttributeClassId": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "Unique identifier for Ads111xBasedCac object articulated by the ads111x.based.cac.gt.000 type.",
+      "description": "Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry.",
+      "required": true
+    },
+    "DisplayName": {
+      "type": "string",
+      "description": "Sample: Oak 16-channel AdsTemp Sensor <100>",
+      "required": false
+    },
+    "OpenVoltageByAds": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      },
+      "description": "The voltage reading with no thermistor attached is called the "open voltage." It is close to the power supply voltage (e.g. 5V) , but we have found that there is non-trivial variation (~0.2 V), and there can even be variation in the average open voltage in the same installation across different ADS chips (~0.01 or 0.02V).",
+      "required": true
+    },
+    "ConfigList": {
+      "type": "array",
+      "items": {
+        "type": "thermistor.data.processing.config.000"
+      },
+      "description": "This includes the list of configuration information needed for data processing and reporting for the data collected by thermistors - both voltage and (derived) temperature.",
+      "required": true
+    },
+    "HwUid": {
+      "type": "string",
+      "required": false
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "ads111x.based.component.gt",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "000",
+      "required": true
+    }
+  },
+  "formats": {
+    "UuidCanonicalTextual": {
+      "type": "string",
+      "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
+      "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"
+    },
+    "Ads1115I2cAddress": {
+      "type": "string",
+      "description": "ToLower(v) in ["0x48", "0x49", "0x4a", 0x4b"]. One of the 4 allowable I2C addresses for Texas Instrument Ads1115 chips.",
+      "example": ""
+    }
+  }
+}

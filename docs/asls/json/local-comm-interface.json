@@ -1,52 +1,22 @@
 {
-  "gtr_asl": "001",
-  "enum_name": "local.comm.interface",
-  "enum_version": "000",
-  "description": "Categorization of in-house comm mechanisms for SCADA",
-  "ssot": "https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#localcomminterface",
-  "values": [
-    "Unknown",
-    "I2C",
-    "Ethernet",
-    "OneWire",
-    "RS485",
-    "SimRabbit",
-    "Wifi",
-    "Analog_4_20_mA",
-    "RS232"
-  ],
-  "value_to_gt_symbol": {
-    "UNKNOWN": "00000000",
-    "I2C": "9ec8bc49",
-    "ETHERNET": "c1e7a955",
-    "ONEWIRE": "ae2d4cd8",
-    "RS485": "a6a4ac9f",
-    "SIMRABBIT": "efc144cd",
-    "WIFI": "46ac6589",
-    "ANALOG_4_20_MA": "653c73b8",
-    "RS232": "0843a726"
-  },
-  "value_to_version": {
-    "UNKNOWN": "000",
-    "I2C": "000",
-    "ETHERNET": "000",
-    "ONEWIRE": "000",
-    "RS485": "000",
-    "SIMRABBIT": "000",
-    "WIFI": "000",
-    "ANALOG_4_20_MA": "000",
-    "RS232": "000"
-  },
-  "value_descriptions": {
-    "Unknown": "",
-    "I2C": "",
-    "Ethernet": "",
-    "OneWire": "",
-    "RS485": "",
-    "SimRabbit": "",
-    "Wifi": "",
-    "Analog_4_20_mA": "",
-    "RS232": ""
-  },
-  "default_value": "Unknown"
+    "gtr_asl": "001",
+    "enum_name": "local.comm.interface",
+    "enum_version": "000",
+    "description": "Categorization of in-house comm mechanisms for SCADA",
+    "ssot": "https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#localcomminterface",
+    "values": ["Unknown", "I2C", "Ethernet", "OneWire", "RS485", "SimRabbit", "Wifi", "Analog_4_20_mA", "RS232"],
+    "value_to_symbol": { "UNKNOWN": "00000000",  "I2C": "9ec8bc49",  "ETHERNET": "c1e7a955",  "ONEWIRE": "ae2d4cd8",  "RS485": "a6a4ac9f",  "SIMRABBIT": "efc144cd",  "WIFI": "46ac6589",  "ANALOG_4_20_MA": "653c73b8",  "RS232": "0843a726"},
+    "value_to_version": { "UNKNOWN": "000",  "I2C": "000",  "ETHERNET": "000",  "ONEWIRE": "000",  "RS485": "000",  "SIMRABBIT": "000",  "WIFI": "000",  "ANALOG_4_20_MA": "000",  "RS232": "000"},
+    "value_descriptions": {
+                "Unknown": "",
+                "I2C": "",
+                "Ethernet": "",
+                "OneWire": "",
+                "RS485": "",
+                "SimRabbit": "",
+                "Wifi": "",
+                "Analog_4_20_mA": "",
+                "RS232": ""
+            },
+    "default_value": "Unknown"
 }

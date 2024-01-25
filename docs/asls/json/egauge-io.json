@@ -1,7 +1,7 @@
 {
   "gtr_asl": "001",
   "type_name": "egauge.io",
-  "version": "000",
+  "version": "001",
   "owner": "gridworks@gridworks-consulting.com",
   "description": "Used for an eGauge meter's component information in a hardware layout. When the component associated to a PowerMeter ShNode has MakeModel EGAUGE__4030, there is a significant amount of configuration required to specify both what is read from the eGauge (input) and what is then sent up to the SCADA (output). This type handles that information.",
   "url": "https://gridworks-protocol.readthedocs.io/en/latest/egauge-io.html",
@@ -12,7 +12,7 @@
       "required": true
     },
     "OutputConfig": {
-      "type": "telemetry.reporting.config.000",
+      "type": "telemetry.reporting.config.001",
       "description": "This is the data as the Scada proactor expects to consume it from the power meter driver proactor.",
       "required": true
     },
@@ -24,34 +24,8 @@
     "Version": {
       "type": "string",
       "title": "The type version",
-      "default": "000",
+      "default": "001",
       "required": true
     }
-  },
-  "example": {
-    "InputConfig": {
-      "Address": 9016,
-      "Name": "house-panel-power",
-      "Description": "change in value",
-      "Type": "f32",
-      "Denominator": 1,
-      "Unit": "W",
-      "TypeName": "egauge.register.config",
-      "Version": "000"
-    },
-    "OutputConfig": {
-      "TelemetryNameGtEnumSymbol": "af39eec9",
-      "AboutNodeName": "house-panel-power",
-      "ReportOnChange": true,
-      "SamplePeriodS": 300,
-      "Exponent": 0,
-      "UnitGtEnumSymbol": "f459a9c3",
-      "AsyncReportThreshold": 0.02,
-      "NameplateMaxValue": 3500,
-      "TypeName": "telemetry.reporting.config",
-      "Version": "000"
-    },
-    "TypeName": "egauge.io",
-    "Version": "000"
   }
 }

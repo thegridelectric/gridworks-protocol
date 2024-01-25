@@ -1,7 +1,7 @@
 {
   "gtr_asl": "001",
   "type_name": "spaceheat.node.gt",
-  "version": "100",
+  "version": "101",
   "owner": "gridworks@gridworks-consulting.com",
   "description": "Spaceheat Node. A SpaceheatNode, or ShNode, is an organizing principal for the SCADA software. ShNodes can represent both underlying physical objects (water tank), measurements of these objects (temperature sensing at the top of a water tank), and actors within the code (an actor measuring multiple temperatures, or an actor responsible for filtering/smoothing temperature data for the purposes of thermostatic control).",
   "url": "https://gridworks-protocol.readthedocs.io/en/latest/spaceheat-node.html",
@@ -9,24 +9,20 @@
     "ShNodeId": {
       "type": "string",
       "format": "UuidCanonicalTextual",
-      "title": "",
+      "title": "Spaceheat Node Id",
+      "description": "Immutable identifier for a Spaceheat Node.",
       "required": true
     },
-    "Alias": {
+    "Name": {
       "type": "string",
-      "format": "LeftRightDot",
+      "format": "SpaceheatName",
       "title": "",
+      "description": "Functional identifier for a Spaceheat Node. Names indicate chain of command via the "dot" hierarchy. That is, `a.b` will only listen to commands from `a`. This name can and will change, in particular, for Nodes that are under the AtomicTNode chain of command when the dispatch contract is live.",
       "required": true
     },
     "ActorClass": {
       "type": "string",
       "format": "sh.actor.class",
-      "title": "",
-      "required": true
-    },
-    "Role": {
-      "type": "string",
-      "format": "sh.node.role",
       "title": "",
       "required": true
     },
@@ -36,29 +32,12 @@
     },
     "ComponentId": {
       "type": "string",
-      "format": "UuidCanonicalTextual",
-      "title": "Unique identifier for Component object articulated by the component.gt.000 type.",
       "description": "Used if a Spaceheat Node is associated with a physical device.",
-      "required": false
-    },
-    "ReportingSamplePeriodS": {
-      "type": "integer",
-      "required": false
-    },
-    "RatedVoltageV": {
-      "type": "integer",
-      "format": "PositiveInteger",
-      "title": "",
-      "required": false
-    },
-    "TypicalVoltageV": {
-      "type": "integer",
-      "format": "PositiveInteger",
-      "title": "",
       "required": false
     },
     "InPowerMetering": {
       "type": "boolean",
+      "description": "This exists and is True if the SpaceheatNode is part of the power metering that is used for market participation. Small loads like circulator pumps and fans may be metered to determine their behavior but are are likely NOT part of the power metering used for market participation.",
       "required": false
     },
     "TypeName": {
@@ -69,8 +48,14 @@
     "Version": {
       "type": "string",
       "title": "The type version",
-      "default": "100",
+      "default": "101",
       "required": true
+    }
+  },
+  "axioms": {
+    "Axiom1": {
+      "title": "InPowerMetering requirements",
+      "description": "If InPowerMetering exists and is true, then NameplatePowerW and RatedVoltageV must both exist"
     }
   },
   "formats": {
@@ -79,15 +64,10 @@
       "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
       "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"
     },
-    "PositiveInteger": {
+    "SpaceheatName": {
       "type": "string",
-      "description": "Must be positive when interpreted as an integer. Interpretation as an integer follows the pydantic rules for this - which will round down rational numbers. So 1.7 will be interpreted as 1 and is also fine, while 0.5 is interpreted as 0 and will raise an exception.",
-      "example": ""
-    },
-    "LeftRightDot": {
-      "type": "string",
-      "description": "Lowercase alphanumeric words separated by periods, with the most significant word (on the left) starting with an alphabet character.",
-      "example": "dw1.isone.me.freedom.apple"
+      "description": "Lowercase words separated by periods, where the word characters can be alphanumeric or a hyphen and the first word starts with an alphabet character.",
+      "example": "store-hot-pipe"
     }
   }
 }

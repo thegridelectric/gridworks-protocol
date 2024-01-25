@@ -1,0 +1,79 @@
+{
+  "gtr_asl": "001",
+  "type_name": "batched.readings",
+  "version": "000",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": "Batched Readings. A collection of telemetry readings sent up in periodic reports from a SCADA to an AtomicTNode. These are organized into data channels (a triple of TelemetryName, AboutNode, and CapturedByNode).",
+  "properties": {
+    "FromGNodeAlias": {
+      "type": "string",
+      "format": "LeftRightDot",
+      "title": "",
+      "required": true
+    },
+    "FromGNodeInstanceId": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "",
+      "required": true
+    },
+    "AboutGNodeAlias": {
+      "type": "string",
+      "format": "LeftRightDot",
+      "title": "",
+      "required": true
+    },
+    "SlotStartUnixS": {
+      "type": "integer",
+      "format": "ReasonableUnixTimeS",
+      "title": "",
+      "required": true
+    },
+    "BatchedTransmissionPeriodS": {
+      "type": "integer",
+      "required": true
+    },
+    "ChannelReadingList": {
+      "type": "array",
+      "items": {
+        "type": "channel.readings.000"
+      },
+      "required": true
+    },
+    "BooleanactuatorCmdList": {
+      "type": "array",
+      "items": {
+        "type": "gt.sh.booleanactuator.cmd.status.100"
+      },
+      "required": true
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "batched.readings",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "000",
+      "required": true
+    }
+  },
+  "formats": {
+    "ReasonableUnixTimeS": {
+      "type": "string",
+      "description": "Integer reflecting unix time seconds between 1970 and 3000",
+      "example": ""
+    },
+    "UuidCanonicalTextual": {
+      "type": "string",
+      "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
+      "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"
+    },
+    "LeftRightDot": {
+      "type": "string",
+      "description": "Lowercase alphanumeric words separated by periods, with the most significant word (on the left) starting with an alphabet character.",
+      "example": "dw1.isone.me.freedom.apple"
+    }
+  }
+}

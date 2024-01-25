@@ -10,16 +10,16 @@ Python pydantic class corresponding to json type `resistive.heater.cac.gt`, vers
     - Format: UuidCanonicalTextual
 
 **MakeModel**:
-    - Description:
+    - Description: 
 
 **DisplayName**:
-    - Description:
+    - Description: 
 
 **NameplateMaxPowerW**:
-    - Description:
+    - Description: 
 
 **RatedVoltageV**:
-    - Description:
+    - Description: 
     - Format: PositiveInteger
 
 **TypeName**:
@@ -40,3 +40,4 @@ Python pydantic class corresponding to json type `resistive.heater.cac.gt`, vers
 
 .. autoclass:: gwproto.types.ResistiveHeaterCacGt_Maker
     :members:
+

@@ -201,6 +201,7 @@ class ResistiveHeaterCacGt_Maker:
             raise SchemaError(f"MakeModelGtEnumSymbol missing from dict <{d2}>")
         value = EnumMakeModel.symbol_to_value(d2["MakeModelGtEnumSymbol"])
         d2["MakeModel"] = EnumMakeModel(value)
+        del d2["MakeModelGtEnumSymbol"]
         if "NameplateMaxPowerW" not in d2.keys():
             raise SchemaError(f"dict missing NameplateMaxPowerW: <{d2}>")
         if "RatedVoltageV" not in d2.keys():

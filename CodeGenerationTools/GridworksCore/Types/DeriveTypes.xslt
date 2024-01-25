@@ -72,7 +72,11 @@ from typing import Optional</xsl:text>
 </xsl:if>
 <xsl:text>
 
-from pydantic import BaseModel
+from pydantic import BaseModel</xsl:text>
+<xsl:if test="ExtraAllowed='true'">
+<xsl:text>
+from pydantic import Extra</xsl:text>
+</xsl:if><xsl:text>
 from pydantic import Field</xsl:text>
 <xsl:if test="count($airtable//TypeAxioms/TypeAxiom[MultiPropertyAxiom=$versioned-type-id]) > 0">
 <xsl:text>

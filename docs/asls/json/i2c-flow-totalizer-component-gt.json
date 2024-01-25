@@ -1,0 +1,55 @@
+{
+  "gtr_asl": "001",
+  "type_name": "i2c.flow.totalizer.component.gt",
+  "version": "000",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": "I2C Flow Totalizer Component. A specific instance of a chip that integates pulse count flow meters and reports the result as I2C.",
+  "properties": {
+    "ComponentId": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "Component Id",
+      "description": "Primary GridWorks identifier for a specific physical instance of a PipeFlowSensor, and also as a more generic Component.",
+      "required": true
+    },
+    "ComponentAttributeClass": {
+      "type": "",
+      "description": "Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry.",
+      "required": true
+    },
+    "I2cAddress": {
+      "type": "integer",
+      "required": true
+    },
+    "ConversionFactor": {
+      "type": "number",
+      "required": true
+    },
+    "PulseFlowMeterType": {
+      "type": "string",
+      "format": "spaceheat.make.model",
+      "title": "",
+      "required": true
+    },
+    "DisplayName": {
+      "type": "string",
+      "description": "Sample: Pipe Flow Meter Component <dist-flow>",
+      "required": false
+    },
+    "HwUid": {
+      "type": "string",
+      "required": false
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "i2c.flow.totalizer.component.gt",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "000",
+      "required": true
+    }
+  }
+}

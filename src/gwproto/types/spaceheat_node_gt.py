@@ -1,4 +1,4 @@
-"""Type spaceheat.node.gt, version 100"""
+"""Type spaceheat.node.gt, version 101"""
 import json
 import logging
 from typing import Any
@@ -8,11 +8,11 @@ from typing import Optional
 
 from pydantic import BaseModel
 from pydantic import Field
+from pydantic import root_validator
 from pydantic import validator
 
 from gwproto.data_classes.sh_node import ShNode
 from gwproto.enums import ActorClass as EnumActorClass
-from gwproto.enums import Role as EnumRole
 from gwproto.errors import SchemaError
 
 
@@ -37,16 +37,20 @@ class SpaceheatNodeGt(BaseModel):
     """
 
     ShNodeId: str = Field(
-        title="ShNodeId",
+        title="Spaceheat Node Id",
+        description="Immutable identifier for a Spaceheat Node.",
     )
-    Alias: str = Field(
-        title="Alias",
+    Name: str = Field(
+        title="Name",
+        description=(
+            "Functional identifier for a Spaceheat Node. Names indicate chain of command via "
+            "the "dot" hierarchy. That is, `a.b` will only listen to commands from `a`. This "
+            "name can and will change, in particular, for Nodes that are under the AtomicTNode "
+            "chain of command when the dispatch contract is live."
+        ),
     )
     ActorClass: EnumActorClass = Field(
         title="ActorClass",
-    )
-    Role: EnumRole = Field(
-        title="Role",
     )
     DisplayName: Optional[str] = Field(
         title="DisplayName",
@@ -57,24 +61,18 @@ class SpaceheatNodeGt(BaseModel):
         description="Used if a Spaceheat Node is associated with a physical device.",
         default=None,
     )
-    ReportingSamplePeriodS: Optional[int] = Field(
-        title="ReportingSamplePeriodS",
-        default=None,
-    )
-    RatedVoltageV: Optional[int] = Field(
-        title="RatedVoltageV",
-        default=None,
-    )
-    TypicalVoltageV: Optional[int] = Field(
-        title="TypicalVoltageV",
-        default=None,
-    )
     InPowerMetering: Optional[bool] = Field(
         title="InPowerMetering",
+        description=(
+            "This exists and is True if the SpaceheatNode is part of the power metering that "
+            "is used for market participation. Small loads like circulator pumps and fans may "
+            "be metered to determine their behavior but are are likely NOT part of the power "
+            "metering used for market participation."
+        ),
         default=None,
     )
     TypeName: Literal["spaceheat.node.gt"] = "spaceheat.node.gt"
-    Version: Literal["100"] = "100"
+    Version: Literal["101"] = "101"
 
     @validator("ShNodeId")
     def _check_sh_node_id(cls, v: str) -> str:
@@ -86,58 +84,31 @@ class SpaceheatNodeGt(BaseModel):
             )
         return v
 
-    @validator("Alias")
-    def _check_alias(cls, v: str) -> str:
+    @validator("Name")
+    def _check_name(cls, v: str) -> str:
         try:
-            check_is_left_right_dot(v)
+            check_is_spaceheat_name(v)
         except ValueError as e:
-            raise ValueError(f"Alias failed LeftRightDot format validation: {e}")
+            raise ValueError(f"Name failed SpaceheatName format validation: {e}")
         return v
 
-    @validator("ComponentId")
-    def _check_component_id(cls, v: Optional[str]) -> Optional[str]:
-        if v is None:
-            return v
-        try:
-            check_is_uuid_canonical_textual(v)
-        except ValueError as e:
-            raise ValueError(
-                f"ComponentId failed UuidCanonicalTextual format validation: {e}"
-            )
-        return v
-
-    @validator("RatedVoltageV")
-    def _check_rated_voltage_v(cls, v: Optional[int]) -> Optional[int]:
-        if v is None:
-            return v
-        try:
-            check_is_positive_integer(v)
-        except ValueError as e:
-            raise ValueError(
-                f"RatedVoltageV failed PositiveInteger format validation: {e}"
-            )
-        return v
-
-    @validator("TypicalVoltageV")
-    def _check_typical_voltage_v(cls, v: Optional[int]) -> Optional[int]:
-        if v is None:
-            return v
-        try:
-            check_is_positive_integer(v)
-        except ValueError as e:
-            raise ValueError(
-                f"TypicalVoltageV failed PositiveInteger format validation: {e}"
-            )
+    @root_validator
+    def check_axiom_1(cls, v: dict) -> dict:
+        """
+        Axiom 1: InPowerMetering requirements.
+        If InPowerMetering exists and is true, then NameplatePowerW and RatedVoltageV must both exist
+        """
+        # TODO: Implement check for axiom 1"
         return v
 
     def as_dict(self) -> Dict[str, Any]:
         """
         Translate the object into a dictionary representation that can be serialized into a
-        spaceheat.node.gt.100 object.
+        spaceheat.node.gt.101 object.
 
         This method prepares the object for serialization by the as_type method, creating a
         dictionary with key-value pairs that follow the requirements for an instance of the
-        spaceheat.node.gt.100 type. Unlike the standard python dict method,
+        spaceheat.node.gt.101 type. Unlike the standard python dict method,
         it makes the following substantive changes:
         - Enum Values: Translates between the values used locally by the actor to the symbol
         sent in messages.
@@ -155,16 +126,14 @@ class SpaceheatNodeGt(BaseModel):
         }
         del d["ActorClass"]
         d["ActorClassGtEnumSymbol"] = EnumActorClass.value_to_symbol(self.ActorClass)
-        del d["Role"]
-        d["RoleGtEnumSymbol"] = EnumRole.value_to_symbol(self.Role)
         return d
 
     def as_type(self) -> bytes:
         """
-        Serialize to the spaceheat.node.gt.100 representation.
+        Serialize to the spaceheat.node.gt.101 representation.
 
-        Instances in the class are python-native representations of spaceheat.node.gt.100
-        objects, while the actual spaceheat.node.gt.100 object is the serialized UTF-8 byte
+        Instances in the class are python-native representations of spaceheat.node.gt.101
+        objects, while the actual spaceheat.node.gt.101 object is the serialized UTF-8 byte
         string designed for sending in a message.
 
         This method calls the as_dict() method, which differs from the native python dict()
@@ -189,31 +158,23 @@ class SpaceheatNodeGt(BaseModel):
 
 class SpaceheatNodeGt_Maker:
     type_name = "spaceheat.node.gt"
-    version = "100"
+    version = "101"
 
     def __init__(
         self,
         sh_node_id: str,
-        alias: str,
+        name: str,
         actor_class: EnumActorClass,
-        role: EnumRole,
         display_name: Optional[str],
         component_id: Optional[str],
-        reporting_sample_period_s: Optional[int],
-        rated_voltage_v: Optional[int],
-        typical_voltage_v: Optional[int],
         in_power_metering: Optional[bool],
     ):
         self.tuple = SpaceheatNodeGt(
             ShNodeId=sh_node_id,
-            Alias=alias,
+            Name=name,
             ActorClass=actor_class,
-            Role=role,
             DisplayName=display_name,
             ComponentId=component_id,
-            ReportingSamplePeriodS=reporting_sample_period_s,
-            RatedVoltageV=rated_voltage_v,
-            TypicalVoltageV=typical_voltage_v,
             InPowerMetering=in_power_metering,
         )
 
@@ -240,7 +201,7 @@ class SpaceheatNodeGt_Maker:
     @classmethod
     def dict_to_tuple(cls, d: dict[str, Any]) -> SpaceheatNodeGt:
         """
-        Deserialize a dictionary representation of a spaceheat.node.gt.100 message object
+        Deserialize a dictionary representation of a spaceheat.node.gt.101 message object
         into a SpaceheatNodeGt python object for internal use.
 
         This is the near-inverse of the SpaceheatNodeGt.as_dict() method:
@@ -264,25 +225,22 @@ class SpaceheatNodeGt_Maker:
         d2 = dict(d)
         if "ShNodeId" not in d2.keys():
             raise SchemaError(f"dict missing ShNodeId: <{d2}>")
-        if "Alias" not in d2.keys():
-            raise SchemaError(f"dict missing Alias: <{d2}>")
+        if "Name" not in d2.keys():
+            raise SchemaError(f"dict missing Name: <{d2}>")
         if "ActorClassGtEnumSymbol" not in d2.keys():
             raise SchemaError(f"ActorClassGtEnumSymbol missing from dict <{d2}>")
         value = EnumActorClass.symbol_to_value(d2["ActorClassGtEnumSymbol"])
         d2["ActorClass"] = EnumActorClass(value)
-        if "RoleGtEnumSymbol" not in d2.keys():
-            raise SchemaError(f"RoleGtEnumSymbol missing from dict <{d2}>")
-        value = EnumRole.symbol_to_value(d2["RoleGtEnumSymbol"])
-        d2["Role"] = EnumRole(value)
+        del d2["ActorClassGtEnumSymbol"]
         if "TypeName" not in d2.keys():
             raise SchemaError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():
             raise SchemaError(f"Version missing from dict <{d2}>")
-        if d2["Version"] != "100":
+        if d2["Version"] != "101":
             LOGGER.debug(
-                f"Attempting to interpret spaceheat.node.gt version {d2['Version']} as version 100"
+                f"Attempting to interpret spaceheat.node.gt version {d2['Version']} as version 101"
             )
-            d2["Version"] = "100"
+            d2["Version"] = "101"
         return SpaceheatNodeGt(**d2)
 
     @classmethod
@@ -292,14 +250,10 @@ class SpaceheatNodeGt_Maker:
         else:
             dc = ShNode(
                 sh_node_id=t.ShNodeId,
-                alias=t.Alias,
+                name=t.Name,
                 actor_class=t.ActorClass,
-                role=t.Role,
                 display_name=t.DisplayName,
                 component_id=t.ComponentId,
-                reporting_sample_period_s=t.ReportingSamplePeriodS,
-                rated_voltage_v=t.RatedVoltageV,
-                typical_voltage_v=t.TypicalVoltageV,
                 in_power_metering=t.InPowerMetering,
             )
         return dc
@@ -308,14 +262,10 @@ class SpaceheatNodeGt_Maker:
     def dc_to_tuple(cls, dc: ShNode) -> SpaceheatNodeGt:
         t = SpaceheatNodeGt_Maker(
             sh_node_id=dc.sh_node_id,
-            alias=dc.alias,
+            name=dc.name,
             actor_class=dc.actor_class,
-            role=dc.role,
             display_name=dc.display_name,
             component_id=dc.component_id,
-            reporting_sample_period_s=dc.reporting_sample_period_s,
-            rated_voltage_v=dc.rated_voltage_v,
-            typical_voltage_v=dc.typical_voltage_v,
             in_power_metering=dc.in_power_metering,
         ).tuple
         return t
@@ -333,20 +283,20 @@ class SpaceheatNodeGt_Maker:
         return cls.tuple_to_dc(cls.dict_to_tuple(d))
 
 
-def check_is_left_right_dot(v: str) -> None:
-    """Checks LeftRightDot Format
+def check_is_spaceheat_name(v: str) -> None:
+    """Check SpaceheatName Format.
 
-    LeftRightDot format: Lowercase alphanumeric words separated by periods, with
-    the most significant word (on the left) starting with an alphabet character.
+    Validates if the provided string adheres to the SpaceheatName format:
+    Lowercase words separated by periods, where word characters can be alphanumeric
+    or a hyphen, and the first word starts with an alphabet character.
 
     Args:
-        v (str): the candidate
+        candidate (str): The string to be validated.
 
     Raises:
-        ValueError: if v is not LeftRightDot format
+        ValueError: If the provided string is not in SpaceheatName format.
     """
     from typing import List
-
     try:
         x: List[str] = v.split(".")
     except:
@@ -358,28 +308,11 @@ def check_is_left_right_dot(v: str) -> None:
             f"Most significant word of <{v}> must start with alphabet char."
         )
     for word in x:
-        if not word.isalnum():
-            raise ValueError(f"words of <{v}> split by by '.' must be alphanumeric.")
+        for char in word:
+            if not (char.isalnum() or char == '-'):
+                raise ValueError(f"words of <{v}> split by by '.' must be alphanumeric or hyphen.")
     if not v.islower():
-        raise ValueError(f"All characters of <{v}> must be lowercase.")
-
-
-def check_is_positive_integer(v: int) -> None:
-    """
-    Must be positive when interpreted as an integer. Interpretation as an
-    integer follows the pydantic rules for this - which will round down
-    rational numbers. So 1.7 will be interpreted as 1 and is also fine,
-    while 0.5 is interpreted as 0 and will raise an exception.
-
-    Args:
-        v (int): the candidate
-
-    Raises:
-        ValueError: if v < 1
-    """
-    v2 = int(v)
-    if v2 < 1:
-        raise ValueError(f"<{v}> is not PositiveInteger")
+        raise ValueError(f"<{v}> must be lowercase.")
 
 
 def check_is_uuid_canonical_textual(v: str) -> None:

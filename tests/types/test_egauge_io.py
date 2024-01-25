@@ -1,4 +1,4 @@
-"""Tests egauge.io type, version 000"""
+"""Tests egauge.io type, version 001"""
 import json
 
 import pytest
@@ -10,30 +10,10 @@ from gwproto.types import EgaugeIo_Maker as Maker
 
 def test_egauge_io_generated() -> None:
     d = {
-        "InputConfig": {
-            "Address": 9004,
-            "Name": "Garage power",
-            "Description": "",
-            "Type": "f32",
-            "Denominator": 1,
-            "Unit": "W",
-            "TypeName": "egauge.register.config",
-            "Version": "000",
-        },
-        "OutputConfig": {
-            "AboutNodeName": "a.tank1.elts",
-            "ReportOnChange": True,
-            "SamplePeriodS": 60,
-            "Exponent": 0,
-            "AsyncReportThreshold": 0.05,
-            "NameplateMaxValue": 4500,
-            "TypeName": "telemetry.reporting.config",
-            "Version": "000",
-            "TelemetryNameGtEnumSymbol": "af39eec9",
-            "UnitGtEnumSymbol": "f459a9c3",
-        },
+        "InputConfig": {'Address': 9004, 'Name': 'Garage power', 'Description': '', 'Type': 'f32', 'Denominator': 1, 'Unit': 'W', 'TypeName': 'egauge.register.config', 'Version': '000'},
+        "OutputConfig": {'AboutNodeName': 'h.tank1.elts', 'AsyncCapture': True, 'PollPeriodMs': 1000, 'CapturePeriodS': 60, 'Exponent': 0, 'AsyncCaptureDelta: 50, 'NameplateMaxValue': 4500, 'TypeName': 'telemetry.reporting.config', 'Version': '001', 'TelemetryNameGtEnumSymbol': 'af39eec9', 'UnitGtEnumSymbol': 'f459a9c3'},
         "TypeName": "egauge.io",
-        "Version": "000",
+        "Version": "001",
     }
 
     with pytest.raises(SchemaError):
@@ -53,6 +33,7 @@ def test_egauge_io_generated() -> None:
     t = Maker(
         input_config=gtuple.InputConfig,
         output_config=gtuple.OutputConfig,
+        
     ).tuple
     assert t == gtuple
 

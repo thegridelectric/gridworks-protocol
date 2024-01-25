@@ -1,4 +1,4 @@
-"""Type egauge.io, version 000"""
+"""Type egauge.io, version 001"""
 import json
 import logging
 from typing import Any
@@ -50,16 +50,16 @@ class EgaugeIo(BaseModel):
         ),
     )
     TypeName: Literal["egauge.io"] = "egauge.io"
-    Version: Literal["000"] = "000"
+    Version: Literal["001"] = "001"
 
     def as_dict(self) -> Dict[str, Any]:
         """
         Translate the object into a dictionary representation that can be serialized into a
-        egauge.io.000 object.
+        egauge.io.001 object.
 
         This method prepares the object for serialization by the as_type method, creating a
         dictionary with key-value pairs that follow the requirements for an instance of the
-        egauge.io.000 type. Unlike the standard python dict method,
+        egauge.io.001 type. Unlike the standard python dict method,
         it makes the following substantive changes:
         - Enum Values: Translates between the values used locally by the actor to the symbol
         sent in messages.
@@ -81,10 +81,10 @@ class EgaugeIo(BaseModel):
 
     def as_type(self) -> bytes:
         """
-        Serialize to the egauge.io.000 representation.
+        Serialize to the egauge.io.001 representation.
 
-        Instances in the class are python-native representations of egauge.io.000
-        objects, while the actual egauge.io.000 object is the serialized UTF-8 byte
+        Instances in the class are python-native representations of egauge.io.001
+        objects, while the actual egauge.io.001 object is the serialized UTF-8 byte
         string designed for sending in a message.
 
         This method calls the as_dict() method, which differs from the native python dict()
@@ -109,7 +109,7 @@ class EgaugeIo(BaseModel):
 
 class EgaugeIo_Maker:
     type_name = "egauge.io"
-    version = "000"
+    version = "001"
 
     def __init__(
         self,
@@ -144,7 +144,7 @@ class EgaugeIo_Maker:
     @classmethod
     def dict_to_tuple(cls, d: dict[str, Any]) -> EgaugeIo:
         """
-        Deserialize a dictionary representation of a egauge.io.000 message object
+        Deserialize a dictionary representation of a egauge.io.001 message object
         into a EgaugeIo python object for internal use.
 
         This is the near-inverse of the EgaugeIo.as_dict() method:
@@ -186,9 +186,9 @@ class EgaugeIo_Maker:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():
             raise SchemaError(f"Version missing from dict <{d2}>")
-        if d2["Version"] != "000":
+        if d2["Version"] != "001":
             LOGGER.debug(
-                f"Attempting to interpret egauge.io version {d2['Version']} as version 000"
+                f"Attempting to interpret egauge.io version {d2['Version']} as version 001"
             )
-            d2["Version"] = "000"
+            d2["Version"] = "001"
         return EgaugeIo(**d2)

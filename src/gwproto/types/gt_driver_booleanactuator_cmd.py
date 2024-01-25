@@ -1,4 +1,4 @@
-"""Type gt.driver.booleanactuator.cmd, version 100"""
+"""Type gt.driver.booleanactuator.cmd, version 101"""
 import json
 import logging
 from typing import Any
@@ -29,52 +29,17 @@ class GtDriverBooleanactuatorCmd(BaseModel):
     [More info](https://gridworks.readthedocs.io/en/latest/relay-state.html)
     """
 
-    RelayState: int = Field(
-        title="RelayState",
-    )
-    ShNodeAlias: str = Field(
-        title="ShNodeAlias",
-    )
-    CommandTimeUnixMs: int = Field(
-        title="CommandTimeUnixMs",
-    )
     TypeName: Literal["gt.driver.booleanactuator.cmd"] = "gt.driver.booleanactuator.cmd"
-    Version: Literal["100"] = "100"
-
-    @validator("RelayState", pre=True)
-    def _check_relay_state(cls, v: int) -> int:
-        try:
-            check_is_bit(v)
-        except ValueError as e:
-            raise ValueError(f"RelayState failed Bit format validation: {e}")
-        return v
-
-    @validator("ShNodeAlias")
-    def _check_sh_node_alias(cls, v: str) -> str:
-        try:
-            check_is_left_right_dot(v)
-        except ValueError as e:
-            raise ValueError(f"ShNodeAlias failed LeftRightDot format validation: {e}")
-        return v
-
-    @validator("CommandTimeUnixMs")
-    def _check_command_time_unix_ms(cls, v: int) -> int:
-        try:
-            check_is_reasonable_unix_time_ms(v)
-        except ValueError as e:
-            raise ValueError(
-                f"CommandTimeUnixMs failed ReasonableUnixTimeMs format validation: {e}"
-            )
-        return v
+    Version: Literal["101"] = "101"
 
     def as_dict(self) -> Dict[str, Any]:
         """
         Translate the object into a dictionary representation that can be serialized into a
-        gt.driver.booleanactuator.cmd.100 object.
+        gt.driver.booleanactuator.cmd.101 object.
 
         This method prepares the object for serialization by the as_type method, creating a
         dictionary with key-value pairs that follow the requirements for an instance of the
-        gt.driver.booleanactuator.cmd.100 type. Unlike the standard python dict method,
+        gt.driver.booleanactuator.cmd.101 type. Unlike the standard python dict method,
         it makes the following substantive changes:
         - Enum Values: Translates between the values used locally by the actor to the symbol
         sent in messages.
@@ -94,10 +59,10 @@ class GtDriverBooleanactuatorCmd(BaseModel):
 
     def as_type(self) -> bytes:
         """
-        Serialize to the gt.driver.booleanactuator.cmd.100 representation.
+        Serialize to the gt.driver.booleanactuator.cmd.101 representation.
 
-        Instances in the class are python-native representations of gt.driver.booleanactuator.cmd.100
-        objects, while the actual gt.driver.booleanactuator.cmd.100 object is the serialized UTF-8 byte
+        Instances in the class are python-native representations of gt.driver.booleanactuator.cmd.101
+        objects, while the actual gt.driver.booleanactuator.cmd.101 object is the serialized UTF-8 byte
         string designed for sending in a message.
 
         This method calls the as_dict() method, which differs from the native python dict()
@@ -122,19 +87,12 @@ class GtDriverBooleanactuatorCmd(BaseModel):
 
 class GtDriverBooleanactuatorCmd_Maker:
     type_name = "gt.driver.booleanactuator.cmd"
-    version = "100"
+    version = "101"
 
     def __init__(
         self,
-        relay_state: int,
-        sh_node_alias: str,
-        command_time_unix_ms: int,
     ):
-        self.tuple = GtDriverBooleanactuatorCmd(
-            RelayState=relay_state,
-            ShNodeAlias=sh_node_alias,
-            CommandTimeUnixMs=command_time_unix_ms,
-        )
+        self.tuple = GtDriverBooleanactuatorCmd()
 
     @classmethod
     def tuple_to_type(cls, tuple: GtDriverBooleanactuatorCmd) -> bytes:
@@ -159,7 +117,7 @@ class GtDriverBooleanactuatorCmd_Maker:
     @classmethod
     def dict_to_tuple(cls, d: dict[str, Any]) -> GtDriverBooleanactuatorCmd:
         """
-        Deserialize a dictionary representation of a gt.driver.booleanactuator.cmd.100 message object
+        Deserialize a dictionary representation of a gt.driver.booleanactuator.cmd.101 message object
         into a GtDriverBooleanactuatorCmd python object for internal use.
 
         This is the near-inverse of the GtDriverBooleanactuatorCmd.as_dict() method:
@@ -181,21 +139,15 @@ class GtDriverBooleanactuatorCmd_Maker:
             GtDriverBooleanactuatorCmd
         """
         d2 = dict(d)
-        if "RelayState" not in d2.keys():
-            raise SchemaError(f"dict missing RelayState: <{d2}>")
-        if "ShNodeAlias" not in d2.keys():
-            raise SchemaError(f"dict missing ShNodeAlias: <{d2}>")
-        if "CommandTimeUnixMs" not in d2.keys():
-            raise SchemaError(f"dict missing CommandTimeUnixMs: <{d2}>")
         if "TypeName" not in d2.keys():
             raise SchemaError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():
             raise SchemaError(f"Version missing from dict <{d2}>")
-        if d2["Version"] != "100":
+        if d2["Version"] != "101":
             LOGGER.debug(
-                f"Attempting to interpret gt.driver.booleanactuator.cmd version {d2['Version']} as version 100"
+                f"Attempting to interpret gt.driver.booleanactuator.cmd version {d2['Version']} as version 101"
             )
-            d2["Version"] = "100"
+            d2["Version"] = "101"
         return GtDriverBooleanactuatorCmd(**d2)
 
 
@@ -218,37 +170,6 @@ def check_is_bit(v: int) -> None:
         raise ValueError(f"<{v}> must be 0 or 1")
 
 
-def check_is_left_right_dot(v: str) -> None:
-    """Checks LeftRightDot Format
-
-    LeftRightDot format: Lowercase alphanumeric words separated by periods, with
-    the most significant word (on the left) starting with an alphabet character.
-
-    Args:
-        v (str): the candidate
-
-    Raises:
-        ValueError: if v is not LeftRightDot format
-    """
-    from typing import List
-
-    try:
-        x: List[str] = v.split(".")
-    except:
-        raise ValueError(f"Failed to seperate <{v}> into words with split'.'")
-    first_word = x[0]
-    first_char = first_word[0]
-    if not first_char.isalpha():
-        raise ValueError(
-            f"Most significant word of <{v}> must start with alphabet char."
-        )
-    for word in x:
-        if not word.isalnum():
-            raise ValueError(f"words of <{v}> split by by '.' must be alphanumeric.")
-    if not v.islower():
-        raise ValueError(f"All characters of <{v}> must be lowercase.")
-
-
 def check_is_reasonable_unix_time_ms(v: int) -> None:
     """Checks ReasonableUnixTimeMs format
 
@@ -266,3 +187,38 @@ def check_is_reasonable_unix_time_ms(v: int) -> None:
         raise ValueError(f"<{v}> must be after Jan 1 2000")
     if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp * 1000 < v:  # type: ignore[attr-defined]
         raise ValueError(f"<{v}> must be before Jan 1 3000")
+
+
+def check_is_spaceheat_name(v: str) -> None:
+    """Check SpaceheatName Format.
+
+    Validates if the provided string adheres to the SpaceheatName format:
+    Lowercase words separated by periods, where word characters can be alphanumeric
+    or a hyphen, and the first word starts with an alphabet character.
+
+    Args:
+        candidate (str): The string to be validated.
+
+    Raises:
+        ValueError: If the provided string is not in SpaceheatName format.
+    """
+    from typing import List
+
+    try:
+        x: List[str] = v.split(".")
+    except:
+        raise ValueError(f"Failed to seperate <{v}> into words with split'.'")
+    first_word = x[0]
+    first_char = first_word[0]
+    if not first_char.isalpha():
+        raise ValueError(
+            f"Most significant word of <{v}> must start with alphabet char."
+        )
+    for word in x:
+        for char in word:
+            if not (char.isalnum() or char == "-"):
+                raise ValueError(
+                    f"words of <{v}> split by by '.' must be alphanumeric or hyphen."
+                )
+    if not v.islower():
+        raise ValueError(f"<{v}> must be lowercase.")

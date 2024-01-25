@@ -1,4 +1,4 @@
-"""Type component.attribute.class.gt, version 000"""
+"""Type component.attribute.class.gt, version 001"""
 import json
 import logging
 from typing import Any
@@ -7,10 +7,12 @@ from typing import Literal
 from typing import Optional
 
 from pydantic import BaseModel
+from pydantic import Extra
 from pydantic import Field
 from pydantic import validator
 
 from gwproto.data_classes.component_attribute_class import ComponentAttributeClass
+from gwproto.enums import MakeModel as EnumMakeModel
 from gwproto.errors import SchemaError
 
 
@@ -42,6 +44,11 @@ class ComponentAttributeClassGt(BaseModel):
             "the component will point to its ComponentAttributeClassId)."
         ),
     )
+    MakeModel: Optional[EnumMakeModel] = Field(
+        title="MakeModel",
+        description="MakeModel of the component.",
+        default=None,
+    )
     DisplayName: Optional[str] = Field(
         title="DisplayName",
         description=(
@@ -50,8 +57,16 @@ class ComponentAttributeClassGt(BaseModel):
         ),
         default=None,
     )
+    MinPollPeriodMs: Optional[int] = Field(
+        title="Min Poll Period Ms",
+        description="The minimum amount of time between polls of this device .",
+        default=None,
+    )
     TypeName: Literal["component.attribute.class.gt"] = "component.attribute.class.gt"
-    Version: Literal["000"] = "000"
+    Version: Literal["001"] = "001"
+
+    class Config:
+        extra = Extra.allow
 
     @validator("ComponentAttributeClassId")
     def _check_component_attribute_class_id(cls, v: str) -> str:
@@ -63,14 +78,26 @@ class ComponentAttributeClassGt(BaseModel):
             )
         return v
 
+    @validator("MinPollPeriodMs")
+    def _check_min_poll_period_ms(cls, v: Optional[int]) -> Optional[int]:
+        if v is None:
+            return v
+        try:
+            check_is_positive_integer(v)
+        except ValueError as e:
+            raise ValueError(
+                f"MinPollPeriodMs failed PositiveInteger format validation: {e}"
+            )
+        return v
+
     def as_dict(self) -> Dict[str, Any]:
         """
         Translate the object into a dictionary representation that can be serialized into a
-        component.attribute.class.gt.000 object.
+        component.attribute.class.gt.001 object.
 
         This method prepares the object for serialization by the as_type method, creating a
         dictionary with key-value pairs that follow the requirements for an instance of the
-        component.attribute.class.gt.000 type. Unlike the standard python dict method,
+        component.attribute.class.gt.001 type. Unlike the standard python dict method,
         it makes the following substantive changes:
         - Enum Values: Translates between the values used locally by the actor to the symbol
         sent in messages.
@@ -86,14 +113,17 @@ class ComponentAttributeClassGt(BaseModel):
             ).items()
             if value is not None
         }
+        if "MakeModel" in d.keys():
+            del d["MakeModel"]
+            d["MakeModelGtEnumSymbol"] = EnumMakeModel.value_to_symbol(self.MakeModel)
         return d
 
     def as_type(self) -> bytes:
         """
-        Serialize to the component.attribute.class.gt.000 representation.
+        Serialize to the component.attribute.class.gt.001 representation.
 
-        Instances in the class are python-native representations of component.attribute.class.gt.000
-        objects, while the actual component.attribute.class.gt.000 object is the serialized UTF-8 byte
+        Instances in the class are python-native representations of component.attribute.class.gt.001
+        objects, while the actual component.attribute.class.gt.001 object is the serialized UTF-8 byte
         string designed for sending in a message.
 
         This method calls the as_dict() method, which differs from the native python dict()
@@ -118,16 +148,20 @@ class ComponentAttributeClassGt(BaseModel):
 
 class ComponentAttributeClassGt_Maker:
     type_name = "component.attribute.class.gt"
-    version = "000"
+    version = "001"
 
     def __init__(
         self,
         component_attribute_class_id: str,
+        make_model: Optional[EnumMakeModel],
         display_name: Optional[str],
+        min_poll_period_ms: Optional[int],
     ):
         self.tuple = ComponentAttributeClassGt(
             ComponentAttributeClassId=component_attribute_class_id,
+            MakeModel=make_model,
             DisplayName=display_name,
+            MinPollPeriodMs=min_poll_period_ms,
         )
 
     @classmethod
@@ -153,7 +187,7 @@ class ComponentAttributeClassGt_Maker:
     @classmethod
     def dict_to_tuple(cls, d: dict[str, Any]) -> ComponentAttributeClassGt:
         """
-        Deserialize a dictionary representation of a component.attribute.class.gt.000 message object
+        Deserialize a dictionary representation of a component.attribute.class.gt.001 message object
         into a ComponentAttributeClassGt python object for internal use.
 
         This is the near-inverse of the ComponentAttributeClassGt.as_dict() method:
@@ -177,15 +211,18 @@ class ComponentAttributeClassGt_Maker:
         d2 = dict(d)
         if "ComponentAttributeClassId" not in d2.keys():
             raise SchemaError(f"dict missing ComponentAttributeClassId: <{d2}>")
+        if "MakeModel" in d2.keys():
+            value = EnumMakeModel.symbol_to_value(d2["MakeModelGtEnumSymbol"])
+            d2["MakeModel"] = EnumMakeModel(value)
         if "TypeName" not in d2.keys():
             raise SchemaError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():
             raise SchemaError(f"Version missing from dict <{d2}>")
-        if d2["Version"] != "000":
+        if d2["Version"] != "001":
             LOGGER.debug(
-                f"Attempting to interpret component.attribute.class.gt version {d2['Version']} as version 000"
+                f"Attempting to interpret component.attribute.class.gt version {d2['Version']} as version 001"
             )
-            d2["Version"] = "000"
+            d2["Version"] = "001"
         return ComponentAttributeClassGt(**d2)
 
     @classmethod
@@ -195,7 +232,9 @@ class ComponentAttributeClassGt_Maker:
         else:
             dc = ComponentAttributeClass(
                 component_attribute_class_id=t.ComponentAttributeClassId,
+                make_model=t.MakeModel,
                 display_name=t.DisplayName,
+                min_poll_period_ms=t.MinPollPeriodMs,
             )
         return dc
 
@@ -203,7 +242,9 @@ class ComponentAttributeClassGt_Maker:
     def dc_to_tuple(cls, dc: ComponentAttributeClass) -> ComponentAttributeClassGt:
         t = ComponentAttributeClassGt_Maker(
             component_attribute_class_id=dc.component_attribute_class_id,
+            make_model=dc.make_model,
             display_name=dc.display_name,
+            min_poll_period_ms=dc.min_poll_period_ms,
         ).tuple
         return t
 
@@ -218,38 +259,3 @@ class ComponentAttributeClassGt_Maker:
     @classmethod
     def dict_to_dc(cls, d: dict[Any, str]) -> ComponentAttributeClass:
         return cls.tuple_to_dc(cls.dict_to_tuple(d))
-
-
-def check_is_uuid_canonical_textual(v: str) -> None:
-    """Checks UuidCanonicalTextual format
-
-    UuidCanonicalTextual format:  A string of hex words separated by hyphens
-    of length 8-4-4-4-12.
-
-    Args:
-        v (str): the candidate
-
-    Raises:
-        ValueError: if v is not UuidCanonicalTextual format
-    """
-    try:
-        x = v.split("-")
-    except AttributeError as e:
-        raise ValueError(f"Failed to split on -: {e}")
-    if len(x) != 5:
-        raise ValueError(f"<{v}> split by '-' did not have 5 words")
-    for hex_word in x:
-        try:
-            int(hex_word, 16)
-        except ValueError:
-            raise ValueError(f"Words of <{v}> are not all hex")
-    if len(x[0]) != 8:
-        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
-    if len(x[1]) != 4:
-        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
-    if len(x[2]) != 4:
-        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
-    if len(x[3]) != 4:
-        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
-    if len(x[4]) != 12:
-        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")

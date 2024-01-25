@@ -1,0 +1,56 @@
+{
+  "gtr_asl": "001",
+  "type_name": "channel.readings",
+  "version": "000",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": ". A list of timestamped readings (values) for a data channel (AboutName, CapturedByName, TelemetryName).",
+  "properties": {
+    "DataChannel": {
+      "type": "data.channel.000",
+      "description": "The Data Channel that this batch of timestamped values is about.",
+      "required": true
+    },
+    "ValueList": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "The values of the readings.",
+      "required": true
+    },
+    "ScadaReadTimeUnixMsList": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "format": "ReasonableUnixTimeMs",
+      "title": "List of Read Times",
+      "description": "The times that the MultipurposeSensor took the readings, in unix milliseconds",
+      "required": true
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "channel.readings",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "000",
+      "required": true
+    }
+  },
+  "axioms": {
+    "Axiom1": {
+      "title": "ListLengthConsistency",
+      "description": "ValueList and ReadTimeUnixMsList must have the same length."
+    }
+  },
+  "formats": {
+    "ReasonableUnixTimeMs": {
+      "type": "string",
+      "description": "An integer reflecting unix time in MILLISECONDS between midnight Jan 1 2000 and midnight Jan 1 3000 UTC",
+      "example": "1702327940710"
+    }
+  }
+}

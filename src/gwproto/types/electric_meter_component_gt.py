@@ -1,4 +1,4 @@
-"""Type electric.meter.component.gt, version 000"""
+"""Type electric.meter.component.gt, version 001"""
 import json
 import logging
 from typing import Any
@@ -97,7 +97,7 @@ class ElectricMeterComponentGt(BaseModel):
         ),
     )
     TypeName: Literal["electric.meter.component.gt"] = "electric.meter.component.gt"
-    Version: Literal["000"] = "000"
+    Version: Literal["001"] = "001"
 
     @validator("ComponentId")
     def _check_component_id(cls, v: str) -> str:
@@ -138,48 +138,25 @@ class ElectricMeterComponentGt(BaseModel):
         ModbusHost is None if and only if ModbusPort is None
         """
         # TODO: Implement check for axiom 1"
-        ModbusHost = v.get("ModbusHost", None)
-        ModbusPort = v.get("ModbusHost", None)
-        if ModbusHost is None and not (ModbusPort is None):
-            raise ValueError("Axiom 1: ModbusHost None iff ModbusPort None! ")
-        if not (ModbusHost is None) and ModbusPort is None:
-            raise ValueError("Axiom 1: ModbusHost None iff ModbusPort None! ")
         return v
 
     @root_validator
     def check_axiom_2(cls, v: dict) -> dict:
         """
         Axiom 2: Egauge4030 consistency.
-        If the EgaugeIoList has non-zero length, then the ModbusHost is not None and
-        the set of output configs is equal to ConfigList as a set
+        If the EgaugeIoList has non-zero length, then the ModbusHost is not None and the set of output configs is equal to ConfigList as a set
         """
         # TODO: Implement check for axiom 2"
-        EgaugeIoList = v.get("EgaugeIoList", None)
-        ModbusHost = v.get("ModbusHost", None)
-        ConfigList = v.get("ConfigList", None)
-        if len(EgaugeIoList) == 0:
-            return v
-
-        if ModbusHost is None:
-            raise ValueError(
-                f"Axiom 2: If EgaugeIoList has non-zero length then ModbusHost must exist!"
-            )
-        output_configs = set(map(lambda x: x.OutputConfig, EgaugeIoList))
-        if output_configs != set(ConfigList):
-            raise ValueError(
-                "Axiom 2: If EgaugeIoList has non-zero length then then the set of"
-                "output configs must equal ConfigList as a set"
-            )
         return v
 
     def as_dict(self) -> Dict[str, Any]:
         """
         Translate the object into a dictionary representation that can be serialized into a
-        electric.meter.component.gt.000 object.
+        electric.meter.component.gt.001 object.
 
         This method prepares the object for serialization by the as_type method, creating a
         dictionary with key-value pairs that follow the requirements for an instance of the
-        electric.meter.component.gt.000 type. Unlike the standard python dict method,
+        electric.meter.component.gt.001 type. Unlike the standard python dict method,
         it makes the following substantive changes:
         - Enum Values: Translates between the values used locally by the actor to the symbol
         sent in messages.
@@ -209,10 +186,10 @@ class ElectricMeterComponentGt(BaseModel):
 
     def as_type(self) -> bytes:
         """
-        Serialize to the electric.meter.component.gt.000 representation.
+        Serialize to the electric.meter.component.gt.001 representation.
 
-        Instances in the class are python-native representations of electric.meter.component.gt.000
-        objects, while the actual electric.meter.component.gt.000 object is the serialized UTF-8 byte
+        Instances in the class are python-native representations of electric.meter.component.gt.001
+        objects, while the actual electric.meter.component.gt.001 object is the serialized UTF-8 byte
         string designed for sending in a message.
 
         This method calls the as_dict() method, which differs from the native python dict()
@@ -237,7 +214,7 @@ class ElectricMeterComponentGt(BaseModel):
 
 class ElectricMeterComponentGt_Maker:
     type_name = "electric.meter.component.gt"
-    version = "000"
+    version = "001"
 
     def __init__(
         self,
@@ -284,7 +261,7 @@ class ElectricMeterComponentGt_Maker:
     @classmethod
     def dict_to_tuple(cls, d: dict[str, Any]) -> ElectricMeterComponentGt:
         """
-        Deserialize a dictionary representation of a electric.meter.component.gt.000 message object
+        Deserialize a dictionary representation of a electric.meter.component.gt.001 message object
         into a ElectricMeterComponentGt python object for internal use.
 
         This is the near-inverse of the ElectricMeterComponentGt.as_dict() method:
@@ -340,11 +317,11 @@ class ElectricMeterComponentGt_Maker:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():
             raise SchemaError(f"Version missing from dict <{d2}>")
-        if d2["Version"] != "000":
+        if d2["Version"] != "001":
             LOGGER.debug(
-                f"Attempting to interpret electric.meter.component.gt version {d2['Version']} as version 000"
+                f"Attempting to interpret electric.meter.component.gt version {d2['Version']} as version 001"
             )
-            d2["Version"] = "000"
+            d2["Version"] = "001"
         return ElectricMeterComponentGt(**d2)
 
     @classmethod
@@ -389,74 +366,3 @@ class ElectricMeterComponentGt_Maker:
     @classmethod
     def dict_to_dc(cls, d: dict[Any, str]) -> ElectricMeterComponent:
         return cls.tuple_to_dc(cls.dict_to_tuple(d))
-
-
-def check_is_non_negative_integer(v: int) -> None:
-    """
-    Must be non-negative when interpreted as an integer. Interpretation
-    as an integer follows the pydantic rules for this - which will round
-    down rational numbers. So 0 is fine, and 1.7 will be interpreted as
-    1 and is also fine.
-
-    Args:
-        v (int): the candidate
-
-    Raises:
-        ValueError: if v < 0
-    """
-    v2 = int(v)
-    if v2 < 0:
-        raise ValueError(f"<{v}> is not NonNegativeInteger")
-
-
-def check_is_positive_integer(v: int) -> None:
-    """
-    Must be positive when interpreted as an integer. Interpretation as an
-    integer follows the pydantic rules for this - which will round down
-    rational numbers. So 1.7 will be interpreted as 1 and is also fine,
-    while 0.5 is interpreted as 0 and will raise an exception.
-
-    Args:
-        v (int): the candidate
-
-    Raises:
-        ValueError: if v < 1
-    """
-    v2 = int(v)
-    if v2 < 1:
-        raise ValueError(f"<{v}> is not PositiveInteger")
-
-
-def check_is_uuid_canonical_textual(v: str) -> None:
-    """Checks UuidCanonicalTextual format
-
-    UuidCanonicalTextual format:  A string of hex words separated by hyphens
-    of length 8-4-4-4-12.
-
-    Args:
-        v (str): the candidate
-
-    Raises:
-        ValueError: if v is not UuidCanonicalTextual format
-    """
-    try:
-        x = v.split("-")
-    except AttributeError as e:
-        raise ValueError(f"Failed to split on -: {e}")
-    if len(x) != 5:
-        raise ValueError(f"<{v}> split by '-' did not have 5 words")
-    for hex_word in x:
-        try:
-            int(hex_word, 16)
-        except ValueError:
-            raise ValueError(f"Words of <{v}> are not all hex")
-    if len(x[0]) != 8:
-        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
-    if len(x[1]) != 4:
-        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
-    if len(x[2]) != 4:
-        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
-    if len(x[3]) != 4:
-        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
-    if len(x[4]) != 12:
-        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")

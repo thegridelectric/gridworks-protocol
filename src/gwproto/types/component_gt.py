@@ -1,4 +1,4 @@
-"""Type component.gt, version 000"""
+"""Type component.gt, version 001"""
 import json
 import logging
 from typing import Any
@@ -7,6 +7,7 @@ from typing import Literal
 from typing import Optional
 
 from pydantic import BaseModel
+from pydantic import Extra
 from pydantic import Field
 from pydantic import validator
 
@@ -36,9 +37,13 @@ class ComponentGt(BaseModel):
     [More info](https://g-node-registry.readthedocs.io/en/latest/component.html)
     """
 
-    ComponentId: str = Field(
-        title="Component Id",
-        description="Primary identifier for components in all GridWorks registries.",
+    : Optional[] = Field(
+        title="",
+        default=None,
+    )
+    ComponentId: Optional[] = Field(
+        title="ComponentId",
+        default=None,
     )
     ComponentAttributeClassId: str = Field(
         title="ComponentAttributeClassId",
@@ -63,17 +68,10 @@ class ComponentGt(BaseModel):
         default=None,
     )
     TypeName: Literal["component.gt"] = "component.gt"
-    Version: Literal["000"] = "000"
+    Version: Literal["001"] = "001"
 
-    @validator("ComponentId")
-    def _check_component_id(cls, v: str) -> str:
-        try:
-            check_is_uuid_canonical_textual(v)
-        except ValueError as e:
-            raise ValueError(
-                f"ComponentId failed UuidCanonicalTextual format validation: {e}"
-            )
-        return v
+    class Config:
+        extra = Extra.allow
 
     @validator("ComponentAttributeClassId")
     def _check_component_attribute_class_id(cls, v: str) -> str:
@@ -88,11 +86,11 @@ class ComponentGt(BaseModel):
     def as_dict(self) -> Dict[str, Any]:
         """
         Translate the object into a dictionary representation that can be serialized into a
-        component.gt.000 object.
+        component.gt.001 object.
 
         This method prepares the object for serialization by the as_type method, creating a
         dictionary with key-value pairs that follow the requirements for an instance of the
-        component.gt.000 type. Unlike the standard python dict method,
+        component.gt.001 type. Unlike the standard python dict method,
         it makes the following substantive changes:
         - Enum Values: Translates between the values used locally by the actor to the symbol
         sent in messages.
@@ -112,10 +110,10 @@ class ComponentGt(BaseModel):
 
     def as_type(self) -> bytes:
         """
-        Serialize to the component.gt.000 representation.
+        Serialize to the component.gt.001 representation.
 
-        Instances in the class are python-native representations of component.gt.000
-        objects, while the actual component.gt.000 object is the serialized UTF-8 byte
+        Instances in the class are python-native representations of component.gt.001
+        objects, while the actual component.gt.001 object is the serialized UTF-8 byte
         string designed for sending in a message.
 
         This method calls the as_dict() method, which differs from the native python dict()
@@ -140,16 +138,18 @@ class ComponentGt(BaseModel):
 
 class ComponentGt_Maker:
     type_name = "component.gt"
-    version = "000"
+    version = "001"
 
     def __init__(
         self,
-        component_id: str,
+        : Optional[],
+        component_id: Optional[],
         component_attribute_class_id: str,
         display_name: Optional[str],
         hw_uid: Optional[str],
     ):
         self.tuple = ComponentGt(
+            =,
             ComponentId=component_id,
             ComponentAttributeClassId=component_attribute_class_id,
             DisplayName=display_name,
@@ -179,7 +179,7 @@ class ComponentGt_Maker:
     @classmethod
     def dict_to_tuple(cls, d: dict[str, Any]) -> ComponentGt:
         """
-        Deserialize a dictionary representation of a component.gt.000 message object
+        Deserialize a dictionary representation of a component.gt.001 message object
         into a ComponentGt python object for internal use.
 
         This is the near-inverse of the ComponentGt.as_dict() method:
@@ -201,19 +201,17 @@ class ComponentGt_Maker:
             ComponentGt
         """
         d2 = dict(d)
-        if "ComponentId" not in d2.keys():
-            raise SchemaError(f"dict missing ComponentId: <{d2}>")
         if "ComponentAttributeClassId" not in d2.keys():
             raise SchemaError(f"dict missing ComponentAttributeClass: <{d2}>")
         if "TypeName" not in d2.keys():
             raise SchemaError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():
             raise SchemaError(f"Version missing from dict <{d2}>")
-        if d2["Version"] != "000":
+        if d2["Version"] != "001":
             LOGGER.debug(
-                f"Attempting to interpret component.gt version {d2['Version']} as version 000"
+                f"Attempting to interpret component.gt version {d2['Version']} as version 001"
             )
-            d2["Version"] = "000"
+            d2["Version"] = "001"
         return ComponentGt(**d2)
 
     @classmethod
@@ -222,6 +220,7 @@ class ComponentGt_Maker:
             dc = Component.by_id[t.ComponentId]
         else:
             dc = Component(
+                =t.,
                 component_id=t.ComponentId,
                 component_attribute_class_id=t.ComponentAttributeClassId,
                 display_name=t.DisplayName,
@@ -232,6 +231,7 @@ class ComponentGt_Maker:
     @classmethod
     def dc_to_tuple(cls, dc: Component) -> ComponentGt:
         t = ComponentGt_Maker(
+            =dc.,
             component_id=dc.component_id,
             component_attribute_class_id=dc.component_attribute_class_id,
             display_name=dc.display_name,
@@ -250,38 +250,3 @@ class ComponentGt_Maker:
     @classmethod
     def dict_to_dc(cls, d: dict[Any, str]) -> Component:
         return cls.tuple_to_dc(cls.dict_to_tuple(d))
-
-
-def check_is_uuid_canonical_textual(v: str) -> None:
-    """Checks UuidCanonicalTextual format
-
-    UuidCanonicalTextual format:  A string of hex words separated by hyphens
-    of length 8-4-4-4-12.
-
-    Args:
-        v (str): the candidate
-
-    Raises:
-        ValueError: if v is not UuidCanonicalTextual format
-    """
-    try:
-        x = v.split("-")
-    except AttributeError as e:
-        raise ValueError(f"Failed to split on -: {e}")
-    if len(x) != 5:
-        raise ValueError(f"<{v}> split by '-' did not have 5 words")
-    for hex_word in x:
-        try:
-            int(hex_word, 16)
-        except ValueError:
-            raise ValueError(f"Words of <{v}> are not all hex")
-    if len(x[0]) != 8:
-        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
-    if len(x[1]) != 4:
-        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
-    if len(x[2]) != 4:
-        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
-    if len(x[3]) != 4:
-        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
-    if len(x[4]) != 12:
-        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")

@@ -1,4 +1,4 @@
-"""Type snapshot.spaceheat, version 000"""
+"""Type snapshot.spaceheat, version 001"""
 import json
 import logging
 from typing import Any
@@ -34,7 +34,7 @@ class SnapshotSpaceheat(BaseModel):
         title="Snapshot",
     )
     TypeName: Literal["snapshot.spaceheat"] = "snapshot.spaceheat"
-    Version: Literal["000"] = "000"
+    Version: Literal["001"] = "001"
 
     @validator("FromGNodeAlias")
     def _check_from_g_node_alias(cls, v: str) -> str:
@@ -59,11 +59,11 @@ class SnapshotSpaceheat(BaseModel):
     def as_dict(self) -> Dict[str, Any]:
         """
         Translate the object into a dictionary representation that can be serialized into a
-        snapshot.spaceheat.000 object.
+        snapshot.spaceheat.001 object.
 
         This method prepares the object for serialization by the as_type method, creating a
         dictionary with key-value pairs that follow the requirements for an instance of the
-        snapshot.spaceheat.000 type. Unlike the standard python dict method,
+        snapshot.spaceheat.001 type. Unlike the standard python dict method,
         it makes the following substantive changes:
         - Enum Values: Translates between the values used locally by the actor to the symbol
         sent in messages.
@@ -84,10 +84,10 @@ class SnapshotSpaceheat(BaseModel):
 
     def as_type(self) -> bytes:
         """
-        Serialize to the snapshot.spaceheat.000 representation.
+        Serialize to the snapshot.spaceheat.001 representation.
 
-        Instances in the class are python-native representations of snapshot.spaceheat.000
-        objects, while the actual snapshot.spaceheat.000 object is the serialized UTF-8 byte
+        Instances in the class are python-native representations of snapshot.spaceheat.001
+        objects, while the actual snapshot.spaceheat.001 object is the serialized UTF-8 byte
         string designed for sending in a message.
 
         This method calls the as_dict() method, which differs from the native python dict()
@@ -112,7 +112,7 @@ class SnapshotSpaceheat(BaseModel):
 
 class SnapshotSpaceheat_Maker:
     type_name = "snapshot.spaceheat"
-    version = "000"
+    version = "001"
 
     def __init__(
         self,
@@ -149,7 +149,7 @@ class SnapshotSpaceheat_Maker:
     @classmethod
     def dict_to_tuple(cls, d: dict[str, Any]) -> SnapshotSpaceheat:
         """
-        Deserialize a dictionary representation of a snapshot.spaceheat.000 message object
+        Deserialize a dictionary representation of a snapshot.spaceheat.001 message object
         into a SnapshotSpaceheat python object for internal use.
 
         This is the near-inverse of the SnapshotSpaceheat.as_dict() method:
@@ -187,75 +187,9 @@ class SnapshotSpaceheat_Maker:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():
             raise SchemaError(f"Version missing from dict <{d2}>")
-        if d2["Version"] != "000":
+        if d2["Version"] != "001":
             LOGGER.debug(
-                f"Attempting to interpret snapshot.spaceheat version {d2['Version']} as version 000"
+                f"Attempting to interpret snapshot.spaceheat version {d2['Version']} as version 001"
             )
-            d2["Version"] = "000"
+            d2["Version"] = "001"
         return SnapshotSpaceheat(**d2)
-
-
-def check_is_left_right_dot(v: str) -> None:
-    """Checks LeftRightDot Format
-
-    LeftRightDot format: Lowercase alphanumeric words separated by periods, with
-    the most significant word (on the left) starting with an alphabet character.
-
-    Args:
-        v (str): the candidate
-
-    Raises:
-        ValueError: if v is not LeftRightDot format
-    """
-    from typing import List
-
-    try:
-        x: List[str] = v.split(".")
-    except:
-        raise ValueError(f"Failed to seperate <{v}> into words with split'.'")
-    first_word = x[0]
-    first_char = first_word[0]
-    if not first_char.isalpha():
-        raise ValueError(
-            f"Most significant word of <{v}> must start with alphabet char."
-        )
-    for word in x:
-        if not word.isalnum():
-            raise ValueError(f"words of <{v}> split by by '.' must be alphanumeric.")
-    if not v.islower():
-        raise ValueError(f"All characters of <{v}> must be lowercase.")
-
-
-def check_is_uuid_canonical_textual(v: str) -> None:
-    """Checks UuidCanonicalTextual format
-
-    UuidCanonicalTextual format:  A string of hex words separated by hyphens
-    of length 8-4-4-4-12.
-
-    Args:
-        v (str): the candidate
-
-    Raises:
-        ValueError: if v is not UuidCanonicalTextual format
-    """
-    try:
-        x = v.split("-")
-    except AttributeError as e:
-        raise ValueError(f"Failed to split on -: {e}")
-    if len(x) != 5:
-        raise ValueError(f"<{v}> split by '-' did not have 5 words")
-    for hex_word in x:
-        try:
-            int(hex_word, 16)
-        except ValueError:
-            raise ValueError(f"Words of <{v}> are not all hex")
-    if len(x[0]) != 8:
-        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
-    if len(x[1]) != 4:
-        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
-    if len(x[2]) != 4:
-        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
-    if len(x[3]) != 4:
-        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
-    if len(x[4]) != 12:
-        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")

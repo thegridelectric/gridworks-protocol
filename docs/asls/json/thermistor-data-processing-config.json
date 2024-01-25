@@ -1,0 +1,51 @@
+{
+  "gtr_asl": "001",
+  "type_name": "thermistor.data.processing.config",
+  "version": "000",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": ". How does polled raw data get turned into a captured temperature reading? This config type provides that information.",
+  "properties": {
+    "TerminalBlockIdx": {
+      "type": "integer",
+      "format": "PositiveInteger",
+      "title": "Terminal Block Index",
+      "description": "If the reading Node uses terminal blocks for inputs (e.g. thermistors or current transformers), and it has multiple terminal blocks, then one needs to know which terminal block to read. For example, al Ads111xBasedComponents use this.",
+      "required": true
+    },
+    "ReportingConfig": {
+      "type": "telemetry.reporting.config.001",
+      "description": "This includes the standard non-thermistor-specific reporting configuration data.",
+      "required": true
+    },
+    "DataProcessingMethod": {
+      "type": "string",
+      "format": "thermistor.data.method",
+      "title": "Data Processing Method",
+      "description": "What method is used to go from polled raw voltage to captured temperature readings? Not applicable if the data channel is voltage.",
+      "required": false
+    },
+    "DataProcessingDescription": {
+      "type": "string",
+      "description": "Additional information to flesh out and articulate the data processing method enum. For example, if the method is an exponential weighted average of temperature readings achieved with the beta formula, how is the weighting determined?",
+      "required": false
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "thermistor.data.processing.config",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "000",
+      "required": true
+    }
+  },
+  "formats": {
+    "PositiveInteger": {
+      "type": "string",
+      "description": "Must be positive when interpreted as an integer. Interpretation as an integer follows the pydantic rules for this - which will round down rational numbers. So 1.7 will be interpreted as 1 and is also fine, while 0.5 is interpreted as 0 and will raise an exception.",
+      "example": ""
+    }
+  }
+}

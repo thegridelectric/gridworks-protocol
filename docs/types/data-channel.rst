@@ -6,7 +6,7 @@ Python pydantic class corresponding to json type `data.channel`, version `000`.
     :members:
 
 **DisplayName**:
-    - Description: Display Name. This display name is the handle for the data channel. It is meant to be set by the person/people who will be analyzing time series data. It is only expected to be unique within the data channels associated to a specific Terminal Asset.
+    - Description: Display Name. This display name is the handle for the data channel. It is meant to be set by the person/people who will be analyzing time series data. It is only expected to be unique within the data channels associated to a specific Terminal Asset. 
 
 **AboutName**:
     - Description: About Name. The name of the SpaceheatNode whose physical quantities are getting captured.
@@ -33,3 +33,4 @@ Python pydantic class corresponding to json type `data.channel`, version `000`.
 
 .. autoclass:: gwproto.types.DataChannel_Maker
     :members:
+

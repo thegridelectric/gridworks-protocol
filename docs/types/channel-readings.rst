@@ -1,0 +1,32 @@
+ChannelReadings
+==========================
+Python pydantic class corresponding to json type `channel.readings`, version `000`.
+
+.. autoclass:: gwproto.types.ChannelReadings
+    :members:
+
+**DataChannel**:
+    - Description: Data Channel. The Data Channel that this batch of timestamped values is about.
+
+**ValueList**:
+    - Description: List of Values. The values of the readings. 
+
+**ScadaReadTimeUnixMsList**:
+    - Description: List of Read Times. The times that the MultipurposeSensor took the readings, in unix milliseconds
+    - Format: ReasonableUnixTimeMs
+
+**TypeName**:
+    - Description: All GridWorks Versioned Types have a fixed TypeName, which is a string of lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character, and final word NOT all Hindu-Arabic numerals.
+
+**Version**:
+    - Description: All GridWorks Versioned Types have a fixed version, which is a string of three Hindu-Arabic numerals.
+
+
+
+.. autoclass:: gwproto.types.channel_readings.check_is_reasonable_unix_time_ms
+    :members:
+
+
+.. autoclass:: gwproto.types.ChannelReadings_Maker
+    :members:
+

@@ -9,10 +9,8 @@
       "type": "string",
       "required": true
     },
-    "ComponentAttributeClassId": {
-      "type": "string",
-      "format": "UuidCanonicalTextual",
-      "title": "Unique identifier for HubitatPollerCac object articulated by the hubitat.poller.cac.gt.000 type.",
+    "ComponentAttributeClass": {
+      "type": "",
       "required": true
     },
     "DisplayName": {

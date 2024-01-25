@@ -1,44 +1,29 @@
 SpaceheatNodeGt
 ==========================
-Python pydantic class corresponding to json type `spaceheat.node.gt`, version `100`.
+Python pydantic class corresponding to json type `spaceheat.node.gt`, version `101`.
 
 .. autoclass:: gwproto.types.SpaceheatNodeGt
     :members:
 
 **ShNodeId**:
-    - Description:
+    - Description: Spaceheat Node Id. Immutable identifier for a Spaceheat Node.
     - Format: UuidCanonicalTextual
 
-**Alias**:
-    - Description:
-    - Format: LeftRightDot
+**Name**:
+    - Description: Functional identifier for a Spaceheat Node. Names indicate chain of command via the "dot" hierarchy. That is, `a.b` will only listen to commands from `a`. This name can and will change, in particular, for Nodes that are under the AtomicTNode chain of command when the dispatch contract is live.
+    - Format: SpaceheatName
 
 **ActorClass**:
-    - Description:
-
-**Role**:
-    - Description:
+    - Description: 
 
 **DisplayName**:
-    - Description:
+    - Description: 
 
 **ComponentId**:
     - Description: Unique identifier for Spaceheat Node's Component. Used if a Spaceheat Node is associated with a physical device.
-    - Format: UuidCanonicalTextual
-
-**ReportingSamplePeriodS**:
-    - Description:
-
-**RatedVoltageV**:
-    - Description:
-    - Format: PositiveInteger
-
-**TypicalVoltageV**:
-    - Description:
-    - Format: PositiveInteger
 
 **InPowerMetering**:
-    - Description:
+    - Description: This exists and is True if the SpaceheatNode is part of the power metering that is used for market participation. Small loads like circulator pumps and fans may be metered to determine their behavior but are are likely NOT part of the power metering used for market participation. 
 
 **TypeName**:
     - Description: All GridWorks Versioned Types have a fixed TypeName, which is a string of lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character, and final word NOT all Hindu-Arabic numerals.
@@ -52,13 +37,10 @@ Python pydantic class corresponding to json type `spaceheat.node.gt`, version `1
     :members:
 
 
-.. autoclass:: gwproto.types.spaceheat_node_gt.check_is_positive_integer
-    :members:
-
-
-.. autoclass:: gwproto.types.spaceheat_node_gt.check_is_left_right_dot
+.. autoclass:: gwproto.types.spaceheat_node_gt.check_is_spaceheat_name
     :members:
 
 
 .. autoclass:: gwproto.types.SpaceheatNodeGt_Maker
     :members:
+

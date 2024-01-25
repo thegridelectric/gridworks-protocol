@@ -1,4 +1,4 @@
-"""Tests spaceheat.node.gt type, version 100"""
+"""Tests spaceheat.node.gt type, version 101"""
 import json
 
 import pytest
@@ -13,17 +13,13 @@ from gwproto.types import SpaceheatNodeGt_Maker as Maker
 def test_spaceheat_node_gt_generated() -> None:
     d = {
         "ShNodeId": "41f2ae73-8782-406d-bda7-a95b5abe317e",
-        "Alias": "a.elt1",
+        "Name": "h.elt1",
         "ActorClassGtEnumSymbol": "638bf97b",
-        "RoleGtEnumSymbol": "5a28eb2e",
         "DisplayName": "First boost element",
         "ComponentId": "80f95280-e999-49e0-a0e4-a7faf3b5b3bd",
-        "ReportingSamplePeriodS": 300,
-        "RatedVoltageV": 240,
-        "TypicalVoltageV": 225,
         "InPowerMetering": False,
         "TypeName": "spaceheat.node.gt",
-        "Version": "100",
+        "Version": "101",
     }
 
     with pytest.raises(SchemaError):
@@ -42,14 +38,10 @@ def test_spaceheat_node_gt_generated() -> None:
     # test Maker init
     t = Maker(
         sh_node_id=gtuple.ShNodeId,
-        alias=gtuple.Alias,
+        name=gtuple.Name,
         actor_class=gtuple.ActorClass,
-        role=gtuple.Role,
         display_name=gtuple.DisplayName,
         component_id=gtuple.ComponentId,
-        reporting_sample_period_s=gtuple.ReportingSamplePeriodS,
-        rated_voltage_v=gtuple.RatedVoltageV,
-        typical_voltage_v=gtuple.TypicalVoltageV,
         in_power_metering=gtuple.InPowerMetering,
     ).tuple
     assert t == gtuple
@@ -77,17 +69,12 @@ def test_spaceheat_node_gt_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["Alias"]
+    del d2["Name"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
     del d2["ActorClassGtEnumSymbol"]
-    with pytest.raises(SchemaError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d)
-    del d2["RoleGtEnumSymbol"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -106,21 +93,6 @@ def test_spaceheat_node_gt_generated() -> None:
     Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    if "ReportingSamplePeriodS" in d2.keys():
-        del d2["ReportingSamplePeriodS"]
-    Maker.dict_to_tuple(d2)
-
-    d2 = dict(d)
-    if "RatedVoltageV" in d2.keys():
-        del d2["RatedVoltageV"]
-    Maker.dict_to_tuple(d2)
-
-    d2 = dict(d)
-    if "TypicalVoltageV" in d2.keys():
-        del d2["TypicalVoltageV"]
-    Maker.dict_to_tuple(d2)
-
-    d2 = dict(d)
     if "InPowerMetering" in d2.keys():
         del d2["InPowerMetering"]
     Maker.dict_to_tuple(d2)
@@ -131,21 +103,6 @@ def test_spaceheat_node_gt_generated() -> None:
 
     d2 = dict(d, ActorClassGtEnumSymbol="unknown_symbol")
     Maker.dict_to_tuple(d2).ActorClass == ActorClass.default()
-
-    d2 = dict(d, RoleGtEnumSymbol="unknown_symbol")
-    Maker.dict_to_tuple(d2).Role == Role.default()
-
-    d2 = dict(d, ReportingSamplePeriodS="300.1")
-    with pytest.raises(ValidationError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d, RatedVoltageV="240.1")
-    with pytest.raises(ValidationError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d, TypicalVoltageV="225.1")
-    with pytest.raises(ValidationError):
-        Maker.dict_to_tuple(d2)
 
     d2 = dict(d, InPowerMetering="this is not a boolean")
     with pytest.raises(ValidationError):
@@ -167,16 +124,6 @@ def test_spaceheat_node_gt_generated() -> None:
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, Alias="a.b-h")
+    d2 = dict(d, Name="A.hot-stuff")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
-
-    d2 = dict(d, RatedVoltageV=0)
-    with pytest.raises(ValidationError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d, TypicalVoltageV=0)
-    with pytest.raises(ValidationError):
-        Maker.dict_to_tuple(d2)
-
-    # End of Test

@@ -1,0 +1,20 @@
+{
+  "gtr_asl": "001",
+  "type_name": "i2c.multichannel.dt.relay.component.gt",
+  "version": "000",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": "I2c Multichannel Double Throw Relay Component. A specific instance of a board with multiple double-throw electromechanical relays. The board is expected to be addressable over i2c, with that address being configurable to a finite number of choices via dipswitches.",
+  "properties": {
+    "TypeName": {
+      "type": "string",
+      "value": "i2c.multichannel.dt.relay.component.gt",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "000",
+      "required": true
+    }
+  }
+}

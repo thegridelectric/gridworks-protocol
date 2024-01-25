@@ -1,4 +1,4 @@
-"""Type telemetry.snapshot.spaceheat, version 000"""
+"""Type telemetry.snapshot.spaceheat, version 001"""
 import json
 import logging
 from typing import Any
@@ -11,8 +11,9 @@ from pydantic import Field
 from pydantic import root_validator
 from pydantic import validator
 
-from gwproto.enums import TelemetryName
 from gwproto.errors import SchemaError
+from gwproto.types.data_channel import DataChannel
+from gwproto.types.data_channel import DataChannel_Maker
 
 
 LOG_FORMAT = (
@@ -33,48 +34,31 @@ class TelemetrySnapshotSpaceheat(BaseModel):
     [More info](https://gridworks-protocol.readthedocs.io/en/latest/spaceheat-node.html)
     """
 
-    ReportTimeUnixMs: int = Field(
-        title="ReportTimeUnixMs",
+    DataChannelList: List[DataChannel] = Field(
+        title="Data Channel List",
         description=(
-            "The time, in unix ms, that the SCADA creates this type. It may not be when the SCADA "
-            "sends the type to the atn (for example if Internet is down)."
-        ),
-    )
-    AboutNodeAliasList: List[str] = Field(
-        title="AboutNodeAliases",
-        description=(
-            "The list of Spaceheat nodes in the snapshot."
+            "The list of Data Channels in the Snapshot"
             "[More info](https://gridworks-protocol.readthedocs.io/en/latest/spaceheat-node.html)"
         ),
     )
     ValueList: List[int] = Field(
         title="ValueList",
     )
-    TelemetryNameList: List[TelemetryName] = Field(
-        title="TelemetryNameList",
-        description="[More info](https://gridworks-protocol.readthedocs.io/en/latest/telemetry-name.html)",
+    ScadaReadTimeUnixMsList: List[int] = Field(
+        title="ReportTimeUnixMs",
+        description="The time, in unix ms, that each reading was taken.",
     )
     TypeName: Literal["telemetry.snapshot.spaceheat"] = "telemetry.snapshot.spaceheat"
-    Version: Literal["000"] = "000"
+    Version: Literal["001"] = "001"
 
-    @validator("ReportTimeUnixMs")
-    def _check_report_time_unix_ms(cls, v: int) -> int:
-        try:
-            check_is_reasonable_unix_time_ms(v)
-        except ValueError as e:
-            raise ValueError(
-                f"ReportTimeUnixMs failed ReasonableUnixTimeMs format validation: {e}"
-            )
-        return v
-
-    @validator("AboutNodeAliasList")
-    def _check_about_node_alias_list(cls, v: List[str]) -> List[str]:
+    @validator("ScadaReadTimeUnixMsList")
+    def _check_scada_read_time_unix_ms_list(cls, v: List[int]) -> List[int]:
         for elt in v:
             try:
-                check_is_left_right_dot(elt)
+                check_is_reasonable_unix_time_ms(elt)
             except ValueError as e:
                 raise ValueError(
-                    f"AboutNodeAliasList element {elt} failed LeftRightDot format validation: {e}"
+                    f"ScadaReadTimeUnixMsList element {elt} failed ReasonableUnixTimeMs format validation: {e}"
                 )
         return v
 
@@ -82,25 +66,19 @@ class TelemetrySnapshotSpaceheat(BaseModel):
     def check_axiom_1(cls, v: dict) -> dict:
         """
         Axiom 1: ListLengthConsistency.
-        AboutNodeAliasList, ValueList and TelemetryNameList must all have the same length.
+        DataChannelList, ValueList, and ScadaReadTimeUnixMs must all have the same length.
         """
-        alias_list: List[str] = v.get("AboutNodeAliasList", None)
-        value_list: List[int] = v.get("ValueList", None)
-        tn_list: List[TelemetryName] = v.get("TelemetryNameList", None)
-        if (len(value_list) != len(alias_list)) or (len(value_list) != len(tn_list)):
-            raise ValueError(
-                "Axiom 1: AboutNodeAliasList, ValueList and TelemetryNameList must all have the same length."
-            )
+        # TODO: Implement check for axiom 1"
         return v
 
     def as_dict(self) -> Dict[str, Any]:
         """
         Translate the object into a dictionary representation that can be serialized into a
-        telemetry.snapshot.spaceheat.000 object.
+        telemetry.snapshot.spaceheat.001 object.
 
         This method prepares the object for serialization by the as_type method, creating a
         dictionary with key-value pairs that follow the requirements for an instance of the
-        telemetry.snapshot.spaceheat.000 type. Unlike the standard python dict method,
+        telemetry.snapshot.spaceheat.001 type. Unlike the standard python dict method,
         it makes the following substantive changes:
         - Enum Values: Translates between the values used locally by the actor to the symbol
         sent in messages.
@@ -116,19 +94,19 @@ class TelemetrySnapshotSpaceheat(BaseModel):
             ).items()
             if value is not None
         }
-        del d["TelemetryNameList"]
-        telemetry_name_list = []
-        for elt in self.TelemetryNameList:
-            telemetry_name_list.append(TelemetryName.value_to_symbol(elt.value))
-        d["TelemetryNameList"] = telemetry_name_list
+        # Recursively calling as_dict()
+        data_channel_list = []
+        for elt in self.DataChannelList:
+            data_channel_list.append(elt.as_dict())
+        d["DataChannelList"] = data_channel_list
         return d
 
     def as_type(self) -> bytes:
         """
-        Serialize to the telemetry.snapshot.spaceheat.000 representation.
+        Serialize to the telemetry.snapshot.spaceheat.001 representation.
 
-        Instances in the class are python-native representations of telemetry.snapshot.spaceheat.000
-        objects, while the actual telemetry.snapshot.spaceheat.000 object is the serialized UTF-8 byte
+        Instances in the class are python-native representations of telemetry.snapshot.spaceheat.001
+        objects, while the actual telemetry.snapshot.spaceheat.001 object is the serialized UTF-8 byte
         string designed for sending in a message.
 
         This method calls the as_dict() method, which differs from the native python dict()
@@ -153,20 +131,18 @@ class TelemetrySnapshotSpaceheat(BaseModel):
 
 class TelemetrySnapshotSpaceheat_Maker:
     type_name = "telemetry.snapshot.spaceheat"
-    version = "000"
+    version = "001"
 
     def __init__(
         self,
-        report_time_unix_ms: int,
-        about_node_alias_list: List[str],
+        data_channel_list: List[DataChannel],
         value_list: List[int],
-        telemetry_name_list: List[TelemetryName],
+        scada_read_time_unix_ms_list: List[int],
     ):
         self.tuple = TelemetrySnapshotSpaceheat(
-            ReportTimeUnixMs=report_time_unix_ms,
-            AboutNodeAliasList=about_node_alias_list,
+            DataChannelList=data_channel_list,
             ValueList=value_list,
-            TelemetryNameList=telemetry_name_list,
+            ScadaReadTimeUnixMsList=scada_read_time_unix_ms_list,
         )
 
     @classmethod
@@ -192,7 +168,7 @@ class TelemetrySnapshotSpaceheat_Maker:
     @classmethod
     def dict_to_tuple(cls, d: dict[str, Any]) -> TelemetrySnapshotSpaceheat:
         """
-        Deserialize a dictionary representation of a telemetry.snapshot.spaceheat.000 message object
+        Deserialize a dictionary representation of a telemetry.snapshot.spaceheat.001 message object
         into a TelemetrySnapshotSpaceheat python object for internal use.
 
         This is the near-inverse of the TelemetrySnapshotSpaceheat.as_dict() method:
@@ -214,78 +190,32 @@ class TelemetrySnapshotSpaceheat_Maker:
             TelemetrySnapshotSpaceheat
         """
         d2 = dict(d)
-        if "ReportTimeUnixMs" not in d2.keys():
-            raise SchemaError(f"dict missing ReportTimeUnixMs: <{d2}>")
-        if "AboutNodeAliasList" not in d2.keys():
-            raise SchemaError(f"dict missing AboutNodeAliasList: <{d2}>")
+        if "DataChannelList" not in d2.keys():
+            raise SchemaError(f"dict missing DataChannelList: <{d2}>")
+        if not isinstance(d2["DataChannelList"], List):
+            raise SchemaError(
+                f"DataChannelList <{d2['DataChannelList']}> must be a List!"
+            )
+        data_channel_list = []
+        for elt in d2["DataChannelList"]:
+            if not isinstance(elt, dict):
+                raise SchemaError(
+                    f"DataChannelList <{d2['DataChannelList']}> must be a List of DataChannel types"
+                )
+            t = DataChannel_Maker.dict_to_tuple(elt)
+            data_channel_list.append(t)
+        d2["DataChannelList"] = data_channel_list
         if "ValueList" not in d2.keys():
             raise SchemaError(f"dict missing ValueList: <{d2}>")
-        if "TelemetryNameList" not in d2.keys():
-            raise SchemaError(f"dict <{d2}> missing TelemetryNameList")
-        if not isinstance(d2["TelemetryNameList"], List):
-            raise SchemaError("TelemetryNameList must be a List!")
-        telemetry_name_list = []
-        for elt in d2["TelemetryNameList"]:
-            value = TelemetryName.symbol_to_value(elt)
-            telemetry_name_list.append(TelemetryName(value))
-        d2["TelemetryNameList"] = telemetry_name_list
+        if "ScadaReadTimeUnixMsList" not in d2.keys():
+            raise SchemaError(f"dict missing ScadaReadTimeUnixMsList: <{d2}>")
         if "TypeName" not in d2.keys():
             raise SchemaError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():
             raise SchemaError(f"Version missing from dict <{d2}>")
-        if d2["Version"] != "000":
+        if d2["Version"] != "001":
             LOGGER.debug(
-                f"Attempting to interpret telemetry.snapshot.spaceheat version {d2['Version']} as version 000"
+                f"Attempting to interpret telemetry.snapshot.spaceheat version {d2['Version']} as version 001"
             )
-            d2["Version"] = "000"
+            d2["Version"] = "001"
         return TelemetrySnapshotSpaceheat(**d2)
-
-
-def check_is_left_right_dot(v: str) -> None:
-    """Checks LeftRightDot Format
-
-    LeftRightDot format: Lowercase alphanumeric words separated by periods, with
-    the most significant word (on the left) starting with an alphabet character.
-
-    Args:
-        v (str): the candidate
-
-    Raises:
-        ValueError: if v is not LeftRightDot format
-    """
-    from typing import List
-
-    try:
-        x: List[str] = v.split(".")
-    except:
-        raise ValueError(f"Failed to seperate <{v}> into words with split'.'")
-    first_word = x[0]
-    first_char = first_word[0]
-    if not first_char.isalpha():
-        raise ValueError(
-            f"Most significant word of <{v}> must start with alphabet char."
-        )
-    for word in x:
-        if not word.isalnum():
-            raise ValueError(f"words of <{v}> split by by '.' must be alphanumeric.")
-    if not v.islower():
-        raise ValueError(f"All characters of <{v}> must be lowercase.")
-
-
-def check_is_reasonable_unix_time_ms(v: int) -> None:
-    """Checks ReasonableUnixTimeMs format
-
-    ReasonableUnixTimeMs format: unix milliseconds between Jan 1 2000 and Jan 1 3000
-
-    Args:
-        v (int): the candidate
-
-    Raises:
-        ValueError: if v is not ReasonableUnixTimeMs format
-    """
-    import pendulum
-
-    if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp * 1000 > v:  # type: ignore[attr-defined]
-        raise ValueError(f"<{v}> must be after Jan 1 2000")
-    if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp * 1000 < v:  # type: ignore[attr-defined]
-        raise ValueError(f"<{v}> must be before Jan 1 3000")

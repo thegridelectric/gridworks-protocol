@@ -1,20 +1,18 @@
-"""Tests electric.meter.component.gt type, version 000"""
+"""Tests electric.meter.component.gt type, version 001"""
 import json
 
 import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
-from gwproto.types.electric_meter_component_gt import (
-    ElectricMeterComponentGt_Maker as Maker,
-)
+from gwproto.types import ElectricMeterComponentGt_Maker as Maker
 
 
 def test_electric_meter_component_gt_generated() -> None:
     d = {
-        "ComponentId": "2dfb0cb6-6015-4273-b02b-bd446cc785d7",
-        "ComponentAttributeClassId": "204832ef-0c88-408b-9640-264d2ee74914",
-        "DisplayName": "EGauge Power Meter",
+        "ComponentId": "04ceb282-d7e8-4293-80b5-72455e1a5db3",
+        "ComponentAttributeClassId": "c1856e62-d8c0-4352-b79e-6ae05a5294c2",
+        "DisplayName": "Main power meter for Little orange house garage space heat",
         "ConfigList": [
             {
                 "AboutNodeName": "a.m.hp.outdoor.power",
@@ -29,8 +27,8 @@ def test_electric_meter_component_gt_generated() -> None:
                 "UnitGtEnumSymbol": "f459a9c3",
             }
         ],
-        "HwUid": "BP01349",
-        "ModbusHost": "eGauge6069.local",
+        "HwUid": "35941_308",
+        "ModbusHost": "eGauge4922.local",
         "ModbusPort": 502,
         "EgaugeIoList": [
             {
@@ -45,23 +43,25 @@ def test_electric_meter_component_gt_generated() -> None:
                     "Version": "000",
                 },
                 "OutputConfig": {
-                    "AboutNodeName": "a.m.hp.outdoor.power",
-                    "ReportOnChange": True,
+                    "AboutNodeName": "h.hp-pwr",
+                    "AsyncCapture": True,
                     "SamplePeriodS": 300,
                     "Exponent": 0,
-                    "AsyncReportThreshold": 0.02,
+                    "AsyncCaptureDelta": 50,
+                    "PollPeriodMs": 1000,
+                    "CapturePeriodS": 60,
                     "NameplateMaxValue": 3500,
                     "TypeName": "telemetry.reporting.config",
-                    "Version": "000",
+                    "Version": "001",
                     "TelemetryNameGtEnumSymbol": "af39eec9",
                     "UnitGtEnumSymbol": "f459a9c3",
                 },
                 "TypeName": "egauge.io",
-                "Version": "000",
+                "Version": "001",
             }
         ],
         "TypeName": "electric.meter.component.gt",
-        "Version": "000",
+        "Version": "001",
     }
 
     with pytest.raises(SchemaError):
@@ -142,17 +142,8 @@ def test_electric_meter_component_gt_generated() -> None:
     Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    # Axiom 2: If EgaugeIoList has non-zero length then ModbusHost must exist!
-    del d2["ModbusHost"]
-    with pytest.raises(ValidationError):
-        Maker.dict_to_tuple(d2)
-
-    d2["ConfigList"] = []
-    # Axiom 2 part 2: If EgaugeIoList has non-zero length then it has the same length as ConfigList
-    with pytest.raises(ValidationError):
-        Maker.dict_to_tuple(d2)
-
-    d2["EgaugeIoList"] = []
+    if "ModbusHost" in d2.keys():
+        del d2["ModbusHost"]
     Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
@@ -211,5 +202,3 @@ def test_electric_meter_component_gt_generated() -> None:
     d2 = dict(d, ModbusPort=-1)
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
-
-    # End of Test

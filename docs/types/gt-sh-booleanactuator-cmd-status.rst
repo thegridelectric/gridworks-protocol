@@ -1,19 +1,20 @@
 GtShBooleanactuatorCmdStatus
 ==========================
-Python pydantic class corresponding to json type `gt.sh.booleanactuator.cmd.status`, version `100`.
+Python pydantic class corresponding to json type `gt.sh.booleanactuator.cmd.status`, version `101`.
 
 .. autoclass:: gwproto.types.GtShBooleanactuatorCmdStatus
     :members:
 
-**ShNodeAlias**:
+**ShNodeName**:
     - Description: SpaceheatNodeAlias. The alias of the spaceheat node that is getting actuated. For example, `a.elt1.relay` would likely indicate the relay for a resistive element.
     - Format: LeftRightDot
 
 **RelayStateCommandList**:
-    - Description: List of RelayStateCommands.
+    - Description: List of RelayStateCommands. This is only intended for use for relays where the two states are either closing a circuit so that power is on ( "1") or opening it ("0").
+    - Format: Bit
 
 **CommandTimeUnixMsList**:
-    - Description: List of Command Times.
+    - Description: List of Command Times. 
     - Format: ReasonableUnixTimeMs
 
 **TypeName**:
@@ -24,7 +25,7 @@ Python pydantic class corresponding to json type `gt.sh.booleanactuator.cmd.stat
 
 
 
-.. autoclass:: gwproto.types.gt_sh_booleanactuator_cmd_status.check_is_left_right_dot
+.. autoclass:: gwproto.types.gt_sh_booleanactuator_cmd_status.check_is_spaceheat_name
     :members:
 
 
@@ -34,3 +35,4 @@ Python pydantic class corresponding to json type `gt.sh.booleanactuator.cmd.stat
 
 .. autoclass:: gwproto.types.GtShBooleanactuatorCmdStatus_Maker
     :members:
+

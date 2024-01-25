@@ -1,12 +1,12 @@
 {
   "gtr_asl": "001",
   "type_name": "gt.sh.booleanactuator.cmd.status",
-  "version": "100",
+  "version": "101",
   "owner": "gridworks@gridworks-consulting.com",
   "description": "Boolean  Actuator Driver Command Status Package. This is a subtype of the status message sent from a SCADA to its AtomicTNode. It contains a list of all the commands that a particular boolean actuator actor has reported as sending as actuation commands to its driver in the last transmission period (typically 5 minutes).",
   "url": "https://gridworks.readthedocs.io/en/latest/relay-state.html",
   "properties": {
-    "ShNodeAlias": {
+    "ShNodeName": {
       "type": "string",
       "format": "LeftRightDot",
       "title": "SpaceheatNodeAlias",
@@ -18,6 +18,9 @@
       "items": {
         "type": "integer"
       },
+      "format": "Bit",
+      "title": "List of RelayStateCommands",
+      "description": "This is only intended for use for relays where the two states are either closing a circuit so that power is on ( "1") or opening it ("0").",
       "required": true
     },
     "CommandTimeUnixMsList": {
@@ -37,15 +40,15 @@
     "Version": {
       "type": "string",
       "title": "The type version",
-      "default": "100",
+      "default": "101",
       "required": true
     }
   },
   "formats": {
-    "LeftRightDot": {
+    "SpaceheatName": {
       "type": "string",
-      "description": "Lowercase alphanumeric words separated by periods, with the most significant word (on the left) starting with an alphabet character.",
-      "example": "dw1.isone.me.freedom.apple"
+      "description": "Lowercase words separated by periods, where the word characters can be alphanumeric or a hyphen and the first word starts with an alphabet character.",
+      "example": "store-hot-pipe"
     },
     "ReasonableUnixTimeMs": {
       "type": "string",

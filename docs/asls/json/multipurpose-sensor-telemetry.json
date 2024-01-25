@@ -1,0 +1,67 @@
+{
+  "gtr_asl": "001",
+  "type_name": "multipurpose.sensor.telemetry",
+  "version": "000",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": ". A set of readings made at the same time by a multipurpose sensor, sent by SpaceheatNode actor capturing the data (which will be associated to some sort of multipurpose sensing component) to its SCADA. The nth element of each of its three readings are coupled: AboutNodeName, what the value is, what the TelemetryName is.",
+  "properties": {
+    "ScadaReadTimeUnixMs": {
+      "type": "integer",
+      "format": "ReasonableUnixTimeMs",
+      "title": "ScadaReadTime in Unix MilliSeconds",
+      "description": "The single time, in unix milliseconds, assigned to this list of readings.",
+      "required": true
+    },
+    "AboutNodeNameList": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "format": "SpaceheatName",
+      "title": "AboutNodeAliasList",
+      "description": "List of names of the SpaceHeat Nodes getting measured.",
+      "required": true
+    },
+    "TelemetryNameList": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "format": "spaceheat.telemetry.name",
+      "title": "TelemetryNameList",
+      "description": "List of the TelemetryNames. The nth name in this list indicates the TelemetryName of the nth alias in the AboutNodeAliasList.",
+      "required": true
+    },
+    "ValueList": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "List of the values read.",
+      "required": true
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "multipurpose.sensor.telemetry",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "000",
+      "required": true
+    }
+  },
+  "formats": {
+    "SpaceheatName": {
+      "type": "string",
+      "description": "Lowercase words separated by periods, where the word characters can be alphanumeric or a hyphen and the first word starts with an alphabet character.",
+      "example": "store-hot-pipe"
+    },
+    "ReasonableUnixTimeMs": {
+      "type": "string",
+      "description": "An integer reflecting unix time in MILLISECONDS between midnight Jan 1 2000 and midnight Jan 1 3000 UTC",
+      "example": "1702327940710"
+    }
+  }
+}

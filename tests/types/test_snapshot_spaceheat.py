@@ -1,4 +1,4 @@
-"""Tests snapshot.spaceheat type, version 000"""
+"""Tests snapshot.spaceheat type, version 001"""
 import json
 
 import pytest
@@ -12,16 +12,9 @@ def test_snapshot_spaceheat_generated() -> None:
     d = {
         "FromGNodeAlias": "dwtest.isone.ct.newhaven.orange1.ta.scada",
         "FromGNodeInstanceId": "0384ef21-648b-4455-b917-58a1172d7fc1",
-        "Snapshot": {
-            "TelemetryNameList": ["5a71d4b3"],
-            "AboutNodeAliasList": ["a.elt1.relay"],
-            "ReportTimeUnixMs": 1656363448000,
-            "ValueList": [1],
-            "TypeName": "telemetry.snapshot.spaceheat",
-            "Version": "000",
-        },
+        "Snapshot": ,
         "TypeName": "snapshot.spaceheat",
-        "Version": "000",
+        "Version": "001",
     }
 
     with pytest.raises(SchemaError):
@@ -42,6 +35,7 @@ def test_snapshot_spaceheat_generated() -> None:
         from_g_node_alias=gtuple.FromGNodeAlias,
         from_g_node_instance_id=gtuple.FromGNodeInstanceId,
         snapshot=gtuple.Snapshot,
+        
     ).tuple
     assert t == gtuple
 
@@ -92,5 +86,3 @@ def test_snapshot_spaceheat_generated() -> None:
     d2 = dict(d, FromGNodeInstanceId="d4be12d5-33ba-4f1f-b9e5")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
-
-    # End of Test

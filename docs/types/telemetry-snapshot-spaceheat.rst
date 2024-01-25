@@ -1,23 +1,19 @@
 TelemetrySnapshotSpaceheat
 ==========================
-Python pydantic class corresponding to json type `telemetry.snapshot.spaceheat`, version `000`.
+Python pydantic class corresponding to json type `telemetry.snapshot.spaceheat`, version `001`.
 
 .. autoclass:: gwproto.types.TelemetrySnapshotSpaceheat
     :members:
 
-**ReportTimeUnixMs**:
-    - Description: ReportTimeUnixMs. The time, in unix ms, that the SCADA creates this type. It may not be when the SCADA sends the type to the atn (for example if Internet is down).
-    - Format: ReasonableUnixTimeMs
-
-**AboutNodeAliasList**:
-    - Description: AboutNodeAliases. The list of Spaceheat nodes in the snapshot.
-    - Format: LeftRightDot
+**DataChannelList**:
+    - Description: Data Channel List. The list of Data Channels in the Snapshot
 
 **ValueList**:
-    - Description: ValueList.
+    - Description: ValueList. 
 
-**TelemetryNameList**:
-    - Description:
+**ScadaReadTimeUnixMsList**:
+    - Description: ReportTimeUnixMs. The time, in unix ms, that each reading was taken.
+    - Format: ReasonableUnixTimeMs
 
 **TypeName**:
     - Description: All GridWorks Versioned Types have a fixed TypeName, which is a string of lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character, and final word NOT all Hindu-Arabic numerals.
@@ -27,13 +23,6 @@ Python pydantic class corresponding to json type `telemetry.snapshot.spaceheat`,
 
 
 
-.. autoclass:: gwproto.types.telemetry_snapshot_spaceheat.check_is_left_right_dot
-    :members:
-
-
-.. autoclass:: gwproto.types.telemetry_snapshot_spaceheat.check_is_reasonable_unix_time_ms
-    :members:
-
-
 .. autoclass:: gwproto.types.TelemetrySnapshotSpaceheat_Maker
     :members:
+

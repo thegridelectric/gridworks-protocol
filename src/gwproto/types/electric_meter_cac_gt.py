@@ -223,6 +223,7 @@ class ElectricMeterCacGt_Maker:
             raise SchemaError(f"MakeModelGtEnumSymbol missing from dict <{d2}>")
         value = EnumMakeModel.symbol_to_value(d2["MakeModelGtEnumSymbol"])
         d2["MakeModel"] = EnumMakeModel(value)
+        del d2["MakeModelGtEnumSymbol"]
         if "TelemetryNameList" not in d2.keys():
             raise SchemaError(f"dict <{d2}> missing TelemetryNameList")
         if not isinstance(d2["TelemetryNameList"], List):
@@ -238,6 +239,7 @@ class ElectricMeterCacGt_Maker:
             raise SchemaError(f"InterfaceGtEnumSymbol missing from dict <{d2}>")
         value = LocalCommInterface.symbol_to_value(d2["InterfaceGtEnumSymbol"])
         d2["Interface"] = LocalCommInterface(value)
+        del d2["InterfaceGtEnumSymbol"]
         if "TypeName" not in d2.keys():
             raise SchemaError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():

@@ -64,7 +64,7 @@ class Ads111xBasedComponentGt(BaseModel):
     OpenVoltageByAds: List[] = Field(
         title="Open Voltage By Ads",
         description=(
-            "The voltage reading with no thermistor attached is called the "open voltage." It "
+            "The voltage reading with no thermistor attached is called the 'open voltage.' It "
             "is close to the power supply voltage (e.g. 5V) , but we have found that there is "
             "non-trivial variation (~0.2 V), and there can even be variation in the average open "
             "voltage in the same installation across different ADS chips (~0.01 or 0.02V)."

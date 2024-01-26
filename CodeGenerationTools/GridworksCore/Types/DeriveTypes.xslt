@@ -198,11 +198,12 @@ class </xsl:text>
     <!-- Type Description, wrapped, if it exists -->
     <xsl:if test="(normalize-space(Description) != '')">
     <xsl:call-template name="wrap-text">
-        <xsl:with-param name="text" select="normalize-space(Description)"/>
+        <xsl:with-param name="text" select="normalize-space(concat(Description, ' ', UpdateDescription))"/>
         <xsl:with-param name="indent-spaces" select="4"/>
     </xsl:call-template>
     </xsl:if>
 
+    
     <xsl:if test="(normalize-space(Url) != '')">
     <xsl:text>
 

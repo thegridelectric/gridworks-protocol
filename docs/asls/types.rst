@@ -98,10 +98,6 @@ keyparam.change.log.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/keyparam-change-log.json
 
-multipurpose.sensor.telemetry.000
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/multipurpose-sensor-telemetry.json
-
 power.watts.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/power-watts.json
@@ -122,9 +118,9 @@ rest.poller.component.gt.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/rest-poller-component-gt.json
 
-simple.sensor.telemetry.000
+single.reading.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/simple-sensor-telemetry.json
+.. literalinclude:: json/single-reading.json
 
 snapshot.spaceheat.001
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -133,6 +129,10 @@ snapshot.spaceheat.001
 spaceheat.node.gt.101
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/spaceheat-node-gt.json
+
+synced.readings.000
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. literalinclude:: json/synced-readings.json
 
 ta.data.channels.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -149,4 +149,3 @@ telemetry.snapshot.spaceheat.001
 thermistor.data.processing.config.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/thermistor-data-processing-config.json
-

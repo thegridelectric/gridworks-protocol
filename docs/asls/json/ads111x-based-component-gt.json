@@ -30,7 +30,9 @@
       "items": {
         "type": "number"
       },
-      "description": "The voltage reading with no thermistor attached is called the "open voltage." It is close to the power supply voltage (e.g. 5V) , but we have found that there is non-trivial variation (~0.2 V), and there can even be variation in the average open voltage in the same installation across different ADS chips (~0.01 or 0.02V).",
+      "format": "Near5",
+      "title": "Open Voltage By Ads",
+      "description": "The voltage reading with no thermistor attached is called the 'open voltage.' It is close to the power supply voltage (e.g. 5V) , but we have found that there is non-trivial variation (~0.2 V), and there can even be variation in the average open voltage in the same installation across different ADS chips (~0.01 or 0.02V). This list follows the same order as the self.cac.AdsI2cAddressList.",
       "required": true
     },
     "ConfigList": {
@@ -57,6 +59,12 @@
       "required": true
     }
   },
+  "axioms": {
+    "Axiom1": {
+      "title": "Terminal Block, TelemetryName uniqueness",
+      "description": "Each pair (x.TerminalBlockIdx, x.ReportingConfig.TelemetryName) in the ConfigList is unique."
+    }
+  },
   "formats": {
     "UuidCanonicalTextual": {
       "type": "string",
@@ -67,6 +75,11 @@
       "type": "string",
       "description": "ToLower(v) in ["0x48", "0x49", "0x4a", 0x4b"]. One of the 4 allowable I2C addresses for Texas Instrument Ads1115 chips.",
       "example": ""
+    },
+    "Near5": {
+      "type": "string",
+      "description": "4.5 < x < 5.5",
+      "example": "4.7"
     }
   }
 }

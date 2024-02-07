@@ -31,7 +31,8 @@ class ComponentAttributeClassGt(BaseModel):
     The WorldRegistry is part of the GridWorks 'BackOffice' structure for managing relational
     device data. Generally speaking, a component attribute class is meant to specify WHAT you
     might order from a plumbing supply store to 'get the same part.' The Component refers to
-    something that will have a specific serial number.
+    something that will have a specific serial number. Add optional MakeModel and MinPollPeriodMs;
+    allow extra.
 
     [More info](https://g-node-registry.readthedocs.io/en/latest/component-attribute-class.html)
     """
@@ -44,10 +45,9 @@ class ComponentAttributeClassGt(BaseModel):
             "the component will point to its ComponentAttributeClassId)."
         ),
     )
-    MakeModel: Optional[EnumMakeModel] = Field(
+    MakeModel: EnumMakeModel = Field(
         title="MakeModel",
         description="MakeModel of the component.",
-        default=None,
     )
     DisplayName: Optional[str] = Field(
         title="DisplayName",
@@ -59,7 +59,7 @@ class ComponentAttributeClassGt(BaseModel):
     )
     MinPollPeriodMs: Optional[int] = Field(
         title="Min Poll Period Ms",
-        description="The minimum amount of time between polls of this device .",
+        description="The minimum amount of time between polls of this device.",
         default=None,
     )
     TypeName: Literal["component.attribute.class.gt"] = "component.attribute.class.gt"
@@ -113,9 +113,8 @@ class ComponentAttributeClassGt(BaseModel):
             ).items()
             if value is not None
         }
-        if "MakeModel" in d.keys():
-            del d["MakeModel"]
-            d["MakeModelGtEnumSymbol"] = EnumMakeModel.value_to_symbol(self.MakeModel)
+        del d["MakeModel"]
+        d["MakeModelGtEnumSymbol"] = EnumMakeModel.value_to_symbol(self.MakeModel)
         return d
 
     def as_type(self) -> bytes:
@@ -153,7 +152,7 @@ class ComponentAttributeClassGt_Maker:
     def __init__(
         self,
         component_attribute_class_id: str,
-        make_model: Optional[EnumMakeModel],
+        make_model: EnumMakeModel,
         display_name: Optional[str],
         min_poll_period_ms: Optional[int],
     ):
@@ -211,9 +210,11 @@ class ComponentAttributeClassGt_Maker:
         d2 = dict(d)
         if "ComponentAttributeClassId" not in d2.keys():
             raise SchemaError(f"dict missing ComponentAttributeClassId: <{d2}>")
-        if "MakeModel" in d2.keys():
-            value = EnumMakeModel.symbol_to_value(d2["MakeModelGtEnumSymbol"])
-            d2["MakeModel"] = EnumMakeModel(value)
+        if "MakeModelGtEnumSymbol" not in d2.keys():
+            raise SchemaError(f"MakeModelGtEnumSymbol missing from dict <{d2}>")
+        value = EnumMakeModel.symbol_to_value(d2["MakeModelGtEnumSymbol"])
+        d2["MakeModel"] = EnumMakeModel(value)
+        del d2["MakeModelGtEnumSymbol"]
         if "TypeName" not in d2.keys():
             raise SchemaError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():

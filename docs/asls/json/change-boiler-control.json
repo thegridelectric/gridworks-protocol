@@ -1,0 +1,15 @@
+{
+  "gtr_asl": "001",
+  "enum_name": "change.boiler.control",
+  "enum_version": "000",
+  "description": "",
+  "ssot": "https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeboilercontrol",
+  "values": ["SwitchToTankAquastat", "SwitchToScada"],
+  "value_to_symbol": { "SwitchToTankAquastat": "", "SwitchToScada": "" },
+  "value_to_version": { "SwitchToTankAquastat": "000", "SwitchToScada": "000" },
+  "value_descriptions": {
+    "SwitchToTankAquastat": "",
+    "SwitchToScada": ""
+  },
+  "default_value": "SwitchToTankAquastat"
+}

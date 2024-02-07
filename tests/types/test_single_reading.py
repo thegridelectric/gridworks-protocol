@@ -1,21 +1,20 @@
-"""Tests multipurpose.sensor.telemetry type, version 000"""
+"""Tests single.reading type, version 000"""
 import json
 
 import pytest
 from pydantic import ValidationError
 
-from gwproto.enums import TelemetryName
 from gwproto.errors import SchemaError
-from gwproto.types import MultipurposeSensorTelemetry_Maker as Maker
+from gwproto.types import SingleReading_Maker as Maker
 
 
-def test_multipurpose_sensor_telemetry_generated() -> None:
+def test_single_reading_generated() -> None:
     d = {
-        "ScadaReadTimeUnixMs": 1656587343297,
-        "AboutNodeNameList": ["a.elt1"],
-        "TelemetryNameList": ["ad19e79c"],
-        "ValueList": [18000],
-        "TypeName": "multipurpose.sensor.telemetry",
+        "ScadaReadTimeUnixMs": 1656513094288,
+        "AboutNodeNameGtEnumSymbol": "c89d0ba1",
+        "TelemetryName": ,
+        "Value": 63430,
+        "TypeName": "single.reading",
         "Version": "000",
     }
 
@@ -35,9 +34,10 @@ def test_multipurpose_sensor_telemetry_generated() -> None:
     # test Maker init
     t = Maker(
         scada_read_time_unix_ms=gtuple.ScadaReadTimeUnixMs,
-        about_node_name_list=gtuple.AboutNodeNameList,
-        telemetry_name_list=gtuple.TelemetryNameList,
-        value_list=gtuple.ValueList,
+        about_node_name=gtuple.AboutNodeName,
+        telemetry_name=gtuple.TelemetryName,
+        value=gtuple.Value,
+
     ).tuple
     assert t == gtuple
 
@@ -56,25 +56,36 @@ def test_multipurpose_sensor_telemetry_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["AboutNodeNameList"]
+    del d2["AboutNodeNameGtEnumSymbol"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["TelemetryNameList"]
+    del d2["Value"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
+    ######################################
+    # Optional attributes can be removed from type
+    ######################################
+
     d2 = dict(d)
-    del d2["ValueList"]
-    with pytest.raises(SchemaError):
-        Maker.dict_to_tuple(d2)
+    if "TelemetryName" in d2.keys():
+        del d2["TelemetryName"]
+    Maker.dict_to_tuple(d2)
 
     ######################################
     # Behavior on incorrect types
     ######################################
 
-    d2 = dict(d, ScadaReadTimeUnixMs="1656587343297.1")
+    d2 = dict(d, ScadaReadTimeUnixMs="1656513094288.1")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, AboutNodeNameGtEnumSymbol="unknown_symbol")
+    Maker.dict_to_tuple(d2).AboutNodeName == TelemetryName.default()
+
+    d2 = dict(d, Value="63430.1")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
@@ -91,9 +102,5 @@ def test_multipurpose_sensor_telemetry_generated() -> None:
     ######################################
 
     d2 = dict(d, ScadaReadTimeUnixMs=1656245000)
-    with pytest.raises(ValidationError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d, AboutNodeNameList=["A.hot-stuff"])
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)

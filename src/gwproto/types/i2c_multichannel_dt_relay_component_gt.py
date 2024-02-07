@@ -4,6 +4,7 @@ import logging
 from typing import Any
 from typing import Dict
 from typing import Literal
+from typing import Optional
 
 from pydantic import BaseModel
 from pydantic import Field
@@ -13,6 +14,8 @@ from gwproto.data_classes.components.i2c_multichannel_dt_relay_component import 
     I2cMultichannelDtRelayComponent,
 )
 from gwproto.errors import SchemaError
+from gwproto.types.relay_actor_config import RelayActorConfig
+from gwproto.types.relay_actor_config import RelayActorConfig_Maker
 
 
 LOG_FORMAT = (
@@ -31,10 +34,69 @@ class I2cMultichannelDtRelayComponentGt(BaseModel):
     finite number of choices via dipswitches.
     """
 
+    ComponentId: str = Field(
+        title="Component Id",
+        description=(
+            "Primary GridWorks identifier for a specific physical instance of a Relay, and also "
+            "as a more generic Component."
+        ),
+    )
+    ComponentAttributeClassId: str = Field(
+        title="ComponentAttributeClassId",
+        description=(
+            "Unique identifier for the device class. Authority for these, as well as the relationship "
+            "between Components and ComponentAttributeClasses (Cacs) is maintained by the World "
+            "Registry."
+        ),
+    )
+    RelayConfigList: RelayActorConfig = Field(
+        title="Relay Config List",
+        description=(
+            "Information about which actors control each relay, and the relay wiring state: (normally "
+            "open, normally closed, double throw)."
+        ),
+    )
+    DisplayName: Optional[str] = Field(
+        title="DisplayName",
+        default=None,
+    )
+    HwUid: Optional[str] = Field(
+        title="Hardware Unique Id",
+        default=None,
+    )
     TypeName: Literal[
         "i2c.multichannel.dt.relay.component.gt"
     ] = "i2c.multichannel.dt.relay.component.gt"
     Version: Literal["000"] = "000"
+
+    @validator("ComponentId")
+    def _check_component_id(cls, v: str) -> str:
+        try:
+            check_is_uuid_canonical_textual(v)
+        except ValueError as e:
+            raise ValueError(
+                f"ComponentId failed UuidCanonicalTextual format validation: {e}"
+            )
+        return v
+
+    @validator("ComponentAttributeClassId")
+    def _check_component_attribute_class_id(cls, v: str) -> str:
+        try:
+            check_is_uuid_canonical_textual(v)
+        except ValueError as e:
+            raise ValueError(
+                f"ComponentAttributeClassId failed UuidCanonicalTextual format validation: {e}"
+            )
+        return v
+
+    @validator("RelayConfigList")
+    def check_relay_config_list(cls, v: RelayActorConfig) -> RelayActorConfig:
+        """
+        Axiom : Relay Index Consistency.
+        All of the Relay indices in the RelayConfigList are unique.
+        """
+        ...
+        # TODO: Implement Axiom(s)
 
     def as_dict(self) -> Dict[str, Any]:
         """
@@ -59,6 +121,7 @@ class I2cMultichannelDtRelayComponentGt(BaseModel):
             ).items()
             if value is not None
         }
+        d["RelayConfigList"] = self.RelayConfigList.as_dict()
         return d
 
     def as_type(self) -> bytes:
@@ -95,8 +158,19 @@ class I2cMultichannelDtRelayComponentGt_Maker:
 
     def __init__(
         self,
+        component_id: str,
+        component_attribute_class_id: str,
+        relay_config_list: RelayActorConfig,
+        display_name: Optional[str],
+        hw_uid: Optional[str],
     ):
-        self.tuple = I2cMultichannelDtRelayComponentGt()
+        self.tuple = I2cMultichannelDtRelayComponentGt(
+            ComponentId=component_id,
+            ComponentAttributeClassId=component_attribute_class_id,
+            RelayConfigList=relay_config_list,
+            DisplayName=display_name,
+            HwUid=hw_uid,
+        )
 
     @classmethod
     def tuple_to_type(cls, tuple: I2cMultichannelDtRelayComponentGt) -> bytes:
@@ -143,6 +217,18 @@ class I2cMultichannelDtRelayComponentGt_Maker:
             I2cMultichannelDtRelayComponentGt
         """
         d2 = dict(d)
+        if "ComponentId" not in d2.keys():
+            raise SchemaError(f"dict missing ComponentId: <{d2}>")
+        if "ComponentAttributeClassId" not in d2.keys():
+            raise SchemaError(f"dict missing ComponentAttributeClass: <{d2}>")
+        if "RelayConfigList" not in d2.keys():
+            raise SchemaError(f"dict missing RelayConfigList: <{d2}>")
+        if not isinstance(d2["RelayConfigList"], dict):
+            raise SchemaError(
+                f"RelayConfigList <{d2['RelayConfigList']}> must be a RelayActorConfig!"
+            )
+        relay_config_list = RelayActorConfig_Maker.dict_to_tuple(d2["RelayConfigList"])
+        d2["RelayConfigList"] = relay_config_list
         if "TypeName" not in d2.keys():
             raise SchemaError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():
@@ -161,14 +247,26 @@ class I2cMultichannelDtRelayComponentGt_Maker:
         if t.ComponentId in I2cMultichannelDtRelayComponent.by_id.keys():
             dc = I2cMultichannelDtRelayComponent.by_id[t.ComponentId]
         else:
-            dc = I2cMultichannelDtRelayComponent()
+            dc = I2cMultichannelDtRelayComponent(
+                component_id=t.ComponentId,
+                component_attribute_class_id=t.ComponentAttributeClassId,
+                relay_config_list=t.RelayConfigList,
+                display_name=t.DisplayName,
+                hw_uid=t.HwUid,
+            )
         return dc
 
     @classmethod
     def dc_to_tuple(
         cls, dc: I2cMultichannelDtRelayComponent
     ) -> I2cMultichannelDtRelayComponentGt:
-        t = I2cMultichannelDtRelayComponentGt_Maker().tuple
+        t = I2cMultichannelDtRelayComponentGt_Maker(
+            component_id=dc.component_id,
+            component_attribute_class_id=dc.component_attribute_class_id,
+            relay_config_list=dc.relay_config_list,
+            display_name=dc.display_name,
+            hw_uid=dc.hw_uid,
+        ).tuple
         return t
 
     @classmethod

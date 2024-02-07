@@ -33,6 +33,8 @@ class BatchedReadings(BaseModel):
 
     A collection of telemetry readings sent up in periodic reports from a SCADA to an AtomicTNode.
     These are organized into data channels (a triple of TelemetryName, AboutNode, and CapturedByNode).
+    This replaces GtShStatus. Changes include: FromGNodeId -> FromGNodeInstanveId ReportPeriodS
+    -> BatchedTransmissionPeriodS
     """
 
     FromGNodeAlias: str = Field(
@@ -99,6 +101,16 @@ class BatchedReadings(BaseModel):
         except ValueError as e:
             raise ValueError(
                 f"SlotStartUnixS failed ReasonableUnixTimeS format validation: {e}"
+            )
+        return v
+
+    @validator("BatchedTransmissionPeriodS")
+    def _check_batched_transmission_period_s(cls, v: int) -> int:
+        try:
+            check_is_positive_integer(v)
+        except ValueError as e:
+            raise ValueError(
+                f"BatchedTransmissionPeriodS failed PositiveInteger format validation: {e}"
             )
         return v
 

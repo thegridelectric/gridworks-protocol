@@ -1,9 +1,10 @@
-"""Type simple.sensor.telemetry, version 000"""
+"""Type single.reading, version 000"""
 import json
 import logging
 from typing import Any
 from typing import Dict
 from typing import Literal
+from typing import Optional
 
 from pydantic import BaseModel
 from pydantic import Field
@@ -20,18 +21,20 @@ LOG_FORMAT = (
 LOGGER = logging.getLogger(__name__)
 
 
-class SimpleSensorTelemetry(BaseModel):
+class SingleReading(BaseModel):
     """
     Simple Sensor Telemetry.
 
-    A reading sent from a simple sensor to its SCADA Spaceheat Node. A simple sensor is one
-    whose CapturedBy Spaceheat Node is the same as the AboutNode.
+    A single reading sent from a spaceheat node actor.
 
     [More info](https://gridworks-protocol.readthedocs.io/en/latest/spaceheat-actor.html)
     """
 
-    Name: TelemetryName = Field(
-        title="Name",
+    ScadaReadTimeUnixMs: int = Field(
+        title="Scada Read Time in Unix Milliseconds",
+    )
+    AboutNodeName: TelemetryName = Field(
+        title="AboutNodeName",
         description=(
             "The name of the Simple Sensing Spaceheat Node. This is both the AboutNodeName and "
             "FromNodeName for a data channel. The TelemetryName (and thus Units) are expected "
@@ -40,14 +43,15 @@ class SimpleSensorTelemetry(BaseModel):
             "SimpleTempSensorComponent etc."
         ),
     )
+    TelemetryName: Optional[] = Field(
+        title="TelemetryName",
+        default=None,
+    )
     Value: int = Field(
         title="Value",
         description="The value of the reading.",
     )
-    ScadaReadTimeUnixMs: int = Field(
-        title="Scada Read Time in Unix Milliseconds",
-    )
-    TypeName: Literal["simple.sensor.telemetry"] = "simple.sensor.telemetry"
+    TypeName: Literal["single.reading"] = "single.reading"
     Version: Literal["000"] = "000"
 
     @validator("ScadaReadTimeUnixMs")
@@ -63,11 +67,11 @@ class SimpleSensorTelemetry(BaseModel):
     def as_dict(self) -> Dict[str, Any]:
         """
         Translate the object into a dictionary representation that can be serialized into a
-        simple.sensor.telemetry.000 object.
+        single.reading.000 object.
 
         This method prepares the object for serialization by the as_type method, creating a
         dictionary with key-value pairs that follow the requirements for an instance of the
-        simple.sensor.telemetry.000 type. Unlike the standard python dict method,
+        single.reading.000 type. Unlike the standard python dict method,
         it makes the following substantive changes:
         - Enum Values: Translates between the values used locally by the actor to the symbol
         sent in messages.
@@ -83,16 +87,16 @@ class SimpleSensorTelemetry(BaseModel):
             ).items()
             if value is not None
         }
-        del d["Name"]
-        d["NameGtEnumSymbol"] = TelemetryName.value_to_symbol(self.Name)
+        del d["AboutNodeName"]
+        d["AboutNodeNameGtEnumSymbol"] = TelemetryName.value_to_symbol(self.AboutNodeName)
         return d
 
     def as_type(self) -> bytes:
         """
-        Serialize to the simple.sensor.telemetry.000 representation.
+        Serialize to the single.reading.000 representation.
 
-        Instances in the class are python-native representations of simple.sensor.telemetry.000
-        objects, while the actual simple.sensor.telemetry.000 object is the serialized UTF-8 byte
+        Instances in the class are python-native representations of single.reading.000
+        objects, while the actual single.reading.000 object is the serialized UTF-8 byte
         string designed for sending in a message.
 
         This method calls the as_dict() method, which differs from the native python dict()
@@ -104,7 +108,7 @@ class SimpleSensorTelemetry(BaseModel):
 
         It also applies these changes recursively to sub-types.
 
-        Its near-inverse is SimpleSensorTelemetry.type_to_tuple(). If the type (or any sub-types)
+        Its near-inverse is SingleReading.type_to_tuple(). If the type (or any sub-types)
         includes an enum, then the type_to_tuple will map an unrecognized symbol to the
         default enum value. This is why these two methods are only 'near' inverses.
         """
@@ -115,31 +119,33 @@ class SimpleSensorTelemetry(BaseModel):
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
-class SimpleSensorTelemetry_Maker:
-    type_name = "simple.sensor.telemetry"
+class SingleReading_Maker:
+    type_name = "single.reading"
     version = "000"
 
     def __init__(
         self,
-        name: TelemetryName,
-        value: int,
         scada_read_time_unix_ms: int,
+        about_node_name: TelemetryName,
+        telemetry_name: Optional[],
+        value: int,
     ):
-        self.tuple = SimpleSensorTelemetry(
-            Name=name,
-            Value=value,
+        self.tuple = SingleReading(
             ScadaReadTimeUnixMs=scada_read_time_unix_ms,
+            AboutNodeName=about_node_name,
+            TelemetryName=telemetry_name,
+            Value=value,
         )
 
     @classmethod
-    def tuple_to_type(cls, tuple: SimpleSensorTelemetry) -> bytes:
+    def tuple_to_type(cls, tuple: SingleReading) -> bytes:
         """
         Given a Python class object, returns the serialized JSON type object.
         """
         return tuple.as_type()
 
     @classmethod
-    def type_to_tuple(cls, t: bytes) -> SimpleSensorTelemetry:
+    def type_to_tuple(cls, t: bytes) -> SingleReading:
         """
         Given a serialized JSON type object, returns the Python class object.
         """
@@ -152,12 +158,12 @@ class SimpleSensorTelemetry_Maker:
         return cls.dict_to_tuple(d)
 
     @classmethod
-    def dict_to_tuple(cls, d: dict[str, Any]) -> SimpleSensorTelemetry:
+    def dict_to_tuple(cls, d: dict[str, Any]) -> SingleReading:
         """
-        Deserialize a dictionary representation of a simple.sensor.telemetry.000 message object
-        into a SimpleSensorTelemetry python object for internal use.
+        Deserialize a dictionary representation of a single.reading.000 message object
+        into a SingleReading python object for internal use.
 
-        This is the near-inverse of the SimpleSensorTelemetry.as_dict() method:
+        This is the near-inverse of the SingleReading.as_dict() method:
           - Enums: translates between the symbols sent in messages between actors and
         the values used by the actors internally once they've deserialized the messages.
           - Types: recursively validates and deserializes sub-types.
@@ -170,28 +176,79 @@ class SimpleSensorTelemetry_Maker:
             d (dict): the dictionary resulting from json.loads(t) for a serialized JSON type object t.
 
         Raises:
-           SchemaError: if the dict cannot be turned into a SimpleSensorTelemetry object.
+           SchemaError: if the dict cannot be turned into a SingleReading object.
 
         Returns:
-            SimpleSensorTelemetry
+            SingleReading
         """
         d2 = dict(d)
-        if "NameGtEnumSymbol" not in d2.keys():
-            raise SchemaError(f"NameGtEnumSymbol missing from dict <{d2}>")
-        value = TelemetryName.symbol_to_value(d2["NameGtEnumSymbol"])
-        d2["Name"] = TelemetryName(value)
-        del d2["NameGtEnumSymbol"]
-        if "Value" not in d2.keys():
-            raise SchemaError(f"dict missing Value: <{d2}>")
         if "ScadaReadTimeUnixMs" not in d2.keys():
             raise SchemaError(f"dict missing ScadaReadTimeUnixMs: <{d2}>")
+        if "AboutNodeNameGtEnumSymbol" not in d2.keys():
+            raise SchemaError(f"AboutNodeNameGtEnumSymbol missing from dict <{d2}>")
+        value = TelemetryName.symbol_to_value(d2["AboutNodeNameGtEnumSymbol"])
+        d2["AboutNodeName"] = TelemetryName(value)
+        del d2["AboutNodeNameGtEnumSymbol"]
+        if "Value" not in d2.keys():
+            raise SchemaError(f"dict missing Value: <{d2}>")
         if "TypeName" not in d2.keys():
             raise SchemaError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "000":
             LOGGER.debug(
-                f"Attempting to interpret simple.sensor.telemetry version {d2['Version']} as version 000"
+                f"Attempting to interpret single.reading version {d2['Version']} as version 000"
             )
             d2["Version"] = "000"
-        return SimpleSensorTelemetry(**d2)
+        return SingleReading(**d2)
+
+
+def check_is_reasonable_unix_time_ms(v: int) -> None:
+    """Checks ReasonableUnixTimeMs format
+
+    ReasonableUnixTimeMs format: unix milliseconds between Jan 1 2000 and Jan 1 3000
+
+    Args:
+        v (int): the candidate
+
+    Raises:
+        ValueError: if v is not ReasonableUnixTimeMs format
+    """
+    import pendulum
+
+    if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp * 1000 > v:  # type: ignore[attr-defined]
+        raise ValueError(f"<{v}> must be after Jan 1 2000")
+    if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp * 1000 < v:  # type: ignore[attr-defined]
+        raise ValueError(f"<{v}> must be before Jan 1 3000")
+
+
+def check_is_spaceheat_name(v: str) -> None:
+    """Check SpaceheatName Format.
+
+    Validates if the provided string adheres to the SpaceheatName format:
+    Lowercase words separated by periods, where word characters can be alphanumeric
+    or a hyphen, and the first word starts with an alphabet character.
+
+    Args:
+        candidate (str): The string to be validated.
+
+    Raises:
+        ValueError: If the provided string is not in SpaceheatName format.
+    """
+    from typing import List
+    try:
+        x: List[str] = v.split(".")
+    except:
+        raise ValueError(f"Failed to seperate <{v}> into words with split'.'")
+    first_word = x[0]
+    first_char = first_word[0]
+    if not first_char.isalpha():
+        raise ValueError(
+            f"Most significant word of <{v}> must start with alphabet char."
+        )
+    for word in x:
+        for char in word:
+            if not (char.isalnum() or char == '-'):
+                raise ValueError(f"words of <{v}> split by by '.' must be alphanumeric or hyphen.")
+    if not v.islower():
+        raise ValueError(f"<{v}> must be lowercase.")

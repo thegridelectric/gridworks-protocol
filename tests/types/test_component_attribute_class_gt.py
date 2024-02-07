@@ -37,7 +37,7 @@ def test_component_attribute_class_gt_generated() -> None:
         make_model=gtuple.MakeModel,
         display_name=gtuple.DisplayName,
         min_poll_period_ms=gtuple.MinPollPeriodMs,
-        
+
     ).tuple
     assert t == gtuple
 
@@ -63,14 +63,14 @@ def test_component_attribute_class_gt_generated() -> None:
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
+    d2 = dict(d)
+    del d2["MakeModelGtEnumSymbol"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
     ######################################
     # Optional attributes can be removed from type
     ######################################
-
-    d2 = dict(d)
-    if "MakeModel" in d2.keys():
-        del d2["MakeModel"]
-    Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
     if "DisplayName" in d2.keys():

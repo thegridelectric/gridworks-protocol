@@ -3,9 +3,28 @@
   "type_name": "relay.actor.config",
   "version": "000",
   "owner": "gridworks@gridworks-consulting.com",
-  "description": "Relay Actor Config. Used to associate individual relays on a multi-channel relay board to specific SpaceheatNode actors.",
+  "description": "Relay Actor Config. Used to associate individual relays on a multi-channel relay board to specific SpaceheatNode actors. Each actor managed by the Spaceheat SCADA has an associated SpaceheatNode. That Node will be associated to a relay board component with multiple relays. Th relay board will have a list of relay actor configs so that the actor can identify which relay it has purview over.",
   "url": "https://gridworks-protocol.readthedocs.io/en/latest/spaceheat-actor.html",
   "properties": {
+    "RelayIdx": {
+      "type": "integer",
+      "format": "PositiveInteger",
+      "title": "Relay Index",
+      "required": true
+    },
+    "ActorName": {
+      "type": "string",
+      "format": "SpaceheatName",
+      "title": "Name of the Actor's SpaceheatNode",
+      "required": true
+    },
+    "WiringConfig": {
+      "type": "string",
+      "format": "relay.wiring.config",
+      "title": "Wiring Config",
+      "description": "Is the relay a simple Normally Open or Normally Closed relay (in which case "0/1" work for RelayState) or is it a double throw relay?",
+      "required": true
+    },
     "TypeName": {
       "type": "string",
       "value": "relay.actor.config",
@@ -16,6 +35,18 @@
       "title": "The type version",
       "default": "000",
       "required": true
+    }
+  },
+  "formats": {
+    "SpaceheatName": {
+      "type": "string",
+      "description": "Lowercase words separated by periods, where the word characters can be alphanumeric or a hyphen and the first word starts with an alphabet character.",
+      "example": "store-hot-pipe"
+    },
+    "PositiveInteger": {
+      "type": "string",
+      "description": "Must be positive when interpreted as an integer. Interpretation as an integer follows the pydantic rules for this - which will round down rational numbers. So 1.7 will be interpreted as 1 and is also fine, while 0.5 is interpreted as 0 and will raise an exception.",
+      "example": ""
     }
   }
 }

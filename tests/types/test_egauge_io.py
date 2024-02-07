@@ -33,7 +33,7 @@ def test_egauge_io_generated() -> None:
     t = Maker(
         input_config=gtuple.InputConfig,
         output_config=gtuple.OutputConfig,
-        
+
     ).tuple
     assert t == gtuple
 

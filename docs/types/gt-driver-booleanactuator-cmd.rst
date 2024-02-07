@@ -27,4 +27,3 @@ Python pydantic class corresponding to json type `gt.driver.booleanactuator.cmd`
 
 .. autoclass:: gwproto.types.GtDriverBooleanactuatorCmd_Maker
     :members:
-

@@ -35,7 +35,7 @@ def test_snapshot_spaceheat_generated() -> None:
         from_g_node_alias=gtuple.FromGNodeAlias,
         from_g_node_instance_id=gtuple.FromGNodeInstanceId,
         snapshot=gtuple.Snapshot,
-        
+
     ).tuple
     assert t == gtuple
 

@@ -4,10 +4,10 @@ import json
 import pytest
 from pydantic import ValidationError
 
-from gwproto.errors import SchemaError
-from gwproto.types import TelemetryReportingConfig_Maker as Maker
 from gwproto.enums import TelemetryName
 from gwproto.enums import Unit
+from gwproto.errors import SchemaError
+from gwproto.types import TelemetryReportingConfig_Maker as Maker
 
 
 def test_telemetry_reporting_config_generated() -> None:

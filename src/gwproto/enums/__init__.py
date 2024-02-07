@@ -32,16 +32,36 @@ on these ideas:
 
  """
 from gwproto.enums.actor_class import ActorClass
+from gwproto.enums.change_boiler_control import ChangeBoilerControl
+from gwproto.enums.change_heatcall_source import ChangeHeatcallSource
+from gwproto.enums.change_lg_operating_mode import ChangeLgOperatingMode
+from gwproto.enums.change_relay_state import ChangeRelayState
+from gwproto.enums.change_store_flow_direction import ChangeStoreFlowDirection
+from gwproto.enums.change_valve_state import ChangeValveState
+from gwproto.enums.control_signal_type import ControlSignalType
+from gwproto.enums.lg_operating_mode import LgOperatingMode
 from gwproto.enums.local_comm_interface import LocalCommInterface
 from gwproto.enums.make_model import MakeModel
+from gwproto.enums.relay_wiring_config import RelayWiringConfig
 from gwproto.enums.telemetry_name import TelemetryName
+from gwproto.enums.thermistor_data_method import ThermistorDataMethod
 from gwproto.enums.unit import Unit
 
 
 __all__ = [
     "ActorClass",  # [sh.actor.class.001](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shactorclass)
+    "ChangeBoilerControl",  # [change.boiler.control.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeboilercontrol)
+    "ChangeHeatcallSource",  # [change.heatcall.source.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeheatcallsource)
+    "ChangeLgOperatingMode",  # [change.lg.operating.mode.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changelgoperatingmode)
+    "ChangeRelayState",  # [change.relay.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changerelaystate)
+    "ChangeStoreFlowDirection",  # [change.store.flow.direction.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changestoreflowdirection)
+    "ChangeValveState",  # [change.valve.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changevalvestate)
+    "ControlSignalType",  # [control.signal.type.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#controlsignaltype)
+    "LgOperatingMode",  # [lg.operating.mode.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#lgoperatingmode)
     "LocalCommInterface",  # [local.comm.interface.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#localcomminterface)
     "MakeModel",  # [spaceheat.make.model.001](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatmakemodel)
+    "RelayWiringConfig",  # [relay.wiring.config.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relaywiringconfig)
     "TelemetryName",  # [spaceheat.telemetry.name.001](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheattelemetryname)
+    "ThermistorDataMethod",  # [thermistor.data.method.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#thermistordatamethod)
     "Unit",  # [spaceheat.unit.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatunit)
 ]

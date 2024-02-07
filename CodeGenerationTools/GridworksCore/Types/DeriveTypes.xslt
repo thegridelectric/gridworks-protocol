@@ -203,7 +203,7 @@ class </xsl:text>
     </xsl:call-template>
     </xsl:if>
 
-    
+
     <xsl:if test="(normalize-space(Url) != '')">
     <xsl:text>
 
@@ -1530,6 +1530,24 @@ class </xsl:text>
 <xsl:for-each select="$airtable//PropertyFormats/PropertyFormat[(normalize-space(Name) !='')  and (count(TypesThatUse[text()=$versioned-type-id])>0)]">
 <xsl:sort select="Name" data-type="text"/>
 <xsl:choose>
+    <xsl:when test="Name='Ads1115I2cAddress'">
+    <xsl:text>
+
+
+def check_is_ads1115_i2c_address(v: str) -> None:
+    """
+    Ads1115I2cAddress: ToLower(v) in ["0x48", "0x49", "0x4a", 0x4b"].
+
+    One of the 4 allowable I2C addresses for Texas Instrument Ads1115 chips.
+
+    Raises:
+        ValueError: if not Ads1115I2cAddress format
+    """
+    if ToLower(v) not in ["0x48", "0x49", "0x4a", 0x4b"]:
+        raise ValueError(f"Not Ads1115I2cAddress: {e}")</xsl:text>
+
+    </xsl:when>
+
     <xsl:when test="Name='AlgoAddressStringFormat'">
     <xsl:text>
 
@@ -1688,7 +1706,7 @@ def check_is_log_style_date_with_millis(v: str) -> None:
         v (str): the candidate
 
     Raises:
-        ValueError: if v is not LogStyleDateWithMillis format. 
+        ValueError: if v is not LogStyleDateWithMillis format.
         In particular the milliseconds must have exactly 3 digits.
     """
     from datetime import datetime
@@ -1701,7 +1719,7 @@ def check_is_log_style_date_with_millis(v: str) -> None:
     milliseconds_part = v.split(".")[1]
     if len(milliseconds_part) != 3:
         raise ValueError(f"{v} is not in LogStyleDateWithMillis format."
-                            " Milliseconds must have exactly 3 digits")    
+                            " Milliseconds must have exactly 3 digits")
     </xsl:text>
 
     </xsl:when>
@@ -1764,6 +1782,18 @@ def check_is_market_slot_name_lrd_format(v: str) -> None:
         raise ValueError(
             f"market_slot_start_s mod {(market_type.duration_minutes * 60)} must be 0"
         )</xsl:text>
+    </xsl:when>
+
+    <xsl:when test="Name='Near5'">
+    <xsl:text>
+
+
+def check_is_near5(v: str) -> None:
+    """
+    4.5 &lt;= v &lt;= 5.5
+    """
+    if v &lt; 4.5 or v > 5.5:
+        raise ValueError(f"&lt;{v}> is not between 4.5 and 5.5, not Near5")</xsl:text>
     </xsl:when>
 
     <xsl:when test="Name='NonNegativeInteger'">

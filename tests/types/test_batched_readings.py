@@ -43,7 +43,7 @@ def test_batched_readings_generated() -> None:
         batched_transmission_period_s=gtuple.BatchedTransmissionPeriodS,
         channel_reading_list=gtuple.ChannelReadingList,
         booleanactuator_cmd_list=gtuple.BooleanactuatorCmdList,
-        
+
     ).tuple
     assert t == gtuple
 
@@ -152,5 +152,9 @@ def test_batched_readings_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d, SlotStartUnixS=32503683600)
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, BatchedTransmissionPeriodS=0)
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)

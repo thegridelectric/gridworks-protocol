@@ -344,6 +344,19 @@ class Ads111xBasedCacGt_Maker:
         return cls.tuple_to_dc(cls.dict_to_tuple(d))
 
 
+def check_is_ads1115_i2c_address(v: str) -> None:
+    """
+    Ads1115I2cAddress: ToLower(v) in ["0x48", "0x49", "0x4a", 0x4b"].
+
+    One of the 4 allowable I2C addresses for Texas Instrument Ads1115 chips.
+
+    Raises:
+        ValueError: if not Ads1115I2cAddress format
+    """
+    if ToLower(v) not in ["0x48", "0x49", "0x4a", 0x4b"]:
+        raise ValueError(f"Not Ads1115I2cAddress: {e}")
+
+
 def check_is_positive_integer(v: int) -> None:
     """
     Must be positive when interpreted as an integer. Interpretation as an

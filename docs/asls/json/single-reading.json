@@ -1,32 +1,36 @@
 {
   "gtr_asl": "001",
-  "type_name": "simple.sensor.telemetry",
+  "type_name": "single.reading",
   "version": "000",
   "owner": "gridworks@gridworks-consulting.com",
-  "description": "Simple Sensor Telemetry. A reading sent from a simple sensor to its SCADA Spaceheat Node. A simple sensor is one whose CapturedBy Spaceheat Node is the same as the AboutNode.",
+  "description": "Simple Sensor Telemetry. A single reading sent from a spaceheat node actor.",
   "url": "https://gridworks-protocol.readthedocs.io/en/latest/spaceheat-actor.html",
   "properties": {
-    "Name": {
-      "type": "string",
-      "format": "spaceheat.telemetry.name",
-      "title": "Name",
-      "description": "The name of the Simple Sensing Spaceheat Node. This is both the AboutNodeName and FromNodeName for a data channel. The TelemetryName (and thus Units) are expected to be inferred by the Spaceheat Node. For example this is done initially in SCADA code according to whether the component of the Node is a PipeFlowSensorComponent, SimpleTempSensorComponent etc.",
-      "required": true
-    },
-    "Value": {
-      "type": "integer",
-      "description": "The value of the reading.",
-      "required": true
-    },
     "ScadaReadTimeUnixMs": {
       "type": "integer",
       "format": "ReasonableUnixTimeMs",
       "title": "Scada Read Time in Unix Milliseconds",
       "required": true
     },
+    "AboutNodeName": {
+      "type": "string",
+      "format": "spaceheat.telemetry.name",
+      "title": "AboutNodeName",
+      "description": "The name of the Simple Sensing Spaceheat Node. This is both the AboutNodeName and FromNodeName for a data channel. The TelemetryName (and thus Units) are expected to be inferred by the Spaceheat Node. For example this is done initially in SCADA code according to whether the component of the Node is a PipeFlowSensorComponent, SimpleTempSensorComponent etc.",
+      "required": true
+    },
+    "TelemetryName": {
+      "type": "",
+      "required": false
+    },
+    "Value": {
+      "type": "integer",
+      "description": "The value of the reading.",
+      "required": true
+    },
     "TypeName": {
       "type": "string",
-      "value": "simple.sensor.telemetry",
+      "value": "single.reading",
       "title": "The type name"
     },
     "Version": {
@@ -34,6 +38,18 @@
       "title": "The type version",
       "default": "000",
       "required": true
+    }
+  },
+  "formats": {
+    "SpaceheatName": {
+      "type": "string",
+      "description": "Lowercase words separated by periods, where the word characters can be alphanumeric or a hyphen and the first word starts with an alphabet character.",
+      "example": "store-hot-pipe"
+    },
+    "ReasonableUnixTimeMs": {
+      "type": "string",
+      "description": "An integer reflecting unix time in MILLISECONDS between midnight Jan 1 2000 and midnight Jan 1 3000 UTC",
+      "example": "1702327940710"
     }
   }
 }

@@ -1,0 +1,48 @@
+{
+  "gtr_asl": "001",
+  "enum_name": "control.signal.type",
+  "enum_version": "000",
+  "description": "",
+  "ssot": "https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#controlsignaltype",
+  "values": [
+    "ChangeRelayState",
+    "Analog010V",
+    "Analog420mA",
+    "ChangeValveState",
+    "ChangeStoreFlowDirection",
+    "ChangeHeatcallSource",
+    "ChangeBoilerControl",
+    "ChangeLgOperatingMode"
+  ],
+  "value_to_symbol": {
+    "ChangeRelayState": "",
+    "Analog010V": "",
+    "Analog420mA": "",
+    "ChangeValveState": "",
+    "ChangeStoreFlowDirection": "",
+    "ChangeHeatcallSource": "",
+    "ChangeBoilerControl": "",
+    "ChangeLgOperatingMode": ""
+  },
+  "value_to_version": {
+    "ChangeRelayState": "000",
+    "Analog010V": "000",
+    "Analog420mA": "000",
+    "ChangeValveState": "000",
+    "ChangeStoreFlowDirection": "000",
+    "ChangeHeatcallSource": "000",
+    "ChangeBoilerControl": "000",
+    "ChangeLgOperatingMode": "000"
+  },
+  "value_descriptions": {
+    "ChangeRelayState": "",
+    "Analog010V": "",
+    "Analog420mA": "",
+    "ChangeValveState": "",
+    "ChangeStoreFlowDirection": "",
+    "ChangeHeatcallSource": "",
+    "ChangeBoilerControl": "",
+    "ChangeLgOperatingMode": ""
+  },
+  "default_value": "ChangeRelayState"
+}

@@ -15,7 +15,7 @@
       "items": {
         "type": "integer"
       },
-      "description": "The values of the readings.",
+      "description": "Refer to the associated DataChannel to understand the meaning of the these readings.",
       "required": true
     },
     "ScadaReadTimeUnixMsList": {
@@ -43,7 +43,7 @@
   "axioms": {
     "Axiom1": {
       "title": "ListLengthConsistency",
-      "description": "ValueList and ReadTimeUnixMsList must have the same length."
+      "description": "ValueList and ScadaReadTimeUnixMsList must have the same length."
     }
   },
   "formats": {

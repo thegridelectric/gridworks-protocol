@@ -33,16 +33,15 @@ class ComponentGt(BaseModel):
     that is also immutable - it is meant to be an immutable identifier associated to a specific
     physical device, ideally one that can be read remotely by the SCADA and also by the naked
     eye. The DisplayName is mutable, with its current value in time governed by the WorldRegistry.
+    Reference updated cac 001, which has optional MakeModel and min poll period. Also allow
+    extra.
 
     [More info](https://g-node-registry.readthedocs.io/en/latest/component.html)
     """
 
-    : Optional[] = Field(
-        title="",
-        default=None,
-    )
     ComponentId: Optional[] = Field(
         title="ComponentId",
+        description="Immutable unique identifier for this specific device.",
         default=None,
     )
     ComponentAttributeClassId: str = Field(
@@ -54,7 +53,7 @@ class ComponentGt(BaseModel):
         ),
     )
     DisplayName: Optional[str] = Field(
-        title="DisplayName",
+        title="Display Name",
         description=(
             "This is an optional, mutable field whose use is strongly encouraged. It may include "
             "information about HOW the component is used in a hardware layout. It may also include "
@@ -63,7 +62,7 @@ class ComponentGt(BaseModel):
         default=None,
     )
     HwUid: Optional[str] = Field(
-        title="HwUid",
+        title="Hardware Unique Id",
         description="Usually this is determined by the inheriting class.",
         default=None,
     )
@@ -142,14 +141,12 @@ class ComponentGt_Maker:
 
     def __init__(
         self,
-        : Optional[],
         component_id: Optional[],
         component_attribute_class_id: str,
         display_name: Optional[str],
         hw_uid: Optional[str],
     ):
         self.tuple = ComponentGt(
-            =,
             ComponentId=component_id,
             ComponentAttributeClassId=component_attribute_class_id,
             DisplayName=display_name,
@@ -220,7 +217,6 @@ class ComponentGt_Maker:
             dc = Component.by_id[t.ComponentId]
         else:
             dc = Component(
-                =t.,
                 component_id=t.ComponentId,
                 component_attribute_class_id=t.ComponentAttributeClassId,
                 display_name=t.DisplayName,
@@ -231,7 +227,6 @@ class ComponentGt_Maker:
     @classmethod
     def dc_to_tuple(cls, dc: Component) -> ComponentGt:
         t = ComponentGt_Maker(
-            =dc.,
             component_id=dc.component_id,
             component_attribute_class_id=dc.component_attribute_class_id,
             display_name=dc.display_name,

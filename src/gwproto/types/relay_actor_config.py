@@ -9,6 +9,7 @@ from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
 
+from gwproto.enums import RelayWiringConfig
 from gwproto.errors import SchemaError
 
 
@@ -24,13 +25,46 @@ class RelayActorConfig(BaseModel):
     Relay Actor Config.
 
     Used to associate individual relays on a multi-channel relay board to specific SpaceheatNode
-    actors.
+    actors. Each actor managed by the Spaceheat SCADA has an associated SpaceheatNode. That
+    Node will be associated to a relay board component with multiple relays. Th relay board
+    will have a list of relay actor configs so that the actor can identify which relay it has
+    purview over.
 
     [More info](https://gridworks-protocol.readthedocs.io/en/latest/spaceheat-actor.html)
     """
 
+    RelayIdx: int = Field(
+        title="Relay Index",
+    )
+    ActorName: str = Field(
+        title="Name of the Actor's SpaceheatNode",
+        description="[More info](https://gridworks-protocol.readthedocs.io/en/latest/spaceheat-actor.html)",
+    )
+    WiringConfig: RelayWiringConfig = Field(
+        title="Wiring Config",
+        description=(
+            "Is the relay a simple Normally Open or Normally Closed relay (in which case "0/1" "
+            "work for RelayState) or is it a double throw relay?"
+        ),
+    )
     TypeName: Literal["relay.actor.config"] = "relay.actor.config"
     Version: Literal["000"] = "000"
+
+    @validator("RelayIdx")
+    def _check_relay_idx(cls, v: int) -> int:
+        try:
+            check_is_positive_integer(v)
+        except ValueError as e:
+            raise ValueError(f"RelayIdx failed PositiveInteger format validation: {e}")
+        return v
+
+    @validator("ActorName")
+    def _check_actor_name(cls, v: str) -> str:
+        try:
+            check_is_spaceheat_name(v)
+        except ValueError as e:
+            raise ValueError(f"ActorName failed SpaceheatName format validation: {e}")
+        return v
 
     def as_dict(self) -> Dict[str, Any]:
         """
@@ -55,6 +89,8 @@ class RelayActorConfig(BaseModel):
             ).items()
             if value is not None
         }
+        del d["WiringConfig"]
+        d["WiringConfigGtEnumSymbol"] = RelayWiringConfig.value_to_symbol(self.WiringConfig)
         return d
 
     def as_type(self) -> bytes:
@@ -91,8 +127,15 @@ class RelayActorConfig_Maker:
 
     def __init__(
         self,
+        relay_idx: int,
+        actor_name: str,
+        wiring_config: RelayWiringConfig,
     ):
-        self.tuple = RelayActorConfig()
+        self.tuple = RelayActorConfig(
+            RelayIdx=relay_idx,
+            ActorName=actor_name,
+            WiringConfig=wiring_config,
+        )
 
     @classmethod
     def tuple_to_type(cls, tuple: RelayActorConfig) -> bytes:
@@ -139,6 +182,15 @@ class RelayActorConfig_Maker:
             RelayActorConfig
         """
         d2 = dict(d)
+        if "RelayIdx" not in d2.keys():
+            raise SchemaError(f"dict missing RelayIdx: <{d2}>")
+        if "ActorName" not in d2.keys():
+            raise SchemaError(f"dict missing ActorName: <{d2}>")
+        if "WiringConfigGtEnumSymbol" not in d2.keys():
+            raise SchemaError(f"WiringConfigGtEnumSymbol missing from dict <{d2}>")
+        value = RelayWiringConfig.symbol_to_value(d2["WiringConfigGtEnumSymbol"])
+        d2["WiringConfig"] = RelayWiringConfig(value)
+        del d2["WiringConfigGtEnumSymbol"]
         if "TypeName" not in d2.keys():
             raise SchemaError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():
@@ -149,3 +201,53 @@ class RelayActorConfig_Maker:
             )
             d2["Version"] = "000"
         return RelayActorConfig(**d2)
+
+
+def check_is_positive_integer(v: int) -> None:
+    """
+    Must be positive when interpreted as an integer. Interpretation as an
+    integer follows the pydantic rules for this - which will round down
+    rational numbers. So 1.7 will be interpreted as 1 and is also fine,
+    while 0.5 is interpreted as 0 and will raise an exception.
+
+    Args:
+        v (int): the candidate
+
+    Raises:
+        ValueError: if v < 1
+    """
+    v2 = int(v)
+    if v2 < 1:
+        raise ValueError(f"<{v}> is not PositiveInteger")
+
+
+def check_is_spaceheat_name(v: str) -> None:
+    """Check SpaceheatName Format.
+
+    Validates if the provided string adheres to the SpaceheatName format:
+    Lowercase words separated by periods, where word characters can be alphanumeric
+    or a hyphen, and the first word starts with an alphabet character.
+
+    Args:
+        candidate (str): The string to be validated.
+
+    Raises:
+        ValueError: If the provided string is not in SpaceheatName format.
+    """
+    from typing import List
+    try:
+        x: List[str] = v.split(".")
+    except:
+        raise ValueError(f"Failed to seperate <{v}> into words with split'.'")
+    first_word = x[0]
+    first_char = first_word[0]
+    if not first_char.isalpha():
+        raise ValueError(
+            f"Most significant word of <{v}> must start with alphabet char."
+        )
+    for word in x:
+        for char in word:
+            if not (char.isalnum() or char == '-'):
+                raise ValueError(f"words of <{v}> split by by '.' must be alphanumeric or hyphen.")
+    if not v.islower():
+        raise ValueError(f"<{v}> must be lowercase.")

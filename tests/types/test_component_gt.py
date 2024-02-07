@@ -10,7 +10,6 @@ from gwproto.types import ComponentGt_Maker as Maker
 
 def test_component_gt_generated() -> None:
     d = {
-        "": ,
         "ComponentId": ,
         "ComponentAttributeClassId": '0a2fed00-8ff9-4391-a6d8-4b08ab94dfe1',
         "DisplayName": "Sample Component",
@@ -34,12 +33,11 @@ def test_component_gt_generated() -> None:
 
     # test Maker init
     t = Maker(
-        =gtuple.,
         component_id=gtuple.ComponentId,
         component_attribute_class_id=gtuple.ComponentAttributeClassId,
         display_name=gtuple.DisplayName,
         hw_uid=gtuple.HwUid,
-        
+
     ).tuple
     assert t == gtuple
 
@@ -68,11 +66,6 @@ def test_component_gt_generated() -> None:
     ######################################
     # Optional attributes can be removed from type
     ######################################
-
-    d2 = dict(d)
-    if "" in d2.keys():
-        del d2[""]
-    Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
     if "ComponentId" in d2.keys():

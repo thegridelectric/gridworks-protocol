@@ -15,4 +15,3 @@ Python pydantic class corresponding to json type `gt.dispatch.boolean.local`, ve
 
 .. autoclass:: gwproto.types.GtDispatchBooleanLocal_Maker
     :members:
-

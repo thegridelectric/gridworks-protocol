@@ -26,6 +26,7 @@ LOGGER = logging.getLogger(__name__)
 class ChannelReadings(BaseModel):
     """
     A list of timestamped readings (values) for a data channel (AboutName, CapturedByName, TelemetryName).
+    Replaces both GtShSimpleTelemetryStatus and GtShMultipurposeTelemetryStatus
     """
 
     DataChannel: DataChannel = Field(
@@ -37,7 +38,9 @@ class ChannelReadings(BaseModel):
     )
     ValueList: List[int] = Field(
         title="List of Values",
-        description="The values of the readings.",
+        description=(
+            "Refer to the associated DataChannel to understand the meaning of the these readings."
+        ),
     )
     ScadaReadTimeUnixMsList: List[int] = Field(
         title="List of Read Times",
@@ -61,7 +64,7 @@ class ChannelReadings(BaseModel):
     def check_axiom_1(cls, v: dict) -> dict:
         """
         Axiom 1: ListLengthConsistency.
-        ValueList and ReadTimeUnixMsList must have the same length.
+        ValueList and ScadaReadTimeUnixMsList must have the same length.
         """
         # TODO: Implement check for axiom 1"
         return v

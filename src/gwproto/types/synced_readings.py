@@ -1,4 +1,4 @@
-"""Type multipurpose.sensor.telemetry, version 000"""
+"""Type synced.readings, version 000"""
 import json
 import logging
 from typing import Any
@@ -21,12 +21,12 @@ LOG_FORMAT = (
 LOGGER = logging.getLogger(__name__)
 
 
-class MultipurposeSensorTelemetry(BaseModel):
+class SyncedReadings(BaseModel):
     """
     A set of readings made at the same time by a multipurpose sensor, sent by SpaceheatNode
     actor capturing the data (which will be associated to some sort of multipurpose sensing
-    component) to its SCADA. The nth element of each of its three readings are coupled: AboutNodeName,
-    what the value is, what the TelemetryName is.
+    component). The nth element of each of its three readings are coupled: AboutNodeName, what
+    the value is, what the TelemetryName is.
     """
 
     ScadaReadTimeUnixMs: int = Field(
@@ -34,7 +34,7 @@ class MultipurposeSensorTelemetry(BaseModel):
         description="The single time, in unix milliseconds, assigned to this list of readings.",
     )
     AboutNodeNameList: List[str] = Field(
-        title="AboutNodeAliasList",
+        title="AboutNodeNameList",
         description="List of names of the SpaceHeat Nodes getting measured.",
     )
     TelemetryNameList: List[TelemetryName] = Field(
@@ -49,7 +49,7 @@ class MultipurposeSensorTelemetry(BaseModel):
         title="ValueList",
         description="List of the values read.",
     )
-    TypeName: Literal["multipurpose.sensor.telemetry"] = "multipurpose.sensor.telemetry"
+    TypeName: Literal["synced.readings"] = "synced.readings"
     Version: Literal["000"] = "000"
 
     @validator("ScadaReadTimeUnixMs")
@@ -76,11 +76,11 @@ class MultipurposeSensorTelemetry(BaseModel):
     def as_dict(self) -> Dict[str, Any]:
         """
         Translate the object into a dictionary representation that can be serialized into a
-        multipurpose.sensor.telemetry.000 object.
+        synced.readings.000 object.
 
         This method prepares the object for serialization by the as_type method, creating a
         dictionary with key-value pairs that follow the requirements for an instance of the
-        multipurpose.sensor.telemetry.000 type. Unlike the standard python dict method,
+        synced.readings.000 type. Unlike the standard python dict method,
         it makes the following substantive changes:
         - Enum Values: Translates between the values used locally by the actor to the symbol
         sent in messages.
@@ -105,10 +105,10 @@ class MultipurposeSensorTelemetry(BaseModel):
 
     def as_type(self) -> bytes:
         """
-        Serialize to the multipurpose.sensor.telemetry.000 representation.
+        Serialize to the synced.readings.000 representation.
 
-        Instances in the class are python-native representations of multipurpose.sensor.telemetry.000
-        objects, while the actual multipurpose.sensor.telemetry.000 object is the serialized UTF-8 byte
+        Instances in the class are python-native representations of synced.readings.000
+        objects, while the actual synced.readings.000 object is the serialized UTF-8 byte
         string designed for sending in a message.
 
         This method calls the as_dict() method, which differs from the native python dict()
@@ -120,7 +120,7 @@ class MultipurposeSensorTelemetry(BaseModel):
 
         It also applies these changes recursively to sub-types.
 
-        Its near-inverse is MultipurposeSensorTelemetry.type_to_tuple(). If the type (or any sub-types)
+        Its near-inverse is SyncedReadings.type_to_tuple(). If the type (or any sub-types)
         includes an enum, then the type_to_tuple will map an unrecognized symbol to the
         default enum value. This is why these two methods are only 'near' inverses.
         """
@@ -131,8 +131,8 @@ class MultipurposeSensorTelemetry(BaseModel):
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
-class MultipurposeSensorTelemetry_Maker:
-    type_name = "multipurpose.sensor.telemetry"
+class SyncedReadings_Maker:
+    type_name = "synced.readings"
     version = "000"
 
     def __init__(
@@ -142,7 +142,7 @@ class MultipurposeSensorTelemetry_Maker:
         telemetry_name_list: List[TelemetryName],
         value_list: List[int],
     ):
-        self.tuple = MultipurposeSensorTelemetry(
+        self.tuple = SyncedReadings(
             ScadaReadTimeUnixMs=scada_read_time_unix_ms,
             AboutNodeNameList=about_node_name_list,
             TelemetryNameList=telemetry_name_list,
@@ -150,14 +150,14 @@ class MultipurposeSensorTelemetry_Maker:
         )
 
     @classmethod
-    def tuple_to_type(cls, tuple: MultipurposeSensorTelemetry) -> bytes:
+    def tuple_to_type(cls, tuple: SyncedReadings) -> bytes:
         """
         Given a Python class object, returns the serialized JSON type object.
         """
         return tuple.as_type()
 
     @classmethod
-    def type_to_tuple(cls, t: bytes) -> MultipurposeSensorTelemetry:
+    def type_to_tuple(cls, t: bytes) -> SyncedReadings:
         """
         Given a serialized JSON type object, returns the Python class object.
         """
@@ -170,12 +170,12 @@ class MultipurposeSensorTelemetry_Maker:
         return cls.dict_to_tuple(d)
 
     @classmethod
-    def dict_to_tuple(cls, d: dict[str, Any]) -> MultipurposeSensorTelemetry:
+    def dict_to_tuple(cls, d: dict[str, Any]) -> SyncedReadings:
         """
-        Deserialize a dictionary representation of a multipurpose.sensor.telemetry.000 message object
-        into a MultipurposeSensorTelemetry python object for internal use.
+        Deserialize a dictionary representation of a synced.readings.000 message object
+        into a SyncedReadings python object for internal use.
 
-        This is the near-inverse of the MultipurposeSensorTelemetry.as_dict() method:
+        This is the near-inverse of the SyncedReadings.as_dict() method:
           - Enums: translates between the symbols sent in messages between actors and
         the values used by the actors internally once they've deserialized the messages.
           - Types: recursively validates and deserializes sub-types.
@@ -188,10 +188,10 @@ class MultipurposeSensorTelemetry_Maker:
             d (dict): the dictionary resulting from json.loads(t) for a serialized JSON type object t.
 
         Raises:
-           SchemaError: if the dict cannot be turned into a MultipurposeSensorTelemetry object.
+           SchemaError: if the dict cannot be turned into a SyncedReadings object.
 
         Returns:
-            MultipurposeSensorTelemetry
+            SyncedReadings
         """
         d2 = dict(d)
         if "ScadaReadTimeUnixMs" not in d2.keys():
@@ -215,10 +215,10 @@ class MultipurposeSensorTelemetry_Maker:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "000":
             LOGGER.debug(
-                f"Attempting to interpret multipurpose.sensor.telemetry version {d2['Version']} as version 000"
+                f"Attempting to interpret synced.readings version {d2['Version']} as version 000"
             )
             d2["Version"] = "000"
-        return MultipurposeSensorTelemetry(**d2)
+        return SyncedReadings(**d2)
 
 
 def check_is_reasonable_unix_time_ms(v: int) -> None:

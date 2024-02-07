@@ -1,9 +1,9 @@
 {
   "gtr_asl": "001",
-  "type_name": "multipurpose.sensor.telemetry",
+  "type_name": "synced.readings",
   "version": "000",
   "owner": "gridworks@gridworks-consulting.com",
-  "description": ". A set of readings made at the same time by a multipurpose sensor, sent by SpaceheatNode actor capturing the data (which will be associated to some sort of multipurpose sensing component) to its SCADA. The nth element of each of its three readings are coupled: AboutNodeName, what the value is, what the TelemetryName is.",
+  "description": ". A set of readings made at the same time by a multipurpose sensor, sent by SpaceheatNode actor capturing the data (which will be associated to some sort of multipurpose sensing component). The nth element of each of its three readings are coupled: AboutNodeName, what the value is, what the TelemetryName is.",
   "properties": {
     "ScadaReadTimeUnixMs": {
       "type": "integer",
@@ -18,7 +18,7 @@
         "type": "string"
       },
       "format": "SpaceheatName",
-      "title": "AboutNodeAliasList",
+      "title": "AboutNodeNameList",
       "description": "List of names of the SpaceHeat Nodes getting measured.",
       "required": true
     },
@@ -42,7 +42,7 @@
     },
     "TypeName": {
       "type": "string",
-      "value": "multipurpose.sensor.telemetry",
+      "value": "synced.readings",
       "title": "The type name"
     },
     "Version": {

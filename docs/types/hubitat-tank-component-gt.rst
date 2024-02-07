@@ -6,11 +6,11 @@ Python pydantic class corresponding to json type `hubitat.tank.component.gt`, ve
     :members:
 
 **ComponentId**:
-    - Description: Component Id. Primary GridWorks identifier for a specific physical instance of a GridWorks TankModule1 and also as a more generic Component. 
+    - Description: Component Id. Primary GridWorks identifier for a specific physical instance of a GridWorks TankModule1 and also as a more generic Component.
     - Format: UuidCanonicalTextual
 
 **ComponentAttributeClass**:
-    - Description: ComponentAttributeClassId. Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry. 
+    - Description: ComponentAttributeClassId. Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry.
 
 **Tank**:
     - Description: Tank. The configuration information (HubitatTankSettingsGt) about the 4 analog temperature sensors for a GridWorks TankModule1.
@@ -31,4 +31,3 @@ Python pydantic class corresponding to json type `hubitat.tank.component.gt`, ve
 
 .. autoclass:: gwproto.types.HubitatTankComponentGt_Maker
     :members:
-

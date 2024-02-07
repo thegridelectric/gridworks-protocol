@@ -11,6 +11,7 @@ from pydantic import Extra
 from pydantic import Field
 from pydantic import validator
 
+from gwproto.enums import ThermistorDataMethod
 from gwproto.errors import SchemaError
 from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
 from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig_Maker
@@ -43,7 +44,7 @@ class ThermistorDataProcessingConfig(BaseModel):
             "This includes the standard non-thermistor-specific reporting configuration data."
         ),
     )
-    DataProcessingMethod: Optional[] = Field(
+    DataProcessingMethod: Optional[ThermistorDataMethod] = Field(
         title="Data Processing Method",
         description=(
             "What method is used to go from polled raw voltage to captured temperature readings? "
@@ -60,7 +61,9 @@ class ThermistorDataProcessingConfig(BaseModel):
         ),
         default=None,
     )
-    TypeName: Literal["thermistor.data.processing.config"] = "thermistor.data.processing.config"
+    TypeName: Literal[
+        "thermistor.data.processing.config"
+    ] = "thermistor.data.processing.config"
     Version: Literal["000"] = "000"
 
     class Config:
@@ -102,7 +105,9 @@ class ThermistorDataProcessingConfig(BaseModel):
         d["ReportingConfig"] = self.ReportingConfig.as_dict()
         if "DataProcessingMethod" in d.keys():
             del d["DataProcessingMethod"]
-            d["DataProcessingMethodGtEnumSymbol"] = .value_to_symbol(self.DataProcessingMethod)
+            d[
+                "DataProcessingMethodGtEnumSymbol"
+            ] = ThermistorDataMethod.value_to_symbol(self.DataProcessingMethod)
         return d
 
     def as_type(self) -> bytes:
@@ -141,7 +146,7 @@ class ThermistorDataProcessingConfig_Maker:
         self,
         terminal_block_idx: int,
         reporting_config: TelemetryReportingConfig,
-        data_processing_method: Optional[],
+        data_processing_method: Optional[ThermistorDataMethod],
         data_processing_description: Optional[str],
     ):
         self.tuple = ThermistorDataProcessingConfig(
@@ -201,12 +206,18 @@ class ThermistorDataProcessingConfig_Maker:
         if "ReportingConfig" not in d2.keys():
             raise SchemaError(f"dict missing ReportingConfig: <{d2}>")
         if not isinstance(d2["ReportingConfig"], dict):
-            raise SchemaError(f"ReportingConfig <{d2['ReportingConfig']}> must be a TelemetryReportingConfig!")
-        reporting_config = TelemetryReportingConfig_Maker.dict_to_tuple(d2["ReportingConfig"])
+            raise SchemaError(
+                f"ReportingConfig <{d2['ReportingConfig']}> must be a TelemetryReportingConfig!"
+            )
+        reporting_config = TelemetryReportingConfig_Maker.dict_to_tuple(
+            d2["ReportingConfig"]
+        )
         d2["ReportingConfig"] = reporting_config
         if "DataProcessingMethod" in d2.keys():
-            value = .symbol_to_value(d2["DataProcessingMethodGtEnumSymbol"])
-            d2["DataProcessingMethod"] = (value)
+            value = ThermistorDataMethod.symbol_to_value(
+                d2["DataProcessingMethodGtEnumSymbol"]
+            )
+            d2["DataProcessingMethod"] = ThermistorDataMethod(value)
         if "TypeName" not in d2.keys():
             raise SchemaError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():

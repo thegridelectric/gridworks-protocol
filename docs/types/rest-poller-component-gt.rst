@@ -15,4 +15,3 @@ Python pydantic class corresponding to json type `rest.poller.component.gt`, ver
 
 .. autoclass:: gwproto.types.RestPollerComponentGt_Maker
     :members:
-

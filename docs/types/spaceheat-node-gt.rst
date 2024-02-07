@@ -14,16 +14,16 @@ Python pydantic class corresponding to json type `spaceheat.node.gt`, version `1
     - Format: SpaceheatName
 
 **ActorClass**:
-    - Description: 
+    - Description:
 
 **DisplayName**:
-    - Description: 
+    - Description:
 
 **ComponentId**:
     - Description: Unique identifier for Spaceheat Node's Component. Used if a Spaceheat Node is associated with a physical device.
 
 **InPowerMetering**:
-    - Description: This exists and is True if the SpaceheatNode is part of the power metering that is used for market participation. Small loads like circulator pumps and fans may be metered to determine their behavior but are are likely NOT part of the power metering used for market participation. 
+    - Description: This exists and is True if the SpaceheatNode is part of the power metering that is used for market participation. Small loads like circulator pumps and fans may be metered to determine their behavior but are are likely NOT part of the power metering used for market participation.
 
 **TypeName**:
     - Description: All GridWorks Versioned Types have a fixed TypeName, which is a string of lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character, and final word NOT all Hindu-Arabic numerals.
@@ -43,4 +43,3 @@ Python pydantic class corresponding to json type `spaceheat.node.gt`, version `1
 
 .. autoclass:: gwproto.types.SpaceheatNodeGt_Maker
     :members:
-

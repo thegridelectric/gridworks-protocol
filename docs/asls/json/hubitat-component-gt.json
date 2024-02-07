@@ -56,17 +56,17 @@
     }
   },
   "example": {
-      "ComponentAttributeClassId": "62528da5-b510-4ac2-82c1-3782842eae07",
-      "ComponentId": "48039704-7d45-4937-adda-0e362d13cef6",
-      "DisplayName": "Oak Hubitat 81:37:82",
-      "Hubitat": {
-        "AccessToken": "a8232144-abe9-4eed-bcfd-8f182600b8e7",
-        "Host": "hubitat-keene-oak.local",
-        "MacAddress": "34:E1:D1:81:37:82",
-        "MakerApiId": 2
-      },
-      "HwUid": "813782",
-      "TypeName": "hubitat.component.gt",
-      "Version": "000"
-    }
+    "ComponentAttributeClassId": "62528da5-b510-4ac2-82c1-3782842eae07",
+    "ComponentId": "48039704-7d45-4937-adda-0e362d13cef6",
+    "DisplayName": "Oak Hubitat 81:37:82",
+    "Hubitat": {
+      "AccessToken": "a8232144-abe9-4eed-bcfd-8f182600b8e7",
+      "Host": "hubitat-keene-oak.local",
+      "MacAddress": "34:E1:D1:81:37:82",
+      "MakerApiId": 2
+    },
+    "HwUid": "813782",
+    "TypeName": "hubitat.component.gt",
+    "Version": "000"
+  }
 }

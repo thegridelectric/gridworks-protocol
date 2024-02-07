@@ -1,8 +1,8 @@
-MultipurposeSensorTelemetry
+SyncedReadings
 ==========================
-Python pydantic class corresponding to json type `multipurpose.sensor.telemetry`, version `000`.
+Python pydantic class corresponding to json type `synced.readings`, version `000`.
 
-.. autoclass:: gwproto.types.MultipurposeSensorTelemetry
+.. autoclass:: gwproto.types.SyncedReadings
     :members:
 
 **ScadaReadTimeUnixMs**:
@@ -10,7 +10,7 @@ Python pydantic class corresponding to json type `multipurpose.sensor.telemetry`
     - Format: ReasonableUnixTimeMs
 
 **AboutNodeNameList**:
-    - Description: AboutNodeAliasList. List of names of the SpaceHeat Nodes getting measured.
+    - Description: AboutNodeNameList. List of names of the SpaceHeat Nodes getting measured.
     - Format: SpaceheatName
 
 **TelemetryNameList**:
@@ -27,14 +27,13 @@ Python pydantic class corresponding to json type `multipurpose.sensor.telemetry`
 
 
 
-.. autoclass:: gwproto.types.multipurpose_sensor_telemetry.check_is_spaceheat_name
+.. autoclass:: gwproto.types.synced_readings.check_is_spaceheat_name
     :members:
 
 
-.. autoclass:: gwproto.types.multipurpose_sensor_telemetry.check_is_reasonable_unix_time_ms
+.. autoclass:: gwproto.types.synced_readings.check_is_reasonable_unix_time_ms
     :members:
 
 
-.. autoclass:: gwproto.types.MultipurposeSensorTelemetry_Maker
+.. autoclass:: gwproto.types.SyncedReadings_Maker
     :members:
-

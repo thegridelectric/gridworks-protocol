@@ -23,7 +23,8 @@ class GtDispatchBoolean(BaseModel):
     """
     GridWorks Type Boolean Dispatch.
 
-    Boolean dispatch command designed to be sent from an AtomicTNode to a SCADA.
+    Boolean dispatch command designed to be sent from an AtomicTNode to a SCADA. FromName, AboutName
+    property format changed from LeftRightDot to SpaceheatName
     """
 
     ToGNodeAlias: str = Field(

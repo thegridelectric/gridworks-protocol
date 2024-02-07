@@ -41,7 +41,7 @@ def test_ads111x_based_component_gt_generated() -> None:
         open_voltage_by_ads=gtuple.OpenVoltageByAds,
         config_list=gtuple.ConfigList,
         hw_uid=gtuple.HwUid,
-        
+
     ).tuple
     assert t == gtuple
 

@@ -42,17 +42,17 @@ forth between type instances and Python objects.
     I2cFlowTotalizerComponentGt  <types/i2c-flow-totalizer-component-gt>
     I2cMultichannelDtRelayComponentGt  <types/i2c-multichannel-dt-relay-component-gt>
     KeyparamChangeLog  <types/keyparam-change-log>
-    MultipurposeSensorTelemetry  <types/multipurpose-sensor-telemetry>
     PowerWatts  <types/power-watts>
     RelayActorConfig  <types/relay-actor-config>
     ResistiveHeaterCacGt  <types/resistive-heater-cac-gt>
     ResistiveHeaterComponentGt  <types/resistive-heater-component-gt>
     RestPollerComponentGt  <types/rest-poller-component-gt>
-    SimpleSensorTelemetry  <types/simple-sensor-telemetry>
+    SingleReading  <types/single-reading>
     SnapshotSpaceheat  <types/snapshot-spaceheat>
     SpaceheatNodeGt  <types/spaceheat-node-gt>
+    SyncedReadings  <types/synced-readings>
     TaDataChannels  <types/ta-data-channels>
     TelemetryReportingConfig  <types/telemetry-reporting-config>
     TelemetrySnapshotSpaceheat  <types/telemetry-snapshot-spaceheat>
     ThermistorDataProcessingConfig  <types/thermistor-data-processing-config>
-    
+

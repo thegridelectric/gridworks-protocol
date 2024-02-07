@@ -45,12 +45,7 @@ class ShNode:
         ShNode.by_id[self.sh_node_id] = self
 
     def __repr__(self):
-        rs = f"ShNode {self.display_name} => {self.role.value} {self.alias}, "
-        if self.has_actor:
-            rs += " (has actor)"
-        else:
-            rs += " (passive, no actor)"
-        return rs
+        return f"ShNode {self.display_name} => {self.actor_class.value} {self.alias}"
 
     @property
     def has_actor(self) -> bool:

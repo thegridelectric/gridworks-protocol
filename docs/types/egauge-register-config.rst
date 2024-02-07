@@ -33,4 +33,3 @@ Python pydantic class corresponding to json type `egauge.register.config`, versi
 
 .. autoclass:: gwproto.types.EgaugeRegisterConfig_Maker
     :members:
-

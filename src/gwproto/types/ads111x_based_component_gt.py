@@ -61,13 +61,14 @@ class Ads111xBasedComponentGt(BaseModel):
         description="Sample: Oak 16-channel AdsTemp Sensor <100>",
         default=None,
     )
-    OpenVoltageByAds: List[] = Field(
+    OpenVoltageByAds: List[float] = Field(
         title="Open Voltage By Ads",
         description=(
             "The voltage reading with no thermistor attached is called the 'open voltage.' It "
             "is close to the power supply voltage (e.g. 5V) , but we have found that there is "
             "non-trivial variation (~0.2 V), and there can even be variation in the average open "
-            "voltage in the same installation across different ADS chips (~0.01 or 0.02V)."
+            "voltage in the same installation across different ADS chips (~0.01 or 0.02V). This "
+            "list follows the same order as the self.cac.AdsI2cAddressList."
         ),
     )
     ConfigList: List[ThermistorDataProcessingConfig] = Field(
@@ -106,6 +107,26 @@ class Ads111xBasedComponentGt(BaseModel):
                 f"ComponentAttributeClassId failed UuidCanonicalTextual format validation: {e}"
             )
         return v
+
+    @validator("OpenVoltageByAds")
+    def _check_open_voltage_by_ads(cls, v: List[float]) -> List[float]:
+        for elt in v:
+            try:
+                check_is_near5(elt)
+            except ValueError as e:
+                raise ValueError(
+                    f"OpenVoltageByAds element {elt} failed Near5 format validation: {e}"
+                )
+        return v
+
+    @validator("ConfigList")
+    def check_config_list(cls, v: List[ThermistorDataProcessingConfig]) -> List[ThermistorDataProcessingConfig]:
+        """
+        Axiom 1: Terminal Block, TelemetryName uniqueness.
+        Each pair (x.TerminalBlockIdx, x.ReportingConfig.TelemetryName) in the ConfigList is unique.
+        """
+        ...
+        # TODO: Implement Axiom(s)
 
     def as_dict(self) -> Dict[str, Any]:
         """
@@ -174,7 +195,7 @@ class Ads111xBasedComponentGt_Maker:
         component_id: str,
         component_attribute_class_id: str,
         display_name: Optional[str],
-        open_voltage_by_ads: List[],
+        open_voltage_by_ads: List[float],
         config_list: List[ThermistorDataProcessingConfig],
         hw_uid: Optional[str],
     ):
@@ -298,6 +319,27 @@ class Ads111xBasedComponentGt_Maker:
     @classmethod
     def dict_to_dc(cls, d: dict[Any, str]) -> Ads111xBasedComponent:
         return cls.tuple_to_dc(cls.dict_to_tuple(d))
+
+
+def check_is_ads1115_i2c_address(v: str) -> None:
+    """
+    Ads1115I2cAddress: ToLower(v) in ["0x48", "0x49", "0x4a", 0x4b"].
+
+    One of the 4 allowable I2C addresses for Texas Instrument Ads1115 chips.
+
+    Raises:
+        ValueError: if not Ads1115I2cAddress format
+    """
+    if ToLower(v) not in ["0x48", "0x49", "0x4a", 0x4b"]:
+        raise ValueError(f"Not Ads1115I2cAddress: {e}")
+
+
+def check_is_near5(v: str) -> None:
+    """
+    4.5 <= v <= 5.5
+    """
+    if v < 4.5 or v > 5.5:
+        raise ValueError(f"<{v}> is not between 4.5 and 5.5, not Near5")
 
 
 def check_is_uuid_canonical_textual(v: str) -> None:

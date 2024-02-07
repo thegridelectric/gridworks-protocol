@@ -31,7 +31,10 @@ class SpaceheatNodeGt(BaseModel):
     represent both underlying physical objects (water tank), measurements of these objects (temperature
     sensing at the top of a water tank), and actors within the code (an actor measuring multiple
     temperatures, or an actor responsible for filtering/smoothing temperature data for the purposes
-    of thermostatic control).
+    of thermostatic control). BIG CHANGES: Alias -> Name. The Property Format changes from LeftRightDot
+    to SpaceheatNode. Remove Role. (Require numerous changes, in both code and hardware layout.)
+    MEDIUM CHANGE: Remove ReportingSamplePeriodS. (Requires change for SimpleSensor). Smaller
+    changes include removing NameplatePowerW, RatedVoltageV.
 
     [More info](https://gridworks-protocol.readthedocs.io/en/latest/spaceheat-node.html)
     """

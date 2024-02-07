@@ -25,6 +25,7 @@ class GtDispatchBooleanLocal(BaseModel):
 
     By Locally, this means sent without access to Internet. The HomeAlone actor must reside
     within the Local Area Network of the SCADA - typically it should reside on the same hardware.
+    AboutNodeName property format changed from LeftRightDot to SpaceheatName
     """
 
     TypeName: Literal["gt.dispatch.boolean.local"] = "gt.dispatch.boolean.local"

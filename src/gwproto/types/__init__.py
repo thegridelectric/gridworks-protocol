@@ -60,10 +60,6 @@ from gwproto.types.i2c_multichannel_dt_relay_component_gt import (
 )
 from gwproto.types.keyparam_change_log import KeyparamChangeLog
 from gwproto.types.keyparam_change_log import KeyparamChangeLog_Maker
-from gwproto.types.multipurpose_sensor_telemetry import MultipurposeSensorTelemetry
-from gwproto.types.multipurpose_sensor_telemetry import (
-    MultipurposeSensorTelemetry_Maker,
-)
 from gwproto.types.power_watts import PowerWatts
 from gwproto.types.power_watts import PowerWatts_Maker
 from gwproto.types.relay_actor_config import RelayActorConfig
@@ -74,12 +70,14 @@ from gwproto.types.resistive_heater_component_gt import ResistiveHeaterComponent
 from gwproto.types.resistive_heater_component_gt import ResistiveHeaterComponentGt_Maker
 from gwproto.types.rest_poller_component_gt import RESTPollerComponentGt
 from gwproto.types.rest_poller_component_gt import RESTPollerComponentGt_Maker
-from gwproto.types.simple_sensor_telemetry import SimpleSensorTelemetry
-from gwproto.types.simple_sensor_telemetry import SimpleSensorTelemetry_Maker
+from gwproto.types.single_reading import SingleReading
+from gwproto.types.single_reading import SingleReading_Maker
 from gwproto.types.snapshot_spaceheat import SnapshotSpaceheat
 from gwproto.types.snapshot_spaceheat import SnapshotSpaceheat_Maker
 from gwproto.types.spaceheat_node_gt import SpaceheatNodeGt
 from gwproto.types.spaceheat_node_gt import SpaceheatNodeGt_Maker
+from gwproto.types.synced_readings import SyncedReadings
+from gwproto.types.synced_readings import SyncedReadings_Maker
 from gwproto.types.ta_data_channels import TaDataChannels
 from gwproto.types.ta_data_channels import TaDataChannels_Maker
 from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
@@ -143,8 +141,6 @@ __all__ = [
     "I2cMultichannelDtRelayComponentGt_Maker",
     "KeyparamChangeLog",
     "KeyparamChangeLog_Maker",
-    "MultipurposeSensorTelemetry",
-    "MultipurposeSensorTelemetry_Maker",
     "PowerWatts",
     "PowerWatts_Maker",
     "RelayActorConfig",
@@ -155,12 +151,14 @@ __all__ = [
     "ResistiveHeaterComponentGt_Maker",
     "RESTPollerComponentGt",
     "RESTPollerComponentGt_Maker",
-    "SimpleSensorTelemetry",
-    "SimpleSensorTelemetry_Maker",
+    "SingleReading",
+    "SingleReading_Maker",
     "SnapshotSpaceheat",
     "SnapshotSpaceheat_Maker",
     "SpaceheatNodeGt",
     "SpaceheatNodeGt_Maker",
+    "SyncedReadings",
+    "SyncedReadings_Maker",
     "TaDataChannels",
     "TaDataChannels_Maker",
     "TelemetryReportingConfig",

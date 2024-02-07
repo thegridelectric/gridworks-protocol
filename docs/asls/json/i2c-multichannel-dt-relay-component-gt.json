@@ -5,6 +5,33 @@
   "owner": "gridworks@gridworks-consulting.com",
   "description": "I2c Multichannel Double Throw Relay Component. A specific instance of a board with multiple double-throw electromechanical relays. The board is expected to be addressable over i2c, with that address being configurable to a finite number of choices via dipswitches.",
   "properties": {
+    "ComponentId": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "Component Id",
+      "description": "Primary GridWorks identifier for a specific physical instance of a Relay, and also as a more generic Component.",
+      "required": true
+    },
+    "ComponentAttributeClassId": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "Unique identifier for ComponentAttributeClass object articulated by the component.attribute.class.gt.001 type.",
+      "description": "Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry.",
+      "required": true
+    },
+    "RelayConfigList": {
+      "type": "relay.actor.config.000",
+      "description": "Information about which actors control each relay, and the relay wiring state: (normally open, normally closed, double throw).",
+      "required": true
+    },
+    "DisplayName": {
+      "type": "string",
+      "required": false
+    },
+    "HwUid": {
+      "type": "string",
+      "required": false
+    },
     "TypeName": {
       "type": "string",
       "value": "i2c.multichannel.dt.relay.component.gt",
@@ -15,6 +42,12 @@
       "title": "The type version",
       "default": "000",
       "required": true
+    }
+  },
+  "axioms": {
+    "Axiom": {
+      "title": "Relay Index Consistency",
+      "description": "All of the Relay indices in the RelayConfigList are unique."
     }
   }
 }

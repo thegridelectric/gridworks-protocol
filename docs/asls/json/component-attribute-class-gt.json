@@ -18,7 +18,7 @@
       "format": "spaceheat.make.model",
       "title": "MakeModel",
       "description": "MakeModel of the component.",
-      "required": false
+      "required": true
     },
     "DisplayName": {
       "type": "string",
@@ -29,7 +29,7 @@
       "type": "integer",
       "format": "PositiveInteger",
       "title": "Min Poll Period Ms",
-      "description": "The minimum amount of time between polls of this device .",
+      "description": "The minimum amount of time between polls of this device.",
       "required": false
     },
     "TypeName": {

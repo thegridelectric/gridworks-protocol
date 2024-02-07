@@ -31,6 +31,8 @@
     },
     "BatchedTransmissionPeriodS": {
       "type": "integer",
+      "format": "PositiveInteger",
+      "title": "",
       "required": true
     },
     "ChannelReadingList": {

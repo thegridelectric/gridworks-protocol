@@ -53,12 +53,12 @@ class MakeModel(StrEnum):
         also has 2 potential free outputs. [More Info](https://drive.google.com/drive/u/0/folders/1Muhsvw00goppHIfGSEmreX4hM6V78b-m).
       - Amphenol__NTC_10K_Thermistor_MA100GG103BN (46f21cd5): A small gauge, low-cost, rapid response
         NTC 10K Thermistor designed for medical applications. [More Info](https://drive.google.com/drive/u/0/folders/11HW4ov66UvxKAwqApW6IrtoXatZBLQkd).
-      - YHDC__SCT013-100 (08da3f7d): YHDC current transformer [More Info](https://en.yhdc.com/product/SCT013-401.html).
-      - Magnelab__SCT-0300-050 (a8d9a70d): Magnelab 50A current transformer
+      - YHDC__SCT013-100 (08da3f7d): YHDC current transformer. [More Info](https://en.yhdc.com/product/SCT013-401.html).
+      - Magnelab__SCT-0300-050 (a8d9a70d): Magnelab 50A current transformer.
       - GridWorks__MultiTemp1 (bb31d136): GridWorks Analog temperature sensor that has 12 channels
         (labeled 1-12) to read 12 10K NTC Thermistors. It is comprised of 3 NCD ADS 1115 I2C
         temperature sensors with I2C Addresses 0x4b, 0x48, 0x49. [More Info](https://drive.google.com/drive/u/0/folders/1OuY0tunaad2Ie4Id3zFB7FcbEwHizWuL).
-      - Krida__Emr16-I2c-V3 (3353ce46): 16-Channel I2C Low Voltage Electromagnetic Relay Board [More Info](https://drive.google.com/drive/u/0/folders/1jL82MTRKEh9DDmxJFQ2yU2cjqnVD9Ik7).
+      - Krida__Emr16-I2c-V3 (3353ce46): 16-Channel I2C Low Voltage Electromagnetic Relay Board. [More Info](https://drive.google.com/drive/u/0/folders/1jL82MTRKEh9DDmxJFQ2yU2cjqnVD9Ik7).
     """
 
     UNKNOWNMAKE__UNKNOWNMODEL = auto()

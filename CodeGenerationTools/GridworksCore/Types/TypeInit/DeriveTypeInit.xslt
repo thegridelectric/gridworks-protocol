@@ -28,8 +28,8 @@
 """ List of all the types """
 </xsl:text>
 <xsl:for-each select="$airtable//VersionedTypes/VersionedType[
-  count(Protocols[text()='gwproto']) > 0 and 
-  (Status = 'Active' or Status = 'Pending') and 
+  count(Protocols[text()='gwproto']) > 0 and
+  (Status = 'Active' or Status = 'Pending') and
   (ProtocolCategory = 'Json' or ProtocolCategory = 'GwAlgoSerial') and
   not (NotInInit='true')
 ]">
@@ -65,8 +65,8 @@ __all__ = [</xsl:text>
 
 
 <xsl:for-each select="$airtable//VersionedTypes/VersionedType[
-  count(Protocols[text()='gwproto']) > 0 and 
-  (Status = 'Active' or Status = 'Pending') and 
+  count(Protocols[text()='gwproto']) > 0 and
+  (Status = 'Active' or Status = 'Pending') and
   (ProtocolCategory = 'Json' or ProtocolCategory = 'GwAlgoSerial')
 ]">
 <xsl:sort select="VersionedTypeName" data-type="text"/>
@@ -108,7 +108,7 @@ __all__ = [</xsl:text>
 </xsl:otherwise>
 </xsl:choose>
 
-    
+
 
 </xsl:for-each>
 <xsl:text>

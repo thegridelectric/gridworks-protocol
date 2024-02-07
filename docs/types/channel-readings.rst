@@ -9,7 +9,7 @@ Python pydantic class corresponding to json type `channel.readings`, version `00
     - Description: Data Channel. The Data Channel that this batch of timestamped values is about.
 
 **ValueList**:
-    - Description: List of Values. The values of the readings. 
+    - Description: List of Values. Refer to the associated DataChannel to understand the meaning of the these readings.
 
 **ScadaReadTimeUnixMsList**:
     - Description: List of Read Times. The times that the MultipurposeSensor took the readings, in unix milliseconds
@@ -29,4 +29,3 @@ Python pydantic class corresponding to json type `channel.readings`, version `00
 
 .. autoclass:: gwproto.types.ChannelReadings_Maker
     :members:
-

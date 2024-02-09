@@ -16,6 +16,7 @@ from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
 class HubitatTankComponent(Component, ComponentResolver):
     hubitat: HubitatComponentGt
     sensor_supply_voltage: float
+    default_poll_period_seconds: Optional[float] = None
     devices_gt: list[FibaroTempSensorSettingsGt]
     devices: list[FibaroTempSensorSettings] = []
 
@@ -33,6 +34,7 @@ class HubitatTankComponent(Component, ComponentResolver):
         # rely on the actual HubitatComponentGt existing yet.
         self.hubitat = HubitatComponentGt.make_stub(tank_gt.hubitat_component_id)
         self.sensor_supply_voltage = tank_gt.sensor_supply_voltage
+        self.default_poll_period_seconds = tank_gt.default_poll_period_seconds
         self.devices_gt = list(tank_gt.devices)
         super().__init__(
             display_name=display_name,
@@ -56,6 +58,7 @@ class HubitatTankComponent(Component, ComponentResolver):
                 tank_name=tank_node_name,
                 settings_gt=device_gt,
                 hubitat=hubitat_settings,
+                default_poll_period_seconds=self.default_poll_period_seconds,
             )
             for device_gt in self.devices_gt
             if device_gt.enabled

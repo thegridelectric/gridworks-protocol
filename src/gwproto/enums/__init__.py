@@ -1,7 +1,7 @@
 """
-GridWorks Enums used in gwproto, the Shared Application Langauge used by SCADA
+GridWorks Enums used in gwproto, the Application Shared Language (ASL) used by SCADA
 devices and AtomicTNodes to communicate with each other. These enums play a specific structural
-role as semantic "glue" within Shared Application Languages.
+role as semantic "glue" within ASLs.
 
 Key attributes:
   - Enum values are translated into "GridWorks Type Enum Symbols" (GtEnumSymbols) when embedded
@@ -18,7 +18,7 @@ Key attributes:
 If Enums are "glue", then GridWorks Types are the building blocks of SALs. Every SAL is comprised
 of a set of shared GridWorks Types.
 
-Shared Application Languages are an evolution of the concept of Application Programming Interfaces.
+Application Shared Languages are an evolution of the concept of Application Programming Interfaces.
 In a nutshell, an API can be viewed as a rather restricted version of an SAL, where only one application
 has anything complex/interesting to say and, in general, the developers/owners of that application
 have sole responsibility for managing the versioning and changing of that API. Note also that SALs
@@ -27,7 +27,7 @@ or the message delivery mechanism (i.e. via default GET/POST to RESTful URLs). F
 on these ideas:
   - [GridWorks Enums](https://gridwork-type-registry.readthedocs.io/en/latest/types.html)
   - [GridWorks Types](https://gridwork-type-registry.readthedocs.io/en/latest/types.html)
-  - [SALs](https://gridwork-type-registry.readthedocs.io/en/latest/sals.html)
+  - [ASLs](https://gridwork-type-registry.readthedocs.io/en/latest/asls.html)
 
 
  """
@@ -40,10 +40,10 @@ from gwproto.enums.unit import Unit
 
 
 __all__ = [
-    "ActorClass",  # [sh.actor.class.001](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shactorclass)
-    "LocalCommInterface",  # [local.comm.interface.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#localcomminterface)
-    "MakeModel",  # [spaceheat.make.model.001](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatmakemodel)
-    "Role",  # [sh.node.role.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shnoderole)
-    "TelemetryName",  # [spaceheat.telemetry.name.001](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheattelemetryname)
-    "Unit",  # [spaceheat.unit.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatunit)
+    "ActorClass",   # [sh.actor.class.001](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shactorclass)
+    "LocalCommInterface",   # [local.comm.interface.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#localcomminterface)
+    "MakeModel",   # [spaceheat.make.model.001](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatmakemodel)
+    "Role",   # [sh.node.role.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shnoderole)
+    "TelemetryName",   # [spaceheat.telemetry.name.001](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheattelemetryname)
+    "Unit",   # [spaceheat.unit.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatunit)
 ]

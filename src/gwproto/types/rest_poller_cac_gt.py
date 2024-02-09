@@ -1,33 +1,16 @@
 import json
 import typing
 from typing import Any
-from typing import Dict
 from typing import Literal
-from typing import Optional
-
-from pydantic import UUID4
-from pydantic import BaseModel
-from pydantic import validator
 
 from gwproto.data_classes.cacs.rest_poller_cac import RESTPollerCac
 from gwproto.data_classes.component_attribute_class import ComponentAttributeClass
+from gwproto.types import ComponentAttributeClassGt
 
 
-class RESTPollerCacGt(BaseModel):
-    ComponentAttributeClassId: str
-    DisplayName: Optional[str] = None
+class RESTPollerCacGt(ComponentAttributeClassGt):
     TypeName: Literal["rest.poller.cac.gt"] = "rest.poller.cac.gt"
     Version: Literal["000"] = "000"
-
-    @validator("ComponentAttributeClassId")
-    def _check_component_attribute_class_id(cls, v: str) -> str:
-        return str(UUID4(v))
-
-    def as_dict(self) -> Dict[str, Any]:
-        return self.dict(exclude_unset=True)
-
-    def as_type(self) -> str:
-        return json.dumps(self.as_dict())
 
     @classmethod
     def from_data_class(cls, cac: RESTPollerCac) -> "RESTPollerCacGt":
@@ -59,7 +42,7 @@ class RESTPollerCacGt_Maker:
 
     @classmethod
     def tuple_to_type(cls, tpl: RESTPollerCacGt) -> str:
-        return tpl.as_type()
+        return tpl.as_type()  # noqa
 
     @classmethod
     def type_to_tuple(cls, t: str) -> RESTPollerCacGt:
@@ -83,7 +66,7 @@ class RESTPollerCacGt_Maker:
 
     @classmethod
     def dc_to_type(cls, dc: RESTPollerCac) -> str:
-        return cls.dc_to_tuple(dc).as_type()
+        return cls.dc_to_tuple(dc).as_type()  # noqa
 
     @classmethod
     def dict_to_dc(cls, d: dict[Any, str]) -> RESTPollerCac:

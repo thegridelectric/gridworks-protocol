@@ -82,7 +82,8 @@ class ComponentAttributeClassGt(BaseModel):
         d = {
             key: value
             for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+                include=self.__fields_set__ | {"TypeName", "Version"},
+                by_alias=True,
             ).items()
             if value is not None
         }
@@ -131,11 +132,11 @@ class ComponentAttributeClassGt_Maker:
         )
 
     @classmethod
-    def tuple_to_type(cls, tuple: ComponentAttributeClassGt) -> bytes:
+    def tuple_to_type(cls, tuple_: ComponentAttributeClassGt) -> bytes:
         """
         Given a Python class object, returns the serialized JSON type object.
         """
-        return tuple.as_type()
+        return tuple_.as_type()
 
     @classmethod
     def type_to_tuple(cls, t: bytes) -> ComponentAttributeClassGt:
@@ -209,11 +210,11 @@ class ComponentAttributeClassGt_Maker:
 
     @classmethod
     def type_to_dc(cls, t: str) -> ComponentAttributeClass:
-        return cls.tuple_to_dc(cls.type_to_tuple(t))
+        return cls.tuple_to_dc(cls.type_to_tuple(t))  # noqa
 
     @classmethod
     def dc_to_type(cls, dc: ComponentAttributeClass) -> str:
-        return cls.dc_to_tuple(dc).as_type()
+        return cls.dc_to_tuple(dc).as_type()  # noqa
 
     @classmethod
     def dict_to_dc(cls, d: dict[Any, str]) -> ComponentAttributeClass:

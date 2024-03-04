@@ -11,18 +11,10 @@ from pydantic import BaseModel
 from pydantic import Extra
 from pydantic import Field
 from pydantic import validator
-
-from gwproto.data_classes.components.ads111x_based_component import (
-    Ads111xBasedComponent,
-)
+from gwproto.data_classes.components.ads111x_based_component import Ads111xBasedComponent
+from gwproto.types.thermistor_data_processing_config import ThermistorDataProcessingConfig
+from gwproto.types.thermistor_data_processing_config import ThermistorDataProcessingConfig_Maker
 from gwproto.errors import SchemaError
-from gwproto.types.thermistor_data_processing_config import (
-    ThermistorDataProcessingConfig,
-)
-from gwproto.types.thermistor_data_processing_config import (
-    ThermistorDataProcessingConfig_Maker,
-)
-
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "

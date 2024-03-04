@@ -9,25 +9,32 @@
     "ShNodeId": {
       "type": "string",
       "format": "UuidCanonicalTextual",
-      "title": "Spaceheat Node Id",
-      "description": "Immutable identifier for a Spaceheat Node.",
+      "title": "Id",
+      "description": "Immutable identifier for one of the Spaceheat Nodes of a Terminal Asset. Globally unique - i.e. across all Space Heat Nodes for all Terminal Assets.",
       "required": true
     },
     "Name": {
       "type": "string",
       "format": "SpaceheatName",
-      "title": "",
-      "description": "Functional identifier for a Spaceheat Node. Names indicate chain of command via the "dot" hierarchy. That is, `a.b` will only listen to commands from `a`. This name can and will change, in particular, for Nodes that are under the AtomicTNode chain of command when the dispatch contract is live.",
+      "title": "Name",
+      "description": "Most human readable locally unique identifier. Immutable. Words (separated by dots) shows actor startup hierarchy. That is, if the node "s.analog-temp" has an actor, then that actor is spawned by node "s".",
       "required": true
+    },
+    "Handle": {
+      "type": "",
+      "description": "Word structure shows Terminal Asset Finiste State Machine hierarchy. Locally unique, but mutable. If there is a dot, then the predecessor handle (handle with the final word removed) is the handle for the "boss" node. Only nodes with actors that can take actions that change the state of the Terminal Asset have dots in their handles. For example, the analog temperature sensor in the LocalName description above does NOT take actions and its handle would likely be analog-temp. If a node's actor CAN take actions that change the state of the TerminalAsset, it only takes commands from its boss node. For example, a relay actor will only agree to energize or de-energize its relay as a result of a command from its (current) boss.",
+      "required": false
     },
     "ActorClass": {
       "type": "string",
       "format": "sh.actor.class",
-      "title": "",
+      "title": "Actor Class",
+      "description": "Used to select the actor's code.",
       "required": true
     },
     "DisplayName": {
       "type": "string",
+      "description": "For user interfaces that don't want to show the local name or handle.",
       "required": false
     },
     "ComponentId": {

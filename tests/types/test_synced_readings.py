@@ -4,9 +4,9 @@ import json
 import pytest
 from pydantic import ValidationError
 
-from gwproto.enums import TelemetryName
 from gwproto.errors import SchemaError
 from gwproto.types import SyncedReadings_Maker as Maker
+from gwproto.enums import TelemetryName
 
 
 def test_synced_readings_generated() -> None:
@@ -38,6 +38,7 @@ def test_synced_readings_generated() -> None:
         about_node_name_list=gtuple.AboutNodeNameList,
         telemetry_name_list=gtuple.TelemetryNameList,
         value_list=gtuple.ValueList,
+        
     ).tuple
     assert t == gtuple
 

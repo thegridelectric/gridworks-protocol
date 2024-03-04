@@ -6,30 +6,33 @@ Python pydantic class corresponding to json type `batched.readings`, version `00
     :members:
 
 **FromGNodeAlias**:
-    - Description:
+    - Description: 
     - Format: LeftRightDot
 
 **FromGNodeInstanceId**:
-    - Description:
+    - Description: 
     - Format: UuidCanonicalTextual
 
 **AboutGNodeAlias**:
-    - Description:
+    - Description: 
     - Format: LeftRightDot
 
 **SlotStartUnixS**:
-    - Description:
+    - Description: 
     - Format: ReasonableUnixTimeS
 
 **BatchedTransmissionPeriodS**:
-    - Description:
+    - Description: 
     - Format: PositiveInteger
 
 **ChannelReadingList**:
-    - Description:
+    - Description: 
 
-**BooleanactuatorCmdList**:
-    - Description:
+**FsmActionList**:
+    - Description: Finite State Machine Action List. FSM Actions (that is, side-effects of state machine transitions with real-world changes to the underlying TerminalAsset).
+
+**FsmReportList**:
+    - Description: Finite State Machine Report List. FSM Reports are the cacading events, actions and transitions caused by a single high-level event. There is duplication with the action list. 
 
 **TypeName**:
     - Description: All GridWorks Versioned Types have a fixed TypeName, which is a string of lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character, and final word NOT all Hindu-Arabic numerals.
@@ -53,3 +56,4 @@ Python pydantic class corresponding to json type `batched.readings`, version `00
 
 .. autoclass:: gwproto.types.BatchedReadings_Maker
     :members:
+

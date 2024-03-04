@@ -1,0 +1,69 @@
+{
+  "gtr_asl": "001",
+  "type_name": "fsm.atomic.report",
+  "version": "000",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": ". Reports of single Fsm Actions and Transitions. The actions is any side-effect, which is the way the StateMachine is supposed to cause things happen to the outside world (This could include, for example, actuating a relay.) Transitions are intended to be captured by changing the handle of the Spaceheat Node whose actor maintains that finite state machine.",
+  "url": "https://gridworks-protocol.readthedocs.io/en/latest/finite-state-machines.html",
+  "properties": {
+    "FromHandle": {
+      "type": "string",
+      "format": "SpaceheatName",
+      "title": "From Name",
+      "description": "The Name (as opposed to the handle) of the Spaceheat Node actor issuing the Finite State Machine report. The actor is meant to realize and be the authority on the FSM in question. Its handle reflects the state it is in.",
+      "required": true
+    },
+    "IsAction": {
+      "type": "boolean",
+      "description": "An Action refers to some side effect of a state transition that results in a physical change to an underlying TerminalAsset.",
+      "required": true
+    },
+    "ActionType": {
+      "type": "string",
+      "format": "sh.fsm.action.type",
+      "title": "Action Type",
+      "description": "The FiniteState Machine Action taken",
+      "required": false
+    },
+    "Action": {
+      "type": "string",
+      "description": "Should belong to the associated enum element chosen in ActionType. For example, if ActionType is ChangeStoreFlowDirection, then Action should be either 'Discharge' or 'Charge.'",
+      "required": false
+    },
+    "UnixTimeMs": {
+      "type": "integer",
+      "format": "ReasonableUnixTimeMs",
+      "title": "Unix Time in Milliseconds",
+      "required": true
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "fsm.atomic.report",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "000",
+      "required": true
+    }
+  },
+  "axioms": {
+    "Axiom1": {
+      "title": "Action and ActionType exist iff IsAction",
+      "description": "The Optional Attributes ActionType and Action exist if and only if IsAction is true."
+    }
+  },
+  "formats": {
+    "SpaceheatName": {
+      "type": "string",
+      "description": "Lowercase words separated by periods, where the word characters can be alphanumeric or a hyphen and the first word starts with an alphabet character.",
+      "example": "store-hot-pipe"
+    },
+    "ReasonableUnixTimeMs": {
+      "type": "string",
+      "description": "An integer reflecting unix time in MILLISECONDS between midnight Jan 1 2000 and midnight Jan 1 3000 UTC",
+      "example": "1702327940710"
+    }
+  }
+}

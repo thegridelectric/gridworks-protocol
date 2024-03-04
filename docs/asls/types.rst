@@ -50,21 +50,21 @@ fibaro.smart.implant.component.gt.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/fibaro-smart-implant-component-gt.json
 
-gt.dispatch.boolean.111
+fsm.atomic.report.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/gt-dispatch-boolean.json
+.. literalinclude:: json/fsm-atomic-report.json
 
-gt.dispatch.boolean.local.111
+fsm.event.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/gt-dispatch-boolean-local.json
+.. literalinclude:: json/fsm-event.json
 
-gt.driver.booleanactuator.cmd.101
+fsm.full.report.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/gt-driver-booleanactuator-cmd.json
+.. literalinclude:: json/fsm-full-report.json
 
-gt.sh.booleanactuator.cmd.status.101
+fsm.trigger.from.atn.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/gt-sh-booleanactuator-cmd-status.json
+.. literalinclude:: json/fsm-trigger-from-atn.json
 
 gt.sh.cli.atn.cmd.110
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -149,3 +149,4 @@ telemetry.snapshot.spaceheat.001
 thermistor.data.processing.config.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/thermistor-data-processing-config.json
+

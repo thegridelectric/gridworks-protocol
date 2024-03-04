@@ -8,11 +8,9 @@ from typing import Literal
 from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
-
-from gwproto.errors import SchemaError
 from gwproto.types.telemetry_snapshot_spaceheat import TelemetrySnapshotSpaceheat
 from gwproto.types.telemetry_snapshot_spaceheat import TelemetrySnapshotSpaceheat_Maker
-
+from gwproto.errors import SchemaError
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -22,7 +20,9 @@ LOGGER = logging.getLogger(__name__)
 
 
 class SnapshotSpaceheat(BaseModel):
-    """ """
+    """
+    
+    """
 
     FromGNodeAlias: str = Field(
         title="FromGNodeAlias",
@@ -178,9 +178,7 @@ class SnapshotSpaceheat_Maker:
         if "Snapshot" not in d2.keys():
             raise SchemaError(f"dict missing Snapshot: <{d2}>")
         if not isinstance(d2["Snapshot"], dict):
-            raise SchemaError(
-                f"Snapshot <{d2['Snapshot']}> must be a TelemetrySnapshotSpaceheat!"
-            )
+            raise SchemaError(f"Snapshot <{d2['Snapshot']}> must be a TelemetrySnapshotSpaceheat!")
         snapshot = TelemetrySnapshotSpaceheat_Maker.dict_to_tuple(d2["Snapshot"])
         d2["Snapshot"] = snapshot
         if "TypeName" not in d2.keys():

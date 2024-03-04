@@ -10,14 +10,14 @@ Python pydantic class corresponding to json type `ads111x.based.cac.gt`, version
     - Format: UuidCanonicalTextual
 
 **MinPollPeriodMs**:
-    - Description: Min Poll Period in Milliseconds. Poll Period refers to the period of time between two readings by the local actor. This is in contrast to Capture Period, which refers to the period between readings that are sent up to the cloud (or otherwise saved for the long-term).
+    - Description: Min Poll Period in Milliseconds. Poll Period refers to the period of time between two readings by the local actor. This is in contrast to Capture Period, which refers to the period between readings that are sent up to the cloud (or otherwise saved for the long-term). 
     - Format: PositiveInteger
 
 **MakeModel**:
     - Description: MakeModel. Meant to be enough to articulate any difference in how GridWorks code would interact with a device. Should be able to use this information to buy or build a device.
 
 **AdsI2cAddressList**:
-    - Description: Ads I2c Address List. The list of I2C Addresses for the Texas Instrument Ads111X chips comprising this device.
+    - Description: Ads I2c Address List. The list of I2C Addresses for the Texas Instrument Ads111X chips comprising this device.  
     - Format: Ads1115I2cAddress
 
 **TotalTerminalBlocks**:
@@ -52,3 +52,4 @@ Python pydantic class corresponding to json type `ads111x.based.cac.gt`, version
 
 .. autoclass:: gwproto.types.Ads111xBasedCacGt_Maker
     :members:
+

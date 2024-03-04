@@ -12,8 +12,10 @@
       "description": "Primary GridWorks identifier for a specific physical instance of a PipeFlowSensor, and also as a more generic Component.",
       "required": true
     },
-    "ComponentAttributeClass": {
-      "type": "",
+    "ComponentAttributeClassId": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "Unique identifier for ComponentAttributeClass object articulated by the component.attribute.class.gt.001 type.",
       "description": "Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry.",
       "required": true
     },

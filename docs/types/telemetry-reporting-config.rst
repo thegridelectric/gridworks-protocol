@@ -13,7 +13,7 @@ Python pydantic class corresponding to json type `telemetry.reporting.config`, v
     - Description: Telemetry Name. The Telemetry Name associated with this config.
 
 **PollPeriodMs**:
-    - Description: Poll Period in Milliseconds. Poll Period refers to the period of time between two readings by the local actor. This is in contrast to Capture Period, which refers to the period between readings that are sent up to the cloud (or otherwise saved for the long-term).
+    - Description: Poll Period in Milliseconds. Poll Period refers to the period of time between two readings by the local actor. This is in contrast to Capture Period, which refers to the period between readings that are sent up to the cloud (or otherwise saved for the long-term). 
     - Format: PositiveInteger
 
 **CapturePeriodS**:
@@ -51,3 +51,4 @@ Python pydantic class corresponding to json type `telemetry.reporting.config`, v
 
 .. autoclass:: gwproto.types.TelemetryReportingConfig_Maker
     :members:
+

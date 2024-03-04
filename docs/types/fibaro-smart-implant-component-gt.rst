@@ -6,11 +6,12 @@ Python pydantic class corresponding to json type `fibaro.smart.implant.component
     :members:
 
 **ComponentId**:
-    - Description: Component Id. Primary GridWorks identifier for a specific physical instance of an  Fibaro, and also as a more generic Component.
+    - Description: Component Id. Primary GridWorks identifier for a specific physical instance of an  Fibaro, and also as a more generic Component. 
     - Format: UuidCanonicalTextual
 
-**ComponentAttributeClass**:
-    - Description: ComponentAttributeClassId. Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry.
+**ComponentAttributeClassId**:
+    - Description: ComponentAttributeClassId. Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry. 
+    - Format: UuidCanonicalTextual
 
 **ZWaveDSK**:
     - Description: The Z-Wave DSK  (Device Specific Key) is a unique identifier associated with a Z-Wave device, used during the process of securely including the device into a Z-Wave network. It helps establish secure communication between the Z-Wave controller and the device, ensuring that only authorized devices can join the network. Unfortunately Hubitat does not currently provide a way to view the ZWave DSK of a Fibaro.
@@ -35,3 +36,4 @@ Python pydantic class corresponding to json type `fibaro.smart.implant.component
 
 .. autoclass:: gwproto.types.FibaroSmartImplantComponentGt_Maker
     :members:
+

@@ -10,15 +10,13 @@ from pydantic import BaseModel
 from pydantic import Extra
 from pydantic import Field
 from pydantic import validator
-
-from gwproto.errors import SchemaError
 from gwproto.types.channel_readings import ChannelReadings
 from gwproto.types.channel_readings import ChannelReadings_Maker
-from gwproto.types.gt_sh_booleanactuator_cmd_status import GtShBooleanactuatorCmdStatus
-from gwproto.types.gt_sh_booleanactuator_cmd_status import (
-    GtShBooleanactuatorCmdStatus_Maker,
-)
-
+from gwproto.types.fsm_full_report import FsmFullReport
+from gwproto.types.fsm_full_report import FsmFullReport_Maker
+from gwproto.types.fsm_atomic_report import FsmAtomicReport
+from gwproto.types.fsm_atomic_report import FsmAtomicReport_Maker
+from gwproto.errors import SchemaError
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -55,8 +53,21 @@ class BatchedReadings(BaseModel):
     ChannelReadingList: List[ChannelReadings] = Field(
         title="ChannelReadingList",
     )
-    BooleanactuatorCmdList: List[GtShBooleanactuatorCmdStatus] = Field(
-        title="BooleanactuatorCmdList",
+    FsmActionList: List[FsmAtomicReport] = Field(
+        title="Finite State Machine Action List",
+        description=(
+            "FSM Actions (that is, side-effects of state machine transitions with real-world "
+            "changes to the underlying TerminalAsset)."
+            "[More info](https://gridworks-protocol.readthedocs.io/en/latest/finite-state-machines.html)"
+        ),
+    )
+    FsmReportList: List[FsmFullReport] = Field(
+        title="Finite State Machine Report List",
+        description=(
+            "FSM Reports are the cacading events, actions and transitions caused by a single "
+            "high-level event. There is duplication with the action list."
+            "[More info](https://gridworks-protocol.readthedocs.io/en/latest/finite-state-machines.html)"
+        ),
     )
     TypeName: Literal["batched.readings"] = "batched.readings"
     Version: Literal["000"] = "000"
@@ -114,6 +125,14 @@ class BatchedReadings(BaseModel):
             )
         return v
 
+    @validator("FsmActionList")
+    def check_fsm_action_list(cls, v: List[FsmAtomicReport]) -> List[FsmAtomicReport]:
+        """
+        Axiom 1: Each of the fsm.atomic.reports in this list must be actions (i.e. IsAction = true).
+        """
+        ...
+        # TODO: Implement Axiom(s)
+
     def as_dict(self) -> Dict[str, Any]:
         """
         Translate the object into a dictionary representation that can be serialized into a
@@ -143,10 +162,15 @@ class BatchedReadings(BaseModel):
             channel_reading_list.append(elt.as_dict())
         d["ChannelReadingList"] = channel_reading_list
         # Recursively calling as_dict()
-        booleanactuator_cmd_list = []
-        for elt in self.BooleanactuatorCmdList:
-            booleanactuator_cmd_list.append(elt.as_dict())
-        d["BooleanactuatorCmdList"] = booleanactuator_cmd_list
+        fsm_action_list = []
+        for elt in self.FsmActionList:
+            fsm_action_list.append(elt.as_dict())
+        d["FsmActionList"] = fsm_action_list
+        # Recursively calling as_dict()
+        fsm_report_list = []
+        for elt in self.FsmReportList:
+            fsm_report_list.append(elt.as_dict())
+        d["FsmReportList"] = fsm_report_list
         return d
 
     def as_type(self) -> bytes:
@@ -189,7 +213,8 @@ class BatchedReadings_Maker:
         slot_start_unix_s: int,
         batched_transmission_period_s: int,
         channel_reading_list: List[ChannelReadings],
-        booleanactuator_cmd_list: List[GtShBooleanactuatorCmdStatus],
+        fsm_action_list: List[FsmAtomicReport],
+        fsm_report_list: List[FsmFullReport],
     ):
         self.tuple = BatchedReadings(
             FromGNodeAlias=from_g_node_alias,
@@ -198,7 +223,8 @@ class BatchedReadings_Maker:
             SlotStartUnixS=slot_start_unix_s,
             BatchedTransmissionPeriodS=batched_transmission_period_s,
             ChannelReadingList=channel_reading_list,
-            BooleanactuatorCmdList=booleanactuator_cmd_list,
+            FsmActionList=fsm_action_list,
+            FsmReportList=fsm_report_list,
         )
 
     @classmethod
@@ -259,33 +285,36 @@ class BatchedReadings_Maker:
         if "ChannelReadingList" not in d2.keys():
             raise SchemaError(f"dict missing ChannelReadingList: <{d2}>")
         if not isinstance(d2["ChannelReadingList"], List):
-            raise SchemaError(
-                f"ChannelReadingList <{d2['ChannelReadingList']}> must be a List!"
-            )
+            raise SchemaError(f"ChannelReadingList <{d2['ChannelReadingList']}> must be a List!")
         channel_reading_list = []
         for elt in d2["ChannelReadingList"]:
             if not isinstance(elt, dict):
-                raise SchemaError(
-                    f"ChannelReadingList <{d2['ChannelReadingList']}> must be a List of ChannelReadings types"
-                )
+                raise SchemaError(f"ChannelReadingList <{d2['ChannelReadingList']}> must be a List of ChannelReadings types")
             t = ChannelReadings_Maker.dict_to_tuple(elt)
             channel_reading_list.append(t)
         d2["ChannelReadingList"] = channel_reading_list
-        if "BooleanactuatorCmdList" not in d2.keys():
-            raise SchemaError(f"dict missing BooleanactuatorCmdList: <{d2}>")
-        if not isinstance(d2["BooleanactuatorCmdList"], List):
-            raise SchemaError(
-                f"BooleanactuatorCmdList <{d2['BooleanactuatorCmdList']}> must be a List!"
-            )
-        booleanactuator_cmd_list = []
-        for elt in d2["BooleanactuatorCmdList"]:
+        if "FsmActionList" not in d2.keys():
+            raise SchemaError(f"dict missing FsmActionList: <{d2}>")
+        if not isinstance(d2["FsmActionList"], List):
+            raise SchemaError(f"FsmActionList <{d2['FsmActionList']}> must be a List!")
+        fsm_action_list = []
+        for elt in d2["FsmActionList"]:
             if not isinstance(elt, dict):
-                raise SchemaError(
-                    f"BooleanactuatorCmdList <{d2['BooleanactuatorCmdList']}> must be a List of GtShBooleanactuatorCmdStatus types"
-                )
-            t = GtShBooleanactuatorCmdStatus_Maker.dict_to_tuple(elt)
-            booleanactuator_cmd_list.append(t)
-        d2["BooleanactuatorCmdList"] = booleanactuator_cmd_list
+                raise SchemaError(f"FsmActionList <{d2['FsmActionList']}> must be a List of FsmAtomicReport types")
+            t = FsmAtomicReport_Maker.dict_to_tuple(elt)
+            fsm_action_list.append(t)
+        d2["FsmActionList"] = fsm_action_list
+        if "FsmReportList" not in d2.keys():
+            raise SchemaError(f"dict missing FsmReportList: <{d2}>")
+        if not isinstance(d2["FsmReportList"], List):
+            raise SchemaError(f"FsmReportList <{d2['FsmReportList']}> must be a List!")
+        fsm_report_list = []
+        for elt in d2["FsmReportList"]:
+            if not isinstance(elt, dict):
+                raise SchemaError(f"FsmReportList <{d2['FsmReportList']}> must be a List of FsmFullReport types")
+            t = FsmFullReport_Maker.dict_to_tuple(elt)
+            fsm_report_list.append(t)
+        d2["FsmReportList"] = fsm_report_list
         if "TypeName" not in d2.keys():
             raise SchemaError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():
@@ -341,7 +370,6 @@ def check_is_reasonable_unix_time_s(v: int) -> None:
         ValueError: if v is not ReasonableUnixTimeS format
     """
     import pendulum
-
     if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp > v:  # type: ignore[attr-defined]
         raise ValueError(f"<{v}> must be after Jan 1 2000")
     if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp < v:  # type: ignore[attr-defined]

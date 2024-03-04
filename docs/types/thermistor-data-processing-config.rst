@@ -33,3 +33,4 @@ Python pydantic class corresponding to json type `thermistor.data.processing.con
 
 .. autoclass:: gwproto.types.ThermistorDataProcessingConfig_Maker
     :members:
+

@@ -1,0 +1,62 @@
+{
+  "gtr_asl": "001",
+  "type_name": "fsm.trigger.from.atn",
+  "version": "000",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": ". This is an FSM Event sent from the AtomicTNode to its Scada. We use the word "trigger" to refer to an event that BEGINS a cause-and-effect chain of events in the hierarchical finite state machine.",
+  "url": "https://gridworks-protocol.readthedocs.io/en/latest/finite-state-machines.html",
+  "properties": {
+    "ToGNodeAlias": {
+      "type": "string",
+      "format": "LeftRightDot",
+      "title": "GNodeAlias of the receiving SCADA",
+      "required": true
+    },
+    "FromGNodeAlias": {
+      "type": "string",
+      "format": "LeftRightDot",
+      "title": "GNodeAlias of the sending AtomicTNode",
+      "required": true
+    },
+    "FromGNodeInstanceId": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "GNodeInstance of the sending AtomicTNode",
+      "required": true
+    },
+    "Trigger": {
+      "type": "fsm.event.000",
+      "description": "This is meant to be an event that triggers a cascade of other events, transitions and actions in the Spaceheat Nodes of the SCADA. This comes from the language of Finite State Machines",
+      "required": true
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "fsm.trigger.from.atn",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "000",
+      "required": true
+    }
+  },
+  "axioms": {
+    "Axiom": {
+      "title": "FromHandle must be "a" (for AtomicTNode).",
+      "description": "The triggering event is coming from the AtomicTNode, which always has the handle of "a" as a SpaceheatNode in the SCADA's hierarchical finite state machine."
+    }
+  },
+  "formats": {
+    "UuidCanonicalTextual": {
+      "type": "string",
+      "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
+      "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"
+    },
+    "LeftRightDot": {
+      "type": "string",
+      "description": "Lowercase alphanumeric words separated by periods, with the most significant word (on the left) starting with an alphabet character.",
+      "example": "dw1.isone.me.freedom.apple"
+    }
+  }
+}

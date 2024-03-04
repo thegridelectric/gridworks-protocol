@@ -29,3 +29,4 @@ Python pydantic class corresponding to json type `channel.readings`, version `00
 
 .. autoclass:: gwproto.types.ChannelReadings_Maker
     :members:
+

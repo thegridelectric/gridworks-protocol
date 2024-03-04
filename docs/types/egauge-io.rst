@@ -21,3 +21,4 @@ Python pydantic class corresponding to json type `egauge.io`, version `001`.
 
 .. autoclass:: gwproto.types.EgaugeIo_Maker
     :members:
+

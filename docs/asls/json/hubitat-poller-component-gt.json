@@ -9,8 +9,10 @@
       "type": "string",
       "required": true
     },
-    "ComponentAttributeClass": {
-      "type": "",
+    "ComponentAttributeClassId": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "Unique identifier for ComponentAttributeClass object articulated by the component.attribute.class.gt.001 type.",
       "required": true
     },
     "DisplayName": {

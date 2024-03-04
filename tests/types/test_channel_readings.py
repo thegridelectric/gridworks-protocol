@@ -35,6 +35,7 @@ def test_channel_readings_generated() -> None:
         data_channel=gtuple.DataChannel,
         value_list=gtuple.ValueList,
         scada_read_time_unix_ms_list=gtuple.ScadaReadTimeUnixMsList,
+        
     ).tuple
     assert t == gtuple
 

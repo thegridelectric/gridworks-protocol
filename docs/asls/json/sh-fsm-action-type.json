@@ -1,0 +1,23 @@
+{
+    "gtr_asl": "001",
+    "enum_name": "sh.fsm.action.type",
+    "enum_version": "000",
+    "description": "A list of the finite state machine Actions that a spaceheat node might take. An Action, in this context, is a side-effect of a state machine transition that impacts the real world (i.e., a relay is actuated).",
+    "url": "https://gridworks-protocol.readthedocs.io/en/latest/finite-state-machines.html",
+    "ssot": "https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shfsmactiontype",
+    "values": ["ChangeRelayState", "Analog010V", "Analog420mA", "ChangeValveState", "ChangeStoreFlowDirection", "ChangeHeatcallSource", "ChangeBoilerControl", "ChangeHeatPumpControl", "ChangeLgOperatingMode"],
+    "value_to_symbol": { "ChangeRelayState": "",  "Analog010V": "",  "Analog420mA": "",  "ChangeValveState": "",  "ChangeStoreFlowDirection": "",  "ChangeHeatcallSource": "",  "ChangeBoilerControl": "",  "ChangeHeatPumpControl": "",  "ChangeLgOperatingMode": ""},
+    "value_to_version": { "ChangeRelayState": "000",  "Analog010V": "000",  "Analog420mA": "000",  "ChangeValveState": "000",  "ChangeStoreFlowDirection": "000",  "ChangeHeatcallSource": "000",  "ChangeBoilerControl": "000",  "ChangeHeatPumpControl": "000",  "ChangeLgOperatingMode": "000"},
+    "value_descriptions": {
+                "ChangeRelayState": "",
+                "Analog010V": "",
+                "Analog420mA": "",
+                "ChangeValveState": "",
+                "ChangeStoreFlowDirection": "",
+                "ChangeHeatcallSource": "",
+                "ChangeBoilerControl": "",
+                "ChangeHeatPumpControl": "",
+                "ChangeLgOperatingMode": ""
+            },
+    "default_value": "ChangeRelayState"
+}

@@ -4,10 +4,10 @@ import json
 import pytest
 from pydantic import ValidationError
 
-from gwproto.enums import MakeModel
-from gwproto.enums import TelemetryName
 from gwproto.errors import SchemaError
-from gwproto.types import Ads111xBasedCacGt_Maker as Maker
+from gwproto.types.ads111x_based_cac_gt import Ads111xBasedCacGt_Maker as Maker
+from gwproto.enums import TelemetryName
+from gwproto.enums import MakeModel
 
 
 def test_ads111x_based_cac_gt_generated() -> None:
@@ -45,6 +45,7 @@ def test_ads111x_based_cac_gt_generated() -> None:
         total_terminal_blocks=gtuple.TotalTerminalBlocks,
         telemetry_name_list=gtuple.TelemetryNameList,
         display_name=gtuple.DisplayName,
+        
     ).tuple
     assert t == gtuple
 

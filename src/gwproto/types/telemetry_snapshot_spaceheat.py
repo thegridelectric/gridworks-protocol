@@ -10,11 +10,9 @@ from pydantic import BaseModel
 from pydantic import Field
 from pydantic import root_validator
 from pydantic import validator
-
-from gwproto.errors import SchemaError
 from gwproto.types.data_channel import DataChannel
 from gwproto.types.data_channel import DataChannel_Maker
-
+from gwproto.errors import SchemaError
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -193,15 +191,11 @@ class TelemetrySnapshotSpaceheat_Maker:
         if "DataChannelList" not in d2.keys():
             raise SchemaError(f"dict missing DataChannelList: <{d2}>")
         if not isinstance(d2["DataChannelList"], List):
-            raise SchemaError(
-                f"DataChannelList <{d2['DataChannelList']}> must be a List!"
-            )
+            raise SchemaError(f"DataChannelList <{d2['DataChannelList']}> must be a List!")
         data_channel_list = []
         for elt in d2["DataChannelList"]:
             if not isinstance(elt, dict):
-                raise SchemaError(
-                    f"DataChannelList <{d2['DataChannelList']}> must be a List of DataChannel types"
-                )
+                raise SchemaError(f"DataChannelList <{d2['DataChannelList']}> must be a List of DataChannel types")
             t = DataChannel_Maker.dict_to_tuple(elt)
             data_channel_list.append(t)
         d2["DataChannelList"] = data_channel_list

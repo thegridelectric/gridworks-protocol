@@ -42,11 +42,20 @@
       },
       "required": true
     },
-    "BooleanactuatorCmdList": {
+    "FsmActionList": {
       "type": "array",
       "items": {
-        "type": "gt.sh.booleanactuator.cmd.status.100"
+        "type": "fsm.atomic.report.000"
       },
+      "description": "FSM Actions (that is, side-effects of state machine transitions with real-world changes to the underlying TerminalAsset).",
+      "required": true
+    },
+    "FsmReportList": {
+      "type": "array",
+      "items": {
+        "type": "fsm.full.report.000"
+      },
+      "description": "FSM Reports are the cacading events, actions and transitions caused by a single high-level event. There is duplication with the action list.",
       "required": true
     },
     "TypeName": {
@@ -59,6 +68,12 @@
       "title": "The type version",
       "default": "000",
       "required": true
+    }
+  },
+  "axioms": {
+    "Axiom1": {
+      "title": "Each of the fsm.atomic.reports in this list must be actions (i.e. IsAction = true).",
+      "description": ""
     }
   },
   "formats": {

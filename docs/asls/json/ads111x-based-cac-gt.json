@@ -79,7 +79,7 @@
     },
     "Ads1115I2cAddress": {
       "type": "string",
-      "description": "ToLower(v) in ["0x48", "0x49", "0x4a", 0x4b"]. One of the 4 allowable I2C addresses for Texas Instrument Ads1115 chips.",
+      "description": "ToLower(v) in ["0x48", "0x49", "0x4a", "0x4b"]. One of the 4 allowable I2C addresses for Texas Instrument Ads1115 chips.",
       "example": ""
     },
     "PositiveInteger": {

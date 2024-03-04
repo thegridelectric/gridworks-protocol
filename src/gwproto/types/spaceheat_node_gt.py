@@ -10,11 +10,9 @@ from pydantic import BaseModel
 from pydantic import Field
 from pydantic import root_validator
 from pydantic import validator
-
 from gwproto.data_classes.sh_node import ShNode
 from gwproto.enums import ActorClass as EnumActorClass
 from gwproto.errors import SchemaError
-
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -40,23 +38,42 @@ class SpaceheatNodeGt(BaseModel):
     """
 
     ShNodeId: str = Field(
-        title="Spaceheat Node Id",
-        description="Immutable identifier for a Spaceheat Node.",
+        title="Id",
+        description=(
+            "Immutable identifier for one of the Spaceheat Nodes of a Terminal Asset. Globally "
+            "unique - i.e. across all Space Heat Nodes for all Terminal Assets."
+        ),
     )
     Name: str = Field(
         title="Name",
         description=(
-            "Functional identifier for a Spaceheat Node. Names indicate chain of command via "
-            "the "dot" hierarchy. That is, `a.b` will only listen to commands from `a`. This "
-            "name can and will change, in particular, for Nodes that are under the AtomicTNode "
-            "chain of command when the dispatch contract is live."
+            "Most human readable locally unique identifier. Immutable. Words (separated by dots) "
+            "shows actor startup hierarchy. That is, if the node "s.analog-temp" has an actor, "
+            "then that actor is spawned by node "s"."
         ),
     )
+    Handle: Optional[] = Field(
+        title="Handle",
+        description=(
+            "Word structure shows Terminal Asset Finiste State Machine hierarchy. Locally unique, "
+            "but mutable. If there is a dot, then the predecessor handle (handle with the final "
+            "word removed) is the handle for the "boss" node. Only nodes with actors that can "
+            "take actions that change the state of the Terminal Asset have dots in their handles. "
+            "For example, the analog temperature sensor in the LocalName description above does "
+            "NOT take actions and its handle would likely be analog-temp. If a node's actor CAN "
+            "take actions that change the state of the TerminalAsset, it only takes commands "
+            "from its boss node. For example, a relay actor will only agree to energize or de-energize "
+            "its relay as a result of a command from its (current) boss."
+        ),
+        default=None,
+    )
     ActorClass: EnumActorClass = Field(
-        title="ActorClass",
+        title="Actor Class",
+        description="Used to select the actor's code.",
     )
     DisplayName: Optional[str] = Field(
-        title="DisplayName",
+        title="Display Name",
+        description="For user interfaces that don't want to show the local name or handle.",
         default=None,
     )
     ComponentId: Optional[str] = Field(
@@ -65,7 +82,7 @@ class SpaceheatNodeGt(BaseModel):
         default=None,
     )
     InPowerMetering: Optional[bool] = Field(
-        title="InPowerMetering",
+        title="In Power Metering",
         description=(
             "This exists and is True if the SpaceheatNode is part of the power metering that "
             "is used for market participation. Small loads like circulator pumps and fans may "
@@ -167,6 +184,7 @@ class SpaceheatNodeGt_Maker:
         self,
         sh_node_id: str,
         name: str,
+        handle: Optional[],
         actor_class: EnumActorClass,
         display_name: Optional[str],
         component_id: Optional[str],
@@ -175,6 +193,7 @@ class SpaceheatNodeGt_Maker:
         self.tuple = SpaceheatNodeGt(
             ShNodeId=sh_node_id,
             Name=name,
+            Handle=handle,
             ActorClass=actor_class,
             DisplayName=display_name,
             ComponentId=component_id,
@@ -254,6 +273,7 @@ class SpaceheatNodeGt_Maker:
             dc = ShNode(
                 sh_node_id=t.ShNodeId,
                 name=t.Name,
+                handle=t.Handle,
                 actor_class=t.ActorClass,
                 display_name=t.DisplayName,
                 component_id=t.ComponentId,
@@ -266,6 +286,7 @@ class SpaceheatNodeGt_Maker:
         t = SpaceheatNodeGt_Maker(
             sh_node_id=dc.sh_node_id,
             name=dc.name,
+            handle=dc.handle,
             actor_class=dc.actor_class,
             display_name=dc.display_name,
             component_id=dc.component_id,

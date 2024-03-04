@@ -6,11 +6,11 @@ Python pydantic class corresponding to json type `relay.actor.config`, version `
     :members:
 
 **RelayIdx**:
-    - Description: Relay Index.
+    - Description: Relay Index. 
     - Format: PositiveInteger
 
 **ActorName**:
-    - Description: Name of the Actor's SpaceheatNode.
+    - Description: Name of the Actor's SpaceheatNode. 
     - Format: SpaceheatName
 
 **WiringConfig**:
@@ -34,3 +34,4 @@ Python pydantic class corresponding to json type `relay.actor.config`, version `
 
 .. autoclass:: gwproto.types.RelayActorConfig_Maker
     :members:
+

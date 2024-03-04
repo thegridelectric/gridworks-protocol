@@ -4,16 +4,17 @@ import json
 import pytest
 from pydantic import ValidationError
 
-from gwproto.enums import ActorClass
-from gwproto.enums import Role
 from gwproto.errors import SchemaError
 from gwproto.types import SpaceheatNodeGt_Maker as Maker
+from gwproto.enums import ActorClass
+from gwproto.enums import Role
 
 
 def test_spaceheat_node_gt_generated() -> None:
     d = {
         "ShNodeId": "41f2ae73-8782-406d-bda7-a95b5abe317e",
         "Name": "h.elt1",
+        "Handle": ,
         "ActorClassGtEnumSymbol": "638bf97b",
         "DisplayName": "First boost element",
         "ComponentId": "80f95280-e999-49e0-a0e4-a7faf3b5b3bd",
@@ -39,10 +40,12 @@ def test_spaceheat_node_gt_generated() -> None:
     t = Maker(
         sh_node_id=gtuple.ShNodeId,
         name=gtuple.Name,
+        handle=gtuple.Handle,
         actor_class=gtuple.ActorClass,
         display_name=gtuple.DisplayName,
         component_id=gtuple.ComponentId,
         in_power_metering=gtuple.InPowerMetering,
+        
     ).tuple
     assert t == gtuple
 
@@ -81,6 +84,11 @@ def test_spaceheat_node_gt_generated() -> None:
     ######################################
     # Optional attributes can be removed from type
     ######################################
+
+    d2 = dict(d)
+    if "Handle" in d2.keys():
+        del d2["Handle"]
+    Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
     if "DisplayName" in d2.keys():

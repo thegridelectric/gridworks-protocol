@@ -11,12 +11,10 @@ from pydantic import BaseModel
 from pydantic import Extra
 from pydantic import Field
 from pydantic import validator
-
 from gwproto.data_classes.cacs.ads111x_based_cac import Ads111xBasedCac
 from gwproto.enums import MakeModel as EnumMakeModel
 from gwproto.enums import TelemetryName
 from gwproto.errors import SchemaError
-
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -346,7 +344,7 @@ class Ads111xBasedCacGt_Maker:
 
 def check_is_ads1115_i2c_address(v: str) -> None:
     """
-    Ads1115I2cAddress: ToLower(v) in ["0x48", "0x49", "0x4a", 0x4b"].
+    Ads1115I2cAddress: ToLower(v) in ["0x48", "0x49", "0x4a", "0x4b"].
 
     One of the 4 allowable I2C addresses for Texas Instrument Ads1115 chips.
 

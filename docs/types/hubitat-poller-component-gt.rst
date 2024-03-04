@@ -6,10 +6,11 @@ Python pydantic class corresponding to json type `hubitat.poller.component.gt`, 
     :members:
 
 **ComponentId**:
-    - Description: ComponentId.
+    - Description: ComponentId. 
 
-**ComponentAttributeClass**:
-    - Description: ComponentAttributeClassId.
+**ComponentAttributeClassId**:
+    - Description: ComponentAttributeClassId. 
+    - Format: UuidCanonicalTextual
 
 **DisplayName**:
     - Description: DisplayName. Sample: Downstairs Thermostat
@@ -18,7 +19,7 @@ Python pydantic class corresponding to json type `hubitat.poller.component.gt`, 
     - Description: HwUid. Unique Hardware Identifier
 
 **Poller**:
-    - Description: Poller. Includes hubitat_component_id (str), device_id (int), enabled (bool), poll_period_s (int) and attributes.
+    - Description: Poller. Includes hubitat_component_id (str), device_id (int), enabled (bool), poll_period_s (int) and attributes. 
 
 **TypeName**:
     - Description: All GridWorks Versioned Types have a fixed TypeName, which is a string of lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character, and final word NOT all Hindu-Arabic numerals.
@@ -34,3 +35,4 @@ Python pydantic class corresponding to json type `hubitat.poller.component.gt`, 
 
 .. autoclass:: gwproto.types.HubitatPollerComponentGt_Maker
     :members:
+

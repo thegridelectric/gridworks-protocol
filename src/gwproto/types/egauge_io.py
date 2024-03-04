@@ -8,13 +8,11 @@ from typing import Literal
 from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
-
-from gwproto.errors import SchemaError
-from gwproto.types.egauge_register_config import EgaugeRegisterConfig
-from gwproto.types.egauge_register_config import EgaugeRegisterConfig_Maker
 from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
 from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig_Maker
-
+from gwproto.types.egauge_register_config import EgaugeRegisterConfig
+from gwproto.types.egauge_register_config import EgaugeRegisterConfig_Maker
+from gwproto.errors import SchemaError
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -169,17 +167,13 @@ class EgaugeIo_Maker:
         if "InputConfig" not in d2.keys():
             raise SchemaError(f"dict missing InputConfig: <{d2}>")
         if not isinstance(d2["InputConfig"], dict):
-            raise SchemaError(
-                f"InputConfig <{d2['InputConfig']}> must be a EgaugeRegisterConfig!"
-            )
+            raise SchemaError(f"InputConfig <{d2['InputConfig']}> must be a EgaugeRegisterConfig!")
         input_config = EgaugeRegisterConfig_Maker.dict_to_tuple(d2["InputConfig"])
         d2["InputConfig"] = input_config
         if "OutputConfig" not in d2.keys():
             raise SchemaError(f"dict missing OutputConfig: <{d2}>")
         if not isinstance(d2["OutputConfig"], dict):
-            raise SchemaError(
-                f"OutputConfig <{d2['OutputConfig']}> must be a TelemetryReportingConfig!"
-            )
+            raise SchemaError(f"OutputConfig <{d2['OutputConfig']}> must be a TelemetryReportingConfig!")
         output_config = TelemetryReportingConfig_Maker.dict_to_tuple(d2["OutputConfig"])
         d2["OutputConfig"] = output_config
         if "TypeName" not in d2.keys():

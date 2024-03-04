@@ -37,7 +37,7 @@ def test_component_gt_generated() -> None:
         component_attribute_class_id=gtuple.ComponentAttributeClassId,
         display_name=gtuple.DisplayName,
         hw_uid=gtuple.HwUid,
-
+        
     ).tuple
     assert t == gtuple
 

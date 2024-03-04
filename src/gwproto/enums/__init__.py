@@ -38,7 +38,7 @@ from gwproto.enums.change_lg_operating_mode import ChangeLgOperatingMode
 from gwproto.enums.change_relay_state import ChangeRelayState
 from gwproto.enums.change_store_flow_direction import ChangeStoreFlowDirection
 from gwproto.enums.change_valve_state import ChangeValveState
-from gwproto.enums.control_signal_type import ControlSignalType
+from gwproto.enums.fsm_action_type import FsmActionType
 from gwproto.enums.lg_operating_mode import LgOperatingMode
 from gwproto.enums.local_comm_interface import LocalCommInterface
 from gwproto.enums.make_model import MakeModel
@@ -50,13 +50,13 @@ from gwproto.enums.unit import Unit
 
 __all__ = [
     "ActorClass",  # [sh.actor.class.001](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shactorclass)
-    "ChangeBoilerControl",  # [change.boiler.control.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeboilercontrol)
+    "ChangeBoilerControl",  # [x.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#x)
     "ChangeHeatcallSource",  # [change.heatcall.source.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeheatcallsource)
     "ChangeLgOperatingMode",  # [change.lg.operating.mode.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changelgoperatingmode)
     "ChangeRelayState",  # [change.relay.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changerelaystate)
     "ChangeStoreFlowDirection",  # [change.store.flow.direction.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changestoreflowdirection)
     "ChangeValveState",  # [change.valve.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changevalvestate)
-    "ControlSignalType",  # [control.signal.type.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#controlsignaltype)
+    "FsmActionType",  # [sh.fsm.action.type.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shfsmactiontype)
     "LgOperatingMode",  # [lg.operating.mode.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#lgoperatingmode)
     "LocalCommInterface",  # [local.comm.interface.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#localcomminterface)
     "MakeModel",  # [spaceheat.make.model.001](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatmakemodel)

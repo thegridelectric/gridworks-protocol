@@ -37,3 +37,4 @@ Python pydantic class corresponding to json type `synced.readings`, version `000
 
 .. autoclass:: gwproto.types.SyncedReadings_Maker
     :members:
+

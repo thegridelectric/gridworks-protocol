@@ -1,17 +1,21 @@
-"""Tests gt.driver.booleanactuator.cmd type, version 101"""
+"""Tests fsm.event type, version 000"""
 import json
 
 import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
-from gwproto.types import GtDriverBooleanactuatorCmd_Maker as Maker
+from gwproto.types import FsmEvent_Maker as Maker
 
 
-def test_gt_driver_booleanactuator_cmd_generated() -> None:
+def test_fsm_event_generated() -> None:
     d = {
-        "TypeName": "gt.driver.booleanactuator.cmd",
-        "Version": "101",
+        "FromHandle": ,
+        "ToHandle": ,
+        "Name": ,
+        "SendTimeUnixMs": ,
+        "TypeName": "fsm.event",
+        "Version": "000",
     }
 
     with pytest.raises(SchemaError):
@@ -28,7 +32,13 @@ def test_gt_driver_booleanactuator_cmd_generated() -> None:
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple
 
     # test Maker init
-    t = Maker().tuple
+    t = Maker(
+        from_handle=gtuple.FromHandle,
+        to_handle=gtuple.ToHandle,
+        name=gtuple.Name,
+        send_time_unix_ms=gtuple.SendTimeUnixMs,
+        
+    ).tuple
     assert t == gtuple
 
     ######################################
@@ -39,6 +49,30 @@ def test_gt_driver_booleanactuator_cmd_generated() -> None:
     del d2["TypeName"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
+
+    ######################################
+    # Optional attributes can be removed from type
+    ######################################
+
+    d2 = dict(d)
+    if "FromHandle" in d2.keys():
+        del d2["FromHandle"]
+    Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    if "ToHandle" in d2.keys():
+        del d2["ToHandle"]
+    Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    if "Name" in d2.keys():
+        del d2["Name"]
+    Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    if "SendTimeUnixMs" in d2.keys():
+        del d2["SendTimeUnixMs"]
+    Maker.dict_to_tuple(d2)
 
     ######################################
     # Behavior on incorrect types

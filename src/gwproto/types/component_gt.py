@@ -10,10 +10,8 @@ from pydantic import BaseModel
 from pydantic import Extra
 from pydantic import Field
 from pydantic import validator
-
 from gwproto.data_classes.component import Component
 from gwproto.errors import SchemaError
-
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "

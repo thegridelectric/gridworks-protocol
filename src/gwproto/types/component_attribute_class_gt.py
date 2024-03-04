@@ -10,11 +10,9 @@ from pydantic import BaseModel
 from pydantic import Extra
 from pydantic import Field
 from pydantic import validator
-
 from gwproto.data_classes.component_attribute_class import ComponentAttributeClass
 from gwproto.enums import MakeModel as EnumMakeModel
 from gwproto.errors import SchemaError
-
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "

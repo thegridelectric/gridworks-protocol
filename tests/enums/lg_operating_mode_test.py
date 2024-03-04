@@ -10,7 +10,7 @@ def test_lg_operating_mode() -> None:
         "Heat",
     }
 
-    assert LgOperatingMode.default() == LgOperatingMode.Dhw
+    assert LgOperatingMode.default() == LgOperatingMode.Heat
     assert LgOperatingMode.enum_name() == "lg.operating.mode"
     assert LgOperatingMode.enum_version() == "000"
 

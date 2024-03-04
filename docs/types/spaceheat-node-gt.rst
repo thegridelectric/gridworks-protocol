@@ -6,24 +6,27 @@ Python pydantic class corresponding to json type `spaceheat.node.gt`, version `1
     :members:
 
 **ShNodeId**:
-    - Description: Spaceheat Node Id. Immutable identifier for a Spaceheat Node.
+    - Description: Id. Immutable identifier for one of the Spaceheat Nodes of a Terminal Asset.   Globally unique - i.e. across all Space Heat Nodes for all Terminal Assets.
     - Format: UuidCanonicalTextual
 
 **Name**:
-    - Description: Functional identifier for a Spaceheat Node. Names indicate chain of command via the "dot" hierarchy. That is, `a.b` will only listen to commands from `a`. This name can and will change, in particular, for Nodes that are under the AtomicTNode chain of command when the dispatch contract is live.
+    - Description: Name. Most human readable locally unique identifier. Immutable. Words (separated by dots) shows actor startup hierarchy. That is,  if the node "s.analog-temp" has an actor, then that actor is spawned by node "s". 
     - Format: SpaceheatName
 
+**Handle**:
+    - Description: Handle. Word structure shows Terminal Asset Finiste State Machine hierarchy. Locally unique, but mutable.  If there is a dot, then the predecessor handle (handle with the final word removed) is the handle for the "boss" node.  Only nodes with actors that can take actions that change the state of the Terminal Asset have dots in their handles. For example, the analog temperature sensor in the LocalName description above does NOT take actions and its handle would likely be analog-temp. If a node's actor CAN take actions that change the state of the TerminalAsset, it only takes commands from its boss node. For example, a relay actor will only agree to energize or de-energize its relay as a result of a command from its (current) boss. 
+
 **ActorClass**:
-    - Description:
+    - Description: Actor Class. Used to select the actor's code.
 
 **DisplayName**:
-    - Description:
+    - Description: Display Name. For user interfaces that don't want to show the local name or handle.
 
 **ComponentId**:
     - Description: Unique identifier for Spaceheat Node's Component. Used if a Spaceheat Node is associated with a physical device.
 
 **InPowerMetering**:
-    - Description: This exists and is True if the SpaceheatNode is part of the power metering that is used for market participation. Small loads like circulator pumps and fans may be metered to determine their behavior but are are likely NOT part of the power metering used for market participation.
+    - Description: In Power Metering. This exists and is True if the SpaceheatNode is part of the power metering that is used for market participation. Small loads like circulator pumps and fans may be metered to determine their behavior but are are likely NOT part of the power metering used for market participation. 
 
 **TypeName**:
     - Description: All GridWorks Versioned Types have a fixed TypeName, which is a string of lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character, and final word NOT all Hindu-Arabic numerals.
@@ -43,3 +46,4 @@ Python pydantic class corresponding to json type `spaceheat.node.gt`, version `1
 
 .. autoclass:: gwproto.types.SpaceheatNodeGt_Maker
     :members:
+

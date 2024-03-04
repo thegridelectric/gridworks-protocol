@@ -28,9 +28,9 @@ class LgOperatingMode(StrEnum):
     @classmethod
     def default(cls) -> "LgOperatingMode":
         """
-        Returns default value (in this case Dhw)
+        Returns default value (in this case Heat)
         """
-        return cls.Dhw
+        return cls.Heat
 
     @classmethod
     def values(cls) -> List[str]:
@@ -87,7 +87,7 @@ class LgOperatingMode(StrEnum):
         Returns:
             str: The encoded value associated to that symbol. If the symbol is not
             recognized - which could happen if the actor making the symbol is using
-            a later version of this enum, returns the default value of "Dhw".
+            a later version of this enum, returns the default value of "Heat".
         """
         if symbol not in symbol_to_value.keys():
             return cls.default().value
@@ -105,7 +105,7 @@ class LgOperatingMode(StrEnum):
             str: The symbol encoding that value. If the value is not recognized -
             which could happen if the actor making the message used a later version
             of this enum than the actor decoding the message, returns the default
-            symbol of "00000000".
+            symbol of "4f96e480".
         """
         if value not in value_to_symbol.keys():
             return value_to_symbol[cls.default().value]

@@ -8,12 +8,12 @@ class ChangeBoilerControl(StrEnum):
     """
     
 
-    Enum change.boiler.control version 000 in the GridWorks Type registry.
+    Enum x version 000 in the GridWorks Type registry.
 
     Used by used by multiple Application Shared Languages (ASLs), including but not limited to
     gwproto. For more information:
       - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
-      - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeboilercontrol)
+      - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#x)
 
     Values (with symbols in parens):
       - SwitchToTankAquastat ()
@@ -63,9 +63,9 @@ class ChangeBoilerControl(StrEnum):
     @classmethod
     def enum_name(cls) -> str:
         """
-        The name in the GridWorks Type Registry (change.boiler.control)
+        The name in the GridWorks Type Registry (x)
         """
-        return "change.boiler.control"
+        return "x"
 
     @classmethod
     def enum_version(cls) -> str:

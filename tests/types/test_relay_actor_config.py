@@ -11,7 +11,7 @@ from gwproto.types import RelayActorConfig_Maker as Maker
 def test_relay_actor_config_generated() -> None:
     d = {
         "RelayIdx": 18,
-        "ActorName": h.zone1 - stat.ctrl - relay,
+        "ActorName": h.zone1-stat.ctrl-relay,
         "WiringConfigGtEnumSymbol": "63f5da41",
         "TypeName": "relay.actor.config",
         "Version": "000",
@@ -35,6 +35,7 @@ def test_relay_actor_config_generated() -> None:
         relay_idx=gtuple.RelayIdx,
         actor_name=gtuple.ActorName,
         wiring_config=gtuple.WiringConfig,
+        
     ).tuple
     assert t == gtuple
 

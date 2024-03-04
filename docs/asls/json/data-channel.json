@@ -7,7 +7,7 @@
   "properties": {
     "DisplayName": {
       "type": "string",
-      "description": "This display name is the handle for the data channel. It is meant to be set by the person/people who will be analyzing time series data. It is only expected to be unique within the data channels associated to a specific Terminal Asset.",
+      "description": "This display name is the handle for the data channel. It is meant to be set by the person/people who will be analyzing time series data. It is only expected to be unique within the data channels associated to a specific Terminal Asset. Mutable.",
       "required": true
     },
     "AboutName": {
@@ -20,15 +20,22 @@
     "CapturedByName": {
       "type": "string",
       "format": "SpaceheatName",
-      "title": "",
+      "title": "Captured By Name",
       "description": "The name of the SpaceheatNode that is capturing the physical quantities (which can be AboutName but does not have to be).",
       "required": true
     },
     "TelemetryName": {
       "type": "string",
       "format": "spaceheat.telemetry.name",
-      "title": "",
+      "title": "Telemetry Name",
       "description": "The name of the physical quantity getting measured.",
+      "required": true
+    },
+    "Id": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "Id",
+      "description": "Meant to be an immutable identifier that is globally unique (i.e., across terminal assets).",
       "required": true
     },
     "TypeName": {

@@ -1,15 +1,15 @@
 {
-  "gtr_asl": "001",
-  "enum_name": "change.store.flow.direction",
-  "enum_version": "000",
-  "description": "Request/action in changing store.flow.direction state",
-  "ssot": "https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changestoreflowdirection",
-  "values": ["Discharge", "Charge"],
-  "value_to_symbol": { "Discharge": "", "Charge": "" },
-  "value_to_version": { "Discharge": "000", "Charge": "000" },
-  "value_descriptions": {
-    "Discharge": "",
-    "Charge": ""
-  },
-  "default_value": "Discharge"
+    "gtr_asl": "001",
+    "enum_name": "change.store.flow.direction",
+    "enum_version": "000",
+    "description": "Request/action in changing store.flow.direction state",
+    "ssot": "https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changestoreflowdirection",
+    "values": ["Discharge", "Charge"],
+    "value_to_symbol": { "Discharge": "",  "Charge": ""},
+    "value_to_version": { "Discharge": "000",  "Charge": "000"},
+    "value_descriptions": {
+                "Discharge": "",
+                "Charge": ""
+            },
+    "default_value": "Discharge"
 }

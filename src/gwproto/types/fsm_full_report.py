@@ -1,4 +1,4 @@
-"""Type gt.driver.booleanactuator.cmd, version 101"""
+"""Type fsm.full.report, version 000"""
 import json
 import logging
 from typing import Any
@@ -6,11 +6,14 @@ from typing import Dict
 from typing import Literal
 
 from pydantic import BaseModel
+from pydantic import Extra
 from pydantic import Field
 from pydantic import validator
-
+from gwproto.types.fsm_event import FsmEvent
+from gwproto.types.fsm_event import FsmEvent_Maker
+from gwproto.types.fsm_event import FsmEvent
+from gwproto.types.fsm_event import FsmEvent_Maker
 from gwproto.errors import SchemaError
-
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -19,27 +22,57 @@ LOG_FORMAT = (
 LOGGER = logging.getLogger(__name__)
 
 
-class GtDriverBooleanactuatorCmd(BaseModel):
+class FsmFullReport(BaseModel):
     """
-    Boolean Actuator Driver Command.
+    There will be cascading events, actions and transitions that will naturally follow a single
+    high-level event. This message is designed to encapsulate all of those.
 
-    The boolean actuator actor reports when it has sent an actuation command to its driver so
-    that the SCADA can add this to information to be sent up to the AtomicTNode.
-
-    [More info](https://gridworks.readthedocs.io/en/latest/relay-state.html)
+    [More info](https://gridworks-protocol.readthedocs.io/en/latest/finite-state-machines.html)
     """
 
-    TypeName: Literal["gt.driver.booleanactuator.cmd"] = "gt.driver.booleanactuator.cmd"
-    Version: Literal["101"] = "101"
+    FromName: str = Field(
+        title="From Name",
+        description=(
+            "The name (not the handle, so immutable) of the Node issuing the report. This will "
+            "typically be the scada node itself."
+        ),
+    )
+    Trigger: FsmEvent = Field(
+        title="Trigger",
+        description=(
+            "The event that triggered the collected list of actions, transitions and further "
+            "events."
+        ),
+    )
+    AtomicList: FsmEvent = Field(
+        title="Atomic List",
+        description=(
+            "The list of cascading events, transitions and actions triggered by a single high-level "
+            "event in a hierarchical finite state machine."
+        ),
+    )
+    TypeName: Literal["fsm.full.report"] = "fsm.full.report"
+    Version: Literal["000"] = "000"
+
+    class Config:
+        extra = Extra.allow
+
+    @validator("FromName")
+    def _check_from_name(cls, v: str) -> str:
+        try:
+            check_is_spaceheat_name(v)
+        except ValueError as e:
+            raise ValueError(f"FromName failed SpaceheatName format validation: {e}")
+        return v
 
     def as_dict(self) -> Dict[str, Any]:
         """
         Translate the object into a dictionary representation that can be serialized into a
-        gt.driver.booleanactuator.cmd.101 object.
+        fsm.full.report.000 object.
 
         This method prepares the object for serialization by the as_type method, creating a
         dictionary with key-value pairs that follow the requirements for an instance of the
-        gt.driver.booleanactuator.cmd.101 type. Unlike the standard python dict method,
+        fsm.full.report.000 type. Unlike the standard python dict method,
         it makes the following substantive changes:
         - Enum Values: Translates between the values used locally by the actor to the symbol
         sent in messages.
@@ -55,14 +88,16 @@ class GtDriverBooleanactuatorCmd(BaseModel):
             ).items()
             if value is not None
         }
+        d["Trigger"] = self.Trigger.as_dict()
+        d["AtomicList"] = self.AtomicList.as_dict()
         return d
 
     def as_type(self) -> bytes:
         """
-        Serialize to the gt.driver.booleanactuator.cmd.101 representation.
+        Serialize to the fsm.full.report.000 representation.
 
-        Instances in the class are python-native representations of gt.driver.booleanactuator.cmd.101
-        objects, while the actual gt.driver.booleanactuator.cmd.101 object is the serialized UTF-8 byte
+        Instances in the class are python-native representations of fsm.full.report.000
+        objects, while the actual fsm.full.report.000 object is the serialized UTF-8 byte
         string designed for sending in a message.
 
         This method calls the as_dict() method, which differs from the native python dict()
@@ -74,7 +109,7 @@ class GtDriverBooleanactuatorCmd(BaseModel):
 
         It also applies these changes recursively to sub-types.
 
-        Its near-inverse is GtDriverBooleanactuatorCmd.type_to_tuple(). If the type (or any sub-types)
+        Its near-inverse is FsmFullReport.type_to_tuple(). If the type (or any sub-types)
         includes an enum, then the type_to_tuple will map an unrecognized symbol to the
         default enum value. This is why these two methods are only 'near' inverses.
         """
@@ -85,24 +120,31 @@ class GtDriverBooleanactuatorCmd(BaseModel):
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
-class GtDriverBooleanactuatorCmd_Maker:
-    type_name = "gt.driver.booleanactuator.cmd"
-    version = "101"
+class FsmFullReport_Maker:
+    type_name = "fsm.full.report"
+    version = "000"
 
     def __init__(
         self,
+        from_name: str,
+        trigger: FsmEvent,
+        atomic_list: FsmEvent,
     ):
-        self.tuple = GtDriverBooleanactuatorCmd()
+        self.tuple = FsmFullReport(
+            FromName=from_name,
+            Trigger=trigger,
+            AtomicList=atomic_list,
+        )
 
     @classmethod
-    def tuple_to_type(cls, tuple: GtDriverBooleanactuatorCmd) -> bytes:
+    def tuple_to_type(cls, tuple: FsmFullReport) -> bytes:
         """
         Given a Python class object, returns the serialized JSON type object.
         """
         return tuple.as_type()
 
     @classmethod
-    def type_to_tuple(cls, t: bytes) -> GtDriverBooleanactuatorCmd:
+    def type_to_tuple(cls, t: bytes) -> FsmFullReport:
         """
         Given a serialized JSON type object, returns the Python class object.
         """
@@ -115,12 +157,12 @@ class GtDriverBooleanactuatorCmd_Maker:
         return cls.dict_to_tuple(d)
 
     @classmethod
-    def dict_to_tuple(cls, d: dict[str, Any]) -> GtDriverBooleanactuatorCmd:
+    def dict_to_tuple(cls, d: dict[str, Any]) -> FsmFullReport:
         """
-        Deserialize a dictionary representation of a gt.driver.booleanactuator.cmd.101 message object
-        into a GtDriverBooleanactuatorCmd python object for internal use.
+        Deserialize a dictionary representation of a fsm.full.report.000 message object
+        into a FsmFullReport python object for internal use.
 
-        This is the near-inverse of the GtDriverBooleanactuatorCmd.as_dict() method:
+        This is the near-inverse of the FsmFullReport.as_dict() method:
           - Enums: translates between the symbols sent in messages between actors and
         the values used by the actors internally once they've deserialized the messages.
           - Types: recursively validates and deserializes sub-types.
@@ -133,60 +175,36 @@ class GtDriverBooleanactuatorCmd_Maker:
             d (dict): the dictionary resulting from json.loads(t) for a serialized JSON type object t.
 
         Raises:
-           SchemaError: if the dict cannot be turned into a GtDriverBooleanactuatorCmd object.
+           SchemaError: if the dict cannot be turned into a FsmFullReport object.
 
         Returns:
-            GtDriverBooleanactuatorCmd
+            FsmFullReport
         """
         d2 = dict(d)
+        if "FromName" not in d2.keys():
+            raise SchemaError(f"dict missing FromName: <{d2}>")
+        if "Trigger" not in d2.keys():
+            raise SchemaError(f"dict missing Trigger: <{d2}>")
+        if not isinstance(d2["Trigger"], dict):
+            raise SchemaError(f"Trigger <{d2['Trigger']}> must be a FsmEvent!")
+        trigger = FsmEvent_Maker.dict_to_tuple(d2["Trigger"])
+        d2["Trigger"] = trigger
+        if "AtomicList" not in d2.keys():
+            raise SchemaError(f"dict missing AtomicList: <{d2}>")
+        if not isinstance(d2["AtomicList"], dict):
+            raise SchemaError(f"AtomicList <{d2['AtomicList']}> must be a FsmEvent!")
+        atomic_list = FsmEvent_Maker.dict_to_tuple(d2["AtomicList"])
+        d2["AtomicList"] = atomic_list
         if "TypeName" not in d2.keys():
             raise SchemaError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():
             raise SchemaError(f"Version missing from dict <{d2}>")
-        if d2["Version"] != "101":
+        if d2["Version"] != "000":
             LOGGER.debug(
-                f"Attempting to interpret gt.driver.booleanactuator.cmd version {d2['Version']} as version 101"
+                f"Attempting to interpret fsm.full.report version {d2['Version']} as version 000"
             )
-            d2["Version"] = "101"
-        return GtDriverBooleanactuatorCmd(**d2)
-
-
-def check_is_bit(v: int) -> None:
-    """
-    Checks Bit format
-
-    Bit format: The value must be the integer 0 or the integer 1.
-
-    Will not attempt to first interpret as an integer. For example,
-    1.3 will not be interpreted as 1 but will raise an error.
-
-    Args:
-        v (int): the candidate
-
-    Raises:
-        ValueError: if v is not 0 or 1
-    """
-    if not v in [0, 1]:
-        raise ValueError(f"<{v}> must be 0 or 1")
-
-
-def check_is_reasonable_unix_time_ms(v: int) -> None:
-    """Checks ReasonableUnixTimeMs format
-
-    ReasonableUnixTimeMs format: unix milliseconds between Jan 1 2000 and Jan 1 3000
-
-    Args:
-        v (int): the candidate
-
-    Raises:
-        ValueError: if v is not ReasonableUnixTimeMs format
-    """
-    import pendulum
-
-    if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp * 1000 > v:  # type: ignore[attr-defined]
-        raise ValueError(f"<{v}> must be after Jan 1 2000")
-    if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp * 1000 < v:  # type: ignore[attr-defined]
-        raise ValueError(f"<{v}> must be before Jan 1 3000")
+            d2["Version"] = "000"
+        return FsmFullReport(**d2)
 
 
 def check_is_spaceheat_name(v: str) -> None:
@@ -203,7 +221,6 @@ def check_is_spaceheat_name(v: str) -> None:
         ValueError: If the provided string is not in SpaceheatName format.
     """
     from typing import List
-
     try:
         x: List[str] = v.split(".")
     except:
@@ -216,9 +233,7 @@ def check_is_spaceheat_name(v: str) -> None:
         )
     for word in x:
         for char in word:
-            if not (char.isalnum() or char == "-"):
-                raise ValueError(
-                    f"words of <{v}> split by by '.' must be alphanumeric or hyphen."
-                )
+            if not (char.isalnum() or char == '-'):
+                raise ValueError(f"words of <{v}> split by by '.' must be alphanumeric or hyphen.")
     if not v.islower():
         raise ValueError(f"<{v}> must be lowercase.")

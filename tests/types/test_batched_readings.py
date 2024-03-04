@@ -15,8 +15,9 @@ def test_batched_readings_generated() -> None:
         "AboutGNodeAlias": "dwtest.isone.ct.newhaven.orange1.ta",
         "SlotStartUnixS": 1656945300,
         "BatchedTransmissionPeriodS": 300,
-        "ChannelReadingList": ,
-        "BooleanactuatorCmdList": [ { "ShNodeAlias": "a.elt1.relay", "RelayStateCommandList": [1], "CommandTimeUnixMsList": [1656945413464], "TypeName": "gt.sh.booleanactuator.cmd.status", "Version": "100", } ],
+        "ChannelReadingList": [],
+        "FsmActionList": [],
+        "FsmReportList": [],
         "TypeName": "batched.readings",
         "Version": "000",
     }
@@ -42,8 +43,9 @@ def test_batched_readings_generated() -> None:
         slot_start_unix_s=gtuple.SlotStartUnixS,
         batched_transmission_period_s=gtuple.BatchedTransmissionPeriodS,
         channel_reading_list=gtuple.ChannelReadingList,
-        booleanactuator_cmd_list=gtuple.BooleanactuatorCmdList,
-
+        fsm_action_list=gtuple.FsmActionList,
+        fsm_report_list=gtuple.FsmReportList,
+        
     ).tuple
     assert t == gtuple
 
@@ -87,7 +89,12 @@ def test_batched_readings_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["BooleanactuatorCmdList"]
+    del d2["FsmActionList"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    del d2["FsmReportList"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -115,15 +122,27 @@ def test_batched_readings_generated() -> None:
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
-    d2  = dict(d, BooleanactuatorCmdList="Not a list.")
+    d2  = dict(d, FsmActionList="Not a list.")
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
-    d2  = dict(d, BooleanactuatorCmdList=["Not a list of dicts"])
+    d2  = dict(d, FsmActionList=["Not a list of dicts"])
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
-    d2  = dict(d, BooleanactuatorCmdList= [{"Failed": "Not a GtSimpleSingleStatus"}])
+    d2  = dict(d, FsmActionList= [{"Failed": "Not a GtSimpleSingleStatus"}])
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2  = dict(d, FsmReportList="Not a list.")
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2  = dict(d, FsmReportList=["Not a list of dicts"])
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2  = dict(d, FsmReportList= [{"Failed": "Not a GtSimpleSingleStatus"}])
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 

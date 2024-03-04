@@ -10,11 +10,9 @@ from pydantic import BaseModel
 from pydantic import Field
 from pydantic import root_validator
 from pydantic import validator
-
-from gwproto.errors import SchemaError
 from gwproto.types.data_channel import DataChannel
 from gwproto.types.data_channel import DataChannel_Maker
-
+from gwproto.errors import SchemaError
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -187,9 +185,7 @@ class ChannelReadings_Maker:
         if "DataChannel" not in d2.keys():
             raise SchemaError(f"dict missing DataChannel: <{d2}>")
         if not isinstance(d2["DataChannel"], dict):
-            raise SchemaError(
-                f"DataChannel <{d2['DataChannel']}> must be a DataChannel!"
-            )
+            raise SchemaError(f"DataChannel <{d2['DataChannel']}> must be a DataChannel!")
         data_channel = DataChannel_Maker.dict_to_tuple(d2["DataChannel"])
         d2["DataChannel"] = data_channel
         if "ValueList" not in d2.keys():

@@ -4,16 +4,19 @@ from typing import List
 from fastapi_utils.enums import StrEnum
 
 
-class ControlSignalType(StrEnum):
+class FsmActionType(StrEnum):
     """
-    
+    A list of the finite state machine Actions that a spaceheat node might take. An Action,
+    in this context, is a side-effect of a state machine transition that impacts the real world
+    (i.e., a relay is actuated).
 
-    Enum control.signal.type version 000 in the GridWorks Type registry.
+    Enum sh.fsm.action.type version 000 in the GridWorks Type registry.
 
     Used by used by multiple Application Shared Languages (ASLs), including but not limited to
     gwproto. For more information:
       - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
-      - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#controlsignaltype)
+      - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shfsmactiontype)
+      - [More Info](https://gridworks-protocol.readthedocs.io/en/latest/finite-state-machines.html)
 
     Values (with symbols in parens):
       - ChangeRelayState ()
@@ -23,6 +26,7 @@ class ControlSignalType(StrEnum):
       - ChangeStoreFlowDirection ()
       - ChangeHeatcallSource ()
       - ChangeBoilerControl ()
+      - ChangeHeatPumpControl ()
       - ChangeLgOperatingMode ()
     """
 
@@ -33,10 +37,11 @@ class ControlSignalType(StrEnum):
     ChangeStoreFlowDirection = auto()
     ChangeHeatcallSource = auto()
     ChangeBoilerControl = auto()
+    ChangeHeatPumpControl = auto()
     ChangeLgOperatingMode = auto()
 
     @classmethod
-    def default(cls) -> "ControlSignalType":
+    def default(cls) -> "FsmActionType":
         """
         Returns default value (in this case ChangeRelayState)
         """
@@ -75,9 +80,9 @@ class ControlSignalType(StrEnum):
     @classmethod
     def enum_name(cls) -> str:
         """
-        The name in the GridWorks Type Registry (control.signal.type)
+        The name in the GridWorks Type Registry (sh.fsm.action.type)
         """
-        return "control.signal.type"
+        return "sh.fsm.action.type"
 
     @classmethod
     def enum_version(cls) -> str:
@@ -106,7 +111,7 @@ class ControlSignalType(StrEnum):
     @classmethod
     def value_to_symbol(cls, value: str) -> str:
         """
-        Provides the encoding symbol for a ControlSignalType enum to send in seriliazed messages.
+        Provides the encoding symbol for a FsmActionType enum to send in seriliazed messages.
 
         Args:
             symbol (str): The candidate value.
@@ -135,6 +140,7 @@ class ControlSignalType(StrEnum):
             "",
             "",
             "",
+            "",
         ]
 
 
@@ -146,6 +152,7 @@ symbol_to_value = {
     "": "ChangeStoreFlowDirection",
     "": "ChangeHeatcallSource",
     "": "ChangeBoilerControl",
+    "": "ChangeHeatPumpControl",
     "": "ChangeLgOperatingMode",
 }
 
@@ -159,5 +166,6 @@ value_to_version = {
     "ChangeStoreFlowDirection": "000",
     "ChangeHeatcallSource": "000",
     "ChangeBoilerControl": "000",
+    "ChangeHeatPumpControl": "000",
     "ChangeLgOperatingMode": "000",
 }

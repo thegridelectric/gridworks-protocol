@@ -39,7 +39,7 @@ def test_i2c_multichannel_dt_relay_component_gt_generated() -> None:
         relay_config_list=gtuple.RelayConfigList,
         display_name=gtuple.DisplayName,
         hw_uid=gtuple.HwUid,
-
+        
     ).tuple
     assert t == gtuple
 

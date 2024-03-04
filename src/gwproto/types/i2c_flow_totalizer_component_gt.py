@@ -9,13 +9,9 @@ from typing import Optional
 from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
-
-from gwproto.data_classes.components.i2c_flow_totalizer_component import (
-    I2cFlowTotalizerComponent,
-)
+from gwproto.data_classes.components.i2c_flow_totalizer_component import I2cFlowTotalizerComponent
 from gwproto.enums import MakeModel
 from gwproto.errors import SchemaError
-
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -39,7 +35,7 @@ class I2cFlowTotalizerComponentGt(BaseModel):
             "and also as a more generic Component."
         ),
     )
-    ComponentAttributeClass:  = Field(
+    ComponentAttributeClassId: str = Field(
         title="ComponentAttributeClass",
         description=(
             "Unique identifier for the device class. Authority for these, as well as the relationship "
@@ -75,6 +71,16 @@ class I2cFlowTotalizerComponentGt(BaseModel):
         except ValueError as e:
             raise ValueError(
                 f"ComponentId failed UuidCanonicalTextual format validation: {e}"
+            )
+        return v
+
+    @validator("ComponentAttributeClassId")
+    def _check_component_attribute_class_id(cls, v: str) -> str:
+        try:
+            check_is_uuid_canonical_textual(v)
+        except ValueError as e:
+            raise ValueError(
+                f"ComponentAttributeClassId failed UuidCanonicalTextual format validation: {e}"
             )
         return v
 
@@ -140,7 +146,7 @@ class I2cFlowTotalizerComponentGt_Maker:
     def __init__(
         self,
         component_id: str,
-        component_attribute_class: ,
+        component_attribute_class_id: str,
         i2c_address: int,
         conversion_factor: float,
         pulse_flow_meter_type: MakeModel,
@@ -149,7 +155,7 @@ class I2cFlowTotalizerComponentGt_Maker:
     ):
         self.tuple = I2cFlowTotalizerComponentGt(
             ComponentId=component_id,
-            ComponentAttributeClass=component_attribute_class,
+            ComponentAttributeClassId=component_attribute_class_id,
             I2cAddress=i2c_address,
             ConversionFactor=conversion_factor,
             PulseFlowMeterType=pulse_flow_meter_type,
@@ -204,7 +210,7 @@ class I2cFlowTotalizerComponentGt_Maker:
         d2 = dict(d)
         if "ComponentId" not in d2.keys():
             raise SchemaError(f"dict missing ComponentId: <{d2}>")
-        if "ComponentAttributeClass" not in d2.keys():
+        if "ComponentAttributeClassId" not in d2.keys():
             raise SchemaError(f"dict missing ComponentAttributeClass: <{d2}>")
         if "I2cAddress" not in d2.keys():
             raise SchemaError(f"dict missing I2cAddress: <{d2}>")
@@ -233,7 +239,7 @@ class I2cFlowTotalizerComponentGt_Maker:
         else:
             dc = I2cFlowTotalizerComponent(
                 component_id=t.ComponentId,
-                component_attribute_class=t.ComponentAttributeClass,
+                component_attribute_class_id=t.ComponentAttributeClassId,
                 i2c_address=t.I2cAddress,
                 conversion_factor=t.ConversionFactor,
                 pulse_flow_meter_type=t.PulseFlowMeterType,
@@ -246,7 +252,7 @@ class I2cFlowTotalizerComponentGt_Maker:
     def dc_to_tuple(cls, dc: I2cFlowTotalizerComponent) -> I2cFlowTotalizerComponentGt:
         t = I2cFlowTotalizerComponentGt_Maker(
             component_id=dc.component_id,
-            component_attribute_class=dc.component_attribute_class,
+            component_attribute_class_id=dc.component_attribute_class_id,
             i2c_address=dc.i2c_address,
             conversion_factor=dc.conversion_factor,
             pulse_flow_meter_type=dc.pulse_flow_meter_type,

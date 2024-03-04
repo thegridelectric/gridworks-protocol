@@ -4,9 +4,9 @@ import json
 import pytest
 from pydantic import ValidationError
 
-from gwproto.enums import ThermistorDataMethod
 from gwproto.errors import SchemaError
 from gwproto.types import ThermistorDataProcessingConfig_Maker as Maker
+from gwproto.enums import ThermistorDataMethod
 
 
 def test_thermistor_data_processing_config_generated() -> None:
@@ -38,7 +38,7 @@ def test_thermistor_data_processing_config_generated() -> None:
         reporting_config=gtuple.ReportingConfig,
         data_processing_method=gtuple.DataProcessingMethod,
         data_processing_description=gtuple.DataProcessingDescription,
-
+        
     ).tuple
     assert t == gtuple
 

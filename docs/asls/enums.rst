@@ -18,9 +18,9 @@ change.lg.operating.mode.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/change-lg-operating-mode.json
 
-control.signal.type.000
+sh.fsm.action.type.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/control-signal-type.json
+.. literalinclude:: json/sh-fsm-action-type.json
 
 change.valve.state.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -38,9 +38,9 @@ sh.actor.class.001
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/sh-actor-class.json
 
-change.boiler.control.000
+x.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/change-boiler-control.json
+.. literalinclude:: json/x.json
 
 lg.operating.mode.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -61,3 +61,4 @@ change.heatcall.source.000
 change.relay.state.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/change-relay-state.json
+

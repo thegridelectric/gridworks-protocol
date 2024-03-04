@@ -37,7 +37,7 @@ def test_component_attribute_class_gt_generated() -> None:
         make_model=gtuple.MakeModel,
         display_name=gtuple.DisplayName,
         min_poll_period_ms=gtuple.MinPollPeriodMs,
-
+        
     ).tuple
     assert t == gtuple
 

@@ -10,7 +10,7 @@ Python pydantic class corresponding to json type `component.attribute.class.gt`,
     - Format: UuidCanonicalTextual
 
 **MakeModel**:
-    - Description: MakeModel. MakeModel of the component.
+    - Description: MakeModel. MakeModel of the component. 
 
 **DisplayName**:
     - Description: DisplayName. Optional Mutable field to include manufacturer's model name. Note that several different models may be given the same spaceheat.make.model enum name.
@@ -29,3 +29,4 @@ Python pydantic class corresponding to json type `component.attribute.class.gt`,
 
 .. autoclass:: gwproto.types.ComponentAttributeClassGt_Maker
     :members:
+

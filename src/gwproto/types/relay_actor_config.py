@@ -8,10 +8,8 @@ from typing import Literal
 from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
-
 from gwproto.enums import RelayWiringConfig
 from gwproto.errors import SchemaError
-
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "

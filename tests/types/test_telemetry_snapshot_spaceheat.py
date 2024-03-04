@@ -35,7 +35,7 @@ def test_telemetry_snapshot_spaceheat_generated() -> None:
         data_channel_list=gtuple.DataChannelList,
         value_list=gtuple.ValueList,
         scada_read_time_unix_ms_list=gtuple.ScadaReadTimeUnixMsList,
-
+        
     ).tuple
     assert t == gtuple
 

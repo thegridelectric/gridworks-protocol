@@ -11,7 +11,7 @@ from gwproto.types import I2cFlowTotalizerComponentGt_Maker as Maker
 def test_i2c_flow_totalizer_component_gt_generated() -> None:
     d = {
         "ComponentId": "dd5ac673-91a8-40e2-a233-b67479cec709",
-        "ComponentAttributeClass": "13d916dc-8764-4b16-b85d-b8ead3e2fc80",
+        "ComponentAttributeClassId": "13d916dc-8764-4b16-b85d-b8ead3e2fc80",
         "I2cAddress": 100,
         "ConversionFactor": 0.1328,
         "PulseFlowMeterTypeGtEnumSymbol": "99d961da",
@@ -37,12 +37,13 @@ def test_i2c_flow_totalizer_component_gt_generated() -> None:
     # test Maker init
     t = Maker(
         component_id=gtuple.ComponentId,
-        component_attribute_class=gtuple.ComponentAttributeClass,
+        component_attribute_class_id=gtuple.ComponentAttributeClassId,
         i2c_address=gtuple.I2cAddress,
         conversion_factor=gtuple.ConversionFactor,
         pulse_flow_meter_type=gtuple.PulseFlowMeterType,
         display_name=gtuple.DisplayName,
         hw_uid=gtuple.HwUid,
+        
     ).tuple
     assert t == gtuple
 
@@ -69,7 +70,7 @@ def test_i2c_flow_totalizer_component_gt_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["ComponentAttributeClass"]
+    del d2["ComponentAttributeClassId"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 

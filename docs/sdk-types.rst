@@ -30,10 +30,10 @@ forth between type instances and Python objects.
     ElectricMeterCacGt  <types/electric-meter-cac-gt>
     ElectricMeterComponentGt  <types/electric-meter-component-gt>
     FibaroSmartImplantComponentGt  <types/fibaro-smart-implant-component-gt>
-    GtDispatchBoolean  <types/gt-dispatch-boolean>
-    GtDispatchBooleanLocal  <types/gt-dispatch-boolean-local>
-    GtDriverBooleanactuatorCmd  <types/gt-driver-booleanactuator-cmd>
-    GtShBooleanactuatorCmdStatus  <types/gt-sh-booleanactuator-cmd-status>
+    FsmAtomicReport  <types/fsm-atomic-report>
+    FsmEvent  <types/fsm-event>
+    FsmFullReport  <types/fsm-full-report>
+    FsmTriggerFromAtn  <types/fsm-trigger-from-atn>
     GtShCliAtnCmd  <types/gt-sh-cli-atn-cmd>
     HeartbeatB  <types/heartbeat-b>
     HubitatComponentGt  <types/hubitat-component-gt>
@@ -55,4 +55,4 @@ forth between type instances and Python objects.
     TelemetryReportingConfig  <types/telemetry-reporting-config>
     TelemetrySnapshotSpaceheat  <types/telemetry-snapshot-spaceheat>
     ThermistorDataProcessingConfig  <types/thermistor-data-processing-config>
-
+    

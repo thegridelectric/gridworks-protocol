@@ -11,16 +11,12 @@ from pydantic import BaseModel
 from pydantic import Field
 from pydantic import root_validator
 from pydantic import validator
-
-from gwproto.data_classes.components.electric_meter_component import (
-    ElectricMeterComponent,
-)
-from gwproto.errors import SchemaError
+from gwproto.data_classes.components.electric_meter_component import ElectricMeterComponent
 from gwproto.types.egauge_io import EgaugeIo
 from gwproto.types.egauge_io import EgaugeIo_Maker
 from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
 from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig_Maker
-
+from gwproto.errors import SchemaError
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -135,7 +131,7 @@ class ElectricMeterComponentGt(BaseModel):
     def check_axiom_1(cls, v: dict) -> dict:
         """
         Axiom 1: Modbus consistency.
-        ModbusHost is None if and only if ModbusPort is None
+        ModbusHost is None if and only if ModbusPort is None 
         """
         # TODO: Implement check for axiom 1"
         return v
@@ -294,9 +290,7 @@ class ElectricMeterComponentGt_Maker:
         config_list = []
         for elt in d2["ConfigList"]:
             if not isinstance(elt, dict):
-                raise SchemaError(
-                    f"ConfigList <{d2['ConfigList']}> must be a List of TelemetryReportingConfig types"
-                )
+                raise SchemaError(f"ConfigList <{d2['ConfigList']}> must be a List of TelemetryReportingConfig types")
             t = TelemetryReportingConfig_Maker.dict_to_tuple(elt)
             config_list.append(t)
         d2["ConfigList"] = config_list
@@ -307,9 +301,7 @@ class ElectricMeterComponentGt_Maker:
         egauge_io_list = []
         for elt in d2["EgaugeIoList"]:
             if not isinstance(elt, dict):
-                raise SchemaError(
-                    f"EgaugeIoList <{d2['EgaugeIoList']}> must be a List of EgaugeIo types"
-                )
+                raise SchemaError(f"EgaugeIoList <{d2['EgaugeIoList']}> must be a List of EgaugeIo types")
             t = EgaugeIo_Maker.dict_to_tuple(elt)
             egauge_io_list.append(t)
         d2["EgaugeIoList"] = egauge_io_list

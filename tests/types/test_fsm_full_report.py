@@ -1,17 +1,20 @@
-"""Tests gt.dispatch.boolean.local type, version 111"""
+"""Tests fsm.full.report type, version 000"""
 import json
 
 import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
-from gwproto.types import GtDispatchBooleanLocal_Maker as Maker
+from gwproto.types import FsmFullReport_Maker as Maker
 
 
-def test_gt_dispatch_boolean_local_generated() -> None:
+def test_fsm_full_report_generated() -> None:
     d = {
-        "TypeName": "gt.dispatch.boolean.local",
-        "Version": "111",
+        "FromName": ,
+        "Trigger": ,
+        "AtomicList": ,
+        "TypeName": "fsm.full.report",
+        "Version": "000",
     }
 
     with pytest.raises(SchemaError):
@@ -28,7 +31,12 @@ def test_gt_dispatch_boolean_local_generated() -> None:
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple
 
     # test Maker init
-    t = Maker().tuple
+    t = Maker(
+        from_name=gtuple.FromName,
+        trigger=gtuple.Trigger,
+        atomic_list=gtuple.AtomicList,
+        
+    ).tuple
     assert t == gtuple
 
     ######################################
@@ -37,6 +45,21 @@ def test_gt_dispatch_boolean_local_generated() -> None:
 
     d2 = dict(d)
     del d2["TypeName"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    del d2["FromName"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    del d2["Trigger"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    del d2["AtomicList"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -49,5 +72,13 @@ def test_gt_dispatch_boolean_local_generated() -> None:
     ######################################
 
     d2 = dict(d, TypeName="not the type name")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    ######################################
+    # SchemaError raised if primitive attributes do not have appropriate property_format
+    ######################################
+
+    d2 = dict(d, FromName="A.hot-stuff")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)

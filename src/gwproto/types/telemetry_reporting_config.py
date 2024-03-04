@@ -11,11 +11,9 @@ from pydantic import Extra
 from pydantic import Field
 from pydantic import root_validator
 from pydantic import validator
-
 from gwproto.enums import TelemetryName as EnumTelemetryName
 from gwproto.enums import Unit as EnumUnit
 from gwproto.errors import SchemaError
-
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -25,7 +23,9 @@ LOGGER = logging.getLogger(__name__)
 
 
 class TelemetryReportingConfig(BaseModel):
-    """ """
+    """
+    
+    """
 
     AboutNodeName: str = Field(
         title="About Node Name",
@@ -174,9 +174,7 @@ class TelemetryReportingConfig(BaseModel):
             if value is not None
         }
         del d["TelemetryName"]
-        d["TelemetryNameGtEnumSymbol"] = EnumTelemetryName.value_to_symbol(
-            self.TelemetryName
-        )
+        d["TelemetryNameGtEnumSymbol"] = EnumTelemetryName.value_to_symbol(self.TelemetryName)
         del d["Unit"]
         d["UnitGtEnumSymbol"] = EnumUnit.value_to_symbol(self.Unit)
         return d
@@ -344,7 +342,6 @@ def check_is_spaceheat_name(v: str) -> None:
         ValueError: If the provided string is not in SpaceheatName format.
     """
     from typing import List
-
     try:
         x: List[str] = v.split(".")
     except:
@@ -357,9 +354,7 @@ def check_is_spaceheat_name(v: str) -> None:
         )
     for word in x:
         for char in word:
-            if not (char.isalnum() or char == "-"):
-                raise ValueError(
-                    f"words of <{v}> split by by '.' must be alphanumeric or hyphen."
-                )
+            if not (char.isalnum() or char == '-'):
+                raise ValueError(f"words of <{v}> split by by '.' must be alphanumeric or hyphen.")
     if not v.islower():
         raise ValueError(f"<{v}> must be lowercase.")

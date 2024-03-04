@@ -6,14 +6,15 @@ Python pydantic class corresponding to json type `hubitat.component.gt`, version
     :members:
 
 **ComponentId**:
-    - Description: Component Id. Primary GridWorks identifier for a specific physical instance of a Hubitat, and also as a more generic Component.
+    - Description: Component Id. Primary GridWorks identifier for a specific physical instance of a Hubitat, and also as a more generic Component. 
     - Format: UuidCanonicalTextual
 
-**ComponentAttributeClass**:
-    - Description: ComponentAttributeClassId. Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry.
+**ComponentAttributeClassId**:
+    - Description: ComponentAttributeClassId. Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry. 
+    - Format: UuidCanonicalTextual
 
 **Hubitat**:
-    - Description: Hubitat Type Helper. Includes the information needed to access the MakerAPI of a Hubitat on the Local area network: Host, MakerApiID, AccessToken and MacAddress for the Hubitat.
+    - Description: Hubitat Type Helper. Includes the information needed to access the MakerAPI of a Hubitat on the Local area network: Host, MakerApiID, AccessToken and MacAddress for the Hubitat.  
 
 **DisplayName**:
     - Description: Sample: Oak Hubitat 81:37:82  (using the last 6 digits of the Hubitat MacId in the display name, as well as the short alias for the associated g node.)
@@ -31,3 +32,4 @@ Python pydantic class corresponding to json type `hubitat.component.gt`, version
 
 .. autoclass:: gwproto.types.HubitatComponentGt_Maker
     :members:
+

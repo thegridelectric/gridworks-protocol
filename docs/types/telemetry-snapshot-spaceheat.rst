@@ -9,7 +9,7 @@ Python pydantic class corresponding to json type `telemetry.snapshot.spaceheat`,
     - Description: Data Channel List. The list of Data Channels in the Snapshot
 
 **ValueList**:
-    - Description: ValueList.
+    - Description: ValueList. 
 
 **ScadaReadTimeUnixMsList**:
     - Description: ReportTimeUnixMs. The time, in unix ms, that each reading was taken.
@@ -25,3 +25,4 @@ Python pydantic class corresponding to json type `telemetry.snapshot.spaceheat`,
 
 .. autoclass:: gwproto.types.TelemetrySnapshotSpaceheat_Maker
     :members:
+

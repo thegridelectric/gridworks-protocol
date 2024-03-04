@@ -10,12 +10,10 @@ from pydantic import BaseModel
 from pydantic import Extra
 from pydantic import Field
 from pydantic import validator
-
-from gwproto.enums import ThermistorDataMethod
-from gwproto.errors import SchemaError
 from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
 from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig_Maker
-
+from gwproto.enums import ThermistorDataMethod
+from gwproto.errors import SchemaError
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -61,9 +59,7 @@ class ThermistorDataProcessingConfig(BaseModel):
         ),
         default=None,
     )
-    TypeName: Literal[
-        "thermistor.data.processing.config"
-    ] = "thermistor.data.processing.config"
+    TypeName: Literal["thermistor.data.processing.config"] = "thermistor.data.processing.config"
     Version: Literal["000"] = "000"
 
     class Config:
@@ -105,9 +101,7 @@ class ThermistorDataProcessingConfig(BaseModel):
         d["ReportingConfig"] = self.ReportingConfig.as_dict()
         if "DataProcessingMethod" in d.keys():
             del d["DataProcessingMethod"]
-            d[
-                "DataProcessingMethodGtEnumSymbol"
-            ] = ThermistorDataMethod.value_to_symbol(self.DataProcessingMethod)
+            d["DataProcessingMethodGtEnumSymbol"] = ThermistorDataMethod.value_to_symbol(self.DataProcessingMethod)
         return d
 
     def as_type(self) -> bytes:
@@ -206,17 +200,11 @@ class ThermistorDataProcessingConfig_Maker:
         if "ReportingConfig" not in d2.keys():
             raise SchemaError(f"dict missing ReportingConfig: <{d2}>")
         if not isinstance(d2["ReportingConfig"], dict):
-            raise SchemaError(
-                f"ReportingConfig <{d2['ReportingConfig']}> must be a TelemetryReportingConfig!"
-            )
-        reporting_config = TelemetryReportingConfig_Maker.dict_to_tuple(
-            d2["ReportingConfig"]
-        )
+            raise SchemaError(f"ReportingConfig <{d2['ReportingConfig']}> must be a TelemetryReportingConfig!")
+        reporting_config = TelemetryReportingConfig_Maker.dict_to_tuple(d2["ReportingConfig"])
         d2["ReportingConfig"] = reporting_config
         if "DataProcessingMethod" in d2.keys():
-            value = ThermistorDataMethod.symbol_to_value(
-                d2["DataProcessingMethodGtEnumSymbol"]
-            )
+            value = ThermistorDataMethod.symbol_to_value(d2["DataProcessingMethodGtEnumSymbol"])
             d2["DataProcessingMethod"] = ThermistorDataMethod(value)
         if "TypeName" not in d2.keys():
             raise SchemaError(f"TypeName missing from dict <{d2}>")

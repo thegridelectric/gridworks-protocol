@@ -26,9 +26,9 @@ class ChangeLgOperatingMode(StrEnum):
     @classmethod
     def default(cls) -> "ChangeLgOperatingMode":
         """
-        Returns default value (in this case SwitchToDhw)
+        Returns default value (in this case SwitchToHeat)
         """
-        return cls.SwitchToDhw
+        return cls.SwitchToHeat
 
     @classmethod
     def values(cls) -> List[str]:
@@ -85,7 +85,7 @@ class ChangeLgOperatingMode(StrEnum):
         Returns:
             str: The encoded value associated to that symbol. If the symbol is not
             recognized - which could happen if the actor making the symbol is using
-            a later version of this enum, returns the default value of "SwitchToDhw".
+            a later version of this enum, returns the default value of "SwitchToHeat".
         """
         if symbol not in symbol_to_value.keys():
             return cls.default().value

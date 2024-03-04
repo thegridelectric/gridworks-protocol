@@ -353,8 +353,8 @@ def check_is_ads1115_i2c_address(v: str) -> None:
     Raises:
         ValueError: if not Ads1115I2cAddress format
     """
-    if ToLower(v) not in ["0x48", "0x49", "0x4a", 0x4b"]:
-        raise ValueError(f"Not Ads1115I2cAddress: {e}")
+    if v.lower() not in ["0x48", "0x49", "0x4a", "0x4b"]:
+        raise ValueError(f"Not Ads1115I2cAddress: <{v}>")
 
 
 def check_is_positive_integer(v: int) -> None:

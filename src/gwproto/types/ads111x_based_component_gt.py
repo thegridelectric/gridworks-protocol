@@ -323,15 +323,15 @@ class Ads111xBasedComponentGt_Maker:
 
 def check_is_ads1115_i2c_address(v: str) -> None:
     """
-    Ads1115I2cAddress: ToLower(v) in ["0x48", "0x49", "0x4a", 0x4b"].
+    Ads1115I2cAddress: ToLower(v) in ["0x48", "0x49", "0x4a", "0x4b"].
 
     One of the 4 allowable I2C addresses for Texas Instrument Ads1115 chips.
 
     Raises:
         ValueError: if not Ads1115I2cAddress format
     """
-    if ToLower(v) not in ["0x48", "0x49", "0x4a", 0x4b"]:
-        raise ValueError(f"Not Ads1115I2cAddress: {e}")
+    if v.lower() not in ["0x48", "0x49", "0x4a", "0x4b"]:
+        raise ValueError(f"Not Ads1115I2cAddress: <{v}>")
 
 
 def check_is_near5(v: str) -> None:

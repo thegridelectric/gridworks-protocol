@@ -3,6 +3,8 @@ from typing import Optional
 import yarl
 
 from gwproto.data_classes.component import Component
+from gwproto.data_classes.component_attribute_class import ComponentAttributeClass as Cac
+
 from gwproto.data_classes.resolver import ComponentResolver
 from gwproto.data_classes.sh_node import ShNode
 from gwproto.types.hubitat_component_gt import HubitatComponentGt
@@ -10,7 +12,8 @@ from gwproto.types.hubitat_component_gt import HubitatRESTResolutionSettings
 from gwproto.types.hubitat_tank_gt import FibaroTempSensorSettings
 from gwproto.types.hubitat_tank_gt import FibaroTempSensorSettingsGt
 from gwproto.types.hubitat_tank_gt import HubitatTankSettingsGt
-from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
+from gwproto.types.channel_config import ChannelConfig_Maker, ChannelConfig
+from gwproto.types.data_channel import DataChannel_Maker
 
 
 class HubitatTankComponent(Component, ComponentResolver):
@@ -34,16 +37,21 @@ class HubitatTankComponent(Component, ComponentResolver):
         self.hubitat = HubitatComponentGt.make_stub(tank_gt.hubitat_component_id)
         self.sensor_supply_voltage = tank_gt.sensor_supply_voltage
         self.devices_gt = list(tank_gt.devices)
+        self.my_node_name = tank_gt.my_node_name
         super().__init__(
             display_name=display_name,
             component_id=component_id,
             hw_uid=hw_uid,
+            config_list=self.make_config_list(),
             component_attribute_class_id=component_attribute_class_id,
         )
+    
+    @property
+    def cac(self) -> Cac:
+        return Cac.by_id[self.component_attribute_class_id]
 
     def resolve(
         self,
-        tank_node_name: str,
         nodes: dict[str, ShNode],
         components: dict[str, Component],
     ):
@@ -53,7 +61,6 @@ class HubitatTankComponent(Component, ComponentResolver):
         hubitat_settings = HubitatRESTResolutionSettings(hubitat_component_gt)
         devices = [
             FibaroTempSensorSettings.create(
-                tank_name=tank_node_name,
                 settings_gt=device_gt,
                 hubitat=hubitat_settings,
             )
@@ -61,9 +68,9 @@ class HubitatTankComponent(Component, ComponentResolver):
             if device_gt.enabled
         ]
         for device in devices:
-            if device.node_name not in nodes:
+            if device.about_node_name not in nodes:
                 raise ValueError(
-                    f"ERROR. Node not found for tank temp sensor <{device.node_name}>"
+                    f"ERROR. Node <{device.about_node_name}> not found for <{self.my_node_name}> (thermistor <{device.stack_depth}>)"
                 )
         # replace proxy hubitat component, which only had component id.
         # with the actual hubitat component containing data.
@@ -73,19 +80,18 @@ class HubitatTankComponent(Component, ComponentResolver):
     def urls(self) -> dict[str, Optional[yarl.URL]]:
         urls = self.hubitat.urls()
         for device in self.devices:
-            urls[device.node_name] = device.url
+            urls[device.about_node_name] = device.url
         return urls
 
-    @property
-    def config_list(self) -> list[TelemetryReportingConfig]:
+    def make_config_list(self) -> list[ChannelConfig]:
         return [
-            TelemetryReportingConfig(
-                TelemetryName=device.telemetry_name,
-                AboutNodeName=device.node_name,
-                ReportOnChange=False,
-                SamplePeriodS=int(device.rest.poll_period_seconds),
-                Exponent=device.exponent,
-                Unit=device.unit,
+            ChannelConfig_Maker(
+                channel_name=device.channel_name,
+                poll_period_ms = int(device.rest.poll_period_seconds * 1000),
+                async_capture=False,
+                capture_period_s = int(device.rest.poll_period_seconds * 1000),
+                exponent=device.exponent,
+                unit=device.unit,
             )
             for device in self.devices
         ]

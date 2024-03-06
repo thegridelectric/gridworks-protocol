@@ -23,7 +23,7 @@
                 <xsl:variable name="versioned-enum-id" select="VersionedEnum"/>
                 <xsl:for-each select="$airtable//VersionedEnums/VersionedEnum[(VersionedEnumId = $versioned-enum-id)  and (Status = 'Active' or Status = 'Pending')]">
                     <xsl:variable name="enum-name" select="EnumName"/>
-                    <xsl:variable name="enum-name-style" select="PythonEnumNameStyle" />
+                    <xsl:variable name="enum-type" select="EnumType" />
                     <xsl:variable name="enum-id" select="GtEnumId"/>
                     <xsl:variable name="description" select="Description"/>
                     <xsl:variable name="url" select="Url"/>
@@ -79,10 +79,10 @@
             <xsl:for-each select="$airtable//EnumSymbols/EnumSymbol[(Enum = $enum-id) and (Version &lt;= $version)]">
             <xsl:sort select="Idx" data-type="number"/>
             <xsl:text> "</xsl:text>
-            <xsl:if test="$enum-name-style = 'Upper'">
+            <xsl:if test="$enum-type = 'Upper'">
                 <xsl:value-of select="translate(translate(LocalValue,'-',''),$lcletters, $ucletters)"/>
             </xsl:if>
-            <xsl:if test="$enum-name-style ='UpperPython'">
+            <xsl:if test="$enum-type ='UpperPython'">
                 <xsl:value-of select="LocalValue"/>
             </xsl:if>
             <xsl:text>": "</xsl:text>
@@ -96,10 +96,10 @@
             <xsl:for-each select="$airtable//EnumSymbols/EnumSymbol[(Enum = $enum-id) and (Version &lt;= $version)]">
             <xsl:sort select="Idx" data-type="number"/>
             <xsl:text> "</xsl:text>
-            <xsl:if test="$enum-name-style = 'Upper'">
+            <xsl:if test="$enum-type = 'Upper'">
                 <xsl:value-of select="translate(translate(LocalValue,'-',''),$lcletters, $ucletters)"/>
             </xsl:if>
-            <xsl:if test="$enum-name-style ='UpperPython'">
+            <xsl:if test="$enum-type ='UpperPython'">
                 <xsl:value-of select="LocalValue"/>
             </xsl:if>
             <xsl:text>": "</xsl:text>

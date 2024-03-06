@@ -5,7 +5,7 @@ import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
-from gwproto.types.ads111x_based_cac_gt import Ads111xBasedCacGt_Maker as Maker
+from gwproto.types import Ads111xBasedCacGt_Maker as Maker
 from gwproto.enums import TelemetryName
 from gwproto.enums import MakeModel
 

@@ -3,6 +3,7 @@ import json
 import logging
 from typing import Any
 from typing import Dict
+from typing import List
 from typing import Literal
 from typing import Optional
 
@@ -11,6 +12,8 @@ from pydantic import Extra
 from pydantic import Field
 from pydantic import validator
 from gwproto.data_classes.component import Component
+from gwproto.types.channel_config import ChannelConfig
+from gwproto.types.channel_config import ChannelConfig_Maker
 from gwproto.errors import SchemaError
 
 LOG_FORMAT = (
@@ -37,10 +40,9 @@ class ComponentGt(BaseModel):
     [More info](https://g-node-registry.readthedocs.io/en/latest/component.html)
     """
 
-    ComponentId: Optional[] = Field(
+    ComponentId: str = Field(
         title="ComponentId",
         description="Immutable unique identifier for this specific device.",
-        default=None,
     )
     ComponentAttributeClassId: str = Field(
         title="ComponentAttributeClassId",
@@ -48,6 +50,14 @@ class ComponentGt(BaseModel):
             "Unique identifier for the device class. Authority for these, as well as the relationship "
             "between Components and ComponentAttributeClasses (Cacs) is maintained by the World "
             "Registry."
+        ),
+    )
+    ConfigList: List[ChannelConfig] = Field(
+        title="ConfigList",
+        description=(
+            "This list is expected to have length 0, except for nodes that do some kind of sensing "
+            "- in which case it includes the information re timing of data polling and capture "
+            "for the channels read by the node."
         ),
     )
     DisplayName: Optional[str] = Field(
@@ -69,6 +79,16 @@ class ComponentGt(BaseModel):
 
     class Config:
         extra = Extra.allow
+
+    @validator("ComponentId")
+    def _check_component_id(cls, v: str) -> str:
+        try:
+            check_is_uuid_canonical_textual(v)
+        except ValueError as e:
+            raise ValueError(
+                f"ComponentId failed UuidCanonicalTextual format validation: {e}"
+            )
+        return v
 
     @validator("ComponentAttributeClassId")
     def _check_component_attribute_class_id(cls, v: str) -> str:
@@ -103,6 +123,11 @@ class ComponentGt(BaseModel):
             ).items()
             if value is not None
         }
+        # Recursively calling as_dict()
+        config_list = []
+        for elt in self.ConfigList:
+            config_list.append(elt.as_dict())
+        d["ConfigList"] = config_list
         return d
 
     def as_type(self) -> bytes:
@@ -139,14 +164,16 @@ class ComponentGt_Maker:
 
     def __init__(
         self,
-        component_id: Optional[],
+        component_id: str,
         component_attribute_class_id: str,
+        config_list: List[ChannelConfig],
         display_name: Optional[str],
         hw_uid: Optional[str],
     ):
         self.tuple = ComponentGt(
             ComponentId=component_id,
             ComponentAttributeClassId=component_attribute_class_id,
+            ConfigList=config_list,
             DisplayName=display_name,
             HwUid=hw_uid,
         )
@@ -196,8 +223,21 @@ class ComponentGt_Maker:
             ComponentGt
         """
         d2 = dict(d)
+        if "ComponentId" not in d2.keys():
+            raise SchemaError(f"dict missing ComponentId: <{d2}>")
         if "ComponentAttributeClassId" not in d2.keys():
             raise SchemaError(f"dict missing ComponentAttributeClass: <{d2}>")
+        if "ConfigList" not in d2.keys():
+            raise SchemaError(f"dict missing ConfigList: <{d2}>")
+        if not isinstance(d2["ConfigList"], List):
+            raise SchemaError(f"ConfigList <{d2['ConfigList']}> must be a List!")
+        config_list = []
+        for elt in d2["ConfigList"]:
+            if not isinstance(elt, dict):
+                raise SchemaError(f"ConfigList <{d2['ConfigList']}> must be a List of ChannelConfig types")
+            t = ChannelConfig_Maker.dict_to_tuple(elt)
+            config_list.append(t)
+        d2["ConfigList"] = config_list
         if "TypeName" not in d2.keys():
             raise SchemaError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():
@@ -217,6 +257,7 @@ class ComponentGt_Maker:
             dc = Component(
                 component_id=t.ComponentId,
                 component_attribute_class_id=t.ComponentAttributeClassId,
+                config_list=t.ConfigList,
                 display_name=t.DisplayName,
                 hw_uid=t.HwUid,
             )
@@ -227,6 +268,7 @@ class ComponentGt_Maker:
         t = ComponentGt_Maker(
             component_id=dc.component_id,
             component_attribute_class_id=dc.component_attribute_class_id,
+            config_list=dc.config_list,
             display_name=dc.display_name,
             hw_uid=dc.hw_uid,
         ).tuple
@@ -243,3 +285,38 @@ class ComponentGt_Maker:
     @classmethod
     def dict_to_dc(cls, d: dict[Any, str]) -> Component:
         return cls.tuple_to_dc(cls.dict_to_tuple(d))
+
+
+def check_is_uuid_canonical_textual(v: str) -> None:
+    """Checks UuidCanonicalTextual format
+
+    UuidCanonicalTextual format:  A string of hex words separated by hyphens
+    of length 8-4-4-4-12.
+
+    Args:
+        v (str): the candidate
+
+    Raises:
+        ValueError: if v is not UuidCanonicalTextual format
+    """
+    try:
+        x = v.split("-")
+    except AttributeError as e:
+        raise ValueError(f"Failed to split on -: {e}")
+    if len(x) != 5:
+        raise ValueError(f"<{v}> split by '-' did not have 5 words")
+    for hex_word in x:
+        try:
+            int(hex_word, 16)
+        except ValueError:
+            raise ValueError(f"Words of <{v}> are not all hex")
+    if len(x[0]) != 8:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[1]) != 4:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[2]) != 4:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[3]) != 4:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[4]) != 12:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")

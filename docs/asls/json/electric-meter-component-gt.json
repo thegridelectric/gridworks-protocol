@@ -28,9 +28,9 @@
     "ConfigList": {
       "type": "array",
       "items": {
-        "type": "telemetry.reporting.config.000"
+        "type": "channel.config.000"
       },
-      "description": "This power meter will produce multiple data channels. Each data channel measures a certain quantities (like power, current) for certain ShNodes (like a boost element or heat pump).",
+      "description": "Information re timing of data polling and capture for the channels read by the node (i.e. channels that convey power, current, voltage, frequency for various power consuming elements of the system).",
       "required": true
     },
     "HwUid": {
@@ -76,6 +76,13 @@
     "Axiom2": {
       "title": "Egauge4030 consistency",
       "description": "If the EgaugeIoList has non-zero length, then the ModbusHost is not None and the set of output configs is equal to ConfigList as a set"
+    }
+  },
+  "formats": {
+    "UuidCanonicalTextual": {
+      "type": "string",
+      "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
+      "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"
     }
   }
 }

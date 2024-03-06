@@ -1,27 +1,26 @@
-"""Tests telemetry.reporting.config type, version 001"""
+"""Tests channel.config type, version 000"""
 import json
 
 import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
-from gwproto.types import TelemetryReportingConfig_Maker as Maker
+from gwproto.types.channel_config import ChannelConfig_Maker as Maker
 from gwproto.enums import TelemetryName
 from gwproto.enums import Unit
 
 
-def test_telemetry_reporting_config_generated() -> None:
+def test_channel_config_generated() -> None:
     d = {
-        "AboutNodeName": "a.elt1",
-        "TelemetryNameGtEnumSymbol": "af39eec9",
+        "ChannelName": "hp-idu-pwr",
         "PollPeriodMs": 300,
         "CapturePeriodS": 60,
         "AsyncCapture": True,
         "AsyncCaptureDelta": 0.2,
         "Exponent": 6,
         "UnitGtEnumSymbol": "f459a9c3",
-        "TypeName": "telemetry.reporting.config",
-        "Version": "001",
+        "TypeName": "channel.config",
+        "Version": "000",
     }
 
     with pytest.raises(SchemaError):
@@ -39,8 +38,7 @@ def test_telemetry_reporting_config_generated() -> None:
 
     # test Maker init
     t = Maker(
-        about_node_name=gtuple.AboutNodeName,
-        telemetry_name=gtuple.TelemetryName,
+        channel_name=gtuple.ChannelName,
         poll_period_ms=gtuple.PollPeriodMs,
         capture_period_s=gtuple.CapturePeriodS,
         async_capture=gtuple.AsyncCapture,
@@ -61,12 +59,7 @@ def test_telemetry_reporting_config_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["AboutNodeName"]
-    with pytest.raises(SchemaError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d)
-    del d2["TelemetryNameGtEnumSymbol"]
+    del d2["ChannelName"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -108,9 +101,6 @@ def test_telemetry_reporting_config_generated() -> None:
     # Behavior on incorrect types
     ######################################
 
-    d2 = dict(d, TelemetryNameGtEnumSymbol="unknown_symbol")
-    Maker.dict_to_tuple(d2).TelemetryName == TelemetryName.default()
-
     d2 = dict(d, PollPeriodMs="300.1")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
@@ -146,7 +136,7 @@ def test_telemetry_reporting_config_generated() -> None:
     # SchemaError raised if primitive attributes do not have appropriate property_format
     ######################################
 
-    d2 = dict(d, AboutNodeName="A.hot-stuff")
+    d2 = dict(d, ChannelName="A.hot-stuff")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 

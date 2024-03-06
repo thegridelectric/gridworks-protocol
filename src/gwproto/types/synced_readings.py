@@ -9,7 +9,6 @@ from typing import Literal
 from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
-from gwproto.enums import TelemetryName
 from gwproto.errors import SchemaError
 
 LOG_FORMAT = (
@@ -31,16 +30,11 @@ class SyncedReadings(BaseModel):
         title="ScadaReadTime in Unix MilliSeconds",
         description="The single time, in unix milliseconds, assigned to this list of readings.",
     )
-    AboutNodeNameList: List[str] = Field(
-        title="AboutNodeNameList",
-        description="List of names of the SpaceHeat Nodes getting measured.",
-    )
-    TelemetryNameList: List[TelemetryName] = Field(
-        title="TelemetryNameList",
+    ChannelNameList: List[str] = Field(
+        title="Channel Name List",
         description=(
-            "List of the TelemetryNames. The nth name in this list indicates the TelemetryName "
-            "of the nth alias in the AboutNodeAliasList."
-            "[More info](https://gridworks-protocol.readthedocs.io/en/latest/enums.html#gridworks-protocol.enums.TelemetryName)"
+            "List of the names of the Data Channels getting measured. These names are immutable "
+            "and locally unique for the Scada."
         ),
     )
     ValueList: List[int] = Field(
@@ -60,14 +54,14 @@ class SyncedReadings(BaseModel):
             )
         return v
 
-    @validator("AboutNodeNameList")
-    def _check_about_node_name_list(cls, v: List[str]) -> List[str]:
+    @validator("ChannelNameList")
+    def _check_channel_name_list(cls, v: List[str]) -> List[str]:
         for elt in v:
             try:
                 check_is_spaceheat_name(elt)
             except ValueError as e:
                 raise ValueError(
-                    f"AboutNodeNameList element {elt} failed SpaceheatName format validation: {e}"
+                    f"ChannelNameList element {elt} failed SpaceheatName format validation: {e}"
                 )
         return v
 
@@ -94,11 +88,6 @@ class SyncedReadings(BaseModel):
             ).items()
             if value is not None
         }
-        del d["TelemetryNameList"]
-        telemetry_name_list = []
-        for elt in self.TelemetryNameList:
-            telemetry_name_list.append(TelemetryName.value_to_symbol(elt.value))
-        d["TelemetryNameList"] = telemetry_name_list
         return d
 
     def as_type(self) -> bytes:
@@ -136,14 +125,12 @@ class SyncedReadings_Maker:
     def __init__(
         self,
         scada_read_time_unix_ms: int,
-        about_node_name_list: List[str],
-        telemetry_name_list: List[TelemetryName],
+        channel_name_list: List[str],
         value_list: List[int],
     ):
         self.tuple = SyncedReadings(
             ScadaReadTimeUnixMs=scada_read_time_unix_ms,
-            AboutNodeNameList=about_node_name_list,
-            TelemetryNameList=telemetry_name_list,
+            ChannelNameList=channel_name_list,
             ValueList=value_list,
         )
 
@@ -194,17 +181,8 @@ class SyncedReadings_Maker:
         d2 = dict(d)
         if "ScadaReadTimeUnixMs" not in d2.keys():
             raise SchemaError(f"dict missing ScadaReadTimeUnixMs: <{d2}>")
-        if "AboutNodeNameList" not in d2.keys():
-            raise SchemaError(f"dict missing AboutNodeNameList: <{d2}>")
-        if "TelemetryNameList" not in d2.keys():
-            raise SchemaError(f"dict <{d2}> missing TelemetryNameList")
-        if not isinstance(d2["TelemetryNameList"], List):
-            raise SchemaError("TelemetryNameList must be a List!")
-        telemetry_name_list = []
-        for elt in d2["TelemetryNameList"]:
-            value = TelemetryName.symbol_to_value(elt)
-            telemetry_name_list.append(TelemetryName(value))
-        d2["TelemetryNameList"] = telemetry_name_list
+        if "ChannelNameList" not in d2.keys():
+            raise SchemaError(f"dict missing ChannelNameList: <{d2}>")
         if "ValueList" not in d2.keys():
             raise SchemaError(f"dict missing ValueList: <{d2}>")
         if "TypeName" not in d2.keys():

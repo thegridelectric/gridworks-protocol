@@ -7,21 +7,27 @@
   "url": "https://gridworks-protocol.readthedocs.io/en/latest/finite-state-machines.html",
   "properties": {
     "FromHandle": {
-      "type": "",
-      "required": false
+      "type": "string",
+      "format": "SpaceheatName",
+      "title": "From Handle",
+      "required": true
     },
     "ToHandle": {
-      "type": "",
-      "required": false
+      "type": "string",
+      "format": "SpaceheatName",
+      "title": "To Handle",
+      "required": true
     },
     "Name": {
-      "type": "",
+      "type": "string",
       "description": "This should be the name that the receiving Spaceheat Node's finite state machine uses for an event that triggers a transition.",
-      "required": false
+      "required": true
     },
     "SendTimeUnixMs": {
-      "type": "",
-      "required": false
+      "type": "integer",
+      "format": "ReasonableUnixTimeMs",
+      "title": "Sent Time Unix Ms",
+      "required": true
     },
     "TypeName": {
       "type": "string",

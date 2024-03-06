@@ -25,6 +25,9 @@ Python pydantic class corresponding to json type `batched.readings`, version `00
     - Description: 
     - Format: PositiveInteger
 
+**DataChannelList**:
+    - Description: DataChannel List. The list of data channels for which there is data getting reported in this batched reading. It is a subset of all the data channels for the SCADA - may not be all of them.
+
 **ChannelReadingList**:
     - Description: 
 
@@ -47,6 +50,10 @@ Python pydantic class corresponding to json type `batched.readings`, version `00
 
 
 .. autoclass:: gwproto.types.batched_readings.check_is_uuid_canonical_textual
+    :members:
+
+
+.. autoclass:: gwproto.types.batched_readings.check_is_positive_integer
     :members:
 
 

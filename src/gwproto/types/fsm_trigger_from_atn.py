@@ -84,7 +84,7 @@ class FsmTriggerFromAtn(BaseModel):
     @validator("Trigger")
     def check_trigger(cls, v: FsmEvent) -> FsmEvent:
         """
-        Axiom : FromHandle must be "a" (for AtomicTNode)..
+        Axiom : FromHandle must be 'a' (for AtomicTNode)..
         The triggering event is coming from the AtomicTNode, which always has the handle of "a"
     as a SpaceheatNode in the SCADA's hierarchical finite state machine.
         """

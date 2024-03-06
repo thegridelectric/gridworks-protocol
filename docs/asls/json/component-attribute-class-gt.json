@@ -43,5 +43,17 @@
       "default": "001",
       "required": true
     }
+  },
+  "formats": {
+    "UuidCanonicalTextual": {
+      "type": "string",
+      "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
+      "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"
+    },
+    "PositiveInteger": {
+      "type": "string",
+      "description": "Must be positive when interpreted as an integer. Interpretation as an integer follows the pydantic rules for this - which will round down rational numbers. So 1.7 will be interpreted as 1 and is also fine, while 0.5 is interpreted as 0 and will raise an exception.",
+      "example": ""
+    }
   }
 }

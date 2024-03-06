@@ -14,8 +14,8 @@ from pydantic import validator
 from gwproto.data_classes.components.electric_meter_component import ElectricMeterComponent
 from gwproto.types.egauge_io import EgaugeIo
 from gwproto.types.egauge_io import EgaugeIo_Maker
-from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
-from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig_Maker
+from gwproto.types.channel_config import ChannelConfig
+from gwproto.types.channel_config import ChannelConfig_Maker
 from gwproto.errors import SchemaError
 
 LOG_FORMAT = (
@@ -61,12 +61,12 @@ class ElectricMeterComponentGt(BaseModel):
         description="Sample: Oak EGauge6074",
         default=None,
     )
-    ConfigList: List[TelemetryReportingConfig] = Field(
+    ConfigList: List[ChannelConfig] = Field(
         title="List of Data Channel configs ",
         description=(
-            "This power meter will produce multiple data channels. Each data channel measures "
-            "a certain quantities (like power, current) for certain ShNodes (like a boost element "
-            "or heat pump)."
+            "Information re timing of data polling and capture for the channels read by the node "
+            "(i.e. channels that convey power, current, voltage, frequency for various power "
+            "consuming elements of the system)."
         ),
     )
     HwUid: Optional[str] = Field(
@@ -217,7 +217,7 @@ class ElectricMeterComponentGt_Maker:
         component_id: str,
         component_attribute_class_id: str,
         display_name: Optional[str],
-        config_list: List[TelemetryReportingConfig],
+        config_list: List[ChannelConfig],
         hw_uid: Optional[str],
         modbus_host: Optional[str],
         modbus_port: Optional[int],
@@ -290,8 +290,8 @@ class ElectricMeterComponentGt_Maker:
         config_list = []
         for elt in d2["ConfigList"]:
             if not isinstance(elt, dict):
-                raise SchemaError(f"ConfigList <{d2['ConfigList']}> must be a List of TelemetryReportingConfig types")
-            t = TelemetryReportingConfig_Maker.dict_to_tuple(elt)
+                raise SchemaError(f"ConfigList <{d2['ConfigList']}> must be a List of ChannelConfig types")
+            t = ChannelConfig_Maker.dict_to_tuple(elt)
             config_list.append(t)
         d2["ConfigList"] = config_list
         if "EgaugeIoList" not in d2.keys():
@@ -358,3 +358,38 @@ class ElectricMeterComponentGt_Maker:
     @classmethod
     def dict_to_dc(cls, d: dict[Any, str]) -> ElectricMeterComponent:
         return cls.tuple_to_dc(cls.dict_to_tuple(d))
+
+
+def check_is_uuid_canonical_textual(v: str) -> None:
+    """Checks UuidCanonicalTextual format
+
+    UuidCanonicalTextual format:  A string of hex words separated by hyphens
+    of length 8-4-4-4-12.
+
+    Args:
+        v (str): the candidate
+
+    Raises:
+        ValueError: if v is not UuidCanonicalTextual format
+    """
+    try:
+        x = v.split("-")
+    except AttributeError as e:
+        raise ValueError(f"Failed to split on -: {e}")
+    if len(x) != 5:
+        raise ValueError(f"<{v}> split by '-' did not have 5 words")
+    for hex_word in x:
+        try:
+            int(hex_word, 16)
+        except ValueError:
+            raise ValueError(f"Words of <{v}> are not all hex")
+    if len(x[0]) != 8:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[1]) != 4:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[2]) != 4:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[3]) != 4:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[4]) != 12:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")

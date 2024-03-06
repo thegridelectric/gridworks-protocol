@@ -14,16 +14,19 @@ Python pydantic class corresponding to json type `i2c.flow.totalizer.component.g
     - Format: UuidCanonicalTextual
 
 **I2cAddress**:
-    - Description: 
+    - Description: I2cAddress. The I2cAddress that this component can be found at on the I2cBus.
+
+**ConfigList**:
+    - Description: Config List. A list of the ChannelConfigs for the data channels reported by this actor.
+
+**PulseFlowMeterMakeModel**:
+    - Description: Pulse Flow Meter MakeModel. The MakeModel of the pulse flow meter that this I2cFlowTotalizer is attached to.
 
 **ConversionFactor**:
-    - Description: 
-
-**PulseFlowMeterType**:
-    - Description: 
+    - Description: ConversionFactor. The factor that the cumulative output must be multiplied by in order to read gallons.
 
 **DisplayName**:
-    - Description: Sample: Pipe Flow Meter Component <dist-flow>
+    - Description: Display Name. Sample: Pipe Flow Meter Component <dist-flow>
 
 **HwUid**:
     - Description: Hardware Unique Id. 
@@ -34,6 +37,10 @@ Python pydantic class corresponding to json type `i2c.flow.totalizer.component.g
 **Version**:
     - Description: All GridWorks Versioned Types have a fixed version, which is a string of three Hindu-Arabic numerals.
 
+
+
+.. autoclass:: gwproto.types.i2c_flow_totalizer_component_gt.check_is_uuid_canonical_textual
+    :members:
 
 
 .. autoclass:: gwproto.types.I2cFlowTotalizerComponentGt_Maker

@@ -1,39 +1,46 @@
 """RelayComponent definition"""
 from typing import Dict
 from typing import Optional
+from typing import List
 
-from gwproto.data_classes.cacs.relay_cac import RelayCac
+
+from gwproto.data_classes.component_attribute_class import ComponentAttributeClass as Cac
 from gwproto.data_classes.component import Component
+from gwproto.types.channel_config import ChannelConfig
 from gwproto.enums import MakeModel
 
 
-class RelayComponent(Component):
-    by_id: Dict[str, "RelayComponent"] = {}
+class I2cFlowTotalizerComponent(Component):
+    by_id: Dict[str, "I2cFlowTotalizerComponent"] = {}
 
     def __init__(
         self,
         component_id: str,
         component_attribute_class_id: str,
-        normally_open: bool,
+        i2c_address: int,
+        config_list: List[ChannelConfig],
+        pulse_flow_meter_make_model: MakeModel,
+        conversion_factor: float,
         display_name: Optional[str] = None,
-        gpio: Optional[int] = None,
         hw_uid: Optional[str] = None,
     ):
         super(self.__class__, self).__init__(
-            display_name=display_name,
             component_id=component_id,
-            hw_uid=hw_uid,
             component_attribute_class_id=component_attribute_class_id,
+            config_list=config_list,
+            display_name=display_name,
+            hw_uid=hw_uid,
         )
-        self.normally_open = normally_open
-        self.gpio = gpio
+        self.i2c_address = i2c_address
+        self.pulse_flow_meter_make_model = pulse_flow_meter_make_model
+        self.conversion_factor = conversion_factor
 
-        RelayComponent.by_id[self.component_id] = self
+        I2cFlowTotalizerComponent.by_id[self.component_id] = self
         Component.by_id[self.component_id] = self
 
     @property
-    def cac(self) -> RelayCac:
-        return RelayCac.by_id[self.component_attribute_class_id]
+    def cac(self) -> Cac:
+        return Cac.by_id[self.component_attribute_class_id]
 
     @property
     def make_model(self) -> MakeModel:

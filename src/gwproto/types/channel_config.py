@@ -1,4 +1,4 @@
-"""Type telemetry.reporting.config, version 001"""
+"""Type channel.config, version 000"""
 import json
 import logging
 from typing import Any
@@ -11,7 +11,6 @@ from pydantic import Extra
 from pydantic import Field
 from pydantic import root_validator
 from pydantic import validator
-from gwproto.enums import TelemetryName as EnumTelemetryName
 from gwproto.enums import Unit as EnumUnit
 from gwproto.errors import SchemaError
 
@@ -22,21 +21,22 @@ LOG_FORMAT = (
 LOGGER = logging.getLogger(__name__)
 
 
-class TelemetryReportingConfig(BaseModel):
+class ChannelConfig(BaseModel):
     """
-    
+    Channel Configuration.
+
+    Configuration data used to articulate how time series data is polled and captured for a
+    particular channel. ExtraAllowed. Replace the ambigious "SamplePeriodS" with "CapturePeriodS"
+    and "PollPeriodMs" added.
     """
 
-    AboutNodeName: str = Field(
-        title="About Node Name",
+    ChannelName: str = Field(
+        title="Data Channel Name",
         description=(
-            "The name of the SpaceheatNode that is getting measured. Typically this node will "
-            "have a single data channel associated to it."
+            "The (locally unique, immutable) name of the Data Channel to which the configuration "
+            "applies (What node is getting read, what telemetry name is getting read, and what "
+            "node is doing the reading)."
         ),
-    )
-    TelemetryName: EnumTelemetryName = Field(
-        title="Telemetry Name",
-        description="The Telemetry Name associated with this config.",
     )
     PollPeriodMs: int = Field(
         title="Poll Period in Milliseconds",
@@ -84,20 +84,18 @@ class TelemetryReportingConfig(BaseModel):
         title="Unit",
         description="Say TelemetryName is WaterTempCTimes1000. The unit would be Celcius.",
     )
-    TypeName: Literal["telemetry.reporting.config"] = "telemetry.reporting.config"
-    Version: Literal["001"] = "001"
+    TypeName: Literal["channel.config"] = "channel.config"
+    Version: Literal["000"] = "000"
 
     class Config:
         extra = Extra.allow
 
-    @validator("AboutNodeName")
-    def _check_about_node_name(cls, v: str) -> str:
+    @validator("ChannelName")
+    def _check_channel_name(cls, v: str) -> str:
         try:
             check_is_spaceheat_name(v)
         except ValueError as e:
-            raise ValueError(
-                f"AboutNodeName failed SpaceheatName format validation: {e}"
-            )
+            raise ValueError(f"ChannelName failed SpaceheatName format validation: {e}")
         return v
 
     @validator("PollPeriodMs")
@@ -153,11 +151,11 @@ class TelemetryReportingConfig(BaseModel):
     def as_dict(self) -> Dict[str, Any]:
         """
         Translate the object into a dictionary representation that can be serialized into a
-        telemetry.reporting.config.001 object.
+        channel.config.000 object.
 
         This method prepares the object for serialization by the as_type method, creating a
         dictionary with key-value pairs that follow the requirements for an instance of the
-        telemetry.reporting.config.001 type. Unlike the standard python dict method,
+        channel.config.000 type. Unlike the standard python dict method,
         it makes the following substantive changes:
         - Enum Values: Translates between the values used locally by the actor to the symbol
         sent in messages.
@@ -173,18 +171,16 @@ class TelemetryReportingConfig(BaseModel):
             ).items()
             if value is not None
         }
-        del d["TelemetryName"]
-        d["TelemetryNameGtEnumSymbol"] = EnumTelemetryName.value_to_symbol(self.TelemetryName)
         del d["Unit"]
         d["UnitGtEnumSymbol"] = EnumUnit.value_to_symbol(self.Unit)
         return d
 
     def as_type(self) -> bytes:
         """
-        Serialize to the telemetry.reporting.config.001 representation.
+        Serialize to the channel.config.000 representation.
 
-        Instances in the class are python-native representations of telemetry.reporting.config.001
-        objects, while the actual telemetry.reporting.config.001 object is the serialized UTF-8 byte
+        Instances in the class are python-native representations of channel.config.000
+        objects, while the actual channel.config.000 object is the serialized UTF-8 byte
         string designed for sending in a message.
 
         This method calls the as_dict() method, which differs from the native python dict()
@@ -196,7 +192,7 @@ class TelemetryReportingConfig(BaseModel):
 
         It also applies these changes recursively to sub-types.
 
-        Its near-inverse is TelemetryReportingConfig.type_to_tuple(). If the type (or any sub-types)
+        Its near-inverse is ChannelConfig.type_to_tuple(). If the type (or any sub-types)
         includes an enum, then the type_to_tuple will map an unrecognized symbol to the
         default enum value. This is why these two methods are only 'near' inverses.
         """
@@ -207,14 +203,13 @@ class TelemetryReportingConfig(BaseModel):
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
-class TelemetryReportingConfig_Maker:
-    type_name = "telemetry.reporting.config"
-    version = "001"
+class ChannelConfig_Maker:
+    type_name = "channel.config"
+    version = "000"
 
     def __init__(
         self,
-        about_node_name: str,
-        telemetry_name: EnumTelemetryName,
+        channel_name: str,
         poll_period_ms: int,
         capture_period_s: int,
         async_capture: bool,
@@ -222,9 +217,8 @@ class TelemetryReportingConfig_Maker:
         exponent: int,
         unit: EnumUnit,
     ):
-        self.tuple = TelemetryReportingConfig(
-            AboutNodeName=about_node_name,
-            TelemetryName=telemetry_name,
+        self.tuple = ChannelConfig(
+            ChannelName=channel_name,
             PollPeriodMs=poll_period_ms,
             CapturePeriodS=capture_period_s,
             AsyncCapture=async_capture,
@@ -234,14 +228,14 @@ class TelemetryReportingConfig_Maker:
         )
 
     @classmethod
-    def tuple_to_type(cls, tuple: TelemetryReportingConfig) -> bytes:
+    def tuple_to_type(cls, tuple: ChannelConfig) -> bytes:
         """
         Given a Python class object, returns the serialized JSON type object.
         """
         return tuple.as_type()
 
     @classmethod
-    def type_to_tuple(cls, t: bytes) -> TelemetryReportingConfig:
+    def type_to_tuple(cls, t: bytes) -> ChannelConfig:
         """
         Given a serialized JSON type object, returns the Python class object.
         """
@@ -254,12 +248,12 @@ class TelemetryReportingConfig_Maker:
         return cls.dict_to_tuple(d)
 
     @classmethod
-    def dict_to_tuple(cls, d: dict[str, Any]) -> TelemetryReportingConfig:
+    def dict_to_tuple(cls, d: dict[str, Any]) -> ChannelConfig:
         """
-        Deserialize a dictionary representation of a telemetry.reporting.config.001 message object
-        into a TelemetryReportingConfig python object for internal use.
+        Deserialize a dictionary representation of a channel.config.000 message object
+        into a ChannelConfig python object for internal use.
 
-        This is the near-inverse of the TelemetryReportingConfig.as_dict() method:
+        This is the near-inverse of the ChannelConfig.as_dict() method:
           - Enums: translates between the symbols sent in messages between actors and
         the values used by the actors internally once they've deserialized the messages.
           - Types: recursively validates and deserializes sub-types.
@@ -272,19 +266,14 @@ class TelemetryReportingConfig_Maker:
             d (dict): the dictionary resulting from json.loads(t) for a serialized JSON type object t.
 
         Raises:
-           SchemaError: if the dict cannot be turned into a TelemetryReportingConfig object.
+           SchemaError: if the dict cannot be turned into a ChannelConfig object.
 
         Returns:
-            TelemetryReportingConfig
+            ChannelConfig
         """
         d2 = dict(d)
-        if "AboutNodeName" not in d2.keys():
-            raise SchemaError(f"dict missing AboutNodeName: <{d2}>")
-        if "TelemetryNameGtEnumSymbol" not in d2.keys():
-            raise SchemaError(f"TelemetryNameGtEnumSymbol missing from dict <{d2}>")
-        value = EnumTelemetryName.symbol_to_value(d2["TelemetryNameGtEnumSymbol"])
-        d2["TelemetryName"] = EnumTelemetryName(value)
-        del d2["TelemetryNameGtEnumSymbol"]
+        if "ChannelName" not in d2.keys():
+            raise SchemaError(f"dict missing ChannelName: <{d2}>")
         if "PollPeriodMs" not in d2.keys():
             raise SchemaError(f"dict missing PollPeriodMs: <{d2}>")
         if "CapturePeriodS" not in d2.keys():
@@ -302,12 +291,12 @@ class TelemetryReportingConfig_Maker:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():
             raise SchemaError(f"Version missing from dict <{d2}>")
-        if d2["Version"] != "001":
+        if d2["Version"] != "000":
             LOGGER.debug(
-                f"Attempting to interpret telemetry.reporting.config version {d2['Version']} as version 001"
+                f"Attempting to interpret channel.config version {d2['Version']} as version 000"
             )
-            d2["Version"] = "001"
-        return TelemetryReportingConfig(**d2)
+            d2["Version"] = "000"
+        return ChannelConfig(**d2)
 
 
 def check_is_positive_integer(v: int) -> None:

@@ -5,8 +5,9 @@ Python pydantic class corresponding to json type `channel.readings`, version `00
 .. autoclass:: gwproto.types.ChannelReadings
     :members:
 
-**DataChannel**:
-    - Description: Data Channel. The Data Channel that this batch of timestamped values is about.
+**ChannelId**:
+    - Description: Channel Od. The globally unique identifier of the Data Channel for this  batch of timestamped values.
+    - Format: UuidCanonicalTextual
 
 **ValueList**:
     - Description: List of Values. Refer to the associated DataChannel to understand the meaning of the these readings.

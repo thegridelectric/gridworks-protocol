@@ -5,8 +5,8 @@
     "description": "",
     "ssot": "https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changevalvestate",
     "values": ["OpenValve", "CloseValve"],
-    "value_to_symbol": { "OpenValve": "",  "CloseValve": ""},
-    "value_to_version": { "OpenValve": "000",  "CloseValve": "000"},
+    "value_to_symbol": { "": "",  "": ""},
+    "value_to_version": { "": "000",  "": "000"},
     "value_descriptions": {
                 "OpenValve": "",
                 "CloseValve": ""

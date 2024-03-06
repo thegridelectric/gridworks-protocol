@@ -43,7 +43,7 @@
   },
   "axioms": {
     "Axiom": {
-      "title": "FromHandle must be "a" (for AtomicTNode).",
+      "title": "FromHandle must be 'a' (for AtomicTNode).",
       "description": "The triggering event is coming from the AtomicTNode, which always has the handle of "a" as a SpaceheatNode in the SCADA's hierarchical finite state machine."
     }
   },

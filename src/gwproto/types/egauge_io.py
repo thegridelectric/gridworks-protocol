@@ -8,8 +8,6 @@ from typing import Literal
 from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
-from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
-from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig_Maker
 from gwproto.types.egauge_register_config import EgaugeRegisterConfig
 from gwproto.types.egauge_register_config import EgaugeRegisterConfig_Maker
 from gwproto.errors import SchemaError
@@ -32,6 +30,17 @@ class EgaugeIo(BaseModel):
     [More info](https://gridworks-protocol.readthedocs.io/en/latest/egauge-io.html)
     """
 
+    ChannelName: str = Field(
+        title="Name of the Data Channel",
+        description=(
+            "Each input on the egauge is associated with a unique Data Channel (for example, "
+            "TelemetryName PowerW, AboutNodeName hp-idu-pwr, CapturedByNodeName pwr-meter). The "
+            "Data Channel's name is meant to be an easy-to-read immutable and (locally to the "
+            "SCADA) unique identifier. Stylistically, when there is no ambiguity about what node "
+            "is capturing the data or what the telemetry name is, choose the data channel's name "
+            "as the AboutNodeName (e.g. hp-idu-pwr)."
+        ),
+    )
     InputConfig: EgaugeRegisterConfig = Field(
         title="Input config for one channel of data for a specific eGauge meter",
         description=(
@@ -40,15 +49,16 @@ class EgaugeIo(BaseModel):
             "with ID 14875"
         ),
     )
-    OutputConfig: TelemetryReportingConfig = Field(
-        title="Output config for the same channel ",
-        description=(
-            "This is the data as the Scada proactor expects to consume it from the power meter "
-            "driver proactor."
-        ),
-    )
     TypeName: Literal["egauge.io"] = "egauge.io"
     Version: Literal["001"] = "001"
+
+    @validator("ChannelName")
+    def _check_channel_name(cls, v: str) -> str:
+        try:
+            check_is_spaceheat_name(v)
+        except ValueError as e:
+            raise ValueError(f"ChannelName failed SpaceheatName format validation: {e}")
+        return v
 
     def as_dict(self) -> Dict[str, Any]:
         """
@@ -74,7 +84,6 @@ class EgaugeIo(BaseModel):
             if value is not None
         }
         d["InputConfig"] = self.InputConfig.as_dict()
-        d["OutputConfig"] = self.OutputConfig.as_dict()
         return d
 
     def as_type(self) -> bytes:
@@ -111,12 +120,12 @@ class EgaugeIo_Maker:
 
     def __init__(
         self,
+        channel_name: str,
         input_config: EgaugeRegisterConfig,
-        output_config: TelemetryReportingConfig,
     ):
         self.tuple = EgaugeIo(
+            ChannelName=channel_name,
             InputConfig=input_config,
-            OutputConfig=output_config,
         )
 
     @classmethod
@@ -164,18 +173,14 @@ class EgaugeIo_Maker:
             EgaugeIo
         """
         d2 = dict(d)
+        if "ChannelName" not in d2.keys():
+            raise SchemaError(f"dict missing ChannelName: <{d2}>")
         if "InputConfig" not in d2.keys():
             raise SchemaError(f"dict missing InputConfig: <{d2}>")
         if not isinstance(d2["InputConfig"], dict):
             raise SchemaError(f"InputConfig <{d2['InputConfig']}> must be a EgaugeRegisterConfig!")
         input_config = EgaugeRegisterConfig_Maker.dict_to_tuple(d2["InputConfig"])
         d2["InputConfig"] = input_config
-        if "OutputConfig" not in d2.keys():
-            raise SchemaError(f"dict missing OutputConfig: <{d2}>")
-        if not isinstance(d2["OutputConfig"], dict):
-            raise SchemaError(f"OutputConfig <{d2['OutputConfig']}> must be a TelemetryReportingConfig!")
-        output_config = TelemetryReportingConfig_Maker.dict_to_tuple(d2["OutputConfig"])
-        d2["OutputConfig"] = output_config
         if "TypeName" not in d2.keys():
             raise SchemaError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():
@@ -186,3 +191,35 @@ class EgaugeIo_Maker:
             )
             d2["Version"] = "001"
         return EgaugeIo(**d2)
+
+
+def check_is_spaceheat_name(v: str) -> None:
+    """Check SpaceheatName Format.
+
+    Validates if the provided string adheres to the SpaceheatName format:
+    Lowercase words separated by periods, where word characters can be alphanumeric
+    or a hyphen, and the first word starts with an alphabet character.
+
+    Args:
+        candidate (str): The string to be validated.
+
+    Raises:
+        ValueError: If the provided string is not in SpaceheatName format.
+    """
+    from typing import List
+    try:
+        x: List[str] = v.split(".")
+    except:
+        raise ValueError(f"Failed to seperate <{v}> into words with split'.'")
+    first_word = x[0]
+    first_char = first_word[0]
+    if not first_char.isalpha():
+        raise ValueError(
+            f"Most significant word of <{v}> must start with alphabet char."
+        )
+    for word in x:
+        for char in word:
+            if not (char.isalnum() or char == '-'):
+                raise ValueError(f"words of <{v}> split by by '.' must be alphanumeric or hyphen.")
+    if not v.islower():
+        raise ValueError(f"<{v}> must be lowercase.")

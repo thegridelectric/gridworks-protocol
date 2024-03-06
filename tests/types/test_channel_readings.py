@@ -10,7 +10,7 @@ from gwproto.types import ChannelReadings_Maker as Maker
 
 def test_channel_readings_generated() -> None:
     d = {
-        "DataChannel": "a.elt1",
+        "ChannelId": ["f82edd28-d8ef-4137-9d46-960133ead1d0"],
         "ValueList": [4559],
         "ScadaReadTimeUnixMsList": [1656443705023],
         "TypeName": "channel.readings",
@@ -32,7 +32,7 @@ def test_channel_readings_generated() -> None:
 
     # test Maker init
     t = Maker(
-        data_channel=gtuple.DataChannel,
+        channel_id=gtuple.ChannelId,
         value_list=gtuple.ValueList,
         scada_read_time_unix_ms_list=gtuple.ScadaReadTimeUnixMsList,
         
@@ -49,7 +49,7 @@ def test_channel_readings_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["DataChannel"]
+    del d2["ChannelId"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -78,6 +78,10 @@ def test_channel_readings_generated() -> None:
     ######################################
     # SchemaError raised if primitive attributes do not have appropriate property_format
     ######################################
+
+    d2 = dict(d, ChannelId="d4be12d5-33ba-4f1f-b9e5")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
 
     d2 = dict(d, ScadaReadTimeUnixMsList=[1656245000])
     with pytest.raises(ValidationError):

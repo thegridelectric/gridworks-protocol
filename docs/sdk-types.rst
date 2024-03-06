@@ -21,6 +21,7 @@ forth between type instances and Python objects.
     Ads111xBasedCacGt  <types/ads111x-based-cac-gt>
     Ads111xBasedComponentGt  <types/ads111x-based-component-gt>
     BatchedReadings  <types/batched-readings>
+    ChannelConfig  <types/channel-config>
     ChannelReadings  <types/channel-readings>
     ComponentAttributeClassGt  <types/component-attribute-class-gt>
     ComponentGt  <types/component-gt>
@@ -52,7 +53,5 @@ forth between type instances and Python objects.
     SpaceheatNodeGt  <types/spaceheat-node-gt>
     SyncedReadings  <types/synced-readings>
     TaDataChannels  <types/ta-data-channels>
-    TelemetryReportingConfig  <types/telemetry-reporting-config>
-    TelemetrySnapshotSpaceheat  <types/telemetry-snapshot-spaceheat>
     ThermistorDataProcessingConfig  <types/thermistor-data-processing-config>
     

@@ -22,7 +22,7 @@
       "type": "string",
       "format": "relay.wiring.config",
       "title": "Wiring Config",
-      "description": "Is the relay a simple Normally Open or Normally Closed relay (in which case "0/1" work for RelayState) or is it a double throw relay?",
+      "description": "Is the relay a simple Normally Open or Normally Closed or is it a double throw relay?",
       "required": true
     },
     "TypeName": {
@@ -35,6 +35,12 @@
       "title": "The type version",
       "default": "000",
       "required": true
+    }
+  },
+  "axioms": {
+    "Axiom1": {
+      "title": "CapturedBy Actor consistency",
+      "description": ""
     }
   },
   "formats": {

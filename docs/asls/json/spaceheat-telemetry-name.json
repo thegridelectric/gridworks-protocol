@@ -11,7 +11,7 @@
     "value_descriptions": {
                 "Unknown": "Default Value - unknown telemetry name.",
                 "PowerW": "Power in Watts.",
-                "RelayState": "An associated read must be either 0 or 1, with 0 meaning that the relay is open and current CANNOT flow and 1 meaning that the relay is closed and current CAN flow. Note in particular that this TelemetryName is NOT meant to be used to reflect whether a relay is energized or de-energized and in particular '1' means the same thing for both Normally Open and Normally Closed relays. Also, it is not meant to be used for a double-throw relay.",
+                "RelayState": "The Telemetry reading belongs to ['Energized', 'DeEnergized'] (relay.energization.state enum).",
                 "WaterTempCTimes1000": "Water temperature, in Degrees Celcius multiplied by 1000. Example: 43200 means 43.2 deg Celcius.",
                 "WaterTempFTimes1000": "Water temperature, in Degrees F multiplied by 1000. Example: 142100 means 142.1 deg Fahrenheit.",
                 "GpmTimes100": "Gallons Per Minute multiplied by 100. Example: 433 means 4.33 gallons per minute.",

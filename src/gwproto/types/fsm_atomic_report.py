@@ -96,6 +96,15 @@ class FsmAtomicReport(BaseModel):
         # TODO: Implement check for axiom 1"
         return v
 
+    @root_validator
+    def check_axiom_2(cls, v: dict) -> dict:
+        """
+        Axiom 2: If Action exists, then it belongs to the un-versioned enum selected in the ActionType..
+        
+        """
+        # TODO: Implement check for axiom 2"
+        return v
+
     def as_dict(self) -> Dict[str, Any]:
         """
         Translate the object into a dictionary representation that can be serialized into a

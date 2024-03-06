@@ -6,8 +6,8 @@ from typing import Optional
 from gwproto.data_classes.cacs.ads111x_based_cac import Ads111xBasedCac
 from gwproto.data_classes.component import Component
 from gwproto.enums import MakeModel
-from gwproto.types import TelemetryReportingConfig
-
+from gwproto.types import ThermistorDataProcessingConfig
+from gwproto.types.channel_config import ChannelConfig
 
 class Ads111xBasedComponent(Component):
     by_id: Dict[str, "Ads111xBasedComponent"] = {}
@@ -16,19 +16,19 @@ class Ads111xBasedComponent(Component):
         self,
         component_id: str,
         component_attribute_class_id: str,
-        channel_list: List[int],
-        config_list: List[TelemetryReportingConfig],
+        config_list: List[ChannelConfig],
+        thermistor_config_list: List[ThermistorDataProcessingConfig],
         display_name: Optional[str] = None,
         hw_uid: Optional[str] = None,
     ):
         super(self.__class__, self).__init__(
-            display_name=display_name,
             component_id=component_id,
-            hw_uid=hw_uid,
             component_attribute_class_id=component_attribute_class_id,
+            config_list=config_list,
+            display_name=display_name,
+            hw_uid=hw_uid, 
         )
-        self.channel_list = channel_list
-        self.config_list = config_list
+        self.thermistor_config_list = thermistor_config_list
         Ads111xBasedComponent.by_id[self.component_id] = self
         Component.by_id[self.component_id] = self
 

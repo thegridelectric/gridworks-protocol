@@ -258,3 +258,56 @@ class ComponentAttributeClassGt_Maker:
     @classmethod
     def dict_to_dc(cls, d: dict[Any, str]) -> ComponentAttributeClass:
         return cls.tuple_to_dc(cls.dict_to_tuple(d))
+
+
+def check_is_positive_integer(v: int) -> None:
+    """
+    Must be positive when interpreted as an integer. Interpretation as an
+    integer follows the pydantic rules for this - which will round down
+    rational numbers. So 1.7 will be interpreted as 1 and is also fine,
+    while 0.5 is interpreted as 0 and will raise an exception.
+
+    Args:
+        v (int): the candidate
+
+    Raises:
+        ValueError: if v < 1
+    """
+    v2 = int(v)
+    if v2 < 1:
+        raise ValueError(f"<{v}> is not PositiveInteger")
+
+
+def check_is_uuid_canonical_textual(v: str) -> None:
+    """Checks UuidCanonicalTextual format
+
+    UuidCanonicalTextual format:  A string of hex words separated by hyphens
+    of length 8-4-4-4-12.
+
+    Args:
+        v (str): the candidate
+
+    Raises:
+        ValueError: if v is not UuidCanonicalTextual format
+    """
+    try:
+        x = v.split("-")
+    except AttributeError as e:
+        raise ValueError(f"Failed to split on -: {e}")
+    if len(x) != 5:
+        raise ValueError(f"<{v}> split by '-' did not have 5 words")
+    for hex_word in x:
+        try:
+            int(hex_word, 16)
+        except ValueError:
+            raise ValueError(f"Words of <{v}> are not all hex")
+    if len(x[0]) != 8:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[1]) != 4:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[2]) != 4:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[3]) != 4:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[4]) != 12:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")

@@ -6,14 +6,16 @@
   "description": "Used for an eGauge meter's component information in a hardware layout. When the component associated to a PowerMeter ShNode has MakeModel EGAUGE__4030, there is a significant amount of configuration required to specify both what is read from the eGauge (input) and what is then sent up to the SCADA (output). This type handles that information.",
   "url": "https://gridworks-protocol.readthedocs.io/en/latest/egauge-io.html",
   "properties": {
+    "ChannelName": {
+      "type": "string",
+      "format": "SpaceheatName",
+      "title": "Name of the Data Channel",
+      "description": "Each input on the egauge is associated with a unique Data Channel (for example, TelemetryName PowerW, AboutNodeName hp-idu-pwr, CapturedByNodeName pwr-meter). The Data Channel's name is meant to be an easy-to-read immutable and (locally to the SCADA) unique identifier. Stylistically, when there is no ambiguity about what node is capturing the data or what the telemetry name is, choose the data channel's name as the AboutNodeName (e.g. hp-idu-pwr).",
+      "required": true
+    },
     "InputConfig": {
       "type": "egauge.register.config.000",
       "description": "This is the data available from the modbus csv map provided by eGauge for this component, for example http://egauge14875.egaug.es/6001C/settings.html for a eGauge device with ID 14875",
-      "required": true
-    },
-    "OutputConfig": {
-      "type": "telemetry.reporting.config.001",
-      "description": "This is the data as the Scada proactor expects to consume it from the power meter driver proactor.",
       "required": true
     },
     "TypeName": {
@@ -26,6 +28,13 @@
       "title": "The type version",
       "default": "001",
       "required": true
+    }
+  },
+  "formats": {
+    "SpaceheatName": {
+      "type": "string",
+      "description": "Lowercase words separated by periods, where the word characters can be alphanumeric or a hyphen and the first word starts with an alphabet character.",
+      "example": "store-hot-pipe"
     }
   }
 }

@@ -19,13 +19,13 @@
     <xsl:template match="/">
         <FileSet>
             <FileSetFiles>
-                <xsl:for-each select="$airtable//ProtocolEnums/ProtocolEnum[(normalize-space(ProtocolName) ='gwproto')]">
+                <xsl:for-each select="$airtable//ProtocolEnums/ProtocolEnum[(normalize-space(ProtocolName) ='gwproto') and not (NoVersions = 'true')]">
                 <xsl:variable name="enum-id" select="GtEnumId"/>
                 <xsl:variable name="enum-version" select="EnumVersion"/>
                 <xsl:variable name="enum-name" select="EnumName"/>
                 <xsl:variable name="local-name" select="LocalName"/>
                 <xsl:for-each select="$airtable//GtEnums/GtEnum[GtEnumId=$enum-id]">
-                    <xsl:variable name="enum-name-style" select="PythonEnumNameStyle" />
+                    <xsl:variable name="enum-type" select="EnumType" />
                     <xsl:variable name="enum-class-name">
                         <xsl:call-template name="nt-case">
                             <xsl:with-param name="type-name-text" select="LocalName" />
@@ -116,10 +116,10 @@ class </xsl:text><xsl:value-of select="$enum-class-name"/>
  <xsl:call-template name="insert-spaces">
     <xsl:with-param name="count" select="4"/>
 </xsl:call-template>
-<xsl:if test="$enum-name-style = 'Upper'">
+<xsl:if test="$enum-type = 'Upper'">
     <xsl:value-of select="translate(translate(LocalValue,'-',''),$lcletters, $ucletters)"/>
 </xsl:if>
-<xsl:if test="$enum-name-style ='UpperPython'">
+<xsl:if test="$enum-type ='UpperPython'">
     <xsl:value-of select="LocalValue"/>
 </xsl:if>
 
@@ -133,19 +133,19 @@ class </xsl:text><xsl:value-of select="$enum-class-name"/>
     <xsl:text>":
         """
         Returns default value (in this case </xsl:text>
-        <xsl:if test="$enum-name-style = 'Upper'">
+        <xsl:if test="$enum-type = 'Upper'">
             <xsl:value-of select="translate(translate(DefaultEnumValue,'-',''),$lcletters, $ucletters)"/>
         </xsl:if>
-        <xsl:if test="$enum-name-style ='UpperPython'">
+        <xsl:if test="$enum-type ='UpperPython'">
             <xsl:value-of select="DefaultEnumValue"/>
         </xsl:if>
         <xsl:text>)
         """
         return cls.</xsl:text>
-        <xsl:if test="$enum-name-style = 'Upper'">
+        <xsl:if test="$enum-type = 'Upper'">
             <xsl:value-of select="translate(translate(DefaultEnumValue,'-',''),$lcletters, $ucletters)"/>
         </xsl:if>
-        <xsl:if test="$enum-name-style ='UpperPython'">
+        <xsl:if test="$enum-type ='UpperPython'">
             <xsl:value-of select="DefaultEnumValue"/>
         </xsl:if>
 
@@ -258,10 +258,10 @@ symbol_to_value = {</xsl:text>
 <xsl:sort select="Idx" data-type="number"/>
     <xsl:text>
     "</xsl:text><xsl:value-of select="Symbol"/><xsl:text>": "</xsl:text>
-    <xsl:if test="$enum-name-style = 'Upper'">
+    <xsl:if test="$enum-type = 'Upper'">
         <xsl:value-of select="translate(translate(LocalValue,'-',''),$lcletters, $ucletters)"/>
     </xsl:if>
-    <xsl:if test="$enum-name-style ='UpperPython'">
+    <xsl:if test="$enum-type ='UpperPython'">
         <xsl:value-of select="LocalValue"/>
     </xsl:if>
 <xsl:text>",</xsl:text>
@@ -276,10 +276,10 @@ value_to_version = {</xsl:text>
 <xsl:sort select="Idx" data-type="number"/>
     <xsl:text>
     "</xsl:text>
-    <xsl:if test="$enum-name-style = 'Upper'">
+    <xsl:if test="$enum-type = 'Upper'">
         <xsl:value-of select="translate(translate(LocalValue,'-',''),$lcletters, $ucletters)"/>
     </xsl:if>
-    <xsl:if test="$enum-name-style ='UpperPython'">
+    <xsl:if test="$enum-type ='UpperPython'">
         <xsl:value-of select="LocalValue"/>
     </xsl:if>
 <xsl:text>": "</xsl:text> <xsl:value-of select="Version"/><xsl:text>",</xsl:text>

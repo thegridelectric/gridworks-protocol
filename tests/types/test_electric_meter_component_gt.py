@@ -5,7 +5,7 @@ import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
-from gwproto.types import ElectricMeterComponentGt_Maker as Maker
+from gwproto.types.electric_meter_component_gt import ElectricMeterComponentGt_Maker as Maker
 
 
 def test_electric_meter_component_gt_generated() -> None:
@@ -13,11 +13,11 @@ def test_electric_meter_component_gt_generated() -> None:
         "ComponentId": "04ceb282-d7e8-4293-80b5-72455e1a5db3",
         "ComponentAttributeClassId": 'c1856e62-d8c0-4352-b79e-6ae05a5294c2',
         "DisplayName": "Main power meter for Little orange house garage space heat",
-        "ConfigList": [{'AboutNodeName': 'a.m.hp.outdoor.power', 'ReportOnChange': True, 'SamplePeriodS': 300, 'Exponent': 0, 'AsyncReportThreshold': 0.02, 'NameplateMaxValue': 3500, 'TypeName': 'telemetry.reporting.config', 'Version': '000', 'TelemetryNameGtEnumSymbol': 'af39eec9', 'UnitGtEnumSymbol': 'f459a9c3'}],
+        "ConfigList": [{'Channel': {'DisplayName':'Idu Power', 'AboutName': 'hp-idu-pwr', 'CapturedByName': 'pwr-meter', 'TelemetryNameGtEnumSymbol': 'af39eec9'}, 'PollPeriodMs': 1000, 'CapturePeriodS': 300, 'AsyncCapture': True, 'AsyncCaptureDelta': 50, 'Exponent': 0, 'UnitGtEnumSymbol': 'f459a9c3', 'TypeName': 'channel.config', 'Version': '000'}, 'TypeName': 'egauge.io', 'Version': '001'}],
         "HwUid": "35941_308",
         "ModbusHost": "eGauge4922.local",
         "ModbusPort": 502,
-        "EgaugeIoList": [{'InputConfig': {'Address': 9006, 'Name': '', 'Description': 'change in value', 'Type': 'f32', 'Denominator': 1, 'Unit': 'W', 'TypeName': 'egauge.register.config', 'Version': '000'}, 'OutputConfig': {'AboutNodeName': 'h.hp-pwr', 'AsyncCapture': True, 'SamplePeriodS': 300, 'Exponent': 0, 'AsyncCaptureDelta': 50, 'PollPeriodMs': 1000, 'CapturePeriodS': 60, 'NameplateMaxValue': 3500, 'TypeName': 'telemetry.reporting.config', 'Version': '001', 'TelemetryNameGtEnumSymbol': 'af39eec9', 'UnitGtEnumSymbol': 'f459a9c3'}, 'TypeName': 'egauge.io', 'Version': '001'}],
+        "EgaugeIoList": [{'InputConfig': {'Address': 9006, 'Name': '', 'Description': 'change in value', 'Type': 'f32', 'Denominator': 1, 'Unit': 'W', 'TypeName': 'egauge.register.config', 'Version': '000'}, 'OutputConfig': {'Channel': {'DisplayName':'Idu Power', 'AboutName': 'hp-idu-pwr', 'CapturedByName': 'pwr-meter', 'TelemetryNameGtEnumSymbol': 'af39eec9'}, 'PollPeriodMs': 1000, 'CapturePeriodS': 300, 'AsyncCapture': True, 'AsyncCaptureDelta': 50, 'Exponent': 0, 'UnitGtEnumSymbol': 'f459a9c3', 'TypeName': 'channel.config', 'Version': '000'}, 'TypeName': 'egauge.io', 'Version': '001'}],
         "TypeName": "electric.meter.component.gt",
         "Version": "001",
     }

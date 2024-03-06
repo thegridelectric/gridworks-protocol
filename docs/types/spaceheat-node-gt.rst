@@ -1,6 +1,6 @@
 SpaceheatNodeGt
 ==========================
-Python pydantic class corresponding to json type `spaceheat.node.gt`, version `101`.
+Python pydantic class corresponding to json type `spaceheat.node.gt`, version `200`.
 
 .. autoclass:: gwproto.types.SpaceheatNodeGt
     :members:
@@ -10,11 +10,12 @@ Python pydantic class corresponding to json type `spaceheat.node.gt`, version `1
     - Format: UuidCanonicalTextual
 
 **Name**:
-    - Description: Name. Most human readable locally unique identifier. Immutable. Words (separated by dots) shows actor startup hierarchy. That is,  if the node "s.analog-temp" has an actor, then that actor is spawned by node "s". 
+    - Description: Name. Most human readable locally unique identifier. Immutable. Words (separated by dots) shows actor startup hierarchy. That is,  if the node 's.analog-temp' has an actor, then that actor is spawned by node 's'. 
     - Format: SpaceheatName
 
 **Handle**:
-    - Description: Handle. Word structure shows Terminal Asset Finiste State Machine hierarchy. Locally unique, but mutable.  If there is a dot, then the predecessor handle (handle with the final word removed) is the handle for the "boss" node.  Only nodes with actors that can take actions that change the state of the Terminal Asset have dots in their handles. For example, the analog temperature sensor in the LocalName description above does NOT take actions and its handle would likely be analog-temp. If a node's actor CAN take actions that change the state of the TerminalAsset, it only takes commands from its boss node. For example, a relay actor will only agree to energize or de-energize its relay as a result of a command from its (current) boss. 
+    - Description: Handle. Word structure shows Terminal Asset Finite State Machine hierarchy. Locally unique, but mutable.  If there is a dot, then the predecessor handle (handle with the final word removed) is the handle for the 'boss' node.  Only nodes with actors that can take actions that change the state of the Terminal Asset have dots in their handles. For example, the analog temperature sensor in the LocalName description above does NOT take actions and its handle would likely be analog-temp. If a node's actor CAN take actions that change the state of the TerminalAsset, it only takes commands from its boss node. For example, a relay actor will only agree to energize or de-energize its relay as a result of a command from its (current) boss. 
+    - Format: SpaceheatName
 
 **ActorClass**:
     - Description: Actor Class. Used to select the actor's code.

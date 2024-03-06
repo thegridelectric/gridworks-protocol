@@ -1,5 +1,6 @@
 from typing import Optional
 
+from gwproto.data_classes.component_attribute_class import ComponentAttributeClass as Cac
 from gwproto.data_classes.component import Component
 from gwproto.types.rest_poller_gt import RESTPollerSettings
 
@@ -22,3 +23,7 @@ class RESTPollerComponent(Component):
             hw_uid=hw_uid,
             component_attribute_class_id=component_attribute_class_id,
         )
+
+    @property
+    def cac(self) -> Cac:
+        return Cac.by_id[self.component_attribute_class_id]

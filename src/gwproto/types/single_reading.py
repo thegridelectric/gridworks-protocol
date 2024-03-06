@@ -4,15 +4,12 @@ import logging
 from typing import Any
 from typing import Dict
 from typing import Literal
-from typing import Optional
 
 from pydantic import BaseModel
+from pydantic import Extra
 from pydantic import Field
 from pydantic import validator
-
-from gwproto.enums import TelemetryName
 from gwproto.errors import SchemaError
-
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -25,7 +22,7 @@ class SingleReading(BaseModel):
     """
     Simple Sensor Telemetry.
 
-    A single reading sent from a spaceheat node actor.
+    A single data channel reading sent from a spaceheat node actor. The value is an integer.
 
     [More info](https://gridworks-protocol.readthedocs.io/en/latest/spaceheat-actor.html)
     """
@@ -33,19 +30,9 @@ class SingleReading(BaseModel):
     ScadaReadTimeUnixMs: int = Field(
         title="Scada Read Time in Unix Milliseconds",
     )
-    AboutNodeName: TelemetryName = Field(
-        title="AboutNodeName",
-        description=(
-            "The name of the Simple Sensing Spaceheat Node. This is both the AboutNodeName and "
-            "FromNodeName for a data channel. The TelemetryName (and thus Units) are expected "
-            "to be inferred by the Spaceheat Node. For example this is done initially in SCADA "
-            "code according to whether the component of the Node is a PipeFlowSensorComponent, "
-            "SimpleTempSensorComponent etc."
-        ),
-    )
-    TelemetryName: Optional[] = Field(
-        title="TelemetryName",
-        default=None,
+    ChannelName: str = Field(
+        title="Data Channel Name",
+        description="The name of the Channel getting reported",
     )
     Value: int = Field(
         title="Value",
@@ -53,6 +40,9 @@ class SingleReading(BaseModel):
     )
     TypeName: Literal["single.reading"] = "single.reading"
     Version: Literal["000"] = "000"
+
+    class Config:
+        extra = Extra.allow
 
     @validator("ScadaReadTimeUnixMs")
     def _check_scada_read_time_unix_ms(cls, v: int) -> int:
@@ -62,6 +52,14 @@ class SingleReading(BaseModel):
             raise ValueError(
                 f"ScadaReadTimeUnixMs failed ReasonableUnixTimeMs format validation: {e}"
             )
+        return v
+
+    @validator("ChannelName")
+    def _check_channel_name(cls, v: str) -> str:
+        try:
+            check_is_spaceheat_name(v)
+        except ValueError as e:
+            raise ValueError(f"ChannelName failed SpaceheatName format validation: {e}")
         return v
 
     def as_dict(self) -> Dict[str, Any]:
@@ -87,8 +85,6 @@ class SingleReading(BaseModel):
             ).items()
             if value is not None
         }
-        del d["AboutNodeName"]
-        d["AboutNodeNameGtEnumSymbol"] = TelemetryName.value_to_symbol(self.AboutNodeName)
         return d
 
     def as_type(self) -> bytes:
@@ -126,14 +122,12 @@ class SingleReading_Maker:
     def __init__(
         self,
         scada_read_time_unix_ms: int,
-        about_node_name: TelemetryName,
-        telemetry_name: Optional[],
+        channel_name: str,
         value: int,
     ):
         self.tuple = SingleReading(
             ScadaReadTimeUnixMs=scada_read_time_unix_ms,
-            AboutNodeName=about_node_name,
-            TelemetryName=telemetry_name,
+            ChannelName=channel_name,
             Value=value,
         )
 
@@ -184,11 +178,8 @@ class SingleReading_Maker:
         d2 = dict(d)
         if "ScadaReadTimeUnixMs" not in d2.keys():
             raise SchemaError(f"dict missing ScadaReadTimeUnixMs: <{d2}>")
-        if "AboutNodeNameGtEnumSymbol" not in d2.keys():
-            raise SchemaError(f"AboutNodeNameGtEnumSymbol missing from dict <{d2}>")
-        value = TelemetryName.symbol_to_value(d2["AboutNodeNameGtEnumSymbol"])
-        d2["AboutNodeName"] = TelemetryName(value)
-        del d2["AboutNodeNameGtEnumSymbol"]
+        if "ChannelName" not in d2.keys():
+            raise SchemaError(f"dict missing ChannelName: <{d2}>")
         if "Value" not in d2.keys():
             raise SchemaError(f"dict missing Value: <{d2}>")
         if "TypeName" not in d2.keys():

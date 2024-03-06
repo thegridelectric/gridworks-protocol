@@ -5,13 +5,14 @@ import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
-from gwproto.types import ComponentGt_Maker as Maker
+from gwproto.types.component_gt import ComponentGt_Maker as Maker
 
 
 def test_component_gt_generated() -> None:
     d = {
         "ComponentId": ,
         "ComponentAttributeClassId": '0a2fed00-8ff9-4391-a6d8-4b08ab94dfe1',
+        "ConfigList": ,
         "DisplayName": "Sample Component",
         "HwUid": "000aaa",
         "TypeName": "component.gt",
@@ -35,6 +36,7 @@ def test_component_gt_generated() -> None:
     t = Maker(
         component_id=gtuple.ComponentId,
         component_attribute_class_id=gtuple.ComponentAttributeClassId,
+        config_list=gtuple.ConfigList,
         display_name=gtuple.DisplayName,
         hw_uid=gtuple.HwUid,
         
@@ -59,18 +61,23 @@ def test_component_gt_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
+    del d2["ComponentId"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
     del d2["ComponentAttributeClassId"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    del d2["ConfigList"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
     ######################################
     # Optional attributes can be removed from type
     ######################################
-
-    d2 = dict(d)
-    if "ComponentId" in d2.keys():
-        del d2["ComponentId"]
-    Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
     if "DisplayName" in d2.keys():
@@ -86,10 +93,30 @@ def test_component_gt_generated() -> None:
     # Behavior on incorrect types
     ######################################
 
+    d2  = dict(d, ConfigList="Not a list.")
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2  = dict(d, ConfigList=["Not a list of dicts"])
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2  = dict(d, ConfigList= [{"Failed": "Not a GtSimpleSingleStatus"}])
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
     ######################################
     # SchemaError raised if TypeName is incorrect
     ######################################
 
     d2 = dict(d, TypeName="not the type name")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    ######################################
+    # SchemaError raised if primitive attributes do not have appropriate property_format
+    ######################################
+
+    d2 = dict(d, ComponentId="d4be12d5-33ba-4f1f-b9e5")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)

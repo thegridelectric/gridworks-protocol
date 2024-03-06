@@ -3,6 +3,7 @@ import json
 import logging
 from typing import Any
 from typing import Dict
+from typing import List
 from typing import Literal
 from typing import Optional
 
@@ -12,6 +13,8 @@ from pydantic import validator
 from gwproto.data_classes.components.i2c_multichannel_dt_relay_component import I2cMultichannelDtRelayComponent
 from gwproto.types.relay_actor_config import RelayActorConfig
 from gwproto.types.relay_actor_config import RelayActorConfig_Maker
+from gwproto.types.channel_config import ChannelConfig
+from gwproto.types.channel_config import ChannelConfig_Maker
 from gwproto.errors import SchemaError
 
 LOG_FORMAT = (
@@ -43,6 +46,13 @@ class I2cMultichannelDtRelayComponentGt(BaseModel):
             "Unique identifier for the device class. Authority for these, as well as the relationship "
             "between Components and ComponentAttributeClasses (Cacs) is maintained by the World "
             "Registry."
+        ),
+    )
+    ConfigList: List[ChannelConfig] = Field(
+        title="Channel Config List",
+        description=(
+            "A list of the ChannelConfigs for the data channels reported by the actors associated "
+            "to this component's relays (actors specified in the RelayConfigLlist)"
         ),
     )
     RelayConfigList: RelayActorConfig = Field(
@@ -115,6 +125,11 @@ class I2cMultichannelDtRelayComponentGt(BaseModel):
             ).items()
             if value is not None
         }
+        # Recursively calling as_dict()
+        config_list = []
+        for elt in self.ConfigList:
+            config_list.append(elt.as_dict())
+        d["ConfigList"] = config_list
         d["RelayConfigList"] = self.RelayConfigList.as_dict()
         return d
 
@@ -154,6 +169,7 @@ class I2cMultichannelDtRelayComponentGt_Maker:
         self,
         component_id: str,
         component_attribute_class_id: str,
+        config_list: List[ChannelConfig],
         relay_config_list: RelayActorConfig,
         display_name: Optional[str],
         hw_uid: Optional[str],
@@ -161,6 +177,7 @@ class I2cMultichannelDtRelayComponentGt_Maker:
         self.tuple = I2cMultichannelDtRelayComponentGt(
             ComponentId=component_id,
             ComponentAttributeClassId=component_attribute_class_id,
+            ConfigList=config_list,
             RelayConfigList=relay_config_list,
             DisplayName=display_name,
             HwUid=hw_uid,
@@ -215,6 +232,17 @@ class I2cMultichannelDtRelayComponentGt_Maker:
             raise SchemaError(f"dict missing ComponentId: <{d2}>")
         if "ComponentAttributeClassId" not in d2.keys():
             raise SchemaError(f"dict missing ComponentAttributeClass: <{d2}>")
+        if "ConfigList" not in d2.keys():
+            raise SchemaError(f"dict missing ConfigList: <{d2}>")
+        if not isinstance(d2["ConfigList"], List):
+            raise SchemaError(f"ConfigList <{d2['ConfigList']}> must be a List!")
+        config_list = []
+        for elt in d2["ConfigList"]:
+            if not isinstance(elt, dict):
+                raise SchemaError(f"ConfigList <{d2['ConfigList']}> must be a List of ChannelConfig types")
+            t = ChannelConfig_Maker.dict_to_tuple(elt)
+            config_list.append(t)
+        d2["ConfigList"] = config_list
         if "RelayConfigList" not in d2.keys():
             raise SchemaError(f"dict missing RelayConfigList: <{d2}>")
         if not isinstance(d2["RelayConfigList"], dict):
@@ -240,6 +268,7 @@ class I2cMultichannelDtRelayComponentGt_Maker:
             dc = I2cMultichannelDtRelayComponent(
                 component_id=t.ComponentId,
                 component_attribute_class_id=t.ComponentAttributeClassId,
+                config_list=t.ConfigList,
                 relay_config_list=t.RelayConfigList,
                 display_name=t.DisplayName,
                 hw_uid=t.HwUid,
@@ -251,6 +280,7 @@ class I2cMultichannelDtRelayComponentGt_Maker:
         t = I2cMultichannelDtRelayComponentGt_Maker(
             component_id=dc.component_id,
             component_attribute_class_id=dc.component_attribute_class_id,
+            config_list=dc.config_list,
             relay_config_list=dc.relay_config_list,
             display_name=dc.display_name,
             hw_uid=dc.hw_uid,
@@ -268,3 +298,38 @@ class I2cMultichannelDtRelayComponentGt_Maker:
     @classmethod
     def dict_to_dc(cls, d: dict[Any, str]) -> I2cMultichannelDtRelayComponent:
         return cls.tuple_to_dc(cls.dict_to_tuple(d))
+
+
+def check_is_uuid_canonical_textual(v: str) -> None:
+    """Checks UuidCanonicalTextual format
+
+    UuidCanonicalTextual format:  A string of hex words separated by hyphens
+    of length 8-4-4-4-12.
+
+    Args:
+        v (str): the candidate
+
+    Raises:
+        ValueError: if v is not UuidCanonicalTextual format
+    """
+    try:
+        x = v.split("-")
+    except AttributeError as e:
+        raise ValueError(f"Failed to split on -: {e}")
+    if len(x) != 5:
+        raise ValueError(f"<{v}> split by '-' did not have 5 words")
+    for hex_word in x:
+        try:
+            int(hex_word, 16)
+        except ValueError:
+            raise ValueError(f"Words of <{v}> are not all hex")
+    if len(x[0]) != 8:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[1]) != 4:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[2]) != 4:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[3]) != 4:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[4]) != 12:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")

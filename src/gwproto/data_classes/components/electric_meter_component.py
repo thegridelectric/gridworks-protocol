@@ -7,7 +7,7 @@ from gwproto.data_classes.cacs.electric_meter_cac import ElectricMeterCac
 from gwproto.data_classes.component import Component
 from gwproto.enums import MakeModel
 from gwproto.types import EgaugeIo
-from gwproto.types import TelemetryReportingConfig
+from gwproto.types.channel_config import ChannelConfig
 
 
 class ElectricMeterComponent(Component):
@@ -17,22 +17,23 @@ class ElectricMeterComponent(Component):
         self,
         component_id: str,
         component_attribute_class_id: str,
+        config_list: List[ChannelConfig] = [],
+        egauge_io_list: List[EgaugeIo] = [],
         display_name: Optional[str] = None,
         hw_uid: Optional[str] = None,
         modbus_host: Optional[str] = None,
         modbus_port: Optional[int] = None,
-        config_list: List[TelemetryReportingConfig] = [],
-        egauge_io_list: List[EgaugeIo] = [],
     ):
         super(self.__class__, self).__init__(
-            display_name=display_name,
             component_id=component_id,
-            hw_uid=hw_uid,
             component_attribute_class_id=component_attribute_class_id,
+            config_list=config_list,
+            display_name=display_name,
+            hw_uid=hw_uid,
+            
         )
         self.modbus_host = modbus_host
         self.modbus_port = modbus_port
-        self.config_list = config_list
         self.egauge_io_list = egauge_io_list
         ElectricMeterComponent.by_id[self.component_id] = self
         Component.by_id[self.component_id] = self

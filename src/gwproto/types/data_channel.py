@@ -8,10 +8,9 @@ from typing import Literal
 from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
-
+from gwproto.data_classes.data_channel import DataChannel
 from gwproto.enums import TelemetryName as EnumTelemetryName
 from gwproto.errors import SchemaError
-
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -28,48 +27,82 @@ class DataChannel(BaseModel):
     other than time.
     """
 
+    Name: str = Field(
+        title="Name",
+        description=(
+            "The Channel Name is meant to be the local unique identifier for the channel within "
+            "the context of a specific TerminalAsset. In addition to local uniqueness, it is "
+            "immutable. It is designed to be the key that time series data is sorted by in analysis, "
+            "as well as a useful way of referencing a channel within Scada code."
+        ),
+    )
     DisplayName: str = Field(
         title="Display Name",
         description=(
             "This display name is the handle for the data channel. It is meant to be set by the "
             "person/people who will be analyzing time series data. It is only expected to be "
-            "unique within the data channels associated to a specific Terminal Asset."
+            "unique within the data channels associated to a specific Terminal Asset. Mutable."
         ),
     )
-    AboutName: str = Field(
+    AboutNodeName: str = Field(
         title="About Name",
         description="The name of the SpaceheatNode whose physical quantities are getting captured.",
     )
-    CapturedByName: str = Field(
-        title="CapturedByName",
+    CapturedByNodeName: str = Field(
+        title="Captured By Name",
         description=(
             "The name of the SpaceheatNode that is capturing the physical quantities (which can "
             "be AboutName but does not have to be)."
         ),
     )
     TelemetryName: EnumTelemetryName = Field(
-        title="TelemetryName",
+        title="Telemetry Name",
         description="The name of the physical quantity getting measured.",
+    )
+    Id: str = Field(
+        title="Id",
+        description=(
+            "Meant to be an immutable identifier that is globally unique (i.e., across terminal "
+            "assets)."
+        ),
     )
     TypeName: Literal["data.channel"] = "data.channel"
     Version: Literal["000"] = "000"
 
-    @validator("AboutName")
-    def _check_about_name(cls, v: str) -> str:
+    @validator("Name")
+    def _check_name(cls, v: str) -> str:
         try:
             check_is_spaceheat_name(v)
         except ValueError as e:
-            raise ValueError(f"AboutName failed SpaceheatName format validation: {e}")
+            raise ValueError(f"Name failed SpaceheatName format validation: {e}")
         return v
 
-    @validator("CapturedByName")
-    def _check_captured_by_name(cls, v: str) -> str:
+    @validator("AboutNodeName")
+    def _check_about_node_name(cls, v: str) -> str:
         try:
             check_is_spaceheat_name(v)
         except ValueError as e:
             raise ValueError(
-                f"CapturedByName failed SpaceheatName format validation: {e}"
+                f"AboutNodeName failed SpaceheatName format validation: {e}"
             )
+        return v
+
+    @validator("CapturedByNodeName")
+    def _check_captured_by_node_name(cls, v: str) -> str:
+        try:
+            check_is_spaceheat_name(v)
+        except ValueError as e:
+            raise ValueError(
+                f"CapturedByNodeName failed SpaceheatName format validation: {e}"
+            )
+        return v
+
+    @validator("Id")
+    def _check_id(cls, v: str) -> str:
+        try:
+            check_is_uuid_canonical_textual(v)
+        except ValueError as e:
+            raise ValueError(f"Id failed UuidCanonicalTextual format validation: {e}")
         return v
 
     def as_dict(self) -> Dict[str, Any]:
@@ -96,9 +129,7 @@ class DataChannel(BaseModel):
             if value is not None
         }
         del d["TelemetryName"]
-        d["TelemetryNameGtEnumSymbol"] = EnumTelemetryName.value_to_symbol(
-            self.TelemetryName
-        )
+        d["TelemetryNameGtEnumSymbol"] = EnumTelemetryName.value_to_symbol(self.TelemetryName)
         return d
 
     def as_type(self) -> bytes:
@@ -135,16 +166,20 @@ class DataChannel_Maker:
 
     def __init__(
         self,
+        name: str,
         display_name: str,
-        about_name: str,
-        captured_by_name: str,
+        about_node_name: str,
+        captured_by_node_name: str,
         telemetry_name: EnumTelemetryName,
+        id: str,
     ):
         self.tuple = DataChannel(
+            Name=name,
             DisplayName=display_name,
-            AboutName=about_name,
-            CapturedByName=captured_by_name,
+            AboutNodeName=about_node_name,
+            CapturedByNodeName=captured_by_node_name,
             TelemetryName=telemetry_name,
+            Id=id,
         )
 
     @classmethod
@@ -192,17 +227,21 @@ class DataChannel_Maker:
             DataChannel
         """
         d2 = dict(d)
+        if "Name" not in d2.keys():
+            raise SchemaError(f"dict missing Name: <{d2}>")
         if "DisplayName" not in d2.keys():
             raise SchemaError(f"dict missing DisplayName: <{d2}>")
-        if "AboutName" not in d2.keys():
-            raise SchemaError(f"dict missing AboutName: <{d2}>")
-        if "CapturedByName" not in d2.keys():
-            raise SchemaError(f"dict missing CapturedByName: <{d2}>")
+        if "AboutNodeName" not in d2.keys():
+            raise SchemaError(f"dict missing AboutNodeName: <{d2}>")
+        if "CapturedByNodeName" not in d2.keys():
+            raise SchemaError(f"dict missing CapturedByNodeName: <{d2}>")
         if "TelemetryNameGtEnumSymbol" not in d2.keys():
             raise SchemaError(f"TelemetryNameGtEnumSymbol missing from dict <{d2}>")
         value = EnumTelemetryName.symbol_to_value(d2["TelemetryNameGtEnumSymbol"])
         d2["TelemetryName"] = EnumTelemetryName(value)
         del d2["TelemetryNameGtEnumSymbol"]
+        if "Id" not in d2.keys():
+            raise SchemaError(f"dict missing Id: <{d2}>")
         if "TypeName" not in d2.keys():
             raise SchemaError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():
@@ -213,6 +252,45 @@ class DataChannel_Maker:
             )
             d2["Version"] = "000"
         return DataChannel(**d2)
+
+    @classmethod
+    def tuple_to_dc(cls, t: DataChannel) -> DataChannel:
+        if t.Id in DataChannel.by_id.keys():
+            dc = DataChannel.by_id[t.Id]
+        else:
+            dc = DataChannel(
+                name=t.Name,
+                display_name=t.DisplayName,
+                about_node_name=t.AboutNodeName,
+                captured_by_node_name=t.CapturedByNodeName,
+                telemetry_name=t.TelemetryName,
+                id=t.Id,
+            )
+        return dc
+
+    @classmethod
+    def dc_to_tuple(cls, dc: DataChannel) -> DataChannel:
+        t = DataChannel_Maker(
+            name=dc.name,
+            display_name=dc.display_name,
+            about_node_name=dc.about_node_name,
+            captured_by_node_name=dc.captured_by_node_name,
+            telemetry_name=dc.telemetry_name,
+            id=dc.id,
+        ).tuple
+        return t
+
+    @classmethod
+    def type_to_dc(cls, t: str) -> DataChannel:
+        return cls.tuple_to_dc(cls.type_to_tuple(t))
+
+    @classmethod
+    def dc_to_type(cls, dc: DataChannel) -> str:
+        return cls.dc_to_tuple(dc).as_type()
+
+    @classmethod
+    def dict_to_dc(cls, d: dict[Any, str]) -> DataChannel:
+        return cls.tuple_to_dc(cls.dict_to_tuple(d))
 
 
 def check_is_spaceheat_name(v: str) -> None:
@@ -229,7 +307,6 @@ def check_is_spaceheat_name(v: str) -> None:
         ValueError: If the provided string is not in SpaceheatName format.
     """
     from typing import List
-
     try:
         x: List[str] = v.split(".")
     except:
@@ -242,9 +319,42 @@ def check_is_spaceheat_name(v: str) -> None:
         )
     for word in x:
         for char in word:
-            if not (char.isalnum() or char == "-"):
-                raise ValueError(
-                    f"words of <{v}> split by by '.' must be alphanumeric or hyphen."
-                )
+            if not (char.isalnum() or char == '-'):
+                raise ValueError(f"words of <{v}> split by by '.' must be alphanumeric or hyphen.")
     if not v.islower():
         raise ValueError(f"<{v}> must be lowercase.")
+
+
+def check_is_uuid_canonical_textual(v: str) -> None:
+    """Checks UuidCanonicalTextual format
+
+    UuidCanonicalTextual format:  A string of hex words separated by hyphens
+    of length 8-4-4-4-12.
+
+    Args:
+        v (str): the candidate
+
+    Raises:
+        ValueError: if v is not UuidCanonicalTextual format
+    """
+    try:
+        x = v.split("-")
+    except AttributeError as e:
+        raise ValueError(f"Failed to split on -: {e}")
+    if len(x) != 5:
+        raise ValueError(f"<{v}> split by '-' did not have 5 words")
+    for hex_word in x:
+        try:
+            int(hex_word, 16)
+        except ValueError:
+            raise ValueError(f"Words of <{v}> are not all hex")
+    if len(x[0]) != 8:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[1]) != 4:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[2]) != 4:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[3]) != 4:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[4]) != 12:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")

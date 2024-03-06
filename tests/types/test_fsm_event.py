@@ -50,38 +50,54 @@ def test_fsm_event_generated() -> None:
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
-    ######################################
-    # Optional attributes can be removed from type
-    ######################################
+    d2 = dict(d)
+    del d2["FromHandle"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    if "FromHandle" in d2.keys():
-        del d2["FromHandle"]
-    Maker.dict_to_tuple(d2)
+    del d2["ToHandle"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    if "ToHandle" in d2.keys():
-        del d2["ToHandle"]
-    Maker.dict_to_tuple(d2)
+    del d2["Name"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    if "Name" in d2.keys():
-        del d2["Name"]
-    Maker.dict_to_tuple(d2)
-
-    d2 = dict(d)
-    if "SendTimeUnixMs" in d2.keys():
-        del d2["SendTimeUnixMs"]
-    Maker.dict_to_tuple(d2)
+    del d2["SendTimeUnixMs"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
 
     ######################################
     # Behavior on incorrect types
     ######################################
+
+    d2 = dict(d, SendTimeUnixMs=".1")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
 
     ######################################
     # SchemaError raised if TypeName is incorrect
     ######################################
 
     d2 = dict(d, TypeName="not the type name")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    ######################################
+    # SchemaError raised if primitive attributes do not have appropriate property_format
+    ######################################
+
+    d2 = dict(d, FromHandle="A.hot-stuff")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, ToHandle="A.hot-stuff")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, SendTimeUnixMs=1656245000)
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)

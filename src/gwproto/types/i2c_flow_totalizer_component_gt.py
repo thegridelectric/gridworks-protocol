@@ -3,6 +3,7 @@ import json
 import logging
 from typing import Any
 from typing import Dict
+from typing import List
 from typing import Literal
 from typing import Optional
 
@@ -10,6 +11,8 @@ from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
 from gwproto.data_classes.components.i2c_flow_totalizer_component import I2cFlowTotalizerComponent
+from gwproto.types.channel_config import ChannelConfig
+from gwproto.types.channel_config import ChannelConfig_Maker
 from gwproto.enums import MakeModel
 from gwproto.errors import SchemaError
 
@@ -45,15 +48,26 @@ class I2cFlowTotalizerComponentGt(BaseModel):
     )
     I2cAddress: int = Field(
         title="I2cAddress",
+        description="The I2cAddress that this component can be found at on the I2cBus.",
+    )
+    ConfigList: List[ChannelConfig] = Field(
+        title="Config List",
+        description="A list of the ChannelConfigs for the data channels reported by this actor.",
+    )
+    PulseFlowMeterMakeModel: MakeModel = Field(
+        title="Pulse Flow Meter MakeModel",
+        description=(
+            "The MakeModel of the pulse flow meter that this I2cFlowTotalizer is attached to."
+        ),
     )
     ConversionFactor: float = Field(
         title="ConversionFactor",
-    )
-    PulseFlowMeterType: MakeModel = Field(
-        title="PulseFlowMeterType",
+        description=(
+            "The factor that the cumulative output must be multiplied by in order to read gallons."
+        ),
     )
     DisplayName: Optional[str] = Field(
-        title="DisplayName",
+        title="Display Name",
         description="Sample: Pipe Flow Meter Component <dist-flow>",
         default=None,
     )
@@ -107,8 +121,13 @@ class I2cFlowTotalizerComponentGt(BaseModel):
             ).items()
             if value is not None
         }
-        del d["PulseFlowMeterType"]
-        d["PulseFlowMeterTypeGtEnumSymbol"] = MakeModel.value_to_symbol(self.PulseFlowMeterType)
+        # Recursively calling as_dict()
+        config_list = []
+        for elt in self.ConfigList:
+            config_list.append(elt.as_dict())
+        d["ConfigList"] = config_list
+        del d["PulseFlowMeterMakeModel"]
+        d["PulseFlowMeterMakeModelGtEnumSymbol"] = MakeModel.value_to_symbol(self.PulseFlowMeterMakeModel)
         return d
 
     def as_type(self) -> bytes:
@@ -148,8 +167,9 @@ class I2cFlowTotalizerComponentGt_Maker:
         component_id: str,
         component_attribute_class_id: str,
         i2c_address: int,
+        config_list: List[ChannelConfig],
+        pulse_flow_meter_make_model: MakeModel,
         conversion_factor: float,
-        pulse_flow_meter_type: MakeModel,
         display_name: Optional[str],
         hw_uid: Optional[str],
     ):
@@ -157,8 +177,9 @@ class I2cFlowTotalizerComponentGt_Maker:
             ComponentId=component_id,
             ComponentAttributeClassId=component_attribute_class_id,
             I2cAddress=i2c_address,
+            ConfigList=config_list,
+            PulseFlowMeterMakeModel=pulse_flow_meter_make_model,
             ConversionFactor=conversion_factor,
-            PulseFlowMeterType=pulse_flow_meter_type,
             DisplayName=display_name,
             HwUid=hw_uid,
         )
@@ -214,13 +235,24 @@ class I2cFlowTotalizerComponentGt_Maker:
             raise SchemaError(f"dict missing ComponentAttributeClass: <{d2}>")
         if "I2cAddress" not in d2.keys():
             raise SchemaError(f"dict missing I2cAddress: <{d2}>")
+        if "ConfigList" not in d2.keys():
+            raise SchemaError(f"dict missing ConfigList: <{d2}>")
+        if not isinstance(d2["ConfigList"], List):
+            raise SchemaError(f"ConfigList <{d2['ConfigList']}> must be a List!")
+        config_list = []
+        for elt in d2["ConfigList"]:
+            if not isinstance(elt, dict):
+                raise SchemaError(f"ConfigList <{d2['ConfigList']}> must be a List of ChannelConfig types")
+            t = ChannelConfig_Maker.dict_to_tuple(elt)
+            config_list.append(t)
+        d2["ConfigList"] = config_list
+        if "PulseFlowMeterMakeModelGtEnumSymbol" not in d2.keys():
+            raise SchemaError(f"PulseFlowMeterMakeModelGtEnumSymbol missing from dict <{d2}>")
+        value = MakeModel.symbol_to_value(d2["PulseFlowMeterMakeModelGtEnumSymbol"])
+        d2["PulseFlowMeterMakeModel"] = MakeModel(value)
+        del d2["PulseFlowMeterMakeModelGtEnumSymbol"]
         if "ConversionFactor" not in d2.keys():
             raise SchemaError(f"dict missing ConversionFactor: <{d2}>")
-        if "PulseFlowMeterTypeGtEnumSymbol" not in d2.keys():
-            raise SchemaError(f"PulseFlowMeterTypeGtEnumSymbol missing from dict <{d2}>")
-        value = MakeModel.symbol_to_value(d2["PulseFlowMeterTypeGtEnumSymbol"])
-        d2["PulseFlowMeterType"] = MakeModel(value)
-        del d2["PulseFlowMeterTypeGtEnumSymbol"]
         if "TypeName" not in d2.keys():
             raise SchemaError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():
@@ -241,8 +273,9 @@ class I2cFlowTotalizerComponentGt_Maker:
                 component_id=t.ComponentId,
                 component_attribute_class_id=t.ComponentAttributeClassId,
                 i2c_address=t.I2cAddress,
+                config_list=t.ConfigList,
+                pulse_flow_meter_make_model=t.PulseFlowMeterMakeModel,
                 conversion_factor=t.ConversionFactor,
-                pulse_flow_meter_type=t.PulseFlowMeterType,
                 display_name=t.DisplayName,
                 hw_uid=t.HwUid,
             )
@@ -254,8 +287,9 @@ class I2cFlowTotalizerComponentGt_Maker:
             component_id=dc.component_id,
             component_attribute_class_id=dc.component_attribute_class_id,
             i2c_address=dc.i2c_address,
+            config_list=dc.config_list,
+            pulse_flow_meter_make_model=dc.pulse_flow_meter_make_model,
             conversion_factor=dc.conversion_factor,
-            pulse_flow_meter_type=dc.pulse_flow_meter_type,
             display_name=dc.display_name,
             hw_uid=dc.hw_uid,
         ).tuple
@@ -272,3 +306,38 @@ class I2cFlowTotalizerComponentGt_Maker:
     @classmethod
     def dict_to_dc(cls, d: dict[Any, str]) -> I2cFlowTotalizerComponent:
         return cls.tuple_to_dc(cls.dict_to_tuple(d))
+
+
+def check_is_uuid_canonical_textual(v: str) -> None:
+    """Checks UuidCanonicalTextual format
+
+    UuidCanonicalTextual format:  A string of hex words separated by hyphens
+    of length 8-4-4-4-12.
+
+    Args:
+        v (str): the candidate
+
+    Raises:
+        ValueError: if v is not UuidCanonicalTextual format
+    """
+    try:
+        x = v.split("-")
+    except AttributeError as e:
+        raise ValueError(f"Failed to split on -: {e}")
+    if len(x) != 5:
+        raise ValueError(f"<{v}> split by '-' did not have 5 words")
+    for hex_word in x:
+        try:
+            int(hex_word, 16)
+        except ValueError:
+            raise ValueError(f"Words of <{v}> are not all hex")
+    if len(x[0]) != 8:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[1]) != 4:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[2]) != 4:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[3]) != 4:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[4]) != 12:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")

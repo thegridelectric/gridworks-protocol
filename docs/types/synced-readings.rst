@@ -9,12 +9,9 @@ Python pydantic class corresponding to json type `synced.readings`, version `000
     - Description: ScadaReadTime in Unix MilliSeconds. The single time, in unix milliseconds, assigned to this list of readings.
     - Format: ReasonableUnixTimeMs
 
-**AboutNodeNameList**:
-    - Description: AboutNodeNameList. List of names of the SpaceHeat Nodes getting measured.
+**ChannelNameList**:
+    - Description: Channel Name List. List of the names of the  Data Channels getting measured. These names are immutable and locally unique for the Scada.
     - Format: SpaceheatName
-
-**TelemetryNameList**:
-    - Description: TelemetryNameList. List of the TelemetryNames. The nth name in this list indicates the TelemetryName of the nth alias in the AboutNodeAliasList.
 
 **ValueList**:
     - Description: ValueList. List of the values read.

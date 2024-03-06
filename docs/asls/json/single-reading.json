@@ -3,7 +3,7 @@
   "type_name": "single.reading",
   "version": "000",
   "owner": "gridworks@gridworks-consulting.com",
-  "description": "Simple Sensor Telemetry. A single reading sent from a spaceheat node actor.",
+  "description": "Simple Sensor Telemetry. A single data channel reading sent from a spaceheat node actor. The value is an integer.",
   "url": "https://gridworks-protocol.readthedocs.io/en/latest/spaceheat-actor.html",
   "properties": {
     "ScadaReadTimeUnixMs": {
@@ -12,16 +12,12 @@
       "title": "Scada Read Time in Unix Milliseconds",
       "required": true
     },
-    "AboutNodeName": {
+    "ChannelName": {
       "type": "string",
-      "format": "spaceheat.telemetry.name",
-      "title": "AboutNodeName",
-      "description": "The name of the Simple Sensing Spaceheat Node. This is both the AboutNodeName and FromNodeName for a data channel. The TelemetryName (and thus Units) are expected to be inferred by the Spaceheat Node. For example this is done initially in SCADA code according to whether the component of the Node is a PipeFlowSensorComponent, SimpleTempSensorComponent etc.",
+      "format": "SpaceheatName",
+      "title": "Data Channel Name",
+      "description": "The name of the Channel getting reported",
       "required": true
-    },
-    "TelemetryName": {
-      "type": "",
-      "required": false
     },
     "Value": {
       "type": "integer",

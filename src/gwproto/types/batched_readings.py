@@ -12,6 +12,8 @@ from pydantic import Field
 from pydantic import validator
 from gwproto.types.channel_readings import ChannelReadings
 from gwproto.types.channel_readings import ChannelReadings_Maker
+from gwproto.types.data_channel import DataChannel
+from gwproto.types.data_channel import DataChannel_Maker
 from gwproto.types.fsm_full_report import FsmFullReport
 from gwproto.types.fsm_full_report import FsmFullReport_Maker
 from gwproto.types.fsm_atomic_report import FsmAtomicReport
@@ -49,6 +51,14 @@ class BatchedReadings(BaseModel):
     )
     BatchedTransmissionPeriodS: int = Field(
         title="BatchedTransmissionPeriodS",
+    )
+    DataChannelList: List[DataChannel] = Field(
+        title="DataChannel List",
+        description=(
+            "The list of data channels for which there is data getting reported in this batched "
+            "reading. It is a subset of all the data channels for the SCADA - may not be all "
+            "of them."
+        ),
     )
     ChannelReadingList: List[ChannelReadings] = Field(
         title="ChannelReadingList",
@@ -157,6 +167,11 @@ class BatchedReadings(BaseModel):
             if value is not None
         }
         # Recursively calling as_dict()
+        data_channel_list = []
+        for elt in self.DataChannelList:
+            data_channel_list.append(elt.as_dict())
+        d["DataChannelList"] = data_channel_list
+        # Recursively calling as_dict()
         channel_reading_list = []
         for elt in self.ChannelReadingList:
             channel_reading_list.append(elt.as_dict())
@@ -212,6 +227,7 @@ class BatchedReadings_Maker:
         about_g_node_alias: str,
         slot_start_unix_s: int,
         batched_transmission_period_s: int,
+        data_channel_list: List[DataChannel],
         channel_reading_list: List[ChannelReadings],
         fsm_action_list: List[FsmAtomicReport],
         fsm_report_list: List[FsmFullReport],
@@ -222,6 +238,7 @@ class BatchedReadings_Maker:
             AboutGNodeAlias=about_g_node_alias,
             SlotStartUnixS=slot_start_unix_s,
             BatchedTransmissionPeriodS=batched_transmission_period_s,
+            DataChannelList=data_channel_list,
             ChannelReadingList=channel_reading_list,
             FsmActionList=fsm_action_list,
             FsmReportList=fsm_report_list,
@@ -282,6 +299,17 @@ class BatchedReadings_Maker:
             raise SchemaError(f"dict missing SlotStartUnixS: <{d2}>")
         if "BatchedTransmissionPeriodS" not in d2.keys():
             raise SchemaError(f"dict missing BatchedTransmissionPeriodS: <{d2}>")
+        if "DataChannelList" not in d2.keys():
+            raise SchemaError(f"dict missing DataChannelList: <{d2}>")
+        if not isinstance(d2["DataChannelList"], List):
+            raise SchemaError(f"DataChannelList <{d2['DataChannelList']}> must be a List!")
+        data_channel_list = []
+        for elt in d2["DataChannelList"]:
+            if not isinstance(elt, dict):
+                raise SchemaError(f"DataChannelList <{d2['DataChannelList']}> must be a List of DataChannel types")
+            t = DataChannel_Maker.dict_to_tuple(elt)
+            data_channel_list.append(t)
+        d2["DataChannelList"] = data_channel_list
         if "ChannelReadingList" not in d2.keys():
             raise SchemaError(f"dict missing ChannelReadingList: <{d2}>")
         if not isinstance(d2["ChannelReadingList"], List):
@@ -356,6 +384,24 @@ def check_is_left_right_dot(v: str) -> None:
             raise ValueError(f"words of <{v}> split by by '.' must be alphanumeric.")
     if not v.islower():
         raise ValueError(f"All characters of <{v}> must be lowercase.")
+
+
+def check_is_positive_integer(v: int) -> None:
+    """
+    Must be positive when interpreted as an integer. Interpretation as an
+    integer follows the pydantic rules for this - which will round down
+    rational numbers. So 1.7 will be interpreted as 1 and is also fine,
+    while 0.5 is interpreted as 0 and will raise an exception.
+
+    Args:
+        v (int): the candidate
+
+    Raises:
+        ValueError: if v < 1
+    """
+    v2 = int(v)
+    if v2 < 1:
+        raise ValueError(f"<{v}> is not PositiveInteger")
 
 
 def check_is_reasonable_unix_time_s(v: int) -> None:

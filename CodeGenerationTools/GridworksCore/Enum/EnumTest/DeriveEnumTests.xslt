@@ -24,7 +24,7 @@
                 <xsl:variable name="version" select="EnumVersion"/>
                 <xsl:variable name="enum-name" select="EnumName"/>
                 <xsl:for-each select="$airtable//GtEnums/GtEnum[GtEnumId=$enum-id]">
-                    <xsl:variable name="enum-name-style" select="PythonEnumNameStyle" />
+                    <xsl:variable name="enum-type" select="EnumType" />
                     <xsl:variable name="local-class-name">
                         <xsl:call-template name="nt-case">
                             <xsl:with-param name="type-name-text" select="LocalName" />
@@ -52,10 +52,10 @@ def test_</xsl:text> <xsl:value-of select="translate(LocalName,'.','_')"/>
     <xsl:sort select="Idx"  data-type="number"/>
         <xsl:text>
         "</xsl:text>
-        <xsl:if test="$enum-name-style = 'Upper'">
+        <xsl:if test="$enum-type = 'Upper'">
             <xsl:value-of select="translate(translate(LocalValue,'-',''),$lcletters, $ucletters)"/>
         </xsl:if>
-        <xsl:if test="$enum-name-style ='UpperPython'">
+        <xsl:if test="$enum-type ='UpperPython'">
             <xsl:value-of select="LocalValue"/>
         </xsl:if>
 
@@ -66,10 +66,10 @@ def test_</xsl:text> <xsl:value-of select="translate(LocalName,'.','_')"/>
 
     assert </xsl:text><xsl:value-of select="$local-class-name"/><xsl:text>.default() == </xsl:text>
     <xsl:value-of select="$local-class-name"/><xsl:text>.</xsl:text>
-    <xsl:if test="$enum-name-style = 'Upper'">
+    <xsl:if test="$enum-type = 'Upper'">
         <xsl:value-of select="translate(translate(DefaultEnumValue,'-',''),$lcletters, $ucletters)"/>
     </xsl:if>
-    <xsl:if test="$enum-name-style ='UpperPython'">
+    <xsl:if test="$enum-type ='UpperPython'">
         <xsl:value-of select="DefaultEnumValue"/>
     </xsl:if>
     <xsl:text>
@@ -85,10 +85,10 @@ def test_</xsl:text> <xsl:value-of select="translate(LocalName,'.','_')"/>
     <xsl:sort select="Idx"  data-type="number"/>
     <xsl:text>
     assert </xsl:text><xsl:value-of select="$local-class-name"/><xsl:text>.version("</xsl:text>
-     <xsl:if test="$enum-name-style = 'Upper'">
+     <xsl:if test="$enum-type = 'Upper'">
             <xsl:value-of select="translate(translate(LocalValue,'-',''),$lcletters, $ucletters)"/>
         </xsl:if>
-        <xsl:if test="$enum-name-style ='UpperPython'">
+        <xsl:if test="$enum-type ='UpperPython'">
             <xsl:value-of select="LocalValue"/>
         </xsl:if>
     <xsl:text>") == "</xsl:text>

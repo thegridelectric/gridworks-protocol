@@ -5,7 +5,7 @@ import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
-from gwproto.types import Ads111xBasedComponentGt_Maker as Maker
+from gwproto.types.ads111x_based_component_gt import Ads111xBasedComponentGt_Maker as Maker
 
 
 def test_ads111x_based_component_gt_generated() -> None:
@@ -15,6 +15,7 @@ def test_ads111x_based_component_gt_generated() -> None:
         "DisplayName": "4-channel Ads for Beachrose",
         "OpenVoltageByAds": ,
         "ConfigList": ,
+        "ThermistorConfigList": ,
         "HwUid": "1001",
         "TypeName": "ads111x.based.component.gt",
         "Version": "000",
@@ -40,6 +41,7 @@ def test_ads111x_based_component_gt_generated() -> None:
         display_name=gtuple.DisplayName,
         open_voltage_by_ads=gtuple.OpenVoltageByAds,
         config_list=gtuple.ConfigList,
+        thermistor_config_list=gtuple.ThermistorConfigList,
         hw_uid=gtuple.HwUid,
         
     ).tuple
@@ -82,6 +84,11 @@ def test_ads111x_based_component_gt_generated() -> None:
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
+    d2 = dict(d)
+    del d2["ThermistorConfigList"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
     ######################################
     # Optional attributes can be removed from type
     ######################################
@@ -109,6 +116,18 @@ def test_ads111x_based_component_gt_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2  = dict(d, ConfigList= [{"Failed": "Not a GtSimpleSingleStatus"}])
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2  = dict(d, ThermistorConfigList="Not a list.")
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2  = dict(d, ThermistorConfigList=["Not a list of dicts"])
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2  = dict(d, ThermistorConfigList= [{"Failed": "Not a GtSimpleSingleStatus"}])
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 

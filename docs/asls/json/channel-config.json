@@ -1,22 +1,15 @@
 {
   "gtr_asl": "001",
-  "type_name": "telemetry.reporting.config",
-  "version": "001",
+  "type_name": "channel.config",
+  "version": "000",
   "owner": "gridworks@gridworks-consulting.com",
-  "description": "",
+  "description": "Channel Configuration. Configuration data used to articulate how time series data is polled and captured for a particular channel.",
   "properties": {
-    "AboutNodeName": {
+    "ChannelName": {
       "type": "string",
       "format": "SpaceheatName",
-      "title": "About Node Name",
-      "description": "The name of the SpaceheatNode that is getting measured. Typically this node will have a single data channel associated to it.",
-      "required": true
-    },
-    "TelemetryName": {
-      "type": "string",
-      "format": "spaceheat.telemetry.name",
-      "title": "Telemetry Name",
-      "description": "The Telemetry Name associated with this config.",
+      "title": "Data Channel Name",
+      "description": "The (locally unique, immutable) name of the Data Channel to which the configuration applies (What node is getting read, what telemetry name is getting read, and what node is doing the reading).",
       "required": true
     },
     "PollPeriodMs": {
@@ -59,13 +52,13 @@
     },
     "TypeName": {
       "type": "string",
-      "value": "telemetry.reporting.config",
+      "value": "channel.config",
       "title": "The type name"
     },
     "Version": {
       "type": "string",
       "title": "The type version",
-      "default": "001",
+      "default": "000",
       "required": true
     }
   },

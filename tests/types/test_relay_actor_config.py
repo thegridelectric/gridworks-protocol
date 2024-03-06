@@ -5,7 +5,7 @@ import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
-from gwproto.types import RelayActorConfig_Maker as Maker
+from gwproto.types.relay_actor_config import RelayActorConfig_Maker as Maker
 
 
 def test_relay_actor_config_generated() -> None:

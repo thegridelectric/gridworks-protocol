@@ -12,8 +12,7 @@ from gwproto.enums import TelemetryName
 def test_synced_readings_generated() -> None:
     d = {
         "ScadaReadTimeUnixMs": 1656587343297,
-        "AboutNodeNameList": ["a.elt1"],
-        "TelemetryNameList": ["ad19e79c"],
+        "ChannelNameList": ,
         "ValueList": [18000],
         "TypeName": "synced.readings",
         "Version": "000",
@@ -35,8 +34,7 @@ def test_synced_readings_generated() -> None:
     # test Maker init
     t = Maker(
         scada_read_time_unix_ms=gtuple.ScadaReadTimeUnixMs,
-        about_node_name_list=gtuple.AboutNodeNameList,
-        telemetry_name_list=gtuple.TelemetryNameList,
+        channel_name_list=gtuple.ChannelNameList,
         value_list=gtuple.ValueList,
         
     ).tuple
@@ -57,12 +55,7 @@ def test_synced_readings_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["AboutNodeNameList"]
-    with pytest.raises(SchemaError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d)
-    del d2["TelemetryNameList"]
+    del d2["ChannelNameList"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -95,6 +88,6 @@ def test_synced_readings_generated() -> None:
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, AboutNodeNameList=["A.hot-stuff"])
+    d2 = dict(d, ChannelNameList=["A.hot-stuff"])
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)

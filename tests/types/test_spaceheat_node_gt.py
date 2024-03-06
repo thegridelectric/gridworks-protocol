@@ -1,4 +1,4 @@
-"""Tests spaceheat.node.gt type, version 101"""
+"""Tests spaceheat.node.gt type, version 200"""
 import json
 
 import pytest
@@ -20,7 +20,7 @@ def test_spaceheat_node_gt_generated() -> None:
         "ComponentId": "80f95280-e999-49e0-a0e4-a7faf3b5b3bd",
         "InPowerMetering": False,
         "TypeName": "spaceheat.node.gt",
-        "Version": "101",
+        "Version": "200",
     }
 
     with pytest.raises(SchemaError):
@@ -133,5 +133,9 @@ def test_spaceheat_node_gt_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d, Name="A.hot-stuff")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, Handle="A.hot-stuff")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)

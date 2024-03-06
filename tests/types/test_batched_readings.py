@@ -15,6 +15,7 @@ def test_batched_readings_generated() -> None:
         "AboutGNodeAlias": "dwtest.isone.ct.newhaven.orange1.ta",
         "SlotStartUnixS": 1656945300,
         "BatchedTransmissionPeriodS": 300,
+        "DataChannelList": ,
         "ChannelReadingList": [],
         "FsmActionList": [],
         "FsmReportList": [],
@@ -42,6 +43,7 @@ def test_batched_readings_generated() -> None:
         about_g_node_alias=gtuple.AboutGNodeAlias,
         slot_start_unix_s=gtuple.SlotStartUnixS,
         batched_transmission_period_s=gtuple.BatchedTransmissionPeriodS,
+        data_channel_list=gtuple.DataChannelList,
         channel_reading_list=gtuple.ChannelReadingList,
         fsm_action_list=gtuple.FsmActionList,
         fsm_report_list=gtuple.FsmReportList,
@@ -84,6 +86,11 @@ def test_batched_readings_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
+    del d2["DataChannelList"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
     del d2["ChannelReadingList"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
@@ -108,6 +115,18 @@ def test_batched_readings_generated() -> None:
 
     d2 = dict(d, BatchedTransmissionPeriodS="300.1")
     with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2  = dict(d, DataChannelList="Not a list.")
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2  = dict(d, DataChannelList=["Not a list of dicts"])
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2  = dict(d, DataChannelList= [{"Failed": "Not a GtSimpleSingleStatus"}])
+    with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
     d2  = dict(d, ChannelReadingList="Not a list.")

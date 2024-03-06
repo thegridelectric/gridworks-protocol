@@ -10,8 +10,8 @@ from pydantic import BaseModel
 from pydantic import Extra
 from pydantic import Field
 from pydantic import validator
-from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
-from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig_Maker
+from gwproto.types.channel_config import ChannelConfig
+from gwproto.types.channel_config import ChannelConfig_Maker
 from gwproto.enums import ThermistorDataMethod
 from gwproto.errors import SchemaError
 
@@ -36,7 +36,7 @@ class ThermistorDataProcessingConfig(BaseModel):
             "terminal block to read. For example, al Ads111xBasedComponents use this."
         ),
     )
-    ReportingConfig: TelemetryReportingConfig = Field(
+    ReportingConfig: ChannelConfig = Field(
         title="Telemetry Reporting Config",
         description=(
             "This includes the standard non-thermistor-specific reporting configuration data."
@@ -139,7 +139,7 @@ class ThermistorDataProcessingConfig_Maker:
     def __init__(
         self,
         terminal_block_idx: int,
-        reporting_config: TelemetryReportingConfig,
+        reporting_config: ChannelConfig,
         data_processing_method: Optional[ThermistorDataMethod],
         data_processing_description: Optional[str],
     ):
@@ -200,8 +200,8 @@ class ThermistorDataProcessingConfig_Maker:
         if "ReportingConfig" not in d2.keys():
             raise SchemaError(f"dict missing ReportingConfig: <{d2}>")
         if not isinstance(d2["ReportingConfig"], dict):
-            raise SchemaError(f"ReportingConfig <{d2['ReportingConfig']}> must be a TelemetryReportingConfig!")
-        reporting_config = TelemetryReportingConfig_Maker.dict_to_tuple(d2["ReportingConfig"])
+            raise SchemaError(f"ReportingConfig <{d2['ReportingConfig']}> must be a ChannelConfig!")
+        reporting_config = ChannelConfig_Maker.dict_to_tuple(d2["ReportingConfig"])
         d2["ReportingConfig"] = reporting_config
         if "DataProcessingMethod" in d2.keys():
             value = ThermistorDataMethod.symbol_to_value(d2["DataProcessingMethodGtEnumSymbol"])

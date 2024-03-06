@@ -6,6 +6,10 @@ spaceheat.make.model.001
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/spaceheat-make-model.json
 
+spaceheat.kind.of.param.000
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. literalinclude:: json/spaceheat-kind-of-param.json
+
 local.comm.interface.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/local-comm-interface.json
@@ -17,6 +21,10 @@ thermistor.data.method.000
 change.lg.operating.mode.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/change-lg-operating-mode.json
+
+change.heat.pump.control.000
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. literalinclude:: json/change-heat-pump-control.json
 
 sh.fsm.action.type.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -38,9 +46,9 @@ sh.actor.class.001
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/sh-actor-class.json
 
-x.000
+change.boiler.control.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/x.json
+.. literalinclude:: json/change-boiler-control.json
 
 lg.operating.mode.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -57,6 +65,10 @@ change.store.flow.direction.000
 change.heatcall.source.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/change-heatcall-source.json
+
+relay.energization.state.000
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. literalinclude:: json/relay-energization-state.json
 
 change.relay.state.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^

@@ -52,6 +52,10 @@
     "Axiom1": {
       "title": "Action and ActionType exist iff IsAction",
       "description": "The Optional Attributes ActionType and Action exist if and only if IsAction is true."
+    },
+    "Axiom2": {
+      "title": "If Action exists, then it belongs to the un-versioned enum selected in the ActionType.",
+      "description": ""
     }
   },
   "formats": {

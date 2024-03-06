@@ -2,6 +2,7 @@ from typing import Optional
 
 import yarl
 
+from gwproto.data_classes.component_attribute_class import ComponentAttributeClass as Cac
 from gwproto.data_classes.component import Component
 from gwproto.types.hubitat_gt import HubitatGt
 
@@ -27,3 +28,7 @@ class HubitatComponent(Component):
 
     def urls(self) -> dict[str, Optional[yarl.URL]]:
         return self.hubitat_gt.urls()
+
+    @property
+    def cac(self) -> Cac:
+        return Cac.by_id[self.component_attribute_class_id]

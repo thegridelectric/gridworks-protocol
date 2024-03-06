@@ -4,7 +4,6 @@ import logging
 from typing import Any
 from typing import Dict
 from typing import Literal
-from typing import Optional
 
 from pydantic import BaseModel
 from pydantic import Extra
@@ -30,31 +29,53 @@ class FsmEvent(BaseModel):
     [More info](https://gridworks-protocol.readthedocs.io/en/latest/finite-state-machines.html)
     """
 
-    FromHandle: Optional[] = Field(
+    FromHandle: str = Field(
         title="From Handle",
-        default=None,
     )
-    ToHandle: Optional[] = Field(
+    ToHandle: str = Field(
         title="To Handle",
-        default=None,
     )
-    Name: Optional[] = Field(
+    Name: str = Field(
         title="Event Name",
         description=(
             "This should be the name that the receiving Spaceheat Node's finite state machine "
             "uses for an event that triggers a transition."
         ),
-        default=None,
     )
-    SendTimeUnixMs: Optional[] = Field(
+    SendTimeUnixMs: int = Field(
         title="Sent Time Unix Ms",
-        default=None,
     )
     TypeName: Literal["fsm.event"] = "fsm.event"
     Version: Literal["000"] = "000"
 
     class Config:
         extra = Extra.allow
+
+    @validator("FromHandle")
+    def _check_from_handle(cls, v: str) -> str:
+        try:
+            check_is_spaceheat_name(v)
+        except ValueError as e:
+            raise ValueError(f"FromHandle failed SpaceheatName format validation: {e}")
+        return v
+
+    @validator("ToHandle")
+    def _check_to_handle(cls, v: str) -> str:
+        try:
+            check_is_spaceheat_name(v)
+        except ValueError as e:
+            raise ValueError(f"ToHandle failed SpaceheatName format validation: {e}")
+        return v
+
+    @validator("SendTimeUnixMs")
+    def _check_send_time_unix_ms(cls, v: int) -> int:
+        try:
+            check_is_reasonable_unix_time_ms(v)
+        except ValueError as e:
+            raise ValueError(
+                f"SendTimeUnixMs failed ReasonableUnixTimeMs format validation: {e}"
+            )
+        return v
 
     def as_dict(self) -> Dict[str, Any]:
         """
@@ -115,10 +136,10 @@ class FsmEvent_Maker:
 
     def __init__(
         self,
-        from_handle: Optional[],
-        to_handle: Optional[],
-        name: Optional[],
-        send_time_unix_ms: Optional[],
+        from_handle: str,
+        to_handle: str,
+        name: str,
+        send_time_unix_ms: int,
     ):
         self.tuple = FsmEvent(
             FromHandle=from_handle,
@@ -172,6 +193,14 @@ class FsmEvent_Maker:
             FsmEvent
         """
         d2 = dict(d)
+        if "FromHandle" not in d2.keys():
+            raise SchemaError(f"dict missing FromHandle: <{d2}>")
+        if "ToHandle" not in d2.keys():
+            raise SchemaError(f"dict missing ToHandle: <{d2}>")
+        if "Name" not in d2.keys():
+            raise SchemaError(f"dict missing Name: <{d2}>")
+        if "SendTimeUnixMs" not in d2.keys():
+            raise SchemaError(f"dict missing SendTimeUnixMs: <{d2}>")
         if "TypeName" not in d2.keys():
             raise SchemaError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():

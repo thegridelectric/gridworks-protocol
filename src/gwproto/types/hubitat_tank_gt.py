@@ -28,7 +28,8 @@ HUBITAT_ACCESS_TOKEN_REGEX = re.compile(
 
 
 class FibaroTempSensorSettingsGt(BaseModel):
-    stack_depth: conint(ge=1)
+    channel_name: str
+    stack_depth: int
     device_id: int
     fibaro_component_id: str
     analog_input_id: conint(ge=1, le=2)
@@ -57,11 +58,10 @@ class FibaroTempSensorSettingsGt(BaseModel):
         return v
 
 
-DEFAULT_SENSOR_NODE_NAME_FORMAT = "{tank_name}.temp.depth{stack_depth}"
+DEFAULT_SENSOR_NODE_NAME_FORMAT = "{about_node_name}"
 
 
 class FibaroTempSensorSettings(FibaroTempSensorSettingsGt):
-    node_name: str
 
     class Config:
         keep_untouched = (cached_property, TelemetryName)
@@ -194,16 +194,10 @@ class FibaroTempSensorSettings(FibaroTempSensorSettingsGt):
     @classmethod
     def create(
         cls,
-        tank_name: str,
         settings_gt: FibaroTempSensorSettingsGt,
         hubitat: HubitatRESTResolutionSettings,
-        node_name_format=DEFAULT_SENSOR_NODE_NAME_FORMAT,
     ) -> "FibaroTempSensorSettings":
         settings = FibaroTempSensorSettings(
-            node_name=node_name_format.format(
-                tank_name=tank_name,
-                stack_depth=settings_gt.stack_depth,
-            ),
             **settings_gt.dict(),
         )
         settings.resolve_rest(hubitat)
@@ -215,6 +209,7 @@ DEFAULT_TANK_MODULE_VOLTAGE = 23.7
 
 class HubitatTankSettingsGt(BaseModel):
     hubitat_component_id: str
+    my_node_name: str
     sensor_supply_voltage: float = DEFAULT_TANK_MODULE_VOLTAGE
     devices: list[FibaroTempSensorSettingsGt] = []
 

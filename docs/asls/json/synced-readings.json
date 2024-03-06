@@ -12,24 +12,14 @@
       "description": "The single time, in unix milliseconds, assigned to this list of readings.",
       "required": true
     },
-    "AboutNodeNameList": {
+    "ChannelNameList": {
       "type": "array",
       "items": {
         "type": "string"
       },
       "format": "SpaceheatName",
-      "title": "AboutNodeNameList",
-      "description": "List of names of the SpaceHeat Nodes getting measured.",
-      "required": true
-    },
-    "TelemetryNameList": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "format": "spaceheat.telemetry.name",
-      "title": "TelemetryNameList",
-      "description": "List of the TelemetryNames. The nth name in this list indicates the TelemetryName of the nth alias in the AboutNodeAliasList.",
+      "title": "Channel Name List",
+      "description": "List of the names of the Data Channels getting measured. These names are immutable and locally unique for the Scada.",
       "required": true
     },
     "ValueList": {

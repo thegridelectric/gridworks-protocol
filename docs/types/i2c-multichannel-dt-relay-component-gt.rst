@@ -13,6 +13,9 @@ Python pydantic class corresponding to json type `i2c.multichannel.dt.relay.comp
     - Description: ComponentAttributeClassId. Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry. 
     - Format: UuidCanonicalTextual
 
+**ConfigList**:
+    - Description: Channel Config List. A list of the ChannelConfigs for the data channels reported by the actors associated to this component's relays (actors specified in the RelayConfigLlist)
+
 **RelayConfigList**:
     - Description: Relay Config List. Information about which actors control each relay, and the relay wiring state: (normally open, normally closed, double throw).
 
@@ -28,6 +31,10 @@ Python pydantic class corresponding to json type `i2c.multichannel.dt.relay.comp
 **Version**:
     - Description: All GridWorks Versioned Types have a fixed version, which is a string of three Hindu-Arabic numerals.
 
+
+
+.. autoclass:: gwproto.types.i2c_multichannel_dt_relay_component_gt.check_is_uuid_canonical_textual
+    :members:
 
 
 .. autoclass:: gwproto.types.I2cMultichannelDtRelayComponentGt_Maker

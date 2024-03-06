@@ -9,11 +9,9 @@ Python pydantic class corresponding to json type `single.reading`, version `000`
     - Description: Scada Read Time in Unix Milliseconds. 
     - Format: ReasonableUnixTimeMs
 
-**AboutNodeName**:
-    - Description: AboutNodeName. The name of the Simple Sensing Spaceheat Node. This is both the AboutNodeName and FromNodeName for a data channel. The TelemetryName (and thus Units) are expected to be inferred by the Spaceheat Node. For example this is done initially in SCADA code according to whether the component of the Node is a PipeFlowSensorComponent, SimpleTempSensorComponent etc.
-
-**TelemetryName**:
-    - Description: TelemetryName. 
+**ChannelName**:
+    - Description: Data Channel Name. The name of the Channel getting reported
+    - Format: SpaceheatName
 
 **Value**:
     - Description: Value. The value of the reading. 

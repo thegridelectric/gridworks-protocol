@@ -7,6 +7,7 @@ from typing import Literal
 
 from pydantic import BaseModel
 from pydantic import Field
+from pydantic import root_validator
 from pydantic import validator
 from gwproto.enums import RelayWiringConfig
 from gwproto.errors import SchemaError
@@ -41,8 +42,7 @@ class RelayActorConfig(BaseModel):
     WiringConfig: RelayWiringConfig = Field(
         title="Wiring Config",
         description=(
-            "Is the relay a simple Normally Open or Normally Closed relay (in which case "0/1" "
-            "work for RelayState) or is it a double throw relay?"
+            "Is the relay a simple Normally Open or Normally Closed or is it a double throw relay?"
         ),
     )
     TypeName: Literal["relay.actor.config"] = "relay.actor.config"
@@ -62,6 +62,15 @@ class RelayActorConfig(BaseModel):
             check_is_spaceheat_name(v)
         except ValueError as e:
             raise ValueError(f"ActorName failed SpaceheatName format validation: {e}")
+        return v
+
+    @root_validator
+    def check_axiom_1(cls, v: dict) -> dict:
+        """
+        Axiom 1: CapturedBy Actor consistency.
+        
+        """
+        # TODO: Implement check for axiom 1"
         return v
 
     def as_dict(self) -> Dict[str, Any]:

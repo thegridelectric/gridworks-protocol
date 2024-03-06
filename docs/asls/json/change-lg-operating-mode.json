@@ -5,8 +5,8 @@
     "description": "Clarifies the request and the action in changing between lg.operating.modes",
     "ssot": "https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changelgoperatingmode",
     "values": ["SwitchToDhw", "SwitchToHeat"],
-    "value_to_symbol": { "SwitchToDhw": "",  "SwitchToHeat": ""},
-    "value_to_version": { "SwitchToDhw": "000",  "SwitchToHeat": "000"},
+    "value_to_symbol": { "": "",  "": ""},
+    "value_to_version": { "": "000",  "": "000"},
     "value_descriptions": {
                 "SwitchToDhw": "",
                 "SwitchToHeat": ""

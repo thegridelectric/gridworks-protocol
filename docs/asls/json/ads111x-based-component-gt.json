@@ -38,6 +38,14 @@
     "ConfigList": {
       "type": "array",
       "items": {
+        "type": "channel.config.000"
+      },
+      "description": "The information re timing of data polling and capture for the channels read by the node.",
+      "required": true
+    },
+    "ThermistorConfigList": {
+      "type": "array",
+      "items": {
         "type": "thermistor.data.processing.config.000"
       },
       "description": "This includes the list of configuration information needed for data processing and reporting for the data collected by thermistors - both voltage and (derived) temperature.",
@@ -60,6 +68,10 @@
     }
   },
   "axioms": {
+    "Axiom": {
+      "title": "ThermistorConfig, ChannelConfig consistency",
+      "description": "list(map(lambda x: x.ReportingConfig, ThermistorConfigList)) is equal to ConfigList"
+    },
     "Axiom1": {
       "title": "Terminal Block, TelemetryName uniqueness",
       "description": "Each pair (x.TerminalBlockIdx, x.ReportingConfig.TelemetryName) in the ConfigList is unique."

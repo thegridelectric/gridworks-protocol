@@ -3,11 +3,13 @@
   "type_name": "channel.readings",
   "version": "000",
   "owner": "gridworks@gridworks-consulting.com",
-  "description": ". A list of timestamped readings (values) for a data channel (AboutName, CapturedByName, TelemetryName).",
+  "description": ". A list of timestamped readings (values) for a data channel. This is meant to be reported for non-local consumption (AtomicTNode, other) by a SCADA. Therefore, the data channel is referenced by its globally unique identifier. The receiver needs to reference this idea against a list of the data channels used by the SCADA for accurate parsing.",
   "properties": {
-    "DataChannel": {
-      "type": "data.channel.000",
-      "description": "The Data Channel that this batch of timestamped values is about.",
+    "ChannelId": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "Channel Od",
+      "description": "The globally unique identifier of the Data Channel for this batch of timestamped values.",
       "required": true
     },
     "ValueList": {

@@ -5,8 +5,8 @@
     "description": "Used for dispatch/actions between the two states of a double-throw failsafe relay that toggles between the SCADA and a Thermostat for controlling the heat call to a zone.",
     "ssot": "https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeheatcallsource",
     "values": ["SwitchToWallThermostat", "SwitchToScada"],
-    "value_to_symbol": { "SwitchToWallThermostat": "",  "SwitchToScada": ""},
-    "value_to_version": { "SwitchToWallThermostat": "000",  "SwitchToScada": "000"},
+    "value_to_symbol": { "": "",  "": ""},
+    "value_to_version": { "": "000",  "": "000"},
     "value_descriptions": {
                 "SwitchToWallThermostat": "",
                 "SwitchToScada": ""

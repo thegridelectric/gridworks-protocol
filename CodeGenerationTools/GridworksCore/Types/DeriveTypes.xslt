@@ -1505,7 +1505,6 @@ class </xsl:text>
 
 
 <xsl:for-each select="$airtable//GtEnums/GtEnum[(normalize-space(Name) !='')  and (count(TypesThatUse[text()=$versioned-type-id])>0)]">
-<xsl:variable name="enum-name-style" select="PythonEnumNameStyle" />
 <xsl:variable name="local-name" select="LocalName"/>
 <xsl:variable name="enum-local-name">
     <xsl:call-template name="nt-case">

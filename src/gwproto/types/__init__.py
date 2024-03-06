@@ -1,18 +1,16 @@
 
 """ List of all the types """
 
-# from gwproto.types.ads111x_based_cac_gt import Ads111xBasedCacGt
-# from gwproto.types.ads111x_based_cac_gt import Ads111xBasedCacGt_Maker
-from gwproto.types.ads111x_based_component_gt import Ads111xBasedComponentGt
-from gwproto.types.ads111x_based_component_gt import Ads111xBasedComponentGt_Maker
+from gwproto.types.ads111x_based_cac_gt import Ads111xBasedCacGt
+from gwproto.types.ads111x_based_cac_gt import Ads111xBasedCacGt_Maker
 from gwproto.types.batched_readings import BatchedReadings
 from gwproto.types.batched_readings import BatchedReadings_Maker
 from gwproto.types.channel_readings import ChannelReadings
 from gwproto.types.channel_readings import ChannelReadings_Maker
 from gwproto.types.component_attribute_class_gt import ComponentAttributeClassGt
 from gwproto.types.component_attribute_class_gt import ComponentAttributeClassGt_Maker
-from gwproto.types.component_gt import ComponentGt
-from gwproto.types.component_gt import ComponentGt_Maker
+# from gwproto.types.component_gt import ComponentGt
+# from gwproto.types.component_gt import ComponentGt_Maker
 from gwproto.types.data_channel import DataChannel
 from gwproto.types.data_channel import DataChannel_Maker
 from gwproto.types.egauge_io import EgaugeIo
@@ -21,10 +19,6 @@ from gwproto.types.egauge_register_config import EgaugeRegisterConfig
 from gwproto.types.egauge_register_config import EgaugeRegisterConfig_Maker
 from gwproto.types.electric_meter_cac_gt import ElectricMeterCacGt
 from gwproto.types.electric_meter_cac_gt import ElectricMeterCacGt_Maker
-from gwproto.types.electric_meter_component_gt import ElectricMeterComponentGt
-from gwproto.types.electric_meter_component_gt import ElectricMeterComponentGt_Maker
-from gwproto.types.fibaro_smart_implant_component_gt import FibaroSmartImplantComponentGt
-from gwproto.types.fibaro_smart_implant_component_gt import FibaroSmartImplantComponentGt_Maker
 from gwproto.types.fsm_atomic_report import FsmAtomicReport
 from gwproto.types.fsm_atomic_report import FsmAtomicReport_Maker
 from gwproto.types.fsm_event import FsmEvent
@@ -51,8 +45,6 @@ from gwproto.types.keyparam_change_log import KeyparamChangeLog
 from gwproto.types.keyparam_change_log import KeyparamChangeLog_Maker
 from gwproto.types.power_watts import PowerWatts
 from gwproto.types.power_watts import PowerWatts_Maker
-from gwproto.types.relay_actor_config import RelayActorConfig
-from gwproto.types.relay_actor_config import RelayActorConfig_Maker
 from gwproto.types.resistive_heater_cac_gt import ResistiveHeaterCacGt
 from gwproto.types.resistive_heater_cac_gt import ResistiveHeaterCacGt_Maker
 from gwproto.types.resistive_heater_component_gt import ResistiveHeaterComponentGt
@@ -61,35 +53,33 @@ from gwproto.types.rest_poller_component_gt import RESTPollerComponentGt
 from gwproto.types.rest_poller_component_gt import RESTPollerComponentGt_Maker
 from gwproto.types.single_reading import SingleReading
 from gwproto.types.single_reading import SingleReading_Maker
-from gwproto.types.snapshot_spaceheat import SnapshotSpaceheat
-from gwproto.types.snapshot_spaceheat import SnapshotSpaceheat_Maker
+from gwproto.types.snapshot_spaceheat import Snapshot
+from gwproto.types.snapshot_spaceheat import Snapshot_Maker
 from gwproto.types.spaceheat_node_gt import SpaceheatNodeGt
 from gwproto.types.spaceheat_node_gt import SpaceheatNodeGt_Maker
 from gwproto.types.synced_readings import SyncedReadings
 from gwproto.types.synced_readings import SyncedReadings_Maker
 from gwproto.types.ta_data_channels import TaDataChannels
 from gwproto.types.ta_data_channels import TaDataChannels_Maker
-from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
-from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig_Maker
-from gwproto.types.telemetry_snapshot_spaceheat import TelemetrySnapshotSpaceheat
-from gwproto.types.telemetry_snapshot_spaceheat import TelemetrySnapshotSpaceheat_Maker
 from gwproto.types.thermistor_data_processing_config import ThermistorDataProcessingConfig
 from gwproto.types.thermistor_data_processing_config import ThermistorDataProcessingConfig_Maker
 
 
 __all__ = [
-    # "Ads111xBasedCacGt",
-    # "Ads111xBasedCacGt_Maker",
-    "Ads111xBasedComponentGt",
-    "Ads111xBasedComponentGt_Maker",
+    "Ads111xBasedCacGt",
+    "Ads111xBasedCacGt_Maker",
+    # "Ads111xBasedComponentGt",
+    # "Ads111xBasedComponentGt_Maker",
     "BatchedReadings",
     "BatchedReadings_Maker",
+    # "ChannelConfig",
+    # "ChannelConfig_Maker",
     "ChannelReadings",
     "ChannelReadings_Maker",
     "ComponentAttributeClassGt",
     "ComponentAttributeClassGt_Maker",
-    "ComponentGt",
-    "ComponentGt_Maker",
+    # "ComponentGt",
+    # "ComponentGt_Maker",
     "DataChannel",
     "DataChannel_Maker",
     "EgaugeIo",
@@ -98,10 +88,10 @@ __all__ = [
     "EgaugeRegisterConfig_Maker",
     "ElectricMeterCacGt",
     "ElectricMeterCacGt_Maker",
-    "ElectricMeterComponentGt",
-    "ElectricMeterComponentGt_Maker",
-    "FibaroSmartImplantComponentGt",
-    "FibaroSmartImplantComponentGt_Maker",
+    # "ElectricMeterComponentGt",
+    # "ElectricMeterComponentGt_Maker",
+    # "FibaroSmartImplantComponentGt",
+    # "FibaroSmartImplantComponentGt_Maker",
     "FsmAtomicReport",
     "FsmAtomicReport_Maker",
     "FsmEvent",
@@ -128,8 +118,8 @@ __all__ = [
     "KeyparamChangeLog_Maker",
     "PowerWatts",
     "PowerWatts_Maker",
-    "RelayActorConfig",
-    "RelayActorConfig_Maker",
+    # "RelayActorConfig",
+    # "RelayActorConfig_Maker",
     "ResistiveHeaterCacGt",
     "ResistiveHeaterCacGt_Maker",
     "ResistiveHeaterComponentGt",
@@ -138,18 +128,14 @@ __all__ = [
     "RESTPollerComponentGt_Maker",
     "SingleReading",
     "SingleReading_Maker",
-    "SnapshotSpaceheat",
-    "SnapshotSpaceheat_Maker",
+    "Snapshot",
+    "Snapshot_Maker",
     "SpaceheatNodeGt",
     "SpaceheatNodeGt_Maker",
     "SyncedReadings",
     "SyncedReadings_Maker",
     "TaDataChannels",
     "TaDataChannels_Maker",
-    "TelemetryReportingConfig",
-    "TelemetryReportingConfig_Maker",
-    "TelemetrySnapshotSpaceheat",
-    "TelemetrySnapshotSpaceheat_Maker",
     "ThermistorDataProcessingConfig",
     "ThermistorDataProcessingConfig_Maker",
 ]

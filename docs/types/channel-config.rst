@@ -1,16 +1,13 @@
-TelemetryReportingConfig
+ChannelConfig
 ==========================
-Python pydantic class corresponding to json type `telemetry.reporting.config`, version `001`.
+Python pydantic class corresponding to json type `channel.config`, version `000`.
 
-.. autoclass:: gwproto.types.TelemetryReportingConfig
+.. autoclass:: gwproto.types.ChannelConfig
     :members:
 
-**AboutNodeName**:
-    - Description: About Node Name. The name of the SpaceheatNode that is getting measured. Typically this node will have a single data channel associated to it.
+**ChannelName**:
+    - Description: Data Channel Name. The (locally unique, immutable) name of the  Data Channel to which the configuration applies (What node is getting read, what telemetry name is getting read, and what node is doing the reading).
     - Format: SpaceheatName
-
-**TelemetryName**:
-    - Description: Telemetry Name. The Telemetry Name associated with this config.
 
 **PollPeriodMs**:
     - Description: Poll Period in Milliseconds. Poll Period refers to the period of time between two readings by the local actor. This is in contrast to Capture Period, which refers to the period between readings that are sent up to the cloud (or otherwise saved for the long-term). 
@@ -41,14 +38,14 @@ Python pydantic class corresponding to json type `telemetry.reporting.config`, v
 
 
 
-.. autoclass:: gwproto.types.telemetry_reporting_config.check_is_spaceheat_name
+.. autoclass:: gwproto.types.channel_config.check_is_spaceheat_name
     :members:
 
 
-.. autoclass:: gwproto.types.telemetry_reporting_config.check_is_positive_integer
+.. autoclass:: gwproto.types.channel_config.check_is_positive_integer
     :members:
 
 
-.. autoclass:: gwproto.types.TelemetryReportingConfig_Maker
+.. autoclass:: gwproto.types.ChannelConfig_Maker
     :members:
 

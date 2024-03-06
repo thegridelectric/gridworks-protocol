@@ -6,6 +6,7 @@ from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
 from gwproto.types import I2cFlowTotalizerComponentGt_Maker as Maker
+from gwproto.enums import MakeModel
 
 
 def test_i2c_flow_totalizer_component_gt_generated() -> None:
@@ -13,8 +14,9 @@ def test_i2c_flow_totalizer_component_gt_generated() -> None:
         "ComponentId": "dd5ac673-91a8-40e2-a233-b67479cec709",
         "ComponentAttributeClassId": "13d916dc-8764-4b16-b85d-b8ead3e2fc80",
         "I2cAddress": 100,
+        "ConfigList": ,
+        "PulseFlowMeterMakeModelGtEnumSymbol": "99d961da",
         "ConversionFactor": 0.1328,
-        "PulseFlowMeterTypeGtEnumSymbol": "99d961da",
         "DisplayName": "Flow meter on pipe out of tank",
         "HwUid": "1234",
         "TypeName": "i2c.flow.totalizer.component.gt",
@@ -39,8 +41,9 @@ def test_i2c_flow_totalizer_component_gt_generated() -> None:
         component_id=gtuple.ComponentId,
         component_attribute_class_id=gtuple.ComponentAttributeClassId,
         i2c_address=gtuple.I2cAddress,
+        config_list=gtuple.ConfigList,
+        pulse_flow_meter_make_model=gtuple.PulseFlowMeterMakeModel,
         conversion_factor=gtuple.ConversionFactor,
-        pulse_flow_meter_type=gtuple.PulseFlowMeterType,
         display_name=gtuple.DisplayName,
         hw_uid=gtuple.HwUid,
         
@@ -80,12 +83,17 @@ def test_i2c_flow_totalizer_component_gt_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["ConversionFactor"]
+    del d2["ConfigList"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["PulseFlowMeterTypeGtEnumSymbol"]
+    del d2["PulseFlowMeterMakeModelGtEnumSymbol"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    del d2["ConversionFactor"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -111,12 +119,24 @@ def test_i2c_flow_totalizer_component_gt_generated() -> None:
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
+    d2  = dict(d, ConfigList="Not a list.")
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2  = dict(d, ConfigList=["Not a list of dicts"])
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2  = dict(d, ConfigList= [{"Failed": "Not a GtSimpleSingleStatus"}])
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, PulseFlowMeterMakeModelGtEnumSymbol="unknown_symbol")
+    Maker.dict_to_tuple(d2).PulseFlowMeterMakeModel == MakeModel.default()
+
     d2 = dict(d, ConversionFactor="this is not a float")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
-
-    d2 = dict(d, PulseFlowMeterTypeGtEnumSymbol="unknown_symbol")
-    Maker.dict_to_tuple(d2).PulseFlowMeterType == MakeModel.default()
 
     ######################################
     # SchemaError raised if TypeName is incorrect

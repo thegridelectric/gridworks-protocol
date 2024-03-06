@@ -12,7 +12,8 @@ def test_snapshot_spaceheat_generated() -> None:
     d = {
         "FromGNodeAlias": "dwtest.isone.ct.newhaven.orange1.ta.scada",
         "FromGNodeInstanceId": "0384ef21-648b-4455-b917-58a1172d7fc1",
-        "Snapshot": ,
+        "SnapshotTimeUnixMs": ,
+        "LatestReadingList": ,
         "TypeName": "snapshot.spaceheat",
         "Version": "001",
     }
@@ -34,7 +35,8 @@ def test_snapshot_spaceheat_generated() -> None:
     t = Maker(
         from_g_node_alias=gtuple.FromGNodeAlias,
         from_g_node_instance_id=gtuple.FromGNodeInstanceId,
-        snapshot=gtuple.Snapshot,
+        snapshot_time_unix_ms=gtuple.SnapshotTimeUnixMs,
+        latest_reading_list=gtuple.LatestReadingList,
         
     ).tuple
     assert t == gtuple
@@ -59,13 +61,34 @@ def test_snapshot_spaceheat_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["Snapshot"]
+    del d2["SnapshotTimeUnixMs"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    del d2["LatestReadingList"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
     ######################################
     # Behavior on incorrect types
     ######################################
+
+    d2 = dict(d, SnapshotTimeUnixMs=".1")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2  = dict(d, LatestReadingList="Not a list.")
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2  = dict(d, LatestReadingList=["Not a list of dicts"])
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2  = dict(d, LatestReadingList= [{"Failed": "Not a GtSimpleSingleStatus"}])
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
 
     ######################################
     # SchemaError raised if TypeName is incorrect
@@ -84,5 +107,9 @@ def test_snapshot_spaceheat_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d, FromGNodeInstanceId="d4be12d5-33ba-4f1f-b9e5")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, SnapshotTimeUnixMs=1656245000)
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)

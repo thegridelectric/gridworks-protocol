@@ -2,7 +2,6 @@ import copy
 import typing
 from typing import Literal
 
-from gwproto.data_classes.component import Component
 from gwproto.data_classes.components.hubitat_poller_component import (
     HubitatPollerComponent,
 )
@@ -28,7 +27,7 @@ class HubitatPollerComponentGt(ComponentGt):
         )
 
     def to_data_class(self) -> HubitatPollerComponent:
-        component = Component.by_id.get(self.ComponentId, None)
+        component = HubitatPollerComponent.by_id.get(self.ComponentId, None)
         if component is not None:
             return typing.cast(HubitatPollerComponent, component)
         return HubitatPollerComponent(

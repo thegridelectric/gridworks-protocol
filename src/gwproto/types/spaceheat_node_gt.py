@@ -1,4 +1,4 @@
-"""Type spaceheat.node.gt, version 101"""
+"""Type spaceheat.node.gt, version 200"""
 import json
 import logging
 from typing import Any
@@ -48,16 +48,16 @@ class SpaceheatNodeGt(BaseModel):
         title="Name",
         description=(
             "Most human readable locally unique identifier. Immutable. Words (separated by dots) "
-            "shows actor startup hierarchy. That is, if the node "s.analog-temp" has an actor, "
-            "then that actor is spawned by node "s"."
+            "shows actor startup hierarchy. That is, if the node 's.analog-temp' has an actor, "
+            "then that actor is spawned by node 's'."
         ),
     )
-    Handle: Optional[] = Field(
+    Handle: Optional[str] = Field(
         title="Handle",
         description=(
-            "Word structure shows Terminal Asset Finiste State Machine hierarchy. Locally unique, "
+            "Word structure shows Terminal Asset Finite State Machine hierarchy. Locally unique, "
             "but mutable. If there is a dot, then the predecessor handle (handle with the final "
-            "word removed) is the handle for the "boss" node. Only nodes with actors that can "
+            "word removed) is the handle for the 'boss' node. Only nodes with actors that can "
             "take actions that change the state of the Terminal Asset have dots in their handles. "
             "For example, the analog temperature sensor in the LocalName description above does "
             "NOT take actions and its handle would likely be analog-temp. If a node's actor CAN "
@@ -92,7 +92,7 @@ class SpaceheatNodeGt(BaseModel):
         default=None,
     )
     TypeName: Literal["spaceheat.node.gt"] = "spaceheat.node.gt"
-    Version: Literal["101"] = "101"
+    Version: Literal["200"] = "200"
 
     @validator("ShNodeId")
     def _check_sh_node_id(cls, v: str) -> str:
@@ -112,6 +112,16 @@ class SpaceheatNodeGt(BaseModel):
             raise ValueError(f"Name failed SpaceheatName format validation: {e}")
         return v
 
+    @validator("Handle")
+    def _check_handle(cls, v: Optional[str]) -> Optional[str]:
+        if v is None:
+            return v
+        try:
+            check_is_spaceheat_name(v)
+        except ValueError as e:
+            raise ValueError(f"Handle failed SpaceheatName format validation: {e}")
+        return v
+
     @root_validator
     def check_axiom_1(cls, v: dict) -> dict:
         """
@@ -124,11 +134,11 @@ class SpaceheatNodeGt(BaseModel):
     def as_dict(self) -> Dict[str, Any]:
         """
         Translate the object into a dictionary representation that can be serialized into a
-        spaceheat.node.gt.101 object.
+        spaceheat.node.gt.200 object.
 
         This method prepares the object for serialization by the as_type method, creating a
         dictionary with key-value pairs that follow the requirements for an instance of the
-        spaceheat.node.gt.101 type. Unlike the standard python dict method,
+        spaceheat.node.gt.200 type. Unlike the standard python dict method,
         it makes the following substantive changes:
         - Enum Values: Translates between the values used locally by the actor to the symbol
         sent in messages.
@@ -150,10 +160,10 @@ class SpaceheatNodeGt(BaseModel):
 
     def as_type(self) -> bytes:
         """
-        Serialize to the spaceheat.node.gt.101 representation.
+        Serialize to the spaceheat.node.gt.200 representation.
 
-        Instances in the class are python-native representations of spaceheat.node.gt.101
-        objects, while the actual spaceheat.node.gt.101 object is the serialized UTF-8 byte
+        Instances in the class are python-native representations of spaceheat.node.gt.200
+        objects, while the actual spaceheat.node.gt.200 object is the serialized UTF-8 byte
         string designed for sending in a message.
 
         This method calls the as_dict() method, which differs from the native python dict()
@@ -178,13 +188,13 @@ class SpaceheatNodeGt(BaseModel):
 
 class SpaceheatNodeGt_Maker:
     type_name = "spaceheat.node.gt"
-    version = "101"
+    version = "200"
 
     def __init__(
         self,
         sh_node_id: str,
         name: str,
-        handle: Optional[],
+        handle: Optional[str],
         actor_class: EnumActorClass,
         display_name: Optional[str],
         component_id: Optional[str],
@@ -223,7 +233,7 @@ class SpaceheatNodeGt_Maker:
     @classmethod
     def dict_to_tuple(cls, d: dict[str, Any]) -> SpaceheatNodeGt:
         """
-        Deserialize a dictionary representation of a spaceheat.node.gt.101 message object
+        Deserialize a dictionary representation of a spaceheat.node.gt.200 message object
         into a SpaceheatNodeGt python object for internal use.
 
         This is the near-inverse of the SpaceheatNodeGt.as_dict() method:
@@ -258,11 +268,11 @@ class SpaceheatNodeGt_Maker:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():
             raise SchemaError(f"Version missing from dict <{d2}>")
-        if d2["Version"] != "101":
+        if d2["Version"] != "200":
             LOGGER.debug(
-                f"Attempting to interpret spaceheat.node.gt version {d2['Version']} as version 101"
+                f"Attempting to interpret spaceheat.node.gt version {d2['Version']} as version 200"
             )
-            d2["Version"] = "101"
+            d2["Version"] = "200"
         return SpaceheatNodeGt(**d2)
 
     @classmethod

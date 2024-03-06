@@ -1,0 +1,46 @@
+""" SCADA Component Class Definition """
+
+from abc import ABC
+from typing import Dict
+from typing import List
+from typing import Optional
+
+from gwproto.data_classes.component_attribute_class import ComponentAttributeClass
+from gwproto.data_classes.mixin import StreamlinedSerializerMixin
+
+from gwproto.enums import TelemetryName
+
+
+class DataChannel(ABC, StreamlinedSerializerMixin):
+    by_name: Dict[str, "DataChannel"] = {}
+    base_props = []
+    base_props.append("display_name")
+    base_props.append("about_name")
+    base_props.append("captured_by_name")
+    base_props.append("telemetry_name")
+    base_props.append("id")
+
+    def __new__(cls, display_name, *args, **kwargs):
+        try:
+            return cls.by_name[display_name]
+        except KeyError:
+            instance = super().__new__(cls)
+            cls.by_name[display_name] = instance
+            return instance
+
+    def __init__(
+        self,
+        display_name: str,
+        about_name: str,
+        captured_by_name: str,
+        telemetry_name: TelemetryName,
+        id: str,
+    ):
+        self.display_name = display_name
+        self.about_name = about_name
+        self.captured_by_name = captured_by_name
+        self.telemetry_name = telemetry_name
+        self.id = id
+
+    def __repr__(self):
+        return self.display_name

@@ -3,15 +3,10 @@ import typing
 from typing import Type
 from typing import TypeVar
 
-import gwproto.types.fibaro_smart_implant_cac_gt  # noqa
 import gwproto.types.fibaro_smart_implant_component_gt  # noqa
-import gwproto.types.hubitat_cac_gt  # noqa
 import gwproto.types.hubitat_component_gt  # noqa
-import gwproto.types.hubitat_poller_cac_gt  # noqa
 import gwproto.types.hubitat_poller_component_gt  # noqa
-import gwproto.types.hubitat_tank_cac_gt  # noqa
 import gwproto.types.hubitat_tank_component_gt  # noqa
-import gwproto.types.rest_poller_cac_gt  # noqa
 import gwproto.types.rest_poller_component_gt  # noqa
 from gwproto.data_classes.component import Component
 from gwproto.data_classes.component_attribute_class import ComponentAttributeClass
@@ -80,13 +75,7 @@ class ComponentDecoder(PydanticTypeNameDecoder):
 
 default_cac_decoder = CacDecoder(
     model_name="DefaultCacDecoder",
-    module_names=[
-        "gwproto.types.fibaro_smart_implant_cac_gt",
-        "gwproto.types.hubitat_cac_gt",
-        "gwproto.types.hubitat_poller_cac_gt",
-        "gwproto.types.hubitat_tank_cac_gt",
-        "gwproto.types.rest_poller_cac_gt",
-    ],
+    module_names=[],
 )
 
 default_component_decoder = ComponentDecoder(

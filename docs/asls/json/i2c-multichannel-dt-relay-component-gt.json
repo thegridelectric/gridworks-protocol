@@ -19,6 +19,14 @@
       "description": "Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry.",
       "required": true
     },
+    "ConfigList": {
+      "type": "array",
+      "items": {
+        "type": "channel.config.000"
+      },
+      "description": "A list of the ChannelConfigs for the data channels reported by the actors associated to this component's relays (actors specified in the RelayConfigLlist)",
+      "required": true
+    },
     "RelayConfigList": {
       "type": "relay.actor.config.000",
       "description": "Information about which actors control each relay, and the relay wiring state: (normally open, normally closed, double throw).",
@@ -48,6 +56,13 @@
     "Axiom": {
       "title": "Relay Index Consistency",
       "description": "All of the Relay indices in the RelayConfigList are unique."
+    }
+  },
+  "formats": {
+    "UuidCanonicalTextual": {
+      "type": "string",
+      "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
+      "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"
     }
   }
 }

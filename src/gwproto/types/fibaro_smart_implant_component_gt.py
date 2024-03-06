@@ -7,7 +7,7 @@ from gwproto.data_classes.component import Component
 from gwproto.data_classes.components.fibaro_smart_implant_component import (
     FibaroSmartImplantComponent,
 )
-from gwproto.types import ComponentGt
+from gwproto.types.component_gt import ComponentGt
 
 
 class FibaroSmartImplantComponentGt(ComponentGt):

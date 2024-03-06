@@ -19,12 +19,8 @@ class TelemetryName(StrEnum):
     Values (with symbols in parens):
       - Unknown (00000000): Default Value - unknown telemetry name.
       - PowerW (af39eec9): Power in Watts.
-      - RelayState (5a71d4b3): An associated read must be either 0 or 1, with 0 meaning that the
-        relay is open and current CANNOT flow and 1 meaning that the relay is closed and current
-        CAN flow. Note in particular that this TelemetryName is NOT meant to be used to reflect
-        whether a relay is energized or de-energized and in particular '1' means the same thing
-        for both Normally Open and Normally Closed relays. Also, it is not meant to be used
-        for a double-throw relay.
+      - RelayState (5a71d4b3): The Telemetry reading belongs to ['Energized', 'DeEnergized'] (relay.energization.state
+        enum).
       - WaterTempCTimes1000 (c89d0ba1): Water temperature, in Degrees Celcius multiplied by 1000.
         Example: 43200 means 43.2 deg Celcius.
       - WaterTempFTimes1000 (793505aa): Water temperature, in Degrees F multiplied by 1000. Example:

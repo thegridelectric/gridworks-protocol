@@ -14,6 +14,10 @@ batched.readings.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/batched-readings.json
 
+channel.config.000
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. literalinclude:: json/channel-config.json
+
 channel.readings.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/channel-readings.json
@@ -126,7 +130,7 @@ snapshot.spaceheat.001
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/snapshot-spaceheat.json
 
-spaceheat.node.gt.101
+spaceheat.node.gt.200
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/spaceheat-node-gt.json
 
@@ -137,14 +141,6 @@ synced.readings.000
 ta.data.channels.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/ta-data-channels.json
-
-telemetry.reporting.config.001
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/telemetry-reporting-config.json
-
-telemetry.snapshot.spaceheat.001
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/telemetry-snapshot-spaceheat.json
 
 thermistor.data.processing.config.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^

@@ -6,7 +6,6 @@ from typing import Optional
 
 import yarl
 
-from gwproto.data_classes.component import Component
 from gwproto.data_classes.components.hubitat_component import HubitatComponent
 from gwproto.types.component_gt import ComponentGt
 from gwproto.types.hubitat_gt import HubitatGt
@@ -47,7 +46,7 @@ class HubitatComponentGt(ComponentGt):
         )
 
     def to_data_class(self) -> HubitatComponent:
-        component = Component.by_id.get(self.ComponentId, None)
+        component = HubitatComponent.by_id.get(self.ComponentId, None)
         if component is not None:
             return typing.cast(HubitatComponent, component)
         return HubitatComponent(

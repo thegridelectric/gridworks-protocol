@@ -21,16 +21,27 @@
     },
     "I2cAddress": {
       "type": "integer",
+      "description": "The I2cAddress that this component can be found at on the I2cBus.",
+      "required": true
+    },
+    "ConfigList": {
+      "type": "array",
+      "items": {
+        "type": "channel.config.000"
+      },
+      "description": "A list of the ChannelConfigs for the data channels reported by this actor.",
+      "required": true
+    },
+    "PulseFlowMeterMakeModel": {
+      "type": "string",
+      "format": "spaceheat.make.model",
+      "title": "Pulse Flow Meter MakeModel",
+      "description": "The MakeModel of the pulse flow meter that this I2cFlowTotalizer is attached to.",
       "required": true
     },
     "ConversionFactor": {
       "type": "number",
-      "required": true
-    },
-    "PulseFlowMeterType": {
-      "type": "string",
-      "format": "spaceheat.make.model",
-      "title": "",
+      "description": "The factor that the cumulative output must be multiplied by in order to read gallons.",
       "required": true
     },
     "DisplayName": {
@@ -52,6 +63,13 @@
       "title": "The type version",
       "default": "000",
       "required": true
+    }
+  },
+  "formats": {
+    "UuidCanonicalTextual": {
+      "type": "string",
+      "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
+      "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"
     }
   }
 }

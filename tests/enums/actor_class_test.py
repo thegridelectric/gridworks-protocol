@@ -18,6 +18,8 @@ def test_actor_class() -> None:
         "HubitatTelemetryReader",
         "HubitatTankModule",
         "HubitatPoller",
+        "I2cMultiplexer",
+        "FlowTotalizer",
     }
 
     assert ActorClass.default() == ActorClass.NoActor
@@ -36,6 +38,8 @@ def test_actor_class() -> None:
     assert ActorClass.version("HubitatTelemetryReader") == "001"
     assert ActorClass.version("HubitatTankModule") == "001"
     assert ActorClass.version("HubitatPoller") == "001"
+    assert ActorClass.version("I2cMultiplexer") == "001"
+    assert ActorClass.version("FlowTotalizer") == "001"
 
     for value in ActorClass.values():
         symbol = ActorClass.value_to_symbol(value)

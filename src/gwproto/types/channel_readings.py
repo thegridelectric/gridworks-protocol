@@ -10,8 +10,6 @@ from pydantic import BaseModel
 from pydantic import Field
 from pydantic import root_validator
 from pydantic import validator
-from gwproto.types.data_channel import DataChannel
-from gwproto.types.data_channel import DataChannel_Maker
 from gwproto.errors import SchemaError
 
 LOG_FORMAT = (
@@ -23,14 +21,18 @@ LOGGER = logging.getLogger(__name__)
 
 class ChannelReadings(BaseModel):
     """
-    A list of timestamped readings (values) for a data channel (AboutName, CapturedByName, TelemetryName).
-    Replaces both GtShSimpleTelemetryStatus and GtShMultipurposeTelemetryStatus
+    A list of timestamped readings (values) for a data channel. This is meant to be reported
+    for non-local consumption (AtomicTNode, other) by a SCADA. Therefore, the data channel is
+    referenced by its globally unique identifier. The receiver needs to reference this idea
+    against a list of the data channels used by the SCADA for accurate parsing. Replaces both
+    GtShSimpleTelemetryStatus and GtShMultipurposeTelemetryStatus
     """
 
-    DataChannel: DataChannel = Field(
-        title="Data Channel",
+    ChannelId: str = Field(
+        title="Channel Od",
         description=(
-            "The Data Channel that this batch of timestamped values is about."
+            "The globally unique identifier of the Data Channel for this batch of timestamped "
+            "values."
             "[More info](https://gridworks-protocol.readthedocs.io/en/latest/spaceheat-node.html)"
         ),
     )
@@ -46,6 +48,16 @@ class ChannelReadings(BaseModel):
     )
     TypeName: Literal["channel.readings"] = "channel.readings"
     Version: Literal["000"] = "000"
+
+    @validator("ChannelId")
+    def _check_channel_id(cls, v: str) -> str:
+        try:
+            check_is_uuid_canonical_textual(v)
+        except ValueError as e:
+            raise ValueError(
+                f"ChannelId failed UuidCanonicalTextual format validation: {e}"
+            )
+        return v
 
     @validator("ScadaReadTimeUnixMsList")
     def _check_scada_read_time_unix_ms_list(cls, v: List[int]) -> List[int]:
@@ -90,7 +102,6 @@ class ChannelReadings(BaseModel):
             ).items()
             if value is not None
         }
-        d["DataChannel"] = self.DataChannel.as_dict()
         return d
 
     def as_type(self) -> bytes:
@@ -127,12 +138,12 @@ class ChannelReadings_Maker:
 
     def __init__(
         self,
-        data_channel: DataChannel,
+        channel_id: str,
         value_list: List[int],
         scada_read_time_unix_ms_list: List[int],
     ):
         self.tuple = ChannelReadings(
-            DataChannel=data_channel,
+            ChannelId=channel_id,
             ValueList=value_list,
             ScadaReadTimeUnixMsList=scada_read_time_unix_ms_list,
         )
@@ -182,12 +193,8 @@ class ChannelReadings_Maker:
             ChannelReadings
         """
         d2 = dict(d)
-        if "DataChannel" not in d2.keys():
-            raise SchemaError(f"dict missing DataChannel: <{d2}>")
-        if not isinstance(d2["DataChannel"], dict):
-            raise SchemaError(f"DataChannel <{d2['DataChannel']}> must be a DataChannel!")
-        data_channel = DataChannel_Maker.dict_to_tuple(d2["DataChannel"])
-        d2["DataChannel"] = data_channel
+        if "ChannelId" not in d2.keys():
+            raise SchemaError(f"dict missing ChannelId: <{d2}>")
         if "ValueList" not in d2.keys():
             raise SchemaError(f"dict missing ValueList: <{d2}>")
         if "ScadaReadTimeUnixMsList" not in d2.keys():

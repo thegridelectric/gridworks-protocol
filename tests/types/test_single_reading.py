@@ -6,13 +6,13 @@ from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
 from gwproto.types import SingleReading_Maker as Maker
+from gwproto.enums import TelemetryName
 
 
 def test_single_reading_generated() -> None:
     d = {
         "ScadaReadTimeUnixMs": 1656513094288,
-        "AboutNodeNameGtEnumSymbol": "c89d0ba1",
-        "TelemetryName": ,
+        "ChannelName": ,
         "Value": 63430,
         "TypeName": "single.reading",
         "Version": "000",
@@ -34,10 +34,9 @@ def test_single_reading_generated() -> None:
     # test Maker init
     t = Maker(
         scada_read_time_unix_ms=gtuple.ScadaReadTimeUnixMs,
-        about_node_name=gtuple.AboutNodeName,
-        telemetry_name=gtuple.TelemetryName,
+        channel_name=gtuple.ChannelName,
         value=gtuple.Value,
-
+        
     ).tuple
     assert t == gtuple
 
@@ -56,7 +55,7 @@ def test_single_reading_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["AboutNodeNameGtEnumSymbol"]
+    del d2["ChannelName"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -66,24 +65,12 @@ def test_single_reading_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     ######################################
-    # Optional attributes can be removed from type
-    ######################################
-
-    d2 = dict(d)
-    if "TelemetryName" in d2.keys():
-        del d2["TelemetryName"]
-    Maker.dict_to_tuple(d2)
-
-    ######################################
     # Behavior on incorrect types
     ######################################
 
     d2 = dict(d, ScadaReadTimeUnixMs="1656513094288.1")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
-
-    d2 = dict(d, AboutNodeNameGtEnumSymbol="unknown_symbol")
-    Maker.dict_to_tuple(d2).AboutNodeName == TelemetryName.default()
 
     d2 = dict(d, Value="63430.1")
     with pytest.raises(ValidationError):
@@ -102,5 +89,9 @@ def test_single_reading_generated() -> None:
     ######################################
 
     d2 = dict(d, ScadaReadTimeUnixMs=1656245000)
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, ChannelName="A.hot-stuff")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)

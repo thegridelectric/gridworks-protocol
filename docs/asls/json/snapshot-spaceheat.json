@@ -3,7 +3,7 @@
   "type_name": "snapshot.spaceheat",
   "version": "001",
   "owner": "gridworks@gridworks-consulting.com",
-  "description": "",
+  "description": "Snapshot. Collection of all the latest measurements (timestamped) captured by the SCADA for all of its data channels.",
   "properties": {
     "FromGNodeAlias": {
       "type": "string",
@@ -17,8 +17,19 @@
       "title": "",
       "required": true
     },
-    "Snapshot": {
-      "type": "telemetry.snapshot.spaceheat.001",
+    "SnapshotTimeUnixMs": {
+      "type": "integer",
+      "format": "ReasonableUnixTimeMs",
+      "title": "",
+      "description": "The time at which the snapshot was put together.",
+      "required": true
+    },
+    "LatestReadingList": {
+      "type": "array",
+      "items": {
+        "type": "single.reading.000"
+      },
+      "description": "The most up-to-date values the SCADA has for all channels, with timestamps of when they were last updated.",
       "required": true
     },
     "TypeName": {
@@ -31,6 +42,23 @@
       "title": "The type version",
       "default": "001",
       "required": true
+    }
+  },
+  "formats": {
+    "UuidCanonicalTextual": {
+      "type": "string",
+      "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
+      "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"
+    },
+    "LeftRightDot": {
+      "type": "string",
+      "description": "Lowercase alphanumeric words separated by periods, with the most significant word (on the left) starting with an alphabet character.",
+      "example": "dw1.isone.me.freedom.apple"
+    },
+    "ReasonableUnixTimeMs": {
+      "type": "string",
+      "description": "An integer reflecting unix time in MILLISECONDS between midnight Jan 1 2000 and midnight Jan 1 3000 UTC",
+      "example": "1702327940710"
     }
   }
 }

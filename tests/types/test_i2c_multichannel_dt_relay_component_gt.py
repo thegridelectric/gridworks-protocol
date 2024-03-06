@@ -12,6 +12,7 @@ def test_i2c_multichannel_dt_relay_component_gt_generated() -> None:
     d = {
         "ComponentId": "798fe14a-4073-41eb-bce2-075906aee6bb",
         "ComponentAttributeClassId": "69f101fc-22e4-4caa-8103-50b8aeb66028",
+        "ConfigList": ,
         "RelayConfigList": ,
         "DisplayName": "relay for first elt in tank",
         "HwUid": "abc123",
@@ -36,6 +37,7 @@ def test_i2c_multichannel_dt_relay_component_gt_generated() -> None:
     t = Maker(
         component_id=gtuple.ComponentId,
         component_attribute_class_id=gtuple.ComponentAttributeClassId,
+        config_list=gtuple.ConfigList,
         relay_config_list=gtuple.RelayConfigList,
         display_name=gtuple.DisplayName,
         hw_uid=gtuple.HwUid,
@@ -71,6 +73,11 @@ def test_i2c_multichannel_dt_relay_component_gt_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
+    del d2["ConfigList"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
     del d2["RelayConfigList"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
@@ -92,6 +99,18 @@ def test_i2c_multichannel_dt_relay_component_gt_generated() -> None:
     ######################################
     # Behavior on incorrect types
     ######################################
+
+    d2  = dict(d, ConfigList="Not a list.")
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2  = dict(d, ConfigList=["Not a list of dicts"])
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2  = dict(d, ConfigList= [{"Failed": "Not a GtSimpleSingleStatus"}])
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
 
     ######################################
     # SchemaError raised if TypeName is incorrect

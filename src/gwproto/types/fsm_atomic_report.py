@@ -63,6 +63,13 @@ class FsmAtomicReport(BaseModel):
     UnixTimeMs: int = Field(
         title="Unix Time in Milliseconds",
     )
+    TriggerId: str = Field(
+        title="TriggerId",
+        description=(
+            "Reference uuid for the triggering event that started a cascade of transitions, events "
+            "and side-effect actions - of which this report is one."
+        ),
+    )
     TypeName: Literal["fsm.atomic.report"] = "fsm.atomic.report"
     Version: Literal["000"] = "000"
 
@@ -87,6 +94,16 @@ class FsmAtomicReport(BaseModel):
             )
         return v
 
+    @validator("TriggerId")
+    def _check_trigger_id(cls, v: str) -> str:
+        try:
+            check_is_uuid_canonical_textual(v)
+        except ValueError as e:
+            raise ValueError(
+                f"TriggerId failed UuidCanonicalTextual format validation: {e}"
+            )
+        return v
+
     @root_validator
     def check_axiom_1(cls, v: dict) -> dict:
         """
@@ -99,7 +116,7 @@ class FsmAtomicReport(BaseModel):
     @root_validator
     def check_axiom_2(cls, v: dict) -> dict:
         """
-        Axiom 2: If Action exists, then it belongs to the un-versioned enum selected in the ActionType..
+        Axiom 2: If Action exists, then it belongs to the un-versioned enum selected in the ActionType.
         
         """
         # TODO: Implement check for axiom 2"
@@ -172,6 +189,7 @@ class FsmAtomicReport_Maker:
         action_type: Optional[FsmActionType],
         action: Optional[str],
         unix_time_ms: int,
+        trigger_id: str,
     ):
         self.tuple = FsmAtomicReport(
             FromHandle=from_handle,
@@ -179,6 +197,7 @@ class FsmAtomicReport_Maker:
             ActionType=action_type,
             Action=action,
             UnixTimeMs=unix_time_ms,
+            TriggerId=trigger_id,
         )
 
     @classmethod
@@ -230,11 +249,14 @@ class FsmAtomicReport_Maker:
             raise SchemaError(f"dict missing FromHandle: <{d2}>")
         if "IsAction" not in d2.keys():
             raise SchemaError(f"dict missing IsAction: <{d2}>")
-        if "ActionType" in d2.keys():
+        if "ActionTypeGtEnumSymbol" in d2.keys():
             value = FsmActionType.symbol_to_value(d2["ActionTypeGtEnumSymbol"])
             d2["ActionType"] = FsmActionType(value)
+            del d2["ActionTypeGtEnumSymbol"]
         if "UnixTimeMs" not in d2.keys():
             raise SchemaError(f"dict missing UnixTimeMs: <{d2}>")
+        if "TriggerId" not in d2.keys():
+            raise SchemaError(f"dict missing TriggerId: <{d2}>")
         if "TypeName" not in d2.keys():
             raise SchemaError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():
@@ -296,3 +318,38 @@ def check_is_spaceheat_name(v: str) -> None:
                 raise ValueError(f"words of <{v}> split by by '.' must be alphanumeric or hyphen.")
     if not v.islower():
         raise ValueError(f"<{v}> must be lowercase.")
+
+
+def check_is_uuid_canonical_textual(v: str) -> None:
+    """Checks UuidCanonicalTextual format
+
+    UuidCanonicalTextual format:  A string of hex words separated by hyphens
+    of length 8-4-4-4-12.
+
+    Args:
+        v (str): the candidate
+
+    Raises:
+        ValueError: if v is not UuidCanonicalTextual format
+    """
+    try:
+        x = v.split("-")
+    except AttributeError as e:
+        raise ValueError(f"Failed to split on -: {e}")
+    if len(x) != 5:
+        raise ValueError(f"<{v}> split by '-' did not have 5 words")
+    for hex_word in x:
+        try:
+            int(hex_word, 16)
+        except ValueError:
+            raise ValueError(f"Words of <{v}> are not all hex")
+    if len(x[0]) != 8:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[1]) != 4:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[2]) != 4:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[3]) != 4:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[4]) != 12:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")

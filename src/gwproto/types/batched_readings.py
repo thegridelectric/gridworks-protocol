@@ -79,6 +79,10 @@ class BatchedReadings(BaseModel):
             "[More info](https://gridworks-protocol.readthedocs.io/en/latest/finite-state-machines.html)"
         ),
     )
+    Id: str = Field(
+        title="Batched Reading Id",
+        description="Globally Unique identifier for a BatchedReadings message",
+    )
     TypeName: Literal["batched.readings"] = "batched.readings"
     Version: Literal["000"] = "000"
 
@@ -142,6 +146,14 @@ class BatchedReadings(BaseModel):
         """
         ...
         # TODO: Implement Axiom(s)
+
+    @validator("Id")
+    def _check_id(cls, v: str) -> str:
+        try:
+            check_is_uuid_canonical_textual(v)
+        except ValueError as e:
+            raise ValueError(f"Id failed UuidCanonicalTextual format validation: {e}")
+        return v
 
     def as_dict(self) -> Dict[str, Any]:
         """
@@ -231,6 +243,7 @@ class BatchedReadings_Maker:
         channel_reading_list: List[ChannelReadings],
         fsm_action_list: List[FsmAtomicReport],
         fsm_report_list: List[FsmFullReport],
+        id: str,
     ):
         self.tuple = BatchedReadings(
             FromGNodeAlias=from_g_node_alias,
@@ -242,6 +255,7 @@ class BatchedReadings_Maker:
             ChannelReadingList=channel_reading_list,
             FsmActionList=fsm_action_list,
             FsmReportList=fsm_report_list,
+            Id=id,
         )
 
     @classmethod
@@ -343,6 +357,8 @@ class BatchedReadings_Maker:
             t = FsmFullReport_Maker.dict_to_tuple(elt)
             fsm_report_list.append(t)
         d2["FsmReportList"] = fsm_report_list
+        if "Id" not in d2.keys():
+            raise SchemaError(f"dict missing Id: <{d2}>")
         if "TypeName" not in d2.keys():
             raise SchemaError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():

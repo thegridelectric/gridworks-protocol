@@ -8,7 +8,7 @@ class MakeModel(StrEnum):
     """
     Determines Make/Model of device associated to a Spaceheat Node supervised by SCADA
 
-    Enum spaceheat.make.model version 001 in the GridWorks Type registry.
+    Enum spaceheat.make.model version 002 in the GridWorks Type registry.
 
     Used by used by multiple Application Shared Languages (ASLs), including but not limited to
     gwproto. For more information:
@@ -59,6 +59,28 @@ class MakeModel(StrEnum):
         (labeled 1-12) to read 12 10K NTC Thermistors. It is comprised of 3 NCD ADS 1115 I2C
         temperature sensors with I2C Addresses 0x4b, 0x48, 0x49. [More Info](https://drive.google.com/drive/u/0/folders/1OuY0tunaad2Ie4Id3zFB7FcbEwHizWuL).
       - Krida__Emr16-I2c-V3 (3353ce46): 16-Channel I2C Low Voltage Electromagnetic Relay Board. [More Info](https://drive.google.com/drive/u/0/folders/1jL82MTRKEh9DDmxJFQ2yU2cjqnVD9Ik7).
+      - Omega__FTB8007HW-PT (5bd81968): A double-jet reed pulse counting Flow Meter with 3/4" pipe,
+        one pulse per 1/10th of a gallon. [More Info](https://drive.google.com/drive/u/0/folders/1gPR4nIGUuEVyBqBjb2wfY1Znqh6MvKWw).
+      - Istec_4440 (99d961da): A double-jet reed pulse counting Flow Meter with 3/4" pipe, somewhat
+        strange pulse output. [More Info](https://drive.google.com/drive/u/0/folders/1nioNO_XeEzE4NQJKXvuFq74_HH1vwRc6).
+      - Omega__FTB8010HW-PT (39f97379): A double-jet reed pulse counting Flow Meter with 1" pipe,
+        one pulse per gallon. Rated for water to 195F. [More Info](https://drive.google.com/drive/u/0/folders/1fiFr9hwYGeXZ1SmpxaSz_XROhfThGbq8).
+      - Belimo__BallValve232VS (71a58010): Belimo Ball Valve. Configurable to be either normally
+        open or normally closed. Goes into its powered position over about a minute and winds
+        up a spring as it does that. Moves back to un-powered position in about 20 seconds, [More Info](https://drive.google.com/drive/u/0/folders/1eTqPNKaKzjKSWwnvY36tZkkv4WVdvrR3).
+      - Belimo__DiverterB332L (a156568f): Belimo 3-way diverter valve, 1.25", 24 VAC, spring return
+        actuator. [More Info](https://drive.google.com/drive/u/0/folders/1YF_JdUoXrT3bDoXvEwqEvAi7EjahErHk).
+      - Taco__0034ePLUS (94efd0b3): Taco 0034ePLUS 010V controllable pump. [More Info](https://drive.google.com/drive/u/0/folders/1GUaQnrfiJeAmmfMiZT1fjPPIXxcTtTsj).
+      - Taco__007e (88e512cb): Taco 007e basic circulator pump. [More Info](https://drive.google.com/drive/u/0/folders/12LIMxHMFXujV7mY53IItKP3J2EaM2JlV).
+      - Armstrong__CompassH (22a3fc2a): Armstrong CompassH 010V controllable pump. [More Info](https://drive.google.com/drive/u/0/folders/1lpdvjVYD9qk7AHQnRSoY9Xf_o_L0tY38).
+      - Honeywell__T6-ZWave-Thermostat (d86abb96): Honeywell TH6320ZW2003 T6 Pro Series Z-Wave Thermostat. [More Info](https://drive.google.com/drive/u/0/folders/1mqnU95tOdeeSGA6o3Ac_sJ1juDy84BIE).
+      - PRMFiltration__WM075 (6a9541d9): A double-jet reed pulse counting Flow Meter with 3/4" pipe,
+        one pulse per gallon. Cheaper than omegas. [More Info](https://drive.google.com/drive/u/0/folders/1LW-8GHekH9I8vUtT7_xC_9KvkwfZBvid).
+      - BellGossett__Ecocirc20_18 (e35655d0)
+      - Tewa__TT0P-10KC3-T105-1500 (652abfd6): A 10K NTC thermistor used for wrapping around water
+        pipes. [More Info](https://drive.google.com/drive/u/0/folders/1lZFZbpjBFgAQ_wlnKJxmEeiN-EOV9Erl).
+      - EKM__HOT-SPWM-075-HD (208f827f): 3/4" flow pulse meter, 1 pulse per 1/100 cubic ft (~0.0748
+        gallons).
     """
 
     UNKNOWNMAKE__UNKNOWNMODEL = auto()
@@ -81,6 +103,19 @@ class MakeModel(StrEnum):
     MAGNELAB__SCT0300050 = auto()
     GRIDWORKS__MULTITEMP1 = auto()
     KRIDA__EMR16I2CV3 = auto()
+    OMEGA__FTB8007HWPT = auto()
+    ISTEC_4440 = auto()
+    OMEGA__FTB8010HWPT = auto()
+    BELIMO__BALLVALVE232VS = auto()
+    BELIMO__DIVERTERB332L = auto()
+    TACO__0034EPLUS = auto()
+    TACO__007E = auto()
+    ARMSTRONG__COMPASSH = auto()
+    HONEYWELL__T6ZWAVETHERMOSTAT = auto()
+    PRMFILTRATION__WM075 = auto()
+    BELLGOSSETT__ECOCIRC20_18 = auto()
+    TEWA__TT0P10KC3T1051500 = auto()
+    EKM__HOTSPWM075HD = auto()
 
     @classmethod
     def default(cls) -> "MakeModel":
@@ -129,9 +164,9 @@ class MakeModel(StrEnum):
     @classmethod
     def enum_version(cls) -> str:
         """
-        The version in the GridWorks Type Registry (001)
+        The version in the GridWorks Type Registry (002)
         """
-        return "001"
+        return "002"
 
     @classmethod
     def symbol_to_value(cls, symbol: str) -> str:
@@ -194,6 +229,19 @@ class MakeModel(StrEnum):
             "a8d9a70d",
             "bb31d136",
             "3353ce46",
+            "5bd81968",
+            "99d961da",
+            "39f97379",
+            "71a58010",
+            "a156568f",
+            "94efd0b3",
+            "88e512cb",
+            "22a3fc2a",
+            "d86abb96",
+            "6a9541d9",
+            "e35655d0",
+            "652abfd6",
+            "208f827f",
         ]
 
 
@@ -218,6 +266,19 @@ symbol_to_value = {
     "a8d9a70d": "MAGNELAB__SCT0300050",
     "bb31d136": "GRIDWORKS__MULTITEMP1",
     "3353ce46": "KRIDA__EMR16I2CV3",
+    "5bd81968": "OMEGA__FTB8007HWPT",
+    "99d961da": "ISTEC_4440",
+    "39f97379": "OMEGA__FTB8010HWPT",
+    "71a58010": "BELIMO__BALLVALVE232VS",
+    "a156568f": "BELIMO__DIVERTERB332L",
+    "94efd0b3": "TACO__0034EPLUS",
+    "88e512cb": "TACO__007E",
+    "22a3fc2a": "ARMSTRONG__COMPASSH",
+    "d86abb96": "HONEYWELL__T6ZWAVETHERMOSTAT",
+    "6a9541d9": "PRMFILTRATION__WM075",
+    "e35655d0": "BELLGOSSETT__ECOCIRC20_18",
+    "652abfd6": "TEWA__TT0P10KC3T1051500",
+    "208f827f": "EKM__HOTSPWM075HD",
 }
 
 value_to_symbol = {value: key for key, value in symbol_to_value.items()}
@@ -243,4 +304,17 @@ value_to_version = {
     "MAGNELAB__SCT0300050": "001",
     "GRIDWORKS__MULTITEMP1": "001",
     "KRIDA__EMR16I2CV3": "001",
+    "OMEGA__FTB8007HWPT": "002",
+    "ISTEC_4440": "002",
+    "OMEGA__FTB8010HWPT": "002",
+    "BELIMO__BALLVALVE232VS": "002",
+    "BELIMO__DIVERTERB332L": "002",
+    "TACO__0034EPLUS": "002",
+    "TACO__007E": "002",
+    "ARMSTRONG__COMPASSH": "002",
+    "HONEYWELL__T6ZWAVETHERMOSTAT": "002",
+    "PRMFILTRATION__WM075": "002",
+    "BELLGOSSETT__ECOCIRC20_18": "002",
+    "TEWA__TT0P10KC3T1051500": "002",
+    "EKM__HOTSPWM075HD": "002",
 }

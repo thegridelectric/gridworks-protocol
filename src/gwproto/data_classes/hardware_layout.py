@@ -26,9 +26,8 @@ from gwproto.data_classes.resolver import ComponentResolver
 from gwproto.data_classes.sh_node import ShNode
 
 from gwproto.data_classes.telemetry_tuple import TelemetryTuple
-from gwproto.default_decoders import CacDecoder
 from gwproto.default_decoders import ComponentDecoder
-from gwproto.default_decoders import default_cac_decoder
+
 from gwproto.default_decoders import default_component_decoder
 from gwproto.enums import ActorClass
 from gwproto.enums import TelemetryName
@@ -43,13 +42,13 @@ from gwproto.types.ads111x_based_component_gt import (
 )
 
 
-from gwproto.types import I2cFlowTotalizerComponentGt_Maker
+from gwproto.types.i2c_flow_totalizer_component_gt import I2cFlowTotalizerComponentGt_Maker
 
-from gwproto.types import I2cMultichannelDtRelayComponentGt_Maker
+from gwproto.types.i2c_multichannel_dt_relay_component_gt import I2cMultichannelDtRelayComponentGt_Maker
 
 
 from gwproto.types import ResistiveHeaterCacGt_Maker
-from gwproto.types import ResistiveHeaterComponentGt_Maker
+from gwproto.types.resistive_heater_component_gt import ResistiveHeaterComponentGt_Maker
 
 from gwproto.types import SpaceheatNodeGt_Maker
 from gwproto.types.electric_meter_component_gt import ElectricMeterComponentGt_Maker
@@ -74,7 +73,6 @@ def load_cacs(
     layout: dict[str, Any],
     raise_errors: bool = True,
     errors: Optional[list[LoadError]] = None,
-    cac_decoder: Optional[CacDecoder] = None,
 ) -> dict[str, Any]:
     if errors is None:
         errors = []
@@ -95,17 +93,11 @@ def load_cacs(
                 if raise_errors:
                     raise e
                 errors.append(LoadError(type_name, d, e))
-    if cac_decoder is None:
-        cac_decoder = default_cac_decoder
     for d in layout.get("OtherCacs", []):
-        cac_type = d.get("TypeName", "")
         try:
-            if cac_type and cac_type in cac_decoder:
-                cac = cac_decoder.decode_to_data_class(d)
-            else:
-                cac = ComponentAttributeClass(
-                    component_attribute_class_id=d["ComponentAttributeClassId"]
-                )
+            cac = ComponentAttributeClass(
+                component_attribute_class_id=d["ComponentAttributeClassId"]
+            )
             cacs[d["ComponentAttributeClassId"]] = cac
         except Exception as e:
             if raise_errors:
@@ -248,7 +240,6 @@ class HardwareLayout:
         included_node_names: Optional[set[str]] = None,
         raise_errors: bool = True,
         errors: Optional[list[LoadError]] = None,
-        cac_decoder: Optional[CacDecoder] = None,
         component_decoder: Optional[ComponentDecoder] = None,
     ) -> "HardwareLayout":
         with Path(layout_path).open() as f:
@@ -258,7 +249,6 @@ class HardwareLayout:
             included_node_names=included_node_names,
             raise_errors=raise_errors,
             errors=errors,
-            cac_decoder=cac_decoder,
             component_decoder=component_decoder,
         )
 
@@ -269,7 +259,6 @@ class HardwareLayout:
         included_node_names: Optional[set[str]] = None,
         raise_errors: bool = True,
         errors: Optional[list[LoadError]] = None,
-        cac_decoder: Optional[CacDecoder] = None,
         component_decoder: Optional[ComponentDecoder] = None,
     ) -> "HardwareLayout":
         if errors is None:
@@ -279,7 +268,6 @@ class HardwareLayout:
                 layout=layout,
                 raise_errors=raise_errors,
                 errors=errors,
-                cac_decoder=cac_decoder,
             ),
             components=load_components(
                 layout=layout,

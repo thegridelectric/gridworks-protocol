@@ -45,6 +45,13 @@ class FsmEvent(BaseModel):
     SendTimeUnixMs: int = Field(
         title="Sent Time Unix Ms",
     )
+    TriggerId: str = Field(
+        title="Trigger Id",
+        description=(
+            "Reference uuid for the triggering event that started a cascade of transitions, events "
+            "and side-effect actions - of which this event is one."
+        ),
+    )
     TypeName: Literal["fsm.event"] = "fsm.event"
     Version: Literal["000"] = "000"
 
@@ -74,6 +81,16 @@ class FsmEvent(BaseModel):
         except ValueError as e:
             raise ValueError(
                 f"SendTimeUnixMs failed ReasonableUnixTimeMs format validation: {e}"
+            )
+        return v
+
+    @validator("TriggerId")
+    def _check_trigger_id(cls, v: str) -> str:
+        try:
+            check_is_uuid_canonical_textual(v)
+        except ValueError as e:
+            raise ValueError(
+                f"TriggerId failed UuidCanonicalTextual format validation: {e}"
             )
         return v
 
@@ -140,12 +157,14 @@ class FsmEvent_Maker:
         to_handle: str,
         name: str,
         send_time_unix_ms: int,
+        trigger_id: str,
     ):
         self.tuple = FsmEvent(
             FromHandle=from_handle,
             ToHandle=to_handle,
             Name=name,
             SendTimeUnixMs=send_time_unix_ms,
+            TriggerId=trigger_id,
         )
 
     @classmethod
@@ -201,6 +220,8 @@ class FsmEvent_Maker:
             raise SchemaError(f"dict missing Name: <{d2}>")
         if "SendTimeUnixMs" not in d2.keys():
             raise SchemaError(f"dict missing SendTimeUnixMs: <{d2}>")
+        if "TriggerId" not in d2.keys():
+            raise SchemaError(f"dict missing TriggerId: <{d2}>")
         if "TypeName" not in d2.keys():
             raise SchemaError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():
@@ -262,3 +283,38 @@ def check_is_spaceheat_name(v: str) -> None:
                 raise ValueError(f"words of <{v}> split by by '.' must be alphanumeric or hyphen.")
     if not v.islower():
         raise ValueError(f"<{v}> must be lowercase.")
+
+
+def check_is_uuid_canonical_textual(v: str) -> None:
+    """Checks UuidCanonicalTextual format
+
+    UuidCanonicalTextual format:  A string of hex words separated by hyphens
+    of length 8-4-4-4-12.
+
+    Args:
+        v (str): the candidate
+
+    Raises:
+        ValueError: if v is not UuidCanonicalTextual format
+    """
+    try:
+        x = v.split("-")
+    except AttributeError as e:
+        raise ValueError(f"Failed to split on -: {e}")
+    if len(x) != 5:
+        raise ValueError(f"<{v}> split by '-' did not have 5 words")
+    for hex_word in x:
+        try:
+            int(hex_word, 16)
+        except ValueError:
+            raise ValueError(f"Words of <{v}> are not all hex")
+    if len(x[0]) != 8:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[1]) != 4:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[2]) != 4:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[3]) != 4:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[4]) != 12:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")

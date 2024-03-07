@@ -9,8 +9,9 @@ Python pydantic class corresponding to json type `fsm.full.report`, version `000
     - Description: From Name. The name (not the handle, so immutable) of the Node issuing the report. This will typically be the scada node itself.
     - Format: SpaceheatName
 
-**Trigger**:
-    - Description: Trigger. The event that triggered the collected list of actions, transitions and further events.
+**TriggerId**:
+    - Description: TriggerId. Reference uuid for the triggering event that started the cascade of side-effect actions, events and transitions captured in this report 
+    - Format: UuidCanonicalTextual
 
 **AtomicList**:
     - Description: Atomic List. The list of cascading events, transitions and actions triggered by a single high-level event in a hierarchical finite state machine.
@@ -21,6 +22,10 @@ Python pydantic class corresponding to json type `fsm.full.report`, version `000
 **Version**:
     - Description: All GridWorks Versioned Types have a fixed version, which is a string of three Hindu-Arabic numerals.
 
+
+
+.. autoclass:: gwproto.types.fsm_full_report.check_is_uuid_canonical_textual
+    :members:
 
 
 .. autoclass:: gwproto.types.fsm_full_report.check_is_spaceheat_name

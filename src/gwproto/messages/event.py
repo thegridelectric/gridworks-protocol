@@ -14,8 +14,8 @@ from pydantic import validator
 
 from gwproto.message import Message
 from gwproto.message import as_enum
-from gwproto.types import GtShStatus
-from gwproto.types import SnapshotSpaceheat
+from gwproto.types import BatchedReadings
+from gwproto.types import Snapshot
 
 
 class EventBase(BaseModel):
@@ -111,13 +111,13 @@ class PeerActiveEvent(CommEvent):
     ] = "gridworks.event.comm.peer.active"
 
 
-class GtShStatusEvent(EventBase):
-    status: GtShStatus | dict
-    TypeName: Literal["gridworks.event.gt.sh.status"] = "gridworks.event.gt.sh.status"
+class BatchedReadingsEvent(EventBase):
+    batched_readings: BatchedReadings | dict
+    TypeName: Literal["gridworks.event.batched.readings"] = "gridworks.event.batched.readings"
 
 
 class SnapshotSpaceheatEvent(EventBase):
-    snap: SnapshotSpaceheat | dict
+    snap: Snapshot | dict
     TypeName: Literal[
         "gridworks.event.snapshot.spaceheat"
     ] = "gridworks.event.snapshot.spaceheat"

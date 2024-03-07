@@ -219,12 +219,23 @@ def test_</xsl:text><xsl:value-of select="translate($type-name,'.','_')"/>
     <xsl:for-each select="$airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id) and not (IsRequired='true')]">
     <xsl:sort select="Idx" data-type="number"/>
 
-    <xsl:if test= "(normalize-space(SubTypeDataClass) != '')">
+    <xsl:if test= "(normalize-space(SubTypeDataClass) != '') and not (IsEnum='true')">
     <xsl:text>d2 = dict(d)
     if "</xsl:text>
     <xsl:value-of  select="Value"/><xsl:text>Id" in d2.keys():
         del d2["</xsl:text>
         <xsl:value-of  select="Value"/><xsl:text>Id"]
+    Maker.dict_to_tuple(d2)
+
+    </xsl:text>
+    </xsl:if>
+
+    <xsl:if  test= "IsEnum='true'">
+    <xsl:text>d2 = dict(d)
+    if "</xsl:text>
+    <xsl:value-of  select="Value"/><xsl:text>" in d2.keys():
+        del d2["</xsl:text>
+        <xsl:value-of  select="Value"/><xsl:text>GtEnumSymbol"]
     Maker.dict_to_tuple(d2)
 
     </xsl:text>

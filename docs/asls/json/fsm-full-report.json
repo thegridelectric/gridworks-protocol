@@ -13,13 +13,18 @@
       "description": "The name (not the handle, so immutable) of the Node issuing the report. This will typically be the scada node itself.",
       "required": true
     },
-    "Trigger": {
-      "type": "fsm.event.000",
-      "description": "The event that triggered the collected list of actions, transitions and further events.",
+    "TriggerId": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "TriggerId",
+      "description": "Reference uuid for the triggering event that started the cascade of side-effect actions, events and transitions captured in this report",
       "required": true
     },
     "AtomicList": {
-      "type": "fsm.event.000",
+      "type": "array",
+      "items": {
+        "type": "fsm.event.000"
+      },
       "description": "The list of cascading events, transitions and actions triggered by a single high-level event in a hierarchical finite state machine.",
       "required": true
     },
@@ -36,6 +41,11 @@
     }
   },
   "formats": {
+    "UuidCanonicalTextual": {
+      "type": "string",
+      "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
+      "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"
+    },
     "SpaceheatName": {
       "type": "string",
       "description": "Lowercase words separated by periods, where the word characters can be alphanumeric or a hyphen and the first word starts with an alphabet character.",

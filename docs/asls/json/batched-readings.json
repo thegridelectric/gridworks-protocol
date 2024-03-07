@@ -66,6 +66,13 @@
       "description": "FSM Reports are the cacading events, actions and transitions caused by a single high-level event. There is duplication with the action list.",
       "required": true
     },
+    "Id": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "Batched Reading Id",
+      "description": "Globally Unique identifier for a BatchedReadings message",
+      "required": true
+    },
     "TypeName": {
       "type": "string",
       "value": "batched.readings",

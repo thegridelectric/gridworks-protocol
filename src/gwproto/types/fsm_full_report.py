@@ -3,14 +3,13 @@ import json
 import logging
 from typing import Any
 from typing import Dict
+from typing import List
 from typing import Literal
 
 from pydantic import BaseModel
 from pydantic import Extra
 from pydantic import Field
 from pydantic import validator
-from gwproto.types.fsm_event import FsmEvent
-from gwproto.types.fsm_event import FsmEvent_Maker
 from gwproto.types.fsm_event import FsmEvent
 from gwproto.types.fsm_event import FsmEvent_Maker
 from gwproto.errors import SchemaError
@@ -37,14 +36,14 @@ class FsmFullReport(BaseModel):
             "typically be the scada node itself."
         ),
     )
-    Trigger: FsmEvent = Field(
-        title="Trigger",
+    TriggerId: str = Field(
+        title="TriggerId",
         description=(
-            "The event that triggered the collected list of actions, transitions and further "
-            "events."
+            "Reference uuid for the triggering event that started the cascade of side-effect "
+            "actions, events and transitions captured in this report"
         ),
     )
-    AtomicList: FsmEvent = Field(
+    AtomicList: List[FsmEvent] = Field(
         title="Atomic List",
         description=(
             "The list of cascading events, transitions and actions triggered by a single high-level "
@@ -63,6 +62,16 @@ class FsmFullReport(BaseModel):
             check_is_spaceheat_name(v)
         except ValueError as e:
             raise ValueError(f"FromName failed SpaceheatName format validation: {e}")
+        return v
+
+    @validator("TriggerId")
+    def _check_trigger_id(cls, v: str) -> str:
+        try:
+            check_is_uuid_canonical_textual(v)
+        except ValueError as e:
+            raise ValueError(
+                f"TriggerId failed UuidCanonicalTextual format validation: {e}"
+            )
         return v
 
     def as_dict(self) -> Dict[str, Any]:
@@ -88,8 +97,11 @@ class FsmFullReport(BaseModel):
             ).items()
             if value is not None
         }
-        d["Trigger"] = self.Trigger.as_dict()
-        d["AtomicList"] = self.AtomicList.as_dict()
+        # Recursively calling as_dict()
+        atomic_list = []
+        for elt in self.AtomicList:
+            atomic_list.append(elt.as_dict())
+        d["AtomicList"] = atomic_list
         return d
 
     def as_type(self) -> bytes:
@@ -127,12 +139,12 @@ class FsmFullReport_Maker:
     def __init__(
         self,
         from_name: str,
-        trigger: FsmEvent,
-        atomic_list: FsmEvent,
+        trigger_id: str,
+        atomic_list: List[FsmEvent],
     ):
         self.tuple = FsmFullReport(
             FromName=from_name,
-            Trigger=trigger,
+            TriggerId=trigger_id,
             AtomicList=atomic_list,
         )
 
@@ -183,17 +195,18 @@ class FsmFullReport_Maker:
         d2 = dict(d)
         if "FromName" not in d2.keys():
             raise SchemaError(f"dict missing FromName: <{d2}>")
-        if "Trigger" not in d2.keys():
-            raise SchemaError(f"dict missing Trigger: <{d2}>")
-        if not isinstance(d2["Trigger"], dict):
-            raise SchemaError(f"Trigger <{d2['Trigger']}> must be a FsmEvent!")
-        trigger = FsmEvent_Maker.dict_to_tuple(d2["Trigger"])
-        d2["Trigger"] = trigger
+        if "TriggerId" not in d2.keys():
+            raise SchemaError(f"dict missing TriggerId: <{d2}>")
         if "AtomicList" not in d2.keys():
             raise SchemaError(f"dict missing AtomicList: <{d2}>")
-        if not isinstance(d2["AtomicList"], dict):
-            raise SchemaError(f"AtomicList <{d2['AtomicList']}> must be a FsmEvent!")
-        atomic_list = FsmEvent_Maker.dict_to_tuple(d2["AtomicList"])
+        if not isinstance(d2["AtomicList"], List):
+            raise SchemaError(f"AtomicList <{d2['AtomicList']}> must be a List!")
+        atomic_list = []
+        for elt in d2["AtomicList"]:
+            if not isinstance(elt, dict):
+                raise SchemaError(f"AtomicList <{d2['AtomicList']}> must be a List of FsmEvent types")
+            t = FsmEvent_Maker.dict_to_tuple(elt)
+            atomic_list.append(t)
         d2["AtomicList"] = atomic_list
         if "TypeName" not in d2.keys():
             raise SchemaError(f"TypeName missing from dict <{d2}>")
@@ -237,3 +250,38 @@ def check_is_spaceheat_name(v: str) -> None:
                 raise ValueError(f"words of <{v}> split by by '.' must be alphanumeric or hyphen.")
     if not v.islower():
         raise ValueError(f"<{v}> must be lowercase.")
+
+
+def check_is_uuid_canonical_textual(v: str) -> None:
+    """Checks UuidCanonicalTextual format
+
+    UuidCanonicalTextual format:  A string of hex words separated by hyphens
+    of length 8-4-4-4-12.
+
+    Args:
+        v (str): the candidate
+
+    Raises:
+        ValueError: if v is not UuidCanonicalTextual format
+    """
+    try:
+        x = v.split("-")
+    except AttributeError as e:
+        raise ValueError(f"Failed to split on -: {e}")
+    if len(x) != 5:
+        raise ValueError(f"<{v}> split by '-' did not have 5 words")
+    for hex_word in x:
+        try:
+            int(hex_word, 16)
+        except ValueError:
+            raise ValueError(f"Words of <{v}> are not all hex")
+    if len(x[0]) != 8:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[1]) != 4:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[2]) != 4:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[3]) != 4:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[4]) != 12:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")

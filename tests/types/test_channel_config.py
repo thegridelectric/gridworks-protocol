@@ -5,7 +5,7 @@ import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
-from gwproto.types.channel_config import ChannelConfig_Maker as Maker
+from gwproto.types import ChannelConfig_Maker as Maker
 from gwproto.enums import TelemetryName
 from gwproto.enums import Unit
 

@@ -19,6 +19,7 @@ def test_batched_readings_generated() -> None:
         "ChannelReadingList": [],
         "FsmActionList": [],
         "FsmReportList": [],
+        "Id": ,
         "TypeName": "batched.readings",
         "Version": "000",
     }
@@ -47,6 +48,7 @@ def test_batched_readings_generated() -> None:
         channel_reading_list=gtuple.ChannelReadingList,
         fsm_action_list=gtuple.FsmActionList,
         fsm_report_list=gtuple.FsmReportList,
+        id=gtuple.Id,
         
     ).tuple
     assert t == gtuple
@@ -102,6 +104,11 @@ def test_batched_readings_generated() -> None:
 
     d2 = dict(d)
     del d2["FsmReportList"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    del d2["Id"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -194,5 +201,9 @@ def test_batched_readings_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d, BatchedTransmissionPeriodS=0)
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, Id="d4be12d5-33ba-4f1f-b9e5")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)

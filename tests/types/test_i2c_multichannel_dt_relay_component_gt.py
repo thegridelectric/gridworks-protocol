@@ -5,7 +5,7 @@ import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
-from gwproto.types import I2cMultichannelDtRelayComponentGt_Maker as Maker
+from gwproto.types.i2c_multichannel_dt_relay_component_gt import I2cMultichannelDtRelayComponentGt_Maker as Maker
 
 
 def test_i2c_multichannel_dt_relay_component_gt_generated() -> None:

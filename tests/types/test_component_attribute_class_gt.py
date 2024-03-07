@@ -1,19 +1,19 @@
 """Tests component.attribute.class.gt type, version 001"""
 import json
-
+import uuid
 import pytest
 from pydantic import ValidationError
-
+from gwproto.enums import MakeModel
 from gwproto.errors import SchemaError
 from gwproto.types import ComponentAttributeClassGt_Maker as Maker
 
 
 def test_component_attribute_class_gt_generated() -> None:
     d = {
-        "ComponentAttributeClassId": '29c5257b-8a86-4dbe-a9d4-9c7330c3c4d0',
-        "MakeModelGtEnumSymbol": ,
-        "DisplayName": "Sample CAC",
-        "MinPollPeriodMs": ,
+        "ComponentAttributeClassId": "e52cb571-913a-4614-90f4-5cc81f8e7fe5",
+        "MakeModelGtEnumSymbol": "208f827f",
+        "DisplayName": "EKM Hot-Spwm-075-HD Flow Meter",
+        "MinPollPeriodMs": 1000,
         "TypeName": "component.attribute.class.gt",
         "Version": "001",
     }
@@ -86,11 +86,21 @@ def test_component_attribute_class_gt_generated() -> None:
     # Behavior on incorrect types
     ######################################
 
-    d2 = dict(d, MakeModelGtEnumSymbol="unknown_symbol")
-    Maker.dict_to_tuple(d2).MakeModel == MakeModel.default()
 
-    d2 = dict(d, MinPollPeriodMs=".1")
+    d2 = dict(d, MakeModelGtEnumSymbol="unknown_symbol")
+    with pytest.raises(ValidationError): # This Id belongs to the known flow meter
+        Maker.dict_to_tuple(d2)
+    
+    d2 = dict(d, MakeModelGtEnumSymbol="unknown_symbol", ComponentAttributeClassId=str(uuid.uuid4()))
+    # This works
+    Maker.dict_to_tuple(d2).MakeModel == MakeModel.UNKNOWNMAKE__UNKNOWNMODEL
+
+    d2 = dict(d, MinPollPeriodMs="1000.1")
     with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+    
+    d2 = dict(d, ComponentAttributeClassId=str(uuid.uuid4()))
+    with pytest.raises(ValidationError): # Incorrect id for this flow meter
         Maker.dict_to_tuple(d2)
 
     ######################################

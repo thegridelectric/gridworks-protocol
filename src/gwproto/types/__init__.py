@@ -5,12 +5,14 @@ from gwproto.types.ads111x_based_cac_gt import Ads111xBasedCacGt
 from gwproto.types.ads111x_based_cac_gt import Ads111xBasedCacGt_Maker
 from gwproto.types.batched_readings import BatchedReadings
 from gwproto.types.batched_readings import BatchedReadings_Maker
+from gwproto.types.channel_config import ChannelConfig
+from gwproto.types.channel_config import ChannelConfig_Maker
 from gwproto.types.channel_readings import ChannelReadings
 from gwproto.types.channel_readings import ChannelReadings_Maker
 from gwproto.types.component_attribute_class_gt import ComponentAttributeClassGt
 from gwproto.types.component_attribute_class_gt import ComponentAttributeClassGt_Maker
-# from gwproto.types.component_gt import ComponentGt
-# from gwproto.types.component_gt import ComponentGt_Maker
+from gwproto.types.component_gt import ComponentGt
+from gwproto.types.component_gt import ComponentGt_Maker
 from gwproto.types.data_channel import DataChannel
 from gwproto.types.data_channel import DataChannel_Maker
 from gwproto.types.egauge_io import EgaugeIo
@@ -31,26 +33,14 @@ from gwproto.types.gt_sh_cli_atn_cmd import GtShCliAtnCmd
 from gwproto.types.gt_sh_cli_atn_cmd import GtShCliAtnCmd_Maker
 from gwproto.types.heartbeat_b import HeartbeatB
 from gwproto.types.heartbeat_b import HeartbeatB_Maker
-from gwproto.types.hubitat_component_gt import HubitatComponentGt
-from gwproto.types.hubitat_component_gt import HubitatComponentGt_Maker
-from gwproto.types.hubitat_poller_component_gt import HubitatPollerComponentGt
-from gwproto.types.hubitat_poller_component_gt import HubitatPollerComponentGt_Maker
-from gwproto.types.hubitat_tank_component_gt import HubitatTankComponentGt
-from gwproto.types.hubitat_tank_component_gt import HubitatTankComponentGt_Maker
-from gwproto.types.i2c_flow_totalizer_component_gt import I2cFlowTotalizerComponentGt
-from gwproto.types.i2c_flow_totalizer_component_gt import I2cFlowTotalizerComponentGt_Maker
-from gwproto.types.i2c_multichannel_dt_relay_component_gt import I2cMultichannelDtRelayComponentGt
-from gwproto.types.i2c_multichannel_dt_relay_component_gt import I2cMultichannelDtRelayComponentGt_Maker
 from gwproto.types.keyparam_change_log import KeyparamChangeLog
 from gwproto.types.keyparam_change_log import KeyparamChangeLog_Maker
 from gwproto.types.power_watts import PowerWatts
 from gwproto.types.power_watts import PowerWatts_Maker
+from gwproto.types.relay_actor_config import RelayActorConfig
+from gwproto.types.relay_actor_config import RelayActorConfig_Maker
 from gwproto.types.resistive_heater_cac_gt import ResistiveHeaterCacGt
 from gwproto.types.resistive_heater_cac_gt import ResistiveHeaterCacGt_Maker
-from gwproto.types.resistive_heater_component_gt import ResistiveHeaterComponentGt
-from gwproto.types.resistive_heater_component_gt import ResistiveHeaterComponentGt_Maker
-from gwproto.types.rest_poller_component_gt import RESTPollerComponentGt
-from gwproto.types.rest_poller_component_gt import RESTPollerComponentGt_Maker
 from gwproto.types.single_reading import SingleReading
 from gwproto.types.single_reading import SingleReading_Maker
 from gwproto.types.snapshot_spaceheat import Snapshot
@@ -72,14 +62,14 @@ __all__ = [
     # "Ads111xBasedComponentGt_Maker",
     "BatchedReadings",
     "BatchedReadings_Maker",
-    # "ChannelConfig",
-    # "ChannelConfig_Maker",
+    "ChannelConfig",
+    "ChannelConfig_Maker",
     "ChannelReadings",
     "ChannelReadings_Maker",
     "ComponentAttributeClassGt",
     "ComponentAttributeClassGt_Maker",
-    # "ComponentGt",
-    # "ComponentGt_Maker",
+    "ComponentGt",
+    "ComponentGt_Maker",
     "DataChannel",
     "DataChannel_Maker",
     "EgaugeIo",
@@ -104,28 +94,28 @@ __all__ = [
     "GtShCliAtnCmd_Maker",
     "HeartbeatB",
     "HeartbeatB_Maker",
-    "HubitatComponentGt",
-    "HubitatComponentGt_Maker",
-    "HubitatPollerComponentGt",
-    "HubitatPollerComponentGt_Maker",
-    "HubitatTankComponentGt",
-    "HubitatTankComponentGt_Maker",
-    "I2cFlowTotalizerComponentGt",
-    "I2cFlowTotalizerComponentGt_Maker",
-    "I2cMultichannelDtRelayComponentGt",
-    "I2cMultichannelDtRelayComponentGt_Maker",
+    # "HubitatComponentGt",
+    # "HubitatComponentGt_Maker",
+    # "HubitatPollerComponentGt",
+    # "HubitatPollerComponentGt_Maker",
+    # "HubitatTankComponentGt",
+    # "HubitatTankComponentGt_Maker",
+    # "I2cFlowTotalizerComponentGt",
+    # "I2cFlowTotalizerComponentGt_Maker",
+    # "I2cMultichannelDtRelayComponentGt",
+    # "I2cMultichannelDtRelayComponentGt_Maker",
     "KeyparamChangeLog",
     "KeyparamChangeLog_Maker",
     "PowerWatts",
     "PowerWatts_Maker",
-    # "RelayActorConfig",
-    # "RelayActorConfig_Maker",
+    "RelayActorConfig",
+    "RelayActorConfig_Maker",
     "ResistiveHeaterCacGt",
     "ResistiveHeaterCacGt_Maker",
-    "ResistiveHeaterComponentGt",
-    "ResistiveHeaterComponentGt_Maker",
-    "RESTPollerComponentGt",
-    "RESTPollerComponentGt_Maker",
+    # "ResistiveHeaterComponentGt",
+    # "ResistiveHeaterComponentGt_Maker",
+    # "RESTPollerComponentGt",
+    # "RESTPollerComponentGt_Maker",
     "SingleReading",
     "SingleReading_Maker",
     "Snapshot",

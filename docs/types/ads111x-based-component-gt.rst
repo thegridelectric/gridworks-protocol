@@ -24,7 +24,7 @@ Python pydantic class corresponding to json type `ads111x.based.component.gt`, v
     - Description: Config List.  The information re timing of data polling and capture for the channels read by the node.
 
 **ThermistorConfigList**:
-    - Description: Thermistor Config List. This includes the list of configuration information needed for data processing and reporting for the data collected by thermistors - both voltage and (derived) temperature.
+    - Description: Thermistor Config List. This includes the list of configuration information needed for data processing and reporting for the data collected by thermistors - both voltage and (derived) temperature. It also includes the information about what TYPE of thermistor is used.
 
 **HwUid**:
     - Description: Hardware Unique Id. 

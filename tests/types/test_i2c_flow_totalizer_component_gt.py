@@ -5,7 +5,7 @@ import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
-from gwproto.types import I2cFlowTotalizerComponentGt_Maker as Maker
+from gwproto.types.i2c_flow_totalizer_component_gt import I2cFlowTotalizerComponentGt_Maker as Maker
 from gwproto.enums import MakeModel
 
 

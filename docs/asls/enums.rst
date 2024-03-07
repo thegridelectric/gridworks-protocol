@@ -2,7 +2,7 @@
 Enum Application Shared Language (ASL) Specifications
 ===============
 
-spaceheat.make.model.001
+spaceheat.make.model.002
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/spaceheat-make-model.json
 

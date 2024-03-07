@@ -11,10 +11,11 @@ from gwproto.enums import ThermistorDataMethod
 
 def test_thermistor_data_processing_config_generated() -> None:
     d = {
-        "TerminalBlockIdx": ,
-        "ReportingConfig": ,
-        "DataProcessingMethodGtEnumSymbol": ,
-        "DataProcessingDescription": ,
+        "ChannelName": 'hp-ewt',
+        "TerminalBlockIdx": 4,
+        "ThermistorMakeModelGtEnumSymbol": '46f21cd5',
+        "DataProcessingMethodGtEnumSymbol": '00000000',
+        "DataProcessingDescription": 'using a beta of SPLAT.',
         "TypeName": "thermistor.data.processing.config",
         "Version": "000",
     }
@@ -34,8 +35,9 @@ def test_thermistor_data_processing_config_generated() -> None:
 
     # test Maker init
     t = Maker(
+        channel_name=gtuple.ChannelName,
         terminal_block_idx=gtuple.TerminalBlockIdx,
-        reporting_config=gtuple.ReportingConfig,
+        thermistor_make_model=gtuple.ThermistorMakeModel,
         data_processing_method=gtuple.DataProcessingMethod,
         data_processing_description=gtuple.DataProcessingDescription,
         
@@ -52,18 +54,28 @@ def test_thermistor_data_processing_config_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
+    del d2["ChannelName"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
     del d2["TerminalBlockIdx"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["ReportingConfig"]
+    del d2["ThermistorMakeModelGtEnumSymbol"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
     ######################################
     # Optional attributes can be removed from type
     ######################################
+
+    d2 = dict(d)
+    if "DataProcessingMethod" in d2.keys():
+        del d2["DataProcessingMethodGtEnumSymbol"]
+    Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
     if "DataProcessingMethod" in d2.keys():
@@ -79,9 +91,12 @@ def test_thermistor_data_processing_config_generated() -> None:
     # Behavior on incorrect types
     ######################################
 
-    d2 = dict(d, TerminalBlockIdx=".1")
+    d2 = dict(d, TerminalBlockIdx="4.1")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, ThermistorMakeModelGtEnumSymbol="unknown_symbol")
+    Maker.dict_to_tuple(d2).ThermistorMakeModel == MakeModel.default()
 
     d2 = dict(d, DataProcessingMethodGtEnumSymbol="unknown_symbol")
     Maker.dict_to_tuple(d2).DataProcessingMethod == ThermistorDataMethod.default()

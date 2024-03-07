@@ -12,6 +12,7 @@ from pydantic import Field
 from pydantic import validator
 from gwproto.types.channel_config import ChannelConfig
 from gwproto.types.channel_config import ChannelConfig_Maker
+from gwproto.enums import MakeModel
 from gwproto.enums import ThermistorDataMethod
 from gwproto.errors import SchemaError
 
@@ -28,6 +29,10 @@ class ThermistorDataProcessingConfig(BaseModel):
     provides that information.
     """
 
+    ChannelName: ChannelConfig = Field(
+        title="Channel Name",
+        description="The name of the data channel associated with this thermistor",
+    )
     TerminalBlockIdx: int = Field(
         title="Terminal Block Index",
         description=(
@@ -36,11 +41,9 @@ class ThermistorDataProcessingConfig(BaseModel):
             "terminal block to read. For example, al Ads111xBasedComponents use this."
         ),
     )
-    ReportingConfig: ChannelConfig = Field(
-        title="Telemetry Reporting Config",
-        description=(
-            "This includes the standard non-thermistor-specific reporting configuration data."
-        ),
+    ThermistorMakeModel: MakeModel = Field(
+        title="Thermistor MakeModel",
+        description="The Make/Model of the thermistor attached to this terminal block.",
     )
     DataProcessingMethod: Optional[ThermistorDataMethod] = Field(
         title="Data Processing Method",
@@ -98,7 +101,9 @@ class ThermistorDataProcessingConfig(BaseModel):
             ).items()
             if value is not None
         }
-        d["ReportingConfig"] = self.ReportingConfig.as_dict()
+        d["ChannelName"] = self.ChannelName.as_dict()
+        del d["ThermistorMakeModel"]
+        d["ThermistorMakeModelGtEnumSymbol"] = MakeModel.value_to_symbol(self.ThermistorMakeModel)
         if "DataProcessingMethod" in d.keys():
             del d["DataProcessingMethod"]
             d["DataProcessingMethodGtEnumSymbol"] = ThermistorDataMethod.value_to_symbol(self.DataProcessingMethod)
@@ -138,14 +143,16 @@ class ThermistorDataProcessingConfig_Maker:
 
     def __init__(
         self,
+        channel_name: ChannelConfig,
         terminal_block_idx: int,
-        reporting_config: ChannelConfig,
+        thermistor_make_model: MakeModel,
         data_processing_method: Optional[ThermistorDataMethod],
         data_processing_description: Optional[str],
     ):
         self.tuple = ThermistorDataProcessingConfig(
+            ChannelName=channel_name,
             TerminalBlockIdx=terminal_block_idx,
-            ReportingConfig=reporting_config,
+            ThermistorMakeModel=thermistor_make_model,
             DataProcessingMethod=data_processing_method,
             DataProcessingDescription=data_processing_description,
         )
@@ -195,17 +202,23 @@ class ThermistorDataProcessingConfig_Maker:
             ThermistorDataProcessingConfig
         """
         d2 = dict(d)
+        if "ChannelName" not in d2.keys():
+            raise SchemaError(f"dict missing ChannelName: <{d2}>")
+        if not isinstance(d2["ChannelName"], dict):
+            raise SchemaError(f"ChannelName <{d2['ChannelName']}> must be a ChannelConfig!")
+        channel_name = ChannelConfig_Maker.dict_to_tuple(d2["ChannelName"])
+        d2["ChannelName"] = channel_name
         if "TerminalBlockIdx" not in d2.keys():
             raise SchemaError(f"dict missing TerminalBlockIdx: <{d2}>")
-        if "ReportingConfig" not in d2.keys():
-            raise SchemaError(f"dict missing ReportingConfig: <{d2}>")
-        if not isinstance(d2["ReportingConfig"], dict):
-            raise SchemaError(f"ReportingConfig <{d2['ReportingConfig']}> must be a ChannelConfig!")
-        reporting_config = ChannelConfig_Maker.dict_to_tuple(d2["ReportingConfig"])
-        d2["ReportingConfig"] = reporting_config
-        if "DataProcessingMethod" in d2.keys():
+        if "ThermistorMakeModelGtEnumSymbol" not in d2.keys():
+            raise SchemaError(f"ThermistorMakeModelGtEnumSymbol missing from dict <{d2}>")
+        value = MakeModel.symbol_to_value(d2["ThermistorMakeModelGtEnumSymbol"])
+        d2["ThermistorMakeModel"] = MakeModel(value)
+        del d2["ThermistorMakeModelGtEnumSymbol"]
+        if "DataProcessingMethodGtEnumSymbol" in d2.keys():
             value = ThermistorDataMethod.symbol_to_value(d2["DataProcessingMethodGtEnumSymbol"])
             d2["DataProcessingMethod"] = ThermistorDataMethod(value)
+            del d2["DataProcessingMethodGtEnumSymbol"]
         if "TypeName" not in d2.keys():
             raise SchemaError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():

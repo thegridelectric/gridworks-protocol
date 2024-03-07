@@ -21,10 +21,9 @@ except ImportError:
 from gwproto import Message
 from gwproto import MQTTCodec
 from gwproto.messages import Ack
-from gwproto.messages import GtDispatchBoolean_Maker
 from gwproto.messages import GtShCliAtnCmd_Maker
-from gwproto.messages import GtShStatus_Maker
-from gwproto.messages import GtShStatusEvent
+from gwproto.messages import BatchedReadings_Maker
+from gwproto.messages import BatchedReadingsEvent
 from gwproto.messages import MQTTConnectEvent
 from gwproto.messages import MQTTConnectFailedEvent
 from gwproto.messages import MQTTDisconnectEvent
@@ -36,7 +35,7 @@ from gwproto.messages import ProblemEvent
 from gwproto.messages import Problems
 from gwproto.messages import ResponseTimeoutEvent
 from gwproto.messages import ShutdownEvent
-from gwproto.messages import SnapshotSpaceheat_Maker
+from gwproto.messages import Snapshot_Maker
 from gwproto.messages import SnapshotSpaceheatEvent
 from gwproto.messages import StartupEvent
 from tests.dummy_decoders import CHILD
@@ -55,7 +54,7 @@ def get_stored_message_dicts() -> dict:
 
 def child_to_parent_payload_dicts() -> dict:
     d = {}
-    for prefix in ["status", "snapshot"]:
+    for prefix in ["batched_readings", "snapshot"]:
         with (TEST_DATA_DIR / f"{prefix}_message.json").open() as f:
             d[prefix] = json.loads(f.read())
             d[prefix]["Header"]["Src"] = CHILD
@@ -73,25 +72,25 @@ class MessageCase:
 def child_to_parent_messages() -> list[MessageCase]:
     stored_message_dicts = child_to_parent_payload_dicts()
     status_message_dict = stored_message_dicts["status"]
-    gt_sh_status = GtShStatus_Maker.dict_to_tuple(status_message_dict["Payload"])
-    gt_sh_status_event = GtShStatusEvent(Src=CHILD, status=gt_sh_status)
-    unrecognized_status_event = AnyEvent(**gt_sh_status_event.dict())
+    batched_readings = BatchedReadings_Maker.dict_to_tuple(status_message_dict["Payload"])
+    batched_readings_event = BatchedReadingsEvent(Src=CHILD, batched_readings=batched_readings)
+    unrecognized_status_event = AnyEvent(**batched_readings_event.dict())
     unrecognized_status_event.TypeName += ".foo"
     unrecognized_event = AnyEvent(
         TypeName="gridworks.event.bar", MessageId="1", TimeNS=1, Src="1"
     )
     unrecognizeable_not_event_type = AnyEvent(
         **dict(
-            gt_sh_status_event.dict(),
+            batched_readings_event.dict(),
             TypeName="bla",
         )
     )
     unrecognizeable_bad_event_content = dict(TypeName="gridworks.event.baz")
     snap_message_dict = stored_message_dicts["snapshot"]
-    snapshot_spaceheat = SnapshotSpaceheat_Maker.dict_to_tuple(
+    snapshot = Snapshot_Maker.dict_to_tuple(
         snap_message_dict["Payload"]
     )
-    snapshot_event = SnapshotSpaceheatEvent(Src=CHILD, snap=snapshot_spaceheat)
+    snapshot_event = SnapshotSpaceheatEvent(Src=CHILD, snap=snapshot)
 
     return [
         # Gs Pwr
@@ -103,32 +102,32 @@ def child_to_parent_messages() -> list[MessageCase]:
         # status
         # QUESTION: why does this fail when replacing "gt.sh.status.110" with "gt.sh.status"?
         MessageCase(
-            Message(Src=CHILD, MessageType="gt.sh.status.110", Payload=gt_sh_status),
+            Message(Src=CHILD, MessageType="batched.readings", Payload=batched_readings),
             None,
-            gt_sh_status,
+            batched_readings,
         ),
         MessageCase(
             Message(Src=CHILD, Payload=status_message_dict["Payload"]),
             None,
-            gt_sh_status,
+            batched_readings,
         ),
         MessageCase(
-            Message(Src=CHILD, Payload=gt_sh_status.as_dict()), None, gt_sh_status
+            Message(Src=CHILD, Payload=batched_readings.as_dict()), None, batched_readings
         ),
         # snapshot
-        MessageCase(Message(**snap_message_dict), None, snapshot_spaceheat),
+        MessageCase(Message(**snap_message_dict), None, snapshot),
         MessageCase(
             Message(Src=CHILD, Payload=snap_message_dict["Payload"]),
             None,
-            snapshot_spaceheat,
+            snapshot,
         ),
         MessageCase(
-            Message(Src=CHILD, Payload=snapshot_spaceheat.as_dict()),
+            Message(Src=CHILD, Payload=snapshot.as_dict()),
             None,
-            snapshot_spaceheat,
+            snapshot,
         ),
         # events
-        MessageCase(Message(Src=CHILD, Payload=gt_sh_status_event)),
+        MessageCase(Message(Src=CHILD, Payload=batched_readings_event)),
         MessageCase(Message(Src=CHILD, Payload=unrecognized_status_event)),
         MessageCase(Message(Src=CHILD, Payload=unrecognized_event)),
         MessageCase(
@@ -176,14 +175,7 @@ def parent_to_child_messages() -> list[MessageCase]:
         from_g_node_id=str(uuid.uuid4()),
         send_snapshot=True,
     ).tuple
-    set_relay = GtDispatchBoolean_Maker(
-        about_node_name="a.b.c",
-        to_g_node_alias="a.b.c",
-        from_g_node_alias="a.b.c",
-        from_g_node_instance_id=str(uuid.uuid4()),
-        relay_state=1,
-        send_time_unix_ms=int(time.time() * 1000),
-    ).tuple
+    # TODO: add finite state machine event messages
     return [
         # misc messages
         MessageCase(PingMessage(Src=PARENT)),
@@ -193,7 +185,6 @@ def parent_to_child_messages() -> list[MessageCase]:
             None,
             snapshot_request,
         ),
-        MessageCase(Message(Src=PARENT, Payload=set_relay.as_dict()), None, set_relay),
     ]
 
 

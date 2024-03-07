@@ -22,12 +22,20 @@ Python pydantic class corresponding to json type `fsm.atomic.report`, version `0
     - Description: Unix Time in Milliseconds. 
     - Format: ReasonableUnixTimeMs
 
+**TriggerId**:
+    - Description: TriggerId. Reference uuid for the triggering event that started a cascade of transitions, events and  side-effect actions - of which this report is one.
+    - Format: UuidCanonicalTextual
+
 **TypeName**:
     - Description: All GridWorks Versioned Types have a fixed TypeName, which is a string of lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character, and final word NOT all Hindu-Arabic numerals.
 
 **Version**:
     - Description: All GridWorks Versioned Types have a fixed version, which is a string of three Hindu-Arabic numerals.
 
+
+
+.. autoclass:: gwproto.types.fsm_atomic_report.check_is_uuid_canonical_textual
+    :members:
 
 
 .. autoclass:: gwproto.types.fsm_atomic_report.check_is_spaceheat_name

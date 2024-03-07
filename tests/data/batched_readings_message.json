@@ -1,0 +1,15 @@
+{
+  "Header": {
+    "AckRequired": false,
+    "Dst": "",
+    "MessageId": "",
+    "MessageType": "batched.readings",
+    "Src": "hw1.isone.ct.newhaven.orange1.ta.scada",
+    "TypeName": "gridworks.header"
+  },
+  "Payload": {
+    "TypeName": "batched.readings",
+    "Version": "000"
+  },
+  "TypeName": "gw"
+}

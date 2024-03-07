@@ -7,24 +7,22 @@ from gwproto.data_classes.components.electric_meter_component import ElectricMet
 from gwproto.data_classes.components.electric_meter_component import (
     ElectricMeterComponent,
 )
-from gwproto.data_classes.components.pipe_flow_sensor_component import PipeFlowSensorCac
-from gwproto.data_classes.components.pipe_flow_sensor_component import (
-    PipeFlowSensorComponent,
+
+from gwproto.data_classes.components.i2c_flow_totalizer_component import (
+    I2cFlowTotalizerComponent,
 )
-from gwproto.data_classes.components.relay_component import RelayCac
-from gwproto.data_classes.components.relay_component import RelayComponent
+
+from gwproto.data_classes.components.i2c_multichannel_dt_relay_component import (
+    I2cMultichannelDtRelayComponent,
+)
+
 from gwproto.data_classes.components.resistive_heater_component import (
     ResistiveHeaterCac,
 )
 from gwproto.data_classes.components.resistive_heater_component import (
     ResistiveHeaterComponent,
 )
-from gwproto.data_classes.components.simple_temp_sensor_component import (
-    SimpleTempSensorCac,
-)
-from gwproto.data_classes.components.simple_temp_sensor_component import (
-    SimpleTempSensorComponent,
-)
+
 from gwproto.data_classes.hardware_layout import HardwareLayout
 from gwproto.data_classes.sh_node import ShNode
 from gwproto.enums import Role
@@ -102,18 +100,16 @@ def test_flush_and_load_house():
     #     assert node.reporting_sample_period_s is not None
     #
     # flush_all()
-    # assert RelayComponent.by_id == {}
+    # assert I2cMultichannelDtRelayComponent.by_id == {}
     # assert ElectricMeterComponent.by_id == {}
-    # assert PipeFlowSensorComponent.by_id == {}
+    # assert I2cFlowTotalizerComponent.by_id == {}
     # assert ResistiveHeaterComponent.by_id == {}
-    # assert SimpleTempSensorComponent.by_id == {}
     # assert Component.by_id == {}
     #
     # assert RelayCac.by_id == {}
     # assert ElectricMeterCac.by_id == {}
     # assert PipeFlowSensorCac.by_id == {}
     # assert ResistiveHeaterCac.by_id == {}
-    # assert SimpleTempSensorCac.by_id == {}
     # assert ComponentAttributeClass.by_id == {}
     # assert ShNode.by_id == {}
 
@@ -397,7 +393,7 @@ def test_load_real_house():
                     "MaxPowerW": 4500,
                 }
             ],
-            "RelayComponents": [
+            "I2cMultichannelDtRelayComponents": [
                 {
                     "ComponentId": "dd9a1452-d7aa-4523-8deb-8e302a4f86ba",
                     "DisplayName": "relay for radiator fan",
@@ -426,47 +422,7 @@ def test_load_real_house():
                     "Version": "000",
                 },
             ],
-            "MultipurposeSensorComponents": [],
-            "SimpleTempSensorComponents": [
-                {
-                    "ComponentId": "a9d43bb7-f838-4b7c-89ed-186eb8c89f23",
-                    "DisplayName": "Outdoor Temperature Sensor",
-                    "ComponentAttributeClassId": "cac0f096-b460-4dce-aabf-a81ccce23566",
-                    "TypeName": "simple.temp.sensor.component.gt",
-                    "Version": "000",
-                },
-                {
-                    "ComponentId": "2ca9e65a-5e85-4eaa-811b-901e940f8d09",
-                    "DisplayName": "Temp sensor on pipe out of tank",
-                    "ComponentAttributeClassId": "43564cd2-0e78-41a2-8b67-ad80c02161e8",
-                    "HwUid": "00033ffe",
-                    "TypeName": "simple.temp.sensor.component.gt",
-                    "Version": "000",
-                },
-                {
-                    "ComponentId": "35b5107c-bf32-4791-93eb-0497929fae57",
-                    "DisplayName": "Temp sensor on pipe into tank",
-                    "ComponentAttributeClassId": "43564cd2-0e78-41a2-8b67-ad80c02161e8",
-                    "HwUid": "000363a9",
-                    "TypeName": "simple.temp.sensor.component.gt",
-                    "Version": "000",
-                },
-                {
-                    "ComponentId": "2d4b3b73-fc58-4789-b15e-9881f0b4ff40",
-                    "DisplayName": "Component for a.tank.temp0 (on top)",
-                    "ComponentAttributeClassId": "43564cd2-0e78-41a2-8b67-ad80c02161e8",
-                    "HwUid": "00041d3f",
-                    "TypeName": "simple.temp.sensor.component.gt",
-                    "Version": "000",
-                },
-                {
-                    "ComponentId": "38d2db8d-3668-4479-a839-c4b0298be270",
-                    "DisplayName": "First garage temp sensor",
-                    "ComponentAttributeClassId": "5450e92e-8c11-4383-b9b1-c8f412d83608",
-                    "TypeName": "simple.temp.sensor.component.gt",
-                    "Version": "000",
-                },
-            ],
+            "Ads111xBasedComponents": [],
             "ElectricMeterComponents": [
                 {
                     "ComponentId": "04ceb282-d7e8-4293-80b5-72455e1a5db3",
@@ -477,7 +433,7 @@ def test_load_real_house():
                     "Version": "000",
                 }
             ],
-            "PipeFlowSensorComponents": [
+            "I2cFlowTotalizerComponents": [
                 {
                     "ComponentId": "cec2fe5c-977c-4e5f-b299-f70adbc38523",
                     "DisplayName": "Flow meter on pipe out of tank",
@@ -555,40 +511,6 @@ def test_load_real_house():
                 }
             ],
             "MultipurposeSensorCacs": [],
-            "SimpleTempSensorCacs": [
-                {
-                    "ComponentAttributeClassId": "43564cd2-0e78-41a2-8b67-ad80c02161e8",
-                    "MakeModelGtEnumSymbol": "acd93fb3",
-                    "DisplayName": "Adafruit High Temp Waterproof DS18B20 Digital Temp Sensor",
-                    "CommsMethod": "OneWire",
-                    "Exponent": -3,
-                    "TelemetryNameGtEnumSymbol": "c89d0ba1",
-                    "TempUnitGtEnumSymbol": "ec14bd47",
-                    "TypicalResponseTimeMs": 880,
-                    "TypeName": "simple.temp.sensor.cac.gt",
-                    "Versoin": "000",
-                },
-                {
-                    "ComponentAttributeClassId": "5450e92e-8c11-4383-b9b1-c8f412d83608",
-                    "MakeModelGtEnumSymbol": "00000000",
-                    "TempUnitGtEnumSymbol": "ec14bd47",
-                    "TelemetryNameGtEnumSymbol": "c89d0ba1",
-                    "TypicalResponseTimeMs": 0,
-                    "Exponent": -3,
-                    "TypeName": "simple.temp.sensor.cac.gt",
-                    "Version": "000",
-                },
-                {
-                    "ComponentAttributeClassId": "cac0f096-b460-4dce-aabf-a81ccce23566",
-                    "MakeModelGtEnumSymbol": "00000000",
-                    "TempUnitGtEnumSymbol": "ec14bd47",
-                    "TelemetryNameGtEnumSymbol": "c89d0ba1",
-                    "TypicalResponseTimeMs": 0,
-                    "Exponent": -3,
-                    "TypeName": "simple.temp.sensor.cac.gt",
-                    "Version": "000",
-                },
-            ],
             "OtherCacs": [
                 {
                     "ComponentAttributeClassId": "683c193a-bf83-4491-a294-c0e32865a407",

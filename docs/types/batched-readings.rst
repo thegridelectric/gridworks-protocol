@@ -37,6 +37,10 @@ Python pydantic class corresponding to json type `batched.readings`, version `00
 **FsmReportList**:
     - Description: Finite State Machine Report List. FSM Reports are the cacading events, actions and transitions caused by a single high-level event. There is duplication with the action list. 
 
+**Id**:
+    - Description: Batched Reading Id. Globally Unique identifier for a BatchedReadings message
+    - Format: UuidCanonicalTextual
+
 **TypeName**:
     - Description: All GridWorks Versioned Types have a fixed TypeName, which is a string of lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character, and final word NOT all Hindu-Arabic numerals.
 

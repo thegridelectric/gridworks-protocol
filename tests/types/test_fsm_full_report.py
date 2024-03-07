@@ -11,7 +11,7 @@ from gwproto.types import FsmFullReport_Maker as Maker
 def test_fsm_full_report_generated() -> None:
     d = {
         "FromName": ,
-        "Trigger": ,
+        "TriggerId": ,
         "AtomicList": ,
         "TypeName": "fsm.full.report",
         "Version": "000",
@@ -33,7 +33,7 @@ def test_fsm_full_report_generated() -> None:
     # test Maker init
     t = Maker(
         from_name=gtuple.FromName,
-        trigger=gtuple.Trigger,
+        trigger_id=gtuple.TriggerId,
         atomic_list=gtuple.AtomicList,
         
     ).tuple
@@ -54,7 +54,7 @@ def test_fsm_full_report_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["Trigger"]
+    del d2["TriggerId"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -66,6 +66,18 @@ def test_fsm_full_report_generated() -> None:
     ######################################
     # Behavior on incorrect types
     ######################################
+
+    d2  = dict(d, AtomicList="Not a list.")
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2  = dict(d, AtomicList=["Not a list of dicts"])
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2  = dict(d, AtomicList= [{"Failed": "Not a GtSimpleSingleStatus"}])
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
 
     ######################################
     # SchemaError raised if TypeName is incorrect
@@ -80,5 +92,9 @@ def test_fsm_full_report_generated() -> None:
     ######################################
 
     d2 = dict(d, FromName="A.hot-stuff")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, TriggerId="d4be12d5-33ba-4f1f-b9e5")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)

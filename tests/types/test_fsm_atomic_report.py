@@ -16,6 +16,7 @@ def test_fsm_atomic_report_generated() -> None:
         "ActionTypeGtEnumSymbol": ,
         "Action": ,
         "UnixTimeMs": ,
+        "TriggerId": ,
         "TypeName": "fsm.atomic.report",
         "Version": "000",
     }
@@ -40,6 +41,7 @@ def test_fsm_atomic_report_generated() -> None:
         action_type=gtuple.ActionType,
         action=gtuple.Action,
         unix_time_ms=gtuple.UnixTimeMs,
+        trigger_id=gtuple.TriggerId,
         
     ).tuple
     assert t == gtuple
@@ -68,9 +70,19 @@ def test_fsm_atomic_report_generated() -> None:
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
+    d2 = dict(d)
+    del d2["TriggerId"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
     ######################################
     # Optional attributes can be removed from type
     ######################################
+
+    d2 = dict(d)
+    if "ActionType" in d2.keys():
+        del d2["ActionTypeGtEnumSymbol"]
+    Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
     if "ActionType" in d2.keys():
@@ -114,5 +126,9 @@ def test_fsm_atomic_report_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d, UnixTimeMs=1656245000)
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, TriggerId="d4be12d5-33ba-4f1f-b9e5")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)

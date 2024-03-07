@@ -1296,14 +1296,15 @@ class </xsl:text>
 
      <!-- OUTER LOOP dict_to_tuple: attribute is optional-->
     <xsl:otherwise>
-    <xsl:text>
-        if "</xsl:text><xsl:value-of select="Value"/><xsl:text>" in d2.keys():
-            </xsl:text>
+
 
         <xsl:choose>
 
         <!-- (Is required) INNER LOOP dict_to_tuple: Single Enum -->
-            <xsl:when test="(IsEnum = 'true') and not (IsList = 'true')">
+        <xsl:when test="(IsEnum = 'true') and not (IsList = 'true')">
+            <xsl:text>
+        if "</xsl:text><xsl:value-of select="Value"/><xsl:text>GtEnumSymbol" in d2.keys():
+            </xsl:text>
             <xsl:text>value = </xsl:text>
             <xsl:value-of select="$enum-class-name"/>
             <xsl:text>.symbol_to_value(d2["</xsl:text>
@@ -1314,11 +1315,19 @@ class </xsl:text>
                 <xsl:with-param name="type-name-text" select="Value" />
             </xsl:call-template><xsl:text>"] = </xsl:text>
             <xsl:value-of select="$enum-class-name"/>
-            <xsl:text>(value)</xsl:text>
-            </xsl:when>
-            <!-- (Is optional) INNER LOOP dict_to_tuple: Single type not Dataclass -->
-            <xsl:when test="(IsType = 'true') and (normalize-space(SubTypeDataClass) = '') and not (IsList = 'true')">
-            <xsl:text>if not isinstance(d2["</xsl:text><xsl:value-of select="Value"/>
+            <xsl:text>(value)
+            del d2["</xsl:text> 
+            <xsl:call-template name="nt-case">
+                <xsl:with-param name="type-name-text" select="Value" />
+            </xsl:call-template><xsl:text>GtEnumSymbol"]</xsl:text>
+        </xsl:when>
+
+
+        <!-- (Is optional) INNER LOOP dict_to_tuple: Single type not Dataclass -->
+        <xsl:when test="(IsType = 'true') and (normalize-space(SubTypeDataClass) = '') and not (IsList = 'true')">
+        <xsl:text>
+        if "</xsl:text><xsl:value-of select="Value"/><xsl:text>" in d2.keys():
+            if not isinstance(d2["</xsl:text><xsl:value-of select="Value"/>
             <xsl:text>"], dict):
                 raise SchemaError(f"d['</xsl:text>
                 <xsl:value-of select="Value"/>

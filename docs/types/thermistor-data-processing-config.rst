@@ -5,12 +5,15 @@ Python pydantic class corresponding to json type `thermistor.data.processing.con
 .. autoclass:: gwproto.types.ThermistorDataProcessingConfig
     :members:
 
+**ChannelName**:
+    - Description: Channel Name. The name of the data channel associated with this thermistor
+
 **TerminalBlockIdx**:
     - Description: Terminal Block Index. If the reading Node uses terminal blocks for inputs (e.g. thermistors or current transformers), and it has multiple terminal blocks, then one needs to know which terminal block to read. For example, al Ads111xBasedComponents use this.
     - Format: PositiveInteger
 
-**ReportingConfig**:
-    - Description: Telemetry Reporting Config. This includes the standard non-thermistor-specific reporting configuration data.
+**ThermistorMakeModel**:
+    - Description: Thermistor MakeModel. The Make/Model of the thermistor attached to this terminal block.
 
 **DataProcessingMethod**:
     - Description: Data Processing Method. What method is used to go from polled raw voltage to captured temperature readings? Not applicable if the data channel is voltage.

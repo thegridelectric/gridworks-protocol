@@ -3,8 +3,8 @@ from gwproto import Decoders
 from gwproto import MQTTCodec
 from gwproto import create_message_payload_discriminator
 from gwproto.gs import GsPwr_Maker
-from gwproto.messages import GtShStatus_Maker
-from gwproto.messages import SnapshotSpaceheat_Maker
+from gwproto.messages import BatchedReadings_Maker
+from gwproto.messages import Snapshot_Maker
 from tests.dummy_decoders import CHILD
 
 
@@ -19,8 +19,8 @@ class ParentMQTTCodec(MQTTCodec):
         super().__init__(
             Decoders.from_objects(
                 [
-                    GtShStatus_Maker,
-                    SnapshotSpaceheat_Maker,
+                    BatchedReadings_Maker,
+                    Snapshot_Maker,
                 ],
                 message_payload_discriminator=ParentMessageDecoder,
             ).add_decoder(

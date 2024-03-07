@@ -64,7 +64,7 @@ __all__ = [
     "KindOfParam",  # [spaceheat.kind.of.param.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatkindofparam)
     "LgOperatingMode",  # [lg.operating.mode.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#lgoperatingmode)
     "LocalCommInterface",  # [local.comm.interface.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#localcomminterface)
-    "MakeModel",  # [spaceheat.make.model.001](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatmakemodel)
+    "MakeModel",  # [spaceheat.make.model.002](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatmakemodel)
     "RelayEnergizationState",  # [relay.energization.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relayenergizationstate)
     "RelayWiringConfig",  # [relay.wiring.config.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relaywiringconfig)
     "TelemetryName",  # [spaceheat.telemetry.name.001](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheattelemetryname)

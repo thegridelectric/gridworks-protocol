@@ -5,6 +5,11 @@
   "owner": "gridworks@gridworks-consulting.com",
   "description": ". How does polled raw data get turned into a captured temperature reading? This config type provides that information.",
   "properties": {
+    "ChannelName": {
+      "type": "channel.config.000",
+      "description": "The name of the data channel associated with this thermistor",
+      "required": true
+    },
     "TerminalBlockIdx": {
       "type": "integer",
       "format": "PositiveInteger",
@@ -12,9 +17,11 @@
       "description": "If the reading Node uses terminal blocks for inputs (e.g. thermistors or current transformers), and it has multiple terminal blocks, then one needs to know which terminal block to read. For example, al Ads111xBasedComponents use this.",
       "required": true
     },
-    "ReportingConfig": {
-      "type": "channel.config.000",
-      "description": "This includes the standard non-thermistor-specific reporting configuration data.",
+    "ThermistorMakeModel": {
+      "type": "string",
+      "format": "spaceheat.make.model",
+      "title": "Thermistor MakeModel",
+      "description": "The Make/Model of the thermistor attached to this terminal block.",
       "required": true
     },
     "DataProcessingMethod": {

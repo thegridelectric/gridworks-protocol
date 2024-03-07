@@ -29,6 +29,13 @@
       "title": "Sent Time Unix Ms",
       "required": true
     },
+    "TriggerId": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "Trigger Id",
+      "description": "Reference uuid for the triggering event that started a cascade of transitions, events and side-effect actions - of which this event is one.",
+      "required": true
+    },
     "TypeName": {
       "type": "string",
       "value": "fsm.event",
@@ -42,6 +49,11 @@
     }
   },
   "formats": {
+    "UuidCanonicalTextual": {
+      "type": "string",
+      "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
+      "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"
+    },
     "SpaceheatName": {
       "type": "string",
       "description": "Lowercase words separated by periods, where the word characters can be alphanumeric or a hyphen and the first word starts with an alphabet character.",

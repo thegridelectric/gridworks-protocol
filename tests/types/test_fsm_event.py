@@ -14,6 +14,7 @@ def test_fsm_event_generated() -> None:
         "ToHandle": ,
         "Name": ,
         "SendTimeUnixMs": ,
+        "TriggerId": ,
         "TypeName": "fsm.event",
         "Version": "000",
     }
@@ -37,6 +38,7 @@ def test_fsm_event_generated() -> None:
         to_handle=gtuple.ToHandle,
         name=gtuple.Name,
         send_time_unix_ms=gtuple.SendTimeUnixMs,
+        trigger_id=gtuple.TriggerId,
         
     ).tuple
     assert t == gtuple
@@ -70,6 +72,11 @@ def test_fsm_event_generated() -> None:
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
+    d2 = dict(d)
+    del d2["TriggerId"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
     ######################################
     # Behavior on incorrect types
     ######################################
@@ -99,5 +106,9 @@ def test_fsm_event_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d, SendTimeUnixMs=1656245000)
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, TriggerId="d4be12d5-33ba-4f1f-b9e5")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)

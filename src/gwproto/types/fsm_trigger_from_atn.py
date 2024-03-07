@@ -41,9 +41,9 @@ class FsmTriggerFromAtn(BaseModel):
     Trigger: FsmEvent = Field(
         title="Trigger",
         description=(
-            "This is meant to be an event that triggers a cascade of other events, transitions "
-            "and actions in the Spaceheat Nodes of the SCADA. This comes from the language of "
-            "Finite State Machines"
+            "This is meant to be a string that is interpretted as an event that triggers a cascade "
+            "of other events, transitions and actions in the Spaceheat Nodes of the SCADA. This "
+            "comes from the language of Finite State Machines"
             "[More info](https://gridworks-protocol.readthedocs.io/en/latest/finite-state-machines.html)"
         ),
     )
@@ -84,7 +84,7 @@ class FsmTriggerFromAtn(BaseModel):
     @validator("Trigger")
     def check_trigger(cls, v: FsmEvent) -> FsmEvent:
         """
-        Axiom : FromHandle must be 'a' (for AtomicTNode)..
+        Axiom 1: FromHandle must be 'a' (for AtomicTNode).
         The triggering event is coming from the AtomicTNode, which always has the handle of "a"
     as a SpaceheatNode in the SCADA's hierarchical finite state machine.
         """

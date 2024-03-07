@@ -77,7 +77,8 @@ class Ads111xBasedComponentGt(BaseModel):
         title="Thermistor Config List",
         description=(
             "This includes the list of configuration information needed for data processing and "
-            "reporting for the data collected by thermistors - both voltage and (derived) temperature."
+            "reporting for the data collected by thermistors - both voltage and (derived) temperature. "
+            "It also includes the information about what TYPE of thermistor is used."
         ),
     )
     HwUid: Optional[str] = Field(

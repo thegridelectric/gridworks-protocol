@@ -5,7 +5,7 @@ import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
-from gwproto.types.component_gt import ComponentGt_Maker as Maker
+from gwproto.types import ComponentGt_Maker as Maker
 
 
 def test_component_gt_generated() -> None:

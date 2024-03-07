@@ -72,7 +72,7 @@ class HubitatComponentGt(ComponentGt):
 
     @classmethod
     def from_component_id(
-        cls, component_id: str, components: dict[str, Component]
+        cls, component_id: str, components: dict[str, HubitatComponent]
     ) -> "HubitatComponentGt":
         hubitat_component = components.get(component_id, None)
         if hubitat_component is None:

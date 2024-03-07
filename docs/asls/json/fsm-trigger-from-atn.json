@@ -26,7 +26,7 @@
     },
     "Trigger": {
       "type": "fsm.event.000",
-      "description": "This is meant to be an event that triggers a cascade of other events, transitions and actions in the Spaceheat Nodes of the SCADA. This comes from the language of Finite State Machines",
+      "description": "This is meant to be a string that is interpretted as an event that triggers a cascade of other events, transitions and actions in the Spaceheat Nodes of the SCADA. This comes from the language of Finite State Machines",
       "required": true
     },
     "TypeName": {
@@ -42,8 +42,8 @@
     }
   },
   "axioms": {
-    "Axiom": {
-      "title": "FromHandle must be 'a' (for AtomicTNode).",
+    "Axiom1": {
+      "title": "FromHandle must be 'a' (for AtomicTNode)",
       "description": "The triggering event is coming from the AtomicTNode, which always has the handle of "a" as a SpaceheatNode in the SCADA's hierarchical finite state machine."
     }
   },

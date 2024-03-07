@@ -37,24 +37,6 @@ def decode_to_data_class(
     return Component(**decoded_gt.dict())
 
 
-class CacDecoder(PydanticTypeNameDecoder):
-    TYPE_NAME_REGEX = re.compile(r".*\.cac\.gt")
-
-    def __init__(self, model_name: str, **kwargs):
-        if "type_name_regex" not in kwargs:
-            kwargs["type_name_regex"] = CacDecoder.TYPE_NAME_REGEX
-        super().__init__(model_name, **kwargs)
-
-    def decode_to_data_class(
-        self, data: dict, allow_missing_func: bool = True
-    ) -> ComponentAttributeClass:
-        return decode_to_data_class(
-            decoded_gt=self.decode_obj(data),
-            return_type=ComponentAttributeClass,
-            allow_missing_func=allow_missing_func,
-        )
-
-
 class ComponentDecoder(PydanticTypeNameDecoder):
     TYPE_NAME_REGEX = re.compile(r".*\.component\.gt")
 
@@ -72,11 +54,6 @@ class ComponentDecoder(PydanticTypeNameDecoder):
             allow_missing_func=allow_missing_func,
         )
 
-
-default_cac_decoder = CacDecoder(
-    model_name="DefaultCacDecoder",
-    module_names=[],
-)
 
 default_component_decoder = ComponentDecoder(
     model_name="DefaultComponentDecoder",

@@ -1,5 +1,7 @@
-from fastapi_utils.enums import StrEnum
 from enum import auto
+from typing import List
+
+from fastapi_utils.enums import StrEnum
 
 
 class ChangeValveState(StrEnum):
@@ -8,6 +10,13 @@ class ChangeValveState(StrEnum):
     """
     OpenValve = auto()
     CloseValve = auto()
+
+    @classmethod
+    def values(cls) -> List[str]:
+        """
+        Returns enum choices
+        """
+        return [elt.value for elt in cls]
 
     @classmethod
     def default(cls) -> "ChangeValveState":

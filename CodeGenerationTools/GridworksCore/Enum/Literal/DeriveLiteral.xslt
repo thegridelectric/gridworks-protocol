@@ -39,6 +39,7 @@
 
 
 <xsl:text>from fastapi_utils.enums import StrEnum
+from typing import List
 from enum import auto
 
 
@@ -71,6 +72,13 @@ class </xsl:text><xsl:value-of select="$enum-class-name"/>
 
 </xsl:for-each>
 <xsl:text>
+
+    @classmethod
+    def values(cls) -> List[str]:
+        """
+        Returns enum choices
+        """
+        return [elt.value for elt in cls]
 
     @classmethod
     def default(cls) -> "</xsl:text>

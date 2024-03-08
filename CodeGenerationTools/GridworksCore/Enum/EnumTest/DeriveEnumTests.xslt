@@ -52,13 +52,14 @@ def test_</xsl:text> <xsl:value-of select="translate(LocalName,'.','_')"/>
     <xsl:sort select="Idx"  data-type="number"/>
         <xsl:text>
         "</xsl:text>
-        <xsl:if test="$enum-type = 'Upper'">
+        <xsl:choose>
+        <xsl:when test="$enum-type = 'Upper'">
             <xsl:value-of select="translate(translate(LocalValue,'-',''),$lcletters, $ucletters)"/>
-        </xsl:if>
-        <xsl:if test="$enum-type ='UpperPython'">
+        </xsl:when>
+        <xsl:otherwise>
             <xsl:value-of select="LocalValue"/>
-        </xsl:if>
-
+        </xsl:otherwise>
+        </xsl:choose>
         <xsl:text>",</xsl:text>
         </xsl:for-each>
     <xsl:text>
@@ -66,20 +67,26 @@ def test_</xsl:text> <xsl:value-of select="translate(LocalName,'.','_')"/>
 
     assert </xsl:text><xsl:value-of select="$local-class-name"/><xsl:text>.default() == </xsl:text>
     <xsl:value-of select="$local-class-name"/><xsl:text>.</xsl:text>
-    <xsl:if test="$enum-type = 'Upper'">
+    <xsl:choose>
+    <xsl:when test="$enum-type = 'Upper'">
         <xsl:value-of select="translate(translate(DefaultEnumValue,'-',''),$lcletters, $ucletters)"/>
-    </xsl:if>
-    <xsl:if test="$enum-type ='UpperPython'">
+    </xsl:when>
+    <xsl:otherwise>
         <xsl:value-of select="DefaultEnumValue"/>
-    </xsl:if>
+    </xsl:otherwise>
+    </xsl:choose>
     <xsl:text>
     assert </xsl:text><xsl:value-of select="$local-class-name"/><xsl:text>.enum_name() == "</xsl:text>
     <xsl:value-of select="$enum-name"/>
-    <xsl:text>"
+    <xsl:text>"</xsl:text>
+
+    <xsl:if test="$enum-type = 'Upper' or $enum-type = 'UpperPython'">
+    <xsl:text>
     assert </xsl:text><xsl:value-of select="$local-class-name"/><xsl:text>.enum_version() == "</xsl:text>
     <xsl:value-of select="$version"/>
     <xsl:text>"
 </xsl:text>
+    
 
     <xsl:for-each select="$airtable//EnumSymbols/EnumSymbol[(Enum = $enum-id) and (Version &lt;= $version)]">
     <xsl:sort select="Idx"  data-type="number"/>
@@ -100,6 +107,8 @@ def test_</xsl:text> <xsl:value-of select="translate(LocalName,'.','_')"/>
     for value in </xsl:text><xsl:value-of select="$local-class-name"/><xsl:text>.values():
         symbol = </xsl:text><xsl:value-of select="$local-class-name"/><xsl:text>.value_to_symbol(value)
         assert </xsl:text><xsl:value-of select="$local-class-name"/><xsl:text>.symbol_to_value(symbol) == value</xsl:text>
+    
+    </xsl:if>
 
         <!-- Add newline at EOF for git and pre-commit-->
         <xsl:text>&#10;</xsl:text>

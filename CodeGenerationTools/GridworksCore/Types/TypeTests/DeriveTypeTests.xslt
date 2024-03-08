@@ -24,9 +24,17 @@
                 <xsl:for-each select="$airtable//VersionedTypes/VersionedType[(VersionedTypeId = $versioned-type-id)  and (Status = 'Active' or Status = 'Pending') and (ProtocolCategory = 'Json' or ProtocolCategory = 'GwAlgoSerial')]">
                 <xsl:variable name="type-name" select="TypeName"/>
                 <xsl:variable name="class-name">
+                    <xsl:choose>
+                    <xsl:when test="normalize-space(PythonClassName)=''">
                     <xsl:call-template name="nt-case">
                         <xsl:with-param name="type-name-text" select="$type-name" />
                     </xsl:call-template>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="PythonClassName" />
+                    </xsl:otherwise>
+
+                    </xsl:choose>
                 </xsl:variable>
                 <xsl:variable name="overwrite-mode">
 
@@ -57,8 +65,10 @@ from gwproto.errors import SchemaError</xsl:text>
 <xsl:when test="(NotInInit='true')">
 <xsl:text>
 from gwproto.types.</xsl:text><xsl:value-of select="translate($type-name,'.','_')"/>
+<xsl:text> import </xsl:text><xsl:value-of select="$class-name"/><xsl:text>
+from gwproto.types.</xsl:text><xsl:value-of select="translate($type-name,'.','_')"/>
 <xsl:text> import </xsl:text>
-<xsl:value-of select="PythonClassName"/><xsl:text>_Maker as Maker</xsl:text>
+<xsl:value-of select="$class-name"/><xsl:text>_Maker as Maker</xsl:text>
 </xsl:when>
 
 <xsl:otherwise>
@@ -98,7 +108,8 @@ def test_</xsl:text><xsl:value-of select="translate($type-name,'.','_')"/>
         <xsl:text>,</xsl:text>
         </xsl:for-each>
 
-    <xsl:text>)
+    <xsl:text>
+    )
 
     d = {</xsl:text>
         <xsl:for-each select="$airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id)]">
@@ -150,31 +161,6 @@ def test_</xsl:text><xsl:value-of select="translate($type-name,'.','_')"/>
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple
-
-    # test Maker init
-    t = Maker(
-        </xsl:text>
-        <xsl:for-each select="$airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id)]">
-        <xsl:sort select="Idx" data-type="number"/>
-        <xsl:variable name = "attribute-name">
-        <xsl:value-of select="Value"/>
-        <!-- If attribute is associated to a data class, add Id to the Attribute name-->
-        <xsl:if test="not(normalize-space(SubTypeDataClass) = '') and not(IsList='true')">
-        <xsl:text>Id</xsl:text>
-        </xsl:if>
-        </xsl:variable>
-
-        <xsl:call-template name="python-case">
-            <xsl:with-param name="camel-case-text" select="$attribute-name"  />
-        </xsl:call-template>
-        <xsl:text>=gtuple.</xsl:text>
-        <xsl:value-of select="$attribute-name"/>
-        <xsl:text>,
-        </xsl:text>
-        </xsl:for-each>
-        <xsl:text>
-    ).tuple
-    assert t == gtuple
 
     </xsl:text>
     <xsl:if test="MakeDataClass='true'">

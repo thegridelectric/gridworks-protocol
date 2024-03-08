@@ -943,134 +943,6 @@ class </xsl:text>
     type_name = "</xsl:text><xsl:value-of select="TypeName"/><xsl:text>"
     version = "</xsl:text><xsl:value-of select="Version"/><xsl:text>"
 
-    def __init__(
-        self,
-        </xsl:text>
-<xsl:for-each select="$airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id)]">
-<xsl:sort select="Idx" data-type="number"/>
-
-
-<xsl:variable name = "attribute-name">
-    <xsl:value-of select="Value"/>
-    <!-- If attribute is associated to a data class, add Id to the Attribute name-->
-    <xsl:if test="not(normalize-space(SubTypeDataClass) = '') and not(IsList='true')">
-    <xsl:text>Id</xsl:text>
-    </xsl:if>
-</xsl:variable>
-
-<xsl:variable name="enum-class-name">
-    <xsl:if test = "(IsEnum = 'true')">
-        <xsl:if test="UseEnumAlias = 'true'">
-        <xsl:text>Enum</xsl:text>
-        </xsl:if>
-        <xsl:call-template name="nt-case">
-                        <xsl:with-param name="type-name-text" select="EnumLocalName" />
-        </xsl:call-template>
-    </xsl:if>
-</xsl:variable>
-
-<xsl:variable name="attribute-type">
-
-    <!-- If Optional, start the Optional bracket-->
-    <xsl:if test="not(IsRequired = 'true')">
-    <xsl:text>Optional[</xsl:text>
-    </xsl:if>
-
-    <!-- If List, start the List bracket-->
-    <xsl:if test="IsList = 'true'">
-    <xsl:text>List[</xsl:text>
-    </xsl:if>
-    <xsl:choose>
-    <xsl:when test="(IsPrimitive = 'true')">
-    <xsl:call-template name="python-type">
-        <xsl:with-param name="gw-type" select="PrimitiveType"/>
-    </xsl:call-template>
-    </xsl:when>
-
-    <xsl:when test = "(IsEnum = 'true')">
-        <xsl:value-of select="$enum-class-name"/>
-    </xsl:when>
-
-    <!-- If Attribute is a type associated with a dataclass, the reference is to its id, which is a string -->
-    <xsl:when test = "not(normalize-space(SubTypeDataClass) = '') and not(IsList='true')">
-    <xsl:text>str</xsl:text>
-    </xsl:when>
-
-    <!-- Otherwise, the reference is to the type  -->
-    <xsl:when test="(IsType = 'true')">
-        <xsl:call-template name="nt-case">
-            <xsl:with-param name="type-name-text" select="SubTypeName" />
-        </xsl:call-template>
-    </xsl:when>
-    <xsl:otherwise></xsl:otherwise>
-    </xsl:choose>
-            <!-- If List, end the List bracket-->
-    <xsl:if test="IsList = 'true'">
-    <xsl:text>]</xsl:text>
-    </xsl:if>
-
-    <!-- If Optional, end the Optional bracket-->
-    <xsl:if test="not(IsRequired = 'true')">
-    <xsl:text>]</xsl:text>
-    </xsl:if>
-</xsl:variable>
-
-
-        <!-- python case version of attribute names in init-->
-        <xsl:call-template name="python-case">
-            <xsl:with-param name="camel-case-text" select="$attribute-name"  />
-        </xsl:call-template>
-        <xsl:text>: </xsl:text>
-        <xsl:value-of select="$attribute-type"/>
-
-        <xsl:variable name="current-attribute" select="position()" />
-        <xsl:choose>
-        <xsl:when test="$current-attribute=$total-attributes">
-        <xsl:text>,</xsl:text>
-        </xsl:when>
-        <xsl:otherwise>
-        <xsl:text>,
-        </xsl:text>
-        </xsl:otherwise>
-        </xsl:choose>
-
-
-        </xsl:for-each>
-    <xsl:text>
-    ):
-        self.tuple = </xsl:text><xsl:value-of select="$python-class-name"/>
-        <xsl:text>(
-            </xsl:text>
-        <xsl:for-each select="$airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id)]">
-        <xsl:sort select="Idx" data-type="number"/>
-        <xsl:variable name = "attribute-name">
-            <xsl:value-of select="Value"/>
-            <!-- If attribute is associated to a data class, add Id to the Attribute name-->
-            <xsl:if test="not(normalize-space(SubTypeDataClass) = '') and not(IsList='true')">
-            <xsl:text>Id</xsl:text>
-            </xsl:if>
-        </xsl:variable>
-
-        <xsl:value-of select="$attribute-name"/><xsl:text>=</xsl:text>
-        <xsl:call-template name="python-case">
-            <xsl:with-param name="camel-case-text" select="$attribute-name"  />
-        </xsl:call-template>
-
-        <xsl:variable name="current-attribute" select="position()" />
-        <xsl:choose>
-        <xsl:when test="$current-attribute=$total-attributes">
-        <xsl:text>,</xsl:text>
-        </xsl:when>
-        <xsl:otherwise>
-        <xsl:text>,
-            </xsl:text>
-        </xsl:otherwise>
-        </xsl:choose>
-
-    </xsl:for-each>
-    <xsl:text>
-        )
-
     @classmethod
     def tuple_to_type(cls, tuple: </xsl:text><xsl:value-of select="$python-class-name"/>
     <xsl:text>) -> bytes:
@@ -1451,16 +1323,15 @@ class </xsl:text>
 
     @classmethod
     def dc_to_tuple(cls, dc: </xsl:text><xsl:value-of select="DataClass"/><xsl:text>) -> </xsl:text><xsl:value-of select="$python-class-name"/><xsl:text>:
-        t = </xsl:text><xsl:value-of select="$python-class-name"/><xsl:text>_Maker(
+        return </xsl:text><xsl:value-of select="$python-class-name"/><xsl:text>(
             </xsl:text>
         <xsl:for-each select="$airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id)]">
         <xsl:sort select="Idx" data-type="number"/>
         <xsl:choose>
         <!-- Single type associated with a single dataclass -->
         <xsl:when test="not(normalize-space(SubTypeDataClass) = '') and not(IsList = 'true')">
-        <xsl:call-template name="python-case">
-            <xsl:with-param name="camel-case-text" select="Value"  />
-        </xsl:call-template><xsl:text>_id=dc.</xsl:text>
+            <xsl:value-of select="Value"  />
+        <xsl:text>Id=dc.</xsl:text>
         <xsl:call-template name="python-case">
             <xsl:with-param name="camel-case-text" select="Value"  />
         </xsl:call-template>
@@ -1470,9 +1341,8 @@ class </xsl:text>
 
          <!-- For all other classes -->
         <xsl:otherwise>
-        <xsl:call-template name="python-case">
-            <xsl:with-param name="camel-case-text" select="Value"  />
-        </xsl:call-template><xsl:text>=dc.</xsl:text>
+            <xsl:value-of select="Value"  />
+        <xsl:text>=dc.</xsl:text>
         <xsl:call-template name="python-case">
             <xsl:with-param name="camel-case-text" select="Value"  />
         </xsl:call-template>
@@ -1496,8 +1366,7 @@ class </xsl:text>
 
         </xsl:for-each>
         <xsl:text>
-        ).tuple
-        return t
+        )
 
     @classmethod
     def type_to_dc(cls, t: str) -> </xsl:text><xsl:value-of select="DataClass"/><xsl:text>:

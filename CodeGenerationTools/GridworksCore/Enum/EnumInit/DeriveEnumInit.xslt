@@ -57,7 +57,7 @@ on these ideas:
 
 
  """</xsl:text>
-<xsl:for-each select="$airtable//ProtocolEnums/ProtocolEnum[(normalize-space(ProtocolName) ='gwproto')]">
+<xsl:for-each select="$airtable//ProtocolEnums/ProtocolEnum[(normalize-space(ProtocolName) ='gwproto') and not(normalize-space(EnumName)='')]">
 <xsl:sort select="LocalEnumName" data-type="text"/>
 <xsl:text>
 from gwproto.enums.</xsl:text>

@@ -12,8 +12,8 @@ from pydantic import Field
 from pydantic import validator
 from gwproto.types.channel_readings import ChannelReadings
 from gwproto.types.channel_readings import ChannelReadings_Maker
-from gwproto.types.data_channel import DataChannel
-from gwproto.types.data_channel import DataChannel_Maker
+from gwproto.types.data_channel_gt import DataChannelGt
+from gwproto.types.data_channel_gt import DataChannelGt_Maker
 from gwproto.types.fsm_full_report import FsmFullReport
 from gwproto.types.fsm_full_report import FsmFullReport_Maker
 from gwproto.types.fsm_atomic_report import FsmAtomicReport
@@ -52,7 +52,7 @@ class BatchedReadings(BaseModel):
     BatchedTransmissionPeriodS: int = Field(
         title="BatchedTransmissionPeriodS",
     )
-    DataChannelList: List[DataChannel] = Field(
+    DataChannelList: List[DataChannelGt] = Field(
         title="DataChannel List",
         description=(
             "The list of data channels for which there is data getting reported in this batched "
@@ -239,7 +239,7 @@ class BatchedReadings_Maker:
         about_g_node_alias: str,
         slot_start_unix_s: int,
         batched_transmission_period_s: int,
-        data_channel_list: List[DataChannel],
+        data_channel_list: List[DataChannelGt],
         channel_reading_list: List[ChannelReadings],
         fsm_action_list: List[FsmAtomicReport],
         fsm_report_list: List[FsmFullReport],
@@ -320,8 +320,8 @@ class BatchedReadings_Maker:
         data_channel_list = []
         for elt in d2["DataChannelList"]:
             if not isinstance(elt, dict):
-                raise SchemaError(f"DataChannelList <{d2['DataChannelList']}> must be a List of DataChannel types")
-            t = DataChannel_Maker.dict_to_tuple(elt)
+                raise SchemaError(f"DataChannelList <{d2['DataChannelList']}> must be a List of DataChannelGt types")
+            t = DataChannelGt_Maker.dict_to_tuple(elt)
             data_channel_list.append(t)
         d2["DataChannelList"] = data_channel_list
         if "ChannelReadingList" not in d2.keys():

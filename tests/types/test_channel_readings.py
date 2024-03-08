@@ -5,17 +5,25 @@ import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
+from gwproto.types import ChannelReadings
 from gwproto.types import ChannelReadings_Maker as Maker
 
 
 def test_channel_readings_generated() -> None:
+    t = ChannelReadings(
+        ChannelId="e601041c-8cb4-4e6f-9163-e6ad2edb1b72",
+        ValueList=[4559],
+        ScadaReadTimeUnixMsList=[1656443705023],)
+
     d = {
-        "ChannelId": ["f82edd28-d8ef-4137-9d46-960133ead1d0"],
+        "ChannelId": "e601041c-8cb4-4e6f-9163-e6ad2edb1b72",
         "ValueList": [4559],
         "ScadaReadTimeUnixMsList": [1656443705023],
         "TypeName": "channel.readings",
         "Version": "000",
     }
+
+    assert t.as_dict() == d
 
     with pytest.raises(SchemaError):
         Maker.type_to_tuple(d)
@@ -26,6 +34,7 @@ def test_channel_readings_generated() -> None:
     # Test type_to_tuple
     gtype = json.dumps(d)
     gtuple = Maker.type_to_tuple(gtype)
+    assert gtuple == t
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple

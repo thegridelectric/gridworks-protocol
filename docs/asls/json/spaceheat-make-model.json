@@ -39,7 +39,7 @@
                 "Armstrong__CompassH": "Armstrong CompassH 010V controllable pump. More Info: https://drive.google.com/drive/u/0/folders/1lpdvjVYD9qk7AHQnRSoY9Xf_o_L0tY38",
                 "Honeywell__T6-ZWave-Thermostat": "Honeywell TH6320ZW2003 T6 Pro Series Z-Wave Thermostat. More Info: https://drive.google.com/drive/u/0/folders/1mqnU95tOdeeSGA6o3Ac_sJ1juDy84BIE",
                 "PRMFiltration__WM075": "A double-jet reed pulse counting Flow Meter with 3/4" pipe, one pulse per gallon. Cheaper than omegas. More Info: https://drive.google.com/drive/u/0/folders/1LW-8GHekH9I8vUtT7_xC_9KvkwfZBvid",
-                "BellGossett__Ecocirc20_18": "",
+                "BellGossett__Ecocirc20_18": "A 0-10V controllable pump that switches out of 0-10V control when sent a 0 V signal.",
                 "Tewa__TT0P-10KC3-T105-1500": "A 10K NTC thermistor used for wrapping around water pipes. More Info: https://drive.google.com/drive/u/0/folders/1lZFZbpjBFgAQ_wlnKJxmEeiN-EOV9Erl",
                 "EKM__HOT-SPWM-075-HD": "3/4" flow pulse meter, 1 pulse per 1/100 cubic ft (~0.0748 gallons)."
             },

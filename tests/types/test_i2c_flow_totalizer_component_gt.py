@@ -5,11 +5,21 @@ import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
-from gwproto.types.i2c_flow_totalizer_component_gt import I2cFlowTotalizerComponentGt_Maker as Maker
+from gwproto.types.i2c_flow_totalizer_component_gt import _Maker as Maker
 from gwproto.enums import MakeModel
 
 
 def test_i2c_flow_totalizer_component_gt_generated() -> None:
+    t = I2cFlowTotalizerComponentGt(
+        ComponentId="dd5ac673-91a8-40e2-a233-b67479cec709",
+        ComponentAttributeClassId="13d916dc-8764-4b16-b85d-b8ead3e2fc80",
+        I2cAddress=100,
+        ConfigList=,
+        PulseFlowMeterMakeModel="99d961da",
+        ConversionFactor=0.1328,
+        DisplayName="Flow meter on pipe out of tank",
+        HwUid="1234",)
+
     d = {
         "ComponentId": "dd5ac673-91a8-40e2-a233-b67479cec709",
         "ComponentAttributeClassId": "13d916dc-8764-4b16-b85d-b8ead3e2fc80",
@@ -23,6 +33,8 @@ def test_i2c_flow_totalizer_component_gt_generated() -> None:
         "Version": "000",
     }
 
+    assert t.as_dict() == d
+
     with pytest.raises(SchemaError):
         Maker.type_to_tuple(d)
 
@@ -32,6 +44,7 @@ def test_i2c_flow_totalizer_component_gt_generated() -> None:
     # Test type_to_tuple
     gtype = json.dumps(d)
     gtuple = Maker.type_to_tuple(gtype)
+    assert gtuple == t
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple

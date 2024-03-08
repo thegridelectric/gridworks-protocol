@@ -5,10 +5,16 @@ import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
+from gwproto.types import RelayActorConfig
 from gwproto.types import RelayActorConfig_Maker as Maker
 
 
 def test_relay_actor_config_generated() -> None:
+    t = RelayActorConfig(
+        RelayIdx=18,
+        ActorName=h.zone1-stat.ctrl-relay,
+        WiringConfig="63f5da41",)
+
     d = {
         "RelayIdx": 18,
         "ActorName": h.zone1-stat.ctrl-relay,
@@ -16,6 +22,8 @@ def test_relay_actor_config_generated() -> None:
         "TypeName": "relay.actor.config",
         "Version": "000",
     }
+
+    assert t.as_dict() == d
 
     with pytest.raises(SchemaError):
         Maker.type_to_tuple(d)
@@ -26,6 +34,7 @@ def test_relay_actor_config_generated() -> None:
     # Test type_to_tuple
     gtype = json.dumps(d)
     gtuple = Maker.type_to_tuple(gtype)
+    assert gtuple == t
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple

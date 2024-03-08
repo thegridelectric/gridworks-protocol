@@ -1,5 +1,5 @@
 """
-Tests for enum sh.fsm.action.type.000 from the GridWorks Type Registry.
+Tests for enum sh.fsm.event.type.000 from the GridWorks Type Registry.
 """
 from gwproto.enums import FsmActionType
 
@@ -18,7 +18,7 @@ def test_fsm_action_type() -> None:
     }
 
     assert FsmActionType.default() == FsmActionType.ChangeRelayState
-    assert FsmActionType.enum_name() == "sh.fsm.action.type"
+    assert FsmActionType.enum_name() == "sh.fsm.event.type"
     assert FsmActionType.enum_version() == "000"
 
     assert FsmActionType.version("ChangeRelayState") == "000"

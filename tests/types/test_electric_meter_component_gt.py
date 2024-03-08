@@ -5,10 +5,20 @@ import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
-from gwproto.types.electric_meter_component_gt import ElectricMeterComponentGt_Maker as Maker
+from gwproto.types.electric_meter_component_gt import _Maker as Maker
 
 
 def test_electric_meter_component_gt_generated() -> None:
+    t = ElectricMeterComponentGt(
+        ComponentId="04ceb282-d7e8-4293-80b5-72455e1a5db3",
+        ComponentAttributeClassId='c1856e62-d8c0-4352-b79e-6ae05a5294c2',
+        DisplayName="Main power meter for Little orange house garage space heat",
+        ConfigList=[{'Channel': {'DisplayName':'Idu Power', 'AboutName': 'hp-idu-pwr', 'CapturedByName': 'pwr-meter', 'TelemetryNameGtEnumSymbol': 'af39eec9'}, 'PollPeriodMs': 1000, 'CapturePeriodS': 300, 'AsyncCapture': True, 'AsyncCaptureDelta': 50, 'Exponent': 0, 'UnitGtEnumSymbol': 'f459a9c3', 'TypeName': 'channel.config', 'Version': '000'}, 'TypeName': 'egauge.io', 'Version': '001'}],
+        HwUid="35941_308",
+        ModbusHost="eGauge4922.local",
+        ModbusPort=502,
+        EgaugeIoList=[{'InputConfig': {'Address': 9006, 'Name': '', 'Description': 'change in value', 'Type': 'f32', 'Denominator': 1, 'Unit': 'W', 'TypeName': 'egauge.register.config', 'Version': '000'}, 'OutputConfig': {'Channel': {'DisplayName':'Idu Power', 'AboutName': 'hp-idu-pwr', 'CapturedByName': 'pwr-meter', 'TelemetryNameGtEnumSymbol': 'af39eec9'}, 'PollPeriodMs': 1000, 'CapturePeriodS': 300, 'AsyncCapture': True, 'AsyncCaptureDelta': 50, 'Exponent': 0, 'UnitGtEnumSymbol': 'f459a9c3', 'TypeName': 'channel.config', 'Version': '000'}, 'TypeName': 'egauge.io', 'Version': '001'}],)
+
     d = {
         "ComponentId": "04ceb282-d7e8-4293-80b5-72455e1a5db3",
         "ComponentAttributeClassId": 'c1856e62-d8c0-4352-b79e-6ae05a5294c2',
@@ -22,6 +32,8 @@ def test_electric_meter_component_gt_generated() -> None:
         "Version": "001",
     }
 
+    assert t.as_dict() == d
+
     with pytest.raises(SchemaError):
         Maker.type_to_tuple(d)
 
@@ -31,6 +43,7 @@ def test_electric_meter_component_gt_generated() -> None:
     # Test type_to_tuple
     gtype = json.dumps(d)
     gtuple = Maker.type_to_tuple(gtype)
+    assert gtuple == t
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple

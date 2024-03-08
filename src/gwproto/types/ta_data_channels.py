@@ -9,11 +9,9 @@ from typing import Literal
 from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
-
+from gwproto.types.data_channel_gt import DataChannelGt
+from gwproto.types.data_channel_gt import DataChannelGt_Maker
 from gwproto.errors import SchemaError
-from gwproto.types.data_channel import DataChannel
-from gwproto.types.data_channel import DataChannel_Maker
-
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -47,10 +45,10 @@ class TaDataChannels(BaseModel):
         title="Author",
         description="Author of this list of data channels.",
     )
-    Channels: List[DataChannel] = Field(
+    ChannelList: List[DataChannelGt] = Field(
         title="The list of data channels",
     )
-    Identifier: str = Field(
+    Id: str = Field(
         title="Identifier",
         description=(
             "Unique identifier for a specific instance of this type that can be used to establish "
@@ -90,14 +88,12 @@ class TaDataChannels(BaseModel):
             )
         return v
 
-    @validator("Identifier")
-    def _check_identifier(cls, v: str) -> str:
+    @validator("Id")
+    def _check_id(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
         except ValueError as e:
-            raise ValueError(
-                f"Identifier failed UuidCanonicalTextual format validation: {e}"
-            )
+            raise ValueError(f"Id failed UuidCanonicalTextual format validation: {e}")
         return v
 
     def as_dict(self) -> Dict[str, Any]:
@@ -124,10 +120,10 @@ class TaDataChannels(BaseModel):
             if value is not None
         }
         # Recursively calling as_dict()
-        channels = []
-        for elt in self.Channels:
-            channels.append(elt.as_dict())
-        d["Channels"] = channels
+        channel_list = []
+        for elt in self.ChannelList:
+            channel_list.append(elt.as_dict())
+        d["ChannelList"] = channel_list
         return d
 
     def as_type(self) -> bytes:
@@ -168,16 +164,16 @@ class TaDataChannels_Maker:
         terminal_asset_g_node_id: str,
         time_unix_s: int,
         author: str,
-        channels: List[DataChannel],
-        identifier: str,
+        channel_list: List[DataChannelGt],
+        id: str,
     ):
         self.tuple = TaDataChannels(
             TerminalAssetGNodeAlias=terminal_asset_g_node_alias,
             TerminalAssetGNodeId=terminal_asset_g_node_id,
             TimeUnixS=time_unix_s,
             Author=author,
-            Channels=channels,
-            Identifier=identifier,
+            ChannelList=channel_list,
+            Id=id,
         )
 
     @classmethod
@@ -233,21 +229,19 @@ class TaDataChannels_Maker:
             raise SchemaError(f"dict missing TimeUnixS: <{d2}>")
         if "Author" not in d2.keys():
             raise SchemaError(f"dict missing Author: <{d2}>")
-        if "Channels" not in d2.keys():
-            raise SchemaError(f"dict missing Channels: <{d2}>")
-        if not isinstance(d2["Channels"], List):
-            raise SchemaError(f"Channels <{d2['Channels']}> must be a List!")
-        channels = []
-        for elt in d2["Channels"]:
+        if "ChannelList" not in d2.keys():
+            raise SchemaError(f"dict missing ChannelList: <{d2}>")
+        if not isinstance(d2["ChannelList"], List):
+            raise SchemaError(f"ChannelList <{d2['ChannelList']}> must be a List!")
+        channel_list = []
+        for elt in d2["ChannelList"]:
             if not isinstance(elt, dict):
-                raise SchemaError(
-                    f"Channels <{d2['Channels']}> must be a List of DataChannel types"
-                )
-            t = DataChannel_Maker.dict_to_tuple(elt)
-            channels.append(t)
-        d2["Channels"] = channels
-        if "Identifier" not in d2.keys():
-            raise SchemaError(f"dict missing Identifier: <{d2}>")
+                raise SchemaError(f"ChannelList <{d2['ChannelList']}> must be a List of DataChannelGt types")
+            t = DataChannelGt_Maker.dict_to_tuple(elt)
+            channel_list.append(t)
+        d2["ChannelList"] = channel_list
+        if "Id" not in d2.keys():
+            raise SchemaError(f"dict missing Id: <{d2}>")
         if "TypeName" not in d2.keys():
             raise SchemaError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():
@@ -303,7 +297,6 @@ def check_is_reasonable_unix_time_s(v: int) -> None:
         ValueError: if v is not ReasonableUnixTimeS format
     """
     import pendulum
-
     if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp > v:  # type: ignore[attr-defined]
         raise ValueError(f"<{v}> must be after Jan 1 2000")
     if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp < v:  # type: ignore[attr-defined]

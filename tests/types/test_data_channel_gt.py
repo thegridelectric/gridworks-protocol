@@ -1,25 +1,36 @@
-"""Tests data.channel type, version 000"""
+"""Tests data.channel.gt type, version 000"""
 import json
 
 import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
-from gwproto.types import DataChannel_Maker as Maker
+from gwproto.types import DataChannelGt
+from gwproto.types import DataChannelGt_Maker as Maker
 from gwproto.enums import TelemetryName
 
 
-def test_data_channel_generated() -> None:
+def test_data_channel_gt_generated() -> None:
+    t = DataChannelGt(
+        Name="hp-idu-pwr",
+        DisplayName="Hp IDU",
+        AboutNodeName="hp-idu-pwr",
+        CapturedByNodeName="s.pwr-meter",
+        TelemetryName=TelemetryName.PowerW,
+        Id="50cf426b-ff3f-4a30-8415-8d3fba5e0ab7")
+
     d = {
-        "Name": ,
-        "DisplayName": "BoostPower",
-        "AboutNodeName": "a.elt1",
-        "CapturedByNodeName": "a.m",
+        "Name": "hp-idu-pwr",
+        "DisplayName": "Hp IDU",
+        "AboutNodeName": "hp-idu-pwr",
+        "CapturedByNodeName": "s.pwr-meter",
         "TelemetryNameGtEnumSymbol": "af39eec9",
-        "Id": ,
-        "TypeName": "data.channel",
+        "Id": "50cf426b-ff3f-4a30-8415-8d3fba5e0ab7",
+        "TypeName": "data.channel.gt",
         "Version": "000",
     }
+
+    assert t.as_dict() == d
 
     with pytest.raises(SchemaError):
         Maker.type_to_tuple(d)
@@ -30,6 +41,7 @@ def test_data_channel_generated() -> None:
     # Test type_to_tuple
     gtype = json.dumps(d)
     gtuple = Maker.type_to_tuple(gtype)
+    assert gtuple == t
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple

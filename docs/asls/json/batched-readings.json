@@ -38,7 +38,7 @@
     "DataChannelList": {
       "type": "array",
       "items": {
-        "type": "data.channel.000"
+        "type": "data.channel.gt.000"
       },
       "description": "The list of data channels for which there is data getting reported in this batched reading. It is a subset of all the data channels for the SCADA - may not be all of them.",
       "required": true

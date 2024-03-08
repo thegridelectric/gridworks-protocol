@@ -13,8 +13,8 @@ from gwproto.types.component_attribute_class_gt import ComponentAttributeClassGt
 from gwproto.types.component_attribute_class_gt import ComponentAttributeClassGt_Maker
 from gwproto.types.component_gt import ComponentGt
 from gwproto.types.component_gt import ComponentGt_Maker
-from gwproto.types.data_channel import DataChannel
-from gwproto.types.data_channel import DataChannel_Maker
+from gwproto.types.data_channel_gt import DataChannelGt
+from gwproto.types.data_channel_gt import DataChannelGt_Maker
 from gwproto.types.egauge_io import EgaugeIo
 from gwproto.types.egauge_io import EgaugeIo_Maker
 from gwproto.types.egauge_register_config import EgaugeRegisterConfig
@@ -70,8 +70,8 @@ __all__ = [
     "ComponentAttributeClassGt_Maker",
     "ComponentGt",
     "ComponentGt_Maker",
-    "DataChannel",
-    "DataChannel_Maker",
+    "DataChannelGt",
+    "DataChannelGt_Maker",
     "EgaugeIo",
     "EgaugeIo_Maker",
     "EgaugeRegisterConfig",

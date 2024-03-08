@@ -5,12 +5,22 @@ import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
+from gwproto.types import Ads111xBasedCacGt
 from gwproto.types import Ads111xBasedCacGt_Maker as Maker
 from gwproto.enums import TelemetryName
 from gwproto.enums import MakeModel
 
 
 def test_ads111x_based_cac_gt_generated() -> None:
+    t = Ads111xBasedCacGt(
+        ComponentAttributeClassId="8a1a1538-ed2d-4829-9c03-f9be1c9f9c83",
+        MinPollPeriodMs=880,
+        MakeModel="09185ae3",
+        AdsI2cAddressList=12,
+        TotalTerminalBlocks=12,
+        TelemetryNameList=["22641963"],
+        DisplayName="Simulated GridWorks high precision water temp sensor",)
+
     d = {
         "ComponentAttributeClassId": "8a1a1538-ed2d-4829-9c03-f9be1c9f9c83",
         "MinPollPeriodMs": 880,
@@ -23,6 +33,8 @@ def test_ads111x_based_cac_gt_generated() -> None:
         "Version": "000",
     }
 
+    assert t.as_dict() == d
+
     with pytest.raises(SchemaError):
         Maker.type_to_tuple(d)
 
@@ -32,6 +44,7 @@ def test_ads111x_based_cac_gt_generated() -> None:
     # Test type_to_tuple
     gtype = json.dumps(d)
     gtuple = Maker.type_to_tuple(gtype)
+    assert gtuple == t
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple

@@ -24,6 +24,10 @@ Python pydantic class corresponding to json type `channel.readings`, version `00
 
 
 
+.. autoclass:: gwproto.types.channel_readings.check_is_uuid_canonical_textual
+    :members:
+
+
 .. autoclass:: gwproto.types.channel_readings.check_is_reasonable_unix_time_ms
     :members:
 

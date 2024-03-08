@@ -4,30 +4,55 @@ import json
 import pytest
 from pydantic import ValidationError
 
+from gwproto.enums import TelemetryName
 from gwproto.errors import SchemaError
+from gwproto.types import DataChannelGt
+from gwproto.types import TaDataChannels
 from gwproto.types import TaDataChannels_Maker as Maker
 
 
 def test_ta_data_channels_generated() -> None:
+    t = TaDataChannels(
+        TerminalAssetGNodeAlias="hw1.isone.me.versant.keene.oak.ta",
+        TerminalAssetGNodeId="7e152072-c91b-49d2-9ebd-f4fe1b684d06",
+        TimeUnixS=1704142951,
+        Author="Jessica Millar",
+        ChannelList=[
+            DataChannelGt(
+                Name="hp-idu-pwr",
+                DisplayName="Hp IDU",
+                AboutNodeName="hp-idu-pwr",
+                CapturedByNodeName="s.pwr-meter",
+                TelemetryName=TelemetryName.PowerW,
+                Id="50cf426b-ff3f-4a30-8415-8d3fba5e0ab7",
+            )
+        ],
+        Id="ba6558d8-2fe8-4174-ac16-c36f84367c50",
+    )
+
     d = {
         "TerminalAssetGNodeAlias": "hw1.isone.me.versant.keene.oak.ta",
         "TerminalAssetGNodeId": "7e152072-c91b-49d2-9ebd-f4fe1b684d06",
         "TimeUnixS": 1704142951,
         "Author": "Jessica Millar",
-        "Channels": [
+        "ChannelList": [
             {
-                "DisplayName": "BoostPower",
-                "AboutName": "a.elt1",
-                "CapturedByName": "a.m",
+                "Name": "hp-idu-pwr",
+                "DisplayName": "Hp IDU",
+                "AboutNodeName": "hp-idu-pwr",
+                "CapturedByNodeName": "s.pwr-meter",
                 "TelemetryNameGtEnumSymbol": "af39eec9",
-                "TypeName": "data.channel",
+                "Id": "50cf426b-ff3f-4a30-8415-8d3fba5e0ab7",
+                "TypeName": "data.channel.gt",
                 "Version": "000",
             }
         ],
-        "Identifier": "ba6558d8-2fe8-4174-ac16-c36f84367c50",
+        "Id": "ba6558d8-2fe8-4174-ac16-c36f84367c50",
         "TypeName": "ta.data.channels",
         "Version": "000",
     }
+
+    assert t.as_dict() == d
 
     with pytest.raises(SchemaError):
         Maker.type_to_tuple(d)
@@ -38,6 +63,7 @@ def test_ta_data_channels_generated() -> None:
     # Test type_to_tuple
     gtype = json.dumps(d)
     gtuple = Maker.type_to_tuple(gtype)
+    assert gtuple == t
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple
@@ -48,8 +74,8 @@ def test_ta_data_channels_generated() -> None:
         terminal_asset_g_node_id=gtuple.TerminalAssetGNodeId,
         time_unix_s=gtuple.TimeUnixS,
         author=gtuple.Author,
-        channels=gtuple.Channels,
-        identifier=gtuple.Identifier,
+        channel_list=gtuple.ChannelList,
+        id=gtuple.Id,
     ).tuple
     assert t == gtuple
 
@@ -83,12 +109,12 @@ def test_ta_data_channels_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["Channels"]
+    del d2["ChannelList"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["Identifier"]
+    del d2["Id"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -100,15 +126,15 @@ def test_ta_data_channels_generated() -> None:
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, Channels="Not a list.")
+    d2 = dict(d, ChannelList="Not a list.")
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, Channels=["Not a list of dicts"])
+    d2 = dict(d, ChannelList=["Not a list of dicts"])
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, Channels=[{"Failed": "Not a GtSimpleSingleStatus"}])
+    d2 = dict(d, ChannelList=[{"Failed": "Not a GtSimpleSingleStatus"}])
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -136,8 +162,6 @@ def test_ta_data_channels_generated() -> None:
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, Identifier="d4be12d5-33ba-4f1f-b9e5")
+    d2 = dict(d, Id="d4be12d5-33ba-4f1f-b9e5")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
-
-    # End of Test

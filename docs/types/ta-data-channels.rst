@@ -20,10 +20,10 @@ Python pydantic class corresponding to json type `ta.data.channels`, version `00
 **Author**:
     - Description: Author of this list of data channels.
 
-**Channels**:
+**ChannelList**:
     - Description: The list of data channels. 
 
-**Identifier**:
+**Id**:
     - Description: Identifier. Unique identifier for a specific instance of this type that can be used to establish how time series csv's were constructed.
     - Format: UuidCanonicalTextual
 

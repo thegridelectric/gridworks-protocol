@@ -5,18 +5,27 @@ import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
-from gwproto.types import SnapshotSpaceheat_Maker as Maker
+from gwproto.types import Snapshot
+from gwproto.types import Snapshot_Maker as Maker
 
 
 def test_snapshot_spaceheat_generated() -> None:
+    t = Snapshot(
+        FromGNodeAlias="d1.isone.ct.newhaven.rose.scada",
+        FromGNodeInstanceId="0384ef21-648b-4455-b917-58a1172d7fc1",
+        SnapshotTimeUnixMs=1709915800472,
+        LatestReadingList=[],)
+
     d = {
-        "FromGNodeAlias": "dwtest.isone.ct.newhaven.orange1.ta.scada",
+        "FromGNodeAlias": "d1.isone.ct.newhaven.rose.scada",
         "FromGNodeInstanceId": "0384ef21-648b-4455-b917-58a1172d7fc1",
-        "SnapshotTimeUnixMs": ,
-        "LatestReadingList": ,
+        "SnapshotTimeUnixMs": 1709915800472,
+        "LatestReadingList": [],
         "TypeName": "snapshot.spaceheat",
         "Version": "001",
     }
+
+    assert t.as_dict() == d
 
     with pytest.raises(SchemaError):
         Maker.type_to_tuple(d)
@@ -27,6 +36,7 @@ def test_snapshot_spaceheat_generated() -> None:
     # Test type_to_tuple
     gtype = json.dumps(d)
     gtuple = Maker.type_to_tuple(gtype)
+    assert gtuple == t
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple
@@ -74,7 +84,7 @@ def test_snapshot_spaceheat_generated() -> None:
     # Behavior on incorrect types
     ######################################
 
-    d2 = dict(d, SnapshotTimeUnixMs=".1")
+    d2 = dict(d, SnapshotTimeUnixMs="1709915800472.1")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 

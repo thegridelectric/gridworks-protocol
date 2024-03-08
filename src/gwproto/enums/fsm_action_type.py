@@ -10,24 +10,24 @@ class FsmActionType(StrEnum):
     in this context, is a side-effect of a state machine transition that impacts the real world
     (i.e., a relay is actuated).
 
-    Enum sh.fsm.action.type version 000 in the GridWorks Type registry.
+    Enum sh.fsm.event.type version 000 in the GridWorks Type registry.
 
     Used by used by multiple Application Shared Languages (ASLs), including but not limited to
     gwproto. For more information:
       - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
-      - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shfsmactiontype)
+      - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shfsmeventtype)
       - [More Info](https://gridworks-protocol.readthedocs.io/en/latest/finite-state-machines.html)
 
     Values (with symbols in parens):
-      - ChangeRelayState ()
-      - Analog010V ()
-      - Analog420mA ()
-      - ChangeValveState ()
-      - ChangeStoreFlowDirection ()
-      - ChangeHeatcallSource ()
-      - ChangeBoilerControl ()
-      - ChangeHeatPumpControl ()
-      - ChangeLgOperatingMode ()
+      - ChangeRelayState (00000000)
+      - Analog010V (bbef899f)
+      - Analog420mA (aa4b0c96)
+      - ChangeValveState (c234ee7a)
+      - ChangeStoreFlowDirection (1efc9909)
+      - ChangeHeatcallSource (c5717e64)
+      - ChangeBoilerControl (0066a412)
+      - ChangeHeatPumpControl (50ea0661)
+      - ChangeLgOperatingMode (89a98375)
     """
 
     ChangeRelayState = auto()
@@ -80,9 +80,9 @@ class FsmActionType(StrEnum):
     @classmethod
     def enum_name(cls) -> str:
         """
-        The name in the GridWorks Type Registry (sh.fsm.action.type)
+        The name in the GridWorks Type Registry (sh.fsm.event.type)
         """
-        return "sh.fsm.action.type"
+        return "sh.fsm.event.type"
 
     @classmethod
     def enum_version(cls) -> str:
@@ -120,7 +120,7 @@ class FsmActionType(StrEnum):
             str: The symbol encoding that value. If the value is not recognized -
             which could happen if the actor making the message used a later version
             of this enum than the actor decoding the message, returns the default
-            symbol of "".
+            symbol of "00000000".
         """
         if value not in value_to_symbol.keys():
             return value_to_symbol[cls.default().value]
@@ -132,28 +132,28 @@ class FsmActionType(StrEnum):
         Returns a list of the enum symbols
         """
         return [
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
+            "00000000",
+            "bbef899f",
+            "aa4b0c96",
+            "c234ee7a",
+            "1efc9909",
+            "c5717e64",
+            "0066a412",
+            "50ea0661",
+            "89a98375",
         ]
 
 
 symbol_to_value = {
-    "": "ChangeRelayState",
-    "": "Analog010V",
-    "": "Analog420mA",
-    "": "ChangeValveState",
-    "": "ChangeStoreFlowDirection",
-    "": "ChangeHeatcallSource",
-    "": "ChangeBoilerControl",
-    "": "ChangeHeatPumpControl",
-    "": "ChangeLgOperatingMode",
+    "00000000": "ChangeRelayState",
+    "bbef899f": "Analog010V",
+    "aa4b0c96": "Analog420mA",
+    "c234ee7a": "ChangeValveState",
+    "1efc9909": "ChangeStoreFlowDirection",
+    "c5717e64": "ChangeHeatcallSource",
+    "0066a412": "ChangeBoilerControl",
+    "50ea0661": "ChangeHeatPumpControl",
+    "89a98375": "ChangeLgOperatingMode",
 }
 
 value_to_symbol = {value: key for key, value in symbol_to_value.items()}

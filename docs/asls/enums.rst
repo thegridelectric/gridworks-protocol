@@ -26,9 +26,9 @@ change.heat.pump.control.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/change-heat-pump-control.json
 
-sh.fsm.action.type.000
+sh.fsm.event.type.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/sh-fsm-action-type.json
+.. literalinclude:: json/sh-fsm-event-type.json
 
 change.valve.state.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^

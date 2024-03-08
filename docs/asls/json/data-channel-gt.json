@@ -1,6 +1,6 @@
 {
   "gtr_asl": "001",
-  "type_name": "data.channel",
+  "type_name": "data.channel.gt",
   "version": "000",
   "owner": "gridworks@gridworks-consulting.com",
   "description": "Data Channel. A data channel is a concept of some collection of readings that share all characteristics other than time.",
@@ -47,7 +47,7 @@
     },
     "TypeName": {
       "type": "string",
-      "value": "data.channel",
+      "value": "data.channel.gt",
       "title": "The type name"
     },
     "Version": {

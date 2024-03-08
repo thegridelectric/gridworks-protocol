@@ -5,11 +5,17 @@ import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
+from gwproto.types import SingleReading
 from gwproto.types import SingleReading_Maker as Maker
 from gwproto.enums import TelemetryName
 
 
 def test_single_reading_generated() -> None:
+    t = SingleReading(
+        ScadaReadTimeUnixMs=1656513094288,
+        ChannelName=,
+        Value=63430,)
+
     d = {
         "ScadaReadTimeUnixMs": 1656513094288,
         "ChannelName": ,
@@ -17,6 +23,8 @@ def test_single_reading_generated() -> None:
         "TypeName": "single.reading",
         "Version": "000",
     }
+
+    assert t.as_dict() == d
 
     with pytest.raises(SchemaError):
         Maker.type_to_tuple(d)
@@ -27,6 +35,7 @@ def test_single_reading_generated() -> None:
     # Test type_to_tuple
     gtype = json.dumps(d)
     gtuple = Maker.type_to_tuple(gtype)
+    assert gtuple == t
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple

@@ -58,11 +58,12 @@ from gwproto.errors import SchemaError</xsl:text>
 <xsl:text>
 from gwproto.types.</xsl:text><xsl:value-of select="translate($type-name,'.','_')"/>
 <xsl:text> import </xsl:text>
-<xsl:value-of select="$class-name"/><xsl:text>_Maker as Maker</xsl:text>
+<xsl:value-of select="PythonClassName"/><xsl:text>_Maker as Maker</xsl:text>
 </xsl:when>
 
 <xsl:otherwise>
 <xsl:text>
+from gwproto.types import </xsl:text><xsl:value-of select="$class-name"/><xsl:text>
 from gwproto.types import </xsl:text>
 <xsl:value-of select="$class-name"/><xsl:text>_Maker as Maker</xsl:text>
 </xsl:otherwise>
@@ -80,6 +81,25 @@ from gwproto.enums import </xsl:text>
 
 def test_</xsl:text><xsl:value-of select="translate($type-name,'.','_')"/>
 <xsl:text>_generated() -> None:
+    t = </xsl:text><xsl:value-of select="$class-name"/><xsl:text>(</xsl:text>
+                <xsl:for-each select="$airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id)]">
+        <xsl:sort select="Idx" data-type="number"/>
+        <xsl:variable name = "attribute-name">
+        <xsl:value-of select="Value"/>
+        <!-- If attribute is associated to a data class, add Id to the Attribute name-->
+        <xsl:if test="not(normalize-space(SubTypeDataClass) = '') and not(IsList='true')">
+        <xsl:text>Id</xsl:text>
+        </xsl:if>
+        </xsl:variable>
+        <xsl:text>&#10;        </xsl:text>
+        <xsl:value-of select="$attribute-name"  />
+        <xsl:text>=</xsl:text>
+        <xsl:value-of select="normalize-space(TestValue)"/>
+        <xsl:text>,</xsl:text>
+        </xsl:for-each>
+
+    <xsl:text>)
+
     d = {</xsl:text>
         <xsl:for-each select="$airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id)]">
         <xsl:sort select="Idx" data-type="number"/>
@@ -115,6 +135,8 @@ def test_</xsl:text><xsl:value-of select="translate($type-name,'.','_')"/>
         "Version": "</xsl:text><xsl:value-of select="Version"/><xsl:text>",
     }
 
+    assert t.as_dict() == d
+
     with pytest.raises(SchemaError):
         Maker.type_to_tuple(d)
 
@@ -124,6 +146,7 @@ def test_</xsl:text><xsl:value-of select="translate($type-name,'.','_')"/>
     # Test type_to_tuple
     gtype = json.dumps(d)
     gtuple = Maker.type_to_tuple(gtype)
+    assert gtuple == t
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple

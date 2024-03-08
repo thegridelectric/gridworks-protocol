@@ -5,11 +5,17 @@ import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
+from gwproto.types import SyncedReadings
 from gwproto.types import SyncedReadings_Maker as Maker
 from gwproto.enums import TelemetryName
 
 
 def test_synced_readings_generated() -> None:
+    t = SyncedReadings(
+        ScadaReadTimeUnixMs=1656587343297,
+        ChannelNameList=,
+        ValueList=[18000],)
+
     d = {
         "ScadaReadTimeUnixMs": 1656587343297,
         "ChannelNameList": ,
@@ -17,6 +23,8 @@ def test_synced_readings_generated() -> None:
         "TypeName": "synced.readings",
         "Version": "000",
     }
+
+    assert t.as_dict() == d
 
     with pytest.raises(SchemaError):
         Maker.type_to_tuple(d)
@@ -27,6 +35,7 @@ def test_synced_readings_generated() -> None:
     # Test type_to_tuple
     gtype = json.dumps(d)
     gtuple = Maker.type_to_tuple(gtype)
+    assert gtuple == t
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple

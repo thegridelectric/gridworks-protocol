@@ -5,16 +5,23 @@ import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
+from gwproto.types import EgaugeIo
 from gwproto.types import EgaugeIo_Maker as Maker
 
 
 def test_egauge_io_generated() -> None:
+    t = EgaugeIo(
+        ChannelName='hp-idu-pwr',
+        InputConfig={'Address': 9004, 'Name': 'Garage power', 'Description': '', 'Type': 'f32', 'Denominator': 1, 'Unit': 'W', 'TypeName': 'egauge.register.config', 'Version': '000'},)
+
     d = {
         "ChannelName": 'hp-idu-pwr',
         "InputConfig": {'Address': 9004, 'Name': 'Garage power', 'Description': '', 'Type': 'f32', 'Denominator': 1, 'Unit': 'W', 'TypeName': 'egauge.register.config', 'Version': '000'},
         "TypeName": "egauge.io",
         "Version": "001",
     }
+
+    assert t.as_dict() == d
 
     with pytest.raises(SchemaError):
         Maker.type_to_tuple(d)
@@ -25,6 +32,7 @@ def test_egauge_io_generated() -> None:
     # Test type_to_tuple
     gtype = json.dumps(d)
     gtuple = Maker.type_to_tuple(gtype)
+    assert gtuple == t
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple

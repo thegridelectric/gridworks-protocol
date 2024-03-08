@@ -5,10 +5,19 @@ import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
-from gwproto.types.ads111x_based_component_gt import Ads111xBasedComponentGt_Maker as Maker
+from gwproto.types.ads111x_based_component_gt import _Maker as Maker
 
 
 def test_ads111x_based_component_gt_generated() -> None:
+    t = Ads111xBasedComponentGt(
+        ComponentId="02f600e3-8692-43f8-84f2-a03c09c197e7",
+        ComponentAttributeClassId="432073b8-4d2b-4e36-9229-73893f33f846",
+        DisplayName="4-channel Ads for Beachrose",
+        OpenVoltageByAds=,
+        ConfigList=,
+        ThermistorConfigList=,
+        HwUid="1001",)
+
     d = {
         "ComponentId": "02f600e3-8692-43f8-84f2-a03c09c197e7",
         "ComponentAttributeClassId": "432073b8-4d2b-4e36-9229-73893f33f846",
@@ -21,6 +30,8 @@ def test_ads111x_based_component_gt_generated() -> None:
         "Version": "000",
     }
 
+    assert t.as_dict() == d
+
     with pytest.raises(SchemaError):
         Maker.type_to_tuple(d)
 
@@ -30,6 +41,7 @@ def test_ads111x_based_component_gt_generated() -> None:
     # Test type_to_tuple
     gtype = json.dumps(d)
     gtuple = Maker.type_to_tuple(gtype)
+    assert gtuple == t
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple

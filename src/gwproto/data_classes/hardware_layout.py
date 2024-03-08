@@ -32,8 +32,8 @@ from gwproto.default_decoders import default_component_decoder
 from gwproto.enums import ActorClass
 from gwproto.enums import TelemetryName
 from gwproto.types import ElectricMeterCacGt_Maker
-from gwproto.types import DataChannel
-from gwproto.types import DataChannel_Maker
+from gwproto.types import DataChannelGt
+from gwproto.types import DataChannelGt_Maker
 
 from gwproto.types import Ads111xBasedCacGt_Maker
 
@@ -205,7 +205,7 @@ class HardwareLayout:
     cacs: dict[str, ComponentAttributeClass]
     components: dict[str, Component]
     nodes: dict[str, ShNode]
-    channels: dict[str, DataChannel]
+    channels: dict[str, DataChannelGt]
 
     def __init__(
         self,

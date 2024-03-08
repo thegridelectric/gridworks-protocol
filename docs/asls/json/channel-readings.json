@@ -49,6 +49,11 @@
     }
   },
   "formats": {
+    "UuidCanonicalTextual": {
+      "type": "string",
+      "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
+      "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"
+    },
     "ReasonableUnixTimeMs": {
       "type": "string",
       "description": "An integer reflecting unix time in MILLISECONDS between midnight Jan 1 2000 and midnight Jan 1 3000 UTC",

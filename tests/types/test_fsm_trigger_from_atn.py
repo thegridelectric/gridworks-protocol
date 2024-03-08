@@ -5,10 +5,17 @@ import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
+from gwproto.types import FsmTriggerFromAtn
 from gwproto.types import FsmTriggerFromAtn_Maker as Maker
 
 
 def test_fsm_trigger_from_atn_generated() -> None:
+    t = FsmTriggerFromAtn(
+        ToGNodeAlias=,
+        FromGNodeAlias=,
+        FromGNodeInstanceId=,
+        Trigger=,)
+
     d = {
         "ToGNodeAlias": ,
         "FromGNodeAlias": ,
@@ -17,6 +24,8 @@ def test_fsm_trigger_from_atn_generated() -> None:
         "TypeName": "fsm.trigger.from.atn",
         "Version": "000",
     }
+
+    assert t.as_dict() == d
 
     with pytest.raises(SchemaError):
         Maker.type_to_tuple(d)
@@ -27,6 +36,7 @@ def test_fsm_trigger_from_atn_generated() -> None:
     # Test type_to_tuple
     gtype = json.dumps(d)
     gtuple = Maker.type_to_tuple(gtype)
+    assert gtuple == t
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple

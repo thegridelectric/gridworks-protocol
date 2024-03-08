@@ -1,4 +1,4 @@
-"""Type data.channel, version 000"""
+"""Type data.channel.gt, version 000"""
 import json
 import logging
 from typing import Any
@@ -19,7 +19,7 @@ LOG_FORMAT = (
 LOGGER = logging.getLogger(__name__)
 
 
-class DataChannel(BaseModel):
+class DataChannelGt(BaseModel):
     """
     Data Channel.
 
@@ -66,7 +66,7 @@ class DataChannel(BaseModel):
             "assets)."
         ),
     )
-    TypeName: Literal["data.channel"] = "data.channel"
+    TypeName: Literal["data.channel.gt"] = "data.channel.gt"
     Version: Literal["000"] = "000"
 
     @validator("Name")
@@ -108,11 +108,11 @@ class DataChannel(BaseModel):
     def as_dict(self) -> Dict[str, Any]:
         """
         Translate the object into a dictionary representation that can be serialized into a
-        data.channel.000 object.
+        data.channel.gt.000 object.
 
         This method prepares the object for serialization by the as_type method, creating a
         dictionary with key-value pairs that follow the requirements for an instance of the
-        data.channel.000 type. Unlike the standard python dict method,
+        data.channel.gt.000 type. Unlike the standard python dict method,
         it makes the following substantive changes:
         - Enum Values: Translates between the values used locally by the actor to the symbol
         sent in messages.
@@ -134,10 +134,10 @@ class DataChannel(BaseModel):
 
     def as_type(self) -> bytes:
         """
-        Serialize to the data.channel.000 representation.
+        Serialize to the data.channel.gt.000 representation.
 
-        Instances in the class are python-native representations of data.channel.000
-        objects, while the actual data.channel.000 object is the serialized UTF-8 byte
+        Instances in the class are python-native representations of data.channel.gt.000
+        objects, while the actual data.channel.gt.000 object is the serialized UTF-8 byte
         string designed for sending in a message.
 
         This method calls the as_dict() method, which differs from the native python dict()
@@ -149,7 +149,7 @@ class DataChannel(BaseModel):
 
         It also applies these changes recursively to sub-types.
 
-        Its near-inverse is DataChannel.type_to_tuple(). If the type (or any sub-types)
+        Its near-inverse is DataChannelGt.type_to_tuple(). If the type (or any sub-types)
         includes an enum, then the type_to_tuple will map an unrecognized symbol to the
         default enum value. This is why these two methods are only 'near' inverses.
         """
@@ -160,8 +160,8 @@ class DataChannel(BaseModel):
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
-class DataChannel_Maker:
-    type_name = "data.channel"
+class DataChannelGt_Maker:
+    type_name = "data.channel.gt"
     version = "000"
 
     def __init__(
@@ -173,7 +173,7 @@ class DataChannel_Maker:
         telemetry_name: EnumTelemetryName,
         id: str,
     ):
-        self.tuple = DataChannel(
+        self.tuple = DataChannelGt(
             Name=name,
             DisplayName=display_name,
             AboutNodeName=about_node_name,
@@ -183,14 +183,14 @@ class DataChannel_Maker:
         )
 
     @classmethod
-    def tuple_to_type(cls, tuple: DataChannel) -> bytes:
+    def tuple_to_type(cls, tuple: DataChannelGt) -> bytes:
         """
         Given a Python class object, returns the serialized JSON type object.
         """
         return tuple.as_type()
 
     @classmethod
-    def type_to_tuple(cls, t: bytes) -> DataChannel:
+    def type_to_tuple(cls, t: bytes) -> DataChannelGt:
         """
         Given a serialized JSON type object, returns the Python class object.
         """
@@ -203,12 +203,12 @@ class DataChannel_Maker:
         return cls.dict_to_tuple(d)
 
     @classmethod
-    def dict_to_tuple(cls, d: dict[str, Any]) -> DataChannel:
+    def dict_to_tuple(cls, d: dict[str, Any]) -> DataChannelGt:
         """
-        Deserialize a dictionary representation of a data.channel.000 message object
-        into a DataChannel python object for internal use.
+        Deserialize a dictionary representation of a data.channel.gt.000 message object
+        into a DataChannelGt python object for internal use.
 
-        This is the near-inverse of the DataChannel.as_dict() method:
+        This is the near-inverse of the DataChannelGt.as_dict() method:
           - Enums: translates between the symbols sent in messages between actors and
         the values used by the actors internally once they've deserialized the messages.
           - Types: recursively validates and deserializes sub-types.
@@ -221,10 +221,10 @@ class DataChannel_Maker:
             d (dict): the dictionary resulting from json.loads(t) for a serialized JSON type object t.
 
         Raises:
-           SchemaError: if the dict cannot be turned into a DataChannel object.
+           SchemaError: if the dict cannot be turned into a DataChannelGt object.
 
         Returns:
-            DataChannel
+            DataChannelGt
         """
         d2 = dict(d)
         if "Name" not in d2.keys():
@@ -248,13 +248,13 @@ class DataChannel_Maker:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "000":
             LOGGER.debug(
-                f"Attempting to interpret data.channel version {d2['Version']} as version 000"
+                f"Attempting to interpret data.channel.gt version {d2['Version']} as version 000"
             )
             d2["Version"] = "000"
-        return DataChannel(**d2)
+        return DataChannelGt(**d2)
 
     @classmethod
-    def tuple_to_dc(cls, t: DataChannel) -> DataChannel:
+    def tuple_to_dc(cls, t: DataChannelGt) -> DataChannel:
         if t.Id in DataChannel.by_id.keys():
             dc = DataChannel.by_id[t.Id]
         else:
@@ -269,8 +269,8 @@ class DataChannel_Maker:
         return dc
 
     @classmethod
-    def dc_to_tuple(cls, dc: DataChannel) -> DataChannel:
-        t = DataChannel_Maker(
+    def dc_to_tuple(cls, dc: DataChannel) -> DataChannelGt:
+        t = DataChannelGt_Maker(
             name=dc.name,
             display_name=dc.display_name,
             about_node_name=dc.about_node_name,

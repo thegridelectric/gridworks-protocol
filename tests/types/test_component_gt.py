@@ -5,19 +5,29 @@ import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
+from gwproto.types import ComponentGt
 from gwproto.types import ComponentGt_Maker as Maker
 
 
 def test_component_gt_generated() -> None:
+    t = ComponentGt(
+        ComponentId="c6ec1ddb-5f51-4902-9807-a5ebc74d1102",
+        ComponentAttributeClassId="739a6e32-bb9c-43bc-a28d-fb61be665522",
+        ConfigList=[],
+        DisplayName="Demo eGauge Power Meter",
+        HwUid="000aaa",)
+
     d = {
-        "ComponentId": ,
-        "ComponentAttributeClassId": '0a2fed00-8ff9-4391-a6d8-4b08ab94dfe1',
-        "ConfigList": ,
-        "DisplayName": "Sample Component",
+        "ComponentId": "c6ec1ddb-5f51-4902-9807-a5ebc74d1102",
+        "ComponentAttributeClassId": "739a6e32-bb9c-43bc-a28d-fb61be665522",
+        "ConfigList": [],
+        "DisplayName": "Demo eGauge Power Meter",
         "HwUid": "000aaa",
         "TypeName": "component.gt",
         "Version": "001",
     }
+
+    assert t.as_dict() == d
 
     with pytest.raises(SchemaError):
         Maker.type_to_tuple(d)
@@ -28,6 +38,7 @@ def test_component_gt_generated() -> None:
     # Test type_to_tuple
     gtype = json.dumps(d)
     gtuple = Maker.type_to_tuple(gtype)
+    assert gtuple == t
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple

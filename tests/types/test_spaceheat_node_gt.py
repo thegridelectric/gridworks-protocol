@@ -5,23 +5,34 @@ import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
+from gwproto.types import SpaceheatNodeGt
 from gwproto.types import SpaceheatNodeGt_Maker as Maker
 from gwproto.enums import ActorClass
-from gwproto.enums import Role
 
 
 def test_spaceheat_node_gt_generated() -> None:
+    t = SpaceheatNodeGt(
+        ShNodeId="92091523-4fa7-4a3e-820b-fddee089222f",
+        Name="s.pwr-meter",
+        Handle="pwr-meter",
+        ActorClass=ActorClass.PowerMeter,
+        DisplayName="Primary Power Meter",
+        ComponentId="80f95280-e999-49e0-a0e4-a7faf3b5b3bd",
+        InPowerMetering=False,)
+
     d = {
-        "ShNodeId": "41f2ae73-8782-406d-bda7-a95b5abe317e",
-        "Name": "h.elt1",
-        "Handle": ,
-        "ActorClassGtEnumSymbol": "638bf97b",
-        "DisplayName": "First boost element",
+        "ShNodeId": "92091523-4fa7-4a3e-820b-fddee089222f",
+        "Name": "s.pwr-meter",
+        "Handle": "pwr-meter",
+        "ActorClassGtEnumSymbol": "2ea112b9",
+        "DisplayName": "Primary Power Meter",
         "ComponentId": "80f95280-e999-49e0-a0e4-a7faf3b5b3bd",
         "InPowerMetering": False,
         "TypeName": "spaceheat.node.gt",
         "Version": "200",
     }
+
+    assert t.as_dict() == d
 
     with pytest.raises(SchemaError):
         Maker.type_to_tuple(d)
@@ -32,6 +43,7 @@ def test_spaceheat_node_gt_generated() -> None:
     # Test type_to_tuple
     gtype = json.dumps(d)
     gtuple = Maker.type_to_tuple(gtype)
+    assert gtuple == t
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple

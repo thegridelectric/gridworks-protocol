@@ -1,8 +1,8 @@
-DataChannel
+DataChannelGt
 ==========================
-Python pydantic class corresponding to json type `data.channel`, version `000`.
+Python pydantic class corresponding to json type `data.channel.gt`, version `000`.
 
-.. autoclass:: gwproto.types.DataChannel
+.. autoclass:: gwproto.types.DataChannelGt
     :members:
 
 **Name**:
@@ -35,14 +35,14 @@ Python pydantic class corresponding to json type `data.channel`, version `000`.
 
 
 
-.. autoclass:: gwproto.types.data_channel.check_is_uuid_canonical_textual
+.. autoclass:: gwproto.types.data_channel_gt.check_is_uuid_canonical_textual
     :members:
 
 
-.. autoclass:: gwproto.types.data_channel.check_is_spaceheat_name
+.. autoclass:: gwproto.types.data_channel_gt.check_is_spaceheat_name
     :members:
 
 
-.. autoclass:: gwproto.types.DataChannel_Maker
+.. autoclass:: gwproto.types.DataChannelGt_Maker
     :members:
 

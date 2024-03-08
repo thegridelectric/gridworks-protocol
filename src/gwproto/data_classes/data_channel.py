@@ -12,33 +12,38 @@ from gwproto.enums import TelemetryName
 
 
 class DataChannel(ABC, StreamlinedSerializerMixin):
+    by_id: Dict[str, "DataChannel"] = {}
     by_name: Dict[str, "DataChannel"] = {}
     base_props = []
+    base_props.append("name")
     base_props.append("display_name")
-    base_props.append("about_name")
-    base_props.append("captured_by_name")
+    base_props.append("about_node_name")
+    base_props.append("captured_by_node_name")
     base_props.append("telemetry_name")
     base_props.append("id")
 
-    def __new__(cls, display_name, *args, **kwargs):
+    def __new__(cls, display_name, id, *args, **kwargs):
         try:
             return cls.by_name[display_name]
         except KeyError:
             instance = super().__new__(cls)
+            cls.by_id[id] = instance
             cls.by_name[display_name] = instance
             return instance
 
     def __init__(
         self,
+        name: str,
         display_name: str,
-        about_name: str,
-        captured_by_name: str,
+        about_node_name: str,
+        captured_by_node_name: str,
         telemetry_name: TelemetryName,
         id: str,
     ):
+        self.name = name
         self.display_name = display_name
-        self.about_name = about_name
-        self.captured_by_name = captured_by_name
+        self.about_node_name = about_node_name
+        self.captured_by_node_name = captured_by_node_name
         self.telemetry_name = telemetry_name
         self.id = id
 

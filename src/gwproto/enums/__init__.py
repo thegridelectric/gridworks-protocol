@@ -60,7 +60,7 @@ __all__ = [
     "ChangeRelayState",  # [change.relay.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changerelaystate)
     "ChangeStoreFlowDirection",  # [change.store.flow.direction.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changestoreflowdirection)
     "ChangeValveState",  # [change.valve.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changevalvestate)
-    "FsmActionType",  # [sh.fsm.action.type.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shfsmactiontype)
+    "FsmActionType",  # [sh.fsm.event.type.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shfsmeventtype)
     "KindOfParam",  # [spaceheat.kind.of.param.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatkindofparam)
     "LgOperatingMode",  # [lg.operating.mode.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#lgoperatingmode)
     "LocalCommInterface",  # [local.comm.interface.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#localcomminterface)

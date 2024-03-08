@@ -228,3 +228,38 @@ def check_is_reasonable_unix_time_ms(v: int) -> None:
         raise ValueError(f"<{v}> must be after Jan 1 2000")
     if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp * 1000 < v:  # type: ignore[attr-defined]
         raise ValueError(f"<{v}> must be before Jan 1 3000")
+
+
+def check_is_uuid_canonical_textual(v: str) -> None:
+    """Checks UuidCanonicalTextual format
+
+    UuidCanonicalTextual format:  A string of hex words separated by hyphens
+    of length 8-4-4-4-12.
+
+    Args:
+        v (str): the candidate
+
+    Raises:
+        ValueError: if v is not UuidCanonicalTextual format
+    """
+    try:
+        x = v.split("-")
+    except AttributeError as e:
+        raise ValueError(f"Failed to split on -: {e}")
+    if len(x) != 5:
+        raise ValueError(f"<{v}> split by '-' did not have 5 words")
+    for hex_word in x:
+        try:
+            int(hex_word, 16)
+        except ValueError:
+            raise ValueError(f"Words of <{v}> are not all hex")
+    if len(x[0]) != 8:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[1]) != 4:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[2]) != 4:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[3]) != 4:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
+    if len(x[4]) != 12:
+        raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")

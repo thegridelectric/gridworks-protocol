@@ -30,9 +30,9 @@ component.gt.001
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/component-gt.json
 
-data.channel.000
+data.channel.gt.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/data-channel.json
+.. literalinclude:: json/data-channel-gt.json
 
 egauge.io.001
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^

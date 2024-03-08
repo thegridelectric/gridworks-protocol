@@ -5,23 +5,35 @@ import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
+from gwproto.types import ChannelConfig
 from gwproto.types import ChannelConfig_Maker as Maker
 from gwproto.enums import TelemetryName
 from gwproto.enums import Unit
 
 
 def test_channel_config_generated() -> None:
+    t = ChannelConfig(
+        ChannelName="hp-idu-pwr",
+        PollPeriodMs=300,
+        CapturePeriodS=60,
+        AsyncCapture=True,
+        AsyncCaptureDelta=30,
+        Exponent=6,
+        Unit=Unit.W,)
+
     d = {
         "ChannelName": "hp-idu-pwr",
         "PollPeriodMs": 300,
         "CapturePeriodS": 60,
         "AsyncCapture": True,
-        "AsyncCaptureDelta": 0.2,
+        "AsyncCaptureDelta": 30,
         "Exponent": 6,
         "UnitGtEnumSymbol": "f459a9c3",
         "TypeName": "channel.config",
         "Version": "000",
     }
+
+    assert t.as_dict() == d
 
     with pytest.raises(SchemaError):
         Maker.type_to_tuple(d)
@@ -32,6 +44,7 @@ def test_channel_config_generated() -> None:
     # Test type_to_tuple
     gtype = json.dumps(d)
     gtuple = Maker.type_to_tuple(gtype)
+    assert gtuple == t
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple
@@ -113,7 +126,7 @@ def test_channel_config_generated() -> None:
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, AsyncCaptureDelta="0.2.1")
+    d2 = dict(d, AsyncCaptureDelta="30.1")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 

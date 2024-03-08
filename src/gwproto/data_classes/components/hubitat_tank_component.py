@@ -13,7 +13,7 @@ from gwproto.types.hubitat_tank_gt import FibaroTempSensorSettings
 from gwproto.types.hubitat_tank_gt import FibaroTempSensorSettingsGt
 from gwproto.types.hubitat_tank_gt import HubitatTankSettingsGt
 from gwproto.types.channel_config import ChannelConfig_Maker, ChannelConfig
-from gwproto.types.data_channel import DataChannel_Maker
+from gwproto.types.data_channel_gt import DataChannelGt_Maker
 
 
 class HubitatTankComponent(Component, ComponentResolver):

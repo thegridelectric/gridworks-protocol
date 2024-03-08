@@ -5,10 +5,18 @@ import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
-from gwproto.types.i2c_multichannel_dt_relay_component_gt import I2cMultichannelDtRelayComponentGt_Maker as Maker
+from gwproto.types.i2c_multichannel_dt_relay_component_gt import _Maker as Maker
 
 
 def test_i2c_multichannel_dt_relay_component_gt_generated() -> None:
+    t = I2cMultichannelDtRelayComponentGt(
+        ComponentId="798fe14a-4073-41eb-bce2-075906aee6bb",
+        ComponentAttributeClassId="69f101fc-22e4-4caa-8103-50b8aeb66028",
+        ConfigList=,
+        RelayConfigList=,
+        DisplayName="relay for first elt in tank",
+        HwUid="abc123",)
+
     d = {
         "ComponentId": "798fe14a-4073-41eb-bce2-075906aee6bb",
         "ComponentAttributeClassId": "69f101fc-22e4-4caa-8103-50b8aeb66028",
@@ -20,6 +28,8 @@ def test_i2c_multichannel_dt_relay_component_gt_generated() -> None:
         "Version": "000",
     }
 
+    assert t.as_dict() == d
+
     with pytest.raises(SchemaError):
         Maker.type_to_tuple(d)
 
@@ -29,6 +39,7 @@ def test_i2c_multichannel_dt_relay_component_gt_generated() -> None:
     # Test type_to_tuple
     gtype = json.dumps(d)
     gtuple = Maker.type_to_tuple(gtype)
+    assert gtuple == t
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple

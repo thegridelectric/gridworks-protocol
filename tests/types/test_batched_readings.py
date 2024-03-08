@@ -5,10 +5,23 @@ import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
+from gwproto.types import BatchedReadings
 from gwproto.types import BatchedReadings_Maker as Maker
 
 
 def test_batched_readings_generated() -> None:
+    t = BatchedReadings(
+        FromGNodeAlias="dwtest.isone.ct.newhaven.orange1.ta.scada",
+        FromGNodeInstanceId="0384ef21-648b-4455-b917-58a1172d7fc1",
+        AboutGNodeAlias="dwtest.isone.ct.newhaven.orange1.ta",
+        SlotStartUnixS=1656945300,
+        BatchedTransmissionPeriodS=300,
+        DataChannelList=,
+        ChannelReadingList=[],
+        FsmActionList=[],
+        FsmReportList=[],
+        Id=,)
+
     d = {
         "FromGNodeAlias": "dwtest.isone.ct.newhaven.orange1.ta.scada",
         "FromGNodeInstanceId": "0384ef21-648b-4455-b917-58a1172d7fc1",
@@ -24,6 +37,8 @@ def test_batched_readings_generated() -> None:
         "Version": "000",
     }
 
+    assert t.as_dict() == d
+
     with pytest.raises(SchemaError):
         Maker.type_to_tuple(d)
 
@@ -33,6 +48,7 @@ def test_batched_readings_generated() -> None:
     # Test type_to_tuple
     gtype = json.dumps(d)
     gtuple = Maker.type_to_tuple(gtype)
+    assert gtuple == t
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple

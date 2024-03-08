@@ -39,20 +39,20 @@ class FsmAtomicReport(BaseModel):
             "FSM in question. Its handle reflects the state it is in."
         ),
     )
-    IsAction: bool = Field(
-        title="Is Action",
+    IsEvent: bool = Field(
+        title="Is Event",
         description=(
             "An Action refers to some side effect of a state transition that results in a physical "
             "change to an underlying TerminalAsset."
         ),
     )
-    ActionType: Optional[FsmActionType] = Field(
-        title="Action Type",
+    EventType: Optional[FsmActionType] = Field(
+        title="Event Type",
         description="The FiniteState Machine Action taken",
         default=None,
     )
-    Action: Optional[str] = Field(
-        title="Action",
+    Event: Optional[str] = Field(
+        title="Event",
         description=(
             "Should belong to the associated enum element chosen in ActionType. For example, "
             "if ActionType is ChangeStoreFlowDirection, then Action should be either 'Discharge' "
@@ -145,9 +145,9 @@ class FsmAtomicReport(BaseModel):
             ).items()
             if value is not None
         }
-        if "ActionType" in d.keys():
-            del d["ActionType"]
-            d["ActionTypeGtEnumSymbol"] = FsmActionType.value_to_symbol(self.ActionType)
+        if "EventType" in d.keys():
+            del d["EventType"]
+            d["EventTypeGtEnumSymbol"] = FsmActionType.value_to_symbol(self.EventType)
         return d
 
     def as_type(self) -> bytes:
@@ -185,17 +185,17 @@ class FsmAtomicReport_Maker:
     def __init__(
         self,
         from_handle: str,
-        is_action: bool,
-        action_type: Optional[FsmActionType],
-        action: Optional[str],
+        is_event: bool,
+        event_type: Optional[FsmActionType],
+        event: Optional[str],
         unix_time_ms: int,
         trigger_id: str,
     ):
         self.tuple = FsmAtomicReport(
             FromHandle=from_handle,
-            IsAction=is_action,
-            ActionType=action_type,
-            Action=action,
+            IsEvent=is_event,
+            EventType=event_type,
+            Event=event,
             UnixTimeMs=unix_time_ms,
             TriggerId=trigger_id,
         )
@@ -247,12 +247,12 @@ class FsmAtomicReport_Maker:
         d2 = dict(d)
         if "FromHandle" not in d2.keys():
             raise SchemaError(f"dict missing FromHandle: <{d2}>")
-        if "IsAction" not in d2.keys():
-            raise SchemaError(f"dict missing IsAction: <{d2}>")
-        if "ActionTypeGtEnumSymbol" in d2.keys():
-            value = FsmActionType.symbol_to_value(d2["ActionTypeGtEnumSymbol"])
-            d2["ActionType"] = FsmActionType(value)
-            del d2["ActionTypeGtEnumSymbol"]
+        if "IsEvent" not in d2.keys():
+            raise SchemaError(f"dict missing IsEvent: <{d2}>")
+        if "EventTypeGtEnumSymbol" in d2.keys():
+            value = FsmActionType.symbol_to_value(d2["EventTypeGtEnumSymbol"])
+            d2["EventType"] = FsmActionType(value)
+            del d2["EventTypeGtEnumSymbol"]
         if "UnixTimeMs" not in d2.keys():
             raise SchemaError(f"dict missing UnixTimeMs: <{d2}>")
         if "TriggerId" not in d2.keys():

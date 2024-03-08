@@ -25,7 +25,7 @@ forth between type instances and Python objects.
     ChannelReadings  <types/channel-readings>
     ComponentAttributeClassGt  <types/component-attribute-class-gt>
     ComponentGt  <types/component-gt>
-    DataChannel  <types/data-channel>
+    DataChannelGt  <types/data-channel-gt>
     EgaugeIo  <types/egauge-io>
     EgaugeRegisterConfig  <types/egauge-register-config>
     ElectricMeterCacGt  <types/electric-meter-cac-gt>

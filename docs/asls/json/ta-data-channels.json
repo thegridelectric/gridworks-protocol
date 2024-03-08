@@ -31,14 +31,14 @@
       "description": "Author of this list of data channels.",
       "required": true
     },
-    "Channels": {
+    "ChannelList": {
       "type": "array",
       "items": {
-        "type": "data.channel.000"
+        "type": "data.channel.gt.000"
       },
       "required": true
     },
-    "Identifier": {
+    "Id": {
       "type": "string",
       "format": "UuidCanonicalTextual",
       "title": "Identifier",

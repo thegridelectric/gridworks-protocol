@@ -11,12 +11,31 @@ from gwproto.types import EgaugeIo_Maker as Maker
 
 def test_egauge_io_generated() -> None:
     t = EgaugeIo(
-        ChannelName='hp-idu-pwr',
-        InputConfig={'Address': 9004, 'Name': 'Garage power', 'Description': '', 'Type': 'f32', 'Denominator': 1, 'Unit': 'W', 'TypeName': 'egauge.register.config', 'Version': '000'},)
+        ChannelName="hp-idu-pwr",
+        InputConfig={
+            "Address": 9004,
+            "Name": "Garage power",
+            "Description": "",
+            "Type": "f32",
+            "Denominator": 1,
+            "Unit": "W",
+            "TypeName": "egauge.register.config",
+            "Version": "000",
+        },
+    )
 
     d = {
-        "ChannelName": 'hp-idu-pwr',
-        "InputConfig": {'Address': 9004, 'Name': 'Garage power', 'Description': '', 'Type': 'f32', 'Denominator': 1, 'Unit': 'W', 'TypeName': 'egauge.register.config', 'Version': '000'},
+        "ChannelName": "hp-idu-pwr",
+        "InputConfig": {
+            "Address": 9004,
+            "Name": "Garage power",
+            "Description": "",
+            "Type": "f32",
+            "Denominator": 1,
+            "Unit": "W",
+            "TypeName": "egauge.register.config",
+            "Version": "000",
+        },
         "TypeName": "egauge.io",
         "Version": "001",
     }
@@ -36,14 +55,6 @@ def test_egauge_io_generated() -> None:
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple
-
-    # test Maker init
-    t = Maker(
-        channel_name=gtuple.ChannelName,
-        input_config=gtuple.InputConfig,
-        
-    ).tuple
-    assert t == gtuple
 
     ######################################
     # SchemaError raised if missing a required attribute

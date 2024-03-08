@@ -4,17 +4,18 @@ import json
 import pytest
 from pydantic import ValidationError
 
+from gwproto.enums import TelemetryName
 from gwproto.errors import SchemaError
 from gwproto.types import SyncedReadings
 from gwproto.types import SyncedReadings_Maker as Maker
-from gwproto.enums import TelemetryName
 
 
 def test_synced_readings_generated() -> None:
     t = SyncedReadings(
         ScadaReadTimeUnixMs=1656587343297,
         ChannelNameList=,
-        ValueList=[18000],)
+        ValueList=[18000],
+    )
 
     d = {
         "ScadaReadTimeUnixMs": 1656587343297,
@@ -39,15 +40,6 @@ def test_synced_readings_generated() -> None:
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple
-
-    # test Maker init
-    t = Maker(
-        scada_read_time_unix_ms=gtuple.ScadaReadTimeUnixMs,
-        channel_name_list=gtuple.ChannelNameList,
-        value_list=gtuple.ValueList,
-        
-    ).tuple
-    assert t == gtuple
 
     ######################################
     # SchemaError raised if missing a required attribute

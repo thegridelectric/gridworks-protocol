@@ -5,7 +5,10 @@ import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
-from gwproto.types.electric_meter_component_gt import _Maker as Maker
+from gwproto.types.electric_meter_component_gt import ElectricMeterComponentGt
+from gwproto.types.electric_meter_component_gt import (
+    ElectricMeterComponentGt_Maker as Maker,
+)
 
 
 def test_electric_meter_component_gt_generated() -> None:
@@ -17,7 +20,8 @@ def test_electric_meter_component_gt_generated() -> None:
         HwUid="35941_308",
         ModbusHost="eGauge4922.local",
         ModbusPort=502,
-        EgaugeIoList=[{'InputConfig': {'Address': 9006, 'Name': '', 'Description': 'change in value', 'Type': 'f32', 'Denominator': 1, 'Unit': 'W', 'TypeName': 'egauge.register.config', 'Version': '000'}, 'OutputConfig': {'Channel': {'DisplayName':'Idu Power', 'AboutName': 'hp-idu-pwr', 'CapturedByName': 'pwr-meter', 'TelemetryNameGtEnumSymbol': 'af39eec9'}, 'PollPeriodMs': 1000, 'CapturePeriodS': 300, 'AsyncCapture': True, 'AsyncCaptureDelta': 50, 'Exponent': 0, 'UnitGtEnumSymbol': 'f459a9c3', 'TypeName': 'channel.config', 'Version': '000'}, 'TypeName': 'egauge.io', 'Version': '001'}],)
+        EgaugeIoList=[{'InputConfig': {'Address': 9006, 'Name': '', 'Description': 'change in value', 'Type': 'f32', 'Denominator': 1, 'Unit': 'W', 'TypeName': 'egauge.register.config', 'Version': '000'}, 'OutputConfig': {'Channel': {'DisplayName':'Idu Power', 'AboutName': 'hp-idu-pwr', 'CapturedByName': 'pwr-meter', 'TelemetryNameGtEnumSymbol': 'af39eec9'}, 'PollPeriodMs': 1000, 'CapturePeriodS': 300, 'AsyncCapture': True, 'AsyncCaptureDelta': 50, 'Exponent': 0, 'UnitGtEnumSymbol': 'f459a9c3', 'TypeName': 'channel.config', 'Version': '000'}, 'TypeName': 'egauge.io', 'Version': '001'}],
+    )
 
     d = {
         "ComponentId": "04ceb282-d7e8-4293-80b5-72455e1a5db3",
@@ -47,20 +51,6 @@ def test_electric_meter_component_gt_generated() -> None:
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple
-
-    # test Maker init
-    t = Maker(
-        component_id=gtuple.ComponentId,
-        component_attribute_class_id=gtuple.ComponentAttributeClassId,
-        display_name=gtuple.DisplayName,
-        config_list=gtuple.ConfigList,
-        hw_uid=gtuple.HwUid,
-        modbus_host=gtuple.ModbusHost,
-        modbus_port=gtuple.ModbusPort,
-        egauge_io_list=gtuple.EgaugeIoList,
-        
-    ).tuple
-    assert t == gtuple
 
     ######################################
     # Dataclass related tests

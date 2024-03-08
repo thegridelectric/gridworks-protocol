@@ -11,8 +11,10 @@ from pydantic import Extra
 from pydantic import Field
 from pydantic import root_validator
 from pydantic import validator
+
 from gwproto.enums import Unit as EnumUnit
 from gwproto.errors import SchemaError
+
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -207,26 +209,6 @@ class ChannelConfig_Maker:
     type_name = "channel.config"
     version = "000"
 
-    def __init__(
-        self,
-        channel_name: str,
-        poll_period_ms: int,
-        capture_period_s: int,
-        async_capture: bool,
-        async_capture_delta: Optional[int],
-        exponent: int,
-        unit: EnumUnit,
-    ):
-        self.tuple = ChannelConfig(
-            ChannelName=channel_name,
-            PollPeriodMs=poll_period_ms,
-            CapturePeriodS=capture_period_s,
-            AsyncCapture=async_capture,
-            AsyncCaptureDelta=async_capture_delta,
-            Exponent=exponent,
-            Unit=unit,
-        )
-
     @classmethod
     def tuple_to_type(cls, tuple: ChannelConfig) -> bytes:
         """
@@ -331,6 +313,7 @@ def check_is_spaceheat_name(v: str) -> None:
         ValueError: If the provided string is not in SpaceheatName format.
     """
     from typing import List
+
     try:
         x: List[str] = v.split(".")
     except:
@@ -343,7 +326,9 @@ def check_is_spaceheat_name(v: str) -> None:
         )
     for word in x:
         for char in word:
-            if not (char.isalnum() or char == '-'):
-                raise ValueError(f"words of <{v}> split by by '.' must be alphanumeric or hyphen.")
+            if not (char.isalnum() or char == "-"):
+                raise ValueError(
+                    f"words of <{v}> split by by '.' must be alphanumeric or hyphen."
+                )
     if not v.islower():
         raise ValueError(f"<{v}> must be lowercase.")

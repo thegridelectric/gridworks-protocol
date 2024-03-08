@@ -20,7 +20,8 @@ def test_batched_readings_generated() -> None:
         ChannelReadingList=[],
         FsmActionList=[],
         FsmReportList=[],
-        Id=,)
+        Id=,
+    )
 
     d = {
         "FromGNodeAlias": "dwtest.isone.ct.newhaven.orange1.ta.scada",
@@ -52,22 +53,6 @@ def test_batched_readings_generated() -> None:
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple
-
-    # test Maker init
-    t = Maker(
-        from_g_node_alias=gtuple.FromGNodeAlias,
-        from_g_node_instance_id=gtuple.FromGNodeInstanceId,
-        about_g_node_alias=gtuple.AboutGNodeAlias,
-        slot_start_unix_s=gtuple.SlotStartUnixS,
-        batched_transmission_period_s=gtuple.BatchedTransmissionPeriodS,
-        data_channel_list=gtuple.DataChannelList,
-        channel_reading_list=gtuple.ChannelReadingList,
-        fsm_action_list=gtuple.FsmActionList,
-        fsm_report_list=gtuple.FsmReportList,
-        id=gtuple.Id,
-        
-    ).tuple
-    assert t == gtuple
 
     ######################################
     # SchemaError raised if missing a required attribute

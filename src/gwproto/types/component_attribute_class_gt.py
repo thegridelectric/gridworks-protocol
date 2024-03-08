@@ -11,9 +11,11 @@ from pydantic import Extra
 from pydantic import Field
 from pydantic import root_validator
 from pydantic import validator
+
 from gwproto.data_classes.component_attribute_class import ComponentAttributeClass
 from gwproto.enums import MakeModel as EnumMakeModel
 from gwproto.errors import SchemaError
+
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -23,38 +25,39 @@ LOGGER = logging.getLogger(__name__)
 
 
 CACS_BY_MAKE_MODEL: Dict[EnumMakeModel, str] = {
-        EnumMakeModel.EGAUGE__4030: "739a6e32-bb9c-43bc-a28d-fb61be665522",
-        EnumMakeModel.NCD__PR814SPST: "c6e736d8-8078-44f5-98bb-d72ca91dc773",
-        EnumMakeModel.ADAFRUIT__642: "43564cd2-0e78-41a2-8b67-ad80c02161e8",
-        EnumMakeModel.GRIDWORKS__WATERTEMPHIGHPRECISION: "7937eb7e-24d5-4d52-990f-cca063484df9",
-        EnumMakeModel.GRIDWORKS__SIMPM1: "28897ac1-ea42-4633-96d3-196f63f5a951",
-        EnumMakeModel.SCHNEIDERELECTRIC__IEM3455: "6bcdc388-de10-40e6-979a-8d66bfcfe9ba",
-        EnumMakeModel.GRIDWORKS__SIMBOOL30AMPRELAY: "69f101fc-22e4-4caa-8103-50b8aeb66028",
-        EnumMakeModel.OPENENERGY__EMONPI: "357b9b4f-2550-4380-aa6b-d2cd9c7ba0f9",
-        EnumMakeModel.GRIDWORKS__SIMTSNAP1: "b9f7135e-07a9-42f8-b847-a9bb3ea3770a",
-        EnumMakeModel.ATLAS__EZFLO: "13d916dc-8764-4b16-b85d-b8ead3e2fc80",
-        EnumMakeModel.HUBITAT__C7__LAN1: "62528da5-b510-4ac2-82c1-3782842eae07",
-        EnumMakeModel.GRIDWORKS__TANK_MODULE_1: "60ac199d-679a-49f7-9142-8ca3e6428a5f",
-        EnumMakeModel.FIBARO__ANALOG_TEMP_SENSOR: "7ce0ce69-14c6-4cb7-a33f-2aeca91e0680",
-        EnumMakeModel.AMPHENOL__NTC_10K_THERMISTOR_MA100GG103BN: "2821c81d-054d-4003-9b07-2c295aef40f5",
-        EnumMakeModel.YHDC__SCT013100: "812761ba-6544-4796-9aad-e1c979f58734",
-        EnumMakeModel.MAGNELAB__SCT0300050: "cf312bd6-7ca5-403b-a61b-b2e817ea1e22",
-        EnumMakeModel.GRIDWORKS__MULTITEMP1: "432073b8-4d2b-4e36-9229-73893f33f846",
-        EnumMakeModel.KRIDA__EMR16I2CV3: "018d9ffb-89d1-4cc4-95c0-f170711b5ffa",
-        EnumMakeModel.OMEGA__FTB8007HWPT: "8cf6c726-e38a-4900-9cfe-ae6f053aafdf",
-        EnumMakeModel.ISTEC_4440: "62ed724c-ba62-4302-ae30-d52b20d42ad9",
-        EnumMakeModel.OMEGA__FTB8010HWPT: "d9f225f8-eeb5-4cb7-b314-5551b925ea27",
-        EnumMakeModel.BELIMO__BALLVALVE232VS: "a2236d8c-7c9b-403f-9c55-733c62971d09",
-        EnumMakeModel.BELIMO__DIVERTERB332L: "f3261ed0-3fb1-4def-b60b-246960bf85ef",
-        EnumMakeModel.TACO__0034EPLUS: "3880ba73-61e5-4b35-9df1-e154a03a3335",
-        EnumMakeModel.TACO__007E: "198ebac8-e0b9-4cee-ae91-2ee6db708491",
-        EnumMakeModel.ARMSTRONG__COMPASSH: "ff6863e1-d5f7-4066-8579-2768162321a6",
-        EnumMakeModel.HONEYWELL__T6ZWAVETHERMOSTAT: "03533a1f-3cb9-4a1f-8d57-690c0ad0475b",
-        EnumMakeModel.PRMFILTRATION__WM075: "61d5c12d-eeca-4835-9a11-e61167d82e0d",
-        EnumMakeModel.BELLGOSSETT__ECOCIRC20_18: "0d2ccc36-d2b8-405d-a257-3917111607c5",
-        EnumMakeModel.TEWA__TT0P10KC3T1051500: "20779dbb-0302-4c36-9d60-e1962857c2f3",
-        EnumMakeModel.EKM__HOTSPWM075HD: "e52cb571-913a-4614-90f4-5cc81f8e7fe5"
-    }
+    EnumMakeModel.EGAUGE__4030: "739a6e32-bb9c-43bc-a28d-fb61be665522",
+    EnumMakeModel.NCD__PR814SPST: "c6e736d8-8078-44f5-98bb-d72ca91dc773",
+    EnumMakeModel.ADAFRUIT__642: "43564cd2-0e78-41a2-8b67-ad80c02161e8",
+    EnumMakeModel.GRIDWORKS__WATERTEMPHIGHPRECISION: "7937eb7e-24d5-4d52-990f-cca063484df9",
+    EnumMakeModel.GRIDWORKS__SIMPM1: "28897ac1-ea42-4633-96d3-196f63f5a951",
+    EnumMakeModel.SCHNEIDERELECTRIC__IEM3455: "6bcdc388-de10-40e6-979a-8d66bfcfe9ba",
+    EnumMakeModel.GRIDWORKS__SIMBOOL30AMPRELAY: "69f101fc-22e4-4caa-8103-50b8aeb66028",
+    EnumMakeModel.OPENENERGY__EMONPI: "357b9b4f-2550-4380-aa6b-d2cd9c7ba0f9",
+    EnumMakeModel.GRIDWORKS__SIMTSNAP1: "b9f7135e-07a9-42f8-b847-a9bb3ea3770a",
+    EnumMakeModel.ATLAS__EZFLO: "13d916dc-8764-4b16-b85d-b8ead3e2fc80",
+    EnumMakeModel.HUBITAT__C7__LAN1: "62528da5-b510-4ac2-82c1-3782842eae07",
+    EnumMakeModel.GRIDWORKS__TANK_MODULE_1: "60ac199d-679a-49f7-9142-8ca3e6428a5f",
+    EnumMakeModel.FIBARO__ANALOG_TEMP_SENSOR: "7ce0ce69-14c6-4cb7-a33f-2aeca91e0680",
+    EnumMakeModel.AMPHENOL__NTC_10K_THERMISTOR_MA100GG103BN: "2821c81d-054d-4003-9b07-2c295aef40f5",
+    EnumMakeModel.YHDC__SCT013100: "812761ba-6544-4796-9aad-e1c979f58734",
+    EnumMakeModel.MAGNELAB__SCT0300050: "cf312bd6-7ca5-403b-a61b-b2e817ea1e22",
+    EnumMakeModel.GRIDWORKS__MULTITEMP1: "432073b8-4d2b-4e36-9229-73893f33f846",
+    EnumMakeModel.KRIDA__EMR16I2CV3: "018d9ffb-89d1-4cc4-95c0-f170711b5ffa",
+    EnumMakeModel.OMEGA__FTB8007HWPT: "8cf6c726-e38a-4900-9cfe-ae6f053aafdf",
+    EnumMakeModel.ISTEC_4440: "62ed724c-ba62-4302-ae30-d52b20d42ad9",
+    EnumMakeModel.OMEGA__FTB8010HWPT: "d9f225f8-eeb5-4cb7-b314-5551b925ea27",
+    EnumMakeModel.BELIMO__BALLVALVE232VS: "a2236d8c-7c9b-403f-9c55-733c62971d09",
+    EnumMakeModel.BELIMO__DIVERTERB332L: "f3261ed0-3fb1-4def-b60b-246960bf85ef",
+    EnumMakeModel.TACO__0034EPLUS: "3880ba73-61e5-4b35-9df1-e154a03a3335",
+    EnumMakeModel.TACO__007E: "198ebac8-e0b9-4cee-ae91-2ee6db708491",
+    EnumMakeModel.ARMSTRONG__COMPASSH: "ff6863e1-d5f7-4066-8579-2768162321a6",
+    EnumMakeModel.HONEYWELL__T6ZWAVETHERMOSTAT: "03533a1f-3cb9-4a1f-8d57-690c0ad0475b",
+    EnumMakeModel.PRMFILTRATION__WM075: "61d5c12d-eeca-4835-9a11-e61167d82e0d",
+    EnumMakeModel.BELLGOSSETT__ECOCIRC20_18: "0d2ccc36-d2b8-405d-a257-3917111607c5",
+    EnumMakeModel.TEWA__TT0P10KC3T1051500: "20779dbb-0302-4c36-9d60-e1962857c2f3",
+    EnumMakeModel.EKM__HOTSPWM075HD: "e52cb571-913a-4614-90f4-5cc81f8e7fe5",
+}
+
 
 class ComponentAttributeClassGt(BaseModel):
     """
@@ -124,11 +127,11 @@ class ComponentAttributeClassGt(BaseModel):
         return v
 
     @root_validator
-    def check_axiom_(cls, v: dict) -> dict:
+    def check_axiom_1(cls, v: dict) -> dict:
         """
-        Axiom : Component Attribute Classes captured by spaceheat.make.model v 002.
-        If cac is a ComponentAttributeClassGt of type 001, 
-        then 
+        Axiom 1: Component Attribute Classes captured by spaceheat.make.model v 002.
+        If cac is a ComponentAttributeClassGt of type 001,
+        then
            - EITHER  its (MakeModel, ComponentAttributeClassId) must be a key,value pair in
         CACS_BY_MAKE_MODEL (below)
            - XOR its MakeModel is MakeModel.UNKNOWNMAKE__UNKNOWNMODEL
@@ -173,16 +176,24 @@ class ComponentAttributeClassGt(BaseModel):
         model = v["MakeModel"]
         if model == EnumMakeModel.UNKNOWNMAKE__UNKNOWNMODEL:
             if id in CACS_BY_MAKE_MODEL.values():
-                correct_model = next(key for key, value in CACS_BY_MAKE_MODEL.items() if value == id)
-                raise ValueError(f"cac id <{id}> is for MakeModel <{correct_model.value}>, "
-                                 "not UNKNOWNMAKE__UNKNOWNMODEL")
+                correct_model = next(
+                    key for key, value in CACS_BY_MAKE_MODEL.items() if value == id
+                )
+                raise ValueError(
+                    f"cac id <{id}> is for MakeModel <{correct_model.value}>, "
+                    "not UNKNOWNMAKE__UNKNOWNMODEL"
+                )
         else:
             if model not in CACS_BY_MAKE_MODEL.keys():
-                raise ValueError(f"model <{model}> must be in CACS_BY_MAKE_MODEL: \n"
-                                f"{CACS_BY_MAKE_MODEL}")
+                raise ValueError(
+                    f"model <{model}> must be in CACS_BY_MAKE_MODEL: \n"
+                    f"{CACS_BY_MAKE_MODEL}"
+                )
             if id != CACS_BY_MAKE_MODEL[model]:
-                raise ValueError(f"There can only be one cac with MakeModel <{model}> "
-                                f" and it has id <{CACS_BY_MAKE_MODEL[model]}>, NOT {id}")
+                raise ValueError(
+                    f"There can only be one cac with MakeModel <{model}> "
+                    f" and it has id <{CACS_BY_MAKE_MODEL[model]}>, NOT {id}"
+                )
         return v
 
     def as_dict(self) -> Dict[str, Any]:
@@ -243,20 +254,6 @@ class ComponentAttributeClassGt(BaseModel):
 class ComponentAttributeClassGt_Maker:
     type_name = "component.attribute.class.gt"
     version = "001"
-
-    def __init__(
-        self,
-        component_attribute_class_id: str,
-        make_model: EnumMakeModel,
-        display_name: Optional[str],
-        min_poll_period_ms: Optional[int],
-    ):
-        self.tuple = ComponentAttributeClassGt(
-            ComponentAttributeClassId=component_attribute_class_id,
-            MakeModel=make_model,
-            DisplayName=display_name,
-            MinPollPeriodMs=min_poll_period_ms,
-        )
 
     @classmethod
     def tuple_to_type(cls, tuple: ComponentAttributeClassGt) -> bytes:

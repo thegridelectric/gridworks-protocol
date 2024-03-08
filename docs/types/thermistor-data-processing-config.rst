@@ -7,6 +7,7 @@ Python pydantic class corresponding to json type `thermistor.data.processing.con
 
 **ChannelName**:
     - Description: Channel Name. The name of the data channel associated with this thermistor
+    - Format: SpaceheatName
 
 **TerminalBlockIdx**:
     - Description: Terminal Block Index. If the reading Node uses terminal blocks for inputs (e.g. thermistors or current transformers), and it has multiple terminal blocks, then one needs to know which terminal block to read. For example, al Ads111xBasedComponents use this.
@@ -28,6 +29,10 @@ Python pydantic class corresponding to json type `thermistor.data.processing.con
 **Version**:
     - Description: All GridWorks Versioned Types have a fixed version, which is a string of three Hindu-Arabic numerals.
 
+
+
+.. autoclass:: gwproto.types.thermistor_data_processing_config.check_is_spaceheat_name
+    :members:
 
 
 .. autoclass:: gwproto.types.thermistor_data_processing_config.check_is_positive_integer

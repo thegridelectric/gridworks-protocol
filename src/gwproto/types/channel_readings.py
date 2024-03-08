@@ -10,7 +10,9 @@ from pydantic import BaseModel
 from pydantic import Field
 from pydantic import root_validator
 from pydantic import validator
+
 from gwproto.errors import SchemaError
+
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -135,18 +137,6 @@ class ChannelReadings(BaseModel):
 class ChannelReadings_Maker:
     type_name = "channel.readings"
     version = "000"
-
-    def __init__(
-        self,
-        channel_id: str,
-        value_list: List[int],
-        scada_read_time_unix_ms_list: List[int],
-    ):
-        self.tuple = ChannelReadings(
-            ChannelId=channel_id,
-            ValueList=value_list,
-            ScadaReadTimeUnixMsList=scada_read_time_unix_ms_list,
-        )
 
     @classmethod
     def tuple_to_type(cls, tuple: ChannelReadings) -> bytes:

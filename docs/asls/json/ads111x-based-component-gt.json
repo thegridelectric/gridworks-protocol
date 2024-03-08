@@ -68,7 +68,7 @@
     }
   },
   "axioms": {
-    "Axiom": {
+    "Axiom1": {
       "title": "ThermistorConfig, ChannelConfig consistency",
       "description": "list(map(lambda x: x.ReportingConfig, ThermistorConfigList)) is equal to ConfigList"
     },

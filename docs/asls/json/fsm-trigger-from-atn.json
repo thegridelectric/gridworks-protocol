@@ -26,7 +26,7 @@
     },
     "Trigger": {
       "type": "fsm.event.000",
-      "description": "This is meant to be a string that is interpretted as an event that triggers a cascade of other events, transitions and actions in the Spaceheat Nodes of the SCADA. This comes from the language of Finite State Machines",
+      "description": "This remote event will triggers a cascade of local events, transitions and actions in the Spaceheat Nodes of the SCADA. This comes from the language of Finite State Machines",
       "required": true
     },
     "TypeName": {

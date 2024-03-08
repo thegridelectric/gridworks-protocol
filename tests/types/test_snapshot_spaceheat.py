@@ -14,7 +14,8 @@ def test_snapshot_spaceheat_generated() -> None:
         FromGNodeAlias="d1.isone.ct.newhaven.rose.scada",
         FromGNodeInstanceId="0384ef21-648b-4455-b917-58a1172d7fc1",
         SnapshotTimeUnixMs=1709915800472,
-        LatestReadingList=[],)
+        LatestReadingList=[],
+    )
 
     d = {
         "FromGNodeAlias": "d1.isone.ct.newhaven.rose.scada",
@@ -47,7 +48,6 @@ def test_snapshot_spaceheat_generated() -> None:
         from_g_node_instance_id=gtuple.FromGNodeInstanceId,
         snapshot_time_unix_ms=gtuple.SnapshotTimeUnixMs,
         latest_reading_list=gtuple.LatestReadingList,
-        
     ).tuple
     assert t == gtuple
 
@@ -88,15 +88,15 @@ def test_snapshot_spaceheat_generated() -> None:
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2  = dict(d, LatestReadingList="Not a list.")
+    d2 = dict(d, LatestReadingList="Not a list.")
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
-    d2  = dict(d, LatestReadingList=["Not a list of dicts"])
+    d2 = dict(d, LatestReadingList=["Not a list of dicts"])
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
-    d2  = dict(d, LatestReadingList= [{"Failed": "Not a GtSimpleSingleStatus"}])
+    d2 = dict(d, LatestReadingList=[{"Failed": "Not a GtSimpleSingleStatus"}])
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 

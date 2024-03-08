@@ -4,11 +4,11 @@ import json
 import pytest
 from pydantic import ValidationError
 
+from gwproto.enums import TelemetryName
+from gwproto.enums import Unit
 from gwproto.errors import SchemaError
 from gwproto.types import ChannelConfig
 from gwproto.types import ChannelConfig_Maker as Maker
-from gwproto.enums import TelemetryName
-from gwproto.enums import Unit
 
 
 def test_channel_config_generated() -> None:
@@ -19,7 +19,8 @@ def test_channel_config_generated() -> None:
         AsyncCapture=True,
         AsyncCaptureDelta=30,
         Exponent=6,
-        Unit=Unit.W,)
+        Unit=Unit.W,
+    )
 
     d = {
         "ChannelName": "hp-idu-pwr",
@@ -58,7 +59,6 @@ def test_channel_config_generated() -> None:
         async_capture_delta=gtuple.AsyncCaptureDelta,
         exponent=gtuple.Exponent,
         unit=gtuple.Unit,
-        
     ).tuple
     assert t == gtuple
 

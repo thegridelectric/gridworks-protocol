@@ -15,7 +15,8 @@ def test_component_gt_generated() -> None:
         ComponentAttributeClassId="739a6e32-bb9c-43bc-a28d-fb61be665522",
         ConfigList=[],
         DisplayName="Demo eGauge Power Meter",
-        HwUid="000aaa",)
+        HwUid="000aaa",
+    )
 
     d = {
         "ComponentId": "c6ec1ddb-5f51-4902-9807-a5ebc74d1102",
@@ -42,17 +43,6 @@ def test_component_gt_generated() -> None:
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple
-
-    # test Maker init
-    t = Maker(
-        component_id=gtuple.ComponentId,
-        component_attribute_class_id=gtuple.ComponentAttributeClassId,
-        config_list=gtuple.ConfigList,
-        display_name=gtuple.DisplayName,
-        hw_uid=gtuple.HwUid,
-        
-    ).tuple
-    assert t == gtuple
 
     ######################################
     # Dataclass related tests
@@ -104,15 +94,15 @@ def test_component_gt_generated() -> None:
     # Behavior on incorrect types
     ######################################
 
-    d2  = dict(d, ConfigList="Not a list.")
+    d2 = dict(d, ConfigList="Not a list.")
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
-    d2  = dict(d, ConfigList=["Not a list of dicts"])
+    d2 = dict(d, ConfigList=["Not a list of dicts"])
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
-    d2  = dict(d, ConfigList= [{"Failed": "Not a GtSimpleSingleStatus"}])
+    d2 = dict(d, ConfigList=[{"Failed": "Not a GtSimpleSingleStatus"}])
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 

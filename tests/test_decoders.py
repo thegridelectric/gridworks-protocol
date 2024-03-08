@@ -21,9 +21,9 @@ except ImportError:
 from gwproto import Message
 from gwproto import MQTTCodec
 from gwproto.messages import Ack
-from gwproto.messages import GtShCliAtnCmd_Maker
 from gwproto.messages import BatchedReadings_Maker
 from gwproto.messages import BatchedReadingsEvent
+from gwproto.messages import GtShCliAtnCmd_Maker
 from gwproto.messages import MQTTConnectEvent
 from gwproto.messages import MQTTConnectFailedEvent
 from gwproto.messages import MQTTDisconnectEvent
@@ -72,8 +72,12 @@ class MessageCase:
 def child_to_parent_messages() -> list[MessageCase]:
     stored_message_dicts = child_to_parent_payload_dicts()
     status_message_dict = stored_message_dicts["status"]
-    batched_readings = BatchedReadings_Maker.dict_to_tuple(status_message_dict["Payload"])
-    batched_readings_event = BatchedReadingsEvent(Src=CHILD, batched_readings=batched_readings)
+    batched_readings = BatchedReadings_Maker.dict_to_tuple(
+        status_message_dict["Payload"]
+    )
+    batched_readings_event = BatchedReadingsEvent(
+        Src=CHILD, batched_readings=batched_readings
+    )
     unrecognized_status_event = AnyEvent(**batched_readings_event.dict())
     unrecognized_status_event.TypeName += ".foo"
     unrecognized_event = AnyEvent(
@@ -87,9 +91,7 @@ def child_to_parent_messages() -> list[MessageCase]:
     )
     unrecognizeable_bad_event_content = dict(TypeName="gridworks.event.baz")
     snap_message_dict = stored_message_dicts["snapshot"]
-    snapshot = Snapshot_Maker.dict_to_tuple(
-        snap_message_dict["Payload"]
-    )
+    snapshot = Snapshot_Maker.dict_to_tuple(snap_message_dict["Payload"])
     snapshot_event = SnapshotSpaceheatEvent(Src=CHILD, snap=snapshot)
 
     return [
@@ -102,7 +104,9 @@ def child_to_parent_messages() -> list[MessageCase]:
         # status
         # QUESTION: why does this fail when replacing "gt.sh.status.110" with "gt.sh.status"?
         MessageCase(
-            Message(Src=CHILD, MessageType="batched.readings", Payload=batched_readings),
+            Message(
+                Src=CHILD, MessageType="batched.readings", Payload=batched_readings
+            ),
             None,
             batched_readings,
         ),
@@ -112,7 +116,9 @@ def child_to_parent_messages() -> list[MessageCase]:
             batched_readings,
         ),
         MessageCase(
-            Message(Src=CHILD, Payload=batched_readings.as_dict()), None, batched_readings
+            Message(Src=CHILD, Payload=batched_readings.as_dict()),
+            None,
+            batched_readings,
         ),
         # snapshot
         MessageCase(Message(**snap_message_dict), None, snapshot),

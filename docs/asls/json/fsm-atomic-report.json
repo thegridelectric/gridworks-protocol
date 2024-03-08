@@ -9,25 +9,25 @@
     "FromHandle": {
       "type": "string",
       "format": "SpaceheatName",
-      "title": "From Name",
+      "title": "From Handle",
       "description": "The Name (as opposed to the handle) of the Spaceheat Node actor issuing the Finite State Machine report. The actor is meant to realize and be the authority on the FSM in question. Its handle reflects the state it is in.",
       "required": true
     },
-    "IsEvent": {
+    "IsAction": {
       "type": "boolean",
       "description": "An Action refers to some side effect of a state transition that results in a physical change to an underlying TerminalAsset.",
       "required": true
     },
-    "EventType": {
+    "ActionType": {
       "type": "string",
-      "format": "sh.fsm.event.type",
-      "title": "Event Type",
+      "format": "sh.fsm.action.type",
+      "title": "Action Type",
       "description": "The FiniteState Machine Action taken",
       "required": false
     },
-    "Event": {
+    "Action": {
       "type": "string",
-      "description": "Should belong to the associated enum element chosen in ActionType. For example, if ActionType is ChangeStoreFlowDirection, then Action should be either 'Discharge' or 'Charge.'",
+      "description": "Will typically be a number, usually an integer. For example, if ActionType is RelayPinSet, then RelayPinSet.DeEnergized = 0 and RelayPinSet.Energized = 1.",
       "required": false
     },
     "UnixTimeMs": {

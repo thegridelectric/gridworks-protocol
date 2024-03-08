@@ -9,9 +9,11 @@ from typing import Literal
 from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
+
+from gwproto.errors import SchemaError
 from gwproto.types.data_channel_gt import DataChannelGt
 from gwproto.types.data_channel_gt import DataChannelGt_Maker
-from gwproto.errors import SchemaError
+
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -158,24 +160,6 @@ class TaDataChannels_Maker:
     type_name = "ta.data.channels"
     version = "000"
 
-    def __init__(
-        self,
-        terminal_asset_g_node_alias: str,
-        terminal_asset_g_node_id: str,
-        time_unix_s: int,
-        author: str,
-        channel_list: List[DataChannelGt],
-        id: str,
-    ):
-        self.tuple = TaDataChannels(
-            TerminalAssetGNodeAlias=terminal_asset_g_node_alias,
-            TerminalAssetGNodeId=terminal_asset_g_node_id,
-            TimeUnixS=time_unix_s,
-            Author=author,
-            ChannelList=channel_list,
-            Id=id,
-        )
-
     @classmethod
     def tuple_to_type(cls, tuple: TaDataChannels) -> bytes:
         """
@@ -236,7 +220,9 @@ class TaDataChannels_Maker:
         channel_list = []
         for elt in d2["ChannelList"]:
             if not isinstance(elt, dict):
-                raise SchemaError(f"ChannelList <{d2['ChannelList']}> must be a List of DataChannelGt types")
+                raise SchemaError(
+                    f"ChannelList <{d2['ChannelList']}> must be a List of DataChannelGt types"
+                )
             t = DataChannelGt_Maker.dict_to_tuple(elt)
             channel_list.append(t)
         d2["ChannelList"] = channel_list
@@ -297,6 +283,7 @@ def check_is_reasonable_unix_time_s(v: int) -> None:
         ValueError: if v is not ReasonableUnixTimeS format
     """
     import pendulum
+
     if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp > v:  # type: ignore[attr-defined]
         raise ValueError(f"<{v}> must be after Jan 1 2000")
     if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp < v:  # type: ignore[attr-defined]

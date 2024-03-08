@@ -14,7 +14,8 @@ def test_fsm_trigger_from_atn_generated() -> None:
         ToGNodeAlias=,
         FromGNodeAlias=,
         FromGNodeInstanceId=,
-        Trigger=,)
+        Trigger=,
+    )
 
     d = {
         "ToGNodeAlias": ,
@@ -40,16 +41,6 @@ def test_fsm_trigger_from_atn_generated() -> None:
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple
-
-    # test Maker init
-    t = Maker(
-        to_g_node_alias=gtuple.ToGNodeAlias,
-        from_g_node_alias=gtuple.FromGNodeAlias,
-        from_g_node_instance_id=gtuple.FromGNodeInstanceId,
-        trigger=gtuple.Trigger,
-        
-    ).tuple
-    assert t == gtuple
 
     ######################################
     # SchemaError raised if missing a required attribute

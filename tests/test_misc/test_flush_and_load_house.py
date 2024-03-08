@@ -7,22 +7,18 @@ from gwproto.data_classes.components.electric_meter_component import ElectricMet
 from gwproto.data_classes.components.electric_meter_component import (
     ElectricMeterComponent,
 )
-
 from gwproto.data_classes.components.i2c_flow_totalizer_component import (
     I2cFlowTotalizerComponent,
 )
-
 from gwproto.data_classes.components.i2c_multichannel_dt_relay_component import (
     I2cMultichannelDtRelayComponent,
 )
-
 from gwproto.data_classes.components.resistive_heater_component import (
     ResistiveHeaterCac,
 )
 from gwproto.data_classes.components.resistive_heater_component import (
     ResistiveHeaterComponent,
 )
-
 from gwproto.data_classes.hardware_layout import HardwareLayout
 from gwproto.data_classes.sh_node import ShNode
 from gwproto.enums import Role

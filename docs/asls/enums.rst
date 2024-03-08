@@ -22,6 +22,10 @@ change.lg.operating.mode.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/change-lg-operating-mode.json
 
+relay.closed.or.open.000
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. literalinclude:: json/relay-closed-or-open.json
+
 change.heat.pump.control.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/change-heat-pump-control.json
@@ -38,6 +42,10 @@ relay.wiring.config.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/relay-wiring-config.json
 
+relay.pin.set.000
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. literalinclude:: json/relay-pin-set.json
+
 spaceheat.unit.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/spaceheat-unit.json
@@ -45,6 +53,10 @@ spaceheat.unit.000
 sh.actor.class.001
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/sh-actor-class.json
+
+sh.fsm.action.type.000
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. literalinclude:: json/sh-fsm-action-type.json
 
 change.boiler.control.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^

@@ -10,11 +10,15 @@ from typing import Optional
 from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
-from gwproto.data_classes.components.i2c_flow_totalizer_component import I2cFlowTotalizerComponent
-from gwproto.types.channel_config import ChannelConfig
-from gwproto.types.channel_config import ChannelConfig_Maker
+
+from gwproto.data_classes.components.i2c_flow_totalizer_component import (
+    I2cFlowTotalizerComponent,
+)
 from gwproto.enums import MakeModel
 from gwproto.errors import SchemaError
+from gwproto.types.channel_config import ChannelConfig
+from gwproto.types.channel_config import ChannelConfig_Maker
+
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -75,7 +79,9 @@ class I2cFlowTotalizerComponentGt(BaseModel):
         title="Hardware Unique Id",
         default=None,
     )
-    TypeName: Literal["i2c.flow.totalizer.component.gt"] = "i2c.flow.totalizer.component.gt"
+    TypeName: Literal[
+        "i2c.flow.totalizer.component.gt"
+    ] = "i2c.flow.totalizer.component.gt"
     Version: Literal["000"] = "000"
 
     @validator("ComponentId")
@@ -127,7 +133,9 @@ class I2cFlowTotalizerComponentGt(BaseModel):
             config_list.append(elt.as_dict())
         d["ConfigList"] = config_list
         del d["PulseFlowMeterMakeModel"]
-        d["PulseFlowMeterMakeModelGtEnumSymbol"] = MakeModel.value_to_symbol(self.PulseFlowMeterMakeModel)
+        d["PulseFlowMeterMakeModelGtEnumSymbol"] = MakeModel.value_to_symbol(
+            self.PulseFlowMeterMakeModel
+        )
         return d
 
     def as_type(self) -> bytes:
@@ -161,28 +169,6 @@ class I2cFlowTotalizerComponentGt(BaseModel):
 class I2cFlowTotalizerComponentGt_Maker:
     type_name = "i2c.flow.totalizer.component.gt"
     version = "000"
-
-    def __init__(
-        self,
-        component_id: str,
-        component_attribute_class_id: str,
-        i2c_address: int,
-        config_list: List[ChannelConfig],
-        pulse_flow_meter_make_model: MakeModel,
-        conversion_factor: float,
-        display_name: Optional[str],
-        hw_uid: Optional[str],
-    ):
-        self.tuple = I2cFlowTotalizerComponentGt(
-            ComponentId=component_id,
-            ComponentAttributeClassId=component_attribute_class_id,
-            I2cAddress=i2c_address,
-            ConfigList=config_list,
-            PulseFlowMeterMakeModel=pulse_flow_meter_make_model,
-            ConversionFactor=conversion_factor,
-            DisplayName=display_name,
-            HwUid=hw_uid,
-        )
 
     @classmethod
     def tuple_to_type(cls, tuple: I2cFlowTotalizerComponentGt) -> bytes:
@@ -242,12 +228,16 @@ class I2cFlowTotalizerComponentGt_Maker:
         config_list = []
         for elt in d2["ConfigList"]:
             if not isinstance(elt, dict):
-                raise SchemaError(f"ConfigList <{d2['ConfigList']}> must be a List of ChannelConfig types")
+                raise SchemaError(
+                    f"ConfigList <{d2['ConfigList']}> must be a List of ChannelConfig types"
+                )
             t = ChannelConfig_Maker.dict_to_tuple(elt)
             config_list.append(t)
         d2["ConfigList"] = config_list
         if "PulseFlowMeterMakeModelGtEnumSymbol" not in d2.keys():
-            raise SchemaError(f"PulseFlowMeterMakeModelGtEnumSymbol missing from dict <{d2}>")
+            raise SchemaError(
+                f"PulseFlowMeterMakeModelGtEnumSymbol missing from dict <{d2}>"
+            )
         value = MakeModel.symbol_to_value(d2["PulseFlowMeterMakeModelGtEnumSymbol"])
         d2["PulseFlowMeterMakeModel"] = MakeModel(value)
         del d2["PulseFlowMeterMakeModelGtEnumSymbol"]
@@ -283,17 +273,16 @@ class I2cFlowTotalizerComponentGt_Maker:
 
     @classmethod
     def dc_to_tuple(cls, dc: I2cFlowTotalizerComponent) -> I2cFlowTotalizerComponentGt:
-        t = I2cFlowTotalizerComponentGt_Maker(
-            component_id=dc.component_id,
-            component_attribute_class_id=dc.component_attribute_class_id,
-            i2c_address=dc.i2c_address,
-            config_list=dc.config_list,
-            pulse_flow_meter_make_model=dc.pulse_flow_meter_make_model,
-            conversion_factor=dc.conversion_factor,
-            display_name=dc.display_name,
-            hw_uid=dc.hw_uid,
-        ).tuple
-        return t
+        return I2cFlowTotalizerComponentGt(
+            ComponentId=dc.component_id,
+            ComponentAttributeClassId=dc.component_attribute_class_id,
+            I2cAddress=dc.i2c_address,
+            ConfigList=dc.config_list,
+            PulseFlowMeterMakeModel=dc.pulse_flow_meter_make_model,
+            ConversionFactor=dc.conversion_factor,
+            DisplayName=dc.display_name,
+            HwUid=dc.hw_uid,
+        )
 
     @classmethod
     def type_to_dc(cls, t: str) -> I2cFlowTotalizerComponent:

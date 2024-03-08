@@ -6,7 +6,6 @@ from typing import Optional
 from gwproto.data_classes.component_attribute_class import ComponentAttributeClass
 from gwproto.enums import MakeModel
 from gwproto.enums import TelemetryName
-from gwproto.enums import Unit
 
 
 class Ads111xBasedCac(ComponentAttributeClass):
@@ -15,27 +14,22 @@ class Ads111xBasedCac(ComponentAttributeClass):
     def __init__(
         self,
         component_attribute_class_id: str,
-        exponent: int,
-        poll_period_ms: int,
-        temp_unit: Unit,
+        min_poll_period_ms: int,
         make_model: MakeModel,
+        ads_i2c_address_list: List[str],
+        total_terminal_blocks: int,
         telemetry_name_list: List[TelemetryName],
-        max_thermistors: Optional[int],
         display_name: Optional[str] = None,
-        comms_method: Optional[str] = None,
     ):
         super(self.__class__, self).__init__(
             component_attribute_class_id=component_attribute_class_id,
+            make_model=make_model,
             display_name=display_name,
         )
-
-        self.exponent = exponent
-        self.comms_method = comms_method
-        self.poll_period_ms = poll_period_ms
-        self.max_thermistors = max_thermistors
+        self.min_poll_period_ms = min_poll_period_ms
+        self.ads_i2c_address_list = ads_i2c_address_list
+        self.total_terminal_blocks = total_terminal_blocks
         self.telemetry_name_list = telemetry_name_list
-        self.temp_unit = temp_unit
-        self.make_model = make_model
 
         Ads111xBasedCac.by_id[self.component_attribute_class_id] = self
         ComponentAttributeClass.by_id[self.component_attribute_class_id] = self

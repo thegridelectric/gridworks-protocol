@@ -8,9 +8,11 @@ from typing import Literal
 from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
+
 from gwproto.data_classes.data_channel import DataChannel
 from gwproto.enums import TelemetryName as EnumTelemetryName
 from gwproto.errors import SchemaError
+
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -129,7 +131,9 @@ class DataChannelGt(BaseModel):
             if value is not None
         }
         del d["TelemetryName"]
-        d["TelemetryNameGtEnumSymbol"] = EnumTelemetryName.value_to_symbol(self.TelemetryName)
+        d["TelemetryNameGtEnumSymbol"] = EnumTelemetryName.value_to_symbol(
+            self.TelemetryName
+        )
         return d
 
     def as_type(self) -> bytes:
@@ -163,24 +167,6 @@ class DataChannelGt(BaseModel):
 class DataChannelGt_Maker:
     type_name = "data.channel.gt"
     version = "000"
-
-    def __init__(
-        self,
-        name: str,
-        display_name: str,
-        about_node_name: str,
-        captured_by_node_name: str,
-        telemetry_name: EnumTelemetryName,
-        id: str,
-    ):
-        self.tuple = DataChannelGt(
-            Name=name,
-            DisplayName=display_name,
-            AboutNodeName=about_node_name,
-            CapturedByNodeName=captured_by_node_name,
-            TelemetryName=telemetry_name,
-            Id=id,
-        )
 
     @classmethod
     def tuple_to_type(cls, tuple: DataChannelGt) -> bytes:
@@ -270,15 +256,14 @@ class DataChannelGt_Maker:
 
     @classmethod
     def dc_to_tuple(cls, dc: DataChannel) -> DataChannelGt:
-        t = DataChannelGt_Maker(
-            name=dc.name,
-            display_name=dc.display_name,
-            about_node_name=dc.about_node_name,
-            captured_by_node_name=dc.captured_by_node_name,
-            telemetry_name=dc.telemetry_name,
-            id=dc.id,
-        ).tuple
-        return t
+        return DataChannelGt(
+            Name=dc.name,
+            DisplayName=dc.display_name,
+            AboutNodeName=dc.about_node_name,
+            CapturedByNodeName=dc.captured_by_node_name,
+            TelemetryName=dc.telemetry_name,
+            Id=dc.id,
+        )
 
     @classmethod
     def type_to_dc(cls, t: str) -> DataChannel:
@@ -307,6 +292,7 @@ def check_is_spaceheat_name(v: str) -> None:
         ValueError: If the provided string is not in SpaceheatName format.
     """
     from typing import List
+
     try:
         x: List[str] = v.split(".")
     except:
@@ -319,8 +305,10 @@ def check_is_spaceheat_name(v: str) -> None:
         )
     for word in x:
         for char in word:
-            if not (char.isalnum() or char == '-'):
-                raise ValueError(f"words of <{v}> split by by '.' must be alphanumeric or hyphen.")
+            if not (char.isalnum() or char == "-"):
+                raise ValueError(
+                    f"words of <{v}> split by by '.' must be alphanumeric or hyphen."
+                )
     if not v.islower():
         raise ValueError(f"<{v}> must be lowercase.")
 

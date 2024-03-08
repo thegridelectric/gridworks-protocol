@@ -10,11 +10,14 @@ from typing import Optional
 from pydantic import BaseModel
 from pydantic import Extra
 from pydantic import Field
+from pydantic import root_validator
 from pydantic import validator
+
 from gwproto.data_classes.cacs.ads111x_based_cac import Ads111xBasedCac
 from gwproto.enums import MakeModel as EnumMakeModel
 from gwproto.enums import TelemetryName
 from gwproto.errors import SchemaError
+
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -61,15 +64,14 @@ class Ads111xBasedCacGt(BaseModel):
             "with a device. Should be able to use this information to buy or build a device."
         ),
     )
-    AdsI2cAddressList: Optional[List[str]] = Field(
+    AdsI2cAddressList: List[str] = Field(
         title="Ads I2c Address List",
         description=(
             "The list of I2C Addresses for the Texas Instrument Ads111X chips comprising this "
             "device."
         ),
-        default=None,
     )
-    TotalTerminalBlocks: Optional[int] = Field(
+    TotalTerminalBlocks: int = Field(
         title="Total Thermistor Channels",
         description=(
             "There are at most 4 thermisters per Ads111X chip. The channels always start with "
@@ -78,7 +80,6 @@ class Ads111xBasedCacGt(BaseModel):
             "In 3 on the final chip may be reserved for calculating a reference open voltage. "
             "The total number of channels may also be constrained by the screw terminal situation."
         ),
-        default=None,
     )
     TelemetryNameList: List[TelemetryName] = Field(
         title="Telemetry Name List",
@@ -118,9 +119,7 @@ class Ads111xBasedCacGt(BaseModel):
         return v
 
     @validator("AdsI2cAddressList")
-    def _check_ads_i2c_address_list(cls, v: Optional[List[str]]) -> Optional[List[str]]:
-        if v is None:
-            return v
+    def _check_ads_i2c_address_list(cls, v: List[str]) -> List[str]:
         for elt in v:
             try:
                 check_is_ads1115_i2c_address(elt)
@@ -131,15 +130,22 @@ class Ads111xBasedCacGt(BaseModel):
         return v
 
     @validator("TotalTerminalBlocks")
-    def _check_total_terminal_blocks(cls, v: Optional[int]) -> Optional[int]:
-        if v is None:
-            return v
+    def _check_total_terminal_blocks(cls, v: int) -> int:
         try:
             check_is_positive_integer(v)
         except ValueError as e:
             raise ValueError(
                 f"TotalTerminalBlocks failed PositiveInteger format validation: {e}"
             )
+        return v
+
+    @root_validator
+    def check_axiom_1(cls, v: dict) -> dict:
+        """
+        Axiom 1: TerminalBlock Ads Chip consistency.
+        TotalTerminalBlocks should be greater than 4 * (len(AdsI2cAddressList) - 1 ) and less than or equal to 4*len(AdsI2cAddressList)
+        """
+        # TODO: Implement check for axiom 1"
         return v
 
     def as_dict(self) -> Dict[str, Any]:
@@ -206,26 +212,6 @@ class Ads111xBasedCacGt_Maker:
     type_name = "ads111x.based.cac.gt"
     version = "000"
 
-    def __init__(
-        self,
-        component_attribute_class_id: str,
-        min_poll_period_ms: int,
-        make_model: EnumMakeModel,
-        ads_i2c_address_list: Optional[List[str]],
-        total_terminal_blocks: Optional[int],
-        telemetry_name_list: List[TelemetryName],
-        display_name: Optional[str],
-    ):
-        self.tuple = Ads111xBasedCacGt(
-            ComponentAttributeClassId=component_attribute_class_id,
-            MinPollPeriodMs=min_poll_period_ms,
-            MakeModel=make_model,
-            AdsI2cAddressList=ads_i2c_address_list,
-            TotalTerminalBlocks=total_terminal_blocks,
-            TelemetryNameList=telemetry_name_list,
-            DisplayName=display_name,
-        )
-
     @classmethod
     def tuple_to_type(cls, tuple: Ads111xBasedCacGt) -> bytes:
         """
@@ -280,6 +266,10 @@ class Ads111xBasedCacGt_Maker:
         value = EnumMakeModel.symbol_to_value(d2["MakeModelGtEnumSymbol"])
         d2["MakeModel"] = EnumMakeModel(value)
         del d2["MakeModelGtEnumSymbol"]
+        if "AdsI2cAddressList" not in d2.keys():
+            raise SchemaError(f"dict missing AdsI2cAddressList: <{d2}>")
+        if "TotalTerminalBlocks" not in d2.keys():
+            raise SchemaError(f"dict missing TotalTerminalBlocks: <{d2}>")
         if "TelemetryNameList" not in d2.keys():
             raise SchemaError(f"dict <{d2}> missing TelemetryNameList")
         if not isinstance(d2["TelemetryNameList"], List):
@@ -318,16 +308,15 @@ class Ads111xBasedCacGt_Maker:
 
     @classmethod
     def dc_to_tuple(cls, dc: Ads111xBasedCac) -> Ads111xBasedCacGt:
-        t = Ads111xBasedCacGt_Maker(
-            component_attribute_class_id=dc.component_attribute_class_id,
-            min_poll_period_ms=dc.min_poll_period_ms,
-            make_model=dc.make_model,
-            ads_i2c_address_list=dc.ads_i2c_address_list,
-            total_terminal_blocks=dc.total_terminal_blocks,
-            telemetry_name_list=dc.telemetry_name_list,
-            display_name=dc.display_name,
-        ).tuple
-        return t
+        return Ads111xBasedCacGt(
+            ComponentAttributeClassId=dc.component_attribute_class_id,
+            MinPollPeriodMs=dc.min_poll_period_ms,
+            MakeModel=dc.make_model,
+            AdsI2cAddressList=dc.ads_i2c_address_list,
+            TotalTerminalBlocks=dc.total_terminal_blocks,
+            TelemetryNameList=dc.telemetry_name_list,
+            DisplayName=dc.display_name,
+        )
 
     @classmethod
     def type_to_dc(cls, t: str) -> Ads111xBasedCac:

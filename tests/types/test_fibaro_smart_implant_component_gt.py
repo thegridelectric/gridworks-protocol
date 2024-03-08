@@ -5,7 +5,9 @@ import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
-from gwproto.types.fibaro_smart_implant_component_gt import FibaroSmartImplantComponentGt_Maker as Maker
+from gwproto.types.fibaro_smart_implant_component_gt import (
+    FibaroSmartImplantComponentGt_Maker as Maker,
+)
 
 
 def test_fibaro_smart_implant_component_gt_generated() -> None:

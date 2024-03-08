@@ -6,7 +6,9 @@
   "description": ". How does polled raw data get turned into a captured temperature reading? This config type provides that information.",
   "properties": {
     "ChannelName": {
-      "type": "channel.config.000",
+      "type": "string",
+      "format": "SpaceheatName",
+      "title": "Channel Name",
       "description": "The name of the data channel associated with this thermistor",
       "required": true
     },
@@ -49,6 +51,11 @@
     }
   },
   "formats": {
+    "SpaceheatName": {
+      "type": "string",
+      "description": "Lowercase words separated by periods, where the word characters can be alphanumeric or a hyphen and the first word starts with an alphabet character.",
+      "example": "store-hot-pipe"
+    },
     "PositiveInteger": {
       "type": "string",
       "description": "Must be positive when interpreted as an integer. Interpretation as an integer follows the pydantic rules for this - which will round down rational numbers. So 1.7 will be interpreted as 1 and is also fine, while 0.5 is interpreted as 0 and will raise an exception.",

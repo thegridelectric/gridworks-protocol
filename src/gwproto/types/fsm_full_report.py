@@ -10,9 +10,11 @@ from pydantic import BaseModel
 from pydantic import Extra
 from pydantic import Field
 from pydantic import validator
+
+from gwproto.errors import SchemaError
 from gwproto.types.fsm_event import FsmEvent
 from gwproto.types.fsm_event import FsmEvent_Maker
-from gwproto.errors import SchemaError
+
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -136,18 +138,6 @@ class FsmFullReport_Maker:
     type_name = "fsm.full.report"
     version = "000"
 
-    def __init__(
-        self,
-        from_name: str,
-        trigger_id: str,
-        atomic_list: List[FsmEvent],
-    ):
-        self.tuple = FsmFullReport(
-            FromName=from_name,
-            TriggerId=trigger_id,
-            AtomicList=atomic_list,
-        )
-
     @classmethod
     def tuple_to_type(cls, tuple: FsmFullReport) -> bytes:
         """
@@ -204,7 +194,9 @@ class FsmFullReport_Maker:
         atomic_list = []
         for elt in d2["AtomicList"]:
             if not isinstance(elt, dict):
-                raise SchemaError(f"AtomicList <{d2['AtomicList']}> must be a List of FsmEvent types")
+                raise SchemaError(
+                    f"AtomicList <{d2['AtomicList']}> must be a List of FsmEvent types"
+                )
             t = FsmEvent_Maker.dict_to_tuple(elt)
             atomic_list.append(t)
         d2["AtomicList"] = atomic_list
@@ -234,6 +226,7 @@ def check_is_spaceheat_name(v: str) -> None:
         ValueError: If the provided string is not in SpaceheatName format.
     """
     from typing import List
+
     try:
         x: List[str] = v.split(".")
     except:
@@ -246,8 +239,10 @@ def check_is_spaceheat_name(v: str) -> None:
         )
     for word in x:
         for char in word:
-            if not (char.isalnum() or char == '-'):
-                raise ValueError(f"words of <{v}> split by by '.' must be alphanumeric or hyphen.")
+            if not (char.isalnum() or char == "-"):
+                raise ValueError(
+                    f"words of <{v}> split by by '.' must be alphanumeric or hyphen."
+                )
     if not v.islower():
         raise ValueError(f"<{v}> must be lowercase.")
 

@@ -8,9 +8,11 @@ from typing import Literal
 from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
+
+from gwproto.errors import SchemaError
 from gwproto.types.egauge_register_config import EgaugeRegisterConfig
 from gwproto.types.egauge_register_config import EgaugeRegisterConfig_Maker
-from gwproto.errors import SchemaError
+
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -118,16 +120,6 @@ class EgaugeIo_Maker:
     type_name = "egauge.io"
     version = "001"
 
-    def __init__(
-        self,
-        channel_name: str,
-        input_config: EgaugeRegisterConfig,
-    ):
-        self.tuple = EgaugeIo(
-            ChannelName=channel_name,
-            InputConfig=input_config,
-        )
-
     @classmethod
     def tuple_to_type(cls, tuple: EgaugeIo) -> bytes:
         """
@@ -178,7 +170,9 @@ class EgaugeIo_Maker:
         if "InputConfig" not in d2.keys():
             raise SchemaError(f"dict missing InputConfig: <{d2}>")
         if not isinstance(d2["InputConfig"], dict):
-            raise SchemaError(f"InputConfig <{d2['InputConfig']}> must be a EgaugeRegisterConfig!")
+            raise SchemaError(
+                f"InputConfig <{d2['InputConfig']}> must be a EgaugeRegisterConfig!"
+            )
         input_config = EgaugeRegisterConfig_Maker.dict_to_tuple(d2["InputConfig"])
         d2["InputConfig"] = input_config
         if "TypeName" not in d2.keys():
@@ -207,6 +201,7 @@ def check_is_spaceheat_name(v: str) -> None:
         ValueError: If the provided string is not in SpaceheatName format.
     """
     from typing import List
+
     try:
         x: List[str] = v.split(".")
     except:
@@ -219,7 +214,9 @@ def check_is_spaceheat_name(v: str) -> None:
         )
     for word in x:
         for char in word:
-            if not (char.isalnum() or char == '-'):
-                raise ValueError(f"words of <{v}> split by by '.' must be alphanumeric or hyphen.")
+            if not (char.isalnum() or char == "-"):
+                raise ValueError(
+                    f"words of <{v}> split by by '.' must be alphanumeric or hyphen."
+                )
     if not v.islower():
         raise ValueError(f"<{v}> must be lowercase.")

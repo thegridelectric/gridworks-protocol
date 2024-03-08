@@ -9,9 +9,11 @@ from pydantic import BaseModel
 from pydantic import Extra
 from pydantic import Field
 from pydantic import validator
+
+from gwproto.errors import SchemaError
 from gwproto.types.fsm_event import FsmEvent
 from gwproto.types.fsm_event import FsmEvent_Maker
-from gwproto.errors import SchemaError
+
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -41,9 +43,9 @@ class FsmTriggerFromAtn(BaseModel):
     Trigger: FsmEvent = Field(
         title="Trigger",
         description=(
-            "This is meant to be a string that is interpretted as an event that triggers a cascade "
-            "of other events, transitions and actions in the Spaceheat Nodes of the SCADA. This "
-            "comes from the language of Finite State Machines"
+            "This remote event will triggers a cascade of local events, transitions and actions "
+            "in the Spaceheat Nodes of the SCADA. This comes from the language of Finite State "
+            "Machines"
             "[More info](https://gridworks-protocol.readthedocs.io/en/latest/finite-state-machines.html)"
         ),
     )
@@ -84,9 +86,9 @@ class FsmTriggerFromAtn(BaseModel):
     @validator("Trigger")
     def check_trigger(cls, v: FsmEvent) -> FsmEvent:
         """
-        Axiom 1: FromHandle must be 'a' (for AtomicTNode).
-        The triggering event is coming from the AtomicTNode, which always has the handle of "a"
-    as a SpaceheatNode in the SCADA's hierarchical finite state machine.
+            Axiom 1: FromHandle must be 'a' (for AtomicTNode).
+            The triggering event is coming from the AtomicTNode, which always has the handle of "a"
+        as a SpaceheatNode in the SCADA's hierarchical finite state machine.
         """
         ...
         # TODO: Implement Axiom(s)
@@ -148,20 +150,6 @@ class FsmTriggerFromAtn(BaseModel):
 class FsmTriggerFromAtn_Maker:
     type_name = "fsm.trigger.from.atn"
     version = "000"
-
-    def __init__(
-        self,
-        to_g_node_alias: str,
-        from_g_node_alias: str,
-        from_g_node_instance_id: str,
-        trigger: FsmEvent,
-    ):
-        self.tuple = FsmTriggerFromAtn(
-            ToGNodeAlias=to_g_node_alias,
-            FromGNodeAlias=from_g_node_alias,
-            FromGNodeInstanceId=from_g_node_instance_id,
-            Trigger=trigger,
-        )
 
     @classmethod
     def tuple_to_type(cls, tuple: FsmTriggerFromAtn) -> bytes:

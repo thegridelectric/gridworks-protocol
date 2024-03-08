@@ -4,26 +4,28 @@ import json
 import pytest
 from pydantic import ValidationError
 
+from gwproto.enums import MakeModel
+from gwproto.enums import ThermistorDataMethod
 from gwproto.errors import SchemaError
 from gwproto.types import ThermistorDataProcessingConfig
 from gwproto.types import ThermistorDataProcessingConfig_Maker as Maker
-from gwproto.enums import ThermistorDataMethod
 
 
 def test_thermistor_data_processing_config_generated() -> None:
     t = ThermistorDataProcessingConfig(
-        ChannelName='hp-ewt',
+        ChannelName="hp-ewt",
         TerminalBlockIdx=4,
-        ThermistorMakeModel='46f21cd5',
-        DataProcessingMethod='00000000',
-        DataProcessingDescription='using a beta of SPLAT.',)
+        ThermistorMakeModel="652abfd6",
+        DataProcessingMethod="00000000",
+        DataProcessingDescription="using a beta of 3977.",
+    )
 
     d = {
-        "ChannelName": 'hp-ewt',
+        "ChannelName": "hp-ewt",
         "TerminalBlockIdx": 4,
-        "ThermistorMakeModelGtEnumSymbol": '46f21cd5',
-        "DataProcessingMethodGtEnumSymbol": '00000000',
-        "DataProcessingDescription": 'using a beta of SPLAT.',
+        "ThermistorMakeModelGtEnumSymbol": "652abfd6",
+        "DataProcessingMethodGtEnumSymbol": "00000000",
+        "DataProcessingDescription": "using a beta of 3977.",
         "TypeName": "thermistor.data.processing.config",
         "Version": "000",
     }
@@ -43,17 +45,6 @@ def test_thermistor_data_processing_config_generated() -> None:
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple
-
-    # test Maker init
-    t = Maker(
-        channel_name=gtuple.ChannelName,
-        terminal_block_idx=gtuple.TerminalBlockIdx,
-        thermistor_make_model=gtuple.ThermistorMakeModel,
-        data_processing_method=gtuple.DataProcessingMethod,
-        data_processing_description=gtuple.DataProcessingDescription,
-        
-    ).tuple
-    assert t == gtuple
 
     ######################################
     # SchemaError raised if missing a required attribute
@@ -123,6 +114,10 @@ def test_thermistor_data_processing_config_generated() -> None:
     ######################################
     # SchemaError raised if primitive attributes do not have appropriate property_format
     ######################################
+
+    d2 = dict(d, ChannelName="A.hot-stuff")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
 
     d2 = dict(d, TerminalBlockIdx=0)
     with pytest.raises(ValidationError):

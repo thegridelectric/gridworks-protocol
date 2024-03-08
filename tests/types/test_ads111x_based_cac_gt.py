@@ -4,31 +4,35 @@ import json
 import pytest
 from pydantic import ValidationError
 
+from gwproto.enums import MakeModel
+from gwproto.enums import TelemetryName
 from gwproto.errors import SchemaError
 from gwproto.types import Ads111xBasedCacGt
 from gwproto.types import Ads111xBasedCacGt_Maker as Maker
-from gwproto.enums import TelemetryName
-from gwproto.enums import MakeModel
 
 
 def test_ads111x_based_cac_gt_generated() -> None:
     t = Ads111xBasedCacGt(
-        ComponentAttributeClassId="8a1a1538-ed2d-4829-9c03-f9be1c9f9c83",
-        MinPollPeriodMs=880,
-        MakeModel="09185ae3",
-        AdsI2cAddressList=12,
+        ComponentAttributeClassId="432073b8-4d2b-4e36-9229-73893f33f846",
+        MinPollPeriodMs=200,
+        MakeModel=MakeModel.GRIDWORKS__MULTITEMP1,
+        AdsI2cAddressList=["0x4b", "0x48", "0x49"],
         TotalTerminalBlocks=12,
-        TelemetryNameList=["22641963"],
-        DisplayName="Simulated GridWorks high precision water temp sensor",)
+        TelemetryNameList=[
+            TelemetryName.WaterTempCTimes1000,
+            TelemetryName.AirTempCTimes1000,
+        ],
+        DisplayName="Gridworks 12-channel MultiTemp Ads Sensor",
+    )
 
     d = {
-        "ComponentAttributeClassId": "8a1a1538-ed2d-4829-9c03-f9be1c9f9c83",
-        "MinPollPeriodMs": 880,
-        "MakeModelGtEnumSymbol": "09185ae3",
-        "AdsI2cAddressList": 12,
+        "ComponentAttributeClassId": "432073b8-4d2b-4e36-9229-73893f33f846",
+        "MinPollPeriodMs": 200,
+        "MakeModelGtEnumSymbol": "bb31d136",
+        "AdsI2cAddressList": ["0x4b", "0x48", "0x49"],
         "TotalTerminalBlocks": 12,
-        "TelemetryNameList": ["22641963"],
-        "DisplayName": "Simulated GridWorks high precision water temp sensor",
+        "TelemetryNameList": ["c89d0ba1", "0f627faa"],
+        "DisplayName": "Gridworks 12-channel MultiTemp Ads Sensor",
         "TypeName": "ads111x.based.cac.gt",
         "Version": "000",
     }
@@ -48,19 +52,6 @@ def test_ads111x_based_cac_gt_generated() -> None:
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple
-
-    # test Maker init
-    t = Maker(
-        component_attribute_class_id=gtuple.ComponentAttributeClassId,
-        min_poll_period_ms=gtuple.MinPollPeriodMs,
-        make_model=gtuple.MakeModel,
-        ads_i2c_address_list=gtuple.AdsI2cAddressList,
-        total_terminal_blocks=gtuple.TotalTerminalBlocks,
-        telemetry_name_list=gtuple.TelemetryNameList,
-        display_name=gtuple.DisplayName,
-        
-    ).tuple
-    assert t == gtuple
 
     ######################################
     # Dataclass related tests
@@ -95,6 +86,16 @@ def test_ads111x_based_cac_gt_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
+    del d2["AdsI2cAddressList"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    del d2["TotalTerminalBlocks"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
     del d2["TelemetryNameList"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
@@ -102,16 +103,6 @@ def test_ads111x_based_cac_gt_generated() -> None:
     ######################################
     # Optional attributes can be removed from type
     ######################################
-
-    d2 = dict(d)
-    if "AdsI2cAddressList" in d2.keys():
-        del d2["AdsI2cAddressList"]
-    Maker.dict_to_tuple(d2)
-
-    d2 = dict(d)
-    if "TotalTerminalBlocks" in d2.keys():
-        del d2["TotalTerminalBlocks"]
-    Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
     if "DisplayName" in d2.keys():
@@ -122,7 +113,7 @@ def test_ads111x_based_cac_gt_generated() -> None:
     # Behavior on incorrect types
     ######################################
 
-    d2 = dict(d, MinPollPeriodMs="880.1")
+    d2 = dict(d, MinPollPeriodMs="200.1")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 

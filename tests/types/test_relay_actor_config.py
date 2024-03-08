@@ -12,12 +12,13 @@ from gwproto.types import RelayActorConfig_Maker as Maker
 def test_relay_actor_config_generated() -> None:
     t = RelayActorConfig(
         RelayIdx=18,
-        ActorName=h.zone1-stat.ctrl-relay,
-        WiringConfig="63f5da41",)
+        ActorName=h.zone1 - stat.ctrl - relay,
+        WiringConfig="63f5da41",
+    )
 
     d = {
         "RelayIdx": 18,
-        "ActorName": h.zone1-stat.ctrl-relay,
+        "ActorName": h.zone1 - stat.ctrl - relay,
         "WiringConfigGtEnumSymbol": "63f5da41",
         "TypeName": "relay.actor.config",
         "Version": "000",
@@ -38,15 +39,6 @@ def test_relay_actor_config_generated() -> None:
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple
-
-    # test Maker init
-    t = Maker(
-        relay_idx=gtuple.RelayIdx,
-        actor_name=gtuple.ActorName,
-        wiring_config=gtuple.WiringConfig,
-        
-    ).tuple
-    assert t == gtuple
 
     ######################################
     # SchemaError raised if missing a required attribute

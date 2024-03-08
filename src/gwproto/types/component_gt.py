@@ -11,10 +11,12 @@ from pydantic import BaseModel
 from pydantic import Extra
 from pydantic import Field
 from pydantic import validator
+
 from gwproto.data_classes.component import Component
+from gwproto.errors import SchemaError
 from gwproto.types.channel_config import ChannelConfig
 from gwproto.types.channel_config import ChannelConfig_Maker
-from gwproto.errors import SchemaError
+
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -162,22 +164,6 @@ class ComponentGt_Maker:
     type_name = "component.gt"
     version = "001"
 
-    def __init__(
-        self,
-        component_id: str,
-        component_attribute_class_id: str,
-        config_list: List[ChannelConfig],
-        display_name: Optional[str],
-        hw_uid: Optional[str],
-    ):
-        self.tuple = ComponentGt(
-            ComponentId=component_id,
-            ComponentAttributeClassId=component_attribute_class_id,
-            ConfigList=config_list,
-            DisplayName=display_name,
-            HwUid=hw_uid,
-        )
-
     @classmethod
     def tuple_to_type(cls, tuple: ComponentGt) -> bytes:
         """
@@ -234,7 +220,9 @@ class ComponentGt_Maker:
         config_list = []
         for elt in d2["ConfigList"]:
             if not isinstance(elt, dict):
-                raise SchemaError(f"ConfigList <{d2['ConfigList']}> must be a List of ChannelConfig types")
+                raise SchemaError(
+                    f"ConfigList <{d2['ConfigList']}> must be a List of ChannelConfig types"
+                )
             t = ChannelConfig_Maker.dict_to_tuple(elt)
             config_list.append(t)
         d2["ConfigList"] = config_list
@@ -265,14 +253,13 @@ class ComponentGt_Maker:
 
     @classmethod
     def dc_to_tuple(cls, dc: Component) -> ComponentGt:
-        t = ComponentGt_Maker(
-            component_id=dc.component_id,
-            component_attribute_class_id=dc.component_attribute_class_id,
-            config_list=dc.config_list,
-            display_name=dc.display_name,
-            hw_uid=dc.hw_uid,
-        ).tuple
-        return t
+        return ComponentGt(
+            ComponentId=dc.component_id,
+            ComponentAttributeClassId=dc.component_attribute_class_id,
+            ConfigList=dc.config_list,
+            DisplayName=dc.display_name,
+            HwUid=dc.hw_uid,
+        )
 
     @classmethod
     def type_to_dc(cls, t: str) -> Component:

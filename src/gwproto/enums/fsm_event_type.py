@@ -4,36 +4,46 @@ from typing import List
 from fastapi_utils.enums import StrEnum
 
 
-class FsmActionType(StrEnum):
+class FsmEventType(StrEnum):
     """
-    A list of the finite state machine Actions that a spaceheat node might take. An Action,
-    in this context, is a side-effect of a state machine transition that impacts the real world
-    (i.e., a relay is actuated).
+    The name of a set of events for a particular Spaceheat finite state machine.
 
-    Enum sh.fsm.action.type version 000 in the GridWorks Type registry.
+    Enum sh.fsm.event.type version 000 in the GridWorks Type registry.
 
     Used by used by multiple Application Shared Languages (ASLs), including but not limited to
     gwproto. For more information:
       - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
-      - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shfsmactiontype)
+      - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shfsmeventtype)
       - [More Info](https://gridworks-protocol.readthedocs.io/en/latest/finite-state-machines.html)
 
     Values (with symbols in parens):
-      - RelayPinSet (00000000)
-      - Analog010VSignalSet (c487c5f8)
-      - Analog420maSignalSet (11ad13a5)
+      - ChangeRelayState (00000000)
+      - SetAnalog010V (bbef899f)
+      - SetAnalog420mA (aa4b0c96)
+      - ChangeValveState (c234ee7a)
+      - ChangeStoreFlowDirection (1efc9909)
+      - ChangeHeatcallSource (c5717e64)
+      - ChangeBoilerControl (0066a412)
+      - ChangeHeatPumpControl (50ea0661)
+      - ChangeLgOperatingMode (89a98375)
     """
 
-    RelayPinSet = auto()
-    Analog010VSignalSet = auto()
-    Analog420maSignalSet = auto()
+    ChangeRelayState = auto()
+    SetAnalog010V = auto()
+    SetAnalog420mA = auto()
+    ChangeValveState = auto()
+    ChangeStoreFlowDirection = auto()
+    ChangeHeatcallSource = auto()
+    ChangeBoilerControl = auto()
+    ChangeHeatPumpControl = auto()
+    ChangeLgOperatingMode = auto()
 
     @classmethod
-    def default(cls) -> "FsmActionType":
+    def default(cls) -> "FsmEventType":
         """
-        Returns default value (in this case RelayPinSet)
+        Returns default value (in this case ChangeRelayState)
         """
-        return cls.RelayPinSet
+        return cls.ChangeRelayState
 
     @classmethod
     def values(cls) -> List[str]:
@@ -68,9 +78,9 @@ class FsmActionType(StrEnum):
     @classmethod
     def enum_name(cls) -> str:
         """
-        The name in the GridWorks Type Registry (sh.fsm.action.type)
+        The name in the GridWorks Type Registry (sh.fsm.event.type)
         """
-        return "sh.fsm.action.type"
+        return "sh.fsm.event.type"
 
     @classmethod
     def enum_version(cls) -> str:
@@ -90,7 +100,7 @@ class FsmActionType(StrEnum):
         Returns:
             str: The encoded value associated to that symbol. If the symbol is not
             recognized - which could happen if the actor making the symbol is using
-            a later version of this enum, returns the default value of "RelayPinSet".
+            a later version of this enum, returns the default value of "ChangeRelayState".
         """
         if symbol not in symbol_to_value.keys():
             return cls.default().value
@@ -99,7 +109,7 @@ class FsmActionType(StrEnum):
     @classmethod
     def value_to_symbol(cls, value: str) -> str:
         """
-        Provides the encoding symbol for a FsmActionType enum to send in seriliazed messages.
+        Provides the encoding symbol for a FsmEventType enum to send in seriliazed messages.
 
         Args:
             symbol (str): The candidate value.
@@ -121,21 +131,39 @@ class FsmActionType(StrEnum):
         """
         return [
             "00000000",
-            "c487c5f8",
-            "11ad13a5",
+            "bbef899f",
+            "aa4b0c96",
+            "c234ee7a",
+            "1efc9909",
+            "c5717e64",
+            "0066a412",
+            "50ea0661",
+            "89a98375",
         ]
 
 
 symbol_to_value = {
-    "00000000": "RelayPinSet",
-    "c487c5f8": "Analog010VSignalSet",
-    "11ad13a5": "Analog420maSignalSet",
+    "00000000": "ChangeRelayState",
+    "bbef899f": "SetAnalog010V",
+    "aa4b0c96": "SetAnalog420mA",
+    "c234ee7a": "ChangeValveState",
+    "1efc9909": "ChangeStoreFlowDirection",
+    "c5717e64": "ChangeHeatcallSource",
+    "0066a412": "ChangeBoilerControl",
+    "50ea0661": "ChangeHeatPumpControl",
+    "89a98375": "ChangeLgOperatingMode",
 }
 
 value_to_symbol = {value: key for key, value in symbol_to_value.items()}
 
 value_to_version = {
-    "RelayPinSet": "000",
-    "Analog010VSignalSet": "000",
-    "Analog420maSignalSet": "000",
+    "ChangeRelayState": "000",
+    "SetAnalog010V": "000",
+    "SetAnalog420mA": "000",
+    "ChangeValveState": "000",
+    "ChangeStoreFlowDirection": "000",
+    "ChangeHeatcallSource": "000",
+    "ChangeBoilerControl": "000",
+    "ChangeHeatPumpControl": "000",
+    "ChangeLgOperatingMode": "000",
 }

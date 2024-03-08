@@ -11,13 +11,14 @@ from gwproto.types import FsmFullReport_Maker as Maker
 
 def test_fsm_full_report_generated() -> None:
     t = FsmFullReport(
-        FromName=,
-        TriggerId=,
-        AtomicList=,)
+        FromName="admin",
+        TriggerId="12da4269-63c3-44f4-ab65-3ee5e29329fe",
+        AtomicList=,
+    )
 
     d = {
-        "FromName": ,
-        "TriggerId": ,
+        "FromName": "admin",
+        "TriggerId": "12da4269-63c3-44f4-ab65-3ee5e29329fe",
         "AtomicList": ,
         "TypeName": "fsm.full.report",
         "Version": "000",
@@ -38,15 +39,6 @@ def test_fsm_full_report_generated() -> None:
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple
-
-    # test Maker init
-    t = Maker(
-        from_name=gtuple.FromName,
-        trigger_id=gtuple.TriggerId,
-        atomic_list=gtuple.AtomicList,
-        
-    ).tuple
-    assert t == gtuple
 
     ######################################
     # SchemaError raised if missing a required attribute

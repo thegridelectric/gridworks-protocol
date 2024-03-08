@@ -1,8 +1,10 @@
 """Tests component.attribute.class.gt type, version 001"""
 import json
 import uuid
+
 import pytest
 from pydantic import ValidationError
+
 from gwproto.enums import MakeModel
 from gwproto.errors import SchemaError
 from gwproto.types import ComponentAttributeClassGt_Maker as Maker
@@ -37,7 +39,6 @@ def test_component_attribute_class_gt_generated() -> None:
         make_model=gtuple.MakeModel,
         display_name=gtuple.DisplayName,
         min_poll_period_ms=gtuple.MinPollPeriodMs,
-        
     ).tuple
     assert t == gtuple
 
@@ -86,21 +87,24 @@ def test_component_attribute_class_gt_generated() -> None:
     # Behavior on incorrect types
     ######################################
 
-
     d2 = dict(d, MakeModelGtEnumSymbol="unknown_symbol")
-    with pytest.raises(ValidationError): # This Id belongs to the known flow meter
+    with pytest.raises(ValidationError):  # This Id belongs to the known flow meter
         Maker.dict_to_tuple(d2)
-    
-    d2 = dict(d, MakeModelGtEnumSymbol="unknown_symbol", ComponentAttributeClassId=str(uuid.uuid4()))
+
+    d2 = dict(
+        d,
+        MakeModelGtEnumSymbol="unknown_symbol",
+        ComponentAttributeClassId=str(uuid.uuid4()),
+    )
     # This works
     Maker.dict_to_tuple(d2).MakeModel == MakeModel.UNKNOWNMAKE__UNKNOWNMODEL
 
     d2 = dict(d, MinPollPeriodMs="1000.1")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
-    
+
     d2 = dict(d, ComponentAttributeClassId=str(uuid.uuid4()))
-    with pytest.raises(ValidationError): # Incorrect id for this flow meter
+    with pytest.raises(ValidationError):  # Incorrect id for this flow meter
         Maker.dict_to_tuple(d2)
 
     ######################################

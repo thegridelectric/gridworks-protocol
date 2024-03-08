@@ -35,14 +35,14 @@
       "format": "Ads1115I2cAddress",
       "title": "Ads I2c Address List",
       "description": "The list of I2C Addresses for the Texas Instrument Ads111X chips comprising this device.",
-      "required": false
+      "required": true
     },
     "TotalTerminalBlocks": {
       "type": "integer",
       "format": "PositiveInteger",
       "title": "Total Thermistor Channels",
       "description": "There are at most 4 thermisters per Ads111X chip. The channels always start with the number 1, and the channels are expected to follow the natural enumeration set by the AdsI2cAddressList and the associated AI0 through AI3 on those chips. Analog In 3 on the final chip may be reserved for calculating a reference open voltage. The total number of channels may also be constrained by the screw terminal situation.",
-      "required": false
+      "required": true
     },
     "TelemetryNameList": {
       "type": "array",
@@ -69,6 +69,12 @@
       "title": "The type version",
       "default": "000",
       "required": true
+    }
+  },
+  "axioms": {
+    "Axiom1": {
+      "title": "TerminalBlock Ads Chip consistency",
+      "description": "TotalTerminalBlocks should be greater than 4 * (len(AdsI2cAddressList) - 1 ) and less than or equal to 4*len(AdsI2cAddressList)"
     }
   },
   "formats": {

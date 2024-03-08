@@ -4,10 +4,10 @@ import json
 import pytest
 from pydantic import ValidationError
 
+from gwproto.enums import TelemetryName
 from gwproto.errors import SchemaError
 from gwproto.types import DataChannelGt
 from gwproto.types import DataChannelGt_Maker as Maker
-from gwproto.enums import TelemetryName
 
 
 def test_data_channel_gt_generated() -> None:
@@ -17,7 +17,8 @@ def test_data_channel_gt_generated() -> None:
         AboutNodeName="hp-idu-pwr",
         CapturedByNodeName="s.pwr-meter",
         TelemetryName=TelemetryName.PowerW,
-        Id="50cf426b-ff3f-4a30-8415-8d3fba5e0ab7")
+        Id="50cf426b-ff3f-4a30-8415-8d3fba5e0ab7",
+    )
 
     d = {
         "Name": "hp-idu-pwr",
@@ -54,7 +55,6 @@ def test_data_channel_gt_generated() -> None:
         captured_by_node_name=gtuple.CapturedByNodeName,
         telemetry_name=gtuple.TelemetryName,
         id=gtuple.Id,
-        
     ).tuple
     assert t == gtuple
 

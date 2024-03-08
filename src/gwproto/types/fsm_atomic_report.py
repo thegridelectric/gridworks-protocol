@@ -11,8 +11,10 @@ from pydantic import Extra
 from pydantic import Field
 from pydantic import root_validator
 from pydantic import validator
+
 from gwproto.enums import FsmActionType
 from gwproto.errors import SchemaError
+
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -32,31 +34,30 @@ class FsmAtomicReport(BaseModel):
     """
 
     FromHandle: str = Field(
-        title="From Name",
+        title="From Handle",
         description=(
             "The Name (as opposed to the handle) of the Spaceheat Node actor issuing the Finite "
             "State Machine report. The actor is meant to realize and be the authority on the "
             "FSM in question. Its handle reflects the state it is in."
         ),
     )
-    IsEvent: bool = Field(
-        title="Is Event",
+    IsAction: bool = Field(
+        title="Is Action",
         description=(
             "An Action refers to some side effect of a state transition that results in a physical "
             "change to an underlying TerminalAsset."
         ),
     )
-    EventType: Optional[FsmActionType] = Field(
-        title="Event Type",
+    ActionType: Optional[FsmActionType] = Field(
+        title="Action Type",
         description="The FiniteState Machine Action taken",
         default=None,
     )
-    Event: Optional[str] = Field(
+    Action: Optional[str] = Field(
         title="Event",
         description=(
-            "Should belong to the associated enum element chosen in ActionType. For example, "
-            "if ActionType is ChangeStoreFlowDirection, then Action should be either 'Discharge' "
-            "or 'Charge.'"
+            "Will typically be a number, usually an integer. For example, if ActionType is RelayPinSet, "
+            "then RelayPinSet.DeEnergized = 0 and RelayPinSet.Energized = 1."
         ),
         default=None,
     )
@@ -117,7 +118,7 @@ class FsmAtomicReport(BaseModel):
     def check_axiom_2(cls, v: dict) -> dict:
         """
         Axiom 2: If Action exists, then it belongs to the un-versioned enum selected in the ActionType.
-        
+
         """
         # TODO: Implement check for axiom 2"
         return v
@@ -145,9 +146,9 @@ class FsmAtomicReport(BaseModel):
             ).items()
             if value is not None
         }
-        if "EventType" in d.keys():
-            del d["EventType"]
-            d["EventTypeGtEnumSymbol"] = FsmActionType.value_to_symbol(self.EventType)
+        if "ActionType" in d.keys():
+            del d["ActionType"]
+            d["ActionTypeGtEnumSymbol"] = FsmActionType.value_to_symbol(self.ActionType)
         return d
 
     def as_type(self) -> bytes:
@@ -181,24 +182,6 @@ class FsmAtomicReport(BaseModel):
 class FsmAtomicReport_Maker:
     type_name = "fsm.atomic.report"
     version = "000"
-
-    def __init__(
-        self,
-        from_handle: str,
-        is_event: bool,
-        event_type: Optional[FsmActionType],
-        event: Optional[str],
-        unix_time_ms: int,
-        trigger_id: str,
-    ):
-        self.tuple = FsmAtomicReport(
-            FromHandle=from_handle,
-            IsEvent=is_event,
-            EventType=event_type,
-            Event=event,
-            UnixTimeMs=unix_time_ms,
-            TriggerId=trigger_id,
-        )
 
     @classmethod
     def tuple_to_type(cls, tuple: FsmAtomicReport) -> bytes:
@@ -247,12 +230,12 @@ class FsmAtomicReport_Maker:
         d2 = dict(d)
         if "FromHandle" not in d2.keys():
             raise SchemaError(f"dict missing FromHandle: <{d2}>")
-        if "IsEvent" not in d2.keys():
-            raise SchemaError(f"dict missing IsEvent: <{d2}>")
-        if "EventTypeGtEnumSymbol" in d2.keys():
-            value = FsmActionType.symbol_to_value(d2["EventTypeGtEnumSymbol"])
-            d2["EventType"] = FsmActionType(value)
-            del d2["EventTypeGtEnumSymbol"]
+        if "IsAction" not in d2.keys():
+            raise SchemaError(f"dict missing IsAction: <{d2}>")
+        if "ActionTypeGtEnumSymbol" in d2.keys():
+            value = FsmActionType.symbol_to_value(d2["ActionTypeGtEnumSymbol"])
+            d2["ActionType"] = FsmActionType(value)
+            del d2["ActionTypeGtEnumSymbol"]
         if "UnixTimeMs" not in d2.keys():
             raise SchemaError(f"dict missing UnixTimeMs: <{d2}>")
         if "TriggerId" not in d2.keys():
@@ -302,6 +285,7 @@ def check_is_spaceheat_name(v: str) -> None:
         ValueError: If the provided string is not in SpaceheatName format.
     """
     from typing import List
+
     try:
         x: List[str] = v.split(".")
     except:
@@ -314,8 +298,10 @@ def check_is_spaceheat_name(v: str) -> None:
         )
     for word in x:
         for char in word:
-            if not (char.isalnum() or char == '-'):
-                raise ValueError(f"words of <{v}> split by by '.' must be alphanumeric or hyphen.")
+            if not (char.isalnum() or char == "-"):
+                raise ValueError(
+                    f"words of <{v}> split by by '.' must be alphanumeric or hyphen."
+                )
     if not v.islower():
         raise ValueError(f"<{v}> must be lowercase.")
 

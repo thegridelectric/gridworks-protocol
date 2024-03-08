@@ -1,0 +1,15 @@
+{
+    "gtr_asl": "001",
+    "enum_name": "relay.pin.set",
+    "enum_version": "000",
+    "description": "This refers to an ACTION taken by a driver (as opposed to a relay energization pin STATE read by the same driver). It is an old-school enum, where DeEnergized encodes 0 and Energized encodes 1.",
+    "ssot": "https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relaypinset",
+    "values": ["DeEnergized", "Energized"],
+    "value_to_symbol": { "": "0",  "": "1"},
+    "value_to_version": { "": "000",  "": "000"},
+    "value_descriptions": {
+                "DeEnergized": "Common is connected to the Normally Closed pole.",
+                "Energized": "Common is connected to the Normally Open pole."
+            },
+    "default_value": "DeEnergized"
+}

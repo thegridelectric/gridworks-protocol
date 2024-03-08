@@ -13,7 +13,8 @@ def test_channel_readings_generated() -> None:
     t = ChannelReadings(
         ChannelId="e601041c-8cb4-4e6f-9163-e6ad2edb1b72",
         ValueList=[4559],
-        ScadaReadTimeUnixMsList=[1656443705023],)
+        ScadaReadTimeUnixMsList=[1656443705023],
+    )
 
     d = {
         "ChannelId": "e601041c-8cb4-4e6f-9163-e6ad2edb1b72",
@@ -38,15 +39,6 @@ def test_channel_readings_generated() -> None:
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple
-
-    # test Maker init
-    t = Maker(
-        channel_id=gtuple.ChannelId,
-        value_list=gtuple.ValueList,
-        scada_read_time_unix_ms_list=gtuple.ScadaReadTimeUnixMsList,
-        
-    ).tuple
-    assert t == gtuple
 
     ######################################
     # SchemaError raised if missing a required attribute

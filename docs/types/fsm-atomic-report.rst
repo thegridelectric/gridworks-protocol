@@ -6,17 +6,17 @@ Python pydantic class corresponding to json type `fsm.atomic.report`, version `0
     :members:
 
 **FromHandle**:
-    - Description: From Name. The Name (as opposed to the handle) of the Spaceheat Node actor issuing the Finite State Machine report.  The actor is meant to realize and be the authority on the FSM in question. Its handle reflects the state it is in.
+    - Description: From Handle. The Name (as opposed to the handle) of the Spaceheat Node actor issuing the Finite State Machine report.  The actor is meant to realize and be the authority on the FSM in question. Its handle reflects the state it is in.
     - Format: SpaceheatName
 
-**IsEvent**:
-    - Description: Is Event. An Action refers to some side effect of a state transition that results in a physical change to an underlying TerminalAsset. 
+**IsAction**:
+    - Description: Is Action. An Action refers to some side effect of a state transition that results in a physical change to an underlying TerminalAsset. 
 
-**EventType**:
-    - Description: Event Type. The FiniteState Machine Action taken
+**ActionType**:
+    - Description: Action Type. The FiniteState Machine Action taken
 
-**Event**:
-    - Description: Event. Should belong to the associated enum element chosen in ActionType. For example, if ActionType is ChangeStoreFlowDirection, then Action should be either 'Discharge' or 'Charge.'
+**Action**:
+    - Description: Event. Will typically be a number, usually an integer. For example, if ActionType is RelayPinSet, then RelayPinSet.DeEnergized = 0 and RelayPinSet.Energized = 1.
 
 **UnixTimeMs**:
     - Description: Unix Time in Milliseconds. 

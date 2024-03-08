@@ -9,9 +9,11 @@ from typing import Literal
 from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
+
+from gwproto.errors import SchemaError
 from gwproto.types.single_reading import SingleReading
 from gwproto.types.single_reading import SingleReading_Maker
-from gwproto.errors import SchemaError
+
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -140,20 +142,6 @@ class Snapshot_Maker:
     type_name = "snapshot.spaceheat"
     version = "001"
 
-    def __init__(
-        self,
-        from_g_node_alias: str,
-        from_g_node_instance_id: str,
-        snapshot_time_unix_ms: int,
-        latest_reading_list: List[SingleReading],
-    ):
-        self.tuple = Snapshot(
-            FromGNodeAlias=from_g_node_alias,
-            FromGNodeInstanceId=from_g_node_instance_id,
-            SnapshotTimeUnixMs=snapshot_time_unix_ms,
-            LatestReadingList=latest_reading_list,
-        )
-
     @classmethod
     def tuple_to_type(cls, tuple: Snapshot) -> bytes:
         """
@@ -208,11 +196,15 @@ class Snapshot_Maker:
         if "LatestReadingList" not in d2.keys():
             raise SchemaError(f"dict missing LatestReadingList: <{d2}>")
         if not isinstance(d2["LatestReadingList"], List):
-            raise SchemaError(f"LatestReadingList <{d2['LatestReadingList']}> must be a List!")
+            raise SchemaError(
+                f"LatestReadingList <{d2['LatestReadingList']}> must be a List!"
+            )
         latest_reading_list = []
         for elt in d2["LatestReadingList"]:
             if not isinstance(elt, dict):
-                raise SchemaError(f"LatestReadingList <{d2['LatestReadingList']}> must be a List of SingleReading types")
+                raise SchemaError(
+                    f"LatestReadingList <{d2['LatestReadingList']}> must be a List of SingleReading types"
+                )
             t = SingleReading_Maker.dict_to_tuple(elt)
             latest_reading_list.append(t)
         d2["LatestReadingList"] = latest_reading_list

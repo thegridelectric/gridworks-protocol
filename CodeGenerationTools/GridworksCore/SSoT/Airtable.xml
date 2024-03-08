@@ -1163,7 +1163,7 @@ See attached csv for instantiation of this rate as an 8760.</Description>
       <Version>001</Version>
       <DisplayName>spaceheat.telemetry.name__MilliWattHours</DisplayName>
     </EnumSymbol>
-    <EnumSymbol>itrnLPpiAvYDZK7uI/recOVz3BfaUEoVjbv</EnumSymbol>
+    <EnumSymbol>itrzaHk5N5Sc7ZMEc/recOVz3BfaUEoVjbv</EnumSymbol>
     <EnumSymbol>
       <EnumSymbolId>recOgl1jT8XKEDvZw</EnumSymbolId>
       <createdTime>2022-12-02T23:49:28Z</createdTime>
@@ -2226,7 +2226,7 @@ The A Tariff is their standard residential tariff. Look for rate A in Versant
       <Url>https://drive.google.com/drive/folders/1AqAU_lC2phzuI9XRYvogiIYA7GXNtlr6</Url>
       <DisplayName>spaceheat.make.model__Hubitat__C7__LAN1</DisplayName>
     </EnumSymbol>
-    <EnumSymbol>itrnLPpiAvYDZK7uI/recjCvwGoMdYArjAn</EnumSymbol>
+    <EnumSymbol>itrzaHk5N5Sc7ZMEc/recjCvwGoMdYArjAn</EnumSymbol>
     <EnumSymbol>
       <EnumSymbolId>recjMoCkPYlXauGf2</EnumSymbolId>
       <createdTime>2024-01-24T17:58:04Z</createdTime>
@@ -6098,7 +6098,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <ProtocolName>gwproto</ProtocolName>
       <VersionedTypeName>channel.config.000</VersionedTypeName>
       <Name>gwproto channel.config.000</Name>
-      <TypeStatus>Pending</TypeStatus>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rec1Kr8gSWyIe4lG2</ProtocolTypeId>
@@ -6168,7 +6168,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <ProtocolName>gwproto</ProtocolName>
       <VersionedTypeName>channel.readings.000</VersionedTypeName>
       <Name>gwproto channel.readings.000</Name>
-      <TypeStatus>Pending</TypeStatus>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rec3ERBItBJPEBoto</ProtocolTypeId>
@@ -6318,7 +6318,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <ProtocolName>gwproto</ProtocolName>
       <VersionedTypeName>snapshot.spaceheat.001</VersionedTypeName>
       <Name>gwproto snapshot.spaceheat.001</Name>
-      <TypeStatus>Pending</TypeStatus>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recA4Y7Iy3elTbyCB</ProtocolTypeId>
@@ -6438,7 +6438,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <ProtocolName>gwproto</ProtocolName>
       <VersionedTypeName>data.channel.gt.000</VersionedTypeName>
       <Name>gwproto data.channel.gt.000</Name>
-      <TypeStatus>Pending</TypeStatus>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recDqWAGc9wH8TzcX</ProtocolTypeId>
@@ -7040,7 +7040,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Name>gridworks base.g.node.gt.002</Name>
       <TypeStatus>Active</TypeStatus>
     </ProtocolType>
-    <ProtocolType>itrAa0suxPupd3IrB/reccq15mpDgpXGekn</ProtocolType>
+    <ProtocolType>itrFDuJiyDGLWERxX/reccq15mpDgpXGekn</ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recd5s903aDEv7tRL</ProtocolTypeId>
       <createdTime>2024-01-18T03:52:24Z</createdTime>
@@ -7259,7 +7259,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <ProtocolName>gwproto</ProtocolName>
       <VersionedTypeName>component.gt.001</VersionedTypeName>
       <Name>gwproto component.gt.001</Name>
-      <TypeStatus>Pending</TypeStatus>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recnQycM6WlPw1K0f</ProtocolTypeId>
@@ -7289,7 +7289,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <ProtocolName>gwproto</ProtocolName>
       <VersionedTypeName>ta.data.channels.000</VersionedTypeName>
       <Name>gwproto ta.data.channels.000</Name>
-      <TypeStatus>Pending</TypeStatus>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recpmLlSrgwRStIpV</ProtocolTypeId>
@@ -7384,7 +7384,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <ProtocolName>gwproto</ProtocolName>
       <VersionedTypeName>spaceheat.node.gt.200</VersionedTypeName>
       <Name>gwproto spaceheat.node.gt.200</Name>
-      <TypeStatus>Pending</TypeStatus>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recuWqfj2L2IXoPAg</ProtocolTypeId>
@@ -9640,7 +9640,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeInPayload>Number</TypeInPayload>
       <Protocols>gwatn</Protocols>
     </TypeAttribute>
-    <TypeAttribute>itr683sTnBHSInaQo/rec6J08ESPo5dbR8t</TypeAttribute>
+    <TypeAttribute>itrJzMk4UGN9YqQ8K/rec6J08ESPo5dbR8t</TypeAttribute>
     <TypeAttribute>
       <TypeAttributeId>rec6MQ1HJUBz9pC5d</TypeAttributeId>
       <createdTime>2022-11-06T20:03:56Z</createdTime>
@@ -11456,7 +11456,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <PreValidateFormat />
       <Protocols>satn</Protocols>
     </TypeAttribute>
-    <TypeAttribute>itr683sTnBHSInaQo/recDK3v8t65JbIgGo</TypeAttribute>
+    <TypeAttribute>itrJzMk4UGN9YqQ8K/recDK3v8t65JbIgGo</TypeAttribute>
     <TypeAttribute>
       <TypeAttributeId>recDMDjJ0WR1xxx1F</TypeAttributeId>
       <createdTime>2022-07-05T12:42:57Z</createdTime>
@@ -13244,7 +13244,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Format>LeftRightDot</Format>
       <PreValidateFormat />
     </TypeAttribute>
-    <TypeAttribute>itr683sTnBHSInaQo/recIKbu4rYF1nXhPD</TypeAttribute>
+    <TypeAttribute>itrJzMk4UGN9YqQ8K/recIKbu4rYF1nXhPD</TypeAttribute>
     <TypeAttribute>
       <TypeAttributeId>recIN7LQdlrUw9oNP</TypeAttributeId>
       <createdTime>2022-11-06T20:03:52Z</createdTime>
@@ -13252,17 +13252,17 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>Integer</PrimitiveType>
       <PrimitiveFormatId>recKcuGOfjTIPqtXk</PrimitiveFormatId>
-      <PrimitiveFormat>PositiveInteger</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>5</TestValue>
-      <PrimitiveFormatFail1>0</PrimitiveFormatFail1>
       <VersionedType>rec8uTC7GK5qgXzg9</VersionedType>
       <Description>The Id of the TaDeed Algorand Standard Asset if the GNode is a TerminalAsset.  </Description>
       <Idx>7</Idx>
       <Title>Algorand Id of ASA Deed</Title>
-      <TypeInPayload>Integer</TypeInPayload>
       <Url>https://gridworks.readthedocs.io/en/latest/ta-deed.html</Url>
+      <PrimitiveFormat>PositiveInteger</PrimitiveFormat>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>0</PrimitiveFormatFail1>
+      <IsEnum>false</IsEnum>
+      <TypeInPayload>Integer</TypeInPayload>
       <Format>PositiveInteger</Format>
       <PreValidateFormat />
       <Protocols>gridworks</Protocols>
@@ -13273,15 +13273,15 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Value>EgaugeIoList</Value>
       <IsRequired>true</IsRequired>
       <IsList>true</IsList>
-      <VersionedSubTypeName>egauge.io.001</VersionedSubTypeName>
-      <IsEnum>false</IsEnum>
-      <IsType>true</IsType>
       <TestValue>[{'InputConfig': {'Address': 9006, 'Name': '', 'Description': 'change in value', 'Type': 'f32', 'Denominator': 1, 'Unit': 'W', 'TypeName': 'egauge.register.config', 'Version': '000'}, 'OutputConfig': {'Channel': {'DisplayName':'Idu Power', 'AboutName': 'hp-idu-pwr', 'CapturedByName': 'pwr-meter', 'TelemetryNameGtEnumSymbol': 'af39eec9'},  'PollPeriodMs': 1000,  'CapturePeriodS': 300, 'AsyncCapture': True, 'AsyncCaptureDelta': 50, 'Exponent': 0,  'UnitGtEnumSymbol': 'f459a9c3', 'TypeName': 'channel.config', 'Version': '000'}, 'TypeName': 'egauge.io', 'Version': '001'}]</TestValue>
       <VersionedType>recq19BcuGBYsocRs</VersionedType>
       <VersionedSubType>recHRoeL4FL22lKsW</VersionedSubType>
       <Description>This should be empty unless the MakeModel of the corresponding component attribute class is EGauge 4030. The channels that can be read from an EGauge 4030 are configurable by the person who installs the device. The information is encapsulated in a modbus map provided by eGauge as a csv from a device-specific API. The EGaugeIoList maps the data from this map to the data that the SCADA expects to see.</Description>
       <Idx>7</Idx>
       <Title>Bijecton from EGauge4030 input to ConfigList output</Title>
+      <IsType>true</IsType>
+      <VersionedSubTypeName>egauge.io.001</VersionedSubTypeName>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>egauge.io.001</TypeInPayload>
       <SubTypeName>egauge.io</SubTypeName>
       <Protocols>gwproto</Protocols>
@@ -13293,10 +13293,10 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsRequired>true</IsRequired>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>Integer</PrimitiveType>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <VersionedType>recObejFqCYx5kpak</VersionedType>
       <Idx>5</Idx>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>Integer</TypeInPayload>
     </TypeAttribute>
     <TypeAttribute>
@@ -13306,13 +13306,13 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>Integer</PrimitiveType>
       <PrimitiveFormatId>recKcuGOfjTIPqtXk</PrimitiveFormatId>
-      <PrimitiveFormat>PositiveInteger</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>10</TestValue>
-      <PrimitiveFormatFail1>0</PrimitiveFormatFail1>
       <VersionedType>rec8uTC7GK5qgXzg9</VersionedType>
       <Idx>13</Idx>
+      <PrimitiveFormat>PositiveInteger</PrimitiveFormat>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>0</PrimitiveFormatFail1>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>Integer</TypeInPayload>
       <Format>PositiveInteger</Format>
       <PreValidateFormat />
@@ -13326,13 +13326,13 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
       <PrimitiveFormatId>recb9fI4kRkTYXDzA</PrimitiveFormatId>
-      <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>"d1.isone.ver.keene.holly"</TestValue>
-      <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
       <VersionedType>rec2EA0TG0Xexi6wg</VersionedType>
       <Idx>0</Idx>
+      <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Format>LeftRightDot</Format>
       <PreValidateFormat />
@@ -13345,12 +13345,12 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsRequired>true</IsRequired>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>Integer</PrimitiveType>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>100</TestValue>
       <VersionedType>recrZz3gmzl97POA1</VersionedType>
       <Idx>26</Idx>
       <DefaultValue>100</DefaultValue>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>Integer</TypeInPayload>
       <Protocols>satn</Protocols>
     </TypeAttribute>
@@ -13360,11 +13360,11 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Value>DisplayName</Value>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>"Temp sensor on pipe out of tank"</TestValue>
       <VersionedType>recjrd0YFmqQQm5sv</VersionedType>
       <Idx>2</Idx>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
     </TypeAttribute>
     <TypeAttribute>
@@ -13375,16 +13375,16 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
       <PrimitiveFormatId>rec24qjC90m0f4Kvl</PrimitiveFormatId>
-      <PrimitiveFormat>UuidCanonicalTextual</PrimitiveFormat>
       <ImmutableInDc>true</ImmutableInDc>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>"2ca9e65a-5e85-4eaa-811b-901e940f8d09"</TestValue>
-      <PrimitiveFormatFail1>"d4be12d5-33ba-4f1f-b9e5"</PrimitiveFormatFail1>
       <VersionedType>recjrd0YFmqQQm5sv</VersionedType>
       <Description>Primary GridWorks identifier for a specific physical instance of a SimpleTempSensor, and also as a more generic Component. </Description>
       <Idx>0</Idx>
       <Title>Component Id</Title>
+      <PrimitiveFormat>UuidCanonicalTextual</PrimitiveFormat>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>"d4be12d5-33ba-4f1f-b9e5"</PrimitiveFormatFail1>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Format>UuidCanonicalTextual</Format>
       <PreValidateFormat />
@@ -13397,14 +13397,14 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
       <PrimitiveFormatId>rec24qjC90m0f4Kvl</PrimitiveFormatId>
-      <PrimitiveFormat>UuidCanonicalTextual</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>'299ed6df-183d-4230-b60d-fd2eae34b1cd'</TestValue>
-      <PrimitiveFormatFail1>"d4be12d5-33ba-4f1f-b9e5"</PrimitiveFormatFail1>
       <VersionedType>recV0KuDFayH4qGIl</VersionedType>
       <Idx>4</Idx>
       <Title>The Id of the docker container where the Gni runs</Title>
+      <PrimitiveFormat>UuidCanonicalTextual</PrimitiveFormat>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>"d4be12d5-33ba-4f1f-b9e5"</PrimitiveFormatFail1>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Format>UuidCanonicalTextual</Format>
       <PreValidateFormat />
@@ -13418,14 +13418,14 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
       <PrimitiveFormatId>recb9fI4kRkTYXDzA</PrimitiveFormatId>
-      <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>"a.elt1"</TestValue>
-      <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
       <VersionedType>recDEr7ob2KLqM4gU</VersionedType>
       <Description>The name of the SpaceheatNode whose physical quantity is getting captured.</Description>
       <Idx>1</Idx>
+      <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Format>LeftRightDot</Format>
       <PreValidateFormat />
@@ -13435,17 +13435,17 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <createdTime>2024-03-04T17:57:06Z</createdTime>
       <Value>Trigger</Value>
       <IsRequired>true</IsRequired>
-      <VersionedSubTypeName>fsm.event.000</VersionedSubTypeName>
-      <IsEnum>false</IsEnum>
-      <IsType>true</IsType>
       <VersionedType>rec9xWGWHRtGAFQT3</VersionedType>
       <VersionedSubType>recaCjLGTfeAKoLcC</VersionedSubType>
       <Description>This is meant to be a string that is interpretted as an event that triggers a cascade of other events, transitions and actions in the Spaceheat Nodes of the SCADA.  This comes from the language of Finite State Machines</Description>
       <Idx>3</Idx>
       <Title>Trigger</Title>
-      <TypeInPayload>fsm.event.000</TypeInPayload>
       <Axiom>rec1IagzrMviw1VWv</Axiom>
       <Url>https://gridworks-protocol.readthedocs.io/en/latest/finite-state-machines.html</Url>
+      <IsType>true</IsType>
+      <VersionedSubTypeName>fsm.event.000</VersionedSubTypeName>
+      <IsEnum>false</IsEnum>
+      <TypeInPayload>fsm.event.000</TypeInPayload>
       <SubTypeName>fsm.event</SubTypeName>
       <Protocols>gwproto</Protocols>
     </TypeAttribute>
@@ -13458,15 +13458,15 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsList>true</IsList>
       <PrimitiveType>Integer</PrimitiveType>
       <PrimitiveFormatId>recqSXVzLo8RtEjlH</PrimitiveFormatId>
-      <PrimitiveFormat>ReasonableUnixTimeMs</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>[1656443705023]</TestValue>
-      <PrimitiveFormatFail1>1656245000</PrimitiveFormatFail1>
       <VersionedType>recirKkUOZZ1z2ipD</VersionedType>
       <Description>The times that the MultipurposeSensor took the readings, in unix milliseconds</Description>
       <Idx>2</Idx>
       <Title>List of Read Times</Title>
+      <PrimitiveFormat>ReasonableUnixTimeMs</PrimitiveFormat>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>1656245000</PrimitiveFormatFail1>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>Integer</TypeInPayload>
       <Format>ReasonableUnixTimeMs</Format>
       <PreValidateFormat />
@@ -13476,9 +13476,9 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeAttributeId>recJGtUtJlYODYuyq</TypeAttributeId>
       <createdTime>2022-07-25T22:45:08Z</createdTime>
       <Value>PipeFlowSensorCacList</Value>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <VersionedType>recyD0ycgUiT7TiH2</VersionedType>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
     </TypeAttribute>
     <TypeAttribute>
       <TypeAttributeId>recJIkl9dZLq01OeF</TypeAttributeId>
@@ -13488,12 +13488,12 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
       <PrimitiveFormatId>recopFBsq4TmG87Op</PrimitiveFormatId>
-      <PrimitiveFormat>AlgoAddressStringFormat</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>"KXGT6JIRJQR4GCSS647KL2OSSKBZ3FSYJDIXJEGAF7TZLN4JF4DGDDX4BI"</TestValue>
       <VersionedType>rec9udDZT7JDuAbjl</VersionedType>
       <Idx>1</Idx>
+      <PrimitiveFormat>AlgoAddressStringFormat</PrimitiveFormat>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Format>AlgoAddressStringFormat</Format>
       <PreValidateFormat />
@@ -13504,12 +13504,12 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Value>DisplayName</Value>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>"EZFLO for a.tank.out"</TestValue>
       <VersionedType>recmVKHF3ugtUOYrz</VersionedType>
       <Description>Sample: Atlas Scientific EZO FLO i2c</Description>
       <Idx>2</Idx>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Protocols>newatn</Protocols>
     </TypeAttribute>
@@ -13521,15 +13521,15 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
       <PrimitiveFormatId>rec24qjC90m0f4Kvl</PrimitiveFormatId>
-      <PrimitiveFormat>UuidCanonicalTextual</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>"50cf426b-ff3f-4a30-8415-8d3fba5e0ab7"</TestValue>
-      <PrimitiveFormatFail1>"d4be12d5-33ba-4f1f-b9e5"</PrimitiveFormatFail1>
       <VersionedType>recyETDKMGTbGb0zf</VersionedType>
       <Description>Meant to be an immutable identifier that is globally unique (i.e., across terminal assets).</Description>
       <Idx>5</Idx>
       <Title>Id</Title>
+      <PrimitiveFormat>UuidCanonicalTextual</PrimitiveFormat>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>"d4be12d5-33ba-4f1f-b9e5"</PrimitiveFormatFail1>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Format>UuidCanonicalTextual</Format>
       <PreValidateFormat />
@@ -13543,12 +13543,12 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <IsList>true</IsList>
       <PrimitiveType>Integer</PrimitiveType>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>[60]</TestValue>
       <VersionedType>recfDQscmquO0odpo</VersionedType>
       <Idx>12</Idx>
       <DefaultValue>[60]</DefaultValue>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>Integer</TypeInPayload>
       <Protocols>gwatn</Protocols>
     </TypeAttribute>
@@ -13560,12 +13560,12 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <IsList>true</IsList>
       <PrimitiveType>Number</PrimitiveType>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>[25.3]</TestValue>
       <VersionedType>reczzIn3wGYrEKtbr</VersionedType>
       <Idx>40</Idx>
       <DefaultValue>[25.3]</DefaultValue>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>Number</TypeInPayload>
       <Protocols>satn</Protocols>
     </TypeAttribute>
@@ -13575,10 +13575,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Value>BooleanactuatorCmdList</Value>
       <IsRequired>true</IsRequired>
       <IsList>true</IsList>
-      <VersionedSubTypeName>gt.sh.booleanactuator.cmd.status.100</VersionedSubTypeName>
-      <VersionedSubTypeName>gt.sh.booleanactuator.cmd.status.101</VersionedSubTypeName>
-      <IsEnum>false</IsEnum>
-      <IsType>true</IsType>
       <TestValue>[
             {
                 "ShNodeAlias": "a.elt1.relay",
@@ -13592,6 +13588,10 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <VersionedSubType>recpHvfV5mSI7pgRP</VersionedSubType>
       <VersionedSubType>recDsYdEFKoJrPynS</VersionedSubType>
       <Idx>8</Idx>
+      <IsType>true</IsType>
+      <VersionedSubTypeName>gt.sh.booleanactuator.cmd.status.100</VersionedSubTypeName>
+      <VersionedSubTypeName>gt.sh.booleanactuator.cmd.status.101</VersionedSubTypeName>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>gt.sh.booleanactuator.cmd.status.100</TypeInPayload>
       <TypeInPayload>gt.sh.booleanactuator.cmd.status.101</TypeInPayload>
       <SubTypeName>gt.sh.booleanactuator.cmd.status</SubTypeName>
@@ -13603,11 +13603,11 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Value>AsyncReportThreshold</Value>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>Number</PrimitiveType>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>0.2</TestValue>
       <VersionedType>recDEr7ob2KLqM4gU</VersionedType>
       <Idx>6</Idx>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>Number</TypeInPayload>
     </TypeAttribute>
     <TypeAttribute>
@@ -13618,13 +13618,13 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
       <PrimitiveFormatId>recb9fI4kRkTYXDzA</PrimitiveFormatId>
-      <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>"d1.isone.ver.keene.holly.ta"</TestValue>
-      <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
       <VersionedType>recbGrdqqYGiwVYVK</VersionedType>
       <Idx>0</Idx>
+      <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Format>LeftRightDot</Format>
       <PreValidateFormat />
@@ -13639,13 +13639,13 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
       <PrimitiveFormatId>recb9fI4kRkTYXDzA</PrimitiveFormatId>
-      <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>"flo.params.brickstorageheater"</TestValue>
-      <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
       <VersionedType>recBqSlQdF17CgMPY</VersionedType>
       <Idx>2</Idx>
+      <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Format>LeftRightDot</Format>
       <PreValidateFormat />
@@ -13659,11 +13659,11 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
       <PrimitiveFormatId>recopFBsq4TmG87Op</PrimitiveFormatId>
-      <PrimitiveFormat>AlgoAddressStringFormat</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>'KXGT6JIRJQR4GCSS647KL2OSSKBZ3FSYJDIXJEGAF7TZLN4JF4DGDDX4BI'</TestValue>
       <VersionedType>recazQb2vEXgbroHd</VersionedType>
+      <PrimitiveFormat>AlgoAddressStringFormat</PrimitiveFormat>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Format>AlgoAddressStringFormat</Format>
       <PreValidateFormat />
@@ -13674,35 +13674,35 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeAttributeId>recJe8Naf9qaY9GZQ</TypeAttributeId>
       <createdTime>2022-07-22T12:14:34Z</createdTime>
       <Value>MyTerminalAssetGNode</Value>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <VersionedType>recyD0ycgUiT7TiH2</VersionedType>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
     </TypeAttribute>
     <TypeAttribute>
       <TypeAttributeId>recJndcJfL6zLcI0G</TypeAttributeId>
       <createdTime>2024-03-05T16:27:56Z</createdTime>
-      <IsEnum>false</IsEnum>
       <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
     </TypeAttribute>
     <TypeAttribute>
       <TypeAttributeId>recJokmStFWW1yWsq</TypeAttributeId>
       <createdTime>2023-04-03T20:32:26Z</createdTime>
       <Value>TelemetryName</Value>
       <IsRequired>true</IsRequired>
-      <EnumLocalName>telemetry.name</EnumLocalName>
-      <IsEnum>true</IsEnum>
-      <IsType>false</IsType>
       <TestValue> "af39eec9"</TestValue>
       <VersionedType>recyETDKMGTbGb0zf</VersionedType>
       <Description>The name of the physical quantity getting measured.</Description>
-      <DefaultEnumValue>Unknown</DefaultEnumValue>
       <Idx>4</Idx>
-      <EnumType>UpperPython</EnumType>
       <Title>Telemetry Name</Title>
-      <TypeInPayload>String</TypeInPayload>
-      <Format>spaceheat.telemetry.name</Format>
       <UseEnumAlias>true</UseEnumAlias>
       <Enum>rec2HyLffy6QK9QId</Enum>
+      <EnumLocalName>telemetry.name</EnumLocalName>
+      <IsType>false</IsType>
+      <DefaultEnumValue>Unknown</DefaultEnumValue>
+      <EnumType>UpperPython</EnumType>
+      <IsEnum>true</IsEnum>
+      <TypeInPayload>String</TypeInPayload>
+      <Format>spaceheat.telemetry.name</Format>
       <EnumName>spaceheat.telemetry.name</EnumName>
       <Protocols>gwproto</Protocols>
     </TypeAttribute>
@@ -13714,12 +13714,12 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
       <PrimitiveFormatId>recopFBsq4TmG87Op</PrimitiveFormatId>
-      <PrimitiveFormat>AlgoAddressStringFormat</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>"KXGT6JIRJQR4GCSS647KL2OSSKBZ3FSYJDIXJEGAF7TZLN4JF4DGDDX4BI"</TestValue>
       <VersionedType>recvWBuo1Ws1SIL4b</VersionedType>
       <Idx>2</Idx>
+      <PrimitiveFormat>AlgoAddressStringFormat</PrimitiveFormat>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Format>AlgoAddressStringFormat</Format>
       <PreValidateFormat />
@@ -13734,13 +13734,13 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
       <PrimitiveFormatId>recb9fI4kRkTYXDzA</PrimitiveFormatId>
-      <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>"dwtest.isone.ct.newhaven.orange1.ta.scada"</TestValue>
-      <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
       <VersionedType>recNbXbJE9rcnLXAs</VersionedType>
       <Idx>1</Idx>
+      <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Format>LeftRightDot</Format>
       <PreValidateFormat />
@@ -13752,11 +13752,11 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsRequired>true</IsRequired>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>Integer</PrimitiveType>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>44838681</TestValue>
       <VersionedType>recJH4tbXOqVJkMVW</VersionedType>
       <Idx>3</Idx>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>Integer</TypeInPayload>
       <Protocols>gnf</Protocols>
       <Protocols>gnr</Protocols>
@@ -13765,9 +13765,9 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeAttributeId>recJvlubAJR6mjxk3</TypeAttributeId>
       <createdTime>2022-07-25T22:44:12Z</createdTime>
       <Value>CurrentTransformerComponentList</Value>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <VersionedType>recyD0ycgUiT7TiH2</VersionedType>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
     </TypeAttribute>
     <TypeAttribute>
       <TypeAttributeId>recK1YHQ9c8LbBJ0q</TypeAttributeId>
@@ -13777,12 +13777,12 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
       <PrimitiveFormatId>recb9fI4kRkTYXDzA</PrimitiveFormatId>
-      <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>"a.elt1.relay"</TestValue>
-      <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
       <VersionedType>recncxVAzn76fL8xN</VersionedType>
+      <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Format>LeftRightDot</Format>
       <PreValidateFormat />
@@ -13793,9 +13793,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Value>MultipurposeTelemetryList</Value>
       <IsRequired>true</IsRequired>
       <IsList>true</IsList>
-      <VersionedSubTypeName>gt.sh.multipurpose.telemetry.status.100</VersionedSubTypeName>
-      <IsEnum>false</IsEnum>
-      <IsType>true</IsType>
       <TestValue>[
             {
                 "AboutNodeAlias": "a.elt1",
@@ -13810,6 +13807,9 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <VersionedType>recNbXbJE9rcnLXAs</VersionedType>
       <VersionedSubType>receGKnJ8CfemQLdQ</VersionedSubType>
       <Idx>7</Idx>
+      <IsType>true</IsType>
+      <VersionedSubTypeName>gt.sh.multipurpose.telemetry.status.100</VersionedSubTypeName>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>gt.sh.multipurpose.telemetry.status.100</TypeInPayload>
       <SubTypeName>gt.sh.multipurpose.telemetry.status</SubTypeName>
     </TypeAttribute>
@@ -13821,14 +13821,14 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>Integer</PrimitiveType>
       <PrimitiveFormatId>rec13dujLuXXSf5L3</PrimitiveFormatId>
-      <PrimitiveFormat>ReasonableUnixTimeS</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>1667852537</TestValue>
-      <PrimitiveFormatFail1>32503683600</PrimitiveFormatFail1>
       <VersionedType>rec7peRuDqMNa0vlW</VersionedType>
       <Idx>2</Idx>
       <Title>Current time in unix seconds</Title>
+      <PrimitiveFormat>ReasonableUnixTimeS</PrimitiveFormat>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>32503683600</PrimitiveFormatFail1>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>Integer</TypeInPayload>
       <Format>ReasonableUnixTimeS</Format>
       <PreValidateFormat />
@@ -13841,11 +13841,11 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsRequired>true</IsRequired>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>Integer</PrimitiveType>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>50</TestValue>
       <VersionedType>recbAMyCyUX2bLKfz</VersionedType>
       <Idx>4</Idx>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>Integer</TypeInPayload>
       <Protocols>satn</Protocols>
     </TypeAttribute>
@@ -13856,12 +13856,12 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsRequired>true</IsRequired>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>Integer</PrimitiveType>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>113</TestValue>
       <VersionedType>recrZz3gmzl97POA1</VersionedType>
       <Idx>21</Idx>
       <DefaultValue>113</DefaultValue>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>Integer</TypeInPayload>
       <Protocols>satn</Protocols>
     </TypeAttribute>
@@ -13873,14 +13873,14 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
       <PrimitiveFormatId>recb9fI4kRkTYXDzA</PrimitiveFormatId>
-      <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>"a.elt1.relay"</TestValue>
-      <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
       <VersionedType>reckTci9LVdsEt2WQ</VersionedType>
       <Idx>0</Idx>
       <Title>The Spaceheat Node getting dispatched</Title>
+      <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Format>LeftRightDot</Format>
       <PreValidateFormat />
@@ -13892,12 +13892,12 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
       <PrimitiveFormatId>recopFBsq4TmG87Op</PrimitiveFormatId>
-      <PrimitiveFormat>AlgoAddressStringFormat</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>'7QQT4GN3ZPAQEFCNWF5BMF7NULVK3CWICZVT4GM3BQRISD52YEDLWJ4MII'</TestValue>
       <VersionedType>recDp8U1jLA9zeEx2</VersionedType>
       <Idx>12</Idx>
+      <PrimitiveFormat>AlgoAddressStringFormat</PrimitiveFormat>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Format>AlgoAddressStringFormat</Format>
       <PreValidateFormat />
@@ -13910,10 +13910,10 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsRequired>true</IsRequired>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>Integer</PrimitiveType>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>45666353</TestValue>
       <VersionedType>recazQb2vEXgbroHd</VersionedType>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>Integer</TypeInPayload>
       <Protocols>gnf</Protocols>
       <Protocols>gnr</Protocols>
@@ -13925,13 +13925,13 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
       <PrimitiveFormatId>recb9fI4kRkTYXDzA</PrimitiveFormatId>
-      <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>'d1'</TestValue>
-      <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
       <VersionedType>recDp8U1jLA9zeEx2</VersionedType>
       <Idx>5</Idx>
+      <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Format>LeftRightDot</Format>
       <PreValidateFormat />
@@ -13943,11 +13943,11 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Value>DisplayName</Value>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>"Fake Boost Element"</TestValue>
       <VersionedType>rec2m06PsjtFd0cfu</VersionedType>
       <Idx>2</Idx>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Protocols>newatn</Protocols>
       <Protocols>gwproto</Protocols>
@@ -13957,19 +13957,19 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <createdTime>2023-02-14T20:39:27Z</createdTime>
       <Value>Role</Value>
       <IsRequired>true</IsRequired>
-      <EnumLocalName>role</EnumLocalName>
       <ImmutableInDc>true</ImmutableInDc>
-      <IsEnum>true</IsEnum>
-      <IsType>false</IsType>
       <TestValue> "5a28eb2e"</TestValue>
       <VersionedType>recEhzcpob8H7VuEF</VersionedType>
-      <DefaultEnumValue>Unknown</DefaultEnumValue>
       <Idx>3</Idx>
-      <EnumType>UpperPython</EnumType>
-      <TypeInPayload>String</TypeInPayload>
-      <Format>sh.node.role</Format>
       <UseEnumAlias>true</UseEnumAlias>
       <Enum>recomGYBJ9ldSsiNU</Enum>
+      <EnumLocalName>role</EnumLocalName>
+      <IsType>false</IsType>
+      <DefaultEnumValue>Unknown</DefaultEnumValue>
+      <EnumType>UpperPython</EnumType>
+      <IsEnum>true</IsEnum>
+      <TypeInPayload>String</TypeInPayload>
+      <Format>sh.node.role</Format>
       <EnumName>sh.node.role</EnumName>
     </TypeAttribute>
     <TypeAttribute>
@@ -13980,13 +13980,13 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>Integer</PrimitiveType>
       <PrimitiveFormatId>recKcuGOfjTIPqtXk</PrimitiveFormatId>
-      <PrimitiveFormat>PositiveInteger</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>300</TestValue>
-      <PrimitiveFormatFail1>0</PrimitiveFormatFail1>
       <VersionedType>recepkVk3vOelGIUa</VersionedType>
       <Idx>5</Idx>
+      <PrimitiveFormat>PositiveInteger</PrimitiveFormat>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>0</PrimitiveFormatFail1>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>Integer</TypeInPayload>
       <Format>PositiveInteger</Format>
       <PreValidateFormat />
@@ -13999,12 +13999,12 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsRequired>true</IsRequired>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>Number</PrimitiveType>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>10</TestValue>
       <VersionedType>reczzIn3wGYrEKtbr</VersionedType>
       <Idx>9</Idx>
       <DefaultValue>10</DefaultValue>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>Number</TypeInPayload>
       <Protocols>satn</Protocols>
     </TypeAttribute>
@@ -14016,17 +14016,17 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>Integer</PrimitiveType>
       <PrimitiveFormatId>recLyqFB0L7XFIp6C</PrimitiveFormatId>
-      <PrimitiveFormat>Bit</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>1</TestValue>
-      <PrimitiveFormatFail1>2</PrimitiveFormatFail1>
       <VersionedType>reciGkEyh61sro7R0</VersionedType>
       <Description>A Relay State of `0` indicates the relay is OPEN (off). A Relay State of `1` indicates the relay is CLOSED (on). Note that `0` means the relay is open whether or not the relay is normally open or normally closed (For a normally open relay, the relay is ENERGIZED when it is in state `0` and DE-ENERGIZED when it is in state `1`.)</Description>
       <Idx>0</Idx>
       <Title>Relay State (0 or 1)</Title>
-      <TypeInPayload>Integer</TypeInPayload>
       <Url>https://gridworks.readthedocs.io/en/latest/relay-state.html</Url>
+      <PrimitiveFormat>Bit</PrimitiveFormat>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>2</PrimitiveFormatFail1>
+      <IsEnum>false</IsEnum>
+      <TypeInPayload>Integer</TypeInPayload>
       <Format>Bit</Format>
       <PreValidateFormat>true</PreValidateFormat>
     </TypeAttribute>
@@ -14037,11 +14037,11 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsRequired>true</IsRequired>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>Integer</PrimitiveType>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>-68705311</TestValue>
       <VersionedType>recJH4tbXOqVJkMVW</VersionedType>
       <Idx>4</Idx>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>Integer</TypeInPayload>
       <Protocols>gnf</Protocols>
       <Protocols>gnr</Protocols>
@@ -14053,13 +14053,13 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>Integer</PrimitiveType>
       <PrimitiveFormatId>recKcuGOfjTIPqtXk</PrimitiveFormatId>
-      <PrimitiveFormat>PositiveInteger</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>1</TestValue>
-      <PrimitiveFormatFail1>0</PrimitiveFormatFail1>
       <VersionedType>recDp8U1jLA9zeEx2</VersionedType>
       <Idx>11</Idx>
+      <PrimitiveFormat>PositiveInteger</PrimitiveFormat>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>0</PrimitiveFormatFail1>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>Integer</TypeInPayload>
       <Format>PositiveInteger</Format>
       <PreValidateFormat />
@@ -14072,13 +14072,13 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsRequired>true</IsRequired>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>Integer</PrimitiveType>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>63430</TestValue>
       <VersionedType>rec944QikN18Rdopu</VersionedType>
       <Description>The value of the reading. </Description>
       <Idx>1</Idx>
       <Title>Value</Title>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>Integer</TypeInPayload>
     </TypeAttribute>
     <TypeAttribute>
@@ -14088,12 +14088,12 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsRequired>true</IsRequired>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>"US/Eastern"</TestValue>
       <VersionedType>rec2EA0TG0Xexi6wg</VersionedType>
       <Idx>3</Idx>
       <DefaultValue>"US/Eastern"</DefaultValue>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Protocols>gwatn</Protocols>
     </TypeAttribute>
@@ -14105,13 +14105,13 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
       <PrimitiveFormatId>recb9fI4kRkTYXDzA</PrimitiveFormatId>
-      <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>"a.elt1"</TestValue>
-      <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
       <VersionedType>recUj3ZPKMsXanG88</VersionedType>
       <Idx>1</Idx>
+      <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Format>LeftRightDot</Format>
       <PreValidateFormat />
@@ -14121,17 +14121,17 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <createdTime>2022-06-04T19:23:07Z</createdTime>
       <Value>TempUnit</Value>
       <IsRequired>true</IsRequired>
-      <EnumLocalName>unit</EnumLocalName>
-      <IsEnum>true</IsEnum>
-      <IsType>false</IsType>
       <TestValue>"ec14bd47"</TestValue>
       <VersionedType>rec3Noy3m1X4Vdly9</VersionedType>
-      <DefaultEnumValue>Unknown</DefaultEnumValue>
       <Idx>4</Idx>
+      <Enum>recc1W1unmzowrKX9</Enum>
+      <EnumLocalName>unit</EnumLocalName>
+      <IsType>false</IsType>
+      <DefaultEnumValue>Unknown</DefaultEnumValue>
       <EnumType>UpperPython</EnumType>
+      <IsEnum>true</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Format>spaceheat.unit</Format>
-      <Enum>recc1W1unmzowrKX9</Enum>
       <EnumName>spaceheat.unit</EnumName>
     </TypeAttribute>
     <TypeAttribute>
@@ -14141,11 +14141,11 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsRequired>true</IsRequired>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>Integer</PrimitiveType>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>300</TestValue>
       <VersionedType>recDEr7ob2KLqM4gU</VersionedType>
       <Idx>3</Idx>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>Integer</TypeInPayload>
     </TypeAttribute>
     <TypeAttribute>
@@ -14155,12 +14155,12 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsRequired>true</IsRequired>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>Boolean</PrimitiveType>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>True</TestValue>
       <VersionedType>recECSz5o4Z7NFjhG</VersionedType>
       <Idx>4</Idx>
       <DefaultValue>False</DefaultValue>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>Boolean</TypeInPayload>
       <Protocols>gwmm</Protocols>
       <Protocols>gwatn</Protocols>
@@ -14172,13 +14172,13 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>Integer</PrimitiveType>
       <PrimitiveFormatId>reciNckyKjqNQDByG</PrimitiveFormatId>
-      <PrimitiveFormat>NonNegativeInteger</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>502</TestValue>
-      <PrimitiveFormatFail1>-1</PrimitiveFormatFail1>
       <VersionedType>recq19BcuGBYsocRs</VersionedType>
       <Idx>6</Idx>
+      <PrimitiveFormat>NonNegativeInteger</PrimitiveFormat>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>-1</PrimitiveFormatFail1>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>Integer</TypeInPayload>
       <Format>NonNegativeInteger</Format>
       <PreValidateFormat />
@@ -14189,16 +14189,16 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <createdTime>2022-06-14T10:59:30Z</createdTime>
       <Value>ComponentAttributeClass</Value>
       <IsRequired>true</IsRequired>
-      <VersionedSubTypeName>component.attribute.class.gt.000</VersionedSubTypeName>
-      <IsEnum>false</IsEnum>
-      <IsType>true</IsType>
-      <SubTypeDataClass>ComponentAttributeClass</SubTypeDataClass>
       <TestValue>'0a2fed00-8ff9-4391-a6d8-4b08ab94dfe1'</TestValue>
       <VersionedType>recgdLh7RL2N6DtWI</VersionedType>
       <VersionedSubType>recm57e2rjMmC2c6n</VersionedSubType>
       <Description>Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry. </Description>
       <Idx>1</Idx>
       <Title>ComponentAttributeClassId</Title>
+      <IsType>true</IsType>
+      <SubTypeDataClass>ComponentAttributeClass</SubTypeDataClass>
+      <VersionedSubTypeName>component.attribute.class.gt.000</VersionedSubTypeName>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>component.attribute.class.gt.000</TypeInPayload>
       <SubTypeName>component.attribute.class.gt</SubTypeName>
     </TypeAttribute>
@@ -14210,12 +14210,12 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <IsList>true</IsList>
       <PrimitiveType>Number</PrimitiveType>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>[3.42]</TestValue>
       <VersionedType>reczzIn3wGYrEKtbr</VersionedType>
       <Idx>36</Idx>
       <DefaultValue>[3.42]</DefaultValue>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>Number</TypeInPayload>
       <Protocols>satn</Protocols>
     </TypeAttribute>
@@ -14224,19 +14224,19 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <createdTime>2022-07-12T18:12:46Z</createdTime>
       <Value>MakeModel</Value>
       <IsRequired>true</IsRequired>
-      <EnumLocalName>make.model</EnumLocalName>
       <ImmutableInDc>true</ImmutableInDc>
-      <IsEnum>true</IsEnum>
-      <IsType>false</IsType>
       <TestValue>"d5cb9217"</TestValue>
       <VersionedType>recdXzxjKArjU2z9Z</VersionedType>
-      <DefaultEnumValue>UnknownMake__UnknownModel</DefaultEnumValue>
       <Idx>1</Idx>
-      <EnumType>Upper</EnumType>
-      <TypeInPayload>String</TypeInPayload>
-      <Format>spaceheat.make.model</Format>
       <UseEnumAlias>true</UseEnumAlias>
       <Enum>recLQWqTvGwSz2GcN</Enum>
+      <EnumLocalName>make.model</EnumLocalName>
+      <IsType>false</IsType>
+      <DefaultEnumValue>UnknownMake__UnknownModel</DefaultEnumValue>
+      <EnumType>Upper</EnumType>
+      <IsEnum>true</IsEnum>
+      <TypeInPayload>String</TypeInPayload>
+      <Format>spaceheat.make.model</Format>
       <EnumName>spaceheat.make.model</EnumName>
     </TypeAttribute>
     <TypeAttribute>
@@ -14244,9 +14244,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <createdTime>2024-01-24T13:56:32Z</createdTime>
       <Value>InputConfig</Value>
       <IsRequired>true</IsRequired>
-      <VersionedSubTypeName>egauge.register.config.000</VersionedSubTypeName>
-      <IsEnum>false</IsEnum>
-      <IsType>true</IsType>
       <TestValue>{'Address': 9004,
  'Name': 'Garage power',
  'Description': '',
@@ -14260,6 +14257,9 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Description>This is the data available from the modbus csv map provided by eGauge for this component, for example http://egauge14875.egaug.es/6001C/settings.html for a eGauge device with ID 14875</Description>
       <Idx>1</Idx>
       <Title>Input config for one channel of data for a specific eGauge meter</Title>
+      <IsType>true</IsType>
+      <VersionedSubTypeName>egauge.register.config.000</VersionedSubTypeName>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>egauge.register.config.000</TypeInPayload>
       <SubTypeName>egauge.register.config</SubTypeName>
       <Protocols>gwproto</Protocols>
@@ -14271,15 +14271,15 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
       <PrimitiveFormatId>recb9fI4kRkTYXDzA</PrimitiveFormatId>
-      <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>'d1'</TestValue>
-      <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
       <VersionedType>rec8uTC7GK5qgXzg9</VersionedType>
       <Description>As the topology of the grid updates, GNodeAliases will change to reflect that. This may happen a handful of times over the life of a GNode. </Description>
       <Idx>5</Idx>
       <Title>Previous GNodeAlias</Title>
+      <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Format>LeftRightDot</Format>
       <PreValidateFormat />
@@ -14293,12 +14293,12 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
       <PrimitiveFormatId>recb9fI4kRkTYXDzA</PrimitiveFormatId>
-      <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
-      <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
       <VersionedType>rec3kcgktiHCBYpA4</VersionedType>
       <Idx>2</Idx>
+      <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Format>LeftRightDot</Format>
       <PreValidateFormat />
@@ -14310,11 +14310,11 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Value>DisplayName</Value>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>"First 4.5 kW boost in tank"</TestValue>
       <VersionedType>recDjO3rdq76LMOoL</VersionedType>
       <Idx>2</Idx>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Protocols>newatn</Protocols>
       <Protocols>gwproto</Protocols>
@@ -14325,12 +14325,12 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Value>HwUid</Value>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <VersionedType>recdvvHwWMxchWw6W</VersionedType>
       <Description>Use the GridWorks Serial number for GridWorks TankModule1.</Description>
       <Idx>4</Idx>
       <Title>Hardware Unique Id</Title>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
     </TypeAttribute>
     <TypeAttribute>
@@ -14341,14 +14341,14 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
       <PrimitiveFormatId>rec24qjC90m0f4Kvl</PrimitiveFormatId>
-      <PrimitiveFormat>UuidCanonicalTextual</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>'da2dafe0-b5c8-4c36-984c-ae653a29bfcc'</TestValue>
-      <PrimitiveFormatFail1>"d4be12d5-33ba-4f1f-b9e5"</PrimitiveFormatFail1>
       <VersionedType>reczVqlxJInFWonml</VersionedType>
       <Idx>0</Idx>
       <Title>Id of the docker SupervisorContainer</Title>
+      <PrimitiveFormat>UuidCanonicalTextual</PrimitiveFormat>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>"d4be12d5-33ba-4f1f-b9e5"</PrimitiveFormatFail1>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Format>UuidCanonicalTextual</Format>
       <PreValidateFormat />
@@ -14362,13 +14362,13 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
       <PrimitiveFormatId>rec24qjC90m0f4Kvl</PrimitiveFormatId>
-      <PrimitiveFormat>UuidCanonicalTextual</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>"2858afb7-4ffd-4a10-b3b5-c52ad1f61697"</TestValue>
-      <PrimitiveFormatFail1>"d4be12d5-33ba-4f1f-b9e5"</PrimitiveFormatFail1>
       <VersionedType>recX2g8OLICXZHuHr</VersionedType>
       <Idx>1</Idx>
+      <PrimitiveFormat>UuidCanonicalTextual</PrimitiveFormat>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>"d4be12d5-33ba-4f1f-b9e5"</PrimitiveFormatFail1>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Format>UuidCanonicalTextual</Format>
       <PreValidateFormat />
@@ -14383,30 +14383,26 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsRequired>true</IsRequired>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue> "US/Eastern"</TestValue>
       <VersionedType>recrZz3gmzl97POA1</VersionedType>
       <Idx>2</Idx>
       <DefaultValue> "US/Eastern"</DefaultValue>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Protocols>satn</Protocols>
     </TypeAttribute>
     <TypeAttribute>
       <TypeAttributeId>recMJixg6a6DRVTo9</TypeAttributeId>
       <createdTime>2024-03-07T10:41:44Z</createdTime>
-      <IsEnum>false</IsEnum>
       <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
     </TypeAttribute>
     <TypeAttribute>
       <TypeAttributeId>recMLU2TAAxgQCJoD</TypeAttributeId>
       <createdTime>2022-12-02T17:50:26Z</createdTime>
       <Value>GNode</Value>
       <IsRequired>true</IsRequired>
-      <VersionedSubTypeName>g.node.gt.002</VersionedSubTypeName>
-      <IsEnum>false</IsEnum>
-      <IsType>true</IsType>
-      <SubTypeDataClass>GNode</SubTypeDataClass>
       <TestValue>{'GNodeId': '7b1df82e-10c5-49d9-8d02-1e837e31b87e',
  'Alias': 'd1',
  'GNodeRegistryAddr': 'MONSDN5MXG4VMIOHJNCJJBVASG7HEZQSCEIKJAPEPVI5ZJUMQGXQKSOAYU',
@@ -14418,6 +14414,10 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <VersionedSubType>rec8uTC7GK5qgXzg9</VersionedSubType>
       <Idx>1</Idx>
       <Title>The GNode represented by the Gni</Title>
+      <IsType>true</IsType>
+      <SubTypeDataClass>GNode</SubTypeDataClass>
+      <VersionedSubTypeName>g.node.gt.002</VersionedSubTypeName>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>g.node.gt.002</TypeInPayload>
       <SubTypeName>g.node.gt</SubTypeName>
       <Protocols>gridworks</Protocols>
@@ -14429,12 +14429,12 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsRequired>true</IsRequired>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>Integer</PrimitiveType>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>3</TestValue>
       <VersionedType>recQ1SzB1rQPnbRUR</VersionedType>
       <Idx>4</Idx>
       <Title>Exponent</Title>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>Integer</TypeInPayload>
     </TypeAttribute>
     <TypeAttribute>
@@ -14443,12 +14443,12 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Value>HwUid</Value>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>"1001"</TestValue>
       <VersionedType>recBf941oDshcuasP</VersionedType>
       <Idx>6</Idx>
       <Title>Hardware Unique Id</Title>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Protocols>gwproto</Protocols>
     </TypeAttribute>
@@ -14458,18 +14458,18 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Value>FsmActionList</Value>
       <IsRequired>true</IsRequired>
       <IsList>true</IsList>
-      <VersionedSubTypeName>fsm.atomic.report.000</VersionedSubTypeName>
-      <IsEnum>false</IsEnum>
-      <IsType>true</IsType>
       <TestValue>[]</TestValue>
       <VersionedType>recepkVk3vOelGIUa</VersionedType>
       <VersionedSubType>recepQisfhP2a9bg8</VersionedSubType>
       <Description>FSM Actions (that is, side-effects of state machine transitions with real-world changes to the underlying TerminalAsset).</Description>
       <Idx>8</Idx>
       <Title>Finite State Machine Action List</Title>
-      <TypeInPayload>fsm.atomic.report.000</TypeInPayload>
       <Axiom>receuBmb8VweSQ7Cu</Axiom>
       <Url>https://gridworks-protocol.readthedocs.io/en/latest/finite-state-machines.html</Url>
+      <IsType>true</IsType>
+      <VersionedSubTypeName>fsm.atomic.report.000</VersionedSubTypeName>
+      <IsEnum>false</IsEnum>
+      <TypeInPayload>fsm.atomic.report.000</TypeInPayload>
       <SubTypeName>fsm.atomic.report</SubTypeName>
       <Protocols>gwproto</Protocols>
     </TypeAttribute>
@@ -14481,15 +14481,15 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
       <PrimitiveFormatId>recb9fI4kRkTYXDzA</PrimitiveFormatId>
-      <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>"a.elt1.relay"</TestValue>
-      <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
       <VersionedType>reciGkEyh61sro7R0</VersionedType>
       <Description>The boolean actuator Spaceheat Node getting turned on or off.</Description>
       <Idx>1</Idx>
       <Title>About Node Name</Title>
+      <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Format>LeftRightDot</Format>
       <PreValidateFormat />
@@ -14501,12 +14501,12 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsRequired>true</IsRequired>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>Integer</PrimitiveType>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>1</TestValue>
       <VersionedType>recvJ9OVpqVVP895H</VersionedType>
       <Idx>5</Idx>
       <DefaultValue>1</DefaultValue>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>Integer</TypeInPayload>
       <Protocols>gwatn</Protocols>
     </TypeAttribute>
@@ -14516,11 +14516,11 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Value>ReportingSamplePeriodS</Value>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>Integer</PrimitiveType>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>300</TestValue>
       <VersionedType>recUj3ZPKMsXanG88</VersionedType>
       <Idx>6</Idx>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>Integer</TypeInPayload>
     </TypeAttribute>
     <TypeAttribute>
@@ -14528,30 +14528,30 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <createdTime>2023-12-10T21:09:34Z</createdTime>
       <Value>Tank</Value>
       <IsRequired>true</IsRequired>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <VersionedType>recdvvHwWMxchWw6W</VersionedType>
       <Description>The configuration information (HubitatTankSettingsGt) about the 4 analog temperature sensors for a GridWorks TankModule1.</Description>
       <Idx>2</Idx>
       <Title>Tank</Title>
-      <TypeInPayload>Dict</TypeInPayload>
       <TypeHelper>recRsm0fA5EPG1TDW</TypeHelper>
+      <IsType>false</IsType>
       <TypeHelperName>HubitatTankSettingsGt</TypeHelperName>
+      <IsEnum>false</IsEnum>
+      <TypeInPayload>Dict</TypeInPayload>
     </TypeAttribute>
     <TypeAttribute>
       <TypeAttributeId>recMf3Cyd38gDFrUf</TypeAttributeId>
       <createdTime>2023-12-10T20:40:06Z</createdTime>
       <Value>ComponentAttributeClass</Value>
       <IsRequired>true</IsRequired>
-      <VersionedSubTypeName>component.attribute.class.gt.001</VersionedSubTypeName>
-      <IsEnum>false</IsEnum>
-      <IsType>true</IsType>
-      <SubTypeDataClass>ComponentAttributeClass</SubTypeDataClass>
       <VersionedType>recaPHyYTlb7SrZJC</VersionedType>
       <VersionedSubType>recQdr8QOQ0jb3vRn</VersionedSubType>
       <Description>Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry. </Description>
       <Idx>1</Idx>
       <Title>ComponentAttributeClassId</Title>
+      <IsType>true</IsType>
+      <SubTypeDataClass>ComponentAttributeClass</SubTypeDataClass>
+      <VersionedSubTypeName>component.attribute.class.gt.001</VersionedSubTypeName>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>component.attribute.class.gt.001</TypeInPayload>
       <SubTypeName>component.attribute.class.gt</SubTypeName>
       <Protocols>gwproto</Protocols>
@@ -14564,15 +14564,15 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
       <PrimitiveFormatId>rec24qjC90m0f4Kvl</PrimitiveFormatId>
-      <PrimitiveFormat>UuidCanonicalTextual</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>"2ca9e65a-5e85-4eaa-811b-901e940f8d09"</TestValue>
-      <PrimitiveFormatFail1>"d4be12d5-33ba-4f1f-b9e5"</PrimitiveFormatFail1>
       <VersionedType>recbMWz8PxqJUI41L</VersionedType>
       <Description>Primary GridWorks identifier for a specific physical instance of a MultipurposeSensor (perhaps only the 12-channel analog temp sensor), and also as a more generic Component. </Description>
       <Idx>0</Idx>
       <Title>Component Id</Title>
+      <PrimitiveFormat>UuidCanonicalTextual</PrimitiveFormat>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>"d4be12d5-33ba-4f1f-b9e5"</PrimitiveFormatFail1>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Format>UuidCanonicalTextual</Format>
       <PreValidateFormat />
@@ -14585,38 +14585,38 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
       <PrimitiveFormatId>rec8FKfbgEJZxvlIE</PrimitiveFormatId>
-      <PrimitiveFormat>SpaceheatName</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
-      <TestValue>"h.s.admin.iso-valve"</TestValue>
-      <PrimitiveFormatFail1>"A.hot-stuff"</PrimitiveFormatFail1>
       <VersionedType>recepQisfhP2a9bg8</VersionedType>
       <Description>The Name (as opposed to the handle) of the Spaceheat Node actor issuing the Finite State Machine report.  The actor is meant to realize and be the authority on the FSM in question. Its handle reflects the state it is in.</Description>
       <Idx>0</Idx>
       <Title>From Name</Title>
+      <PrimitiveFormat>SpaceheatName</PrimitiveFormat>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>"A.hot-stuff"</PrimitiveFormatFail1>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Format>SpaceheatName</Format>
       <PreValidateFormat />
       <Protocols>gwproto</Protocols>
+      <TestValue>"h.s.admin.iso-valve"</TestValue>
     </TypeAttribute>
     <TypeAttribute>
       <TypeAttributeId>recMomsDfu8ViRPzW</TypeAttributeId>
       <createdTime>2022-07-10T14:13:43Z</createdTime>
       <Value>Role</Value>
       <IsRequired>true</IsRequired>
-      <EnumLocalName>role</EnumLocalName>
       <ImmutableInDc>true</ImmutableInDc>
-      <IsEnum>true</IsEnum>
-      <IsType>false</IsType>
       <TestValue> "5a28eb2e"</TestValue>
       <VersionedType>recUj3ZPKMsXanG88</VersionedType>
-      <DefaultEnumValue>Unknown</DefaultEnumValue>
       <Idx>3</Idx>
-      <EnumType>UpperPython</EnumType>
-      <TypeInPayload>String</TypeInPayload>
-      <Format>sh.node.role</Format>
       <UseEnumAlias>true</UseEnumAlias>
       <Enum>recomGYBJ9ldSsiNU</Enum>
+      <EnumLocalName>role</EnumLocalName>
+      <IsType>false</IsType>
+      <DefaultEnumValue>Unknown</DefaultEnumValue>
+      <EnumType>UpperPython</EnumType>
+      <IsEnum>true</IsEnum>
+      <TypeInPayload>String</TypeInPayload>
+      <Format>sh.node.role</Format>
       <EnumName>sh.node.role</EnumName>
     </TypeAttribute>
     <TypeAttribute>
@@ -14627,13 +14627,13 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
       <PrimitiveFormatId>recvbnpa4cX2nNp9p</PrimitiveFormatId>
-      <PrimitiveFormat>AlgoMsgPackEncoded</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>'gqRtc2lng6ZzdWJzaWeSgaJwa8Qgi1hzb1WaDzF+215cR8xmiRfUQMrnjqHtQV5PiFBAUtmConBrxCD8IT4Zu8vBAhRNsXoWF+2i6q2KyBZrPhmbDCKJD7rBBqFzxEAEp8UcTEJSyTmgw96/mCnNHKfhkdYMCD5jxWejHRmPCrR8U9z/FBVsoCGbjDTTk2L1k7n/eVlumEk/M1KSe48Jo3RocgKhdgGjdHhuiaRhcGFyhaJhbq9Nb2xseSBNZXRlcm1haWSiYXXZKWh0dHA6Ly9sb2NhbGhvc3Q6NTAwMC9tb2xseWNvL3doby13ZS1hcmUvoW3EIItYc29Vmg8xftteXEfMZokX1EDK546h7UFeT4hQQFLZoXQBonVupVZMRFRSo2ZlZc0D6KJmdlGjZ2VuqnNhbmRuZXQtdjGiZ2jEIC/iF+bI4LU6UTgG4SIxyD10PS0/vNAEa93OC5SVRFn6omx2zQQ5pG5vdGXEK01vbGx5IEluYyBUZWxlbWV0cnkgU3VydmV5b3JzIGFuZCBQdXJ2ZXlvcnOjc25kxCDHZxhdCT2TxxxZlZ/H5mIku1s4ulDm3EmU6dYKXCWEB6R0eXBlpGFjZmc='</TestValue>
       <VersionedType>recAWKkS0hcyws7O6</VersionedType>
       <Description>Funding transaction for the TaDaemon account, signed by the TaOwner. </Description>
       <Idx>3</Idx>
+      <PrimitiveFormat>AlgoMsgPackEncoded</PrimitiveFormat>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Format>AlgoMsgPackEncoded</Format>
       <PreValidateFormat />
@@ -14643,22 +14643,22 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
     <TypeAttribute>
       <TypeAttributeId>recN4Z0T3ZXYwoFrg</TypeAttributeId>
       <createdTime>2024-01-26T19:29:47Z</createdTime>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <Idx>1</Idx>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
     </TypeAttribute>
     <TypeAttribute>
       <TypeAttributeId>recN8NS2KiZw0Wzbp</TypeAttributeId>
       <createdTime>2022-07-10T14:13:38Z</createdTime>
       <Value>Component</Value>
-      <VersionedSubTypeName>component.gt.000</VersionedSubTypeName>
-      <IsEnum>false</IsEnum>
-      <IsType>true</IsType>
-      <SubTypeDataClass>Component</SubTypeDataClass>
       <TestValue>"80f95280-e999-49e0-a0e4-a7faf3b5b3bd"</TestValue>
       <VersionedType>recUj3ZPKMsXanG88</VersionedType>
       <VersionedSubType>recgdLh7RL2N6DtWI</VersionedSubType>
       <Idx>5</Idx>
+      <IsType>true</IsType>
+      <SubTypeDataClass>Component</SubTypeDataClass>
+      <VersionedSubTypeName>component.gt.000</VersionedSubTypeName>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>component.gt.000</TypeInPayload>
       <SubTypeName>component.gt</SubTypeName>
     </TypeAttribute>
@@ -14670,14 +14670,14 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
       <PrimitiveFormatId>rec1S1Qh6ReE9UJxT</PrimitiveFormatId>
-      <PrimitiveFormat>WorldInstanceNameFormat</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>'d1__1'</TestValue>
       <VersionedType>reczVqlxJInFWonml</VersionedType>
       <Description>For example, d1__1 is a potential name for a World whose World GNode has alias d1.</Description>
       <Idx>2</Idx>
       <Title>Name of the WorldInstance</Title>
+      <PrimitiveFormat>WorldInstanceNameFormat</PrimitiveFormat>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Format>WorldInstanceNameFormat</Format>
       <PreValidateFormat />
@@ -14689,15 +14689,15 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Value>ConfigList</Value>
       <IsRequired>true</IsRequired>
       <IsList>true</IsList>
-      <VersionedSubTypeName>telemetry.reporting.config.000</VersionedSubTypeName>
-      <IsEnum>false</IsEnum>
-      <IsType>true</IsType>
       <TestValue>[{'AboutNodeName': 'a.m.hp.outdoor.power', 'ReportOnChange': True, 'SamplePeriodS': 300, 'Exponent': 0, 'AsyncReportThreshold': 0.02, 'NameplateMaxValue': 3500, 'TypeName': 'telemetry.reporting.config', 'Version': '000', 'TelemetryNameGtEnumSymbol': 'af39eec9', 'UnitGtEnumSymbol': 'f459a9c3'}]</TestValue>
       <VersionedType>recxdlQ6gCN8mD39r</VersionedType>
       <VersionedSubType>recDEr7ob2KLqM4gU</VersionedSubType>
       <Description>This power meter will produce multiple data channels. Each data channel measures a certain quantities (like power, current) for certain ShNodes (like a boost element or heat pump). </Description>
       <Idx>3</Idx>
       <Title>List of Data Channel configs </Title>
+      <IsType>true</IsType>
+      <VersionedSubTypeName>telemetry.reporting.config.000</VersionedSubTypeName>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>telemetry.reporting.config.000</TypeInPayload>
       <SubTypeName>telemetry.reporting.config</SubTypeName>
     </TypeAttribute>
@@ -14709,12 +14709,12 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <IsList>true</IsList>
       <PrimitiveType>Integer</PrimitiveType>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>[0]</TestValue>
       <VersionedType>recpHvfV5mSI7pgRP</VersionedType>
       <Idx>1</Idx>
       <Title>List of RelayStateCommands</Title>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>Integer</TypeInPayload>
     </TypeAttribute>
     <TypeAttribute>
@@ -14725,13 +14725,13 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
       <PrimitiveFormatId>rec24qjC90m0f4Kvl</PrimitiveFormatId>
-      <PrimitiveFormat>UuidCanonicalTextual</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>'f0eaf540-94c8-4f85-a671-395ab86d0392'</TestValue>
-      <PrimitiveFormatFail1>"d4be12d5-33ba-4f1f-b9e5"</PrimitiveFormatFail1>
       <VersionedType>recd5K0XiAzHsj2Pw</VersionedType>
       <Idx>1</Idx>
+      <PrimitiveFormat>UuidCanonicalTextual</PrimitiveFormat>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>"d4be12d5-33ba-4f1f-b9e5"</PrimitiveFormatFail1>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Format>UuidCanonicalTextual</Format>
       <PreValidateFormat />
@@ -14746,13 +14746,13 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
       <PrimitiveFormatId>recb9fI4kRkTYXDzA</PrimitiveFormatId>
-      <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>"d1.isone.ver.keene.holly"</TestValue>
-      <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
       <VersionedType>recBqSlQdF17CgMPY</VersionedType>
       <Idx>0</Idx>
+      <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Format>LeftRightDot</Format>
       <PreValidateFormat />
@@ -14765,12 +14765,12 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
       <PrimitiveFormatId>recopFBsq4TmG87Op</PrimitiveFormatId>
-      <PrimitiveFormat>AlgoAddressStringFormat</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>'RNMHG32VTIHTC7W3LZOEPTDGREL5IQGK46HKD3KBLZHYQUCAKLMT4G5ALI'</TestValue>
       <VersionedType>recDp8U1jLA9zeEx2</VersionedType>
       <Idx>8</Idx>
+      <PrimitiveFormat>AlgoAddressStringFormat</PrimitiveFormat>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Format>AlgoAddressStringFormat</Format>
       <PreValidateFormat />
@@ -14781,17 +14781,17 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <createdTime>2024-01-24T17:04:18Z</createdTime>
       <Value>ComponentAttributeClass</Value>
       <IsRequired>true</IsRequired>
-      <VersionedSubTypeName>electric.meter.cac.gt.000</VersionedSubTypeName>
       <ImmutableInDc>true</ImmutableInDc>
-      <IsEnum>false</IsEnum>
-      <IsType>true</IsType>
-      <SubTypeDataClass>ElectricMeterCac</SubTypeDataClass>
       <TestValue>'c1856e62-d8c0-4352-b79e-6ae05a5294c2'</TestValue>
       <VersionedType>recq19BcuGBYsocRs</VersionedType>
       <VersionedSubType>recqhQADHovWX1hOl</VersionedSubType>
       <Description>Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry. </Description>
       <Idx>1</Idx>
       <Title>ComponentAttributeClassId</Title>
+      <IsType>true</IsType>
+      <SubTypeDataClass>ElectricMeterCac</SubTypeDataClass>
+      <VersionedSubTypeName>electric.meter.cac.gt.000</VersionedSubTypeName>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>electric.meter.cac.gt.000</TypeInPayload>
       <SubTypeName>electric.meter.cac.gt</SubTypeName>
       <Protocols>gwproto</Protocols>
@@ -14800,9 +14800,9 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeAttributeId>recNggc2pyuzi8Acm</TypeAttributeId>
       <createdTime>2022-07-25T21:46:46Z</createdTime>
       <Value>BooleanActuatorComponentList</Value>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <VersionedType>recyD0ycgUiT7TiH2</VersionedType>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
     </TypeAttribute>
     <TypeAttribute>
       <TypeAttributeId>recNiGLIdTxOhujx3</TypeAttributeId>
@@ -14812,16 +14812,16 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
       <PrimitiveFormatId>rec24qjC90m0f4Kvl</PrimitiveFormatId>
-      <PrimitiveFormat>UuidCanonicalTextual</PrimitiveFormat>
       <ImmutableInDc>true</ImmutableInDc>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>"798fe14a-4073-41eb-bce2-075906aee6bb"</TestValue>
-      <PrimitiveFormatFail1>"d4be12d5-33ba-4f1f-b9e5"</PrimitiveFormatFail1>
       <VersionedType>recPbLemXyDnvKcIc</VersionedType>
       <Description>Primary GridWorks identifier for a specific physical instance of a Relay, and also as a more generic Component. </Description>
       <Idx>0</Idx>
       <Title>Component Id</Title>
+      <PrimitiveFormat>UuidCanonicalTextual</PrimitiveFormat>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>"d4be12d5-33ba-4f1f-b9e5"</PrimitiveFormatFail1>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Format>UuidCanonicalTextual</Format>
       <PreValidateFormat />
@@ -14832,16 +14832,16 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <createdTime>2024-01-26T20:27:59Z</createdTime>
       <Value>RelayConfigList</Value>
       <IsRequired>true</IsRequired>
-      <VersionedSubTypeName>relay.actor.config.000</VersionedSubTypeName>
-      <IsEnum>false</IsEnum>
-      <IsType>true</IsType>
       <VersionedType>recKMMpED7S2tQbz9</VersionedType>
       <VersionedSubType>recw5ZTFWnrXVu5vs</VersionedSubType>
       <Description>Information about which actors control each relay, and the relay wiring state: (normally open, normally closed, double throw).</Description>
       <Idx>3</Idx>
       <Title>Relay Config List</Title>
-      <TypeInPayload>relay.actor.config.000</TypeInPayload>
       <Axiom>recedWWOzObUNu3N4</Axiom>
+      <IsType>true</IsType>
+      <VersionedSubTypeName>relay.actor.config.000</VersionedSubTypeName>
+      <IsEnum>false</IsEnum>
+      <TypeInPayload>relay.actor.config.000</TypeInPayload>
       <SubTypeName>relay.actor.config</SubTypeName>
       <Protocols>gwproto</Protocols>
     </TypeAttribute>
@@ -14853,13 +14853,13 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
       <PrimitiveFormatId>recb9fI4kRkTYXDzA</PrimitiveFormatId>
-      <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>"a.s"</TestValue>
-      <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
       <VersionedType>rec0ASFtYgDm4fTf8</VersionedType>
       <Idx>2</Idx>
+      <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Format>LeftRightDot</Format>
       <PreValidateFormat />
@@ -14873,14 +14873,14 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsList>true</IsList>
       <PrimitiveType>String</PrimitiveType>
       <PrimitiveFormatId>recb9fI4kRkTYXDzA</PrimitiveFormatId>
-      <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>[]</TestValue>
-      <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
       <VersionedType>recwp0F6Gdrg8qLwb</VersionedType>
       <Idx>2</Idx>
       <Title>Aliases of Gnis that own Algorand secret keys</Title>
+      <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Format>LeftRightDot</Format>
       <PreValidateFormat />
@@ -14891,9 +14891,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <createdTime>2022-11-11T00:46:45Z</createdTime>
       <Value>Params</Value>
       <IsRequired>true</IsRequired>
-      <VersionedSubTypeName>atn.params.000</VersionedSubTypeName>
-      <IsEnum>false</IsEnum>
-      <IsType>true</IsType>
       <TestValue>{
             "GNodeAlias": "d1.isone.ver.keene.holly",
             "HomeCity": "MILLINOCKET_ME",
@@ -14918,6 +14915,9 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <VersionedType>rec3fLb6b0gIeuCTO</VersionedType>
       <VersionedSubType>rec4yUxGiLZpqWQqb</VersionedSubType>
       <Idx>5</Idx>
+      <IsType>true</IsType>
+      <VersionedSubTypeName>atn.params.000</VersionedSubTypeName>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>atn.params.000</TypeInPayload>
       <SubTypeName>atn.params</SubTypeName>
       <Protocols>gwatn</Protocols>
@@ -14931,14 +14931,14 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsList>true</IsList>
       <PrimitiveType>String</PrimitiveType>
       <PrimitiveFormatId>rec8FKfbgEJZxvlIE</PrimitiveFormatId>
-      <PrimitiveFormat>SpaceheatName</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
-      <PrimitiveFormatFail1>"A.hot-stuff"</PrimitiveFormatFail1>
       <VersionedType>recswLi7iwHDmuzfw</VersionedType>
       <Description>List of the names of the  Data Channels getting measured. These names are immutable and locally unique for the Scada.</Description>
       <Idx>1</Idx>
       <Title>Channel Name List</Title>
+      <PrimitiveFormat>SpaceheatName</PrimitiveFormat>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>"A.hot-stuff"</PrimitiveFormatFail1>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Format>SpaceheatName</Format>
       <PreValidateFormat />
@@ -14951,13 +14951,13 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>Integer</PrimitiveType>
       <PrimitiveFormatId>rec13dujLuXXSf5L3</PrimitiveFormatId>
-      <PrimitiveFormat>ReasonableUnixTimeS</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>1668127823</TestValue>
-      <PrimitiveFormatFail1>32503683600</PrimitiveFormatFail1>
       <VersionedType>recBqSlQdF17CgMPY</VersionedType>
       <Idx>5</Idx>
+      <PrimitiveFormat>ReasonableUnixTimeS</PrimitiveFormat>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>32503683600</PrimitiveFormatFail1>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>Integer</TypeInPayload>
       <Format>ReasonableUnixTimeS</Format>
       <PreValidateFormat />
@@ -14970,12 +14970,12 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsRequired>true</IsRequired>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>Integer</PrimitiveType>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>190</TestValue>
       <VersionedType>recw5evm1WetKAzZG</VersionedType>
       <Idx>11</Idx>
       <DefaultValue>190</DefaultValue>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>Integer</TypeInPayload>
       <Protocols>gwatn</Protocols>
     </TypeAttribute>
@@ -14986,12 +14986,12 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsRequired>true</IsRequired>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>Boolean</PrimitiveType>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>True</TestValue>
       <VersionedType>recQVDSRdSrYEHimS</VersionedType>
       <Description>Asks SCADA to send back a snapshot. For this version of the type, nothing would happen if SendSnapshot were set to False. However, we include this in case additional variations are added later.</Description>
       <Title>Send Snapshot</Title>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>Boolean</TypeInPayload>
       <Protocols>newatn</Protocols>
       <Protocols>gwproto</Protocols>
@@ -15003,10 +15003,10 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsRequired>true</IsRequired>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>Integer</PrimitiveType>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <VersionedType>recacY2b5R2bByiAQ</VersionedType>
       <Idx>3</Idx>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>Integer</TypeInPayload>
       <Protocols>gwmm</Protocols>
       <Protocols>gwatn</Protocols>
@@ -15018,12 +15018,12 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsRequired>true</IsRequired>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>Integer</PrimitiveType>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>158</TestValue>
       <VersionedType>recw5evm1WetKAzZG</VersionedType>
       <Idx>18</Idx>
       <DefaultValue>158</DefaultValue>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>Integer</TypeInPayload>
       <Protocols>gwatn</Protocols>
     </TypeAttribute>
@@ -15035,19 +15035,19 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsPrimitive>true</IsPrimitive>
       <PrimitiveType>String</PrimitiveType>
       <PrimitiveFormatId>recb9fI4kRkTYXDzA</PrimitiveFormatId>
-      <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
-      <IsEnum>false</IsEnum>
-      <IsType>false</IsType>
       <TestValue>"d1.isone.ver.keene.holly"</TestValue>
-      <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
       <VersionedType>recE3bIWWFpMPqyS1</VersionedType>
       <Idx>0</Idx>
       <Title>My GNodeAlias</Title>
+      <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
+      <IsEnum>false</IsEnum>
       <TypeInPayload>String</TypeInPayload>
       <Format>LeftRightDot</Format>
       <PreValidateFormat />
     </TypeAttribute>
-    <TypeAttribute>itr683sTnBHSInaQo/recOBfgFL5HGn9j1B</TypeAttribute>
+    <TypeAttribute>itrJzMk4UGN9YqQ8K/recOBfgFL5HGn9j1B</TypeAttribute>
     <TypeAttribute>
       <TypeAttributeId>recOOwdmT4q1uk8hq</TypeAttributeId>
       <createdTime>2023-11-10T14:53:48Z</createdTime>
@@ -16833,7 +16833,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeInPayload>Integer</TypeInPayload>
       <Protocols>satn</Protocols>
     </TypeAttribute>
-    <TypeAttribute>itr683sTnBHSInaQo/recUCkBcvPXWjz0vL</TypeAttribute>
+    <TypeAttribute>itrJzMk4UGN9YqQ8K/recUCkBcvPXWjz0vL</TypeAttribute>
     <TypeAttribute>
       <TypeAttributeId>recUGf1IY6nFFb5Gw</TypeAttributeId>
       <createdTime>2022-11-29T21:34:48Z</createdTime>
@@ -18620,7 +18620,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <EnumName>recognized.currency.unit</EnumName>
       <Protocols>gwatn</Protocols>
     </TypeAttribute>
-    <TypeAttribute>itr683sTnBHSInaQo/recbIZmTs1RacVBoR</TypeAttribute>
+    <TypeAttribute>itrJzMk4UGN9YqQ8K/recbIZmTs1RacVBoR</TypeAttribute>
     <TypeAttribute>
       <TypeAttributeId>recbP43UORyJcMOyK</TypeAttributeId>
       <createdTime>2022-10-02T23:33:30Z</createdTime>
@@ -20358,7 +20358,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
     </TypeAttribute>
-    <TypeAttribute>itr683sTnBHSInaQo/rechr2fV1ySXhVahO</TypeAttribute>
+    <TypeAttribute>itrJzMk4UGN9YqQ8K/rechr2fV1ySXhVahO</TypeAttribute>
     <TypeAttribute>
       <TypeAttributeId>rechs1D8dytBH2C5s</TypeAttributeId>
       <createdTime>2023-01-13T18:58:50Z</createdTime>
@@ -22172,7 +22172,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeInPayload>Number</TypeInPayload>
       <Protocols>satn</Protocols>
     </TypeAttribute>
-    <TypeAttribute>itr683sTnBHSInaQo/recoEvfq9uUKvxpmn</TypeAttribute>
+    <TypeAttribute>itrJzMk4UGN9YqQ8K/recoEvfq9uUKvxpmn</TypeAttribute>
     <TypeAttribute>
       <TypeAttributeId>recoF6VnyUxuQ4baG</TypeAttributeId>
       <createdTime>2022-11-29T13:57:43Z</createdTime>
@@ -24006,7 +24006,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Protocols>gnf</Protocols>
       <Protocols>gwatn</Protocols>
     </TypeAttribute>
-    <TypeAttribute>itr683sTnBHSInaQo/recv0jEuP3xygb0bP</TypeAttribute>
+    <TypeAttribute>itrJzMk4UGN9YqQ8K/recv0jEuP3xygb0bP</TypeAttribute>
     <TypeAttribute>
       <TypeAttributeId>recvDPtsFQBsY8Kln</TypeAttributeId>
       <createdTime>2022-11-28T14:50:42Z</createdTime>
@@ -26155,7 +26155,7 @@ The data channel names are partitioned by:
       <MakeDataClass />
       <Creation>rech8RtBLsLVe51DN</Creation>
     </TypeAxiom>
-    <TypeAxiom>itrgf15q6zdoGsl60/recgkttJLsyUmqLlp</TypeAxiom>
+    <TypeAxiom>itrBV3RjdZNBT7L7H/recgkttJLsyUmqLlp</TypeAxiom>
     <TypeAxiom>
       <TypeAxiomId>recgr767PF8P1X06i</TypeAxiomId>
       <createdTime>2022-09-22T05:33:48Z</createdTime>
@@ -27670,7 +27670,7 @@ by the concept of MarketType.</Description>
       <Title>Weather Forecast Raw</Title>
       <ConsistencyCheck>1</ConsistencyCheck>
     </TypeBase>
-    <TypeBase>itrEjSFRh37CWCyJp/recgU28SjJjJYnGHH</TypeBase>
+    <TypeBase>itrdT1Bqhe7jS6xWr/recgU28SjJjJYnGHH</TypeBase>
     <TypeBase>
       <TypeBaseId>recgwy2KHi27HeGkF</TypeBaseId>
       <createdTime>2024-03-04T17:48:53Z</createdTime>
@@ -28311,8 +28311,8 @@ PowerOut = Alpha + Beta * OutsideTempF
       <PrimitiveType>Integer</PrimitiveType>
       <TypeHelper>recTVMqB4otqDA0cK</TypeHelper>
       <PrimitiveFormatId>recSFKqQmp3fEBgGd</PrimitiveFormatId>
-      <Idx>4</Idx>
       <PrimitiveFormat>OneOrTwo</PrimitiveFormat>
+      <Idx>4</Idx>
       <IsEnum>false</IsEnum>
       <Format>Integer</Format>
     </TypeHelperAttribute>
@@ -28356,13 +28356,13 @@ PowerOut = Alpha + Beta * OutsideTempF
       <IsRequired>true</IsRequired>
       <TypeHelper>recTVMqB4otqDA0cK</TypeHelper>
       <Idx>7</Idx>
-      <DefaultValue>c89d0ba1</DefaultValue>
-      <EnumAttributeAlias>EnumTelemetryName</EnumAttributeAlias>
-      <Enum>rec2HyLffy6QK9QId</Enum>
       <EnumType>UpperPython</EnumType>
       <LocalName>telemetry.name</LocalName>
+      <DefaultValue>c89d0ba1</DefaultValue>
       <IsEnum>true</IsEnum>
+      <EnumAttributeAlias>EnumTelemetryName</EnumAttributeAlias>
       <Format>spaceheat.telemetry.name</Format>
+      <Enum>rec2HyLffy6QK9QId</Enum>
     </TypeHelperAttribute>
     <TypeHelperAttribute>
       <TypeHelperAttributeId>recBP9TRGU7sOujts</TypeHelperAttributeId>
@@ -28412,12 +28412,12 @@ PowerOut = Alpha + Beta * OutsideTempF
       <IsRequired>true</IsRequired>
       <TypeHelper>recTVMqB4otqDA0cK</TypeHelper>
       <Idx>8</Idx>
-      <DefaultValue>ec14bd47</DefaultValue>
-      <Enum>recc1W1unmzowrKX9</Enum>
       <EnumType>UpperPython</EnumType>
       <LocalName>unit</LocalName>
+      <DefaultValue>ec14bd47</DefaultValue>
       <IsEnum>true</IsEnum>
       <Format>spaceheat.unit</Format>
+      <Enum>recc1W1unmzowrKX9</Enum>
     </TypeHelperAttribute>
     <TypeHelperAttribute>
       <TypeHelperAttributeId>recYvW8V2AjnVKGsi</TypeHelperAttributeId>
@@ -28427,8 +28427,8 @@ PowerOut = Alpha + Beta * OutsideTempF
       <PrimitiveType>Integer</PrimitiveType>
       <TypeHelper>recTVMqB4otqDA0cK</TypeHelper>
       <PrimitiveFormatId>recKcuGOfjTIPqtXk</PrimitiveFormatId>
-      <Idx>1</Idx>
       <PrimitiveFormat>PositiveInteger</PrimitiveFormat>
+      <Idx>1</Idx>
       <IsEnum>false</IsEnum>
       <Format>Integer</Format>
     </TypeHelperAttribute>
@@ -28439,8 +28439,8 @@ PowerOut = Alpha + Beta * OutsideTempF
       <PrimitiveType>String</PrimitiveType>
       <TypeHelper>recVNw3zEnQ7UEkyF</TypeHelper>
       <PrimitiveFormatId>rectejheYhusOBZIo</PrimitiveFormatId>
-      <Idx>4</Idx>
       <PrimitiveFormat>MacAddressFormat</PrimitiveFormat>
+      <Idx>4</Idx>
       <IsEnum>false</IsEnum>
       <Format>String</Format>
     </TypeHelperAttribute>
@@ -29480,7 +29480,7 @@ PowerOut = Alpha + Beta * OutsideTempF
       <Description>Collection of all the latest measurements (timestamped) captured by the SCADA for all of its data channels.</Description>
       <BaseType>recPnrf8TmF9WBgAm</BaseType>
       <TypeName>snapshot.spaceheat</TypeName>
-      <Status>Pending</Status>
+      <Status>Active</Status>
       <ProtocolTypes>rec9wSDE2snnCJmLi</ProtocolTypes>
       <Title>Snapshot</Title>
       <PropertyFormatsUsed>recb9fI4kRkTYXDzA</PropertyFormatsUsed>
@@ -30989,7 +30989,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Description>A list of data channels associated to a specific Terminal Asset.</Description>
       <BaseType>recZWYlICsJjV7I3V</BaseType>
       <TypeName>ta.data.channels</TypeName>
-      <Status>Pending</Status>
+      <Status>Active</Status>
       <ProtocolTypes>recnziGETwVZFS9Um</ProtocolTypes>
       <Title>Terminal Asset Data Channels</Title>
       <PropertyFormatsUsed>recb9fI4kRkTYXDzA</PropertyFormatsUsed>
@@ -32074,7 +32074,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Protocols>gwatn</Protocols>
       <Protocols>gnf</Protocols>
     </VersionedType>
-    <VersionedType>itrS30wGtHm2xXX1f/recbrp6V9qD6J1NHb</VersionedType>
+    <VersionedType>itrA9ax6itjeF7NSt/recbrp6V9qD6J1NHb</VersionedType>
     <VersionedType>
       <VersionedTypeId>recc2Km1jUViJqVeK</VersionedTypeId>
       <createdTime>2022-11-08T03:22:46Z</createdTime>
@@ -32155,7 +32155,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Description>A SpaceheatNode, or ShNode, is an organizing principal for the SCADA software. ShNodes can represent both underlying physical objects (water tank), measurements of these objects (temperature sensing at the top of a water tank), and actors within the code (an actor measuring multiple temperatures, or an actor responsible for filtering/smoothing temperature data for the purposes of thermostatic control).</Description>
       <BaseType>recijDUCMCF0drLi3</BaseType>
       <TypeName>spaceheat.node.gt</TypeName>
-      <Status>Pending</Status>
+      <Status>Active</Status>
       <UpdateDescription>BIG CHANGES: Alias -&gt; Name.  The Property Format changes from LeftRightDot to SpaceheatNode. Remove Role. (Require numerous changes, in both code and hardware layout.)
 
 MEDIUM CHANGE: Remove ReportingSamplePeriodS. (Requires change for SimpleSensor).
@@ -32562,7 +32562,7 @@ ReportPeriodS -&gt; BatchedTransmissionPeriodS</UpdateDescription>
       <Description>Configuration data used to articulate how time series data is polled and captured for a particular channel.</Description>
       <BaseType>recPoGFtGwFiHMypm</BaseType>
       <TypeName>channel.config</TypeName>
-      <Status>Pending</Status>
+      <Status>Active</Status>
       <UpdateDescription>ExtraAllowed. Replace the ambigious "SamplePeriodS" with "CapturePeriodS" and "PollPeriodMs" added. </UpdateDescription>
       <ProtocolTypes>rec11OYyEPT4FV8al</ProtocolTypes>
       <Title>Channel Configuration</Title>
@@ -32654,7 +32654,7 @@ ReportPeriodS -&gt; BatchedTransmissionPeriodS</UpdateDescription>
       <Description>Authority for the attributes of the component.gt.000 (ComponentId, ComponentAttributeClassId, DisplayName, HwUid) belongs to the WorldRegistry. The WorldRegistry is  part of the GridWorks 'BackOffice' structure for managing relational device data .  Notably, ComponentId and ComponentAttributeClass are both required and immutable.   HwUid is optional but once it is set to a non-null value that is also immutable - it is meant to be an immutable identifier associated to a specific physical device, ideally one that can be read remotely by the SCADA and also by the naked eye. The DisplayName is mutable, with its current value in time governed by the WorldRegistry.</Description>
       <BaseType>recEdlcUTBfQ9Hy6D</BaseType>
       <TypeName>component.gt</TypeName>
-      <Status>Pending</Status>
+      <Status>Active</Status>
       <UpdateDescription>Reference updated cac 001, which has optional MakeModel and min poll period. Also allow extra.</UpdateDescription>
       <ProtocolTypes>recnQKx1KrJs2FsGa</ProtocolTypes>
       <DataClassIdField>ComponentId</DataClassIdField>
@@ -32856,7 +32856,7 @@ ReportPeriodS -&gt; BatchedTransmissionPeriodS</UpdateDescription>
       <Description>A list of timestamped readings (values) for a data channel. This is meant to be reported for non-local consumption (AtomicTNode, other) by a SCADA. Therefore, the data channel is referenced by its globally unique identifier. The receiver needs to reference this idea against a list of the data channels used by the SCADA for accurate parsing.</Description>
       <BaseType>recHZRBexSTBAOPJj</BaseType>
       <TypeName>channel.readings</TypeName>
-      <Status>Pending</Status>
+      <Status>Active</Status>
       <UpdateDescription>Replaces both GtShSimpleTelemetryStatus and GtShMultipurposeTelemetryStatus</UpdateDescription>
       <ProtocolTypes>rec2lRsqXi8nheXkm</ProtocolTypes>
       <PropertyFormatsUsed>recqSXVzLo8RtEjlH</PropertyFormatsUsed>
@@ -33961,7 +33961,7 @@ PowerOut = Alpha + Beta * OutsideTempF
       <Description>A data channel is a concept of some collection of readings that share all characteristics other than time. </Description>
       <BaseType>recySyBLBbcax7x8D</BaseType>
       <TypeName>data.channel.gt</TypeName>
-      <Status>Pending</Status>
+      <Status>Active</Status>
       <ProtocolTypes>recDbV0swsrf9r4Im</ProtocolTypes>
       <DataClassIdField>Id</DataClassIdField>
       <Title>Data Channel</Title>

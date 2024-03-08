@@ -12,12 +12,20 @@ from pydantic import Extra
 from pydantic import Field
 from pydantic import root_validator
 from pydantic import validator
-from gwproto.data_classes.components.ads111x_based_component import Ads111xBasedComponent
-from gwproto.types.thermistor_data_processing_config import ThermistorDataProcessingConfig
-from gwproto.types.thermistor_data_processing_config import ThermistorDataProcessingConfig_Maker
+
+from gwproto.data_classes.components.ads111x_based_component import (
+    Ads111xBasedComponent,
+)
+from gwproto.errors import SchemaError
 from gwproto.types.channel_config import ChannelConfig
 from gwproto.types.channel_config import ChannelConfig_Maker
-from gwproto.errors import SchemaError
+from gwproto.types.thermistor_data_processing_config import (
+    ThermistorDataProcessingConfig,
+)
+from gwproto.types.thermistor_data_processing_config import (
+    ThermistorDataProcessingConfig_Maker,
+)
+
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -132,12 +140,12 @@ class Ads111xBasedComponentGt(BaseModel):
         # TODO: Implement Axiom(s)
 
     @root_validator
-    def check_axiom_(cls, v: dict) -> dict:
+    def check_axiom_1(cls, v: dict) -> dict:
         """
-        Axiom : ThermistorConfig, ChannelConfig consistency.
+        Axiom 1: ThermistorConfig, ChannelConfig consistency.
         list(map(lambda x: x.ReportingConfig, ThermistorConfigList)) is equal to ConfigList
         """
-        # TODO: Implement check for axiom "
+        # TODO: Implement check for axiom 1"
         return v
 
     def as_dict(self) -> Dict[str, Any]:
@@ -207,26 +215,6 @@ class Ads111xBasedComponentGt_Maker:
     type_name = "ads111x.based.component.gt"
     version = "000"
 
-    def __init__(
-        self,
-        component_id: str,
-        component_attribute_class_id: str,
-        display_name: Optional[str],
-        open_voltage_by_ads: List[float],
-        config_list: List[ChannelConfig],
-        thermistor_config_list: List[ThermistorDataProcessingConfig],
-        hw_uid: Optional[str],
-    ):
-        self.tuple = Ads111xBasedComponentGt(
-            ComponentId=component_id,
-            ComponentAttributeClassId=component_attribute_class_id,
-            DisplayName=display_name,
-            OpenVoltageByAds=open_voltage_by_ads,
-            ConfigList=config_list,
-            ThermistorConfigList=thermistor_config_list,
-            HwUid=hw_uid,
-        )
-
     @classmethod
     def tuple_to_type(cls, tuple: Ads111xBasedComponentGt) -> bytes:
         """
@@ -285,18 +273,24 @@ class Ads111xBasedComponentGt_Maker:
         config_list = []
         for elt in d2["ConfigList"]:
             if not isinstance(elt, dict):
-                raise SchemaError(f"ConfigList <{d2['ConfigList']}> must be a List of ChannelConfig types")
+                raise SchemaError(
+                    f"ConfigList <{d2['ConfigList']}> must be a List of ChannelConfig types"
+                )
             t = ChannelConfig_Maker.dict_to_tuple(elt)
             config_list.append(t)
         d2["ConfigList"] = config_list
         if "ThermistorConfigList" not in d2.keys():
             raise SchemaError(f"dict missing ThermistorConfigList: <{d2}>")
         if not isinstance(d2["ThermistorConfigList"], List):
-            raise SchemaError(f"ThermistorConfigList <{d2['ThermistorConfigList']}> must be a List!")
+            raise SchemaError(
+                f"ThermistorConfigList <{d2['ThermistorConfigList']}> must be a List!"
+            )
         thermistor_config_list = []
         for elt in d2["ThermistorConfigList"]:
             if not isinstance(elt, dict):
-                raise SchemaError(f"ThermistorConfigList <{d2['ThermistorConfigList']}> must be a List of ThermistorDataProcessingConfig types")
+                raise SchemaError(
+                    f"ThermistorConfigList <{d2['ThermistorConfigList']}> must be a List of ThermistorDataProcessingConfig types"
+                )
             t = ThermistorDataProcessingConfig_Maker.dict_to_tuple(elt)
             thermistor_config_list.append(t)
         d2["ThermistorConfigList"] = thermistor_config_list
@@ -329,16 +323,15 @@ class Ads111xBasedComponentGt_Maker:
 
     @classmethod
     def dc_to_tuple(cls, dc: Ads111xBasedComponent) -> Ads111xBasedComponentGt:
-        t = Ads111xBasedComponentGt_Maker(
-            component_id=dc.component_id,
-            component_attribute_class_id=dc.component_attribute_class_id,
-            display_name=dc.display_name,
-            open_voltage_by_ads=dc.open_voltage_by_ads,
-            config_list=dc.config_list,
-            thermistor_config_list=dc.thermistor_config_list,
-            hw_uid=dc.hw_uid,
-        ).tuple
-        return t
+        return Ads111xBasedComponentGt(
+            ComponentId=dc.component_id,
+            ComponentAttributeClassId=dc.component_attribute_class_id,
+            DisplayName=dc.display_name,
+            OpenVoltageByAds=dc.open_voltage_by_ads,
+            ConfigList=dc.config_list,
+            ThermistorConfigList=dc.thermistor_config_list,
+            HwUid=dc.hw_uid,
+        )
 
     @classmethod
     def type_to_dc(cls, t: str) -> Ads111xBasedComponent:

@@ -62,7 +62,6 @@ DEFAULT_SENSOR_NODE_NAME_FORMAT = "{about_node_name}"
 
 
 class FibaroTempSensorSettings(FibaroTempSensorSettingsGt):
-
     class Config:
         keep_untouched = (cached_property, TelemetryName)
 

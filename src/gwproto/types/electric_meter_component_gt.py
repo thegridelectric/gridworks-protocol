@@ -11,12 +11,16 @@ from pydantic import BaseModel
 from pydantic import Field
 from pydantic import root_validator
 from pydantic import validator
-from gwproto.data_classes.components.electric_meter_component import ElectricMeterComponent
-from gwproto.types.egauge_io import EgaugeIo
-from gwproto.types.egauge_io import EgaugeIo_Maker
+
+from gwproto.data_classes.components.electric_meter_component import (
+    ElectricMeterComponent,
+)
+from gwproto.errors import SchemaError
 from gwproto.types.channel_config import ChannelConfig
 from gwproto.types.channel_config import ChannelConfig_Maker
-from gwproto.errors import SchemaError
+from gwproto.types.egauge_io import EgaugeIo
+from gwproto.types.egauge_io import EgaugeIo_Maker
+
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -131,7 +135,7 @@ class ElectricMeterComponentGt(BaseModel):
     def check_axiom_1(cls, v: dict) -> dict:
         """
         Axiom 1: Modbus consistency.
-        ModbusHost is None if and only if ModbusPort is None 
+        ModbusHost is None if and only if ModbusPort is None
         """
         # TODO: Implement check for axiom 1"
         return v
@@ -212,28 +216,6 @@ class ElectricMeterComponentGt_Maker:
     type_name = "electric.meter.component.gt"
     version = "001"
 
-    def __init__(
-        self,
-        component_id: str,
-        component_attribute_class_id: str,
-        display_name: Optional[str],
-        config_list: List[ChannelConfig],
-        hw_uid: Optional[str],
-        modbus_host: Optional[str],
-        modbus_port: Optional[int],
-        egauge_io_list: List[EgaugeIo],
-    ):
-        self.tuple = ElectricMeterComponentGt(
-            ComponentId=component_id,
-            ComponentAttributeClassId=component_attribute_class_id,
-            DisplayName=display_name,
-            ConfigList=config_list,
-            HwUid=hw_uid,
-            ModbusHost=modbus_host,
-            ModbusPort=modbus_port,
-            EgaugeIoList=egauge_io_list,
-        )
-
     @classmethod
     def tuple_to_type(cls, tuple: ElectricMeterComponentGt) -> bytes:
         """
@@ -290,7 +272,9 @@ class ElectricMeterComponentGt_Maker:
         config_list = []
         for elt in d2["ConfigList"]:
             if not isinstance(elt, dict):
-                raise SchemaError(f"ConfigList <{d2['ConfigList']}> must be a List of ChannelConfig types")
+                raise SchemaError(
+                    f"ConfigList <{d2['ConfigList']}> must be a List of ChannelConfig types"
+                )
             t = ChannelConfig_Maker.dict_to_tuple(elt)
             config_list.append(t)
         d2["ConfigList"] = config_list
@@ -301,7 +285,9 @@ class ElectricMeterComponentGt_Maker:
         egauge_io_list = []
         for elt in d2["EgaugeIoList"]:
             if not isinstance(elt, dict):
-                raise SchemaError(f"EgaugeIoList <{d2['EgaugeIoList']}> must be a List of EgaugeIo types")
+                raise SchemaError(
+                    f"EgaugeIoList <{d2['EgaugeIoList']}> must be a List of EgaugeIo types"
+                )
             t = EgaugeIo_Maker.dict_to_tuple(elt)
             egauge_io_list.append(t)
         d2["EgaugeIoList"] = egauge_io_list
@@ -335,17 +321,16 @@ class ElectricMeterComponentGt_Maker:
 
     @classmethod
     def dc_to_tuple(cls, dc: ElectricMeterComponent) -> ElectricMeterComponentGt:
-        t = ElectricMeterComponentGt_Maker(
-            component_id=dc.component_id,
-            component_attribute_class_id=dc.component_attribute_class_id,
-            display_name=dc.display_name,
-            config_list=dc.config_list,
-            hw_uid=dc.hw_uid,
-            modbus_host=dc.modbus_host,
-            modbus_port=dc.modbus_port,
-            egauge_io_list=dc.egauge_io_list,
-        ).tuple
-        return t
+        return ElectricMeterComponentGt(
+            ComponentId=dc.component_id,
+            ComponentAttributeClassId=dc.component_attribute_class_id,
+            DisplayName=dc.display_name,
+            ConfigList=dc.config_list,
+            HwUid=dc.hw_uid,
+            ModbusHost=dc.modbus_host,
+            ModbusPort=dc.modbus_port,
+            EgaugeIoList=dc.egauge_io_list,
+        )
 
     @classmethod
     def type_to_dc(cls, t: str) -> ElectricMeterComponent:

@@ -9,7 +9,10 @@ from pydantic import BaseModel
 from pydantic import Extra
 from pydantic import Field
 from pydantic import validator
+
+from gwproto.enums import FsmEventType
 from gwproto.errors import SchemaError
+
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -35,15 +38,21 @@ class FsmEvent(BaseModel):
     ToHandle: str = Field(
         title="To Handle",
     )
-    Name: str = Field(
+    EventType: FsmEventType = Field(
+        title="Event Type",
+        description=(
+            "Typically the set of events allowed will be determined implicitly by the ToHandle. "
+            "This is clarified in the message; and if the message does not clarify the appropriate "
+            "understanding of the finite state machine and its events then the message will likely "
+            "be ignored."
+        ),
+    )
+    EventName: str = Field(
         title="Event Name",
         description=(
             "This should be the name that the receiving Spaceheat Node's finite state machine "
             "uses for an event that triggers a transition."
         ),
-    )
-    SendTimeUnixMs: int = Field(
-        title="Sent Time Unix Ms",
     )
     TriggerId: str = Field(
         title="Trigger Id",
@@ -51,6 +60,9 @@ class FsmEvent(BaseModel):
             "Reference uuid for the triggering event that started a cascade of transitions, events "
             "and side-effect actions - of which this event is one."
         ),
+    )
+    SendTimeUnixMs: int = Field(
+        title="Sent Time Unix Ms",
     )
     TypeName: Literal["fsm.event"] = "fsm.event"
     Version: Literal["000"] = "000"
@@ -74,16 +86,6 @@ class FsmEvent(BaseModel):
             raise ValueError(f"ToHandle failed SpaceheatName format validation: {e}")
         return v
 
-    @validator("SendTimeUnixMs")
-    def _check_send_time_unix_ms(cls, v: int) -> int:
-        try:
-            check_is_reasonable_unix_time_ms(v)
-        except ValueError as e:
-            raise ValueError(
-                f"SendTimeUnixMs failed ReasonableUnixTimeMs format validation: {e}"
-            )
-        return v
-
     @validator("TriggerId")
     def _check_trigger_id(cls, v: str) -> str:
         try:
@@ -91,6 +93,16 @@ class FsmEvent(BaseModel):
         except ValueError as e:
             raise ValueError(
                 f"TriggerId failed UuidCanonicalTextual format validation: {e}"
+            )
+        return v
+
+    @validator("SendTimeUnixMs")
+    def _check_send_time_unix_ms(cls, v: int) -> int:
+        try:
+            check_is_reasonable_unix_time_ms(v)
+        except ValueError as e:
+            raise ValueError(
+                f"SendTimeUnixMs failed ReasonableUnixTimeMs format validation: {e}"
             )
         return v
 
@@ -117,6 +129,8 @@ class FsmEvent(BaseModel):
             ).items()
             if value is not None
         }
+        del d["EventType"]
+        d["EventTypeGtEnumSymbol"] = FsmEventType.value_to_symbol(self.EventType)
         return d
 
     def as_type(self) -> bytes:
@@ -150,22 +164,6 @@ class FsmEvent(BaseModel):
 class FsmEvent_Maker:
     type_name = "fsm.event"
     version = "000"
-
-    def __init__(
-        self,
-        from_handle: str,
-        to_handle: str,
-        name: str,
-        send_time_unix_ms: int,
-        trigger_id: str,
-    ):
-        self.tuple = FsmEvent(
-            FromHandle=from_handle,
-            ToHandle=to_handle,
-            Name=name,
-            SendTimeUnixMs=send_time_unix_ms,
-            TriggerId=trigger_id,
-        )
 
     @classmethod
     def tuple_to_type(cls, tuple: FsmEvent) -> bytes:
@@ -216,12 +214,17 @@ class FsmEvent_Maker:
             raise SchemaError(f"dict missing FromHandle: <{d2}>")
         if "ToHandle" not in d2.keys():
             raise SchemaError(f"dict missing ToHandle: <{d2}>")
-        if "Name" not in d2.keys():
-            raise SchemaError(f"dict missing Name: <{d2}>")
-        if "SendTimeUnixMs" not in d2.keys():
-            raise SchemaError(f"dict missing SendTimeUnixMs: <{d2}>")
+        if "EventTypeGtEnumSymbol" not in d2.keys():
+            raise SchemaError(f"EventTypeGtEnumSymbol missing from dict <{d2}>")
+        value = FsmEventType.symbol_to_value(d2["EventTypeGtEnumSymbol"])
+        d2["EventType"] = FsmEventType(value)
+        del d2["EventTypeGtEnumSymbol"]
+        if "EventName" not in d2.keys():
+            raise SchemaError(f"dict missing EventName: <{d2}>")
         if "TriggerId" not in d2.keys():
             raise SchemaError(f"dict missing TriggerId: <{d2}>")
+        if "SendTimeUnixMs" not in d2.keys():
+            raise SchemaError(f"dict missing SendTimeUnixMs: <{d2}>")
         if "TypeName" not in d2.keys():
             raise SchemaError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():
@@ -267,6 +270,7 @@ def check_is_spaceheat_name(v: str) -> None:
         ValueError: If the provided string is not in SpaceheatName format.
     """
     from typing import List
+
     try:
         x: List[str] = v.split(".")
     except:
@@ -279,8 +283,10 @@ def check_is_spaceheat_name(v: str) -> None:
         )
     for word in x:
         for char in word:
-            if not (char.isalnum() or char == '-'):
-                raise ValueError(f"words of <{v}> split by by '.' must be alphanumeric or hyphen.")
+            if not (char.isalnum() or char == "-"):
+                raise ValueError(
+                    f"words of <{v}> split by by '.' must be alphanumeric or hyphen."
+                )
     if not v.islower():
         raise ValueError(f"<{v}> must be lowercase.")
 

@@ -1,31 +1,25 @@
 from gwproto.data_classes.component import Component
 from gwproto.data_classes.component_attribute_class import ComponentAttributeClass
+from gwproto.data_classes.components.ads111x_based_component import Ads111xBasedCac
+from gwproto.data_classes.components.ads111x_based_component import (
+    Ads111xBasedComponent,
+)
 from gwproto.data_classes.components.electric_meter_component import ElectricMeterCac
 from gwproto.data_classes.components.electric_meter_component import (
     ElectricMeterComponent,
 )
-
-from gwproto.data_classes.components.ads111x_based_component import (
-    Ads111xBasedCac,
-    Ads111xBasedComponent,
-)
-
 from gwproto.data_classes.components.i2c_flow_totalizer_component import (
     I2cFlowTotalizerComponent,
 )
-
 from gwproto.data_classes.components.i2c_multichannel_dt_relay_component import (
-    I2cMultichannelDtRelayComponent
+    I2cMultichannelDtRelayComponent,
 )
-
-
 from gwproto.data_classes.components.resistive_heater_component import (
     ResistiveHeaterCac,
 )
 from gwproto.data_classes.components.resistive_heater_component import (
     ResistiveHeaterComponent,
 )
-
 from gwproto.data_classes.sh_node import ShNode
 
 

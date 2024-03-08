@@ -5,7 +5,12 @@ import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
-from gwproto.types.i2c_multichannel_dt_relay_component_gt import _Maker as Maker
+from gwproto.types.i2c_multichannel_dt_relay_component_gt import (
+    I2cMultichannelDtRelayComponentGt,
+)
+from gwproto.types.i2c_multichannel_dt_relay_component_gt import (
+    I2cMultichannelDtRelayComponentGt_Maker as Maker,
+)
 
 
 def test_i2c_multichannel_dt_relay_component_gt_generated() -> None:
@@ -15,7 +20,8 @@ def test_i2c_multichannel_dt_relay_component_gt_generated() -> None:
         ConfigList=,
         RelayConfigList=,
         DisplayName="relay for first elt in tank",
-        HwUid="abc123",)
+        HwUid="abc123",
+    )
 
     d = {
         "ComponentId": "798fe14a-4073-41eb-bce2-075906aee6bb",
@@ -43,18 +49,6 @@ def test_i2c_multichannel_dt_relay_component_gt_generated() -> None:
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple
-
-    # test Maker init
-    t = Maker(
-        component_id=gtuple.ComponentId,
-        component_attribute_class_id=gtuple.ComponentAttributeClassId,
-        config_list=gtuple.ConfigList,
-        relay_config_list=gtuple.RelayConfigList,
-        display_name=gtuple.DisplayName,
-        hw_uid=gtuple.HwUid,
-        
-    ).tuple
-    assert t == gtuple
 
     ######################################
     # Dataclass related tests

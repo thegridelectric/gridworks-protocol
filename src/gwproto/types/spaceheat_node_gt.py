@@ -10,9 +10,11 @@ from pydantic import BaseModel
 from pydantic import Field
 from pydantic import root_validator
 from pydantic import validator
+
 from gwproto.data_classes.sh_node import ShNode
 from gwproto.enums import ActorClass as EnumActorClass
 from gwproto.errors import SchemaError
+
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -190,26 +192,6 @@ class SpaceheatNodeGt_Maker:
     type_name = "spaceheat.node.gt"
     version = "200"
 
-    def __init__(
-        self,
-        sh_node_id: str,
-        name: str,
-        handle: Optional[str],
-        actor_class: EnumActorClass,
-        display_name: Optional[str],
-        component_id: Optional[str],
-        in_power_metering: Optional[bool],
-    ):
-        self.tuple = SpaceheatNodeGt(
-            ShNodeId=sh_node_id,
-            Name=name,
-            Handle=handle,
-            ActorClass=actor_class,
-            DisplayName=display_name,
-            ComponentId=component_id,
-            InPowerMetering=in_power_metering,
-        )
-
     @classmethod
     def tuple_to_type(cls, tuple: SpaceheatNodeGt) -> bytes:
         """
@@ -293,16 +275,15 @@ class SpaceheatNodeGt_Maker:
 
     @classmethod
     def dc_to_tuple(cls, dc: ShNode) -> SpaceheatNodeGt:
-        t = SpaceheatNodeGt_Maker(
-            sh_node_id=dc.sh_node_id,
-            name=dc.name,
-            handle=dc.handle,
-            actor_class=dc.actor_class,
-            display_name=dc.display_name,
-            component_id=dc.component_id,
-            in_power_metering=dc.in_power_metering,
-        ).tuple
-        return t
+        return SpaceheatNodeGt(
+            ShNodeId=dc.sh_node_id,
+            Name=dc.name,
+            Handle=dc.handle,
+            ActorClass=dc.actor_class,
+            DisplayName=dc.display_name,
+            ComponentId=dc.component_id,
+            InPowerMetering=dc.in_power_metering,
+        )
 
     @classmethod
     def type_to_dc(cls, t: str) -> ShNode:
@@ -331,6 +312,7 @@ def check_is_spaceheat_name(v: str) -> None:
         ValueError: If the provided string is not in SpaceheatName format.
     """
     from typing import List
+
     try:
         x: List[str] = v.split(".")
     except:
@@ -343,8 +325,10 @@ def check_is_spaceheat_name(v: str) -> None:
         )
     for word in x:
         for char in word:
-            if not (char.isalnum() or char == '-'):
-                raise ValueError(f"words of <{v}> split by by '.' must be alphanumeric or hyphen.")
+            if not (char.isalnum() or char == "-"):
+                raise ValueError(
+                    f"words of <{v}> split by by '.' must be alphanumeric or hyphen."
+                )
     if not v.islower():
         raise ValueError(f"<{v}> must be lowercase.")
 

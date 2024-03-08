@@ -9,8 +9,10 @@ from pydantic import BaseModel
 from pydantic import Field
 from pydantic import root_validator
 from pydantic import validator
+
 from gwproto.enums import RelayWiringConfig
 from gwproto.errors import SchemaError
+
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -68,7 +70,7 @@ class RelayActorConfig(BaseModel):
     def check_axiom_1(cls, v: dict) -> dict:
         """
         Axiom 1: CapturedBy Actor consistency.
-        
+
         """
         # TODO: Implement check for axiom 1"
         return v
@@ -97,7 +99,9 @@ class RelayActorConfig(BaseModel):
             if value is not None
         }
         del d["WiringConfig"]
-        d["WiringConfigGtEnumSymbol"] = RelayWiringConfig.value_to_symbol(self.WiringConfig)
+        d["WiringConfigGtEnumSymbol"] = RelayWiringConfig.value_to_symbol(
+            self.WiringConfig
+        )
         return d
 
     def as_type(self) -> bytes:
@@ -131,18 +135,6 @@ class RelayActorConfig(BaseModel):
 class RelayActorConfig_Maker:
     type_name = "relay.actor.config"
     version = "000"
-
-    def __init__(
-        self,
-        relay_idx: int,
-        actor_name: str,
-        wiring_config: RelayWiringConfig,
-    ):
-        self.tuple = RelayActorConfig(
-            RelayIdx=relay_idx,
-            ActorName=actor_name,
-            WiringConfig=wiring_config,
-        )
 
     @classmethod
     def tuple_to_type(cls, tuple: RelayActorConfig) -> bytes:
@@ -242,6 +234,7 @@ def check_is_spaceheat_name(v: str) -> None:
         ValueError: If the provided string is not in SpaceheatName format.
     """
     from typing import List
+
     try:
         x: List[str] = v.split(".")
     except:
@@ -254,7 +247,9 @@ def check_is_spaceheat_name(v: str) -> None:
         )
     for word in x:
         for char in word:
-            if not (char.isalnum() or char == '-'):
-                raise ValueError(f"words of <{v}> split by by '.' must be alphanumeric or hyphen.")
+            if not (char.isalnum() or char == "-"):
+                raise ValueError(
+                    f"words of <{v}> split by by '.' must be alphanumeric or hyphen."
+                )
     if not v.islower():
         raise ValueError(f"<{v}> must be lowercase.")

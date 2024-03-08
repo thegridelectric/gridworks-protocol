@@ -10,11 +10,11 @@ from pydantic import BaseModel
 from pydantic import Extra
 from pydantic import Field
 from pydantic import validator
-from gwproto.types.channel_config import ChannelConfig
-from gwproto.types.channel_config import ChannelConfig_Maker
+
 from gwproto.enums import MakeModel
 from gwproto.enums import ThermistorDataMethod
 from gwproto.errors import SchemaError
+
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -29,7 +29,7 @@ class ThermistorDataProcessingConfig(BaseModel):
     provides that information.
     """
 
-    ChannelName: ChannelConfig = Field(
+    ChannelName: str = Field(
         title="Channel Name",
         description="The name of the data channel associated with this thermistor",
     )
@@ -62,11 +62,21 @@ class ThermistorDataProcessingConfig(BaseModel):
         ),
         default=None,
     )
-    TypeName: Literal["thermistor.data.processing.config"] = "thermistor.data.processing.config"
+    TypeName: Literal[
+        "thermistor.data.processing.config"
+    ] = "thermistor.data.processing.config"
     Version: Literal["000"] = "000"
 
     class Config:
         extra = Extra.allow
+
+    @validator("ChannelName")
+    def _check_channel_name(cls, v: str) -> str:
+        try:
+            check_is_spaceheat_name(v)
+        except ValueError as e:
+            raise ValueError(f"ChannelName failed SpaceheatName format validation: {e}")
+        return v
 
     @validator("TerminalBlockIdx")
     def _check_terminal_block_idx(cls, v: int) -> int:
@@ -101,12 +111,15 @@ class ThermistorDataProcessingConfig(BaseModel):
             ).items()
             if value is not None
         }
-        d["ChannelName"] = self.ChannelName.as_dict()
         del d["ThermistorMakeModel"]
-        d["ThermistorMakeModelGtEnumSymbol"] = MakeModel.value_to_symbol(self.ThermistorMakeModel)
+        d["ThermistorMakeModelGtEnumSymbol"] = MakeModel.value_to_symbol(
+            self.ThermistorMakeModel
+        )
         if "DataProcessingMethod" in d.keys():
             del d["DataProcessingMethod"]
-            d["DataProcessingMethodGtEnumSymbol"] = ThermistorDataMethod.value_to_symbol(self.DataProcessingMethod)
+            d[
+                "DataProcessingMethodGtEnumSymbol"
+            ] = ThermistorDataMethod.value_to_symbol(self.DataProcessingMethod)
         return d
 
     def as_type(self) -> bytes:
@@ -140,22 +153,6 @@ class ThermistorDataProcessingConfig(BaseModel):
 class ThermistorDataProcessingConfig_Maker:
     type_name = "thermistor.data.processing.config"
     version = "000"
-
-    def __init__(
-        self,
-        channel_name: ChannelConfig,
-        terminal_block_idx: int,
-        thermistor_make_model: MakeModel,
-        data_processing_method: Optional[ThermistorDataMethod],
-        data_processing_description: Optional[str],
-    ):
-        self.tuple = ThermistorDataProcessingConfig(
-            ChannelName=channel_name,
-            TerminalBlockIdx=terminal_block_idx,
-            ThermistorMakeModel=thermistor_make_model,
-            DataProcessingMethod=data_processing_method,
-            DataProcessingDescription=data_processing_description,
-        )
 
     @classmethod
     def tuple_to_type(cls, tuple: ThermistorDataProcessingConfig) -> bytes:
@@ -204,19 +201,19 @@ class ThermistorDataProcessingConfig_Maker:
         d2 = dict(d)
         if "ChannelName" not in d2.keys():
             raise SchemaError(f"dict missing ChannelName: <{d2}>")
-        if not isinstance(d2["ChannelName"], dict):
-            raise SchemaError(f"ChannelName <{d2['ChannelName']}> must be a ChannelConfig!")
-        channel_name = ChannelConfig_Maker.dict_to_tuple(d2["ChannelName"])
-        d2["ChannelName"] = channel_name
         if "TerminalBlockIdx" not in d2.keys():
             raise SchemaError(f"dict missing TerminalBlockIdx: <{d2}>")
         if "ThermistorMakeModelGtEnumSymbol" not in d2.keys():
-            raise SchemaError(f"ThermistorMakeModelGtEnumSymbol missing from dict <{d2}>")
+            raise SchemaError(
+                f"ThermistorMakeModelGtEnumSymbol missing from dict <{d2}>"
+            )
         value = MakeModel.symbol_to_value(d2["ThermistorMakeModelGtEnumSymbol"])
         d2["ThermistorMakeModel"] = MakeModel(value)
         del d2["ThermistorMakeModelGtEnumSymbol"]
         if "DataProcessingMethodGtEnumSymbol" in d2.keys():
-            value = ThermistorDataMethod.symbol_to_value(d2["DataProcessingMethodGtEnumSymbol"])
+            value = ThermistorDataMethod.symbol_to_value(
+                d2["DataProcessingMethodGtEnumSymbol"]
+            )
             d2["DataProcessingMethod"] = ThermistorDataMethod(value)
             del d2["DataProcessingMethodGtEnumSymbol"]
         if "TypeName" not in d2.keys():
@@ -247,3 +244,38 @@ def check_is_positive_integer(v: int) -> None:
     v2 = int(v)
     if v2 < 1:
         raise ValueError(f"<{v}> is not PositiveInteger")
+
+
+def check_is_spaceheat_name(v: str) -> None:
+    """Check SpaceheatName Format.
+
+    Validates if the provided string adheres to the SpaceheatName format:
+    Lowercase words separated by periods, where word characters can be alphanumeric
+    or a hyphen, and the first word starts with an alphabet character.
+
+    Args:
+        candidate (str): The string to be validated.
+
+    Raises:
+        ValueError: If the provided string is not in SpaceheatName format.
+    """
+    from typing import List
+
+    try:
+        x: List[str] = v.split(".")
+    except:
+        raise ValueError(f"Failed to seperate <{v}> into words with split'.'")
+    first_word = x[0]
+    first_char = first_word[0]
+    if not first_char.isalpha():
+        raise ValueError(
+            f"Most significant word of <{v}> must start with alphabet char."
+        )
+    for word in x:
+        for char in word:
+            if not (char.isalnum() or char == "-"):
+                raise ValueError(
+                    f"words of <{v}> split by by '.' must be alphanumeric or hyphen."
+                )
+    if not v.islower():
+        raise ValueError(f"<{v}> must be lowercase.")

@@ -10,15 +10,17 @@ from pydantic import BaseModel
 from pydantic import Extra
 from pydantic import Field
 from pydantic import validator
+
+from gwproto.errors import SchemaError
 from gwproto.types.channel_readings import ChannelReadings
 from gwproto.types.channel_readings import ChannelReadings_Maker
 from gwproto.types.data_channel_gt import DataChannelGt
 from gwproto.types.data_channel_gt import DataChannelGt_Maker
-from gwproto.types.fsm_full_report import FsmFullReport
-from gwproto.types.fsm_full_report import FsmFullReport_Maker
 from gwproto.types.fsm_atomic_report import FsmAtomicReport
 from gwproto.types.fsm_atomic_report import FsmAtomicReport_Maker
-from gwproto.errors import SchemaError
+from gwproto.types.fsm_full_report import FsmFullReport
+from gwproto.types.fsm_full_report import FsmFullReport_Maker
+
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -232,32 +234,6 @@ class BatchedReadings_Maker:
     type_name = "batched.readings"
     version = "000"
 
-    def __init__(
-        self,
-        from_g_node_alias: str,
-        from_g_node_instance_id: str,
-        about_g_node_alias: str,
-        slot_start_unix_s: int,
-        batched_transmission_period_s: int,
-        data_channel_list: List[DataChannelGt],
-        channel_reading_list: List[ChannelReadings],
-        fsm_action_list: List[FsmAtomicReport],
-        fsm_report_list: List[FsmFullReport],
-        id: str,
-    ):
-        self.tuple = BatchedReadings(
-            FromGNodeAlias=from_g_node_alias,
-            FromGNodeInstanceId=from_g_node_instance_id,
-            AboutGNodeAlias=about_g_node_alias,
-            SlotStartUnixS=slot_start_unix_s,
-            BatchedTransmissionPeriodS=batched_transmission_period_s,
-            DataChannelList=data_channel_list,
-            ChannelReadingList=channel_reading_list,
-            FsmActionList=fsm_action_list,
-            FsmReportList=fsm_report_list,
-            Id=id,
-        )
-
     @classmethod
     def tuple_to_type(cls, tuple: BatchedReadings) -> bytes:
         """
@@ -316,22 +292,30 @@ class BatchedReadings_Maker:
         if "DataChannelList" not in d2.keys():
             raise SchemaError(f"dict missing DataChannelList: <{d2}>")
         if not isinstance(d2["DataChannelList"], List):
-            raise SchemaError(f"DataChannelList <{d2['DataChannelList']}> must be a List!")
+            raise SchemaError(
+                f"DataChannelList <{d2['DataChannelList']}> must be a List!"
+            )
         data_channel_list = []
         for elt in d2["DataChannelList"]:
             if not isinstance(elt, dict):
-                raise SchemaError(f"DataChannelList <{d2['DataChannelList']}> must be a List of DataChannelGt types")
+                raise SchemaError(
+                    f"DataChannelList <{d2['DataChannelList']}> must be a List of DataChannelGt types"
+                )
             t = DataChannelGt_Maker.dict_to_tuple(elt)
             data_channel_list.append(t)
         d2["DataChannelList"] = data_channel_list
         if "ChannelReadingList" not in d2.keys():
             raise SchemaError(f"dict missing ChannelReadingList: <{d2}>")
         if not isinstance(d2["ChannelReadingList"], List):
-            raise SchemaError(f"ChannelReadingList <{d2['ChannelReadingList']}> must be a List!")
+            raise SchemaError(
+                f"ChannelReadingList <{d2['ChannelReadingList']}> must be a List!"
+            )
         channel_reading_list = []
         for elt in d2["ChannelReadingList"]:
             if not isinstance(elt, dict):
-                raise SchemaError(f"ChannelReadingList <{d2['ChannelReadingList']}> must be a List of ChannelReadings types")
+                raise SchemaError(
+                    f"ChannelReadingList <{d2['ChannelReadingList']}> must be a List of ChannelReadings types"
+                )
             t = ChannelReadings_Maker.dict_to_tuple(elt)
             channel_reading_list.append(t)
         d2["ChannelReadingList"] = channel_reading_list
@@ -342,7 +326,9 @@ class BatchedReadings_Maker:
         fsm_action_list = []
         for elt in d2["FsmActionList"]:
             if not isinstance(elt, dict):
-                raise SchemaError(f"FsmActionList <{d2['FsmActionList']}> must be a List of FsmAtomicReport types")
+                raise SchemaError(
+                    f"FsmActionList <{d2['FsmActionList']}> must be a List of FsmAtomicReport types"
+                )
             t = FsmAtomicReport_Maker.dict_to_tuple(elt)
             fsm_action_list.append(t)
         d2["FsmActionList"] = fsm_action_list
@@ -353,7 +339,9 @@ class BatchedReadings_Maker:
         fsm_report_list = []
         for elt in d2["FsmReportList"]:
             if not isinstance(elt, dict):
-                raise SchemaError(f"FsmReportList <{d2['FsmReportList']}> must be a List of FsmFullReport types")
+                raise SchemaError(
+                    f"FsmReportList <{d2['FsmReportList']}> must be a List of FsmFullReport types"
+                )
             t = FsmFullReport_Maker.dict_to_tuple(elt)
             fsm_report_list.append(t)
         d2["FsmReportList"] = fsm_report_list
@@ -432,6 +420,7 @@ def check_is_reasonable_unix_time_s(v: int) -> None:
         ValueError: if v is not ReasonableUnixTimeS format
     """
     import pendulum
+
     if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp > v:  # type: ignore[attr-defined]
         raise ValueError(f"<{v}> must be after Jan 1 2000")
     if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp < v:  # type: ignore[attr-defined]

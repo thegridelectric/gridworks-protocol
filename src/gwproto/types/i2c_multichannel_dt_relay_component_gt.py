@@ -10,12 +10,16 @@ from typing import Optional
 from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
-from gwproto.data_classes.components.i2c_multichannel_dt_relay_component import I2cMultichannelDtRelayComponent
-from gwproto.types.relay_actor_config import RelayActorConfig
-from gwproto.types.relay_actor_config import RelayActorConfig_Maker
+
+from gwproto.data_classes.components.i2c_multichannel_dt_relay_component import (
+    I2cMultichannelDtRelayComponent,
+)
+from gwproto.errors import SchemaError
 from gwproto.types.channel_config import ChannelConfig
 from gwproto.types.channel_config import ChannelConfig_Maker
-from gwproto.errors import SchemaError
+from gwproto.types.relay_actor_config import RelayActorConfig
+from gwproto.types.relay_actor_config import RelayActorConfig_Maker
+
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -70,7 +74,9 @@ class I2cMultichannelDtRelayComponentGt(BaseModel):
         title="Hardware Unique Id",
         default=None,
     )
-    TypeName: Literal["i2c.multichannel.dt.relay.component.gt"] = "i2c.multichannel.dt.relay.component.gt"
+    TypeName: Literal[
+        "i2c.multichannel.dt.relay.component.gt"
+    ] = "i2c.multichannel.dt.relay.component.gt"
     Version: Literal["000"] = "000"
 
     @validator("ComponentId")
@@ -165,24 +171,6 @@ class I2cMultichannelDtRelayComponentGt_Maker:
     type_name = "i2c.multichannel.dt.relay.component.gt"
     version = "000"
 
-    def __init__(
-        self,
-        component_id: str,
-        component_attribute_class_id: str,
-        config_list: List[ChannelConfig],
-        relay_config_list: RelayActorConfig,
-        display_name: Optional[str],
-        hw_uid: Optional[str],
-    ):
-        self.tuple = I2cMultichannelDtRelayComponentGt(
-            ComponentId=component_id,
-            ComponentAttributeClassId=component_attribute_class_id,
-            ConfigList=config_list,
-            RelayConfigList=relay_config_list,
-            DisplayName=display_name,
-            HwUid=hw_uid,
-        )
-
     @classmethod
     def tuple_to_type(cls, tuple: I2cMultichannelDtRelayComponentGt) -> bytes:
         """
@@ -239,14 +227,18 @@ class I2cMultichannelDtRelayComponentGt_Maker:
         config_list = []
         for elt in d2["ConfigList"]:
             if not isinstance(elt, dict):
-                raise SchemaError(f"ConfigList <{d2['ConfigList']}> must be a List of ChannelConfig types")
+                raise SchemaError(
+                    f"ConfigList <{d2['ConfigList']}> must be a List of ChannelConfig types"
+                )
             t = ChannelConfig_Maker.dict_to_tuple(elt)
             config_list.append(t)
         d2["ConfigList"] = config_list
         if "RelayConfigList" not in d2.keys():
             raise SchemaError(f"dict missing RelayConfigList: <{d2}>")
         if not isinstance(d2["RelayConfigList"], dict):
-            raise SchemaError(f"RelayConfigList <{d2['RelayConfigList']}> must be a RelayActorConfig!")
+            raise SchemaError(
+                f"RelayConfigList <{d2['RelayConfigList']}> must be a RelayActorConfig!"
+            )
         relay_config_list = RelayActorConfig_Maker.dict_to_tuple(d2["RelayConfigList"])
         d2["RelayConfigList"] = relay_config_list
         if "TypeName" not in d2.keys():
@@ -261,7 +253,9 @@ class I2cMultichannelDtRelayComponentGt_Maker:
         return I2cMultichannelDtRelayComponentGt(**d2)
 
     @classmethod
-    def tuple_to_dc(cls, t: I2cMultichannelDtRelayComponentGt) -> I2cMultichannelDtRelayComponent:
+    def tuple_to_dc(
+        cls, t: I2cMultichannelDtRelayComponentGt
+    ) -> I2cMultichannelDtRelayComponent:
         if t.ComponentId in I2cMultichannelDtRelayComponent.by_id.keys():
             dc = I2cMultichannelDtRelayComponent.by_id[t.ComponentId]
         else:
@@ -276,16 +270,17 @@ class I2cMultichannelDtRelayComponentGt_Maker:
         return dc
 
     @classmethod
-    def dc_to_tuple(cls, dc: I2cMultichannelDtRelayComponent) -> I2cMultichannelDtRelayComponentGt:
-        t = I2cMultichannelDtRelayComponentGt_Maker(
-            component_id=dc.component_id,
-            component_attribute_class_id=dc.component_attribute_class_id,
-            config_list=dc.config_list,
-            relay_config_list=dc.relay_config_list,
-            display_name=dc.display_name,
-            hw_uid=dc.hw_uid,
-        ).tuple
-        return t
+    def dc_to_tuple(
+        cls, dc: I2cMultichannelDtRelayComponent
+    ) -> I2cMultichannelDtRelayComponentGt:
+        return I2cMultichannelDtRelayComponentGt(
+            ComponentId=dc.component_id,
+            ComponentAttributeClassId=dc.component_attribute_class_id,
+            ConfigList=dc.config_list,
+            RelayConfigList=dc.relay_config_list,
+            DisplayName=dc.display_name,
+            HwUid=dc.hw_uid,
+        )
 
     @classmethod
     def type_to_dc(cls, t: str) -> I2cMultichannelDtRelayComponent:

@@ -4,8 +4,16 @@ import json
 import pytest
 from pydantic import ValidationError
 
+from gwproto.enums import MakeModel
+from gwproto.enums import ThermistorDataMethod
+from gwproto.enums import Unit
 from gwproto.errors import SchemaError
-from gwproto.types.ads111x_based_component_gt import _Maker as Maker
+from gwproto.types import ChannelConfig
+from gwproto.types import ThermistorDataProcessingConfig
+from gwproto.types.ads111x_based_component_gt import Ads111xBasedComponentGt
+from gwproto.types.ads111x_based_component_gt import (
+    Ads111xBasedComponentGt_Maker as Maker,
+)
 
 
 def test_ads111x_based_component_gt_generated() -> None:
@@ -13,18 +21,59 @@ def test_ads111x_based_component_gt_generated() -> None:
         ComponentId="02f600e3-8692-43f8-84f2-a03c09c197e7",
         ComponentAttributeClassId="432073b8-4d2b-4e36-9229-73893f33f846",
         DisplayName="4-channel Ads for Beachrose",
-        OpenVoltageByAds=,
-        ConfigList=,
-        ThermistorConfigList=,
-        HwUid="1001",)
+        OpenVoltageByAds=[4.89, 4.95, 4.75],
+        ConfigList=[
+            ChannelConfig(
+                ChannelName="hp-ewt",
+                PollPeriodMs=200,
+                CapturePeriodS=60,
+                AsyncCapture=True,
+                AsyncCaptureDelta=250,
+                Exponent=3,
+                Unit=Unit.Celcius,
+            )
+        ],
+        ThermistorConfigList=[
+            ThermistorDataProcessingConfig(
+                ChannelName="hp-ewt",
+                TerminalBlockIdx=4,
+                ThermistorMakeModel=MakeModel.TEWA__TT0P10KC3T1051500,
+                DataProcessingMethod=ThermistorDataMethod.SimpleBeta,
+                DataProcessingDescription="using a beta of 3977.",
+            )
+        ],
+        HwUid="1001",
+    )
 
     d = {
         "ComponentId": "02f600e3-8692-43f8-84f2-a03c09c197e7",
         "ComponentAttributeClassId": "432073b8-4d2b-4e36-9229-73893f33f846",
         "DisplayName": "4-channel Ads for Beachrose",
-        "OpenVoltageByAds": ,
-        "ConfigList": ,
-        "ThermistorConfigList": ,
+        "OpenVoltageByAds": [4.89, 4.95, 4.75],
+        "ConfigList": [
+            {
+                "ChannelName": "hp-ewt",
+                "PollPeriodMs": 200,
+                "CapturePeriodS": 60,
+                "AsyncCapture": true,
+                "AsyncCaptureDelta": 250,
+                "Exponent": 3,
+                "TypeName": "channel.config",
+                "Version": "000",
+                "UnitGtEnumSymbol": "ec14bd47",
+            }
+        ],
+        "ThermistorConfigList": [
+            {
+                "ChannelName": "hp-ewt",
+                "TerminalBlockIdx": 4,
+                "DataProcessingDescription": "using a beta of 3977.",
+                "TypeName": "thermistor.data.processing.config",
+                "Version": "000",
+                "ThermistorMakeModelGtEnumSymbol": "652abfd6",
+                "DataProcessingMethodGtEnumSymbol": "00000000",
+            }
+        ],
         "HwUid": "1001",
         "TypeName": "ads111x.based.component.gt",
         "Version": "000",
@@ -45,19 +94,6 @@ def test_ads111x_based_component_gt_generated() -> None:
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple
-
-    # test Maker init
-    t = Maker(
-        component_id=gtuple.ComponentId,
-        component_attribute_class_id=gtuple.ComponentAttributeClassId,
-        display_name=gtuple.DisplayName,
-        open_voltage_by_ads=gtuple.OpenVoltageByAds,
-        config_list=gtuple.ConfigList,
-        thermistor_config_list=gtuple.ThermistorConfigList,
-        hw_uid=gtuple.HwUid,
-        
-    ).tuple
-    assert t == gtuple
 
     ######################################
     # Dataclass related tests
@@ -119,27 +155,27 @@ def test_ads111x_based_component_gt_generated() -> None:
     # Behavior on incorrect types
     ######################################
 
-    d2  = dict(d, ConfigList="Not a list.")
+    d2 = dict(d, ConfigList="Not a list.")
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
-    d2  = dict(d, ConfigList=["Not a list of dicts"])
+    d2 = dict(d, ConfigList=["Not a list of dicts"])
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
-    d2  = dict(d, ConfigList= [{"Failed": "Not a GtSimpleSingleStatus"}])
+    d2 = dict(d, ConfigList=[{"Failed": "Not a GtSimpleSingleStatus"}])
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
-    d2  = dict(d, ThermistorConfigList="Not a list.")
+    d2 = dict(d, ThermistorConfigList="Not a list.")
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
-    d2  = dict(d, ThermistorConfigList=["Not a list of dicts"])
+    d2 = dict(d, ThermistorConfigList=["Not a list of dicts"])
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
-    d2  = dict(d, ThermistorConfigList= [{"Failed": "Not a GtSimpleSingleStatus"}])
+    d2 = dict(d, ThermistorConfigList=[{"Failed": "Not a GtSimpleSingleStatus"}])
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 

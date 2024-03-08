@@ -4,9 +4,12 @@ import json
 import pytest
 from pydantic import ValidationError
 
-from gwproto.errors import SchemaError
-from gwproto.types.i2c_flow_totalizer_component_gt import _Maker as Maker
 from gwproto.enums import MakeModel
+from gwproto.errors import SchemaError
+from gwproto.types.i2c_flow_totalizer_component_gt import I2cFlowTotalizerComponentGt
+from gwproto.types.i2c_flow_totalizer_component_gt import (
+    I2cFlowTotalizerComponentGt_Maker as Maker,
+)
 
 
 def test_i2c_flow_totalizer_component_gt_generated() -> None:
@@ -18,7 +21,8 @@ def test_i2c_flow_totalizer_component_gt_generated() -> None:
         PulseFlowMeterMakeModel="99d961da",
         ConversionFactor=0.1328,
         DisplayName="Flow meter on pipe out of tank",
-        HwUid="1234",)
+        HwUid="1234",
+    )
 
     d = {
         "ComponentId": "dd5ac673-91a8-40e2-a233-b67479cec709",
@@ -48,20 +52,6 @@ def test_i2c_flow_totalizer_component_gt_generated() -> None:
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple
-
-    # test Maker init
-    t = Maker(
-        component_id=gtuple.ComponentId,
-        component_attribute_class_id=gtuple.ComponentAttributeClassId,
-        i2c_address=gtuple.I2cAddress,
-        config_list=gtuple.ConfigList,
-        pulse_flow_meter_make_model=gtuple.PulseFlowMeterMakeModel,
-        conversion_factor=gtuple.ConversionFactor,
-        display_name=gtuple.DisplayName,
-        hw_uid=gtuple.HwUid,
-        
-    ).tuple
-    assert t == gtuple
 
     ######################################
     # Dataclass related tests

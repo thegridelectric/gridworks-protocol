@@ -4,17 +4,18 @@ import json
 import pytest
 from pydantic import ValidationError
 
+from gwproto.enums import TelemetryName
 from gwproto.errors import SchemaError
 from gwproto.types import SingleReading
 from gwproto.types import SingleReading_Maker as Maker
-from gwproto.enums import TelemetryName
 
 
 def test_single_reading_generated() -> None:
     t = SingleReading(
         ScadaReadTimeUnixMs=1656513094288,
         ChannelName=,
-        Value=63430,)
+        Value=63430,
+    )
 
     d = {
         "ScadaReadTimeUnixMs": 1656513094288,
@@ -39,15 +40,6 @@ def test_single_reading_generated() -> None:
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple
-
-    # test Maker init
-    t = Maker(
-        scada_read_time_unix_ms=gtuple.ScadaReadTimeUnixMs,
-        channel_name=gtuple.ChannelName,
-        value=gtuple.Value,
-        
-    ).tuple
-    assert t == gtuple
 
     ######################################
     # SchemaError raised if missing a required attribute

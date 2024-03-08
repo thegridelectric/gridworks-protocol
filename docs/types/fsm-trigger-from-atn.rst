@@ -18,7 +18,7 @@ Python pydantic class corresponding to json type `fsm.trigger.from.atn`, version
     - Format: UuidCanonicalTextual
 
 **Trigger**:
-    - Description: Trigger. This is meant to be a string that is interpretted as an event that triggers a cascade of other events, transitions and actions in the Spaceheat Nodes of the SCADA.  This comes from the language of Finite State Machines
+    - Description: Trigger. This remote event will triggers a cascade of local events, transitions and actions in the Spaceheat Nodes of the SCADA.  This comes from the language of Finite State Machines
 
 **TypeName**:
     - Description: All GridWorks Versioned Types have a fixed TypeName, which is a string of lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character, and final word NOT all Hindu-Arabic numerals.

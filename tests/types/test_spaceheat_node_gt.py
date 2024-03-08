@@ -4,10 +4,10 @@ import json
 import pytest
 from pydantic import ValidationError
 
+from gwproto.enums import ActorClass
 from gwproto.errors import SchemaError
 from gwproto.types import SpaceheatNodeGt
 from gwproto.types import SpaceheatNodeGt_Maker as Maker
-from gwproto.enums import ActorClass
 
 
 def test_spaceheat_node_gt_generated() -> None:
@@ -18,7 +18,8 @@ def test_spaceheat_node_gt_generated() -> None:
         ActorClass=ActorClass.PowerMeter,
         DisplayName="Primary Power Meter",
         ComponentId="80f95280-e999-49e0-a0e4-a7faf3b5b3bd",
-        InPowerMetering=False,)
+        InPowerMetering=False,
+    )
 
     d = {
         "ShNodeId": "92091523-4fa7-4a3e-820b-fddee089222f",
@@ -57,7 +58,6 @@ def test_spaceheat_node_gt_generated() -> None:
         display_name=gtuple.DisplayName,
         component_id=gtuple.ComponentId,
         in_power_metering=gtuple.InPowerMetering,
-        
     ).tuple
     assert t == gtuple
 

@@ -1,4 +1,4 @@
-"""Type electric.meter.cac.gt, version 000"""
+"""Type electric.meter.cac.gt, version 001"""
 import json
 import logging
 from typing import Any
@@ -8,14 +8,18 @@ from typing import Literal
 from typing import Optional
 
 from pydantic import BaseModel
+from pydantic import Extra
 from pydantic import Field
+from pydantic import root_validator
 from pydantic import validator
 
 from gwproto.data_classes.cacs.electric_meter_cac import ElectricMeterCac
-from gwproto.enums import LocalCommInterface
 from gwproto.enums import MakeModel as EnumMakeModel
 from gwproto.enums import TelemetryName
 from gwproto.errors import SchemaError
+from gwproto.types.component_attribute_class_gt import (
+    ComponentAttributeClassGt as CacGt,
+)
 
 
 LOG_FORMAT = (
@@ -31,6 +35,8 @@ class ElectricMeterCacGt(BaseModel):
 
     GridWorks Spaceheat SCADA uses the GridWorks GNodeRegistry structures and abstractions for
     managing relational device data. The Cac, or ComponentAttributeClass, is part of this structure.
+    PollPeriodMs -> MinPollPeriodMs, remove LocalCommInterface, AllowExtra, add axiom enforcing
+    that it also meets requirements for a ComponentAttributeClassGt.
 
     [More info](https://g-node-registry.readthedocs.io/en/latest/component-attribute-class.html)
     """
@@ -57,7 +63,7 @@ class ElectricMeterCacGt(BaseModel):
     TelemetryNameList: List[TelemetryName] = Field(
         title="TelemetryNames read by this power meter",
     )
-    PollPeriodMs: int = Field(
+    MinPollPeriodMs: int = Field(
         title="Poll Period in Milliseconds",
         description=(
             "Poll Period refers to the period of time between two readings by the local actor. "
@@ -66,15 +72,15 @@ class ElectricMeterCacGt(BaseModel):
             "[More info](https://gridworks-protocol.readthedocs.io/en/latest/data-polling-capturing-transmitting.rst)"
         ),
     )
-    Interface: LocalCommInterface = Field(
-        title="Interface",
-    )
     DefaultBaud: Optional[int] = Field(
         title="To be used when the comms method requires a baud rate",
         default=None,
     )
     TypeName: Literal["electric.meter.cac.gt"] = "electric.meter.cac.gt"
-    Version: Literal["000"] = "000"
+    Version: Literal["001"] = "001"
+
+    class Config:
+        extra = Extra.allow
 
     @validator("ComponentAttributeClassId")
     def _check_component_attribute_class_id(cls, v: str) -> str:
@@ -86,14 +92,30 @@ class ElectricMeterCacGt(BaseModel):
             )
         return v
 
+    @root_validator
+    def check_axiom_1(cls, v: dict) -> dict:
+        """
+        Axiom 1: Satisfies ComponentAttributeClassGt.
+        Specifically, the match between Id and MakeModel is enforced
+        """
+        if all(key in v for key in ("ComponentAttributeClassId", "MakeModel")):
+            try:
+                CacGt(
+                    ComponentAttributeClassId=v["ComponentAttributeClassId"],
+                    MakeModel=v["MakeModel"],
+                )
+            except Exception as e:
+                raise ValueError(f"Axiom 1 violated! v is <{v}>. Error: <{e}>")
+        return v
+
     def as_dict(self) -> Dict[str, Any]:
         """
         Translate the object into a dictionary representation that can be serialized into a
-        electric.meter.cac.gt.000 object.
+        electric.meter.cac.gt.001 object.
 
         This method prepares the object for serialization by the as_type method, creating a
         dictionary with key-value pairs that follow the requirements for an instance of the
-        electric.meter.cac.gt.000 type. Unlike the standard python dict method,
+        electric.meter.cac.gt.001 type. Unlike the standard python dict method,
         it makes the following substantive changes:
         - Enum Values: Translates between the values used locally by the actor to the symbol
         sent in messages.
@@ -116,16 +138,14 @@ class ElectricMeterCacGt(BaseModel):
         for elt in self.TelemetryNameList:
             telemetry_name_list.append(TelemetryName.value_to_symbol(elt.value))
         d["TelemetryNameList"] = telemetry_name_list
-        del d["Interface"]
-        d["InterfaceGtEnumSymbol"] = LocalCommInterface.value_to_symbol(self.Interface)
         return d
 
     def as_type(self) -> bytes:
         """
-        Serialize to the electric.meter.cac.gt.000 representation.
+        Serialize to the electric.meter.cac.gt.001 representation.
 
-        Instances in the class are python-native representations of electric.meter.cac.gt.000
-        objects, while the actual electric.meter.cac.gt.000 object is the serialized UTF-8 byte
+        Instances in the class are python-native representations of electric.meter.cac.gt.001
+        objects, while the actual electric.meter.cac.gt.001 object is the serialized UTF-8 byte
         string designed for sending in a message.
 
         This method calls the as_dict() method, which differs from the native python dict()
@@ -150,27 +170,7 @@ class ElectricMeterCacGt(BaseModel):
 
 class ElectricMeterCacGt_Maker:
     type_name = "electric.meter.cac.gt"
-    version = "000"
-
-    def __init__(
-        self,
-        component_attribute_class_id: str,
-        make_model: EnumMakeModel,
-        display_name: Optional[str],
-        telemetry_name_list: List[TelemetryName],
-        poll_period_ms: int,
-        interface: LocalCommInterface,
-        default_baud: Optional[int],
-    ):
-        self.tuple = ElectricMeterCacGt(
-            ComponentAttributeClassId=component_attribute_class_id,
-            MakeModel=make_model,
-            DisplayName=display_name,
-            TelemetryNameList=telemetry_name_list,
-            PollPeriodMs=poll_period_ms,
-            Interface=interface,
-            DefaultBaud=default_baud,
-        )
+    version = "001"
 
     @classmethod
     def tuple_to_type(cls, tuple: ElectricMeterCacGt) -> bytes:
@@ -195,7 +195,7 @@ class ElectricMeterCacGt_Maker:
     @classmethod
     def dict_to_tuple(cls, d: dict[str, Any]) -> ElectricMeterCacGt:
         """
-        Deserialize a dictionary representation of a electric.meter.cac.gt.000 message object
+        Deserialize a dictionary representation of a electric.meter.cac.gt.001 message object
         into a ElectricMeterCacGt python object for internal use.
 
         This is the near-inverse of the ElectricMeterCacGt.as_dict() method:
@@ -233,22 +233,17 @@ class ElectricMeterCacGt_Maker:
             value = TelemetryName.symbol_to_value(elt)
             telemetry_name_list.append(TelemetryName(value))
         d2["TelemetryNameList"] = telemetry_name_list
-        if "PollPeriodMs" not in d2.keys():
-            raise SchemaError(f"dict missing PollPeriodMs: <{d2}>")
-        if "InterfaceGtEnumSymbol" not in d2.keys():
-            raise SchemaError(f"InterfaceGtEnumSymbol missing from dict <{d2}>")
-        value = LocalCommInterface.symbol_to_value(d2["InterfaceGtEnumSymbol"])
-        d2["Interface"] = LocalCommInterface(value)
-        del d2["InterfaceGtEnumSymbol"]
+        if "MinPollPeriodMs" not in d2.keys():
+            raise SchemaError(f"dict missing MinPollPeriodMs: <{d2}>")
         if "TypeName" not in d2.keys():
             raise SchemaError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():
             raise SchemaError(f"Version missing from dict <{d2}>")
-        if d2["Version"] != "000":
+        if d2["Version"] != "001":
             LOGGER.debug(
-                f"Attempting to interpret electric.meter.cac.gt version {d2['Version']} as version 000"
+                f"Attempting to interpret electric.meter.cac.gt version {d2['Version']} as version 001"
             )
-            d2["Version"] = "000"
+            d2["Version"] = "001"
         return ElectricMeterCacGt(**d2)
 
     @classmethod
@@ -261,24 +256,21 @@ class ElectricMeterCacGt_Maker:
                 make_model=t.MakeModel,
                 display_name=t.DisplayName,
                 telemetry_name_list=t.TelemetryNameList,
-                poll_period_ms=t.PollPeriodMs,
-                interface=t.Interface,
+                min_poll_period_ms=t.MinPollPeriodMs,
                 default_baud=t.DefaultBaud,
             )
         return dc
 
     @classmethod
     def dc_to_tuple(cls, dc: ElectricMeterCac) -> ElectricMeterCacGt:
-        t = ElectricMeterCacGt_Maker(
-            component_attribute_class_id=dc.component_attribute_class_id,
-            make_model=dc.make_model,
-            display_name=dc.display_name,
-            telemetry_name_list=dc.telemetry_name_list,
-            poll_period_ms=dc.poll_period_ms,
-            interface=dc.interface,
-            default_baud=dc.default_baud,
-        ).tuple
-        return t
+        return ElectricMeterCacGt(
+            ComponentAttributeClassId=dc.component_attribute_class_id,
+            MakeModel=dc.make_model,
+            DisplayName=dc.display_name,
+            TelemetryNameList=dc.telemetry_name_list,
+            MinPollPeriodMs=dc.min_poll_period_ms,
+            DefaultBaud=dc.default_baud,
+        )
 
     @classmethod
     def type_to_dc(cls, t: str) -> ElectricMeterCac:

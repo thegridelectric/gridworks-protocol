@@ -1,5 +1,6 @@
 """Tests ads111x.based.cac.gt type, version 000"""
 import json
+import uuid
 
 import pytest
 from pydantic import ValidationError
@@ -118,7 +119,13 @@ def test_ads111x_based_cac_gt_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d, MakeModelGtEnumSymbol="unknown_symbol")
-    Maker.dict_to_tuple(d2).MakeModel == MakeModel.default()
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(
+        d, MakeModelGtEnumSymbol="00000000", ComponentAttributeClassId=str(uuid.uuid4())
+    )
+    assert Maker.dict_to_tuple(d2).MakeModel == MakeModel.UNKNOWNMAKE__UNKNOWNMODEL
 
     d2 = dict(d, TotalTerminalBlocks="12.1")
     with pytest.raises(ValidationError):

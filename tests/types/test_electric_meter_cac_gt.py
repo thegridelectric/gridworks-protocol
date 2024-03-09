@@ -1,28 +1,39 @@
-"""Tests electric.meter.cac.gt type, version 000"""
+"""Tests electric.meter.cac.gt type, version 001"""
 import json
+import uuid
 
 import pytest
 from pydantic import ValidationError
 
-from gwproto.enums import LocalCommInterface
 from gwproto.enums import MakeModel
 from gwproto.enums import TelemetryName
 from gwproto.errors import SchemaError
+from gwproto.types import ElectricMeterCacGt
 from gwproto.types import ElectricMeterCacGt_Maker as Maker
 
 
 def test_electric_meter_cac_gt_generated() -> None:
+    t = ElectricMeterCacGt(
+        ComponentAttributeClassId="6bcdc388-de10-40e6-979a-8d66bfcfe9ba",
+        MakeModel=MakeModel.SCHNEIDERELECTRIC__IEM3455,
+        DisplayName="Schneider Electric Iem3455 Power Meter",
+        TelemetryNameList=[TelemetryName.PowerW],
+        MinPollPeriodMs=1000,
+        DefaultBaud=9600,
+    )
+
     d = {
-        "ComponentAttributeClassId": "a3d298fb-a4ef-427a-939d-02cc9c9689c1",
+        "ComponentAttributeClassId": "6bcdc388-de10-40e6-979a-8d66bfcfe9ba",
         "MakeModelGtEnumSymbol": "d300635e",
         "DisplayName": "Schneider Electric Iem3455 Power Meter",
         "TelemetryNameList": ["af39eec9"],
-        "PollPeriodMs": 1000,
-        "InterfaceGtEnumSymbol": "a6a4ac9f",
+        "MinPollPeriodMs": 1000,
         "DefaultBaud": 9600,
         "TypeName": "electric.meter.cac.gt",
-        "Version": "000",
+        "Version": "001",
     }
+
+    assert t.as_dict() == d
 
     with pytest.raises(SchemaError):
         Maker.type_to_tuple(d)
@@ -33,21 +44,10 @@ def test_electric_meter_cac_gt_generated() -> None:
     # Test type_to_tuple
     gtype = json.dumps(d)
     gtuple = Maker.type_to_tuple(gtype)
+    assert gtuple == t
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple
-
-    # test Maker init
-    t = Maker(
-        component_attribute_class_id=gtuple.ComponentAttributeClassId,
-        make_model=gtuple.MakeModel,
-        display_name=gtuple.DisplayName,
-        telemetry_name_list=gtuple.TelemetryNameList,
-        poll_period_ms=gtuple.PollPeriodMs,
-        interface=gtuple.Interface,
-        default_baud=gtuple.DefaultBaud,
-    ).tuple
-    assert t == gtuple
 
     ######################################
     # Dataclass related tests
@@ -82,12 +82,7 @@ def test_electric_meter_cac_gt_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["PollPeriodMs"]
-    with pytest.raises(SchemaError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d)
-    del d2["InterfaceGtEnumSymbol"]
+    del d2["MinPollPeriodMs"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -110,14 +105,20 @@ def test_electric_meter_cac_gt_generated() -> None:
     ######################################
 
     d2 = dict(d, MakeModelGtEnumSymbol="unknown_symbol")
-    Maker.dict_to_tuple(d2).MakeModel == MakeModel.default()
-
-    d2 = dict(d, PollPeriodMs="1000.1")
+    # This uuid is matched with the Schneider Electric Power Meter MakeModel
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, InterfaceGtEnumSymbol="unknown_symbol")
-    Maker.dict_to_tuple(d2).Interface == LocalCommInterface.default()
+    d2 = dict(
+        d,
+        MakeModelGtEnumSymbol="unknown_symbol",
+        ComponentAttributeClassId=str(uuid.uuid4()),
+    )
+    Maker.dict_to_tuple(d2).MakeModel == MakeModel.UNKNOWNMAKE__UNKNOWNMODEL
+
+    d2 = dict(d, MinPollPeriodMs="1000.1")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
 
     d2 = dict(d, DefaultBaud="9600.1")
     with pytest.raises(ValidationError):
@@ -138,5 +139,3 @@ def test_electric_meter_cac_gt_generated() -> None:
     d2 = dict(d, ComponentAttributeClassId="d4be12d5-33ba-4f1f-b9e5")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
-
-    # End of Test

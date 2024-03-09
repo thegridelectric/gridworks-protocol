@@ -17,6 +17,9 @@ from gwproto.data_classes.cacs.ads111x_based_cac import Ads111xBasedCac
 from gwproto.enums import MakeModel as EnumMakeModel
 from gwproto.enums import TelemetryName
 from gwproto.errors import SchemaError
+from gwproto.types.component_attribute_class_gt import (
+    ComponentAttributeClassGt as CacGt,
+)
 
 
 LOG_FORMAT = (
@@ -145,7 +148,33 @@ class Ads111xBasedCacGt(BaseModel):
         Axiom 1: TerminalBlock Ads Chip consistency.
         TotalTerminalBlocks should be greater than 4 * (len(AdsI2cAddressList) - 1 ) and less than or equal to 4*len(AdsI2cAddressList)
         """
-        # TODO: Implement check for axiom 1"
+        if all(key in v for key in ("AdsI2cAddressList", "TotalTerminalBlocks")):
+            num_ads_chips = len(v["AdsI2cAddressList"])
+            num_terminals = v["TotalTerminalBlocks"]
+            if (
+                num_terminals <= 4 * (num_ads_chips - 1)
+                or num_terminals > 4 * num_ads_chips
+            ):
+                raise ValueError(
+                    f"Axiom 1 violated! TotalTerminalBlocks should be greater than 4 * (len(AdsI2cAddressList) - 1 ) "
+                    "and less than or equal to 4*len(AdsI2cAddressList)"
+                )
+        return v
+
+    @root_validator
+    def check_axiom_2(cls, v: dict) -> dict:
+        """
+        Axiom 2: Satisfies ComponentAttributeClassGt.
+        Specifically, the match between Id and MakeModel is enforced
+        """
+        if all(key in v for key in ("ComponentAttributeClassId", "MakeModel")):
+            try:
+                c = CacGt(
+                    ComponentAttributeClassId=v["ComponentAttributeClassId"],
+                    MakeModel=v["MakeModel"],
+                )
+            except Exception as e:
+                raise ValueError(f"Axiom 2 violated! <{e}>")
         return v
 
     def as_dict(self) -> Dict[str, Any]:

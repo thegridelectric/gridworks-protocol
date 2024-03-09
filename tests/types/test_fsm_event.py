@@ -4,6 +4,7 @@ import json
 import pytest
 from pydantic import ValidationError
 
+from gwproto.enums import FsmEventType
 from gwproto.errors import SchemaError
 from gwproto.types import FsmEvent
 from gwproto.types import FsmEvent_Maker as Maker
@@ -13,7 +14,7 @@ def test_fsm_event_generated() -> None:
     t = FsmEvent(
         FromHandle="h.s.admin",
         ToHandle="h.s.admin.iso-valve",
-        EventType="c234ee7a",
+        EventType=FsmEventType.ChangeValveState,
         EventName="OpenValve",
         TriggerId="12da4269-63c3-44f4-ab65-3ee5e29329fe",
         SendTimeUnixMs=1709923791330,

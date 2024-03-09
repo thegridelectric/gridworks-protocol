@@ -4,6 +4,7 @@ import json
 import pytest
 from pydantic import ValidationError
 
+from gwproto.enums import RelayWiringConfig
 from gwproto.errors import SchemaError
 from gwproto.types import RelayActorConfig
 from gwproto.types import RelayActorConfig_Maker as Maker
@@ -12,13 +13,13 @@ from gwproto.types import RelayActorConfig_Maker as Maker
 def test_relay_actor_config_generated() -> None:
     t = RelayActorConfig(
         RelayIdx=18,
-        ActorName=h.zone1 - stat.ctrl - relay,
-        WiringConfig="63f5da41",
+        ActorName="s.zone1-ctrl-relay",
+        WiringConfig=RelayWiringConfig.NormallyOpen,
     )
 
     d = {
         "RelayIdx": 18,
-        "ActorName": h.zone1 - stat.ctrl - relay,
+        "ActorName": "s.zone1-ctrl-relay",
         "WiringConfigGtEnumSymbol": "63f5da41",
         "TypeName": "relay.actor.config",
         "Version": "000",

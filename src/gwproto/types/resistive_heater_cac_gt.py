@@ -8,11 +8,15 @@ from typing import Optional
 
 from pydantic import BaseModel
 from pydantic import Field
+from pydantic import root_validator
 from pydantic import validator
 
 from gwproto.data_classes.cacs.resistive_heater_cac import ResistiveHeaterCac
 from gwproto.enums import MakeModel as EnumMakeModel
 from gwproto.errors import SchemaError
+from gwproto.types.component_attribute_class_gt import (
+    ComponentAttributeClassGt as CacGt,
+)
 
 
 LOG_FORMAT = (
@@ -75,6 +79,22 @@ class ResistiveHeaterCacGt(BaseModel):
             )
         return v
 
+    @root_validator
+    def check_axiom_1(cls, v: dict) -> dict:
+        """
+        Axiom 1: Satisfies ComponentAttributeClassGt.
+        Specifically, the match between Id and MakeModel is enforced
+        """
+        if all(key in v for key in ("ComponentAttributeClassId", "MakeModel")):
+            try:
+                CacGt(
+                    ComponentAttributeClassId=v["ComponentAttributeClassId"],
+                    MakeModel=v["MakeModel"],
+                )
+            except Exception as e:
+                raise ValueError(f"Axiom 1 violated! v is <{v}>. Error: <{e}>")
+        return v
+
     def as_dict(self) -> Dict[str, Any]:
         """
         Translate the object into a dictionary representation that can be serialized into a
@@ -133,22 +153,6 @@ class ResistiveHeaterCacGt(BaseModel):
 class ResistiveHeaterCacGt_Maker:
     type_name = "resistive.heater.cac.gt"
     version = "000"
-
-    def __init__(
-        self,
-        component_attribute_class_id: str,
-        make_model: EnumMakeModel,
-        display_name: Optional[str],
-        nameplate_max_power_w: int,
-        rated_voltage_v: int,
-    ):
-        self.tuple = ResistiveHeaterCacGt(
-            ComponentAttributeClassId=component_attribute_class_id,
-            MakeModel=make_model,
-            DisplayName=display_name,
-            NameplateMaxPowerW=nameplate_max_power_w,
-            RatedVoltageV=rated_voltage_v,
-        )
 
     @classmethod
     def tuple_to_type(cls, tuple: ResistiveHeaterCacGt) -> bytes:
@@ -233,14 +237,13 @@ class ResistiveHeaterCacGt_Maker:
 
     @classmethod
     def dc_to_tuple(cls, dc: ResistiveHeaterCac) -> ResistiveHeaterCacGt:
-        t = ResistiveHeaterCacGt_Maker(
-            component_attribute_class_id=dc.component_attribute_class_id,
-            make_model=dc.make_model,
-            display_name=dc.display_name,
-            nameplate_max_power_w=dc.nameplate_max_power_w,
-            rated_voltage_v=dc.rated_voltage_v,
-        ).tuple
-        return t
+        return ResistiveHeaterCacGt(
+            ComponentAttributeClassId=dc.component_attribute_class_id,
+            MakeModel=dc.make_model,
+            DisplayName=dc.display_name,
+            NameplateMaxPowerW=dc.nameplate_max_power_w,
+            RatedVoltageV=dc.rated_voltage_v,
+        )
 
     @classmethod
     def type_to_dc(cls, t: str) -> ResistiveHeaterCac:

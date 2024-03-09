@@ -5,7 +5,7 @@ import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
-from gwproto.types import HubitatTankComponentGt_Maker as Maker
+from gwproto.types.hubitat_tank_component_gt import HubitatTankComponentGt_Maker as Maker
 
 
 def test_hubitat_tank_component_gt_generated() -> None:

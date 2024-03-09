@@ -5,7 +5,9 @@ import pytest
 from pydantic import ValidationError
 
 from gwproto.enums import MakeModel
+from gwproto.enums import Unit
 from gwproto.errors import SchemaError
+from gwproto.types import ChannelConfig
 from gwproto.types.i2c_flow_totalizer_component_gt import I2cFlowTotalizerComponentGt
 from gwproto.types.i2c_flow_totalizer_component_gt import (
     I2cFlowTotalizerComponentGt_Maker as Maker,
@@ -17,24 +19,63 @@ def test_i2c_flow_totalizer_component_gt_generated() -> None:
         ComponentId="dd5ac673-91a8-40e2-a233-b67479cec709",
         ComponentAttributeClassId="13d916dc-8764-4b16-b85d-b8ead3e2fc80",
         I2cAddress=100,
-        ConfigList=,
-        PulseFlowMeterMakeModel="99d961da",
-        ConversionFactor=0.1328,
-        DisplayName="Flow meter on pipe out of tank",
-        HwUid="1234",
+        ConfigList=[
+            ChannelConfig(
+                ChannelName="dist-volume",
+                PollPeriodMs=300,
+                CapturePeriodS=30,
+                AsyncCapture=True,
+                AsyncCaptureDelta=5,
+                Exponent=2,
+                Unit=Unit.Gallons,
+            ),
+            ChannelConfig(
+                ChannelName="dist-flow",
+                PollPeriodMs=300,
+                CapturePeriodS=30,
+                AsyncCapture=True,
+                AsyncCaptureDelta=20,
+                Exponent=2,
+                Unit=Unit.Gpm,
+            ),
+        ],
+        PulseFlowMeterMakeModel=MakeModel.EKM__HOTSPWM075HD,
+        ConversionFactor=0.1,
+        DisplayName="Dist EZ FLow (i2c 0x64, or 100)",
     )
-
     d = {
         "ComponentId": "dd5ac673-91a8-40e2-a233-b67479cec709",
         "ComponentAttributeClassId": "13d916dc-8764-4b16-b85d-b8ead3e2fc80",
         "I2cAddress": 100,
-        "ConfigList": ,
-        "PulseFlowMeterMakeModelGtEnumSymbol": "99d961da",
-        "ConversionFactor": 0.1328,
-        "DisplayName": "Flow meter on pipe out of tank",
-        "HwUid": "1234",
+        "ConfigList": [
+            {
+                "ChannelName": "dist-volume",
+                "PollPeriodMs": 300,
+                "CapturePeriodS": 30,
+                "AsyncCapture": True,
+                "AsyncCaptureDelta": 5,
+                "Exponent": 2,
+                "TypeName": "channel.config",
+                "Version": "000",
+                "UnitGtEnumSymbol": "8e123a26",
+            },
+            {
+                "ChannelName": "dist-flow",
+                "PollPeriodMs": 300,
+                "CapturePeriodS": 30,
+                "AsyncCapture": True,
+                "AsyncCaptureDelta": 20,
+                "Exponent": 2,
+                "TypeName": "channel.config",
+                "Version": "000",
+                "UnitGtEnumSymbol": "b4580361",
+            },
+        ],
+        "ConversionFactor": 0.1,
+        "DisplayName": "Dist EZ FLow (i2c 0x64, or 100)",
         "TypeName": "i2c.flow.totalizer.component.gt",
         "Version": "000",
+        "PulseFlowMeterMakeModelGtEnumSymbol": "208f827f",
     }
 
     assert t.as_dict() == d
@@ -122,15 +163,15 @@ def test_i2c_flow_totalizer_component_gt_generated() -> None:
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2  = dict(d, ConfigList="Not a list.")
+    d2 = dict(d, ConfigList="Not a list.")
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
-    d2  = dict(d, ConfigList=["Not a list of dicts"])
+    d2 = dict(d, ConfigList=["Not a list of dicts"])
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
-    d2  = dict(d, ConfigList= [{"Failed": "Not a GtSimpleSingleStatus"}])
+    d2 = dict(d, ConfigList=[{"Failed": "Not a GtSimpleSingleStatus"}])
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -154,5 +195,12 @@ def test_i2c_flow_totalizer_component_gt_generated() -> None:
     ######################################
 
     d2 = dict(d, ComponentId="d4be12d5-33ba-4f1f-b9e5")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    ######################################
+    # Axiom 1: PulseFlowMeterMakeModel, ConversionFactor Consistency
+    ######################################
+    d2 = dict(d, ConversionFactor=3)
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)

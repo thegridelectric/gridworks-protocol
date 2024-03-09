@@ -136,18 +136,39 @@ class ChannelConfig(BaseModel):
     def check_axiom_1(cls, v: dict) -> dict:
         """
         Axiom 1: Async Capture Consistency.
-        If ReportOnChange is true, then AsyncReportThreshold and NameplateMaxValue also exist.
+        If AsyncCapture is True then AsyncCaptureDelta exists
         """
         # TODO: Implement check for axiom 1"
+        if "AsyncCapture" not in v.keys():
+            raise ValueError("Missing AsyncCapture!")
+        async_capture = v["AsyncCapture"]
+        if async_capture == True:
+            if "AsyncCaptureDelta" not in v.keys():
+                raise ValueError("AsyncCapture is true ... need AsyncCaptureDelta!")
+            else:
+                delta = v["AsyncCaptureDelta"]
+                if delta is None:
+                    raise ValueError("AsyncCapture is true ... need AsyncCaptureDelta!")
         return v
 
     @root_validator
     def check_axiom_2(cls, v: dict) -> dict:
         """
         Axiom 2: Capture and Polling Consistency.
-        CapturePeriodMs (CapturePeriodS * 1000) must be larger than PollPeriodMs. If CapturePeriodMs < 10 * PollPeriodMs then CapturePeriodMs must be a multiple of PollPeriodMs.
+        CapturePeriod must be at least as large as  PollPeriod. If CapturePeriodMs < 10 * PollPeriodMs then CapturePeriodMs must be a multiple of PollPeriodMs.
         """
-        # TODO: Implement check for axiom 2"
+        if all(key in v for key in ("CapturePeriodS", "PollPeriodMs")):
+            capture_period_ms = 1000 * v["CapturePeriodS"]
+            poll_period_ms = v["PollPeriodMs"]
+            if capture_period_ms < poll_period_ms:
+                raise ValueError(
+                    f"CapturePeriod must be at least as large as PollPeriod"
+                )
+            elif capture_period_ms < 10 * poll_period_ms:
+                if capture_period_ms % poll_period_ms != 0:
+                    raise ValueError(
+                        f"Axiom 2 violated! If CapturePeriodMs < 10 * PollPeriodMs then CapturePeriodMs must be a multiple of PollPeriodM "
+                    )
         return v
 
     def as_dict(self) -> Dict[str, Any]:

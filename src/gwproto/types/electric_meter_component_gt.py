@@ -124,10 +124,10 @@ class ElectricMeterComponentGt(BaseModel):
         if v is None:
             return v
         try:
-            check_is_non_negative_integer(v)
+            check_is_positive_integer(v)
         except ValueError as e:
             raise ValueError(
-                f"ModbusPort failed NonNegativeInteger format validation: {e}"
+                f"ModbusPort failed PositiveInteger format validation: {e}"
             )
         return v
 
@@ -137,16 +137,98 @@ class ElectricMeterComponentGt(BaseModel):
         Axiom 1: Modbus consistency.
         ModbusHost is None if and only if ModbusPort is None
         """
-        # TODO: Implement check for axiom 1"
+        axiom_passes = True
+        if "ModbusHost" in v.keys():
+            if not (v["ModbusHost"] is None):
+                if not ("ModbusPort" in v.keys()):
+                    axiom_passes = False
+                elif v["ModbusPort"] is None:
+                    axiom_passes = False
+
+        if "ModbusPort" in v.keys():
+            if not (v["ModbusPort"] is None):
+                if not ("ModbusHost" in v.keys()):
+                    axiom_passes = False
+                elif v["ModbusHost"] is None:
+                    axiom_passes = False
+        if axiom_passes == False:
+            raise ValueError(
+                f"Violates Axiom 1:  ModbusHost is None if and only if ModbusPort is None:\n <{v}>"
+            )
         return v
 
     @root_validator
     def check_axiom_2(cls, v: dict) -> dict:
         """
-        Axiom 2: Egauge4030 consistency.
-        If the EgaugeIoList has non-zero length, then the ModbusHost is not None and the set of output configs is equal to ConfigList as a set
+        Axiom 2: Egauge4030 Means Modbus
+        If the EgaugeIoList has non-zero length, then the ModbusHost is not None
         """
-        # TODO: Implement check for axiom 2"
+        if not "EgaugeIoList" in v.keys():
+            raise ValueError("Missing required EgaugeIoList field")
+        if not (isinstance(v["EgaugeIoList"], list)):
+            raise ValueError(f"EgaugeIoList must be a list: <{v}>")
+
+        io_list = v["EgaugeIoList"]
+        if len(io_list) == 0:
+            return v
+
+        # If the EgaugeIoList has non-zero length, then the ModbusHost is not Non
+        if not ("ModbusHost" in v.keys()):
+            raise ValueError(
+                f"Axiom 2 fails: If the EgaugeIoList has non-zero "
+                "length, then the ModbusHost is not None "
+            )
+        elif v["ModbusHost"] is None:
+            raise ValueError(
+                f"Axiom 2 fails: If the EgaugeIoList has non-zero "
+                "length, then the ModbusHost is not None "
+            )
+        return v
+
+    @root_validator
+    def check_axiom_3(cls, v: dict) -> dict:
+        """
+        Axiom 3: Channel Name consistency.
+          If the EgaugeIoList has non-zero length:
+          1) Len(EgaugeIoList) == Len(ConfigList)
+          2) There are no duplicates of ChannelName in the ConfigList or EgaugeIoList
+          3) The set of ChannelNames in IoConfig is equal to the set of ChannelNames in ConfigList
+        """
+        if not (all(key in v for key in ("EgaugeIoList", "ConfigList"))):
+            raise ValueError("Missing required fields")
+
+        if not (isinstance(v["EgaugeIoList"], list)):
+            raise ValueError(f"EgaugeIoList must be a list: <{v}>")
+
+        io_list = v["EgaugeIoList"]
+        config_list = v["ConfigList"]
+        if len(io_list) == 0:
+            return v
+
+        # If the EgaugeIoList has non-zero length, then Len(EgaugeIoList) == Len(ConfigList)
+        if len(io_list) != len(config_list):
+            raise ValueError(
+                f"Axiom 3 fails: EgaugeIoList and ConfigList must have equal length"
+            )
+
+        config_channel_names = list(map(lambda x: x.ChannelName, config_list))
+        if len(config_channel_names) != len(set(config_channel_names)):
+            raise ValueError(
+                f"Axiom 3 fails: duplicate channel name(s) in ConfigList:\n {v}"
+            )
+
+        io_channel_names = list(map(lambda x: x.ChannelName, io_list))
+        if len(io_channel_names) != len(set(io_channel_names)):
+            raise ValueError(
+                f"Axiom 3 fails: duplicate channel name(s) in EgaugeIoList:\n {v}"
+            )
+
+        if set(config_channel_names) != set(io_channel_names):
+            raise ValueError(
+                "Axiom 3 fails: The set of ChannelNames in IoConfig is NOT "
+                f"equal to the set of ChannelNames in ConfigList:\n {v} "
+            )
+
         return v
 
     def as_dict(self) -> Dict[str, Any]:
@@ -343,6 +425,24 @@ class ElectricMeterComponentGt_Maker:
     @classmethod
     def dict_to_dc(cls, d: dict[Any, str]) -> ElectricMeterComponent:
         return cls.tuple_to_dc(cls.dict_to_tuple(d))
+
+
+def check_is_positive_integer(v: int) -> None:
+    """
+    Must be positive when interpreted as an integer. Interpretation as an
+    integer follows the pydantic rules for this - which will round down
+    rational numbers. So 1.7 will be interpreted as 1 and is also fine,
+    while 0.5 is interpreted as 0 and will raise an exception.
+
+    Args:
+        v (int): the candidate
+
+    Raises:
+        ValueError: if v < 1
+    """
+    v2 = int(v)
+    if v2 < 1:
+        raise ValueError(f"<{v}> is not PositiveInteger")
 
 
 def check_is_uuid_canonical_textual(v: str) -> None:

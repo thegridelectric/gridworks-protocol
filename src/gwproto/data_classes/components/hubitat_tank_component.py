@@ -3,17 +3,19 @@ from typing import Optional
 import yarl
 
 from gwproto.data_classes.component import Component
-from gwproto.data_classes.component_attribute_class import ComponentAttributeClass as Cac
-
+from gwproto.data_classes.component_attribute_class import (
+    ComponentAttributeClass as Cac,
+)
 from gwproto.data_classes.resolver import ComponentResolver
 from gwproto.data_classes.sh_node import ShNode
+from gwproto.types.channel_config import ChannelConfig
+from gwproto.types.channel_config import ChannelConfig_Maker
+from gwproto.types.data_channel_gt import DataChannelGt_Maker
 from gwproto.types.hubitat_component_gt import HubitatComponentGt
 from gwproto.types.hubitat_component_gt import HubitatRESTResolutionSettings
 from gwproto.types.hubitat_tank_gt import FibaroTempSensorSettings
 from gwproto.types.hubitat_tank_gt import FibaroTempSensorSettingsGt
 from gwproto.types.hubitat_tank_gt import HubitatTankSettingsGt
-from gwproto.types.channel_config import ChannelConfig_Maker, ChannelConfig
-from gwproto.types.data_channel_gt import DataChannelGt_Maker
 
 
 class HubitatTankComponent(Component, ComponentResolver):

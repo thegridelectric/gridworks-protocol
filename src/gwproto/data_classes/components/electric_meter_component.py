@@ -17,12 +17,12 @@ class ElectricMeterComponent(Component):
         self,
         component_id: str,
         component_attribute_class_id: str,
-        config_list: List[ChannelConfig] = [],
-        egauge_io_list: List[EgaugeIo] = [],
         display_name: Optional[str] = None,
+        config_list: List[ChannelConfig] = [],
         hw_uid: Optional[str] = None,
         modbus_host: Optional[str] = None,
         modbus_port: Optional[int] = None,
+        egauge_io_list: List[EgaugeIo] = [],
     ):
         super(self.__class__, self).__init__(
             component_id=component_id,
@@ -30,7 +30,6 @@ class ElectricMeterComponent(Component):
             config_list=config_list,
             display_name=display_name,
             hw_uid=hw_uid,
-            
         )
         self.modbus_host = modbus_host
         self.modbus_port = modbus_port

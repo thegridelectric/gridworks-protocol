@@ -36,7 +36,7 @@ class Header(BaseModel):
 
 PayloadT = TypeVar("PayloadT")
 
-PAYLOAD_TYPE_FIELDS = ["TypeName", "type_alias", "TypeName", "type_name"]
+PAYLOAD_TYPE_FIELDS = ["TypeName", "type_name"]
 
 GRIDWORKS_ENVELOPE_TYPE = "gw"
 

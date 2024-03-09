@@ -9,6 +9,7 @@ from gwproto.enums import MakeModel
 from gwproto.types import ThermistorDataProcessingConfig
 from gwproto.types.channel_config import ChannelConfig
 
+
 class Ads111xBasedComponent(Component):
     by_id: Dict[str, "Ads111xBasedComponent"] = {}
 
@@ -16,6 +17,7 @@ class Ads111xBasedComponent(Component):
         self,
         component_id: str,
         component_attribute_class_id: str,
+        open_voltage_by_ads: List[float],
         config_list: List[ChannelConfig],
         thermistor_config_list: List[ThermistorDataProcessingConfig],
         display_name: Optional[str] = None,
@@ -26,8 +28,9 @@ class Ads111xBasedComponent(Component):
             component_attribute_class_id=component_attribute_class_id,
             config_list=config_list,
             display_name=display_name,
-            hw_uid=hw_uid, 
+            hw_uid=hw_uid,
         )
+        self.open_voltage_by_ads = open_voltage_by_ads
         self.thermistor_config_list = thermistor_config_list
         Ads111xBasedComponent.by_id[self.component_id] = self
         Component.by_id[self.component_id] = self

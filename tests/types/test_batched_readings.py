@@ -4,36 +4,72 @@ import json
 import pytest
 from pydantic import ValidationError
 
+from gwproto.enums import TelemetryName
 from gwproto.errors import SchemaError
 from gwproto.types import BatchedReadings
 from gwproto.types import BatchedReadings_Maker as Maker
+from gwproto.types import ChannelReadings
+from gwproto.types import DataChannelGt
 
 
 def test_batched_readings_generated() -> None:
     t = BatchedReadings(
-        FromGNodeAlias="dwtest.isone.ct.newhaven.orange1.ta.scada",
-        FromGNodeInstanceId="0384ef21-648b-4455-b917-58a1172d7fc1",
-        AboutGNodeAlias="dwtest.isone.ct.newhaven.orange1.ta",
-        SlotStartUnixS=1656945300,
-        BatchedTransmissionPeriodS=300,
-        DataChannelList=,
-        ChannelReadingList=[],
+        FromGNodeAlias="d1.isone.ct.newhaven.rose.scada",
+        FromGNodeInstanceId="9479051a-55fd-4da7-b14f-746853d70357",
+        AboutGNodeAlias="d1.isone.ct.newhaven.rose.ta",
+        SlotStartUnixS=1710010410,
+        BatchedTransmissionPeriodS=30,
+        DataChannelList=[
+            DataChannelGt(
+                Name="hp-idu-pwr",
+                DisplayName="Hp IDU",
+                AboutNodeName="hp-idu-pwr",
+                CapturedByNodeName="s.pwr-meter",
+                TelemetryName=TelemetryName.PowerW,
+                Id="50cf426b-ff3f-4a30-8415-8d3fba5e0ab7",
+            )
+        ],
+        ChannelReadingList=[
+            ChannelReadings(
+                ChannelId="50cf426b-ff3f-4a30-8415-8d3fba5e0ab7",
+                ValueList=[1220, 1400],
+                ScadaReadTimeUnixMsList=[1_710_010_425_545, 1_710_010_438_720],
+            )
+        ],
         FsmActionList=[],
         FsmReportList=[],
-        Id=,
+        Id="aa3dc3d6-3ef5-4b1f-8c3f-c9a4ef15195e",
     )
-
     d = {
-        "FromGNodeAlias": "dwtest.isone.ct.newhaven.orange1.ta.scada",
-        "FromGNodeInstanceId": "0384ef21-648b-4455-b917-58a1172d7fc1",
-        "AboutGNodeAlias": "dwtest.isone.ct.newhaven.orange1.ta",
-        "SlotStartUnixS": 1656945300,
-        "BatchedTransmissionPeriodS": 300,
-        "DataChannelList": ,
-        "ChannelReadingList": [],
+        "FromGNodeAlias": "d1.isone.ct.newhaven.rose.scada",
+        "FromGNodeInstanceId": "9479051a-55fd-4da7-b14f-746853d70357",
+        "AboutGNodeAlias": "d1.isone.ct.newhaven.rose.ta",
+        "SlotStartUnixS": 1710010410,
+        "BatchedTransmissionPeriodS": 30,
+        "DataChannelList": [
+            {
+                "Name": "hp-idu-pwr",
+                "DisplayName": "Hp IDU",
+                "AboutNodeName": "hp-idu-pwr",
+                "CapturedByNodeName": "s.pwr-meter",
+                "Id": "50cf426b-ff3f-4a30-8415-8d3fba5e0ab7",
+                "TypeName": "data.channel.gt",
+                "Version": "000",
+                "TelemetryNameGtEnumSymbol": "af39eec9",
+            }
+        ],
+        "ChannelReadingList": [
+            {
+                "ChannelId": "50cf426b-ff3f-4a30-8415-8d3fba5e0ab7",
+                "ValueList": [1220, 1400],
+                "ScadaReadTimeUnixMsList": [1710010425545, 1710010438720],
+                "TypeName": "channel.readings",
+                "Version": "000",
+            }
+        ],
         "FsmActionList": [],
         "FsmReportList": [],
-        "Id": ,
+        "Id": "aa3dc3d6-3ef5-4b1f-8c3f-c9a4ef15195e",
         "TypeName": "batched.readings",
         "Version": "000",
     }
@@ -125,51 +161,51 @@ def test_batched_readings_generated() -> None:
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2  = dict(d, DataChannelList="Not a list.")
+    d2 = dict(d, DataChannelList="Not a list.")
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
-    d2  = dict(d, DataChannelList=["Not a list of dicts"])
+    d2 = dict(d, DataChannelList=["Not a list of dicts"])
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
-    d2  = dict(d, DataChannelList= [{"Failed": "Not a GtSimpleSingleStatus"}])
+    d2 = dict(d, DataChannelList=[{"Failed": "Not a GtSimpleSingleStatus"}])
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
-    d2  = dict(d, ChannelReadingList="Not a list.")
+    d2 = dict(d, ChannelReadingList="Not a list.")
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
-    d2  = dict(d, ChannelReadingList=["Not a list of dicts"])
+    d2 = dict(d, ChannelReadingList=["Not a list of dicts"])
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
-    d2  = dict(d, ChannelReadingList= [{"Failed": "Not a GtSimpleSingleStatus"}])
+    d2 = dict(d, ChannelReadingList=[{"Failed": "Not a GtSimpleSingleStatus"}])
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
-    d2  = dict(d, FsmActionList="Not a list.")
+    d2 = dict(d, FsmActionList="Not a list.")
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
-    d2  = dict(d, FsmActionList=["Not a list of dicts"])
+    d2 = dict(d, FsmActionList=["Not a list of dicts"])
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
-    d2  = dict(d, FsmActionList= [{"Failed": "Not a GtSimpleSingleStatus"}])
+    d2 = dict(d, FsmActionList=[{"Failed": "Not a GtSimpleSingleStatus"}])
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
-    d2  = dict(d, FsmReportList="Not a list.")
+    d2 = dict(d, FsmReportList="Not a list.")
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
-    d2  = dict(d, FsmReportList=["Not a list of dicts"])
+    d2 = dict(d, FsmReportList=["Not a list of dicts"])
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
-    d2  = dict(d, FsmReportList= [{"Failed": "Not a GtSimpleSingleStatus"}])
+    d2 = dict(d, FsmReportList=[{"Failed": "Not a GtSimpleSingleStatus"}])
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 

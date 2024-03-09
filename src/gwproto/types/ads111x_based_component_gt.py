@@ -130,22 +130,45 @@ class Ads111xBasedComponentGt(BaseModel):
                 )
         return v
 
-    @validator("ConfigList")
-    def check_config_list(cls, v: List[ChannelConfig]) -> List[ChannelConfig]:
+    @validator("ThermistorConfigList")
+    def check_thermistor_config_list(
+        cls, v: List[ThermistorDataProcessingConfig]
+    ) -> List[ThermistorDataProcessingConfig]:
         """
-        Axiom 1: Terminal Block, TelemetryName uniqueness.
-        Each pair (x.TerminalBlockIdx, x.ReportingConfig.TelemetryName) in the ConfigList is unique.
+        Axiom 1: Terminal Block consistency and Channel Name uniqueness.
+        Terminal Block consistency and Channel Name uniqueness.
+        - Each TerminalBlockIdx occurs at most once in the ThermistorConfigList
+        - Each data channel occurs at most once in the ThermistorConfigList
         """
-        ...
-        # TODO: Implement Axiom(s)
+        terminal_blocks = list(map(lambda x: x.TerminalBlockIdx, v))
+        if len(set(terminal_blocks)) != len(terminal_blocks):
+            raise ValueError(
+                f"Axiom 1 failed! Terminal block used multiple times in "
+                f"ThermistorDataProcessingConfig:\n <{v}>"
+            )
+        channel_names = list(map(lambda x: x.ChannelName, v))
+        if len(set(channel_names)) != len(channel_names):
+            raise ValueError(
+                f"Axiom 1 failed! Channel Name used multiple times in "
+                f"ThermistorDataProcessingConfig:\n <{v}>"
+            )
+        return v
 
     @root_validator
-    def check_axiom_1(cls, v: dict) -> dict:
+    def check_axiom_2(cls, v: dict) -> dict:
         """
-        Axiom 1: ThermistorConfig, ChannelConfig consistency.
-        list(map(lambda x: x.ReportingConfig, ThermistorConfigList)) is equal to ConfigList
+        Axiom 2: ThermistorConfig, ChannelConfig consistency.
+        set(map(lambda x: x.ChannelName, ThermistorConfigList)) is equal to
+        set(map(lambda x: x.ChannelName, ConfigList))
         """
-        # TODO: Implement check for axiom 1"
+        if all(key in v for key in ("ThermistorConfigList", "ConfigList")):
+            therm_names = set(map(lambda x: x.ChannelName, v["ThermistorConfigList"]))
+            config_names = set(map(lambda x: x.ChannelName, v["ConfigList"]))
+            if therm_names != config_names:
+                raise ValueError(
+                    "Axiom 2 failed! ThermistorConfigList and ConfigList "
+                    f"do not refer to same channels: <{v}>"
+                )
         return v
 
     def as_dict(self) -> Dict[str, Any]:
@@ -348,7 +371,7 @@ class Ads111xBasedComponentGt_Maker:
 
 def check_is_ads1115_i2c_address(v: str) -> None:
     """
-    Ads1115I2cAddress: ToLower(v) in ["0x48", "0x49", "0x4a", "0x4b"].
+    Ads1115I2cAddress: ToLower(v) in  ['0x48', '0x49', '0x4a', '0x4b'].
 
     One of the 4 allowable I2C addresses for Texas Instrument Ads1115 chips.
 

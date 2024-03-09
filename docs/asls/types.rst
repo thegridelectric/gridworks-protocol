@@ -42,7 +42,7 @@ egauge.register.config.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/egauge-register-config.json
 
-electric.meter.cac.gt.000
+electric.meter.cac.gt.001
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/electric-meter-cac-gt.json
 

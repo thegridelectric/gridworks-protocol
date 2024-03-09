@@ -8,6 +8,7 @@ from typing import Optional
 from gwproto.data_classes.component_attribute_class import ComponentAttributeClass
 from gwproto.data_classes.mixin import StreamlinedSerializerMixin
 
+
 #from gwproto.types.channel_config import ChannelConfig
 
 

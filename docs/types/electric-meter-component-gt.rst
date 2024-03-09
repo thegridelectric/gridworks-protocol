@@ -27,7 +27,7 @@ Python pydantic class corresponding to json type `electric.meter.component.gt`, 
 
 **ModbusPort**:
     - Description: 
-    - Format: NonNegativeInteger
+    - Format: PositiveInteger
 
 **EgaugeIoList**:
     - Description: Bijecton from EGauge4030 input to ConfigList output. This should be empty unless the MakeModel of the corresponding component attribute class is EGauge 4030. The channels that can be read from an EGauge 4030 are configurable by the person who installs the device. The information is encapsulated in a modbus map provided by eGauge as a csv from a device-specific API. The EGaugeIoList maps the data from this map to the data that the SCADA expects to see.
@@ -41,6 +41,10 @@ Python pydantic class corresponding to json type `electric.meter.component.gt`, 
 
 
 .. autoclass:: gwproto.types.electric_meter_component_gt.check_is_uuid_canonical_textual
+    :members:
+
+
+.. autoclass:: gwproto.types.electric_meter_component_gt.check_is_positive_integer
     :members:
 
 

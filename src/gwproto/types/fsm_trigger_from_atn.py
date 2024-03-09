@@ -86,12 +86,15 @@ class FsmTriggerFromAtn(BaseModel):
     @validator("Trigger")
     def check_trigger(cls, v: FsmEvent) -> FsmEvent:
         """
-            Axiom 1: FromHandle must be 'a' (for AtomicTNode).
-            The triggering event is coming from the AtomicTNode, which always has the handle of "a"
+        Axiom 1: FromHandle must be 'a' (for AtomicTNode).
+        The triggering event is coming from the AtomicTNode, which always has the handle of "a"
         as a SpaceheatNode in the SCADA's hierarchical finite state machine.
         """
-        ...
-        # TODO: Implement Axiom(s)
+        if v.FromHandle != "a":
+            raise ValueError(
+                "Axiom 1 violated: FromHandle must be 'a' (for AtomicTNode)."
+            )
+        return v
 
     def as_dict(self) -> Dict[str, Any]:
         """

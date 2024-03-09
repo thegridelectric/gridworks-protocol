@@ -38,9 +38,10 @@
                         <xsl:element name="FileContents">
 
 
-<xsl:text>from fastapi_utils.enums import StrEnum
+<xsl:text>from enum import auto
 from typing import List
-from enum import auto
+
+from fastapi_utils.enums import StrEnum
 
 
 class </xsl:text><xsl:value-of select="$enum-class-name"/>

@@ -42,6 +42,12 @@
       "required": true
     }
   },
+  "axioms": {
+    "Axiom": {
+      "title": "List Length Consistency",
+      "description": "len(ChannelNameList) = len(ValueList)"
+    }
+  },
   "formats": {
     "SpaceheatName": {
       "type": "string",

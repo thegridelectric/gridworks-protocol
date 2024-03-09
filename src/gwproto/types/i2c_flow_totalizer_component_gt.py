@@ -9,6 +9,7 @@ from typing import Optional
 
 from pydantic import BaseModel
 from pydantic import Field
+from pydantic import root_validator
 from pydantic import validator
 
 from gwproto.data_classes.components.i2c_flow_totalizer_component import (
@@ -25,6 +26,15 @@ LOG_FORMAT = (
     "-35s %(lineno) -5d: %(message)s"
 )
 LOGGER = logging.getLogger(__name__)
+
+
+CONVERSION_FACTOR_BY_MODEL: Dict[MakeModel, float] = {
+    MakeModel.ISTEC_4440: 0.268132,
+    MakeModel.OMEGA__FTB8007HWPT: 0.134066,
+    MakeModel.OMEGA__FTB8010HWPT: 1.34066,
+    MakeModel.PRMFILTRATION__WM075: 1.34066,
+    MakeModel.EKM__HOTSPWM075HD: 0.10,
+}
 
 
 class I2cFlowTotalizerComponentGt(BaseModel):
@@ -102,6 +112,36 @@ class I2cFlowTotalizerComponentGt(BaseModel):
             raise ValueError(
                 f"ComponentAttributeClassId failed UuidCanonicalTextual format validation: {e}"
             )
+        return v
+
+    @root_validator
+    def check_axiom_1(cls, v: dict) -> dict:
+        """
+        Axiom 1:  PulseFlowMeterMakeModel, ConversionFactor Consistency
+        If the PulseFlowMeterMakeModel m is a key in the dict CONVERSION_FACTOR_BY_MODEL, then
+        the ConversionFactor must be CONVERSION_FACTOR_BY_MODEL[m]
+
+        CONVERSION_FACTOR_BY_MODEL: Dict[MakeModel, float] = {
+                            MakeModel.ISTEC_4440: 0.268132,
+                            MakeModel.OMEGA__FTB8007HWPT: 0.134066,
+                            MakeModel.OMEGA__FTB8010HWPT: 1.34066,
+                            MakeModel.PRMFILTRATION__WM075: 1.34066,
+                            MakeModel.EKM__HOTSPWM075HD: 0.10,
+                        }
+        """
+        if (
+            "PulseFlowMeterMakeModel" not in v.keys()
+            or "ConversionFactor" not in v.keys()
+        ):
+            raise ValueError("Missing keys!")
+        model = v["PulseFlowMeterMakeModel"]
+        cf = v["ConversionFactor"]
+        if model in CONVERSION_FACTOR_BY_MODEL.keys():
+            if cf != CONVERSION_FACTOR_BY_MODEL[model]:
+                raise ValueError(
+                    f"Axiom 1 violated! Conversion factor for {model} must "
+                    "be CONVERSION_FACTOR_BY_MODEL[{model}] = {cf}"
+                )
         return v
 
     def as_dict(self) -> Dict[str, Any]:

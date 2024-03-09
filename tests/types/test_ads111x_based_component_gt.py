@@ -55,7 +55,7 @@ def test_ads111x_based_component_gt_generated() -> None:
                 "ChannelName": "hp-ewt",
                 "PollPeriodMs": 200,
                 "CapturePeriodS": 60,
-                "AsyncCapture": true,
+                "AsyncCapture": True,
                 "AsyncCaptureDelta": 250,
                 "Exponent": 3,
                 "TypeName": "channel.config",
@@ -135,6 +135,24 @@ def test_ads111x_based_component_gt_generated() -> None:
     d2 = dict(d)
     del d2["ThermistorConfigList"]
     with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    # Axiom 2: channel names need to match between ConfigList and ThermistorConfigList
+    d2 = dict(d)
+    d2["ConfigList"] = [
+        {
+            "ChannelName": "hp-lwt",  # instead of "hp-ewt"
+            "PollPeriodMs": 200,
+            "CapturePeriodS": 60,
+            "AsyncCapture": True,
+            "AsyncCaptureDelta": 250,
+            "Exponent": 3,
+            "TypeName": "channel.config",
+            "Version": "000",
+            "UnitGtEnumSymbol": "ec14bd47",
+        }
+    ]
+    with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
     ######################################

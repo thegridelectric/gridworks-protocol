@@ -2,8 +2,10 @@ from typing import Optional
 
 import yarl
 
-from gwproto.data_classes.component_attribute_class import ComponentAttributeClass as Cac
 from gwproto.data_classes.component import Component
+from gwproto.data_classes.component_attribute_class import (
+    ComponentAttributeClass as Cac,
+)
 from gwproto.types.hubitat_gt import HubitatGt
 
 

@@ -44,7 +44,7 @@
     },
     "ModbusPort": {
       "type": "integer",
-      "format": "NonNegativeInteger",
+      "format": "PositiveInteger",
       "title": "",
       "required": false
     },
@@ -74,8 +74,12 @@
       "description": "ModbusHost is None if and only if ModbusPort is None"
     },
     "Axiom2": {
-      "title": "Egauge4030 consistency",
-      "description": "If the EgaugeIoList has non-zero length, then the ModbusHost is not None and the set of output configs is equal to ConfigList as a set"
+      "title": "Egauge4030 Means Modbus",
+      "description": "If the EgaugeIoList has non-zero length, then the ModbusHost is not None"
+    },
+    "Axiom3": {
+      "title": "Channel Name Consistency",
+      "description": "If the EgaugeIoList has non-zero length: 1) Len(EgaugeIoList) == Len(ConfigList) 2) There are no duplicates of ChannelName in the ConfigList or EgaugeIoList 3) The set of ChannelNames in IoConfig is equal to the set of ChannelNames in ConfigList"
     }
   },
   "formats": {
@@ -83,6 +87,11 @@
       "type": "string",
       "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
       "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"
+    },
+    "PositiveInteger": {
+      "type": "string",
+      "description": "Must be positive when interpreted as an integer. Interpretation as an integer follows the pydantic rules for this - which will round down rational numbers. So 1.7 will be interpreted as 1 and is also fine, while 0.5 is interpreted as 0 and will raise an exception.",
+      "example": ""
     }
   }
 }

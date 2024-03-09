@@ -13,14 +13,14 @@ from gwproto.types import SyncedReadings_Maker as Maker
 def test_synced_readings_generated() -> None:
     t = SyncedReadings(
         ScadaReadTimeUnixMs=1656587343297,
-        ChannelNameList=,
-        ValueList=[18000],
+        ChannelNameList=["hp-ewt", "hp-lwt"],
+        ValueList=[32755, 38870],
     )
 
     d = {
         "ScadaReadTimeUnixMs": 1656587343297,
-        "ChannelNameList": ,
-        "ValueList": [18000],
+        "ChannelNameList": ["hp-ewt", "hp-lwt"],
+        "ValueList": [32755, 38870],
         "TypeName": "synced.readings",
         "Version": "000",
     }

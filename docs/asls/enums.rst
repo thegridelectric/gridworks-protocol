@@ -10,10 +10,6 @@ spaceheat.kind.of.param.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/spaceheat-kind-of-param.json
 
-local.comm.interface.000
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/local-comm-interface.json
-
 thermistor.data.method.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/thermistor-data-method.json

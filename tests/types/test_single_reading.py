@@ -13,13 +13,13 @@ from gwproto.types import SingleReading_Maker as Maker
 def test_single_reading_generated() -> None:
     t = SingleReading(
         ScadaReadTimeUnixMs=1656513094288,
-        ChannelName=,
+        ChannelName="hp-ewt",
         Value=63430,
     )
 
     d = {
         "ScadaReadTimeUnixMs": 1656513094288,
-        "ChannelName": ,
+        "ChannelName": "hp-ewt",
         "Value": 63430,
         "TypeName": "single.reading",
         "Version": "000",

@@ -45,6 +45,12 @@
       "required": true
     }
   },
+  "axioms": {
+    "Axiom1": {
+      "title": "Satisfies ComponentAttributeClassGt",
+      "description": "Specifically, the match between Id and MakeModel is enforced"
+    }
+  },
   "formats": {
     "UuidCanonicalTextual": {
       "type": "string",

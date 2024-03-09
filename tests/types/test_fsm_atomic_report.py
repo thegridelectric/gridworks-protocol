@@ -4,17 +4,17 @@ import json
 import pytest
 from pydantic import ValidationError
 
-from gwproto.enums import FsmEventType
 from gwproto.errors import SchemaError
 from gwproto.types import FsmAtomicReport
 from gwproto.types import FsmAtomicReport_Maker as Maker
+from gwproto.enums import FsmActionType
 
 
 def test_fsm_atomic_report_generated() -> None:
     t = FsmAtomicReport(
         FromHandle="h.s.admin.iso-valve.relay",
         IsAction=True,
-        ActionType="00000000",
+        ActionType=FsmActionType.RelayPinSet,
         Action=0,
         UnixTimeMs=1709923792000,
         TriggerId="12da4269-63c3-44f4-ab65-3ee5e29329fe",
@@ -24,7 +24,7 @@ def test_fsm_atomic_report_generated() -> None:
         "FromHandle": "h.s.admin.iso-valve.relay",
         "IsAction": True,
         "ActionTypeGtEnumSymbol": "00000000",
-        "Action": 0,
+        "Action": '0',
         "UnixTimeMs": 1709923792000,
         "TriggerId": "12da4269-63c3-44f4-ab65-3ee5e29329fe",
         "TypeName": "fsm.atomic.report",

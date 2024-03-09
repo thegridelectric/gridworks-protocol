@@ -146,8 +146,8 @@ class BatchedReadings(BaseModel):
         """
         Axiom 1: Each of the fsm.atomic.reports in this list must be actions (i.e. IsAction = true).
         """
-        ...
         # TODO: Implement Axiom(s)
+        return v
 
     @validator("Id")
     def _check_id(cls, v: str) -> str:

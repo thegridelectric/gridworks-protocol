@@ -5,7 +5,7 @@ import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
-from gwproto.types import ResistiveHeaterComponentGt_Maker as Maker
+from gwproto.types.resistive_heater_component_gt import ResistiveHeaterComponentGt_Maker as Maker
 
 
 def test_resistive_heater_component_gt_generated() -> None:

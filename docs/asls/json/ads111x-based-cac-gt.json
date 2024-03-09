@@ -3,7 +3,7 @@
   "type_name": "ads111x.based.cac.gt",
   "version": "000",
   "owner": "gridworks@gridworks-consulting.com",
-  "description": "TI ADS111x Based Temp Sensing Component Attribute Class. Component Attribute Class for sensors using the Texas Instrument ADS111X series of chips used with 10K thermistors for reading temperature. The ADS111X is a class of I2C-based 16-bit Analog Digital Convertors. The chip has 4 possible I2C addresses, and the address can be set by jumpering the "Addr" pin of the ADS111X chip to one of the 4 I2C pins. 0x48: GND, 0x49: VDD, 0x4A: SDA, 0x4B: SCL. GridWorks Spaceheat SCADA uses the GridWorks GNodeRegistry structures and abstractions for managing relational device data. The Cac, or ComponentAttributeClass, is part of this structure.",
+  "description": "TI ADS111x Based Temp Sensing Component Attribute Class. Component Attribute Class for sensors using the Texas Instrument ADS111X series of chips used with 10K thermistors for reading temperature. The ADS111X is a class of I2C-based 16-bit Analog Digital Convertors. The chip has 4 possible I2C addresses, and the address can be set by jumpering the 'Addr' pin of the ADS111X chip to one of the 4 I2C pins. 0x48: GND, 0x49: VDD, 0x4A: SDA, 0x4B: SCL. GridWorks Spaceheat SCADA uses the GridWorks GNodeRegistry structures and abstractions for managing relational device data. The Cac, or ComponentAttributeClass, is part of this structure.",
   "url": "https://drive.google.com/drive/u/0/folders/1oFvs4-kvwyzt220eYlFnwdzEgVCIbbt6",
   "properties": {
     "ComponentAttributeClassId": {
@@ -75,6 +75,10 @@
     "Axiom1": {
       "title": "TerminalBlock Ads Chip consistency",
       "description": "TotalTerminalBlocks should be greater than 4 * (len(AdsI2cAddressList) - 1 ) and less than or equal to 4*len(AdsI2cAddressList)"
+    },
+    "Axiom2": {
+      "title": "Satisfies ComponentAttributeClassGt",
+      "description": "Specifically, the match between Id and MakeModel is enforced"
     }
   },
   "formats": {
@@ -85,7 +89,7 @@
     },
     "Ads1115I2cAddress": {
       "type": "string",
-      "description": "ToLower(v) in ["0x48", "0x49", "0x4a", "0x4b"]. One of the 4 allowable I2C addresses for Texas Instrument Ads1115 chips.",
+      "description": "ToLower(v) in ['0x48', '0x49', '0x4a', '0x4b']. One of the 4 allowable I2C addresses for Texas Instrument Ads1115 chips.",
       "example": ""
     },
     "PositiveInteger": {

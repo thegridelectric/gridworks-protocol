@@ -8,6 +8,7 @@ from typing import Literal
 
 from pydantic import BaseModel
 from pydantic import Field
+from pydantic import root_validator
 from pydantic import validator
 
 from gwproto.errors import SchemaError
@@ -65,6 +66,15 @@ class SyncedReadings(BaseModel):
                 raise ValueError(
                     f"ChannelNameList element {elt} failed SpaceheatName format validation: {e}"
                 )
+        return v
+
+    @root_validator
+    def check_axiom_(cls, v: dict) -> dict:
+        """
+        Axiom : List Length Consistency.
+        len(ChannelNameList) = len(ValueList)
+        """
+        # TODO: Implement check for axiom "
         return v
 
     def as_dict(self) -> Dict[str, Any]:

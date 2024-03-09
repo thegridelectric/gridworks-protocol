@@ -24,35 +24,26 @@ from gwproto.data_classes.components.electric_meter_component import (
 from gwproto.data_classes.errors import DataClassLoadingError
 from gwproto.data_classes.resolver import ComponentResolver
 from gwproto.data_classes.sh_node import ShNode
-
 from gwproto.data_classes.telemetry_tuple import TelemetryTuple
 from gwproto.default_decoders import ComponentDecoder
-
 from gwproto.default_decoders import default_component_decoder
 from gwproto.enums import ActorClass
 from gwproto.enums import TelemetryName
-from gwproto.types import ElectricMeterCacGt_Maker
+from gwproto.types import Ads111xBasedCacGt_Maker
 from gwproto.types import DataChannelGt
 from gwproto.types import DataChannelGt_Maker
-
-from gwproto.types import Ads111xBasedCacGt_Maker
-
-from gwproto.types.ads111x_based_component_gt import (
-    Ads111xBasedComponentGt_Maker,
-)
-
-
-from gwproto.types.i2c_flow_totalizer_component_gt import I2cFlowTotalizerComponentGt_Maker
-
-from gwproto.types.i2c_multichannel_dt_relay_component_gt import I2cMultichannelDtRelayComponentGt_Maker
-
-
+from gwproto.types import ElectricMeterCacGt_Maker
 from gwproto.types import ResistiveHeaterCacGt_Maker
-from gwproto.types.resistive_heater_component_gt import ResistiveHeaterComponentGt_Maker
-
 from gwproto.types import SpaceheatNodeGt_Maker
+from gwproto.types.ads111x_based_component_gt import Ads111xBasedComponentGt_Maker
 from gwproto.types.electric_meter_component_gt import ElectricMeterComponentGt_Maker
-
+from gwproto.types.i2c_flow_totalizer_component_gt import (
+    I2cFlowTotalizerComponentGt_Maker,
+)
+from gwproto.types.i2c_multichannel_dt_relay_component_gt import (
+    I2cMultichannelDtRelayComponentGt_Maker,
+)
+from gwproto.types.resistive_heater_component_gt import ResistiveHeaterComponentGt_Maker
 
 
 snake_add_underscore_to_camel_pattern = re.compile(r"(?<!^)(?=[A-Z])")

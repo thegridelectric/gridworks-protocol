@@ -6,6 +6,7 @@ from typing import Optional
 from gwproto.data_classes.mixin import StreamlinedSerializerMixin
 from gwproto.enums import Unit
 
+
 class ChannelConfigDc(ABC, StreamlinedSerializerMixin):
     by_id: Dict[str, "ChannelConfigDc"] = {}
 

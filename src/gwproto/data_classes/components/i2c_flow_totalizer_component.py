@@ -1,13 +1,14 @@
 """RelayComponent definition"""
 from typing import Dict
-from typing import Optional
 from typing import List
+from typing import Optional
 
-
-from gwproto.data_classes.component_attribute_class import ComponentAttributeClass as Cac
 from gwproto.data_classes.component import Component
-from gwproto.types.channel_config import ChannelConfig
+from gwproto.data_classes.component_attribute_class import (
+    ComponentAttributeClass as Cac,
+)
 from gwproto.enums import MakeModel
+from gwproto.types.channel_config import ChannelConfig
 
 
 class I2cFlowTotalizerComponent(Component):

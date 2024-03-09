@@ -43,7 +43,6 @@ from gwproto.enums.fsm_action_type import FsmActionType
 from gwproto.enums.fsm_event_type import FsmEventType
 from gwproto.enums.kind_of_param import KindOfParam
 from gwproto.enums.lg_operating_mode import LgOperatingMode
-from gwproto.enums.local_comm_interface import LocalCommInterface
 from gwproto.enums.make_model import MakeModel
 from gwproto.enums.relay_closed_or_open import RelayClosedOrOpen
 from gwproto.enums.relay_energization_state import RelayEnergizationState
@@ -67,7 +66,6 @@ __all__ = [
     "FsmEventType",  # [sh.fsm.event.type.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shfsmeventtype)
     "KindOfParam",  # [spaceheat.kind.of.param.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatkindofparam)
     "LgOperatingMode",  # [lg.operating.mode.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#lgoperatingmode)
-    "LocalCommInterface",  # [local.comm.interface.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#localcomminterface)
     "MakeModel",  # [spaceheat.make.model.002](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatmakemodel)
     "RelayClosedOrOpen",  # [relay.closed.or.open.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relayclosedoropen)
     "RelayEnergizationState",  # [relay.energization.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relayenergizationstate)

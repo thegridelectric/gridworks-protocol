@@ -2,16 +2,18 @@ from typing import Optional
 
 import yarl
 
-from gwproto.data_classes.component_attribute_class import ComponentAttributeClass as Cac
-
 from gwproto.data_classes.component import Component
+from gwproto.data_classes.component_attribute_class import (
+    ComponentAttributeClass as Cac,
+)
 from gwproto.data_classes.resolver import ComponentResolver
 from gwproto.data_classes.sh_node import ShNode
+from gwproto.types.channel_config import ChannelConfig
+from gwproto.types.channel_config import ChannelConfig_Maker
 from gwproto.types.hubitat_component_gt import HubitatComponentGt
 from gwproto.types.hubitat_poller_gt import HubitatPollerGt
 from gwproto.types.rest_poller_gt import RequestArgs
 from gwproto.types.rest_poller_gt import RESTPollerSettings
-from gwproto.types.channel_config import ChannelConfig_Maker, ChannelConfig
 
 
 class HubitatPollerComponent(Component, ComponentResolver):

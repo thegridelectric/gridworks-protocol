@@ -69,12 +69,12 @@
   },
   "axioms": {
     "Axiom1": {
-      "title": "ThermistorConfig, ChannelConfig consistency",
-      "description": "list(map(lambda x: x.ReportingConfig, ThermistorConfigList)) is equal to ConfigList"
+      "title": "Terminal Block consistency and Channel Name uniqueness.",
+      "description": "Terminal Block consistency and Channel Name uniqueness. - Each TerminalBlockIdx occurs at most once in the ThermistorConfigList - Each data channel occurs at most once in the ThermistorConfigList"
     },
-    "Axiom1": {
-      "title": "Terminal Block, TelemetryName uniqueness",
-      "description": "Each pair (x.TerminalBlockIdx, x.ReportingConfig.TelemetryName) in the ConfigList is unique."
+    "Axiom2": {
+      "title": "ThermistorConfig, ChannelConfig consistency",
+      "description": "set(map(lambda x: x.ChannelName, ThermistorConfigList)) is equal to set(map(lambda x: x.ChannelName, ConfigList))"
     }
   },
   "formats": {
@@ -85,7 +85,7 @@
     },
     "Ads1115I2cAddress": {
       "type": "string",
-      "description": "ToLower(v) in ["0x48", "0x49", "0x4a", "0x4b"]. One of the 4 allowable I2C addresses for Texas Instrument Ads1115 chips.",
+      "description": "ToLower(v) in ['0x48', '0x49', '0x4a', '0x4b']. One of the 4 allowable I2C addresses for Texas Instrument Ads1115 chips.",
       "example": ""
     },
     "Near5": {

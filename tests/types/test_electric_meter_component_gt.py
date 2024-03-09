@@ -4,7 +4,11 @@ import json
 import pytest
 from pydantic import ValidationError
 
+from gwproto.enums import Unit
 from gwproto.errors import SchemaError
+from gwproto.types import ChannelConfig
+from gwproto.types import EgaugeIo
+from gwproto.types import EgaugeRegisterConfig
 from gwproto.types.electric_meter_component_gt import ElectricMeterComponentGt
 from gwproto.types.electric_meter_component_gt import (
     ElectricMeterComponentGt_Maker as Maker,
@@ -14,24 +18,74 @@ from gwproto.types.electric_meter_component_gt import (
 def test_electric_meter_component_gt_generated() -> None:
     t = ElectricMeterComponentGt(
         ComponentId="04ceb282-d7e8-4293-80b5-72455e1a5db3",
-        ComponentAttributeClassId='c1856e62-d8c0-4352-b79e-6ae05a5294c2',
-        DisplayName="Main power meter for Little orange house garage space heat",
-        ConfigList=[{'Channel': {'DisplayName':'Idu Power', 'AboutName': 'hp-idu-pwr', 'CapturedByName': 'pwr-meter', 'TelemetryNameGtEnumSymbol': 'af39eec9'}, 'PollPeriodMs': 1000, 'CapturePeriodS': 300, 'AsyncCapture': True, 'AsyncCaptureDelta': 50, 'Exponent': 0, 'UnitGtEnumSymbol': 'f459a9c3', 'TypeName': 'channel.config', 'Version': '000'}, 'TypeName': 'egauge.io', 'Version': '001'}],
+        ComponentAttributeClassId="739a6e32-bb9c-43bc-a28d-fb61be665522",
+        DisplayName="HP IDU Pwr",
+        ConfigList=[
+            ChannelConfig(
+                ChannelName="hp-idu-pwr",
+                PollPeriodMs=1000,
+                CapturePeriodS=60,
+                AsyncCapture=True,
+                AsyncCaptureDelta=20,
+                Exponent=1,
+                Unit=Unit.W,
+            )
+        ],
         HwUid="35941_308",
         ModbusHost="eGauge4922.local",
         ModbusPort=502,
-        EgaugeIoList=[{'InputConfig': {'Address': 9006, 'Name': '', 'Description': 'change in value', 'Type': 'f32', 'Denominator': 1, 'Unit': 'W', 'TypeName': 'egauge.register.config', 'Version': '000'}, 'OutputConfig': {'Channel': {'DisplayName':'Idu Power', 'AboutName': 'hp-idu-pwr', 'CapturedByName': 'pwr-meter', 'TelemetryNameGtEnumSymbol': 'af39eec9'}, 'PollPeriodMs': 1000, 'CapturePeriodS': 300, 'AsyncCapture': True, 'AsyncCaptureDelta': 50, 'Exponent': 0, 'UnitGtEnumSymbol': 'f459a9c3', 'TypeName': 'channel.config', 'Version': '000'}, 'TypeName': 'egauge.io', 'Version': '001'}],
+        EgaugeIoList=[
+            EgaugeIo(
+                ChannelName="hp-idu-pwr",
+                InputConfig=EgaugeRegisterConfig(
+                    Address=9000,
+                    Name="",
+                    Description="change in value",
+                    Denominator=1,
+                    Type="f32",
+                    Unit=Unit.W,
+                ),
+            )
+        ],
     )
 
     d = {
         "ComponentId": "04ceb282-d7e8-4293-80b5-72455e1a5db3",
-        "ComponentAttributeClassId": 'c1856e62-d8c0-4352-b79e-6ae05a5294c2',
-        "DisplayName": "Main power meter for Little orange house garage space heat",
-        "ConfigList": [{'Channel': {'DisplayName':'Idu Power', 'AboutName': 'hp-idu-pwr', 'CapturedByName': 'pwr-meter', 'TelemetryNameGtEnumSymbol': 'af39eec9'}, 'PollPeriodMs': 1000, 'CapturePeriodS': 300, 'AsyncCapture': True, 'AsyncCaptureDelta': 50, 'Exponent': 0, 'UnitGtEnumSymbol': 'f459a9c3', 'TypeName': 'channel.config', 'Version': '000'}, 'TypeName': 'egauge.io', 'Version': '001'}],
+        "ComponentAttributeClassId": "739a6e32-bb9c-43bc-a28d-fb61be665522",
+        "DisplayName": "HP IDU Pwr",
+        "ConfigList": [
+            {
+                "ChannelName": "hp-idu-pwr",
+                "PollPeriodMs": 1000,
+                "CapturePeriodS": 60,
+                "AsyncCapture": True,
+                "AsyncCaptureDelta": 20,
+                "Exponent": 1,
+                "TypeName": "channel.config",
+                "Version": "000",
+                "UnitGtEnumSymbol": "f459a9c3",
+            }
+        ],
         "HwUid": "35941_308",
         "ModbusHost": "eGauge4922.local",
         "ModbusPort": 502,
-        "EgaugeIoList": [{'InputConfig': {'Address': 9006, 'Name': '', 'Description': 'change in value', 'Type': 'f32', 'Denominator': 1, 'Unit': 'W', 'TypeName': 'egauge.register.config', 'Version': '000'}, 'OutputConfig': {'Channel': {'DisplayName':'Idu Power', 'AboutName': 'hp-idu-pwr', 'CapturedByName': 'pwr-meter', 'TelemetryNameGtEnumSymbol': 'af39eec9'}, 'PollPeriodMs': 1000, 'CapturePeriodS': 300, 'AsyncCapture': True, 'AsyncCaptureDelta': 50, 'Exponent': 0, 'UnitGtEnumSymbol': 'f459a9c3', 'TypeName': 'channel.config', 'Version': '000'}, 'TypeName': 'egauge.io', 'Version': '001'}],
+        "EgaugeIoList": [
+            {
+                "ChannelName": "hp-idu-pwr",
+                "InputConfig": {
+                    "Address": 9000,
+                    "Name": "",
+                    "Description": "change in value",
+                    "Type": "f32",
+                    "Denominator": 1,
+                    "Unit": "W",
+                    "TypeName": "egauge.register.config",
+                    "Version": "000",
+                },
+                "TypeName": "egauge.io",
+                "Version": "001",
+            }
+        ],
         "TypeName": "electric.meter.component.gt",
         "Version": "001",
     }
@@ -104,28 +158,30 @@ def test_electric_meter_component_gt_generated() -> None:
     Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    if "ModbusHost" in d2.keys():
-        del d2["ModbusHost"]
-    Maker.dict_to_tuple(d2)
+    del d2["ModbusHost"]
+    # Axiom 1: If the EgaugeIoList has non-zero length, then the ModbusHost is not None  (type=value_error)
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
 
+    # Axiom 1: ModbusHost is None if and only if ModbusPort is Non
     d2 = dict(d)
-    if "ModbusPort" in d2.keys():
-        del d2["ModbusPort"]
-    Maker.dict_to_tuple(d2)
+    del d2["ModbusPort"]
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
 
     ######################################
     # Behavior on incorrect types
     ######################################
 
-    d2  = dict(d, ConfigList="Not a list.")
+    d2 = dict(d, ConfigList="Not a list.")
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
-    d2  = dict(d, ConfigList=["Not a list of dicts"])
+    d2 = dict(d, ConfigList=["Not a list of dicts"])
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
-    d2  = dict(d, ConfigList= [{"Failed": "Not a GtSimpleSingleStatus"}])
+    d2 = dict(d, ConfigList=[{"Failed": "Not a GtSimpleSingleStatus"}])
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -133,15 +189,15 @@ def test_electric_meter_component_gt_generated() -> None:
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2  = dict(d, EgaugeIoList="Not a list.")
+    d2 = dict(d, EgaugeIoList="Not a list.")
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
-    d2  = dict(d, EgaugeIoList=["Not a list of dicts"])
+    d2 = dict(d, EgaugeIoList=["Not a list of dicts"])
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
-    d2  = dict(d, EgaugeIoList= [{"Failed": "Not a GtSimpleSingleStatus"}])
+    d2 = dict(d, EgaugeIoList=[{"Failed": "Not a GtSimpleSingleStatus"}])
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 

@@ -59,7 +59,7 @@ class I2cMultichannelDtRelayComponentGt(BaseModel):
             "to this component's relays (actors specified in the RelayConfigLlist)"
         ),
     )
-    RelayConfigList: RelayActorConfig = Field(
+    RelayConfigList: List[RelayActorConfig] = Field(
         title="Relay Config List",
         description=(
             "Information about which actors control each relay, and the relay wiring state: (normally "
@@ -99,15 +99,6 @@ class I2cMultichannelDtRelayComponentGt(BaseModel):
             )
         return v
 
-    @validator("RelayConfigList")
-    def check_relay_config_list(cls, v: RelayActorConfig) -> RelayActorConfig:
-        """
-        Axiom : Relay Index Consistency.
-        All of the Relay indices in the RelayConfigList are unique.
-        """
-        ...
-        # TODO: Implement Axiom(s)
-
     def as_dict(self) -> Dict[str, Any]:
         """
         Translate the object into a dictionary representation that can be serialized into a
@@ -136,7 +127,11 @@ class I2cMultichannelDtRelayComponentGt(BaseModel):
         for elt in self.ConfigList:
             config_list.append(elt.as_dict())
         d["ConfigList"] = config_list
-        d["RelayConfigList"] = self.RelayConfigList.as_dict()
+        # Recursively calling as_dict()
+        relay_config_list = []
+        for elt in self.RelayConfigList:
+            relay_config_list.append(elt.as_dict())
+        d["RelayConfigList"] = relay_config_list
         return d
 
     def as_type(self) -> bytes:
@@ -235,11 +230,18 @@ class I2cMultichannelDtRelayComponentGt_Maker:
         d2["ConfigList"] = config_list
         if "RelayConfigList" not in d2.keys():
             raise SchemaError(f"dict missing RelayConfigList: <{d2}>")
-        if not isinstance(d2["RelayConfigList"], dict):
+        if not isinstance(d2["RelayConfigList"], List):
             raise SchemaError(
-                f"RelayConfigList <{d2['RelayConfigList']}> must be a RelayActorConfig!"
+                f"RelayConfigList <{d2['RelayConfigList']}> must be a List!"
             )
-        relay_config_list = RelayActorConfig_Maker.dict_to_tuple(d2["RelayConfigList"])
+        relay_config_list = []
+        for elt in d2["RelayConfigList"]:
+            if not isinstance(elt, dict):
+                raise SchemaError(
+                    f"RelayConfigList <{d2['RelayConfigList']}> must be a List of RelayActorConfig types"
+                )
+            t = RelayActorConfig_Maker.dict_to_tuple(elt)
+            relay_config_list.append(t)
         d2["RelayConfigList"] = relay_config_list
         if "TypeName" not in d2.keys():
             raise SchemaError(f"TypeName missing from dict <{d2}>")

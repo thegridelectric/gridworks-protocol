@@ -1,7 +1,6 @@
 from gwproto import Decoders
 from gwproto import MQTTCodec
 from gwproto import create_message_payload_discriminator
-from gwproto.messages import GtDispatchBoolean_Maker
 from gwproto.messages import GtShCliAtnCmd_Maker
 from tests.dummy_decoders import PARENT
 
@@ -19,7 +18,6 @@ class ChildMQTTCodec(MQTTCodec):
         super().__init__(
             Decoders.from_objects(
                 [
-                    GtDispatchBoolean_Maker,
                     GtShCliAtnCmd_Maker,
                 ],
                 message_payload_discriminator=ChildMessageDecoder,

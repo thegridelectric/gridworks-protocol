@@ -6,8 +6,8 @@ from gwproto.enums import RelayEnergizationState
 
 def test_relay_energization_state() -> None:
     assert set(RelayEnergizationState.values()) == {
-        "DeEnergized",
-        "Energized",
+        0,
+        1,
     }
 
     assert RelayEnergizationState.default() == RelayEnergizationState.DeEnergized

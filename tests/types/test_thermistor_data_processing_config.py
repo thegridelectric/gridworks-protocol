@@ -15,8 +15,8 @@ def test_thermistor_data_processing_config_generated() -> None:
     t = ThermistorDataProcessingConfig(
         ChannelName="hp-ewt",
         TerminalBlockIdx=4,
-        ThermistorMakeModel="652abfd6",
-        DataProcessingMethod="00000000",
+        ThermistorMakeModel=MakeModel.TEWA__TT0P10KC3T1051500,
+        DataProcessingMethod=ThermistorDataMethod.SimpleBeta,
         DataProcessingDescription="using a beta of 3977.",
     )
 

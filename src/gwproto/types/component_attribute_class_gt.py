@@ -333,12 +333,12 @@ class ComponentAttributeClassGt_Maker:
 
     @classmethod
     def dc_to_tuple(cls, dc: ComponentAttributeClass) -> ComponentAttributeClassGt:
-        t = ComponentAttributeClassGt_Maker(
-            component_attribute_class_id=dc.component_attribute_class_id,
-            make_model=dc.make_model,
-            display_name=dc.display_name,
-            min_poll_period_ms=dc.min_poll_period_ms,
-        ).tuple
+        t = ComponentAttributeClassGt(
+            ComponentAttributeClassId=dc.component_attribute_class_id,
+            MakeModel=dc.make_model,
+            DisplayName=dc.display_name,
+            MinPollPeriodMs=dc.min_poll_period_ms,
+        )
         return t
 
     @classmethod

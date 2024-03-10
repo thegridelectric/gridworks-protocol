@@ -7,7 +7,7 @@ from pydantic import ValidationError
 from gwproto.errors import SchemaError
 from gwproto.types import Snapshot
 from gwproto.types import Snapshot_Maker as Maker
-
+from gwproto.types import SingleReading
 
 def test_snapshot_spaceheat_generated() -> None:
     t = Snapshot(
@@ -42,14 +42,6 @@ def test_snapshot_spaceheat_generated() -> None:
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple
 
-    # test Maker init
-    t = Maker(
-        from_g_node_alias=gtuple.FromGNodeAlias,
-        from_g_node_instance_id=gtuple.FromGNodeInstanceId,
-        snapshot_time_unix_ms=gtuple.SnapshotTimeUnixMs,
-        latest_reading_list=gtuple.LatestReadingList,
-    ).tuple
-    assert t == gtuple
 
     ######################################
     # SchemaError raised if missing a required attribute

@@ -21,27 +21,27 @@ from gwproto.data_classes.components.resistive_heater_component import (
 )
 from gwproto.data_classes.hardware_layout import HardwareLayout
 from gwproto.data_classes.sh_node import ShNode
-from gwproto.types import ElectricMeterCacGt_Maker
+from gwproto.types import ElectricMeterCacGt, ElectricMeterCacGt_Maker
 from gwproto.types import SpaceheatNodeGt_Maker
 from gwproto.types.electric_meter_component_gt import ElectricMeterComponentGt_Maker
 from tests.utils import flush_all
-
+from gwproto.enums import MakeModel, TelemetryName
+from gwproto.type_helpers import CACS_BY_MAKE_MODEL
 
 def test_flush_and_load_house():
     """Verify that flush_house() successfully removes all dictionary data from relevant dataclasses, and
     load_house() successfully loads test objects"""
     flush_all()
 
-    electric_meter_cac_dict = {
-        "ComponentAttributeClassId": "6bcdc388-de10-40e6-979a-8d66bfcfe9ba",
-        "MakeModelGtEnumSymbol": "d300635e",
-        "DisplayName": "Schneider Electric Iem3455 Power Meter",
-        "TelemetryNameList": ["af39eec9"],
-        "MinPollPeriodMs": 1000,
-        "DefaultBaud": 9600,
-        "TypeName": "electric.meter.cac.gt",
-        "Version": "001",
-    }
+    cac_gt = ElectricMeterCacGt(
+        ComponentAttributeClassId=CACS_BY_MAKE_MODEL[MakeModel.EGAUGE__4030],
+        MakeModel=MakeModel.EGAUGE__4030,
+        DisplayName="Egauge 4030",
+        MinPollPeriodMs=1000,
+        TelemetryNameList=[TelemetryName.PowerW, TelemetryName.CurrentRmsMicroAmps]
+    )
+    ElectricMeterCacGt_Maker.tuple_to_dc(cac_gt)
+
 
     electric_meter_component_dict = {
         "ComponentId": "04ceb282-d7e8-4293-80b5-72455e1a5db3",
@@ -96,7 +96,6 @@ def test_flush_and_load_house():
         "Version": "200",
     }
 
-    ElectricMeterCacGt_Maker.dict_to_dc(electric_meter_cac_dict)
     ElectricMeterComponentGt_Maker.dict_to_dc(electric_meter_component_dict)
     SpaceheatNodeGt_Maker.dict_to_dc(meter_node_dict)
     assert ShNode.by_id["92091523-4fa7-4a3e-820b-fddee089222f"].name == "s.pwr-meter"

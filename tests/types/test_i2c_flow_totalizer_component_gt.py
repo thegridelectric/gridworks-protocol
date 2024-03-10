@@ -8,13 +8,21 @@ from gwproto.enums import MakeModel
 from gwproto.enums import Unit
 from gwproto.errors import SchemaError
 from gwproto.types import ChannelConfig
+from gwproto.type_helpers import CACS_BY_MAKE_MODEL
+from gwproto.types import ComponentAttributeClassGt as CacGt, ComponentAttributeClassGt_Maker as Cac_Maker
 from gwproto.types.i2c_flow_totalizer_component_gt import I2cFlowTotalizerComponentGt
 from gwproto.types.i2c_flow_totalizer_component_gt import (
     I2cFlowTotalizerComponentGt_Maker as Maker,
 )
-
+from tests.utils import flush_all
 
 def test_i2c_flow_totalizer_component_gt_generated() -> None:
+    flush_all()
+    cac_gt = CacGt(ComponentAttributeClassId=CACS_BY_MAKE_MODEL[MakeModel.ATLAS__EZFLO],
+                   MakeModel=MakeModel.ATLAS__EZFLO,
+                   DisplayName="Atlas EZ Flo Totalizer")
+    Cac_Maker.tuple_to_dc(cac_gt)
+
     t = I2cFlowTotalizerComponentGt(
         ComponentId="dd5ac673-91a8-40e2-a233-b67479cec709",
         ComponentAttributeClassId="13d916dc-8764-4b16-b85d-b8ead3e2fc80",
@@ -204,3 +212,4 @@ def test_i2c_flow_totalizer_component_gt_generated() -> None:
     d2 = dict(d, ConversionFactor=3)
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
+    flush_all()

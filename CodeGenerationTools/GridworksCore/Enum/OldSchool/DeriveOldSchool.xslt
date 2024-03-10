@@ -38,7 +38,8 @@
                         <xsl:element name="FileContents">
 
 
-<xsl:text>from enum import Enum
+<xsl:text>from typing import List
+from enum import Enum
 
 
 class </xsl:text><xsl:value-of select="$enum-class-name"/>
@@ -69,6 +70,13 @@ class </xsl:text><xsl:value-of select="$enum-class-name"/>
 
 </xsl:for-each>
 <xsl:text>
+
+    @classmethod
+    def values(cls) -> List[str]:
+        """
+        Returns enum choices
+        """
+        return [elt.value for elt in cls]
 
     @classmethod
     def default(cls) -> "</xsl:text>

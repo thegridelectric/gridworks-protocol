@@ -13,13 +13,23 @@ from gwproto.types.electric_meter_component_gt import ElectricMeterComponentGt
 from gwproto.types.electric_meter_component_gt import (
     ElectricMeterComponentGt_Maker as Maker,
 )
-
+from gwproto.type_helpers import CACS_BY_MAKE_MODEL
+from gwproto.types import ComponentAttributeClassGt as CacGt, ComponentAttributeClassGt_Maker as Cac_Maker
+from gwproto.enums import MakeModel
+from tests.utils import flush_all
 
 def test_electric_meter_component_gt_generated() -> None:
+    flush_all()
+    cac_gt = CacGt(ComponentAttributeClassId=CACS_BY_MAKE_MODEL[MakeModel.EGAUGE__4030],
+                   MakeModel=MakeModel.EGAUGE__4030,
+                   DisplayName="Egauge 4030")
+    Cac_Maker.tuple_to_dc(cac_gt)
+
+
     t = ElectricMeterComponentGt(
         ComponentId="04ceb282-d7e8-4293-80b5-72455e1a5db3",
-        ComponentAttributeClassId="739a6e32-bb9c-43bc-a28d-fb61be665522",
-        DisplayName="HP IDU Pwr",
+        ComponentAttributeClassId=CACS_BY_MAKE_MODEL[MakeModel.EGAUGE__4030],
+        DisplayName="eGauge4922.local",
         ConfigList=[
             ChannelConfig(
                 ChannelName="hp-idu-pwr",
@@ -52,7 +62,7 @@ def test_electric_meter_component_gt_generated() -> None:
     d = {
         "ComponentId": "04ceb282-d7e8-4293-80b5-72455e1a5db3",
         "ComponentAttributeClassId": "739a6e32-bb9c-43bc-a28d-fb61be665522",
-        "DisplayName": "HP IDU Pwr",
+        "DisplayName": "eGauge4922.local",
         "ConfigList": [
             {
                 "ChannelName": "hp-idu-pwr",
@@ -220,3 +230,4 @@ def test_electric_meter_component_gt_generated() -> None:
     d2 = dict(d, ModbusPort=-1)
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
+    flush_all()

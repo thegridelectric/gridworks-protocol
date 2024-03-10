@@ -50,17 +50,6 @@ def test_channel_config_generated() -> None:
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple
 
-    # test Maker init
-    t = Maker(
-        channel_name=gtuple.ChannelName,
-        poll_period_ms=gtuple.PollPeriodMs,
-        capture_period_s=gtuple.CapturePeriodS,
-        async_capture=gtuple.AsyncCapture,
-        async_capture_delta=gtuple.AsyncCaptureDelta,
-        exponent=gtuple.Exponent,
-        unit=gtuple.Unit,
-    ).tuple
-    assert t == gtuple
 
     ######################################
     # SchemaError raised if missing a required attribute
@@ -101,14 +90,11 @@ def test_channel_config_generated() -> None:
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
-    ######################################
-    # Optional attributes can be removed from type
-    ######################################
-
+    # Axiom 1: if AsyncCapture is true, AsyncCaptureDelta must exists
     d2 = dict(d)
-    if "AsyncCaptureDelta" in d2.keys():
-        del d2["AsyncCaptureDelta"]
-    Maker.dict_to_tuple(d2)
+    del d2["AsyncCaptureDelta"]
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
 
     ######################################
     # Behavior on incorrect types

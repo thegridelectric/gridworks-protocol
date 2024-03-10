@@ -68,16 +68,6 @@ def test_ta_data_channels_generated() -> None:
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple
 
-    # test Maker init
-    t = Maker(
-        terminal_asset_g_node_alias=gtuple.TerminalAssetGNodeAlias,
-        terminal_asset_g_node_id=gtuple.TerminalAssetGNodeId,
-        time_unix_s=gtuple.TimeUnixS,
-        author=gtuple.Author,
-        channel_list=gtuple.ChannelList,
-        id=gtuple.Id,
-    ).tuple
-    assert t == gtuple
 
     ######################################
     # SchemaError raised if missing a required attribute

@@ -1,3 +1,4 @@
+from typing import List
 from enum import Enum
 
 
@@ -9,6 +10,13 @@ class RelayPinSet(Enum):
     """
     DeEnergized = 0
     Energized = 1
+
+    @classmethod
+    def values(cls) -> List[str]:
+        """
+        Returns enum choices
+        """
+        return [elt.value for elt in cls]
 
     @classmethod
     def default(cls) -> "RelayPinSet":

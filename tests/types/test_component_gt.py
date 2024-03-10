@@ -7,9 +7,18 @@ from pydantic import ValidationError
 from gwproto.errors import SchemaError
 from gwproto.types import ComponentGt
 from gwproto.types import ComponentGt_Maker as Maker
-
+from gwproto.type_helpers import CACS_BY_MAKE_MODEL
+from gwproto.types import ComponentAttributeClassGt as CacGt, ComponentAttributeClassGt_Maker as Cac_Maker
+from gwproto.enums import MakeModel
+from tests.utils import flush_all
 
 def test_component_gt_generated() -> None:
+    flush_all()
+    cac_gt = CacGt(ComponentAttributeClassId=CACS_BY_MAKE_MODEL[MakeModel.EGAUGE__4030],
+                   MakeModel=MakeModel.EGAUGE__4030,
+                   DisplayName="Egauge 4030")
+    Cac_Maker.tuple_to_dc(cac_gt)
+
     t = ComponentGt(
         ComponentId="c6ec1ddb-5f51-4902-9807-a5ebc74d1102",
         ComponentAttributeClassId="739a6e32-bb9c-43bc-a28d-fb61be665522",
@@ -121,3 +130,5 @@ def test_component_gt_generated() -> None:
     d2 = dict(d, ComponentId="d4be12d5-33ba-4f1f-b9e5")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
+
+    flush_all()

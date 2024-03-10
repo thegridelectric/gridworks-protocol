@@ -4,11 +4,24 @@ import json
 import pytest
 from pydantic import ValidationError
 
+from gwproto.enums import MakeModel
 from gwproto.errors import SchemaError
-from gwproto.types.resistive_heater_component_gt import ResistiveHeaterComponentGt_Maker as Maker
+from gwproto.type_helpers import CACS_BY_MAKE_MODEL
+from gwproto.types import ComponentAttributeClassGt as CacGt
+from gwproto.types import ComponentAttributeClassGt_Maker as Cac_Maker
+from gwproto.types.resistive_heater_component_gt import (
+    ResistiveHeaterComponentGt_Maker as Maker,
+)
+from tests.utils import flush_all
 
 
 def test_resistive_heater_component_gt_generated() -> None:
+    flush_all()
+    cac_gt = CacGt(
+        ComponentAttributeClassId="cf1f2587-7462-4701-b962-d2b264744c1d",
+        MakeModel=MakeModel.UNKNOWNMAKE__UNKNOWNMODEL,
+    )
+    Cac_Maker.tuple_to_dc(cac_gt)
     d = {
         "ComponentId": "80f95280-e999-49e0-a0e4-a7faf3b5b3bd",
         "ComponentAttributeClassId": "cf1f2587-7462-4701-b962-d2b264744c1d",
@@ -124,3 +137,4 @@ def test_resistive_heater_component_gt_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     # End of Test
+    flush_all()

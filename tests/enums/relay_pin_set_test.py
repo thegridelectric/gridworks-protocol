@@ -6,8 +6,8 @@ from gwproto.enums import RelayPinSet
 
 def test_relay_pin_set() -> None:
     assert set(RelayPinSet.values()) == {
-        "DeEnergized",
-        "Energized",
+        0,
+        1,
     }
 
     assert RelayPinSet.default() == RelayPinSet.DeEnergized

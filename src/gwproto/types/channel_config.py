@@ -144,11 +144,11 @@ class ChannelConfig(BaseModel):
         async_capture = v["AsyncCapture"]
         if async_capture == True:
             if "AsyncCaptureDelta" not in v.keys():
-                raise ValueError("AsyncCapture is true ... need AsyncCaptureDelta!")
+                raise ValueError(f"AsyncCapture is true ... need AsyncCaptureDelta\n <{v}>")
             else:
                 delta = v["AsyncCaptureDelta"]
                 if delta is None:
-                    raise ValueError("AsyncCapture is true ... need AsyncCaptureDelta!")
+                    raise ValueError(f"AsyncCapture is true ... but delta is None\n <{v}>!")
         return v
 
     @root_validator

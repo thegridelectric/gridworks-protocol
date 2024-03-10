@@ -8,9 +8,18 @@ from gwproto.errors import SchemaError
 from gwproto.types.i2c_multichannel_dt_relay_component_gt import I2cMultichannelDtRelayComponentGt
 from gwproto.types.i2c_multichannel_dt_relay_component_gt import I2cMultichannelDtRelayComponentGt_Maker as Maker
 from gwproto.types import ChannelConfig, RelayActorConfig
-from gwproto.enums import Unit, RelayWiringConfig
+from gwproto.enums import Unit, RelayWiringConfig, MakeModel
+from gwproto.type_helpers import CACS_BY_MAKE_MODEL
+from gwproto.types import ComponentAttributeClassGt as CacGt, ComponentAttributeClassGt_Maker as Cac_Maker
+from tests.utils import flush_all
 
 def test_i2c_multichannel_dt_relay_component_gt_generated() -> None:
+    flush_all()
+    cac_gt = CacGt(ComponentAttributeClassId=CACS_BY_MAKE_MODEL[MakeModel.KRIDA__EMR16I2CV3],
+                   MakeModel=MakeModel.KRIDA__EMR16I2CV3,
+                   DisplayName="Krida EMR16 16-pin Relay Board")
+    Cac_Maker.tuple_to_dc(cac_gt)
+
     t = I2cMultichannelDtRelayComponentGt(
         ComponentId="1b9dd897-b203-4a9a-9d6e-4859d1f4c39d",
         ComponentAttributeClassId="018d9ffb-89d1-4cc4-95c0-f170711b5ffa",
@@ -274,3 +283,5 @@ def test_i2c_multichannel_dt_relay_component_gt_generated() -> None:
     d2 = dict(d, ComponentId="d4be12d5-33ba-4f1f-b9e5")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
+
+    flush_all()

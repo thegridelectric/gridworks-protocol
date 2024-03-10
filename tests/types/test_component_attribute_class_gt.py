@@ -7,10 +7,17 @@ from pydantic import ValidationError
 
 from gwproto.enums import MakeModel
 from gwproto.errors import SchemaError
+from gwproto.types import ComponentAttributeClassGt
 from gwproto.types import ComponentAttributeClassGt_Maker as Maker
 
 
 def test_component_attribute_class_gt_generated() -> None:
+    t = ComponentAttributeClassGt(
+        ComponentAttributeClassId="e52cb571-913a-4614-90f4-5cc81f8e7fe5",
+        MakeModel=MakeModel.EKM__HOTSPWM075HD,
+        MinPollPeriodMs=1000,
+        DisplayName="EKM Hot-Spwm-075-HD Flow Meter",
+    )
     d = {
         "ComponentAttributeClassId": "e52cb571-913a-4614-90f4-5cc81f8e7fe5",
         "MakeModelGtEnumSymbol": "208f827f",
@@ -19,6 +26,8 @@ def test_component_attribute_class_gt_generated() -> None:
         "TypeName": "component.attribute.class.gt",
         "Version": "001",
     }
+
+    assert t.as_dict() == d
 
     with pytest.raises(SchemaError):
         Maker.type_to_tuple(d)
@@ -29,18 +38,11 @@ def test_component_attribute_class_gt_generated() -> None:
     # Test type_to_tuple
     gtype = json.dumps(d)
     gtuple = Maker.type_to_tuple(gtype)
+    assert gtuple == t
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple
 
-    # test Maker init
-    t = Maker(
-        component_attribute_class_id=gtuple.ComponentAttributeClassId,
-        make_model=gtuple.MakeModel,
-        display_name=gtuple.DisplayName,
-        min_poll_period_ms=gtuple.MinPollPeriodMs,
-    ).tuple
-    assert t == gtuple
 
     ######################################
     # Dataclass related tests

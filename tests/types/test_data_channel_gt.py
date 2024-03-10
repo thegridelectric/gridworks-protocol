@@ -47,16 +47,6 @@ def test_data_channel_gt_generated() -> None:
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple
 
-    # test Maker init
-    t = Maker(
-        name=gtuple.Name,
-        display_name=gtuple.DisplayName,
-        about_node_name=gtuple.AboutNodeName,
-        captured_by_node_name=gtuple.CapturedByNodeName,
-        telemetry_name=gtuple.TelemetryName,
-        id=gtuple.Id,
-    ).tuple
-    assert t == gtuple
 
     ######################################
     # Dataclass related tests

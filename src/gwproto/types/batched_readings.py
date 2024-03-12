@@ -1,6 +1,7 @@
 """Type batched.readings, version 000"""
 import json
 import logging
+from itertools import chain
 from typing import Any
 from typing import Dict
 from typing import List
@@ -9,6 +10,7 @@ from typing import Literal
 from pydantic import BaseModel
 from pydantic import Extra
 from pydantic import Field
+from pydantic import root_validator
 from pydantic import validator
 
 from gwproto.errors import SchemaError
@@ -146,7 +148,11 @@ class BatchedReadings(BaseModel):
         """
         Axiom 1: Each of the fsm.atomic.reports in this list must be actions (i.e. IsAction = true).
         """
-        # TODO: Implement Axiom(s)
+        for elt in v:
+            if elt.IsAction is False:
+                raise ValueError(
+                    f"Violates Axiom 1: Each elt of FsmActionList muast havec IsAction = true"
+                )
         return v
 
     @validator("Id")
@@ -155,6 +161,65 @@ class BatchedReadings(BaseModel):
             check_is_uuid_canonical_textual(v)
         except ValueError as e:
             raise ValueError(f"Id failed UuidCanonicalTextual format validation: {e}")
+        return v
+
+    @root_validator
+    def check_axiom_2(cls, v: dict) -> dict:
+        """
+        Axiom 2: DataChannel Consistency.
+        There is a bijection between the DataChannelLists and ChannelReadingLists via the ChannelId.
+        """
+        if all(key in v for key in ("DataChannelList", "ChannelReadingList")):
+            channel_list_ids = list(map(lambda x: x.Id, v["DataChannelList"]))
+            reading_list_ids = list(map(lambda x: x.ChannelId, v["ChannelReadingList"]))
+            if len(set(channel_list_ids)) != len(channel_list_ids):
+                raise ValueError(
+                    f"Axiom 2 violated. ChannelIds not unique in DataChannelList:\n <{v}>"
+                )
+            if len(set(reading_list_ids)) != len(reading_list_ids):
+                raise ValueError(
+                    f"Axiom 2 violated. ChannelIds not unique in ChannelReadingList:\n <{v}>"
+                )
+            if set(channel_list_ids) != set(reading_list_ids):
+                raise ValueError(
+                    f"Axiom 2 violated: must be a bijection between DataChannelList "
+                    "and ChannelReadingList:\n <{v}>"
+                )
+        return v
+
+    @root_validator
+    def check_axiom_3(cls, v: dict) -> dict:
+        """
+        Axiom 3: Time Consistency.
+        For every ScadaReadTimeUnixMs   let read_s = read_ms / 1000.  Let start_s be SlotStartUnixS.
+        Then read_s >= start_s and start_s + BatchedTransmissionPeriodS + 1 + start_s > read_s.
+        """
+        if all(
+            key in v
+            for key in (
+                "SlotStartUnixS",
+                "ChannelReadingList",
+                "BatchedTransmissionPeriodS",
+            )
+        ):
+            channel_readings = v["ChannelReadingList"]
+            start_s = v["SlotStartUnixS"]
+            delta_s = v["BatchedTransmissionPeriodS"]
+            read_ms_list = list(
+                chain(*list(map(lambda x: x.ScadaReadTimeUnixMsList, channel_readings)))
+            )
+            read_s_set = set(map(lambda x: x / 1000, read_ms_list))
+            for read_s in read_s_set:
+                if read_s < start_s:
+                    raise ValueError(
+                        f"A ScadaReadTime <{read_s}> came before SlotStartUnixS <{start_s}>"
+                    )
+                if read_s > start_s + delta_s + 1:
+                    raise ValueError(
+                        f"A ScadaReadTime {read_s} came AFTER SlotStartUnixS  plus "
+                        f"BatchedTransmissionPeriodS <{start_s + delta_s}>"
+                    )
+
         return v
 
     def as_dict(self) -> Dict[str, Any]:

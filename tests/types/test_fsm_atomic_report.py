@@ -4,31 +4,37 @@ import json
 import pytest
 from pydantic import ValidationError
 
+from gwproto.enums import FsmActionType
+from gwproto.enums import FsmEventType
+from gwproto.enums import FsmName
+from gwproto.enums import FsmReportType
+from gwproto.enums import RelayPinSet
 from gwproto.errors import SchemaError
 from gwproto.types import FsmAtomicReport
 from gwproto.types import FsmAtomicReport_Maker as Maker
-from gwproto.enums import FsmActionType
 
 
 def test_fsm_atomic_report_generated() -> None:
     t = FsmAtomicReport(
         FromHandle="h.s.admin.iso-valve.relay",
-        IsAction=True,
+        AboutFsm=FsmName.IsoValve,
+        ReportType=FsmReportType.Action,
         ActionType=FsmActionType.RelayPinSet,
-        Action=0,
-        UnixTimeMs=1709923792000,
+        Action=RelayPinSet.DeEnergized.value,
+        UnixTimeMs=1710158001581,
         TriggerId="12da4269-63c3-44f4-ab65-3ee5e29329fe",
     )
 
     d = {
         "FromHandle": "h.s.admin.iso-valve.relay",
-        "IsAction": True,
-        "ActionTypeGtEnumSymbol": "00000000",
-        "Action": '0',
-        "UnixTimeMs": 1709923792000,
+        "Action": 0,
+        "UnixTimeMs": 1710158001581,
         "TriggerId": "12da4269-63c3-44f4-ab65-3ee5e29329fe",
         "TypeName": "fsm.atomic.report",
         "Version": "000",
+        "AboutFsmGtEnumSymbol": "0cce8d12",
+        "ReportTypeGtEnumSymbol": "490d4e1d",
+        "ActionTypeGtEnumSymbol": "00000000",
     }
 
     assert t.as_dict() == d
@@ -62,7 +68,12 @@ def test_fsm_atomic_report_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["IsAction"]
+    del d2["AboutFsmGtEnumSymbol"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    del d2["ReportTypeGtEnumSymbol"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -95,16 +106,50 @@ def test_fsm_atomic_report_generated() -> None:
         del d2["Action"]
     Maker.dict_to_tuple(d2)
 
+    d2 = dict(d)
+    if "EventType" in d2.keys():
+        del d2["EventTypeGtEnumSymbol"]
+    Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    if "EventType" in d2.keys():
+        del d2["EventType"]
+    Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    if "Event" in d2.keys():
+        del d2["Event"]
+    Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    if "FromState" in d2.keys():
+        del d2["FromState"]
+    Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    if "ToState" in d2.keys():
+        del d2["ToState"]
+    Maker.dict_to_tuple(d2)
+
     ######################################
     # Behavior on incorrect types
     ######################################
 
-    d2 = dict(d, IsAction="this is not a boolean")
-    with pytest.raises(ValidationError):
-        Maker.dict_to_tuple(d2)
+    d2 = dict(d, AboutFsmGtEnumSymbol="unknown_symbol")
+    Maker.dict_to_tuple(d2).AboutFsm == FsmName.default()
+
+    d2 = dict(d, ReportTypeGtEnumSymbol="unknown_symbol")
+    Maker.dict_to_tuple(d2).ReportType == FsmReportType.default()
 
     d2 = dict(d, ActionTypeGtEnumSymbol="unknown_symbol")
     Maker.dict_to_tuple(d2).ActionType == FsmActionType.default()
+
+    d2 = dict(d, Action="0.1")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, EventTypeGtEnumSymbol="unknown_symbol")
+    Maker.dict_to_tuple(d2).EventType == FsmEventType.default()
 
     d2 = dict(d, UnixTimeMs="1709923792000.1")
     with pytest.raises(ValidationError):

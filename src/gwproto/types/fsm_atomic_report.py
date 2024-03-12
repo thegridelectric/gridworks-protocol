@@ -13,6 +13,9 @@ from pydantic import root_validator
 from pydantic import validator
 
 from gwproto.enums import FsmActionType
+from gwproto.enums import FsmEventType
+from gwproto.enums import FsmName
+from gwproto.enums import FsmReportType
 from gwproto.errors import SchemaError
 
 
@@ -41,11 +44,15 @@ class FsmAtomicReport(BaseModel):
             "FSM in question. Its handle reflects the state it is in."
         ),
     )
-    IsAction: bool = Field(
-        title="Is Action",
+    AboutFsm: FsmName = Field(
+        title="About Fsm",
+        description="The finite state machine this message is about.",
+    )
+    ReportType: FsmReportType = Field(
+        title="Report Type",
         description=(
-            "An Action refers to some side effect of a state transition that results in a physical "
-            "change to an underlying TerminalAsset."
+            "Is this reporting an event, an action, or some other thing related to a finite state "
+            "machine?"
         ),
     )
     ActionType: Optional[FsmActionType] = Field(
@@ -53,12 +60,30 @@ class FsmAtomicReport(BaseModel):
         description="The FiniteState Machine Action taken",
         default=None,
     )
-    Action: Optional[str] = Field(
-        title="Event",
+    Action: Optional[int] = Field(
+        title="Action",
         description=(
             "Will typically be a number, usually an integer. For example, if ActionType is RelayPinSet, "
             "then RelayPinSet.DeEnergized = 0 and RelayPinSet.Energized = 1."
         ),
+        default=None,
+    )
+    EventType: Optional[FsmEventType] = Field(
+        title="Event Type",
+        default=None,
+    )
+    Event: Optional[str] = Field(
+        title="Event",
+        default=None,
+    )
+    FromState: Optional[str] = Field(
+        title="From State",
+        description="The state of the FSM prior to triggering event.",
+        default=None,
+    )
+    ToState: Optional[str] = Field(
+        title="To State",
+        description="The state of the FSM after the triggering event.",
         default=None,
     )
     UnixTimeMs: int = Field(
@@ -108,7 +133,7 @@ class FsmAtomicReport(BaseModel):
     @root_validator
     def check_axiom_1(cls, v: dict) -> dict:
         """
-        Axiom 1: Action and ActionType exist iff IsAction.
+        Axiom 1: Action and ActionType exist iff  ReportType is Action.
         The Optional Attributes ActionType and Action exist if and only if IsAction is true.
         """
         # TODO: Implement check for axiom 1"
@@ -121,6 +146,15 @@ class FsmAtomicReport(BaseModel):
 
         """
         # TODO: Implement check for axiom 2"
+        return v
+
+    @root_validator
+    def check_axiom_3(cls, v: dict) -> dict:
+        """
+        Axiom 3: EventType, Event, FromState, ToState exist iff ReportType is Event.
+
+        """
+        # TODO: Implement check for axiom 3"
         return v
 
     def as_dict(self) -> Dict[str, Any]:
@@ -146,9 +180,16 @@ class FsmAtomicReport(BaseModel):
             ).items()
             if value is not None
         }
+        del d["AboutFsm"]
+        d["AboutFsmGtEnumSymbol"] = FsmName.value_to_symbol(self.AboutFsm)
+        del d["ReportType"]
+        d["ReportTypeGtEnumSymbol"] = FsmReportType.value_to_symbol(self.ReportType)
         if "ActionType" in d.keys():
             del d["ActionType"]
             d["ActionTypeGtEnumSymbol"] = FsmActionType.value_to_symbol(self.ActionType)
+        if "EventType" in d.keys():
+            del d["EventType"]
+            d["EventTypeGtEnumSymbol"] = FsmEventType.value_to_symbol(self.EventType)
         return d
 
     def as_type(self) -> bytes:
@@ -230,12 +271,24 @@ class FsmAtomicReport_Maker:
         d2 = dict(d)
         if "FromHandle" not in d2.keys():
             raise SchemaError(f"dict missing FromHandle: <{d2}>")
-        if "IsAction" not in d2.keys():
-            raise SchemaError(f"dict missing IsAction: <{d2}>")
+        if "AboutFsmGtEnumSymbol" not in d2.keys():
+            raise SchemaError(f"AboutFsmGtEnumSymbol missing from dict <{d2}>")
+        value = FsmName.symbol_to_value(d2["AboutFsmGtEnumSymbol"])
+        d2["AboutFsm"] = FsmName(value)
+        del d2["AboutFsmGtEnumSymbol"]
+        if "ReportTypeGtEnumSymbol" not in d2.keys():
+            raise SchemaError(f"ReportTypeGtEnumSymbol missing from dict <{d2}>")
+        value = FsmReportType.symbol_to_value(d2["ReportTypeGtEnumSymbol"])
+        d2["ReportType"] = FsmReportType(value)
+        del d2["ReportTypeGtEnumSymbol"]
         if "ActionTypeGtEnumSymbol" in d2.keys():
             value = FsmActionType.symbol_to_value(d2["ActionTypeGtEnumSymbol"])
             d2["ActionType"] = FsmActionType(value)
             del d2["ActionTypeGtEnumSymbol"]
+        if "EventTypeGtEnumSymbol" in d2.keys():
+            value = FsmEventType.symbol_to_value(d2["EventTypeGtEnumSymbol"])
+            d2["EventType"] = FsmEventType(value)
+            del d2["EventTypeGtEnumSymbol"]
         if "UnixTimeMs" not in d2.keys():
             raise SchemaError(f"dict missing UnixTimeMs: <{d2}>")
         if "TriggerId" not in d2.keys():

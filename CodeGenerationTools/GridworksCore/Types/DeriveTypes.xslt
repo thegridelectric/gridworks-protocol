@@ -1798,7 +1798,8 @@ def check_is_spaceheat_name(v: str) -> None:
     for word in x:
         for char in word:
             if not (char.isalnum() or char == '-'):
-                raise ValueError(f"words of &lt;{v}> split by by '.' must be alphanumeric or hyphen.")
+                raise ValueError(f"words of &lt;{v}> split by by '.' must be alphanumeric or hyphen."
+                )
     if not v.islower():
         raise ValueError(f"&lt;{v}> must be lowercase.")</xsl:text>
     </xsl:when>

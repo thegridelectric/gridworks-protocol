@@ -15,6 +15,7 @@ def test_fsm_event_type() -> None:
         "ChangeBoilerControl",
         "ChangeHeatPumpControl",
         "ChangeLgOperatingMode",
+        "TimerFinished",
     }
 
     assert FsmEventType.default() == FsmEventType.ChangeRelayState
@@ -30,6 +31,7 @@ def test_fsm_event_type() -> None:
     assert FsmEventType.version("ChangeBoilerControl") == "000"
     assert FsmEventType.version("ChangeHeatPumpControl") == "000"
     assert FsmEventType.version("ChangeLgOperatingMode") == "000"
+    assert FsmEventType.version("TimerFinished") == "000"
 
     for value in FsmEventType.values():
         symbol = FsmEventType.value_to_symbol(value)

@@ -4,12 +4,14 @@ from typing import List
 from fastapi_utils.enums import StrEnum
 
 
-class ChangeStoreFlowDirection(StrEnum):
+class IsoValveState(StrEnum):
     """
-    Events that trigger changing StoreFlowDirection finite state machine
+    The list of states associated to the House 0 "IsoValve" Finite State Machine.
     """
-    Discharge = auto()
-    Charge = auto()
+    Open = auto()
+    Closing = auto()
+    Closed = auto()
+    Opening = auto()
 
     @classmethod
     def values(cls) -> List[str]:
@@ -19,9 +21,9 @@ class ChangeStoreFlowDirection(StrEnum):
         return [elt.value for elt in cls]
 
     @classmethod
-    def default(cls) -> "ChangeStoreFlowDirection":
-        return cls.Discharge
+    def default(cls) -> "IsoValveState":
+        return cls.Open
 
     @classmethod
     def enum_name(cls) -> str:
-        return "change.store.flow.direction"
+        return "iso.valve.state"

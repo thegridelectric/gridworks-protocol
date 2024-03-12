@@ -13,9 +13,18 @@
       "description": "The Name (as opposed to the handle) of the Spaceheat Node actor issuing the Finite State Machine report. The actor is meant to realize and be the authority on the FSM in question. Its handle reflects the state it is in.",
       "required": true
     },
-    "IsAction": {
-      "type": "boolean",
-      "description": "An Action refers to some side effect of a state transition that results in a physical change to an underlying TerminalAsset.",
+    "AboutFsm": {
+      "type": "string",
+      "format": "sh.fsm.name",
+      "title": "About Fsm",
+      "description": "The finite state machine this message is about.",
+      "required": true
+    },
+    "ReportType": {
+      "type": "string",
+      "format": "fsm.report.type",
+      "title": "Report Type",
+      "description": "Is this reporting an event, an action, or some other thing related to a finite state machine?",
       "required": true
     },
     "ActionType": {
@@ -26,8 +35,28 @@
       "required": false
     },
     "Action": {
-      "type": "string",
+      "type": "integer",
       "description": "Will typically be a number, usually an integer. For example, if ActionType is RelayPinSet, then RelayPinSet.DeEnergized = 0 and RelayPinSet.Energized = 1.",
+      "required": false
+    },
+    "EventType": {
+      "type": "string",
+      "format": "sh.fsm.event.type",
+      "title": "Event Type",
+      "required": false
+    },
+    "Event": {
+      "type": "string",
+      "required": false
+    },
+    "FromState": {
+      "type": "string",
+      "description": "The state of the FSM prior to triggering event.",
+      "required": false
+    },
+    "ToState": {
+      "type": "string",
+      "description": "The state of the FSM after the triggering event.",
       "required": false
     },
     "UnixTimeMs": {
@@ -57,11 +86,15 @@
   },
   "axioms": {
     "Axiom1": {
-      "title": "Action and ActionType exist iff IsAction",
+      "title": "Action and ActionType exist iff  ReportType is Action",
       "description": "The Optional Attributes ActionType and Action exist if and only if IsAction is true."
     },
     "Axiom2": {
       "title": "If Action exists, then it belongs to the un-versioned enum selected in the ActionType",
+      "description": ""
+    },
+    "Axiom3": {
+      "title": "EventType, Event, FromState, ToState exist iff ReportType is Event",
       "description": ""
     }
   },

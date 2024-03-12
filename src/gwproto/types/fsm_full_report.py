@@ -12,8 +12,8 @@ from pydantic import Field
 from pydantic import validator
 
 from gwproto.errors import SchemaError
-from gwproto.types.fsm_event import FsmEvent
-from gwproto.types.fsm_event import FsmEvent_Maker
+from gwproto.types.fsm_atomic_report import FsmAtomicReport
+from gwproto.types.fsm_atomic_report import FsmAtomicReport_Maker
 
 
 LOG_FORMAT = (
@@ -45,7 +45,7 @@ class FsmFullReport(BaseModel):
             "actions, events and transitions captured in this report"
         ),
     )
-    AtomicList: List[FsmEvent] = Field(
+    AtomicList: List[FsmAtomicReport] = Field(
         title="Atomic List",
         description=(
             "The list of cascading events, transitions and actions triggered by a single high-level "
@@ -195,9 +195,9 @@ class FsmFullReport_Maker:
         for elt in d2["AtomicList"]:
             if not isinstance(elt, dict):
                 raise SchemaError(
-                    f"AtomicList <{d2['AtomicList']}> must be a List of FsmEvent types"
+                    f"AtomicList <{d2['AtomicList']}> must be a List of FsmAtomicReport types"
                 )
-            t = FsmEvent_Maker.dict_to_tuple(elt)
+            t = FsmAtomicReport_Maker.dict_to_tuple(elt)
             atomic_list.append(t)
         d2["AtomicList"] = atomic_list
         if "TypeName" not in d2.keys():

@@ -49,7 +49,6 @@ def test_spaceheat_node_gt_generated() -> None:
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple
 
-
     ######################################
     # Dataclass related tests
     ######################################

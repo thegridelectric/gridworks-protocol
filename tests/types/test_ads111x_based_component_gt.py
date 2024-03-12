@@ -8,22 +8,25 @@ from gwproto.enums import MakeModel
 from gwproto.enums import ThermistorDataMethod
 from gwproto.enums import Unit
 from gwproto.errors import SchemaError
+from gwproto.type_helpers import CACS_BY_MAKE_MODEL
 from gwproto.types import ChannelConfig
+from gwproto.types import ComponentAttributeClassGt as CacGt
+from gwproto.types import ComponentAttributeClassGt_Maker as Cac_Maker
 from gwproto.types import ThermistorDataProcessingConfig
 from gwproto.types.ads111x_based_component_gt import Ads111xBasedComponentGt
 from gwproto.types.ads111x_based_component_gt import (
     Ads111xBasedComponentGt_Maker as Maker,
 )
-from gwproto.type_helpers import CACS_BY_MAKE_MODEL
-from gwproto.types import ComponentAttributeClassGt as CacGt, ComponentAttributeClassGt_Maker as Cac_Maker
 from tests.utils import flush_all
 
 
 def test_ads111x_based_component_gt_generated() -> None:
     flush_all()
-    cac_gt = CacGt(ComponentAttributeClassId=CACS_BY_MAKE_MODEL[MakeModel.GRIDWORKS__MULTITEMP1],
-                   MakeModel=MakeModel.GRIDWORKS__MULTITEMP1,
-                   DisplayName="GridWorks MultiTemp1 (12-block temp sensor)")
+    cac_gt = CacGt(
+        ComponentAttributeClassId=CACS_BY_MAKE_MODEL[MakeModel.GRIDWORKS__MULTITEMP1],
+        MakeModel=MakeModel.GRIDWORKS__MULTITEMP1,
+        DisplayName="GridWorks MultiTemp1 (12-block temp sensor)",
+    )
     Cac_Maker.tuple_to_dc(cac_gt)
     t = Ads111xBasedComponentGt(
         ComponentId="02f600e3-8692-43f8-84f2-a03c09c197e7",
@@ -220,5 +223,5 @@ def test_ads111x_based_component_gt_generated() -> None:
     d2 = dict(d, ComponentId="d4be12d5-33ba-4f1f-b9e5")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
-    
+
     flush_all()

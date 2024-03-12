@@ -99,6 +99,28 @@ class I2cMultichannelDtRelayComponentGt(BaseModel):
             )
         return v
 
+    @validator("ConfigList")
+    def check_config_list(cls, v: List[ChannelConfig]) -> List[ChannelConfig]:
+        """
+        Axiom 1: Channel Consistency.
+        There are no duplicates of ChannelName in the ConfigList
+        """
+        ...
+        # TODO: Implement Axiom(s)
+        return v
+
+    @validator("RelayConfigList")
+    def check_relay_config_list(
+        cls, v: List[RelayActorConfig]
+    ) -> List[RelayActorConfig]:
+        """
+        Axiom 2: Actor and Idx Consistency.
+        There are no duplicates of ActorName or RelayIdx in the RelayConfigList
+        """
+        ...
+        # TODO: Implement Axiom(s)
+        return v
+
     def as_dict(self) -> Dict[str, Any]:
         """
         Translate the object into a dictionary representation that can be serialized into a

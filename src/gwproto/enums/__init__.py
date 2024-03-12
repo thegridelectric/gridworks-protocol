@@ -41,6 +41,9 @@ from gwproto.enums.change_store_flow_direction import ChangeStoreFlowDirection
 from gwproto.enums.change_valve_state import ChangeValveState
 from gwproto.enums.fsm_action_type import FsmActionType
 from gwproto.enums.fsm_event_type import FsmEventType
+from gwproto.enums.fsm_name import FsmName
+from gwproto.enums.fsm_report_type import FsmReportType
+from gwproto.enums.iso_valve_state import IsoValveState
 from gwproto.enums.kind_of_param import KindOfParam
 from gwproto.enums.lg_operating_mode import LgOperatingMode
 from gwproto.enums.make_model import MakeModel
@@ -48,6 +51,7 @@ from gwproto.enums.relay_closed_or_open import RelayClosedOrOpen
 from gwproto.enums.relay_energization_state import RelayEnergizationState
 from gwproto.enums.relay_pin_set import RelayPinSet
 from gwproto.enums.relay_wiring_config import RelayWiringConfig
+from gwproto.enums.store_flow_direction import StoreFlowDirection
 from gwproto.enums.telemetry_name import TelemetryName
 from gwproto.enums.thermistor_data_method import ThermistorDataMethod
 from gwproto.enums.unit import Unit
@@ -64,6 +68,9 @@ __all__ = [
     "ChangeValveState",  # [change.valve.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changevalvestate)
     "FsmActionType",  # [sh.fsm.action.type.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shfsmactiontype)
     "FsmEventType",  # [sh.fsm.event.type.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shfsmeventtype)
+    "FsmName",  # [sh.fsm.name.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shfsmname)
+    "FsmReportType",  # [fsm.report.type.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#fsmreporttype)
+    "IsoValveState",  # [iso.valve.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#isovalvestate)
     "KindOfParam",  # [spaceheat.kind.of.param.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatkindofparam)
     "LgOperatingMode",  # [lg.operating.mode.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#lgoperatingmode)
     "MakeModel",  # [spaceheat.make.model.002](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatmakemodel)
@@ -71,6 +78,7 @@ __all__ = [
     "RelayEnergizationState",  # [relay.energization.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relayenergizationstate)
     "RelayPinSet",  # [relay.pin.set.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relaypinset)
     "RelayWiringConfig",  # [relay.wiring.config.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relaywiringconfig)
+    "StoreFlowDirection",  # [store.flow.direction.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#storeflowdirectionstate)
     "TelemetryName",  # [spaceheat.telemetry.name.001](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheattelemetryname)
     "ThermistorDataMethod",  # [thermistor.data.method.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#thermistordatamethod)
     "Unit",  # [spaceheat.unit.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatunit)

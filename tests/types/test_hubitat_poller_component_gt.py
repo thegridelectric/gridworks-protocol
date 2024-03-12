@@ -5,7 +5,9 @@ import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
-from gwproto.types.hubitat_poller_component_gt import HubitatPollerComponentGt_Maker as Maker
+from gwproto.types.hubitat_poller_component_gt import (
+    HubitatPollerComponentGt_Maker as Maker,
+)
 
 
 def test_hubitat_poller_component_gt_generated() -> None:

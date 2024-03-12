@@ -38,6 +38,10 @@ relay.wiring.config.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/relay-wiring-config.json
 
+store.flow.direction.state.000
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. literalinclude:: json/store-flow-direction-state.json
+
 relay.pin.set.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/relay-pin-set.json
@@ -58,6 +62,10 @@ change.boiler.control.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/change-boiler-control.json
 
+iso.valve.state.000
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. literalinclude:: json/iso-valve-state.json
+
 lg.operating.mode.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/lg-operating-mode.json
@@ -69,6 +77,10 @@ spaceheat.telemetry.name.001
 change.store.flow.direction.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/change-store-flow-direction.json
+
+sh.fsm.name.000
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. literalinclude:: json/sh-fsm-name.json
 
 change.heatcall.source.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^

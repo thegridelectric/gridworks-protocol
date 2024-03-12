@@ -4,19 +4,23 @@ import json
 import pytest
 from pydantic import ValidationError
 
+from gwproto.enums import MakeModel
 from gwproto.errors import SchemaError
+from gwproto.type_helpers import CACS_BY_MAKE_MODEL
+from gwproto.types import ComponentAttributeClassGt as CacGt
+from gwproto.types import ComponentAttributeClassGt_Maker as Cac_Maker
 from gwproto.types import ComponentGt
 from gwproto.types import ComponentGt_Maker as Maker
-from gwproto.type_helpers import CACS_BY_MAKE_MODEL
-from gwproto.types import ComponentAttributeClassGt as CacGt, ComponentAttributeClassGt_Maker as Cac_Maker
-from gwproto.enums import MakeModel
 from tests.utils import flush_all
+
 
 def test_component_gt_generated() -> None:
     flush_all()
-    cac_gt = CacGt(ComponentAttributeClassId=CACS_BY_MAKE_MODEL[MakeModel.EGAUGE__4030],
-                   MakeModel=MakeModel.EGAUGE__4030,
-                   DisplayName="Egauge 4030")
+    cac_gt = CacGt(
+        ComponentAttributeClassId=CACS_BY_MAKE_MODEL[MakeModel.EGAUGE__4030],
+        MakeModel=MakeModel.EGAUGE__4030,
+        DisplayName="Egauge 4030",
+    )
     Cac_Maker.tuple_to_dc(cac_gt)
 
     t = ComponentGt(

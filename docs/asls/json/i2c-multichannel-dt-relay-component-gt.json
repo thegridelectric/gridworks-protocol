@@ -28,7 +28,10 @@
       "required": true
     },
     "RelayConfigList": {
-      "type": "relay.actor.config.000",
+      "type": "array",
+      "items": {
+        "type": "relay.actor.config.000"
+      },
       "description": "Information about which actors control each relay, and the relay wiring state: (normally open, normally closed, double throw).",
       "required": true
     },
@@ -53,9 +56,13 @@
     }
   },
   "axioms": {
-    "Axiom": {
-      "title": "Relay Index Consistency",
-      "description": "All of the Relay indices in the RelayConfigList are unique."
+    "Axiom1": {
+      "title": "Channel Consistency",
+      "description": "There are no duplicates of ChannelName in the ConfigList"
+    },
+    "Axiom2": {
+      "title": "Actor and Idx Consistency",
+      "description": "There are no duplicates of ActorName or RelayIdx in the RelayConfigList"
     }
   },
   "formats": {

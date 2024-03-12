@@ -11,8 +11,9 @@ class ChangeRelayState(StrEnum):
     along with simple.relay.state states of RelayOpen and RelayClosed. Open = PowerOff = 0 and
     Closed = PowerOn = 1
     """
-    TurnOn = auto()
-    TurnOff = auto()
+
+    CloseRelay = auto()
+    OpenRelay = auto()
 
     @classmethod
     def values(cls) -> List[str]:
@@ -23,7 +24,7 @@ class ChangeRelayState(StrEnum):
 
     @classmethod
     def default(cls) -> "ChangeRelayState":
-        return cls.TurnOff
+        return cls.OpenRelay
 
     @classmethod
     def enum_name(cls) -> str:

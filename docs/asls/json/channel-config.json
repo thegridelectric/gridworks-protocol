@@ -65,7 +65,7 @@
   "axioms": {
     "Axiom1": {
       "title": "Async Capture Consistency",
-      "description": "If ReportOnChange is true, then AsyncReportThreshold and NameplateMaxValue also exist."
+      "description": "If AsyncCapture is True, then AsyncCaptureDelta exists"
     },
     "Axiom2": {
       "title": "Capture and Polling Consistency",

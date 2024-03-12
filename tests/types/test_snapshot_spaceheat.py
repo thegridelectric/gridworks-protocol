@@ -5,9 +5,10 @@ import pytest
 from pydantic import ValidationError
 
 from gwproto.errors import SchemaError
+from gwproto.types import SingleReading
 from gwproto.types import Snapshot
 from gwproto.types import Snapshot_Maker as Maker
-from gwproto.types import SingleReading
+
 
 def test_snapshot_spaceheat_generated() -> None:
     t = Snapshot(
@@ -41,7 +42,6 @@ def test_snapshot_spaceheat_generated() -> None:
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple
-
 
     ######################################
     # SchemaError raised if missing a required attribute

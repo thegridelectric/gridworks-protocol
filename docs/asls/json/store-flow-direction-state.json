@@ -1,0 +1,17 @@
+{
+    "gtr_asl": "001",
+    "enum_name": "store.flow.direction.state",
+    "enum_version": "000",
+    "description": "Used for a double-throw relay that can toggle between a thermal store heating up (flow is in the charging direction) or cooling down (flow is in the discharging direction). Events in the StoreFlowDirection finite state machine",
+    "ssot": "https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#storeflowdirectionstate",
+    "values": ["Discharging", "ValveMovingToCharging", "Charging", "ValveMovingToDischarging"],
+    "value_to_symbol": { "": "00000000",  "": "365d517c",  "": "00b3ec5e",  "": "fd183a4e"},
+    "value_to_version": { "": "000",  "": "000",  "": "000",  "": "000"},
+    "value_descriptions": {
+                "Discharging": "Thermal store is discharging (and heating the building)",
+                "ValveMovingToCharging": "",
+                "Charging": "Thermal store is charging from an external source (like a heat pump or oil boiler).",
+                "ValveMovingToDischarging": ""
+            },
+    "default_value": "Discharging"
+}

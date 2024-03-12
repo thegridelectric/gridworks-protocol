@@ -6,9 +6,9 @@ from gwproto.enums import ChangeRelayState
 
 def test_change_relay_state() -> None:
     assert set(ChangeRelayState.values()) == {
-        "TurnOn",
-        "TurnOff",
+        "CloseRelay",
+        "OpenRelay",
     }
 
-    assert ChangeRelayState.default() == ChangeRelayState.TurnOff
+    assert ChangeRelayState.default() == ChangeRelayState.OpenRelay
     assert ChangeRelayState.enum_name() == "change.relay.state"

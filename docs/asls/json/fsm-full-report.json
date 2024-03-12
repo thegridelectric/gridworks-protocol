@@ -23,7 +23,7 @@
     "AtomicList": {
       "type": "array",
       "items": {
-        "type": "fsm.event.000"
+        "type": "fsm.atomic.report.000"
       },
       "description": "The list of cascading events, transitions and actions triggered by a single high-level event in a hierarchical finite state machine.",
       "required": true

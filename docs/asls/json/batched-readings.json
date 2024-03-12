@@ -89,6 +89,14 @@
     "Axiom1": {
       "title": "Each of the fsm.atomic.reports in this list must be actions (i.e. IsAction = true).",
       "description": ""
+    },
+    "Axiom2": {
+      "title": "DataChannel Consistency",
+      "description": "There is a bijection between the DataChannelLists and ChannelReadingLists via the ChannelId."
+    },
+    "Axiom3": {
+      "title": "Time Consistency",
+      "description": "For every ScadaReadTimeUnixMs let read_s = read_ms / 1000. Let start_s be SlotStartUnixS. Then read_s >= start_s and start_s + BatchedTransmissionPeriodS + 1 + start_s > read_s."
     }
   },
   "formats": {

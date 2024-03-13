@@ -29,7 +29,7 @@ class FsmReportType(StrEnum):
     @classmethod
     def default(cls) -> "FsmReportType":
         """
-        Returns default value (in this case )
+        Returns default value (in this case Other)
         """
         return cls.Other
 
@@ -88,7 +88,7 @@ class FsmReportType(StrEnum):
         Returns:
             str: The encoded value associated to that symbol. If the symbol is not
             recognized - which could happen if the actor making the symbol is using
-            a later version of this enum, returns the default value of "".
+            a later version of this enum, returns the default value of "Other".
         """
         if symbol not in symbol_to_value.keys():
             return cls.default().value
@@ -106,7 +106,7 @@ class FsmReportType(StrEnum):
             str: The symbol encoding that value. If the value is not recognized -
             which could happen if the actor making the message used a later version
             of this enum than the actor decoding the message, returns the default
-            symbol of "".
+            symbol of "00000000".
         """
         if value not in value_to_symbol.keys():
             return value_to_symbol[cls.default().value]

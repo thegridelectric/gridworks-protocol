@@ -56,7 +56,8 @@ class </xsl:text><xsl:value-of select="$enum-class-name"/>
     </xsl:call-template>
     </xsl:if>
     <xsl:text>
-    """</xsl:text>
+    """
+</xsl:text>
 
 
 <xsl:for-each select="$airtable//EnumSymbols/EnumSymbol[(Enum = $enum-id)]">

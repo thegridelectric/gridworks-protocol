@@ -8,6 +8,7 @@ class RelayClosedOrOpen(StrEnum):
     """
     These are fsm states (as opposed to readings from a pin).
     """
+
     RelayClosed = auto()
     RelayOpen = auto()
 

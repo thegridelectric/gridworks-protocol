@@ -8,6 +8,7 @@ class ChangeValveState(StrEnum):
     """
     Events used in the IsoValve finite state machine.
     """
+
     OpenValve = auto()
     CloseValve = auto()
 

@@ -8,6 +8,7 @@ class ChangeHeatPumpControl(StrEnum):
     """
     Change control between a fallback analog system and SCADA
     """
+
     SwitchToTankAquastat = auto()
     SwitchToScada = auto()
 

@@ -8,6 +8,7 @@ class ChangeLgOperatingMode(StrEnum):
     """
     Clarifies the request and the action in changing between lg.operating.modes
     """
+
     SwitchToDhw = auto()
     SwitchToHeat = auto()
 

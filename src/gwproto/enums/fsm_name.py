@@ -22,6 +22,7 @@ class FsmName(StrEnum):
       - IsoValve (0cce8d12): Finite State Machine reflecting the state of the Iso Valve in a House
         0 design
       - StoreFlowDirection (cfd57bec)
+      - RelayState (1f560b73)
     """
 
     Unknown = auto()
@@ -125,7 +126,6 @@ class FsmName(StrEnum):
             "0cce8d12",
             "cfd57bec",
             "1f560b73",
-
         ]
 
 

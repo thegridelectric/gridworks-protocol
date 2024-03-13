@@ -8,6 +8,7 @@ class ChangeBoilerControl(StrEnum):
     """
     
     """
+
     SwitchToTankAquastat = auto()
     SwitchToScada = auto()
 

@@ -10,6 +10,7 @@ class StoreFlowDirection(StrEnum):
     in the charging direction) or cooling down (flow is in the discharging direction). Events
     in the StoreFlowDirection finite state machine
     """
+
     Discharging = auto()
     ValveMovingToCharging = auto()
     Charging = auto()

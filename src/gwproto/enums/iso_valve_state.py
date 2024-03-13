@@ -8,6 +8,7 @@ class IsoValveState(StrEnum):
     """
     The list of states associated to the House 0 "IsoValve" Finite State Machine.
     """
+
     Open = auto()
     Closing = auto()
     Closed = auto()

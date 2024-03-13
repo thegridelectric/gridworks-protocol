@@ -50,17 +50,26 @@ def test_</xsl:text> <xsl:value-of select="translate(LocalName,'.','_')"/>
     assert set(</xsl:text><xsl:value-of select="$local-class-name"/><xsl:text>.values()) == {</xsl:text>
     <xsl:for-each select="$airtable//EnumSymbols/EnumSymbol[(Enum = $enum-id) and (Version &lt;= $version)]">
     <xsl:sort select="Idx"  data-type="number"/>
-        <xsl:text>
-        "</xsl:text>
         <xsl:choose>
         <xsl:when test="$enum-type = 'Upper'">
+                <xsl:text>
+        "</xsl:text>
             <xsl:value-of select="translate(translate(LocalValue,'-',''),$lcletters, $ucletters)"/>
+             <xsl:text>",</xsl:text>
+        </xsl:when>
+        <xsl:when test="$enum-type = 'OldSchool'">
+        <xsl:text>&#10;        </xsl:text>
+            <xsl:value-of select="Symbol"/>
+            <xsl:text>,</xsl:text>
         </xsl:when>
         <xsl:otherwise>
+        <xsl:text>
+        "</xsl:text>
             <xsl:value-of select="LocalValue"/>
+             <xsl:text>",</xsl:text>
         </xsl:otherwise>
         </xsl:choose>
-        <xsl:text>",</xsl:text>
+       
         </xsl:for-each>
     <xsl:text>
     }

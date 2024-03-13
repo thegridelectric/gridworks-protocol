@@ -8,6 +8,7 @@ class ChangeStoreFlowDirection(StrEnum):
     """
     Events that trigger changing StoreFlowDirection finite state machine
     """
+
     Discharge = auto()
     Charge = auto()
 

@@ -26,6 +26,7 @@ class FsmEventType(StrEnum):
       - ChangeBoilerControl (0066a412)
       - ChangeHeatPumpControl (50ea0661)
       - ChangeLgOperatingMode (89a98375)
+      - TimerFinished (9e44ab43)
     """
 
     ChangeRelayState = auto()

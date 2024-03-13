@@ -24,6 +24,7 @@ from gwproto.data_classes.components.electric_meter_component import (
 from gwproto.data_classes.errors import DataClassLoadingError
 from gwproto.data_classes.resolver import ComponentResolver
 from gwproto.data_classes.sh_node import ShNode
+from gwproto.data_classes.data_channel import DataChannel
 from gwproto.data_classes.telemetry_tuple import TelemetryTuple
 from gwproto.default_decoders import ComponentDecoder
 from gwproto.default_decoders import default_component_decoder
@@ -152,7 +153,7 @@ def load_nodes(
         errors = []
     for d in layout.get("ShNodes", []):
         try:
-            node_name = d["Alias"]
+            node_name = d["Name"]
             if included_node_names is None or node_name in included_node_names:
                 nodes[node_name] = SpaceheatNodeGt_Maker.dict_to_dc(d)
         except Exception as e:
@@ -160,6 +161,27 @@ def load_nodes(
                 raise e
             errors.append(LoadError("ShNode", d, e))
     return nodes
+
+
+def load_channels(
+    layout: dict[Any, Any],
+    raise_errors: bool = True,
+    errors: Optional[list[LoadError]] = None,
+    included_channel_names: Optional[set[str]] = None,
+) -> dict[Any, Any]:
+    channels = {}
+    if errors is None:
+        errors = []
+    for d in layout.get("Channels", []):
+        try:
+            channel_name = d["Name"]
+            if included_channel_names is None or channel_name in included_channel_names:
+                channels[channel_name] = DataChannelGt_Maker.dict_to_dc(d)
+        except Exception as e:
+            if raise_errors:
+                raise e
+            errors.append(LoadError("DataChannel", d, e))
+    return channels
 
 
 def resolve_links(
@@ -201,9 +223,10 @@ class HardwareLayout:
     def __init__(
         self,
         layout: dict[Any, Any],
-        cacs: Optional[dict[str, ComponentAttributeClass]] = None,
-        components: Optional[dict[str, Component]] = None,
-        nodes: Optional[dict[str, ShNode]] = None,
+        cacs: Optional[dict[str, ComponentAttributeClass]] = None, # by id
+        components: Optional[dict[str, Component]] = None,  # by id
+        nodes: Optional[dict[str, ShNode]] = None, # by name
+        channels: Optional[dict[str, DataChannel]] = None, # by name
     ):
         self.layout = copy.deepcopy(layout)
         if cacs is None:
@@ -213,8 +236,11 @@ class HardwareLayout:
             components = Component.by_id
         self.components = dict(components)
         if nodes is None:
-            nodes = ShNode.by_id
+            nodes = ShNode.by_name
         self.nodes = dict(nodes)
+        if channels is None:
+            channels = DataChannel.by_name
+        self.channels = dict(channels)
 
     def clear_property_cache(self) -> None:
         for cached_prop_name in [
@@ -248,6 +274,7 @@ class HardwareLayout:
         cls,
         layout: dict[Any, Any],
         included_node_names: Optional[set[str]] = None,
+        included_channel_names: Optional[set[str]] = None,
         raise_errors: bool = True,
         errors: Optional[list[LoadError]] = None,
         component_decoder: Optional[ComponentDecoder] = None,
@@ -271,6 +298,12 @@ class HardwareLayout:
                 raise_errors=raise_errors,
                 errors=errors,
                 included_node_names=included_node_names,
+            ),
+            channels=load_channels(
+                layout=layout,
+                raise_errors=raise_errors,
+                errors=errors,
+                included_channel_names=included_channel_names,
             ),
         )
         resolve_links(

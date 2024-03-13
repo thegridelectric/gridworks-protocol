@@ -38,8 +38,8 @@
                         <xsl:element name="FileContents">
 
 
-<xsl:text>from typing import List
-from enum import Enum
+<xsl:text>from enum import Enum
+from typing import List
 
 
 class </xsl:text><xsl:value-of select="$enum-class-name"/>

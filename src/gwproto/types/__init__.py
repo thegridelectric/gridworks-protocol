@@ -1,3 +1,4 @@
+
 """ List of all the types """
 
 from gwproto.types.ads111x_based_cac_gt import Ads111xBasedCacGt
@@ -50,12 +51,8 @@ from gwproto.types.synced_readings import SyncedReadings
 from gwproto.types.synced_readings import SyncedReadings_Maker
 from gwproto.types.ta_data_channels import TaDataChannels
 from gwproto.types.ta_data_channels import TaDataChannels_Maker
-from gwproto.types.thermistor_data_processing_config import (
-    ThermistorDataProcessingConfig,
-)
-from gwproto.types.thermistor_data_processing_config import (
-    ThermistorDataProcessingConfig_Maker,
-)
+from gwproto.types.thermistor_data_processing_config import ThermistorDataProcessingConfig
+from gwproto.types.thermistor_data_processing_config import ThermistorDataProcessingConfig_Maker
 
 
 __all__ = [

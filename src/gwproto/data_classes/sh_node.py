@@ -17,6 +17,16 @@ class ShNode:
     """
 
     by_id: Dict[str, "ShNode"] = {}
+    by_name: Dict[str, "ShNode"] = {}
+
+    def  __new__(cls, name, *args, **kwargs):
+        try:
+            return cls.by_name[name]
+        except KeyError:
+            instance = super().__new__(cls)
+            cls.by_name[name] = instance
+            cls.by_id[instance.sh_node_id] = instance
+            return instance
 
     def __init__(
         self,
@@ -36,6 +46,7 @@ class ShNode:
         self.component_id = component_id
         self.in_power_metering = in_power_metering
         ShNode.by_id[self.sh_node_id] = self
+        ShNode.by_name[self.name] = self
 
     def __repr__(self):
         return f"ShNode {self.display_name} => {self.actor_class.value} {self.name}"

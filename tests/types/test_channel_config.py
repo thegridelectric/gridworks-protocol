@@ -18,7 +18,7 @@ def test_channel_config_generated() -> None:
         CapturePeriodS=60,
         AsyncCapture=True,
         AsyncCaptureDelta=30,
-        Exponent=6,
+        Exponent=0,
         Unit=Unit.W,
     )
 
@@ -28,7 +28,7 @@ def test_channel_config_generated() -> None:
         "CapturePeriodS": 60,
         "AsyncCapture": True,
         "AsyncCaptureDelta": 30,
-        "Exponent": 6,
+        "Exponent": 0,
         "UnitGtEnumSymbol": "f459a9c3",
         "TypeName": "channel.config",
         "Version": "000",

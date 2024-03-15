@@ -19,13 +19,13 @@ class ShNode:
     by_id: Dict[str, "ShNode"] = {}
     by_name: Dict[str, "ShNode"] = {}
 
-    def  __new__(cls, name, *args, **kwargs):
+    def  __new__(cls, name, sh_node_id, *args, **kwargs):
         try:
             return cls.by_name[name]
         except KeyError:
             instance = super().__new__(cls)
             cls.by_name[name] = instance
-            cls.by_id[instance.sh_node_id] = instance
+            cls.by_id[sh_node_id] = instance
             return instance
 
     def __init__(

@@ -39,6 +39,8 @@ def test_make_model() -> None:
         "BELLGOSSETT__ECOCIRC20_18",
         "TEWA__TT0P10KC3T1051500",
         "EKM__HOTSPWM075HD",
+        "GRIDWORKS__SIMMULTITEMP",
+        "GRIDWORKS__SIMTOTALIZER",
     }
 
     assert MakeModel.default() == MakeModel.UNKNOWNMAKE__UNKNOWNMODEL
@@ -78,6 +80,8 @@ def test_make_model() -> None:
     assert MakeModel.version("BELLGOSSETT__ECOCIRC20_18") == "002"
     assert MakeModel.version("TEWA__TT0P10KC3T1051500") == "002"
     assert MakeModel.version("EKM__HOTSPWM075HD") == "002"
+    assert MakeModel.version("GRIDWORKS__SIMMULTITEMP") == "002"
+    assert MakeModel.version("GRIDWORKS__SIMTOTALIZER") == "002"
 
     for value in MakeModel.values():
         symbol = MakeModel.value_to_symbol(value)

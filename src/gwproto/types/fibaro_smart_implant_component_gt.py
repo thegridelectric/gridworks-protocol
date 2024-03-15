@@ -32,9 +32,9 @@ class FibaroSmartImplantComponentGt(ComponentGt):
         )
 
     def to_data_class(self) -> FibaroSmartImplantComponent:
-        component = Component.by_id.get(self.ComponentId, None)
+        component = FibaroSmartImplantComponent.by_id.get(self.ComponentId, None)
         if component is not None:
-            return typing.cast(FibaroSmartImplantComponent, component)
+            return component
         return FibaroSmartImplantComponent(
             component_id=self.ComponentId,
             component_attribute_class_id=self.ComponentAttributeClassId,

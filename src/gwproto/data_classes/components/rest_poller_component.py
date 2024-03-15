@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Dict
 
 from gwproto.data_classes.component import Component
 from gwproto.data_classes.component_attribute_class import (
@@ -8,6 +8,7 @@ from gwproto.types.rest_poller_gt import RESTPollerSettings
 
 
 class RESTPollerComponent(Component):
+    by_id: Dict[str, "RESTPollerComponent"]
     rest: RESTPollerSettings
 
     def __init__(
@@ -25,6 +26,7 @@ class RESTPollerComponent(Component):
             hw_uid=hw_uid,
             component_attribute_class_id=component_attribute_class_id,
         )
+        RESTPollerComponent.by_id[self.component_id] = self
 
     @property
     def cac(self) -> Cac:

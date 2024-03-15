@@ -12,6 +12,7 @@ from pydantic import validator
 from gwproto.enums import TelemetryName
 from gwproto.enums import Unit
 from gwproto.types.hubitat_component_gt import HubitatRESTResolutionSettings
+from gwproto.types.rest_poller_gt import DEFAULT_REST_POLL_PERIOD_SECONDS
 from gwproto.types.rest_poller_gt import RequestArgs
 from gwproto.types.rest_poller_gt import RESTPollerSettings
 from gwproto.types.rest_poller_gt import URLArgs
@@ -39,6 +40,13 @@ class FibaroTempSensorSettingsGt(BaseModel):
     temp_unit_gt_enum_symbol: str = "ec14bd47"
     enabled: bool = True
     rest: Optional[RESTPollerSettings] = None
+    poll_period_seconds: Optional[float] = None
+    """The actual poll_seconds_used will be the first of:
+    1. Any value specified in an explicit 'rest' member, if 'rest' member is not None.
+    2. The value from this object, if that value is not None.
+    3. The value of HubitatTanksSettingsGt.default_poll_period_seconds if it is not None.
+    4. The default value.
+    """
 
     class Config:
         extra = Extra.allow
@@ -125,7 +133,14 @@ class FibaroTempSensorSettings(FibaroTempSensorSettingsGt):
 
         if self.rest is None:
             # Since no "inline" rest configuration is present, use constructed url config
-            self.rest = RESTPollerSettings(request=RequestArgs(url=constructed_config))
+            if self.poll_period_seconds is None:
+                poll_period_seconds = DEFAULT_REST_POLL_PERIOD_SECONDS
+            else:
+                poll_period_seconds = self.poll_period_seconds
+            self.rest = RESTPollerSettings(
+                poll_period_seconds=poll_period_seconds,
+                request=RequestArgs(url=constructed_config),
+            )
         else:
             # Again, no inline url config is found; use constructed url config
             if self.rest.request.url is None:
@@ -195,10 +210,13 @@ class FibaroTempSensorSettings(FibaroTempSensorSettingsGt):
         cls,
         settings_gt: FibaroTempSensorSettingsGt,
         hubitat: HubitatRESTResolutionSettings,
+        default_poll_period_seconds: Optional[float] = None,
     ) -> "FibaroTempSensorSettings":
         settings = FibaroTempSensorSettings(
             **settings_gt.dict(),
         )
+        if settings.poll_period_seconds is None:
+            settings.poll_period_seconds = default_poll_period_seconds
         settings.resolve_rest(hubitat)
         return settings
 
@@ -210,6 +228,7 @@ class HubitatTankSettingsGt(BaseModel):
     hubitat_component_id: str
     my_node_name: str
     sensor_supply_voltage: float = DEFAULT_TANK_MODULE_VOLTAGE
+    default_poll_period_seconds: Optional[float] = None
     devices: list[FibaroTempSensorSettingsGt] = []
 
     class Config:

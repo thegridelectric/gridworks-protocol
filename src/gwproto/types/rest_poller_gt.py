@@ -182,10 +182,13 @@ class ErrorResponses(BaseModel):
         allow_population_by_field_name = True
 
 
+DEFAULT_REST_POLL_PERIOD_SECONDS = 60.0
+
+
 class RESTPollerSettings(BaseModel):
     session: SessionArgs = SessionArgs()
     request: RequestArgs = RequestArgs()
-    poll_period_seconds: float = 60
+    poll_period_seconds: float = DEFAULT_REST_POLL_PERIOD_SECONDS
     errors: ErrorResponses = ErrorResponses()
 
     class Config:

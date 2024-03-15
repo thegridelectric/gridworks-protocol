@@ -8,7 +8,7 @@ from gwproto.data_classes.component import Component
 from gwproto.data_classes.components.hubitat_tank_component import HubitatTankComponent
 from gwproto.types.component_gt import ComponentGt
 from gwproto.types.hubitat_tank_gt import HubitatTankSettingsGt
-
+from gwproto.types import ChannelConfig
 
 class HubitatTankComponentGt(ComponentGt):
     Tank: HubitatTankSettingsGt
@@ -31,6 +31,7 @@ class HubitatTankComponentGt(ComponentGt):
             ),
             DisplayName=component.display_name,
             HwUid=component.hw_uid,
+            ConfigList=component.config_list
         )
 
     def to_data_class(self) -> HubitatTankComponent:

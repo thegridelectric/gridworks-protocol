@@ -40,8 +40,8 @@ class I2cFlowTotalizerComponentGt(BaseModel):
     """
     I2C Flow Totalizer Component.
 
-    A specific instance of a chip that integates pulse count flow meters and reports the result
-    as I2C.
+    A specific instance of a component with multiple chips that integrate pulse count flow meters and reports the result
+    as I2C, with a single totalizer component per i2c address.
     """
 
     ComponentId: str = Field(

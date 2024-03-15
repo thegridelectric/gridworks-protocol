@@ -8,7 +8,7 @@ from typing import Optional
 from gwproto.data_classes.component_attribute_class import ComponentAttributeClass
 from gwproto.data_classes.mixin import StreamlinedSerializerMixin
 from gwproto.errors import DcError
-
+from gwproto.type_helpers import CACS_BY_MAKE_MODEL
 
 class Component(ABC, StreamlinedSerializerMixin):
     by_id: Dict[str, "Component"] = {}
@@ -51,4 +51,7 @@ class Component(ABC, StreamlinedSerializerMixin):
         return ComponentAttributeClass.by_id[self.component_attribute_class_id]
 
     def __repr__(self):
-        return self.display_name
+        if self.display_name:
+            return self.display_name
+        else:
+            return f"{self.component_id} (MakeModel {CACS_BY_MAKE_MODEL[self.component_attribute_class_id].value})" 

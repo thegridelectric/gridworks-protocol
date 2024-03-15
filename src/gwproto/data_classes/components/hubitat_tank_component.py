@@ -70,9 +70,9 @@ class HubitatTankComponent(Component, ComponentResolver):
             if device_gt.enabled
         ]
         for device in devices:
-            if device.about_node_name not in nodes:
+            if device.channel_name not in nodes:
                 raise ValueError(
-                    f"ERROR. Node <{device.about_node_name}> not found for <{self.my_node_name}> (thermistor <{device.stack_depth}>)"
+                    f"ERROR. Node <{device.channel_name}> not found for <{self.my_node_name}> (thermistor <{device.stack_depth}>)"
                 )
         # replace proxy hubitat component, which only had component id.
         # with the actual hubitat component containing data.
@@ -82,7 +82,7 @@ class HubitatTankComponent(Component, ComponentResolver):
     def urls(self) -> dict[str, Optional[yarl.URL]]:
         urls = self.hubitat.urls()
         for device in self.devices:
-            urls[device.about_node_name] = device.url
+            urls[device.channel_name] = device.url
         return urls
 
     def make_config_list(self) -> list[ChannelConfig]:

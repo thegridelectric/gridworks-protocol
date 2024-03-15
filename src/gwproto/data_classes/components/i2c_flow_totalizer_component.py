@@ -18,10 +18,10 @@ class I2cFlowTotalizerComponent(Component):
         self,
         component_id: str,
         component_attribute_class_id: str,
-        i2c_address: int,
+        i2c_address_list: List[int],
         config_list: List[ChannelConfig],
-        pulse_flow_meter_make_model: MakeModel,
-        conversion_factor: float,
+        pulse_flow_meter_make_model_list: List[MakeModel],
+        conversion_factor_list: List[float],
         display_name: Optional[str] = None,
         hw_uid: Optional[str] = None,
     ):
@@ -32,9 +32,9 @@ class I2cFlowTotalizerComponent(Component):
             display_name=display_name,
             hw_uid=hw_uid,
         )
-        self.i2c_address = i2c_address
-        self.pulse_flow_meter_make_model = pulse_flow_meter_make_model
-        self.conversion_factor = conversion_factor
+        self.i2c_address_list = i2c_address_list
+        self.pulse_flow_meter_make_model_list = pulse_flow_meter_make_model_list
+        self.conversion_factor_list = conversion_factor_list
 
         I2cFlowTotalizerComponent.by_id[self.component_id] = self
         Component.by_id[self.component_id] = self

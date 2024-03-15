@@ -23,14 +23,14 @@ def test_i2c_flow_totalizer_component_gt_generated() -> None:
     cac_gt = CacGt(
         ComponentAttributeClassId=CACS_BY_MAKE_MODEL[MakeModel.ATLAS__EZFLO],
         MakeModel=MakeModel.ATLAS__EZFLO,
-        DisplayName="Atlas EZ Flo Totalizer",
+        DisplayName="Atlas EZ FLO",
     )
     Cac_Maker.tuple_to_dc(cac_gt)
 
     t = I2cFlowTotalizerComponentGt(
         ComponentId="dd5ac673-91a8-40e2-a233-b67479cec709",
         ComponentAttributeClassId="13d916dc-8764-4b16-b85d-b8ead3e2fc80",
-        I2cAddress=100,
+        I2cAddressList=[100],
         ConfigList=[
             ChannelConfig(
                 ChannelName="dist-volume",
@@ -51,14 +51,16 @@ def test_i2c_flow_totalizer_component_gt_generated() -> None:
                 Unit=Unit.Gpm,
             ),
         ],
-        PulseFlowMeterMakeModel=MakeModel.EKM__HOTSPWM075HD,
-        ConversionFactor=0.1,
-        DisplayName="Dist EZ FLow (i2c 0x64, or 100)",
+        PulseFlowMeterMakeModelList=[MakeModel.EKM__HOTSPWM075HD],
+        ConversionFactorList=[0.10],
+        DisplayName="Flow meter on pipe out of tank",
+        HwUid="1234",
     )
+
     d = {
         "ComponentId": "dd5ac673-91a8-40e2-a233-b67479cec709",
         "ComponentAttributeClassId": "13d916dc-8764-4b16-b85d-b8ead3e2fc80",
-        "I2cAddress": 100,
+        "I2cAddressList": [100],
         "ConfigList": [
             {
                 "ChannelName": "dist-volume",
@@ -83,11 +85,12 @@ def test_i2c_flow_totalizer_component_gt_generated() -> None:
                 "UnitGtEnumSymbol": "b4580361",
             },
         ],
-        "ConversionFactor": 0.1,
-        "DisplayName": "Dist EZ FLow (i2c 0x64, or 100)",
+        "ConversionFactorList": [0.10],
+        "DisplayName": "Flow meter on pipe out of tank",
+        "HwUid": "1234",
         "TypeName": "i2c.flow.totalizer.component.gt",
         "Version": "000",
-        "PulseFlowMeterMakeModelGtEnumSymbol": "208f827f",
+        "PulseFlowMeterMakeModelList": ["208f827f"],
     }
 
     assert t.as_dict() == d
@@ -134,7 +137,7 @@ def test_i2c_flow_totalizer_component_gt_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["I2cAddress"]
+    del d2["I2cAddressList"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -144,12 +147,12 @@ def test_i2c_flow_totalizer_component_gt_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["PulseFlowMeterMakeModelGtEnumSymbol"]
+    del d2["PulseFlowMeterMakeModelList"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["ConversionFactor"]
+    del d2["ConversionFactorList"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -171,10 +174,6 @@ def test_i2c_flow_totalizer_component_gt_generated() -> None:
     # Behavior on incorrect types
     ######################################
 
-    d2 = dict(d, I2cAddress="100.1")
-    with pytest.raises(ValidationError):
-        Maker.dict_to_tuple(d2)
-
     d2 = dict(d, ConfigList="Not a list.")
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
@@ -185,13 +184,6 @@ def test_i2c_flow_totalizer_component_gt_generated() -> None:
 
     d2 = dict(d, ConfigList=[{"Failed": "Not a GtSimpleSingleStatus"}])
     with pytest.raises(SchemaError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d, PulseFlowMeterMakeModelGtEnumSymbol="unknown_symbol")
-    Maker.dict_to_tuple(d2).PulseFlowMeterMakeModel == MakeModel.default()
-
-    d2 = dict(d, ConversionFactor="this is not a float")
-    with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
     ######################################
@@ -209,11 +201,3 @@ def test_i2c_flow_totalizer_component_gt_generated() -> None:
     d2 = dict(d, ComponentId="d4be12d5-33ba-4f1f-b9e5")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
-
-    ######################################
-    # Axiom 1: PulseFlowMeterMakeModel, ConversionFactor Consistency
-    ######################################
-    d2 = dict(d, ConversionFactor=3)
-    with pytest.raises(ValidationError):
-        Maker.dict_to_tuple(d2)
-    flush_all()

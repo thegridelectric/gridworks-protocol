@@ -13,16 +13,16 @@ Python pydantic class corresponding to json type `i2c.flow.totalizer.component.g
     - Description: ComponentAttributeClass. Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry. 
     - Format: UuidCanonicalTextual
 
-**I2cAddress**:
-    - Description: I2cAddress. The I2cAddress that this component can be found at on the I2cBus.
+**I2cAddressList**:
+    - Description: I2cAddress. The  list of I2cAddresses on the I2cBus. The assumption is each i2c address is reading from one Pulse Flow Meter. 
 
 **ConfigList**:
     - Description: Config List. A list of the ChannelConfigs for the data channels reported by this actor.
 
-**PulseFlowMeterMakeModel**:
-    - Description: Pulse Flow Meter MakeModel. The MakeModel of the pulse flow meter that this I2cFlowTotalizer is attached to.
+**PulseFlowMeterMakeModelList**:
+    - Description: Pulse Flow Meter MakeModel. The list of MakeModels of the pulse flow meters getting read. 
 
-**ConversionFactor**:
+**ConversionFactorList**:
     - Description: ConversionFactor. The factor that the cumulative output must be multiplied by in order to read gallons.
 
 **DisplayName**:

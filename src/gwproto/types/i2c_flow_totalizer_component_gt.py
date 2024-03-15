@@ -27,7 +27,6 @@ LOG_FORMAT = (
 )
 LOGGER = logging.getLogger(__name__)
 
-
 CONVERSION_FACTOR_BY_MODEL: Dict[MakeModel, float] = {
     MakeModel.ISTEC_4440: 0.268132,
     MakeModel.OMEGA__FTB8007HWPT: 0.134066,
@@ -60,21 +59,22 @@ class I2cFlowTotalizerComponentGt(BaseModel):
             "Registry."
         ),
     )
-    I2cAddress: int = Field(
+    I2cAddressList: List[int] = Field(
         title="I2cAddress",
-        description="The I2cAddress that this component can be found at on the I2cBus.",
+        description=(
+            "The list of I2cAddresses on the I2cBus. The assumption is each i2c address is reading "
+            "from one Pulse Flow Meter."
+        ),
     )
     ConfigList: List[ChannelConfig] = Field(
         title="Config List",
         description="A list of the ChannelConfigs for the data channels reported by this actor.",
     )
-    PulseFlowMeterMakeModel: MakeModel = Field(
+    PulseFlowMeterMakeModelList: List[MakeModel] = Field(
         title="Pulse Flow Meter MakeModel",
-        description=(
-            "The MakeModel of the pulse flow meter that this I2cFlowTotalizer is attached to."
-        ),
+        description="The list of MakeModels of the pulse flow meters getting read.",
     )
-    ConversionFactor: float = Field(
+    ConversionFactorList: List[float] = Field(
         title="ConversionFactor",
         description=(
             "The factor that the cumulative output must be multiplied by in order to read gallons."
@@ -117,31 +117,50 @@ class I2cFlowTotalizerComponentGt(BaseModel):
     @root_validator
     def check_axiom_1(cls, v: dict) -> dict:
         """
-        Axiom 1:  PulseFlowMeterMakeModel, ConversionFactor Consistency
-        If the PulseFlowMeterMakeModel m is a key in the dict CONVERSION_FACTOR_BY_MODEL, then
-        the ConversionFactor must be CONVERSION_FACTOR_BY_MODEL[m]
+        Axiom 1: I2cAddressList, PulseFlowMeterMakeModel, ConversionFactorList Consistency.
+        All three lists must have the same length.
 
-        CONVERSION_FACTOR_BY_MODEL: Dict[MakeModel, float] = {
-                            MakeModel.ISTEC_4440: 0.268132,
-                            MakeModel.OMEGA__FTB8007HWPT: 0.134066,
-                            MakeModel.OMEGA__FTB8010HWPT: 1.34066,
-                            MakeModel.PRMFILTRATION__WM075: 1.34066,
-                            MakeModel.EKM__HOTSPWM075HD: 0.10,
-                        }
+        For the nth PulseFlowMeterMakeModel and ConversionFactor:
+        If the PulseFlowMeterMakeModel m is a key in the dict CONVERSION_FACTOR_BY_MODEL, then
+                the ConversionFactor must be CONVERSION_FACTOR_BY_MODEL[m]
+
+                CONVERSION_FACTOR_BY_MODEL: Dict[MakeModel, float] = {
+                                    MakeModel.ISTEC_4440: 0.268132,
+                                    MakeModel.OMEGA__FTB8007HWPT: 0.134066,
+                                    MakeModel.OMEGA__FTB8010HWPT: 1.34066,
+                                    MakeModel.PRMFILTRATION__WM075: 1.34066,
+                                    MakeModel.EKM__HOTSPWM075HD: 0.10,
+                                }
         """
         if (
-            "PulseFlowMeterMakeModel" not in v.keys()
-            or "ConversionFactor" not in v.keys()
+            "I2cAddressList" not in v.keys()
+            or "PulseFlowMeterMakeModelList" not in v.keys()
+            or "ConversionFactorList" not in v.keys()
         ):
-            raise ValueError("Missing keys!")
-        model = v["PulseFlowMeterMakeModel"]
-        cf = v["ConversionFactor"]
-        if model in CONVERSION_FACTOR_BY_MODEL.keys():
-            if cf != CONVERSION_FACTOR_BY_MODEL[model]:
-                raise ValueError(
-                    f"Axiom 1 violated! Conversion factor for {model} must "
-                    "be CONVERSION_FACTOR_BY_MODEL[{model}] = {cf}"
-                )
+            raise ValueError(f"Missing keys: {v.keys()}")
+        i2c_address_list = v["I2cAddressList"]
+        model_list = v["PulseFlowMeterMakeModelList"]
+        cf_list = v["ConversionFactorList"]
+        if len(i2c_address_list) != len(set(i2c_address_list)):
+            raise Exception("Axiom 1 violated: duplicate i2c addresses")
+        if len(i2c_address_list) != len(model_list):
+            raise Exception(
+                "Axiom 1 violated: I2cAddressList and PulseFlowMeterMakeModel List must be the same length!"
+            )
+        if len(i2c_address_list) != len(cf_list):
+            raise Exception(
+                "Axiom 1 violated: I2cAddressList and ConversionFactorList List must be the same length!"
+            )
+
+        for i in range(len(model_list)):
+            model = model_list[i]
+            cf = cf_list[i]
+            if model in CONVERSION_FACTOR_BY_MODEL.keys():
+                if cf != CONVERSION_FACTOR_BY_MODEL[model]:
+                    raise ValueError(
+                        f"Axiom 1 violated! Conversion factor for {model} must "
+                        f"be CONVERSION_FACTOR_BY_MODEL[{model}] = {cf}"
+                    )
         return v
 
     def as_dict(self) -> Dict[str, Any]:
@@ -172,10 +191,13 @@ class I2cFlowTotalizerComponentGt(BaseModel):
         for elt in self.ConfigList:
             config_list.append(elt.as_dict())
         d["ConfigList"] = config_list
-        del d["PulseFlowMeterMakeModel"]
-        d["PulseFlowMeterMakeModelGtEnumSymbol"] = MakeModel.value_to_symbol(
-            self.PulseFlowMeterMakeModel
-        )
+        del d["PulseFlowMeterMakeModelList"]
+        pulse_flow_meter_make_model_list = []
+        for elt in self.PulseFlowMeterMakeModelList:
+            pulse_flow_meter_make_model_list.append(
+                MakeModel.value_to_symbol(elt.value)
+            )
+        d["PulseFlowMeterMakeModelList"] = pulse_flow_meter_make_model_list
         return d
 
     def as_type(self) -> bytes:
@@ -259,8 +281,8 @@ class I2cFlowTotalizerComponentGt_Maker:
             raise SchemaError(f"dict missing ComponentId: <{d2}>")
         if "ComponentAttributeClassId" not in d2.keys():
             raise SchemaError(f"dict missing ComponentAttributeClass: <{d2}>")
-        if "I2cAddress" not in d2.keys():
-            raise SchemaError(f"dict missing I2cAddress: <{d2}>")
+        if "I2cAddressList" not in d2.keys():
+            raise SchemaError(f"dict missing I2cAddressList: <{d2}>")
         if "ConfigList" not in d2.keys():
             raise SchemaError(f"dict missing ConfigList: <{d2}>")
         if not isinstance(d2["ConfigList"], List):
@@ -274,15 +296,17 @@ class I2cFlowTotalizerComponentGt_Maker:
             t = ChannelConfig_Maker.dict_to_tuple(elt)
             config_list.append(t)
         d2["ConfigList"] = config_list
-        if "PulseFlowMeterMakeModelGtEnumSymbol" not in d2.keys():
-            raise SchemaError(
-                f"PulseFlowMeterMakeModelGtEnumSymbol missing from dict <{d2}>"
-            )
-        value = MakeModel.symbol_to_value(d2["PulseFlowMeterMakeModelGtEnumSymbol"])
-        d2["PulseFlowMeterMakeModel"] = MakeModel(value)
-        del d2["PulseFlowMeterMakeModelGtEnumSymbol"]
-        if "ConversionFactor" not in d2.keys():
-            raise SchemaError(f"dict missing ConversionFactor: <{d2}>")
+        if "PulseFlowMeterMakeModelList" not in d2.keys():
+            raise SchemaError(f"dict <{d2}> missing PulseFlowMeterMakeModelList")
+        if not isinstance(d2["PulseFlowMeterMakeModelList"], List):
+            raise SchemaError("PulseFlowMeterMakeModelList must be a List!")
+        pulse_flow_meter_make_model_list = []
+        for elt in d2["PulseFlowMeterMakeModelList"]:
+            value = MakeModel.symbol_to_value(elt)
+            pulse_flow_meter_make_model_list.append(MakeModel(value))
+        d2["PulseFlowMeterMakeModelList"] = pulse_flow_meter_make_model_list
+        if "ConversionFactorList" not in d2.keys():
+            raise SchemaError(f"dict missing ConversionFactorList: <{d2}>")
         if "TypeName" not in d2.keys():
             raise SchemaError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():
@@ -302,10 +326,10 @@ class I2cFlowTotalizerComponentGt_Maker:
             dc = I2cFlowTotalizerComponent(
                 component_id=t.ComponentId,
                 component_attribute_class_id=t.ComponentAttributeClassId,
-                i2c_address=t.I2cAddress,
+                i2c_address_list=t.I2cAddressList,
                 config_list=t.ConfigList,
-                pulse_flow_meter_make_model=t.PulseFlowMeterMakeModel,
-                conversion_factor=t.ConversionFactor,
+                pulse_flow_meter_make_model_list=t.PulseFlowMeterMakeModelList,
+                conversion_factor_list=t.ConversionFactorList,
                 display_name=t.DisplayName,
                 hw_uid=t.HwUid,
             )
@@ -316,10 +340,10 @@ class I2cFlowTotalizerComponentGt_Maker:
         return I2cFlowTotalizerComponentGt(
             ComponentId=dc.component_id,
             ComponentAttributeClassId=dc.component_attribute_class_id,
-            I2cAddress=dc.i2c_address,
+            I2cAddressList=dc.i2c_address_list,
             ConfigList=dc.config_list,
-            PulseFlowMeterMakeModel=dc.pulse_flow_meter_make_model,
-            ConversionFactor=dc.conversion_factor,
+            PulseFlowMeterMakeModelList=dc.pulse_flow_meter_make_model_list,
+            ConversionFactorList=dc.conversion_factor_list,
             DisplayName=dc.display_name,
             HwUid=dc.hw_uid,
         )

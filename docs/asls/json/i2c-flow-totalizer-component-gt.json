@@ -19,9 +19,12 @@
       "description": "Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry.",
       "required": true
     },
-    "I2cAddress": {
-      "type": "integer",
-      "description": "The I2cAddress that this component can be found at on the I2cBus.",
+    "I2cAddressList": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "The list of I2cAddresses on the I2cBus. The assumption is each i2c address is reading from one Pulse Flow Meter.",
       "required": true
     },
     "ConfigList": {
@@ -32,15 +35,21 @@
       "description": "A list of the ChannelConfigs for the data channels reported by this actor.",
       "required": true
     },
-    "PulseFlowMeterMakeModel": {
-      "type": "string",
+    "PulseFlowMeterMakeModelList": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
       "format": "spaceheat.make.model",
       "title": "Pulse Flow Meter MakeModel",
-      "description": "The MakeModel of the pulse flow meter that this I2cFlowTotalizer is attached to.",
+      "description": "The list of MakeModels of the pulse flow meters getting read.",
       "required": true
     },
-    "ConversionFactor": {
-      "type": "number",
+    "ConversionFactorList": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      },
       "description": "The factor that the cumulative output must be multiplied by in order to read gallons.",
       "required": true
     },
@@ -67,8 +76,8 @@
   },
   "axioms": {
     "Axiom1": {
-      "title": "PulseFlowMeterMakeModel, ConversionFactor Consistency",
-      "description": "If the PulseFlowMeterMakeModel m is a key in the dict CONVERSION_FACTOR_BY_MODEL, then the ConversionFactor must be CONVERSION_FACTOR_BY_MODEL[m] CONVERSION_FACTOR_BY_MODEL: Dict[MakeModel, float] = { MakeModel.ISTEC_4440: 0.268132, MakeModel.OMEGA__FTB8007HWPT: 0.134066, MakeModel.OMEGA__FTB8010HWPT: 1.34066, MakeModel.PRMFILTRATION__WM075: 1.34066, MakeModel.EKM__HOTSPWM075HD: 0.10, }"
+      "title": "I2cAddressList, PulseFlowMeterMakeModel, ConversionFactorList Consistency",
+      "description": "All three lists must have the same length. For the nth PulseFlowMeterMakeModel and ConversionFactor: If the PulseFlowMeterMakeModel m is a key in the dict CONVERSION_FACTOR_BY_MODEL, then the ConversionFactor must be CONVERSION_FACTOR_BY_MODEL[m] CONVERSION_FACTOR_BY_MODEL: Dict[MakeModel, float] = { MakeModel.ISTEC_4440: 0.268132, MakeModel.OMEGA__FTB8007HWPT: 0.134066, MakeModel.OMEGA__FTB8010HWPT: 1.34066, MakeModel.PRMFILTRATION__WM075: 1.34066, MakeModel.EKM__HOTSPWM075HD: 0.10, }"
     }
   },
   "formats": {

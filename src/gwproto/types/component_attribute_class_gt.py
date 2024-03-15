@@ -56,6 +56,8 @@ CACS_BY_MAKE_MODEL: Dict[EnumMakeModel, str] = {
     EnumMakeModel.BELLGOSSETT__ECOCIRC20_18: "0d2ccc36-d2b8-405d-a257-3917111607c5",
     EnumMakeModel.TEWA__TT0P10KC3T1051500: "20779dbb-0302-4c36-9d60-e1962857c2f3",
     EnumMakeModel.EKM__HOTSPWM075HD: "e52cb571-913a-4614-90f4-5cc81f8e7fe5",
+    EnumMakeModel.GRIDWORKS__SIMMULTITEMP: "627ac482-24fe-46b2-ba8c-3d6f1e1ee069",
+    EnumMakeModel.GRIDWORKS__SIMTOTALIZER: "a88f8f4c-fe1e-4645-a7f4-249912131dc8",
 }
 
 
@@ -167,7 +169,9 @@ class ComponentAttributeClassGt(BaseModel):
                 MakeModel.PRMFILTRATION__WM075: "61d5c12d-eeca-4835-9a11-e61167d82e0d",
                 MakeModel.BELLGOSSETT__ECOCIRC20_18: "0d2ccc36-d2b8-405d-a257-3917111607c5",
                 MakeModel.TEWA__TT0P10KC3T1051500: "20779dbb-0302-4c36-9d60-e1962857c2f3",
-                MakeModel.EKM__HOTSPWM075HD: "e52cb571-913a-4614-90f4-5cc81f8e7fe5"
+                MakeModel.EKM__HOTSPWM075HD: "e52cb571-913a-4614-90f4-5cc81f8e7fe5",
+                MakeModel.GRIDWORKS__SIMMULTITEMP: "627ac482-24fe-46b2-ba8c-3d6f1e1ee069",
+                MakeModel.GRIDWORKS__SIMTOTALIZER: "a88f8f4c-fe1e-4645-a7f4-249912131dc8",
             }
         """
         if "ComponentAttributeClassId" not in v.keys() or "MakeModel" not in v.keys():

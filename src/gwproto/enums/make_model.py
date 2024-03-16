@@ -85,6 +85,8 @@ class MakeModel(StrEnum):
         1/100 cubic ft (~0.0748 gallons).
       - GridWorks__SimMultiTemp (b3eced0d): Simulated 12-channel Ads111x-based analog temp sensor
       - GridWOrks__SimTotalizer (e4807056): Simulated I2c-based pulse counter.
+      - Krida__Double-Emr16-I2c-V3 (ff529d69): Two 16-Channel I2C Low Voltage Electromagnetic Relay
+        Board, with first at address 0x20 and second at address 0x21
     """
 
     UNKNOWNMAKE__UNKNOWNMODEL = auto()
@@ -122,6 +124,7 @@ class MakeModel(StrEnum):
     EKM__HOTSPWM075HD = auto()
     GRIDWORKS__SIMMULTITEMP = auto()
     GRIDWORKS__SIMTOTALIZER = auto()
+    KRIDA__DOUBLEEMR16I2CV3 = auto()
 
     @classmethod
     def default(cls) -> "MakeModel":
@@ -250,6 +253,7 @@ class MakeModel(StrEnum):
             "208f827f",
             "b3eced0d",
             "e4807056",
+            "ff529d69",
         ]
 
 
@@ -289,6 +293,7 @@ symbol_to_value = {
     "208f827f": "EKM__HOTSPWM075HD",
     "b3eced0d": "GRIDWORKS__SIMMULTITEMP",
     "e4807056": "GRIDWORKS__SIMTOTALIZER",
+    "ff529d69": "KRIDA__DOUBLEEMR16I2CV3",
 }
 
 value_to_symbol = {value: key for key, value in symbol_to_value.items()}
@@ -329,4 +334,5 @@ value_to_version = {
     "EKM__HOTSPWM075HD": "002",
     "GRIDWORKS__SIMMULTITEMP": "002",
     "GRIDWORKS__SIMTOTALIZER": "002",
+    "KRIDA__DOUBLEEMR16I2CV3": "002",
 }

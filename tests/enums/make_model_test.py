@@ -41,6 +41,7 @@ def test_make_model() -> None:
         "EKM__HOTSPWM075HD",
         "GRIDWORKS__SIMMULTITEMP",
         "GRIDWORKS__SIMTOTALIZER",
+        "KRIDA__DOUBLEEMR16I2CV3",
     }
 
     assert MakeModel.default() == MakeModel.UNKNOWNMAKE__UNKNOWNMODEL
@@ -82,6 +83,7 @@ def test_make_model() -> None:
     assert MakeModel.version("EKM__HOTSPWM075HD") == "002"
     assert MakeModel.version("GRIDWORKS__SIMMULTITEMP") == "002"
     assert MakeModel.version("GRIDWORKS__SIMTOTALIZER") == "002"
+    assert MakeModel.version("KRIDA__DOUBLEEMR16I2CV3") == "002"
 
     for value in MakeModel.values():
         symbol = MakeModel.value_to_symbol(value)

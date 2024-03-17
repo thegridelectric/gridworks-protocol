@@ -9,9 +9,18 @@ from pydantic import BaseModel
 from pydantic import Field
 from pydantic import root_validator
 from pydantic import validator
-from gwproto.enums import RelayWiringConfig
+
+from gwproto.enums import ChangeBoilerControl
+from gwproto.enums import ChangeHeatcallSource
+from gwproto.enums import ChangeHeatPumpControl
+from gwproto.enums import ChangeLgOperatingMode
+from gwproto.enums import ChangeRelayState
+from gwproto.enums import ChangeStoreFlowDirection
+from gwproto.enums import ChangeValveState
 from gwproto.enums import FsmEventType
+from gwproto.enums import RelayWiringConfig
 from gwproto.errors import SchemaError
+
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -83,7 +92,7 @@ class RelayActorConfig(BaseModel):
     def check_axiom_1(cls, v: dict) -> dict:
         """
         Axiom 1: EventType, DeEnergizingEvent consistency.
-        a) The EventType must belong to one of the boolean choices for FsmEventType (for example, 
+        a) The EventType must belong to one of the boolean choices for FsmEventType (for example,
         it is NOT SetAnalog010V):
             ChangeRelayState
             ChangeValveState
@@ -91,18 +100,74 @@ class RelayActorConfig(BaseModel):
             ChangeHeatcallSource
             ChangeBoilerControl
             ChangeHeatPumpControl
-            ChangeLgOperatingMode 
+            ChangeLgOperatingMode
 
-        b) The DeEnergizingEvent string must be one of the two choices for the EventType as an enum. 
-        For example, if the EventType is ChangeValveState then the  DeEnergizingEvent  must either 
-        be OpenValve or CloseValve. 
+        b) The DeEnergizingEvent string must be one of the two choices for the EventType as an enum.
+        For example, if the EventType is ChangeValveState then the  DeEnergizingEvent  must either
+        be OpenValve or CloseValve.
 
-        c) If the EventType is ChangeRelayState, then 
+        c) If the EventType is ChangeRelayState, then
             i) the WiringConfig cannot be DoubleThrow;
-            ii) if the Wiring Config is NormallyOpen then the DeEnergizingEvent must be OpenRelay; and 
+            ii) if the Wiring Config is NormallyOpen then the DeEnergizingEvent must be OpenRelay; and
             iii) if the WiringConfig is NormallyClosed then the DeEnergizingEvent must be CloseRelay.
         """
-        # TODO: Implement check for axiom 1"
+        if all(key in v for key in ("EventType", "DeEnergizingEvent", "WiringConfig")):
+            event_type: FsmEventType = v["EventType"]
+            de_energizing_event = v["DeEnergizingEvent"]
+            wiring_config: RelayWiringConfig = v["WiringConfig"]
+
+            # 1.a The EventType must belong to one of the boolean choices
+            boolean_event_types = [
+                FsmEventType.ChangeRelayState,
+                FsmEventType.ChangeValveState,
+                FsmEventType.ChangeStoreFlowDirection,
+                FsmEventType.ChangeHeatcallSource,
+                FsmEventType.ChangeBoilerControl,
+                FsmEventType.ChangeHeatPumpControl,
+                FsmEventType.ChangeLgOperatingMode,
+            ]
+            if event_type not in boolean_event_types:
+                raise ValueError(
+                    f"Axiom 1 violated. EventType {event_type} must be a boolean FsmEventType:\n {boolean_event_types}"
+                )
+
+            # 1.b The DeEnergizingEvent string must be one of the two choices for the EventType as an enum.
+            event_enum_by_name = {
+                FsmEventType.ChangeRelayState.value: ChangeRelayState,
+                FsmEventType.ChangeValveState.value: ChangeValveState,
+                FsmEventType.ChangeStoreFlowDirection.value: ChangeStoreFlowDirection,
+                FsmEventType.ChangeHeatcallSource.value: ChangeHeatcallSource,
+                FsmEventType.ChangeBoilerControl.value: ChangeBoilerControl,
+                FsmEventType.ChangeHeatPumpControl.value: ChangeHeatPumpControl,
+                FsmEventType.ChangeLgOperatingMode.value: ChangeLgOperatingMode,
+            }
+            event_enum = event_enum_by_name[event_type.value]
+            if not de_energizing_event in event_enum.values():
+                raise ValueError(
+                    f"Axiom 1b violated. DeEnergizingEvent {de_energizing_event} must be "
+                    f"one of the values for {event_type.value}: {event_enum.values()} "
+                )
+            if event_type is FsmEventType.ChangeRelayState:
+                if wiring_config is RelayWiringConfig.DoubleThrow:
+                    raise ValueError(
+                        "Axiom 1.c.i violated. If the EventType is ChangeRelayState, "
+                        "then the WiringConfig cannot be DoubleThrow"
+                    )
+                elif wiring_config is RelayWiringConfig.NormallyOpen:
+                    if de_energizing_event != "OpenRelay":
+                        raise ValueError(
+                            "Axiom 1c.ii violated. I the EventType is ChangeRelayState "
+                            "and Wiring Config is NormallyOpen then the DeEnergizingEvent "
+                            "must be OpenRelay"
+                        )
+                elif wiring_config is RelayWiringConfig.NormallyClosed:
+                    if de_energizing_event != "CloseRelay":
+                        raise ValueError(
+                            "Axiom 1c.iii violated. I the EventType is ChangeRelayState "
+                            "and Wiring Config is NormallyClosed then the DeEnergizingEvent "
+                            "must be CloseRelay"
+                        )
+
         return v
 
     def as_dict(self) -> Dict[str, Any]:
@@ -129,7 +194,9 @@ class RelayActorConfig(BaseModel):
             if value is not None
         }
         del d["WiringConfig"]
-        d["WiringConfigGtEnumSymbol"] = RelayWiringConfig.value_to_symbol(self.WiringConfig)
+        d["WiringConfigGtEnumSymbol"] = RelayWiringConfig.value_to_symbol(
+            self.WiringConfig
+        )
         del d["EventType"]
         d["EventTypeGtEnumSymbol"] = FsmEventType.value_to_symbol(self.EventType)
         return d
@@ -271,6 +338,7 @@ def check_is_spaceheat_name(v: str) -> None:
         ValueError: If the provided string is not in SpaceheatName format.
     """
     from typing import List
+
     try:
         x: List[str] = v.split(".")
     except:
@@ -283,8 +351,9 @@ def check_is_spaceheat_name(v: str) -> None:
         )
     for word in x:
         for char in word:
-            if not (char.isalnum() or char == '-'):
-                raise ValueError(f"words of <{v}> split by by '.' must be alphanumeric or hyphen."
+            if not (char.isalnum() or char == "-"):
+                raise ValueError(
+                    f"words of <{v}> split by by '.' must be alphanumeric or hyphen."
                 )
     if not v.islower():
         raise ValueError(f"<{v}> must be lowercase.")

@@ -88,8 +88,10 @@ def test_relay_actor_config_generated() -> None:
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, WiringConfigGtEnumSymbol="unknown_symbol")
-    Maker.dict_to_tuple(d2).WiringConfig == RelayWiringConfig.default()
+    d2 = dict(
+        d, WiringConfigGtEnumSymbol="unknown_symbol", DeEnergizingEvent="CloseRelay"
+    )
+    Maker.dict_to_tuple(d2).WiringConfig == RelayWiringConfig.NormallyClosed
 
     d2 = dict(d, EventTypeGtEnumSymbol="unknown_symbol")
     Maker.dict_to_tuple(d2).EventType == FsmEventType.default()
@@ -112,4 +114,34 @@ def test_relay_actor_config_generated() -> None:
 
     d2 = dict(d, ActorName="A.hot-stuff")
     with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    ######################################
+    # TODO: test Axiom 1
+    ######################################
+    """
+    Axiom 1: EventType, DeEnergizingEvent consistency.
+    a) The EventType must belong to one of the boolean choices for FsmEventType (for example,
+    it is NOT SetAnalog010V):
+        ChangeRelayState
+        ChangeValveState
+        ChangeStoreFlowDirection
+        ChangeHeatcallSource
+        ChangeBoilerControl
+        ChangeHeatPumpControl
+        ChangeLgOperatingMode
+
+    b) The DeEnergizingEvent string must be one of the two choices for the EventType as an enum.
+    For example, if the EventType is ChangeValveState then the  DeEnergizingEvent  must either
+    be OpenValve or CloseValve.
+
+    c) If the EventType is ChangeRelayState, then
+        i) the WiringConfig cannot be DoubleThrow;
+        ii) if the Wiring Config is NormallyOpen then the DeEnergizingEvent must be OpenRelay; and
+        iii) if the WiringConfig is NormallyClosed then the DeEnergizingEvent must be CloseRelay.
+    """
+
+    # 1.c.ii: WiringConfig defaults to NormallyClosed, which is not consistent with DeEnergizingEvent OpenRelay:
+    d2 = dict(d, WiringConfigGtEnumSymbol="unknown_symbol")
+    with pytest.raises(ValueError):
         Maker.dict_to_tuple(d2)

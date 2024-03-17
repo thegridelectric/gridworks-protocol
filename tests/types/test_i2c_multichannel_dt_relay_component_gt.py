@@ -163,7 +163,7 @@ def test_i2c_multichannel_dt_relay_component_gt_generated() -> None:
                 ActorName="charge-discharge-valve-relay",
                 WiringConfig=RelayWiringConfig.NormallyOpen,
                 EventType=FsmEventType.ChangeStoreFlowDirection,
-                DeEnergizingEvent="DischargeStore",
+                DeEnergizingEvent="Discharge",
             ),
             RelayActorConfig(
                 RelayIdx=5,
@@ -375,7 +375,7 @@ def test_i2c_multichannel_dt_relay_component_gt_generated() -> None:
             {
                 "RelayIdx": 4,
                 "ActorName": "charge-discharge-valve-relay",
-                "DeEnergizingEvent": "DischargeStore",
+                "DeEnergizingEvent": "Discharge",
                 "TypeName": "relay.actor.config",
                 "Version": "000",
                 "WiringConfigGtEnumSymbol": "63f5da41",

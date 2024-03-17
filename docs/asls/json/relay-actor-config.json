@@ -25,6 +25,18 @@
       "description": "Is the relay a simple Normally Open or Normally Closed or is it a double throw relay?",
       "required": true
     },
+    "EventType": {
+      "type": "string",
+      "format": "sh.fsm.event.type",
+      "title": "Finite State Machine Event Type",
+      "description": "Every pair of energization/de-energization actions for a relay are associated with two events for an associated finite state event.",
+      "required": true
+    },
+    "DeEnergizingEvent": {
+      "type": "string",
+      "description": "Which of the two choices provided by the EventType is intended to result in de-energizing the pin for the relay?",
+      "required": true
+    },
     "TypeName": {
       "type": "string",
       "value": "relay.actor.config",
@@ -39,8 +51,8 @@
   },
   "axioms": {
     "Axiom1": {
-      "title": "CapturedBy Actor consistency",
-      "description": ""
+      "title": "EventType, DeEnergizingEvent consistency",
+      "description": "a) The EventType must belong to one of the boolean choices for FsmEventType (for example, it is NOT SetAnalog010V): ChangeRelayState ChangeValveState ChangeStoreFlowDirection ChangeHeatcallSource ChangeBoilerControl ChangeHeatPumpControl ChangeLgOperatingMode b) The DeEnergizingEvent string must be one of the two choices for the EventType as an enum. For example, if the EventType is ChangeValveState then the DeEnergizingEvent must either be OpenValve or CloseValve. c) If the EventType is ChangeRelayState, then i) the WiringConfig cannot be DoubleThrow ii) if the Wiring Config is NormallyOpen then the DeEnergizingEvent must be OpenRelay and iii) if the WiringConfig is NormallyClosed then the DeEnergizingEvent must be CloseRelay."
     }
   },
   "formats": {

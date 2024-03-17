@@ -52,7 +52,7 @@ def test_i2c_flow_totalizer_component_gt_generated() -> None:
             ),
         ],
         PulseFlowMeterMakeModelList=[MakeModel.EKM__HOTSPWM075HD],
-        ConversionFactorList=[0.10],
+        ConversionFactorList=[0.08322],
         DisplayName="Flow meter on pipe out of tank",
         HwUid="1234",
     )
@@ -85,7 +85,7 @@ def test_i2c_flow_totalizer_component_gt_generated() -> None:
                 "UnitGtEnumSymbol": "b4580361",
             },
         ],
-        "ConversionFactorList": [0.10],
+        "ConversionFactorList": [0.08322],
         "DisplayName": "Flow meter on pipe out of tank",
         "HwUid": "1234",
         "TypeName": "i2c.flow.totalizer.component.gt",

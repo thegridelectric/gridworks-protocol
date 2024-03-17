@@ -4,6 +4,7 @@ import json
 import pytest
 from pydantic import ValidationError
 
+from gwproto.enums import FsmEventType
 from gwproto.enums import RelayWiringConfig
 from gwproto.errors import SchemaError
 from gwproto.types import RelayActorConfig
@@ -15,12 +16,16 @@ def test_relay_actor_config_generated() -> None:
         RelayIdx=18,
         ActorName="s.zone1-ctrl-relay",
         WiringConfig=RelayWiringConfig.NormallyOpen,
+        EventType=FsmEventType.ChangeRelayState,
+        DeEnergizingEvent="OpenRelay",
     )
 
     d = {
         "RelayIdx": 18,
         "ActorName": "s.zone1-ctrl-relay",
         "WiringConfigGtEnumSymbol": "63f5da41",
+        "EventTypeGtEnumSymbol": "00000000",
+        "DeEnergizingEvent": "OpenRelay",
         "TypeName": "relay.actor.config",
         "Version": "000",
     }
@@ -65,6 +70,16 @@ def test_relay_actor_config_generated() -> None:
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
+    d2 = dict(d)
+    del d2["EventTypeGtEnumSymbol"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    del d2["DeEnergizingEvent"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
     ######################################
     # Behavior on incorrect types
     ######################################
@@ -75,6 +90,9 @@ def test_relay_actor_config_generated() -> None:
 
     d2 = dict(d, WiringConfigGtEnumSymbol="unknown_symbol")
     Maker.dict_to_tuple(d2).WiringConfig == RelayWiringConfig.default()
+
+    d2 = dict(d, EventTypeGtEnumSymbol="unknown_symbol")
+    Maker.dict_to_tuple(d2).EventType == FsmEventType.default()
 
     ######################################
     # SchemaError raised if TypeName is incorrect

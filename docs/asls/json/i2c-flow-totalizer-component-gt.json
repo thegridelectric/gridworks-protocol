@@ -77,7 +77,7 @@
   "axioms": {
     "Axiom1": {
       "title": "I2cAddressList, PulseFlowMeterMakeModel, ConversionFactorList Consistency",
-      "description": "All three lists must have the same length. For the nth PulseFlowMeterMakeModel and ConversionFactor: If the PulseFlowMeterMakeModel m is a key in the dict CONVERSION_FACTOR_BY_MODEL, then the ConversionFactor must be CONVERSION_FACTOR_BY_MODEL[m] CONVERSION_FACTOR_BY_MODEL: Dict[MakeModel, float] = { MakeModel.ISTEC_4440: 0.268132, MakeModel.OMEGA__FTB8007HWPT: 0.134066, MakeModel.OMEGA__FTB8010HWPT: 1.34066, MakeModel.PRMFILTRATION__WM075: 1.34066, MakeModel.EKM__HOTSPWM075HD: 0.10, }"
+      "description": "All three lists must have the same length. For the nth PulseFlowMeterMakeModel and ConversionFactor: If the PulseFlowMeterMakeModel m is a key in the dict CONVERSION_FACTOR_BY_MODEL, then the ConversionFactor must be CONVERSION_FACTOR_BY_MODEL[m] CONVERSION_FACTOR_BY_MODEL: Dict[MakeModel, float] = { MakeModel.ISTEC_4440: 0.268132, MakeModel.OMEGA__FTB8007HWPT: 0.134066, MakeModel.OMEGA__FTB8010HWPT: 1.34066, MakeModel.PRMFILTRATION__WM075: 1.34066, MakeModel.EKM__HOTSPWM075HD: 0.08322, }"
     }
   },
   "formats": {

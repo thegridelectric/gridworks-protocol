@@ -9,10 +9,9 @@ from pydantic import BaseModel
 from pydantic import Field
 from pydantic import root_validator
 from pydantic import validator
-
 from gwproto.enums import RelayWiringConfig
+from gwproto.enums import FsmEventType
 from gwproto.errors import SchemaError
-
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -47,6 +46,20 @@ class RelayActorConfig(BaseModel):
             "Is the relay a simple Normally Open or Normally Closed or is it a double throw relay?"
         ),
     )
+    EventType: FsmEventType = Field(
+        title="Finite State Machine Event Type",
+        description=(
+            "Every pair of energization/de-energization actions for a relay are associated with "
+            "two events for an associated finite state event."
+        ),
+    )
+    DeEnergizingEvent: str = Field(
+        title="DeEnergizing Action",
+        description=(
+            "Which of the two choices provided by the EventType is intended to result in de-energizing "
+            "the pin for the relay?"
+        ),
+    )
     TypeName: Literal["relay.actor.config"] = "relay.actor.config"
     Version: Literal["000"] = "000"
 
@@ -69,8 +82,25 @@ class RelayActorConfig(BaseModel):
     @root_validator
     def check_axiom_1(cls, v: dict) -> dict:
         """
-        Axiom 1: CapturedBy Actor consistency.
+        Axiom 1: EventType, DeEnergizingEvent consistency.
+        a) The EventType must belong to one of the boolean choices for FsmEventType (for example, 
+        it is NOT SetAnalog010V):
+            ChangeRelayState
+            ChangeValveState
+            ChangeStoreFlowDirection
+            ChangeHeatcallSource
+            ChangeBoilerControl
+            ChangeHeatPumpControl
+            ChangeLgOperatingMode 
 
+        b) The DeEnergizingEvent string must be one of the two choices for the EventType as an enum. 
+        For example, if the EventType is ChangeValveState then the  DeEnergizingEvent  must either 
+        be OpenValve or CloseValve. 
+
+        c) If the EventType is ChangeRelayState, then 
+            i) the WiringConfig cannot be DoubleThrow;
+            ii) if the Wiring Config is NormallyOpen then the DeEnergizingEvent must be OpenRelay; and 
+            iii) if the WiringConfig is NormallyClosed then the DeEnergizingEvent must be CloseRelay.
         """
         # TODO: Implement check for axiom 1"
         return v
@@ -99,9 +129,9 @@ class RelayActorConfig(BaseModel):
             if value is not None
         }
         del d["WiringConfig"]
-        d["WiringConfigGtEnumSymbol"] = RelayWiringConfig.value_to_symbol(
-            self.WiringConfig
-        )
+        d["WiringConfigGtEnumSymbol"] = RelayWiringConfig.value_to_symbol(self.WiringConfig)
+        del d["EventType"]
+        d["EventTypeGtEnumSymbol"] = FsmEventType.value_to_symbol(self.EventType)
         return d
 
     def as_type(self) -> bytes:
@@ -190,6 +220,13 @@ class RelayActorConfig_Maker:
         value = RelayWiringConfig.symbol_to_value(d2["WiringConfigGtEnumSymbol"])
         d2["WiringConfig"] = RelayWiringConfig(value)
         del d2["WiringConfigGtEnumSymbol"]
+        if "EventTypeGtEnumSymbol" not in d2.keys():
+            raise SchemaError(f"EventTypeGtEnumSymbol missing from dict <{d2}>")
+        value = FsmEventType.symbol_to_value(d2["EventTypeGtEnumSymbol"])
+        d2["EventType"] = FsmEventType(value)
+        del d2["EventTypeGtEnumSymbol"]
+        if "DeEnergizingEvent" not in d2.keys():
+            raise SchemaError(f"dict missing DeEnergizingEvent: <{d2}>")
         if "TypeName" not in d2.keys():
             raise SchemaError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():
@@ -234,7 +271,6 @@ def check_is_spaceheat_name(v: str) -> None:
         ValueError: If the provided string is not in SpaceheatName format.
     """
     from typing import List
-
     try:
         x: List[str] = v.split(".")
     except:
@@ -247,9 +283,8 @@ def check_is_spaceheat_name(v: str) -> None:
         )
     for word in x:
         for char in word:
-            if not (char.isalnum() or char == "-"):
-                raise ValueError(
-                    f"words of <{v}> split by by '.' must be alphanumeric or hyphen."
+            if not (char.isalnum() or char == '-'):
+                raise ValueError(f"words of <{v}> split by by '.' must be alphanumeric or hyphen."
                 )
     if not v.islower():
         raise ValueError(f"<{v}> must be lowercase.")

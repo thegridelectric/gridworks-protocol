@@ -61,6 +61,8 @@ class ActorClass(StrEnum):
         in the industry).
       - Relay (49951f59): An actor representing a relay. If the device is indeed relay that can be
         directly energized or de-energized, recommend using Relay instead of BooleanActuator
+      - Admin (4d5f791b): Actor for taking control of all of the actuators - flattening the hierarchy
+        and disabling all finite state machines.
     """
 
     NoActor = auto()
@@ -78,6 +80,7 @@ class ActorClass(StrEnum):
     I2cMultiplexer = auto()
     FlowTotalizer = auto()
     Relay = auto()
+    Admin = auto()
 
     @classmethod
     def default(cls) -> "ActorClass":
@@ -186,6 +189,7 @@ class ActorClass(StrEnum):
             "cdf7df88",
             "06b306e7",
             "49951f59",
+            "4d5f791b",
         ]
 
 
@@ -205,6 +209,7 @@ symbol_to_value = {
     "cdf7df88": "I2cMultiplexer",
     "06b306e7": "FlowTotalizer",
     "49951f59": "Relay",
+    "4d5f791b": "Admin",
 }
 
 value_to_symbol = {value: key for key, value in symbol_to_value.items()}
@@ -225,4 +230,5 @@ value_to_version = {
     "I2cMultiplexer": "001",
     "FlowTotalizer": "001",
     "Relay": "001",
+    "Admin": "001",
 }

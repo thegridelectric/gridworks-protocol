@@ -21,6 +21,7 @@ def test_actor_class() -> None:
         "I2cMultiplexer",
         "FlowTotalizer",
         "Relay",
+        "Admin",
     }
 
     assert ActorClass.default() == ActorClass.NoActor
@@ -42,6 +43,7 @@ def test_actor_class() -> None:
     assert ActorClass.version("I2cMultiplexer") == "001"
     assert ActorClass.version("FlowTotalizer") == "001"
     assert ActorClass.version("Relay") == "001"
+    assert ActorClass.version("Admin") == "001"
 
     for value in ActorClass.values():
         symbol = ActorClass.value_to_symbol(value)

@@ -31,7 +31,9 @@ class ActorClass(StrEnum):
       - HomeAlone (32d3d19f): HomeAlone is an abstract Spaceheat Actor responsible for dispatching
         the SCADA when it is not talking with the AtomicTNode.
       - BooleanActuator (fddd0064): A SpaceheatNode representing a generic boolean actuator capable
-        of turning on (closing a circuit) or turning off (opening a circuit).
+        of turning on (closing a circuit) or turning off (opening a circuit). If the device
+        is a relay that can be directly energized or de-energized, recommend using Relay actor
+        instead.
       - PowerMeter (2ea112b9): A SpaceheatNode representing the power meter that is used to settle
         financial transactions with the TerminalAsset. That is, this is the power meter whose
         accuracy is certified in the creation of the TerminalAsset GNode via creation of the
@@ -57,6 +59,8 @@ class ActorClass(StrEnum):
       - FlowTotalizer (06b306e7): Attached to a driver that reads liquid flow by counting pulses
         from a flow meter that creates pulses and integrating the result (known as a totalizer
         in the industry).
+      - Relay (49951f59): An actor representing a relay. If the device is indeed relay that can be
+        directly energized or de-energized, recommend using Relay instead of BooleanActuator
     """
 
     NoActor = auto()
@@ -73,6 +77,7 @@ class ActorClass(StrEnum):
     HubitatPoller = auto()
     I2cMultiplexer = auto()
     FlowTotalizer = auto()
+    Relay = auto()
 
     @classmethod
     def default(cls) -> "ActorClass":
@@ -180,6 +185,7 @@ class ActorClass(StrEnum):
             "00000100",
             "cdf7df88",
             "06b306e7",
+            "49951f59",
         ]
 
 
@@ -198,6 +204,7 @@ symbol_to_value = {
     "00000100": "HubitatPoller",
     "cdf7df88": "I2cMultiplexer",
     "06b306e7": "FlowTotalizer",
+    "49951f59": "Relay",
 }
 
 value_to_symbol = {value: key for key, value in symbol_to_value.items()}
@@ -217,4 +224,5 @@ value_to_version = {
     "HubitatPoller": "001",
     "I2cMultiplexer": "001",
     "FlowTotalizer": "001",
+    "Relay": "001",
 }

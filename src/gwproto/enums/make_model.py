@@ -84,7 +84,7 @@ class MakeModel(StrEnum):
       - EKM__HOT-SPWM-075-HD (208f827f): 3/4" horizontal hot water flow pulse meter, 1 pulse per
         1/100 cubic ft (~0.0748 gallons).
       - GridWorks__SimMultiTemp (b3eced0d): Simulated 12-channel Ads111x-based analog temp sensor
-      - GridWOrks__SimTotalizer (e4807056): Simulated I2c-based pulse counter.
+      - GridWorks__SimTotalizer (e4807056): Simulated I2c-based pulse counter.
       - Krida__Double-Emr16-I2c-V3 (ff529d69): Two 16-Channel I2C Low Voltage Electromagnetic Relay
         Board, with first at address 0x20 and second at address 0x21
     """

@@ -218,6 +218,7 @@ class HardwareLayout:
     cacs: dict[str, ComponentAttributeClass]
     components: dict[str, Component]
     nodes: dict[str, ShNode]
+    nodes_by_handle: dict[str, ShNode]
     channels: dict[str, DataChannelGt]
 
     def __init__(
@@ -238,9 +239,14 @@ class HardwareLayout:
         if nodes is None:
             nodes = ShNode.by_name
         self.nodes = dict(nodes)
+        self.make_node_handle_dict()
         if channels is None:
             channels = DataChannel.by_name
         self.channels = dict(channels)
+    
+    def make_node_handle_dict(self) -> None:
+        nodes_w_handles = list(filter(lambda x: x.handle is not None, self.nodes.values()))
+        self.nodes_by_handle = {n.handle: n for n in nodes_w_handles}
 
     def clear_property_cache(self) -> None:
         for cached_prop_name in [

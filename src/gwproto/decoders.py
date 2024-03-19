@@ -263,13 +263,13 @@ class MQTTCodec(abc.ABC):
             raise Exception(
                 f"Type {decoded_topic.envelope_type} not recognized. Available decoders: {self.decoders.types()}"
             )
-        self.validate_source_alias(decoded_topic.src)
+        self.validate_source_handle(decoded_topic.src)
         return self.decoders.decode_str(
             decoded_topic.envelope_type, payload, encoding=self.ENCODING
         )
 
     @abstractmethod
-    def validate_source_alias(self, source_alias: str):
+    def validate_source_handle(self, source_handle: str):
         ...
 
 

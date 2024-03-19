@@ -1,6 +1,6 @@
 from gwproto.gs import *
 from gwproto.types import *
-
+from gwproto.types.old import GtShStatus110
 from .event import *
 from .misc import *
 
@@ -16,6 +16,7 @@ __all__ = [
     "BatchedReadings_Maker",
     "GtShCliAtnCmd",
     "GtShCliAtnCmd_Maker",
+    "GtShStatus110",
     "PowerWatts",
     "PowerWatts_Maker",
     "SnapshotSpaceheat",

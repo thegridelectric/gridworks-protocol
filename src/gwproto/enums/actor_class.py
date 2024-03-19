@@ -55,7 +55,7 @@ class ActorClass(StrEnum):
         thermal storage tank. [More Info](https://drive.google.com/drive/u/0/folders/1GSxDd8Naf1GKK_fSOgQU933M1UcJ4r8q).
       - HubitatPoller (00000100): An actor for representing a somewhat generic ShNode (like a thermostat)
         that can be polled through the Hubitat.
-      - I2cMultiplexer (cdf7df88): Responsible for maintaining a single i2c bus object
+      - KridaI2cMultiplexer (cdf7df88): Responsible for maintaining a single i2c bus object
       - FlowTotalizer (06b306e7): Attached to a driver that reads liquid flow by counting pulses
         from a flow meter that creates pulses and integrating the result (known as a totalizer
         in the industry).
@@ -63,6 +63,8 @@ class ActorClass(StrEnum):
         directly energized or de-energized, recommend using Relay instead of BooleanActuator
       - Admin (4d5f791b): Actor for taking control of all of the actuators - flattening the hierarchy
         and disabling all finite state machines.
+      - Fsm (2abcea3d): Actor Class for Finite State Machine actors. For these actors, the code is
+        determined by the ShNode Name instead of just the ActorClass.
     """
 
     NoActor = auto()
@@ -77,10 +79,11 @@ class ActorClass(StrEnum):
     HubitatTelemetryReader = auto()
     HubitatTankModule = auto()
     HubitatPoller = auto()
-    I2cMultiplexer = auto()
+    KridaI2cMultiplexer = auto()
     FlowTotalizer = auto()
     Relay = auto()
     Admin = auto()
+    Fsm = auto()
 
     @classmethod
     def default(cls) -> "ActorClass":
@@ -190,6 +193,7 @@ class ActorClass(StrEnum):
             "06b306e7",
             "49951f59",
             "4d5f791b",
+            "2abcea3d",
         ]
 
 
@@ -206,10 +210,11 @@ symbol_to_value = {
     "0401b27e": "HubitatTelemetryReader",
     "e2877329": "HubitatTankModule",
     "00000100": "HubitatPoller",
-    "cdf7df88": "I2cMultiplexer",
+    "cdf7df88": "KridaI2cMultiplexer",
     "06b306e7": "FlowTotalizer",
     "49951f59": "Relay",
     "4d5f791b": "Admin",
+    "2abcea3d": "Fsm",
 }
 
 value_to_symbol = {value: key for key, value in symbol_to_value.items()}
@@ -227,8 +232,9 @@ value_to_version = {
     "HubitatTelemetryReader": "001",
     "HubitatTankModule": "001",
     "HubitatPoller": "001",
-    "I2cMultiplexer": "001",
+    "KridaI2cMultiplexer": "001",
     "FlowTotalizer": "001",
     "Relay": "001",
     "Admin": "001",
+    "Fsm": "001",
 }

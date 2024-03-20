@@ -36,6 +36,7 @@ from gwproto.enums.change_boiler_control import ChangeBoilerControl
 from gwproto.enums.change_heat_pump_control import ChangeHeatPumpControl
 from gwproto.enums.change_heatcall_source import ChangeHeatcallSource
 from gwproto.enums.change_lg_operating_mode import ChangeLgOperatingMode
+from gwproto.enums.change_relay_pin import ChangeRelayPin
 from gwproto.enums.change_relay_state import ChangeRelayState
 from gwproto.enums.change_store_flow_direction import ChangeStoreFlowDirection
 from gwproto.enums.change_valve_state import ChangeValveState
@@ -64,6 +65,7 @@ __all__ = [
     "ChangeHeatcallSource",  # [change.heatcall.source.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeheatcallsource)
     "ChangeLgOperatingMode",  # [change.lg.operating.mode.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changelgoperatingmode)
     "ChangeRelayState",  # [change.relay.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changerelaystate)
+    "ChangeRelayPin",
     "ChangeStoreFlowDirection",  # [change.store.flow.direction.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changestoreflowdirection)
     "ChangeValveState",  # [change.valve.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changevalvestate)
     "FsmActionType",  # [sh.fsm.action.type.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shfsmactiontype)

@@ -7,6 +7,7 @@ from gwproto.types.hubitat_tank_gt import FibaroTempSensorSettings
 from gwproto.types.hubitat_tank_gt import FibaroTempSensorSettingsGt
 from gwproto.types.hubitat_tank_gt import HubitatTankSettingsGt
 from gwproto.types.i2c_flow_totalizer_component_gt import CONVERSION_FACTOR_BY_MODEL
+from gwproto.types.relay_actor_config import EVENT_ENUM_BY_NAME
 from gwproto.types.rest_poller_gt import AioHttpClientTimeout
 from gwproto.types.rest_poller_gt import RequestArgs
 from gwproto.types.rest_poller_gt import RESTPollerSettings
@@ -19,6 +20,7 @@ __all__ = [
     "AioHttpClientTimeout",
     "CACS_BY_MAKE_MODEL",
     "CONVERSION_FACTOR_BY_MODEL",
+    "EVENT_ENUM_BY_NAME",
     "FibaroTempSensorSettings",
     "FibaroTempSensorSettingsGt",
     "HubitatGt",

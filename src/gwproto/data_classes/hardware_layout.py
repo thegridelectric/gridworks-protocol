@@ -31,6 +31,7 @@ from gwproto.default_decoders import default_component_decoder
 from gwproto.enums import ActorClass
 from gwproto.enums import TelemetryName
 from gwproto.types import Ads111xBasedCacGt_Maker
+from gwproto.types import ComponentAttributeClassGt_Maker
 from gwproto.types import DataChannelGt
 from gwproto.types import DataChannelGt_Maker
 from gwproto.types import ElectricMeterCacGt_Maker
@@ -73,6 +74,7 @@ def load_cacs(
         ("ResistiveHeaterCacs", ResistiveHeaterCacGt_Maker),
         ("ElectricMeterCacs", ElectricMeterCacGt_Maker),
         ("Ads111xBasedCacs", Ads111xBasedCacGt_Maker),
+        ("OtherCacs", ComponentAttributeClassGt_Maker)
     ]:
         for d in layout.get(type_name, []):
             try:
@@ -85,16 +87,6 @@ def load_cacs(
                 if raise_errors:
                     raise e
                 errors.append(LoadError(type_name, d, e))
-    for d in layout.get("OtherCacs", []):
-        try:
-            cac = ComponentAttributeClass(
-                component_attribute_class_id=d["ComponentAttributeClassId"]
-            )
-            cacs[d["ComponentAttributeClassId"]] = cac
-        except Exception as e:
-            if raise_errors:
-                raise e
-            errors.append(LoadError("OtherCacs", d, e))
     return cacs
 
 

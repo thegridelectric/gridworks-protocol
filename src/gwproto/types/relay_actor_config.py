@@ -28,6 +28,15 @@ LOG_FORMAT = (
 )
 LOGGER = logging.getLogger(__name__)
 
+EVENT_ENUM_BY_NAME = {
+    FsmEventType.ChangeRelayState.value: ChangeRelayState,
+    FsmEventType.ChangeValveState.value: ChangeValveState,
+    FsmEventType.ChangeStoreFlowDirection.value: ChangeStoreFlowDirection,
+    FsmEventType.ChangeHeatcallSource.value: ChangeHeatcallSource,
+    FsmEventType.ChangeBoilerControl.value: ChangeBoilerControl,
+    FsmEventType.ChangeHeatPumpControl.value: ChangeHeatPumpControl,
+    FsmEventType.ChangeLgOperatingMode.value: ChangeLgOperatingMode,
+}
 
 class RelayActorConfig(BaseModel):
     """
@@ -132,16 +141,8 @@ class RelayActorConfig(BaseModel):
                 )
 
             # 1.b The DeEnergizingEvent string must be one of the two choices for the EventType as an enum.
-            event_enum_by_name = {
-                FsmEventType.ChangeRelayState.value: ChangeRelayState,
-                FsmEventType.ChangeValveState.value: ChangeValveState,
-                FsmEventType.ChangeStoreFlowDirection.value: ChangeStoreFlowDirection,
-                FsmEventType.ChangeHeatcallSource.value: ChangeHeatcallSource,
-                FsmEventType.ChangeBoilerControl.value: ChangeBoilerControl,
-                FsmEventType.ChangeHeatPumpControl.value: ChangeHeatPumpControl,
-                FsmEventType.ChangeLgOperatingMode.value: ChangeLgOperatingMode,
-            }
-            event_enum = event_enum_by_name[event_type.value]
+
+            event_enum = EVENT_ENUM_BY_NAME[event_type.value]
             if not de_energizing_event in event_enum.values():
                 raise ValueError(
                     f"Axiom 1b violated. DeEnergizingEvent {de_energizing_event} must be "

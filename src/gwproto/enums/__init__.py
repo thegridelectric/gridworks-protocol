@@ -32,7 +32,7 @@ on these ideas:
 
  """
 from gwproto.enums.actor_class import ActorClass
-from gwproto.enums.change_boiler_control import ChangeBoilerControl
+from gwproto.enums.change_aquastat_control import ChangeAquastatControl
 from gwproto.enums.change_heat_pump_control import ChangeHeatPumpControl
 from gwproto.enums.change_heatcall_source import ChangeHeatcallSource
 from gwproto.enums.change_lg_operating_mode import ChangeLgOperatingMode
@@ -60,7 +60,7 @@ from gwproto.enums.unit import Unit
 
 __all__ = [
     "ActorClass",  # [sh.actor.class.001](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shactorclass)
-    "ChangeBoilerControl",  # [change.boiler.control.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeboilercontrol)
+    "ChangeAquastatControl",  # [change.aquastat.control.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeboilercontrol)
     "ChangeHeatPumpControl",  # [change.heat.pump.control.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeheatpumpcontrol)
     "ChangeHeatcallSource",  # [change.heatcall.source.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeheatcallsource)
     "ChangeLgOperatingMode",  # [change.lg.operating.mode.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changelgoperatingmode)

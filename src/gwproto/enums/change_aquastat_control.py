@@ -4,12 +4,12 @@ from typing import List
 from fastapi_utils.enums import StrEnum
 
 
-class ChangeBoilerControl(StrEnum):
+class ChangeAquastatControl(StrEnum):
     """
     
     """
 
-    SwitchToTankAquastat = auto()
+    SwitchToBoiler = auto()
     SwitchToScada = auto()
 
     @classmethod
@@ -20,9 +20,9 @@ class ChangeBoilerControl(StrEnum):
         return [elt.value for elt in cls]
 
     @classmethod
-    def default(cls) -> "ChangeBoilerControl":
-        return cls.SwitchToTankAquastat
+    def default(cls) -> "ChangeAquastatControl":
+        return cls.SwitchToBoiler
 
     @classmethod
     def enum_name(cls) -> str:
-        return "change.boiler.control"
+        return "change.aquastat.control"

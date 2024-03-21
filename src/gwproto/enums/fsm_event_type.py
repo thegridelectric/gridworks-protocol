@@ -23,7 +23,7 @@ class FsmEventType(StrEnum):
       - ChangeValveState (c234ee7a)
       - ChangeStoreFlowDirection (1efc9909)
       - ChangeHeatcallSource (c5717e64)
-      - ChangeBoilerControl (0066a412)
+      - ChangeAquastatControl (0066a412)
       - ChangeHeatPumpControl (50ea0661)
       - ChangeLgOperatingMode (89a98375)
       - TimerFinished (9e44ab43)
@@ -35,7 +35,7 @@ class FsmEventType(StrEnum):
     ChangeValveState = auto()
     ChangeStoreFlowDirection = auto()
     ChangeHeatcallSource = auto()
-    ChangeBoilerControl = auto()
+    ChangeAquastatControl = auto()
     ChangeHeatPumpControl = auto()
     ChangeLgOperatingMode = auto()
     TimerFinished = auto()
@@ -154,7 +154,7 @@ symbol_to_value = {
     "c234ee7a": "ChangeValveState",
     "1efc9909": "ChangeStoreFlowDirection",
     "c5717e64": "ChangeHeatcallSource",
-    "0066a412": "ChangeBoilerControl",
+    "0066a412": "ChangeAquastatControl",
     "50ea0661": "ChangeHeatPumpControl",
     "89a98375": "ChangeLgOperatingMode",
     "9e44ab43": "TimerFinished",
@@ -170,7 +170,7 @@ value_to_version = {
     "ChangeValveState": "000",
     "ChangeStoreFlowDirection": "000",
     "ChangeHeatcallSource": "000",
-    "ChangeBoilerControl": "000",
+    "ChangeAquastatControl": "000",
     "ChangeHeatPumpControl": "000",
     "ChangeLgOperatingMode": "000",
     "TimerFinished": "000",

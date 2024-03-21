@@ -10,7 +10,7 @@ from pydantic import Field
 from pydantic import root_validator
 from pydantic import validator
 
-from gwproto.enums import ChangeBoilerControl
+from gwproto.enums import ChangeAquastatControl
 from gwproto.enums import ChangeHeatcallSource
 from gwproto.enums import ChangeHeatPumpControl
 from gwproto.enums import ChangeLgOperatingMode
@@ -33,7 +33,7 @@ EVENT_ENUM_BY_NAME = {
     FsmEventType.ChangeValveState.value: ChangeValveState,
     FsmEventType.ChangeStoreFlowDirection.value: ChangeStoreFlowDirection,
     FsmEventType.ChangeHeatcallSource.value: ChangeHeatcallSource,
-    FsmEventType.ChangeBoilerControl.value: ChangeBoilerControl,
+    FsmEventType.ChangeAquastatControl.value: ChangeAquastatControl,
     FsmEventType.ChangeHeatPumpControl.value: ChangeHeatPumpControl,
     FsmEventType.ChangeLgOperatingMode.value: ChangeLgOperatingMode,
 }
@@ -107,7 +107,7 @@ class RelayActorConfig(BaseModel):
             ChangeValveState
             ChangeStoreFlowDirection
             ChangeHeatcallSource
-            ChangeBoilerControl
+            ChangeAquastatControl
             ChangeHeatPumpControl
             ChangeLgOperatingMode
 
@@ -131,7 +131,7 @@ class RelayActorConfig(BaseModel):
                 FsmEventType.ChangeValveState,
                 FsmEventType.ChangeStoreFlowDirection,
                 FsmEventType.ChangeHeatcallSource,
-                FsmEventType.ChangeBoilerControl,
+                FsmEventType.ChangeAquastatControl,
                 FsmEventType.ChangeHeatPumpControl,
                 FsmEventType.ChangeLgOperatingMode,
             ]

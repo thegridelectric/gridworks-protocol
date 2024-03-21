@@ -127,7 +127,7 @@ def test_relay_actor_config_generated() -> None:
         ChangeValveState
         ChangeStoreFlowDirection
         ChangeHeatcallSource
-        ChangeBoilerControl
+        ChangeAquastatControl
         ChangeHeatPumpControl
         ChangeLgOperatingMode
 

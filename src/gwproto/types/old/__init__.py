@@ -9,6 +9,8 @@ from gwproto.types.old.gt_sh_status_110 import GtShStatus110
 from gwproto.types.old.gt_sh_status_110 import GtShStatus110_Maker
 from gwproto.types.old.snapshot_spaceheat_000 import SnapshotSpaceheat000
 from gwproto.types.old.snapshot_spaceheat_000 import SnapshotSpaceheat000_Maker
+from gwproto.types.old.telemetry_snapshot_spaceheat_000 import TelemetrySnapshotSpaceheat000
+from gwproto.types.old.telemetry_snapshot_spaceheat_000 import TelemetrySnapshotSpaceheat000_Maker
 
 
 
@@ -24,4 +26,6 @@ __all__ = [
     "GtShStatus110_Maker",
     "SnapshotSpaceheat000",
     "SnapshotSpaceheat000_Maker",
+    "TelemetrySnapshotSpaceheat000",
+    "TelemetrySnapshotSpaceheat000_Maker",
 ]

@@ -13,6 +13,9 @@ Python pydantic class corresponding to json type `i2c.multichannel.dt.relay.comp
     - Description: ComponentAttributeClassId. Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry. 
     - Format: UuidCanonicalTextual
 
+**I2cAddressList**:
+    - Description: I2c Address List. An ordered list of the I2c Addresses for the boards.
+
 **ConfigList**:
     - Description: Channel Config List. A list of the ChannelConfigs for the data channels reported by the actors associated to this component's relays (actors specified in the RelayConfigLlist)
 

@@ -42,6 +42,10 @@ store.flow.direction.state.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/store-flow-direction-state.json
 
+change.relay.pin.000
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. literalinclude:: json/change-relay-pin.json
+
 relay.pin.set.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/relay-pin-set.json
@@ -58,9 +62,9 @@ sh.fsm.action.type.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/sh-fsm-action-type.json
 
-change.boiler.control.000
+change.aquastat.control.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/change-boiler-control.json
+.. literalinclude:: json/change-aquastat-control.json
 
 iso.valve.state.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^

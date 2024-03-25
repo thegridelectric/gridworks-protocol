@@ -39,7 +39,6 @@ class FsmEventType(StrEnum):
     ChangeHeatPumpControl = auto()
     ChangeLgOperatingMode = auto()
     TimerFinished = auto()
-    ChangeRelayPin = auto()
 
     @classmethod
     def default(cls) -> "FsmEventType":
@@ -143,7 +142,6 @@ class FsmEventType(StrEnum):
             "50ea0661",
             "89a98375",
             "9e44ab43",
-            "b6706976",
         ]
 
 
@@ -158,7 +156,6 @@ symbol_to_value = {
     "50ea0661": "ChangeHeatPumpControl",
     "89a98375": "ChangeLgOperatingMode",
     "9e44ab43": "TimerFinished",
-    "b6706976": "ChangeRelayPin",
 }
 
 value_to_symbol = {value: key for key, value in symbol_to_value.items()}
@@ -174,5 +171,4 @@ value_to_version = {
     "ChangeHeatPumpControl": "000",
     "ChangeLgOperatingMode": "000",
     "TimerFinished": "000",
-    "ChangeRelayPin": "000",
 }

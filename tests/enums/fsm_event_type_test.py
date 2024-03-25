@@ -12,7 +12,7 @@ def test_fsm_event_type() -> None:
         "ChangeValveState",
         "ChangeStoreFlowDirection",
         "ChangeHeatcallSource",
-        "ChangeBoilerControl",
+        "ChangeAquastatControl",
         "ChangeHeatPumpControl",
         "ChangeLgOperatingMode",
         "TimerFinished",
@@ -28,7 +28,7 @@ def test_fsm_event_type() -> None:
     assert FsmEventType.version("ChangeValveState") == "000"
     assert FsmEventType.version("ChangeStoreFlowDirection") == "000"
     assert FsmEventType.version("ChangeHeatcallSource") == "000"
-    assert FsmEventType.version("ChangeBoilerControl") == "000"
+    assert FsmEventType.version("ChangeAquastatControl") == "000"
     assert FsmEventType.version("ChangeHeatPumpControl") == "000"
     assert FsmEventType.version("ChangeLgOperatingMode") == "000"
     assert FsmEventType.version("TimerFinished") == "000"

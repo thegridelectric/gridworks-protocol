@@ -12,6 +12,7 @@ from pydantic import root_validator
 from pydantic import validator
 
 from gwproto.data_classes.sh_node import ShNode
+from pydantic import Extra
 from gwproto.enums import ActorClass as EnumActorClass
 from gwproto.errors import SchemaError
 
@@ -95,6 +96,9 @@ class SpaceheatNodeGt(BaseModel):
     )
     TypeName: Literal["spaceheat.node.gt"] = "spaceheat.node.gt"
     Version: Literal["200"] = "200"
+
+    class Config:
+        extra = Extra.allow
 
     @validator("ShNodeId")
     def _check_sh_node_id(cls, v: str) -> str:

@@ -52,6 +52,10 @@ class I2cMultichannelDtRelayComponentGt(BaseModel):
             "Registry."
         ),
     )
+    I2cAddressList: List[int] = Field(
+        title="I2c Address List",
+        description="An ordered list of the I2c Addresses for the boards.",
+    )
     ConfigList: List[ChannelConfig] = Field(
         title="Channel Config List",
         description=(
@@ -237,6 +241,8 @@ class I2cMultichannelDtRelayComponentGt_Maker:
             raise SchemaError(f"dict missing ComponentId: <{d2}>")
         if "ComponentAttributeClassId" not in d2.keys():
             raise SchemaError(f"dict missing ComponentAttributeClass: <{d2}>")
+        if "I2cAddressList" not in d2.keys():
+            raise SchemaError(f"dict missing I2cAddressList: <{d2}>")
         if "ConfigList" not in d2.keys():
             raise SchemaError(f"dict missing ConfigList: <{d2}>")
         if not isinstance(d2["ConfigList"], List):
@@ -286,6 +292,7 @@ class I2cMultichannelDtRelayComponentGt_Maker:
             dc = I2cMultichannelDtRelayComponent(
                 component_id=t.ComponentId,
                 component_attribute_class_id=t.ComponentAttributeClassId,
+                i2c_address_list=t.I2cAddressList,
                 config_list=t.ConfigList,
                 relay_config_list=t.RelayConfigList,
                 display_name=t.DisplayName,
@@ -300,6 +307,7 @@ class I2cMultichannelDtRelayComponentGt_Maker:
         return I2cMultichannelDtRelayComponentGt(
             ComponentId=dc.component_id,
             ComponentAttributeClassId=dc.component_attribute_class_id,
+            I2cAddressList=dc.i2c_address_list,
             ConfigList=dc.config_list,
             RelayConfigList=dc.relay_config_list,
             DisplayName=dc.display_name,

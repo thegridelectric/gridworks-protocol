@@ -1,13 +1,15 @@
 from enum import auto
 from typing import List
+
 from fastapi_utils.enums import StrEnum
 
 
 class ChangeRelayPin(StrEnum):
     """
-    Clarifies the request sent to an internal multiplexing  actor regarding
-    a single relay on a relay board
+    Clarifies the event request sent to an internal multiplexing actor regarding a single relay
+    on a relay board (energize or de-energize).
     """
+
     DeEnergize = auto()
     Energize = auto()
 

@@ -1,0 +1,15 @@
+{
+    "gtr_asl": "001",
+    "enum_name": "change.relay.pin",
+    "enum_version": "000",
+    "description": "Clarifies the event request sent to an internal multiplexing actor regarding a single relay on a relay board (energize or de-energize).",
+    "ssot": "https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changerelaypin",
+    "values": ["DeEnergize", "Energize"],
+    "value_to_symbol": { "": "",  "": ""},
+    "value_to_version": { "": "000",  "": "000"},
+    "value_descriptions": {
+                "DeEnergize": "",
+                "Energize": ""
+            },
+    "default_value": "DeEnergize"
+}

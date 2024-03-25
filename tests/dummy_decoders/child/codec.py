@@ -24,6 +24,6 @@ class ChildMQTTCodec(MQTTCodec):
             )
         )
 
-    def validate_source_alias(self, source_alias: str):
-        if source_alias != PARENT:
-            raise Exception(f"alias {source_alias} not my parent!")
+    def validate_source_handle(self, source_handle: str):
+        if source_handle != PARENT:
+            raise Exception(f"alias {source_handle} not my boss!")

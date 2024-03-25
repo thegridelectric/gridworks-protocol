@@ -5,9 +5,9 @@
     "description": "The name of a set of events for a particular Spaceheat finite state machine.",
     "url": "https://gridworks-protocol.readthedocs.io/en/latest/finite-state-machines.html",
     "ssot": "https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shfsmeventtype",
-    "values": ["ChangeRelayState", "SetAnalog010V", "SetAnalog420mA", "ChangeValveState", "ChangeStoreFlowDirection", "ChangeHeatcallSource", "ChangeBoilerControl", "ChangeHeatPumpControl", "ChangeLgOperatingMode", "TimerFinished"],
-    "value_to_symbol": { "ChangeRelayState": "00000000",  "SetAnalog010V": "bbef899f",  "SetAnalog420mA": "aa4b0c96",  "ChangeValveState": "c234ee7a",  "ChangeStoreFlowDirection": "1efc9909",  "ChangeHeatcallSource": "c5717e64",  "ChangeBoilerControl": "0066a412",  "ChangeHeatPumpControl": "50ea0661",  "ChangeLgOperatingMode": "89a98375",  "TimerFinished": "9e44ab43"},
-    "value_to_version": { "ChangeRelayState": "000",  "SetAnalog010V": "000",  "SetAnalog420mA": "000",  "ChangeValveState": "000",  "ChangeStoreFlowDirection": "000",  "ChangeHeatcallSource": "000",  "ChangeBoilerControl": "000",  "ChangeHeatPumpControl": "000",  "ChangeLgOperatingMode": "000",  "TimerFinished": "000"},
+    "values": ["ChangeRelayState", "SetAnalog010V", "SetAnalog420mA", "ChangeValveState", "ChangeStoreFlowDirection", "ChangeHeatcallSource", "ChangeAquastatControl", "ChangeHeatPumpControl", "ChangeLgOperatingMode", "TimerFinished"],
+    "value_to_symbol": { "ChangeRelayState": "00000000",  "SetAnalog010V": "bbef899f",  "SetAnalog420mA": "aa4b0c96",  "ChangeValveState": "c234ee7a",  "ChangeStoreFlowDirection": "1efc9909",  "ChangeHeatcallSource": "c5717e64",  "ChangeAquastatControl": "0066a412",  "ChangeHeatPumpControl": "50ea0661",  "ChangeLgOperatingMode": "89a98375",  "TimerFinished": "9e44ab43"},
+    "value_to_version": { "ChangeRelayState": "000",  "SetAnalog010V": "000",  "SetAnalog420mA": "000",  "ChangeValveState": "000",  "ChangeStoreFlowDirection": "000",  "ChangeHeatcallSource": "000",  "ChangeAquastatControl": "000",  "ChangeHeatPumpControl": "000",  "ChangeLgOperatingMode": "000",  "TimerFinished": "000"},
     "value_descriptions": {
                 "ChangeRelayState": "",
                 "SetAnalog010V": "",
@@ -15,7 +15,7 @@
                 "ChangeValveState": "",
                 "ChangeStoreFlowDirection": "",
                 "ChangeHeatcallSource": "",
-                "ChangeBoilerControl": "",
+                "ChangeAquastatControl": "",
                 "ChangeHeatPumpControl": "",
                 "ChangeLgOperatingMode": "",
                 "TimerFinished": ""

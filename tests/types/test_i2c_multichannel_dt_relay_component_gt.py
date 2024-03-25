@@ -35,6 +35,7 @@ def test_i2c_multichannel_dt_relay_component_gt_generated() -> None:
     t = I2cMultichannelDtRelayComponentGt(
         ComponentId="1b9dd897-b203-4a9a-9d6e-4859d1f4c39d",
         ComponentAttributeClassId="018d9ffb-89d1-4cc4-95c0-f170711b5ffa",
+        I2cAddressList=[0x20, 0x21],
         ConfigList=[
             ChannelConfig(
                 ChannelName="vdc-24-relay",
@@ -221,6 +222,7 @@ def test_i2c_multichannel_dt_relay_component_gt_generated() -> None:
     d = {
         "ComponentId": "1b9dd897-b203-4a9a-9d6e-4859d1f4c39d",
         "ComponentAttributeClassId": "018d9ffb-89d1-4cc4-95c0-f170711b5ffa",
+        "I2cAddressList":[32, 33],
         "ConfigList": [
             {
                 "ChannelName": "vdc-24-relay",

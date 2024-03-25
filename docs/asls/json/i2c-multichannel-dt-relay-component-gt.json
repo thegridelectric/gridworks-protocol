@@ -19,6 +19,14 @@
       "description": "Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry.",
       "required": true
     },
+    "I2cAddressList": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "An ordered list of the I2c Addresses for the boards.",
+      "required": true
+    },
     "ConfigList": {
       "type": "array",
       "items": {

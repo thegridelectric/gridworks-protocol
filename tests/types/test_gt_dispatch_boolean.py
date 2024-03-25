@@ -1,4 +1,5 @@
 """Tests gt.dispatch.boolean type, version 110"""
+
 import json
 
 import pytest

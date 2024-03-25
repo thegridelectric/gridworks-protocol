@@ -1,4 +1,5 @@
 """Type gt.sh.booleanactuator.cmd.status, version 100"""
+
 import json
 import logging
 from typing import Any
@@ -45,9 +46,9 @@ class GtShBooleanactuatorCmdStatus(BaseModel):
     CommandTimeUnixMsList: List[int] = Field(
         title="List of Command Times",
     )
-    TypeName: Literal[
+    TypeName: Literal["gt.sh.booleanactuator.cmd.status"] = (
         "gt.sh.booleanactuator.cmd.status"
-    ] = "gt.sh.booleanactuator.cmd.status"
+    )
     Version: Literal["100"] = "100"
 
     @validator("ShNodeAlias")

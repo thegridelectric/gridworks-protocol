@@ -1,6 +1,7 @@
 """
 Tests for enum sh.actor.class.001 from the GridWorks Type Registry.
 """
+
 from gwproto.enums import ActorClass
 
 

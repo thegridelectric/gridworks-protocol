@@ -1,6 +1,7 @@
 """
 Tests for enum spaceheat.make.model.001 from the GridWorks Type Registry.
 """
+
 from gwproto.enums import MakeModel
 
 

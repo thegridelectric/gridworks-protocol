@@ -1,6 +1,7 @@
 """
 Tests for enum local.comm.interface.000 from the GridWorks Type Registry.
 """
+
 from gwproto.enums import LocalCommInterface
 
 

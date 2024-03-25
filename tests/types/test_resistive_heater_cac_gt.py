@@ -1,4 +1,5 @@
 """Tests resistive.heater.cac.gt type, version 000"""
+
 import json
 
 import pytest

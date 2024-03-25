@@ -1,4 +1,5 @@
 """Type multipurpose.sensor.component.gt, version 000"""
+
 import json
 import logging
 from typing import Any
@@ -72,9 +73,9 @@ class MultipurposeSensorComponentGt(BaseModel):
         description="Sample: Oak Multipurpose Temp Sensor Component <100>",
         default=None,
     )
-    TypeName: Literal[
+    TypeName: Literal["multipurpose.sensor.component.gt"] = (
         "multipurpose.sensor.component.gt"
-    ] = "multipurpose.sensor.component.gt"
+    )
     Version: Literal["000"] = "000"
 
     @validator("ComponentId")

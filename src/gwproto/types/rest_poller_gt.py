@@ -2,6 +2,7 @@
 REST commands into a message posted to main processing thread.
 
 """
+
 from functools import cached_property
 from typing import Literal
 from typing import Optional

@@ -1,4 +1,5 @@
 """Tests gt.driver.booleanactuator.cmd type, version 100"""
+
 import json
 
 import pytest

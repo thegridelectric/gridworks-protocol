@@ -1,4 +1,5 @@
 """Type spaceheat.node.gt, version 100"""
+
 import json
 import logging
 from typing import Any

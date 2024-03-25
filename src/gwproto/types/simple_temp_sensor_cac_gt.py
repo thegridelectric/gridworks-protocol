@@ -1,4 +1,5 @@
 """Type simple.temp.sensor.cac.gt, version 000"""
+
 import json
 import logging
 from typing import Any

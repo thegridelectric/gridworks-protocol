@@ -1,4 +1,5 @@
 """Tests heartbeat.b type, version 001"""
+
 import json
 
 import pytest

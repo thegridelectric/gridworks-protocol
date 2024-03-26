@@ -1,6 +1,7 @@
 from gwproto.gs import *
 from gwproto.types import *
 from gwproto.types.old import GtShStatus110
+
 from .event import *
 from .misc import *
 

@@ -7,12 +7,12 @@ from typing import Literal
 from typing import Optional
 
 from pydantic import BaseModel
+from pydantic import Extra
 from pydantic import Field
 from pydantic import root_validator
 from pydantic import validator
 
 from gwproto.data_classes.sh_node import ShNode
-from pydantic import Extra
 from gwproto.enums import ActorClass as EnumActorClass
 from gwproto.errors import SchemaError
 

@@ -87,6 +87,8 @@ class MakeModel(StrEnum):
       - GridWorks__SimTotalizer (e4807056): Simulated I2c-based pulse counter.
       - Krida__Double-Emr16-I2c-V3 (ff529d69): Two 16-Channel I2C Low Voltage Electromagnetic Relay
         Board, with first at address 0x20 and second at address 0x21
+      - GridWorks__SimI2cRelay (81d8b222): Simulated I2c Relay board with two boards and 32 pins
+        (for dev code using Krida__Doubler-Emr16-I2c-V3).
     """
 
     UNKNOWNMAKE__UNKNOWNMODEL = auto()
@@ -125,6 +127,7 @@ class MakeModel(StrEnum):
     GRIDWORKS__SIMMULTITEMP = auto()
     GRIDWORKS__SIMTOTALIZER = auto()
     KRIDA__DOUBLEEMR16I2CV3 = auto()
+    GRIDWORKS__SIMI2CRELAY = auto()
 
     @classmethod
     def default(cls) -> "MakeModel":
@@ -254,6 +257,7 @@ class MakeModel(StrEnum):
             "b3eced0d",
             "e4807056",
             "ff529d69",
+            "81d8b222",
         ]
 
 
@@ -294,6 +298,7 @@ symbol_to_value = {
     "b3eced0d": "GRIDWORKS__SIMMULTITEMP",
     "e4807056": "GRIDWORKS__SIMTOTALIZER",
     "ff529d69": "KRIDA__DOUBLEEMR16I2CV3",
+    "81d8b222": "GRIDWORKS__SIMI2CRELAY",
 }
 
 value_to_symbol = {value: key for key, value in symbol_to_value.items()}
@@ -335,4 +340,5 @@ value_to_version = {
     "GRIDWORKS__SIMMULTITEMP": "002",
     "GRIDWORKS__SIMTOTALIZER": "002",
     "KRIDA__DOUBLEEMR16I2CV3": "002",
+    "GRIDWORKS__SIMI2CRELAY": "002",
 }

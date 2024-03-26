@@ -1,15 +1,15 @@
 {
-    "gtr_asl": "001",
-    "enum_name": "lg.operating.mode",
-    "enum_version": "000",
-    "description": "LG ThermaV and HydroKit heat pumps have the concept of being in different operating modes. This is used for a double-throw relay, so it can only ever have two states.",
-    "ssot": "https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#lgoperatingmode",
-    "values": ["Dhw", "Heat"],
-    "value_to_symbol": { "": "00000000",  "": "4f96e480"},
-    "value_to_version": { "": "000",  "": "000"},
-    "value_descriptions": {
-                "Dhw": "The LG Therma V or HydroKit is in Domestic Hot Water Mode - it requires a temp sensor to work.",
-                "Heat": "The LG is in Heating mode."
-            },
-    "default_value": "Heat"
+  "gtr_asl": "001",
+  "enum_name": "lg.operating.mode",
+  "enum_version": "000",
+  "description": "LG ThermaV and HydroKit heat pumps have the concept of being in different operating modes. This is used for a double-throw relay, so it can only ever have two states.",
+  "ssot": "https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#lgoperatingmode",
+  "values": ["Dhw", "Heat"],
+  "value_to_symbol": { "": "00000000", "": "4f96e480" },
+  "value_to_version": { "": "000", "": "000" },
+  "value_descriptions": {
+    "Dhw": "The LG Therma V or HydroKit is in Domestic Hot Water Mode - it requires a temp sensor to work.",
+    "Heat": "The LG is in Heating mode."
+  },
+  "default_value": "Heat"
 }

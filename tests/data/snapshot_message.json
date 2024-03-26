@@ -1,34 +1,34 @@
 {
-    "Header": {
-        "Src": "hw1.isone.ct.newhaven.orange1.ta.scada",
-        "Dst": "",
-        "MessageType": "snapshot.spaceheat",
-        "MessageId": "",
-        "AckRequired": false,
-        "TypeName": "gridworks.header"
-    },
-    "Payload": {
-        "FromGNodeAlias": "d1.isone.ct.newhaven.rose.scada",
-        "FromGNodeInstanceId": "0384ef21-648b-4455-b917-58a1172d7fc1",
-        "SnapshotTimeUnixMs": 1709915800472,
-        "LatestReadingList": [
-            {
-                "ScadaReadTimeUnixMs": 1709915801222,
-                "ChannelName": "hp-ewt",
-                "Value": 63430,
-                "TypeName": "single.reading",
-                "Version": "000"
-            },
-            {
-                "ScadaReadTimeUnixMs": 1709915801250,
-                "ChannelName": "hp-lwt",
-                "Value": 69200,
-                "TypeName": "single.reading",
-                "Version": "000"
-            }
-        ],
-        "TypeName": "snapshot.spaceheat",
-        "Version": "001"
-    },
-    "TypeName": "gw"
+  "Header": {
+    "Src": "hw1.isone.ct.newhaven.orange1.ta.scada",
+    "Dst": "",
+    "MessageType": "snapshot.spaceheat",
+    "MessageId": "",
+    "AckRequired": false,
+    "TypeName": "gridworks.header"
+  },
+  "Payload": {
+    "FromGNodeAlias": "d1.isone.ct.newhaven.rose.scada",
+    "FromGNodeInstanceId": "0384ef21-648b-4455-b917-58a1172d7fc1",
+    "SnapshotTimeUnixMs": 1709915800472,
+    "LatestReadingList": [
+      {
+        "ScadaReadTimeUnixMs": 1709915801222,
+        "ChannelName": "hp-ewt",
+        "Value": 63430,
+        "TypeName": "single.reading",
+        "Version": "000"
+      },
+      {
+        "ScadaReadTimeUnixMs": 1709915801250,
+        "ChannelName": "hp-lwt",
+        "Value": 69200,
+        "TypeName": "single.reading",
+        "Version": "000"
+      }
+    ],
+    "TypeName": "snapshot.spaceheat",
+    "Version": "001"
+  },
+  "TypeName": "gw"
 }

@@ -48,13 +48,13 @@
     }
   },
   "example": {
-      "Address": 9016,
-      "Name": "house-panel-power",
-      "Description": "change in value",
-      "Type": "f32",
-      "Denominator": 1,
-      "Unit": "W",
-      "TypeName": "egauge.register.config",
-      "Version": "000"
-    }
+    "Address": 9016,
+    "Name": "house-panel-power",
+    "Description": "change in value",
+    "Type": "f32",
+    "Denominator": 1,
+    "Unit": "W",
+    "TypeName": "egauge.register.config",
+    "Version": "000"
+  }
 }

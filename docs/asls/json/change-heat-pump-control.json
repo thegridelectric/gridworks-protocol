@@ -1,15 +1,15 @@
 {
-    "gtr_asl": "001",
-    "enum_name": "change.heat.pump.control",
-    "enum_version": "000",
-    "description": "Change control between a fallback analog system and SCADA",
-    "ssot": "https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeheatpumpcontrol",
-    "values": ["SwitchToTankAquastat", "SwitchToScada"],
-    "value_to_symbol": { "": "",  "": ""},
-    "value_to_version": { "": "000",  "": "000"},
-    "value_descriptions": {
-                "SwitchToTankAquastat": "",
-                "SwitchToScada": ""
-            },
-    "default_value": "SwitchToTankAquastat"
+  "gtr_asl": "001",
+  "enum_name": "change.heat.pump.control",
+  "enum_version": "000",
+  "description": "Change control between a fallback analog system and SCADA",
+  "ssot": "https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeheatpumpcontrol",
+  "values": ["SwitchToTankAquastat", "SwitchToScada"],
+  "value_to_symbol": { "": "", "": "" },
+  "value_to_version": { "": "000", "": "000" },
+  "value_descriptions": {
+    "SwitchToTankAquastat": "",
+    "SwitchToScada": ""
+  },
+  "default_value": "SwitchToTankAquastat"
 }

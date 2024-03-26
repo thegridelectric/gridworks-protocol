@@ -6,11 +6,11 @@ Python pydantic class corresponding to json type `electric.meter.component.gt`, 
     :members:
 
 **ComponentId**:
-    - Description: Component Id. Primary GridWorks identifier for a specific physical instance of an  ElectricMeter, and also as a more generic Component. 
+    - Description: Component Id. Primary GridWorks identifier for a specific physical instance of an  ElectricMeter, and also as a more generic Component.
     - Format: UuidCanonicalTextual
 
 **ComponentAttributeClassId**:
-    - Description: ComponentAttributeClassId. Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry. 
+    - Description: ComponentAttributeClassId. Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry.
     - Format: UuidCanonicalTextual
 
 **DisplayName**:
@@ -23,10 +23,10 @@ Python pydantic class corresponding to json type `electric.meter.component.gt`, 
     - Description: Unique Hardware Id for the Power Meter. For eGauge, use what comes back over modbus address 100.
 
 **ModbusHost**:
-    - Description: Host on LAN when power meter is modbus over Ethernet. 
+    - Description: Host on LAN when power meter is modbus over Ethernet.
 
 **ModbusPort**:
-    - Description: 
+    - Description:
     - Format: PositiveInteger
 
 **EgaugeIoList**:

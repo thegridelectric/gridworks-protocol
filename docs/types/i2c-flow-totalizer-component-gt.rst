@@ -10,17 +10,17 @@ Python pydantic class corresponding to json type `i2c.flow.totalizer.component.g
     - Format: UuidCanonicalTextual
 
 **ComponentAttributeClassId**:
-    - Description: ComponentAttributeClass. Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry. 
+    - Description: ComponentAttributeClass. Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry.
     - Format: UuidCanonicalTextual
 
 **I2cAddressList**:
-    - Description: I2cAddress. The  list of I2cAddresses on the I2cBus. The assumption is each i2c address is reading from one Pulse Flow Meter. 
+    - Description: I2cAddress. The  list of I2cAddresses on the I2cBus. The assumption is each i2c address is reading from one Pulse Flow Meter.
 
 **ConfigList**:
     - Description: Config List. A list of the ChannelConfigs for the data channels reported by this actor.
 
 **PulseFlowMeterMakeModelList**:
-    - Description: Pulse Flow Meter MakeModel. The list of MakeModels of the pulse flow meters getting read. 
+    - Description: Pulse Flow Meter MakeModel. The list of MakeModels of the pulse flow meters getting read.
 
 **ConversionFactorList**:
     - Description: ConversionFactor. The factor that the cumulative output must be multiplied by in order to read gallons.
@@ -29,7 +29,7 @@ Python pydantic class corresponding to json type `i2c.flow.totalizer.component.g
     - Description: Display Name. Sample: Pipe Flow Meter Component <dist-flow>
 
 **HwUid**:
-    - Description: Hardware Unique Id. 
+    - Description: Hardware Unique Id.
 
 **TypeName**:
     - Description: All GridWorks Versioned Types have a fixed TypeName, which is a string of lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character, and final word NOT all Hindu-Arabic numerals.

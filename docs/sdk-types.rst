@@ -54,4 +54,3 @@ forth between type instances and Python objects.
     SyncedReadings  <types/synced-readings>
     TaDataChannels  <types/ta-data-channels>
     ThermistorDataProcessingConfig  <types/thermistor-data-processing-config>
-    

@@ -6,11 +6,11 @@ Python pydantic class corresponding to json type `fsm.event`, version `000`.
     :members:
 
 **FromHandle**:
-    - Description: From Handle. 
+    - Description: From Handle.
     - Format: SpaceheatName
 
 **ToHandle**:
-    - Description: To Handle. 
+    - Description: To Handle.
     - Format: SpaceheatName
 
 **EventType**:
@@ -24,7 +24,7 @@ Python pydantic class corresponding to json type `fsm.event`, version `000`.
     - Format: UuidCanonicalTextual
 
 **SendTimeUnixMs**:
-    - Description: Sent Time Unix Ms. 
+    - Description: Sent Time Unix Ms.
     - Format: ReasonableUnixTimeMs
 
 **TypeName**:

@@ -3,7 +3,7 @@
   "type_name": "fsm.trigger.from.atn",
   "version": "000",
   "owner": "gridworks@gridworks-consulting.com",
-  "description": ". This is an FSM Event sent from the AtomicTNode to its Scada. We use the word "trigger" to refer to an event that BEGINS a cause-and-effect chain of events in the hierarchical finite state machine.",
+  "description": ". This is an FSM Event sent from the AtomicTNode to its Scada. We use the word \"trigger\", to refer to an event that BEGINS a cause-and-effect chain of events in the hierarchical finite state machine.",
   "url": "https://gridworks-protocol.readthedocs.io/en/latest/finite-state-machines.html",
   "properties": {
     "ToGNodeAlias": {
@@ -44,7 +44,7 @@
   "axioms": {
     "Axiom1": {
       "title": "FromHandle must be 'a' (for AtomicTNode)",
-      "description": "The triggering event is coming from the AtomicTNode, which always has the handle of "a" as a SpaceheatNode in the SCADA's hierarchical finite state machine."
+      "description": "The triggering event is coming from the AtomicTNode, which always has the handle of \",a\" as a SpaceheatNode in the SCADA's hierarchical finite state machine."
     }
   },
   "formats": {

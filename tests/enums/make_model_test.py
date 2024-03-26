@@ -43,7 +43,7 @@ def test_make_model() -> None:
         "GRIDWORKS__SIMMULTITEMP",
         "GRIDWORKS__SIMTOTALIZER",
         "KRIDA__DOUBLEEMR16I2CV3",
-        "GRIDWORKS__SIMI2CRELAY",
+        "GRIDWORKS__SIMDOUBLE16PINI2CRELAY",
     }
 
     assert MakeModel.default() == MakeModel.UNKNOWNMAKE__UNKNOWNMODEL
@@ -86,7 +86,7 @@ def test_make_model() -> None:
     assert MakeModel.version("GRIDWORKS__SIMMULTITEMP") == "002"
     assert MakeModel.version("GRIDWORKS__SIMTOTALIZER") == "002"
     assert MakeModel.version("KRIDA__DOUBLEEMR16I2CV3") == "002"
-    assert MakeModel.version("GRIDWORKS__SIMI2CRELAY") == "002"
+    assert MakeModel.version("GRIDWORKS__SIMDOUBLE16PINI2CRELAY") == "002"
 
     for value in MakeModel.values():
         symbol = MakeModel.value_to_symbol(value)

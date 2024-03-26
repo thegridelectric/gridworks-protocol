@@ -34,7 +34,7 @@ repos:
         language: system
         types: [text]
         stages: [commit, push, manual]
-        exclude: "src/gwproto/gt/|src/gwproto/gs/|src/gwproto/enums/|CodeGenerationTools/|docs/"
+        exclude: "src/gwproto/gt/|src/gwproto/gs/|src/gwproto/enums/|src/gwproto/types/old/|CodeGenerationTools/|docs/"
         #      - id: flake8
         #        name: flake8
         #        entry: flake8
@@ -62,7 +62,7 @@ repos:
         language: system
         types: [text]
         stages: [commit, push, manual]
-        exclude: "src/gwproto/gt/|src/gwproto/gs/|src/gwproto/enums/"
+        exclude: "src/gwproto/gt/|src/gwproto/gs/|src/gwproto/enums/|CodeGenerationTools/"
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v2.6.0
     hooks:

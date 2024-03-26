@@ -10,8 +10,12 @@ from pydantic import Field
 from pydantic import validator
 
 from gwproto.errors import SchemaError
-from gwproto.types.old.telemetry_snapshot_spaceheat_000 import TelemetrySnapshotSpaceheat000
-from gwproto.types.old.telemetry_snapshot_spaceheat_000 import TelemetrySnapshotSpaceheat000_Maker
+from gwproto.types.old.telemetry_snapshot_spaceheat_000 import (
+    TelemetrySnapshotSpaceheat000,
+)
+from gwproto.types.old.telemetry_snapshot_spaceheat_000 import (
+    TelemetrySnapshotSpaceheat000_Maker,
+)
 
 
 LOG_FORMAT = (

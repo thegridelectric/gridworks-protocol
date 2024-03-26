@@ -19,7 +19,7 @@ class ShNode:
     by_id: Dict[str, "ShNode"] = {}
     by_name: Dict[str, "ShNode"] = {}
 
-    def  __new__(cls, name, sh_node_id, *args, **kwargs):
+    def __new__(cls, name, sh_node_id, *args, **kwargs):
         try:
             return cls.by_name[name]
         except KeyError:

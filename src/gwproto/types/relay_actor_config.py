@@ -38,6 +38,7 @@ EVENT_ENUM_BY_NAME = {
     FsmEventType.ChangeLgOperatingMode.value: ChangeLgOperatingMode,
 }
 
+
 class RelayActorConfig(BaseModel):
     """
     Relay Actor Config.

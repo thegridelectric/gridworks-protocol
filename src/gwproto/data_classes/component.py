@@ -54,4 +54,4 @@ class Component(ABC, StreamlinedSerializerMixin):
         if self.display_name:
             return self.display_name
         else:
-            return f"{self.component_id} (MakeModel {self.component_attribute_class.make_model.value})" 
+            return f"{self.component_id} (MakeModel {self.component_attribute_class.make_model.value})"

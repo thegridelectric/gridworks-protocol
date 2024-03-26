@@ -49,7 +49,7 @@ class HubitatTankComponent(Component, ComponentResolver):
             config_list=self.make_config_list(),
             component_attribute_class_id=component_attribute_class_id,
         )
-    
+
     @property
     def cac(self) -> Cac:
         return Cac.by_id[self.component_attribute_class_id]
@@ -92,9 +92,9 @@ class HubitatTankComponent(Component, ComponentResolver):
         return [
             ChannelConfig_Maker(
                 channel_name=device.channel_name,
-                poll_period_ms = int(device.rest.poll_period_seconds * 1000),
+                poll_period_ms=int(device.rest.poll_period_seconds * 1000),
                 async_capture=False,
-                capture_period_s = int(device.rest.poll_period_seconds * 1000),
+                capture_period_s=int(device.rest.poll_period_seconds * 1000),
                 exponent=device.exponent,
                 unit=device.unit,
             )

@@ -33,7 +33,7 @@ class I2cMultichannelDtRelayComponent(Component):
             display_name=display_name,
         )
         self.i2c_address_list = i2c_address_list
-        self.relay_config_list=relay_config_list
+        self.relay_config_list = relay_config_list
         I2cMultichannelDtRelayComponent.by_id[self.component_id] = self
         Component.by_id[self.component_id] = self
 

@@ -1,4 +1,5 @@
 """Type ads111x.based.cac.gt, version 000"""
+
 import json
 import logging
 from typing import Any

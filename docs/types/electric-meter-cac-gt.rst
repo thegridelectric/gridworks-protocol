@@ -16,13 +16,13 @@ Python pydantic class corresponding to json type `electric.meter.cac.gt`, versio
     - Description: Sample: EGauge 4030
 
 **TelemetryNameList**:
-    - Description: TelemetryNames read by this power meter. 
+    - Description: TelemetryNames read by this power meter.
 
 **MinPollPeriodMs**:
-    - Description: Poll Period in Milliseconds. Poll Period refers to the period of time between two readings by the local actor. This is in contrast to Capture Period, which refers to the period between readings that are sent up to the cloud (or otherwise saved for the long-term). 
+    - Description: Poll Period in Milliseconds. Poll Period refers to the period of time between two readings by the local actor. This is in contrast to Capture Period, which refers to the period between readings that are sent up to the cloud (or otherwise saved for the long-term).
 
 **DefaultBaud**:
-    - Description: To be used when the comms method requires a baud rate. 
+    - Description: To be used when the comms method requires a baud rate.
 
 **TypeName**:
     - Description: All GridWorks Versioned Types have a fixed TypeName, which is a string of lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character, and final word NOT all Hindu-Arabic numerals.

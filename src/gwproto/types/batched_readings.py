@@ -1,4 +1,5 @@
 """Type batched.readings, version 000"""
+
 import json
 import logging
 from itertools import chain

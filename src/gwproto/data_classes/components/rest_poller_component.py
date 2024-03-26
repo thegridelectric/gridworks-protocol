@@ -1,4 +1,5 @@
-from typing import Optional, Dict
+from typing import Dict
+from typing import Optional
 
 from gwproto.data_classes.component import Component
 from gwproto.data_classes.component_attribute_class import (

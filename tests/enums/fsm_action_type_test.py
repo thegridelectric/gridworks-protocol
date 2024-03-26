@@ -1,6 +1,7 @@
 """
 Tests for enum sh.fsm.action.type.000 from the GridWorks Type Registry.
 """
+
 from gwproto.enums import FsmActionType
 
 

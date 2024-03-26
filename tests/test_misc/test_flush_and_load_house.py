@@ -21,12 +21,15 @@ from gwproto.data_classes.components.resistive_heater_component import (
 )
 from gwproto.data_classes.hardware_layout import HardwareLayout
 from gwproto.data_classes.sh_node import ShNode
-from gwproto.types import ElectricMeterCacGt, ElectricMeterCacGt_Maker
+from gwproto.enums import MakeModel
+from gwproto.enums import TelemetryName
+from gwproto.type_helpers import CACS_BY_MAKE_MODEL
+from gwproto.types import ElectricMeterCacGt
+from gwproto.types import ElectricMeterCacGt_Maker
 from gwproto.types import SpaceheatNodeGt_Maker
 from gwproto.types.electric_meter_component_gt import ElectricMeterComponentGt_Maker
 from tests.utils import flush_all
-from gwproto.enums import MakeModel, TelemetryName
-from gwproto.type_helpers import CACS_BY_MAKE_MODEL
+
 
 def test_flush_and_load_house():
     """Verify that flush_house() successfully removes all dictionary data from relevant dataclasses, and
@@ -38,10 +41,9 @@ def test_flush_and_load_house():
         MakeModel=MakeModel.EGAUGE__4030,
         DisplayName="Egauge 4030",
         MinPollPeriodMs=1000,
-        TelemetryNameList=[TelemetryName.PowerW, TelemetryName.CurrentRmsMicroAmps]
+        TelemetryNameList=[TelemetryName.PowerW, TelemetryName.CurrentRmsMicroAmps],
     )
     ElectricMeterCacGt_Maker.tuple_to_dc(cac_gt)
-
 
     electric_meter_component_dict = {
         "ComponentId": "04ceb282-d7e8-4293-80b5-72455e1a5db3",

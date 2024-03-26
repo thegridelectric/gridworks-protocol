@@ -1,4 +1,5 @@
 """Tests snapshot.spaceheat type, version 001"""
+
 import json
 
 import pytest

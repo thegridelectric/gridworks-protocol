@@ -2,6 +2,7 @@
 REST commands into a message posted to main processing thread.
 
 """
+
 import json
 import typing
 from typing import Any

@@ -1,15 +1,21 @@
 {
-    "gtr_asl": "001",
-    "enum_name": "thermistor.data.method",
-    "enum_version": "000",
-    "description": "What method is used to go from raw voltage readings to captured temperature readings.",
-    "ssot": "https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#thermistordatamethod",
-    "values": ["SimpleBeta", "BetaWithExponentialAveraging"],
-    "value_to_symbol": { "SimpleBeta": "00000000",  "BetaWithExponentialAveraging": "2c13f809"},
-    "value_to_version": { "SimpleBeta": "000",  "BetaWithExponentialAveraging": "000"},
-    "value_descriptions": {
-                "SimpleBeta": "Using the beta formula with a calibrated open voltage reading, transmitting raw polled data.",
-                "BetaWithExponentialAveraging": "Using the beta formula with a calibrated open voltage reading, and then some sort of exponential weighted averaging on polled data."
-            },
-    "default_value": "SimpleBeta"
+  "gtr_asl": "001",
+  "enum_name": "thermistor.data.method",
+  "enum_version": "000",
+  "description": "What method is used to go from raw voltage readings to captured temperature readings.",
+  "ssot": "https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#thermistordatamethod",
+  "values": ["SimpleBeta", "BetaWithExponentialAveraging"],
+  "value_to_symbol": {
+    "SimpleBeta": "00000000",
+    "BetaWithExponentialAveraging": "2c13f809"
+  },
+  "value_to_version": {
+    "SimpleBeta": "000",
+    "BetaWithExponentialAveraging": "000"
+  },
+  "value_descriptions": {
+    "SimpleBeta": "Using the beta formula with a calibrated open voltage reading, transmitting raw polled data.",
+    "BetaWithExponentialAveraging": "Using the beta formula with a calibrated open voltage reading, and then some sort of exponential weighted averaging on polled data."
+  },
+  "default_value": "SimpleBeta"
 }

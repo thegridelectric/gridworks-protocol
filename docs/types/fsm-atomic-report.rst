@@ -22,10 +22,10 @@ Python pydantic class corresponding to json type `fsm.atomic.report`, version `0
     - Description: Action. Will typically be a number, usually an integer. For example, if ActionType is RelayPinSet, then RelayPinSet.DeEnergized = 0 and RelayPinSet.Energized = 1.
 
 **EventType**:
-    - Description: Event Type. 
+    - Description: Event Type.
 
 **Event**:
-    - Description: Event. 
+    - Description: Event.
 
 **FromState**:
     - Description: From State. The state of the FSM prior to triggering event.
@@ -34,7 +34,7 @@ Python pydantic class corresponding to json type `fsm.atomic.report`, version `0
     - Description: To State. The state of the FSM after the triggering event.
 
 **UnixTimeMs**:
-    - Description: Unix Time in Milliseconds. 
+    - Description: Unix Time in Milliseconds.
     - Format: ReasonableUnixTimeMs
 
 **TriggerId**:

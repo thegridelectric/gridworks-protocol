@@ -1,4 +1,5 @@
 """Tests fsm.full.report type, version 000"""
+
 import json
 
 import pytest

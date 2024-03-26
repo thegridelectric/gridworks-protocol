@@ -34,8 +34,7 @@ class Decoder(abc.ABC):
         return self.decode_obj(json.loads(content))
 
     @abstractmethod
-    def decode_obj(self, o: Any) -> Any:
-        ...
+    def decode_obj(self, o: Any) -> Any: ...
 
 
 class CallableDecoder(Decoder):
@@ -269,8 +268,7 @@ class MQTTCodec(abc.ABC):
         )
 
     @abstractmethod
-    def validate_source_handle(self, source_handle: str):
-        ...
+    def validate_source_handle(self, source_handle: str): ...
 
 
 def get_pydantic_literal_type_name(

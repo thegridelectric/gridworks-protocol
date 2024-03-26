@@ -1,6 +1,7 @@
 """
 Tests for enum relay.energization.state.000 from the GridWorks Type Registry.
 """
+
 from gwproto.enums import RelayEnergizationState
 
 

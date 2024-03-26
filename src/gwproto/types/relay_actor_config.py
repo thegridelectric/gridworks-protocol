@@ -1,4 +1,5 @@
 """Type relay.actor.config, version 000"""
+
 import json
 import logging
 from typing import Any
@@ -37,6 +38,7 @@ EVENT_ENUM_BY_NAME = {
     FsmEventType.ChangeHeatPumpControl.value: ChangeHeatPumpControl,
     FsmEventType.ChangeLgOperatingMode.value: ChangeLgOperatingMode,
 }
+
 
 class RelayActorConfig(BaseModel):
     """

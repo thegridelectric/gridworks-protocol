@@ -6,15 +6,15 @@ Python pydantic class corresponding to json type `fsm.trigger.from.atn`, version
     :members:
 
 **ToGNodeAlias**:
-    - Description: GNodeAlias of the receiving SCADA. 
+    - Description: GNodeAlias of the receiving SCADA.
     - Format: LeftRightDot
 
 **FromGNodeAlias**:
-    - Description: GNodeAlias of the sending AtomicTNode. 
+    - Description: GNodeAlias of the sending AtomicTNode.
     - Format: LeftRightDot
 
 **FromGNodeInstanceId**:
-    - Description: GNodeInstance of the sending AtomicTNode. 
+    - Description: GNodeInstance of the sending AtomicTNode.
     - Format: UuidCanonicalTextual
 
 **Trigger**:

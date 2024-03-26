@@ -1,15 +1,15 @@
 {
-    "gtr_asl": "001",
-    "enum_name": "change.heatcall.source",
-    "enum_version": "000",
-    "description": "Used for dispatch/actions between the two states of a double-throw failsafe relay that toggles between the SCADA and a Thermostat for controlling the heat call to a zone.",
-    "ssot": "https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeheatcallsource",
-    "values": ["SwitchToWallThermostat", "SwitchToScada"],
-    "value_to_symbol": { "": "",  "": ""},
-    "value_to_version": { "": "000",  "": "000"},
-    "value_descriptions": {
-                "SwitchToWallThermostat": "",
-                "SwitchToScada": ""
-            },
-    "default_value": "SwitchToWallThermostat"
+  "gtr_asl": "001",
+  "enum_name": "change.heatcall.source",
+  "enum_version": "000",
+  "description": "Used for dispatch/actions between the two states of a double-throw failsafe relay that toggles between the SCADA and a Thermostat for controlling the heat call to a zone.",
+  "ssot": "https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeheatcallsource",
+  "values": ["SwitchToWallThermostat", "SwitchToScada"],
+  "value_to_symbol": { "": "", "": "" },
+  "value_to_version": { "": "000", "": "000" },
+  "value_descriptions": {
+    "SwitchToWallThermostat": "",
+    "SwitchToScada": ""
+  },
+  "default_value": "SwitchToWallThermostat"
 }

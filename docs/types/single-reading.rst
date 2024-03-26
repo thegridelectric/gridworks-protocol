@@ -6,7 +6,7 @@ Python pydantic class corresponding to json type `single.reading`, version `000`
     :members:
 
 **ScadaReadTimeUnixMs**:
-    - Description: Scada Read Time in Unix Milliseconds. 
+    - Description: Scada Read Time in Unix Milliseconds.
     - Format: ReasonableUnixTimeMs
 
 **ChannelName**:
@@ -14,7 +14,7 @@ Python pydantic class corresponding to json type `single.reading`, version `000`
     - Format: SpaceheatName
 
 **Value**:
-    - Description: Value. The value of the reading. 
+    - Description: Value. The value of the reading.
 
 **TypeName**:
     - Description: All GridWorks Versioned Types have a fixed TypeName, which is a string of lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character, and final word NOT all Hindu-Arabic numerals.

@@ -27,7 +27,7 @@
 #         MinPollPeriodMs=1000,
 #         DefaultBaud=9600,
 #     )
-    
+
 #     comp_gt = ElectricMeterComponentGt(
 #         ComponentId="04ceb282-d7e8-4293-80b5-72455e1a5db3",
 #         ComponentAttributeClassId=CACS_BY_MAKE_MODEL[MakeModel.EGAUGE__4030],
@@ -60,13 +60,13 @@
 #             )
 #         ],
 #     )
-    
+
 #     # Need to load the Cac as a data class first
 #     with pytest.raises(DcError):
 #         ElectricMeterComponentGt_Maker.tuple_to_dc(comp_gt)
 
 #     cac = ElectricMeterCacGt_Maker.tuple_to_dc(cac_gt)
-    
+
 #     comp = ElectricMeterComponentGt_Maker.tuple_to_dc(comp_gt)
 
 #     assert comp_gt.ComponentId in ElectricMeterComponent.by_id.keys()
@@ -83,5 +83,3 @@
 #     ComponentAttributeClass.by_id = {}
 #     ElectricMeterComponent.by_id = {}
 #     ElectricMeterCac.by_id = {}
-
-

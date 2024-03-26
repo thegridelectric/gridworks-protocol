@@ -1,4 +1,5 @@
 """ ChannelConfig"""
+
 from abc import ABC
 from typing import Dict
 from typing import Optional
@@ -27,14 +28,15 @@ class ChannelConfigDc(ABC, StreamlinedSerializerMixin):
             cls.by_id[channel_name] = instance
             return instance
 
-    def __init__(self, 
-                 channel_name: str,
-                 poll_period_ms: int,
-                 capture_period_s: int,
-                 async_capture: bool,
-                 async_capture_delta: int,
-                 exponent: int,
-                 unit:  Unit,
+    def __init__(
+        self,
+        channel_name: str,
+        poll_period_ms: int,
+        capture_period_s: int,
+        async_capture: bool,
+        async_capture_delta: int,
+        exponent: int,
+        unit: Unit,
     ):
         self.channel_name = channel_name
         self.poll_period_ms = poll_period_ms
@@ -45,4 +47,4 @@ class ChannelConfigDc(ABC, StreamlinedSerializerMixin):
         self.unit = unit
 
     def __repr__(self):
-            return f"{self.channel_name}: PollPeriod: {self.poll_period_ms} ms, CapturePeriod: {self.capture_period_s} s, Async: {self.async_capture}"
+        return f"{self.channel_name}: PollPeriod: {self.poll_period_ms} ms, CapturePeriod: {self.capture_period_s} s, Async: {self.async_capture}"

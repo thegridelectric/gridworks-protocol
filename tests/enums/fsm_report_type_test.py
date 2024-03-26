@@ -1,6 +1,7 @@
 """
 Tests for enum fsm.report.type.000 from the GridWorks Type Registry.
 """
+
 from gwproto.enums import FsmReportType
 
 

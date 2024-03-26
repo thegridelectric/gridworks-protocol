@@ -48,14 +48,14 @@
     }
   },
   "example": {
-      "ComponentId": "1fdd40dd-14d7-4da2-8cf8-7cf66484e385",
-      "ComponentAttributeClassId": "7ce0ce69-14c6-4cb7-a33f-2aeca91e0680",
-      "DisplayName": "Fibaro 1010 A",
-      "ZWaveDSK": "",
-      "HwUid": "20134",
-      "TypeName": "fibaro.smart.implant.component.gt",
-      "Version": "000"
-    },
+    "ComponentId": "1fdd40dd-14d7-4da2-8cf8-7cf66484e385",
+    "ComponentAttributeClassId": "7ce0ce69-14c6-4cb7-a33f-2aeca91e0680",
+    "DisplayName": "Fibaro 1010 A",
+    "ZWaveDSK": "",
+    "HwUid": "20134",
+    "TypeName": "fibaro.smart.implant.component.gt",
+    "Version": "000"
+  },
   "formats": {
     "UuidCanonicalTextual": {
       "type": "string",

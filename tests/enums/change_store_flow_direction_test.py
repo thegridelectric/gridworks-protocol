@@ -1,6 +1,7 @@
 """
 Tests for enum change.store.flow.direction.000 from the GridWorks Type Registry.
 """
+
 from gwproto.enums import ChangeStoreFlowDirection
 
 

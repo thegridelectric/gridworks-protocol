@@ -6,7 +6,7 @@ Python pydantic class corresponding to json type `ta.data.channels`, version `00
     :members:
 
 **TerminalAssetGNodeAlias**:
-    - Description: GNodeAlias for the Terminal Asset. The Alias of the Terminal Asset about which the time series data is providing information. 
+    - Description: GNodeAlias for the Terminal Asset. The Alias of the Terminal Asset about which the time series data is providing information.
     - Format: LeftRightDot
 
 **TerminalAssetGNodeId**:
@@ -21,7 +21,7 @@ Python pydantic class corresponding to json type `ta.data.channels`, version `00
     - Description: Author of this list of data channels.
 
 **ChannelList**:
-    - Description: The list of data channels. 
+    - Description: The list of data channels.
 
 **Id**:
     - Description: Identifier. Unique identifier for a specific instance of this type that can be used to establish how time series csv's were constructed.

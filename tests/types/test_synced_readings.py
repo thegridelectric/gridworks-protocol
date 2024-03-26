@@ -1,4 +1,5 @@
 """Tests synced.readings type, version 000"""
+
 import json
 
 import pytest

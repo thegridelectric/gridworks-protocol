@@ -1,4 +1,5 @@
 """ResistiveHeaterComponent definition"""
+
 from typing import Dict
 from typing import Optional
 

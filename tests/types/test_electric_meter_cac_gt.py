@@ -1,4 +1,5 @@
 """Tests electric.meter.cac.gt type, version 001"""
+
 import json
 import uuid
 

@@ -1,4 +1,5 @@
 """Type gt.sh.status, version 110"""
+
 import json
 import logging
 from typing import Any
@@ -13,10 +14,8 @@ from pydantic import validator
 from gwproto.errors import SchemaError
 from gwproto.types.old import GtShBooleanactuatorCmdStatus100
 from gwproto.types.old import GtShBooleanactuatorCmdStatus100_Maker
-
 from gwproto.types.old import GtShMultipurposeTelemetryStatus100
 from gwproto.types.old import GtShMultipurposeTelemetryStatus100_Maker
-
 from gwproto.types.old import GtShSimpleTelemetryStatus100
 from gwproto.types.old import GtShSimpleTelemetryStatus100_Maker
 

@@ -1,4 +1,5 @@
 """Type thermistor.data.processing.config, version 000"""
+
 import json
 import logging
 from typing import Any
@@ -62,9 +63,9 @@ class ThermistorDataProcessingConfig(BaseModel):
         ),
         default=None,
     )
-    TypeName: Literal[
+    TypeName: Literal["thermistor.data.processing.config"] = (
         "thermistor.data.processing.config"
-    ] = "thermistor.data.processing.config"
+    )
     Version: Literal["000"] = "000"
 
     class Config:
@@ -117,9 +118,9 @@ class ThermistorDataProcessingConfig(BaseModel):
         )
         if "DataProcessingMethod" in d.keys():
             del d["DataProcessingMethod"]
-            d[
-                "DataProcessingMethodGtEnumSymbol"
-            ] = ThermistorDataMethod.value_to_symbol(self.DataProcessingMethod)
+            d["DataProcessingMethodGtEnumSymbol"] = (
+                ThermistorDataMethod.value_to_symbol(self.DataProcessingMethod)
+            )
         return d
 
     def as_type(self) -> bytes:

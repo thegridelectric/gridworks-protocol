@@ -1,4 +1,5 @@
 """ ComponentAttributeClass"""
+
 from abc import ABC
 from typing import Dict
 from typing import Optional
@@ -24,11 +25,12 @@ class ComponentAttributeClass(ABC, StreamlinedSerializerMixin):
             cls.by_id[component_attribute_class_id] = instance
             return instance
 
-    def __init__(self, 
-                 component_attribute_class_id: str, 
-                 make_model: MakeModel = MakeModel.UNKNOWNMAKE__UNKNOWNMODEL,
-                 display_name: Optional[str] = None,
-                 min_poll_period_ms: Optional[int] = None,
+    def __init__(
+        self,
+        component_attribute_class_id: str,
+        make_model: MakeModel = MakeModel.UNKNOWNMAKE__UNKNOWNMODEL,
+        display_name: Optional[str] = None,
+        min_poll_period_ms: Optional[int] = None,
     ):
         self.component_attribute_class_id = component_attribute_class_id
         self.make_model = make_model

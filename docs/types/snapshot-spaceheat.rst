@@ -6,11 +6,11 @@ Python pydantic class corresponding to json type `snapshot.spaceheat`, version `
     :members:
 
 **FromGNodeAlias**:
-    - Description: 
+    - Description:
     - Format: LeftRightDot
 
 **FromGNodeInstanceId**:
-    - Description: 
+    - Description:
     - Format: UuidCanonicalTextual
 
 **SnapshotTimeUnixMs**:

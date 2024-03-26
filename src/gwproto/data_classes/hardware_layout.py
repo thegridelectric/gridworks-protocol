@@ -4,6 +4,7 @@ This will probably be refactored as we implement our local registry. Currently s
 because content is static (except for needing a path to the houses.json file, which we should be able to do
 away with).
 """
+
 import copy
 import json
 import re
@@ -21,10 +22,10 @@ from gwproto.data_classes.component_attribute_class import ComponentAttributeCla
 from gwproto.data_classes.components.electric_meter_component import (
     ElectricMeterComponent,
 )
+from gwproto.data_classes.data_channel import DataChannel
 from gwproto.data_classes.errors import DataClassLoadingError
 from gwproto.data_classes.resolver import ComponentResolver
 from gwproto.data_classes.sh_node import ShNode
-from gwproto.data_classes.data_channel import DataChannel
 from gwproto.data_classes.telemetry_tuple import TelemetryTuple
 from gwproto.default_decoders import ComponentDecoder
 from gwproto.default_decoders import default_component_decoder
@@ -74,14 +75,14 @@ def load_cacs(
         ("ResistiveHeaterCacs", ResistiveHeaterCacGt_Maker),
         ("ElectricMeterCacs", ElectricMeterCacGt_Maker),
         ("Ads111xBasedCacs", Ads111xBasedCacGt_Maker),
-        ("OtherCacs", ComponentAttributeClassGt_Maker)
+        ("OtherCacs", ComponentAttributeClassGt_Maker),
     ]:
         for d in layout.get(type_name, []):
             try:
-                cacs[
-                    d["ComponentAttributeClassId"]
-                ] = maker_class.dict_to_dc(  # type:ignore[attr-defined]
-                    d
+                cacs[d["ComponentAttributeClassId"]] = (
+                    maker_class.dict_to_dc(  # type:ignore[attr-defined]
+                        d
+                    )
                 )
             except Exception as e:
                 if raise_errors:
@@ -108,10 +109,10 @@ def load_components(
     ]:
         for d in layout.get(type_name, []):
             try:
-                components[
-                    d["ComponentId"]
-                ] = maker_class.dict_to_dc(  # type:ignore[attr-defined]
-                    d
+                components[d["ComponentId"]] = (
+                    maker_class.dict_to_dc(  # type:ignore[attr-defined]
+                        d
+                    )
                 )
             except Exception as e:
                 if raise_errors:
@@ -216,10 +217,10 @@ class HardwareLayout:
     def __init__(
         self,
         layout: dict[Any, Any],
-        cacs: Optional[dict[str, ComponentAttributeClass]] = None, # by id
+        cacs: Optional[dict[str, ComponentAttributeClass]] = None,  # by id
         components: Optional[dict[str, Component]] = None,  # by id
-        nodes: Optional[dict[str, ShNode]] = None, # by name
-        channels: Optional[dict[str, DataChannel]] = None, # by name
+        nodes: Optional[dict[str, ShNode]] = None,  # by name
+        channels: Optional[dict[str, DataChannel]] = None,  # by name
     ):
         self.layout = copy.deepcopy(layout)
         if cacs is None:
@@ -235,9 +236,11 @@ class HardwareLayout:
         if channels is None:
             channels = DataChannel.by_name
         self.channels = dict(channels)
-    
+
     def make_node_handle_dict(self) -> None:
-        nodes_w_handles = list(filter(lambda x: x.handle is not None, self.nodes.values()))
+        nodes_w_handles = list(
+            filter(lambda x: x.handle is not None, self.nodes.values())
+        )
         self.nodes_by_handle = {n.handle: n for n in nodes_w_handles}
 
     def clear_property_cache(self) -> None:
@@ -360,7 +363,7 @@ class HardwareLayout:
                     f"{node.name} is missing parent {parent_name}!"
                 )
             return self.node(parent_name)
-    
+
     def children(self, node: ShNode) -> List[ShNode]:
         return list(filter(lambda x: self.parent_node(x) == node, self.nodes.values()))
 
@@ -422,7 +425,9 @@ class HardwareLayout:
     def power_meter_node(self) -> ShNode:
         """Schema for input data enforces exactly one Spaceheat Node with actor class PowerMeter"""
         power_meter_node = list(
-            filter(lambda x: x.actor_class == ActorClass.PowerMeter, self.nodes.values())
+            filter(
+                lambda x: x.actor_class == ActorClass.PowerMeter, self.nodes.values()
+            )
         )[0]
         return power_meter_node
 
@@ -449,13 +454,17 @@ class HardwareLayout:
     @cached_property
     def scada_node(self) -> ShNode:
         """Schema for input data enforces exactly one Spaceheat Node with actor class Scada"""
-        nodes = list(filter(lambda x: x.actor_class == ActorClass.Scada, self.nodes.values()))
+        nodes = list(
+            filter(lambda x: x.actor_class == ActorClass.Scada, self.nodes.values())
+        )
         return nodes[0]
 
     @cached_property
     def home_alone_node(self) -> ShNode:
         """Schema for input data enforces exactly one Spaceheat Node with role HomeAlone"""
-        nodes = list(filter(lambda x: x.actor_class == ActorClass.HomeAlone, self.nodes.values()))
+        nodes = list(
+            filter(lambda x: x.actor_class == ActorClass.HomeAlone, self.nodes.values())
+        )
         if len(nodes) != 1:
             raise Exception(
                 "there should be a single SpaceheatNode with role HomeAlone"
@@ -469,6 +478,13 @@ class HardwareLayout:
         This includes the (unique) power meter, but may also include other roles like thermostats
         and heat pumps."""
         all_nodes = list(self.nodes.values())
-        actor_classes = [ActorClass.PowerMeter, ActorClass.MultipurposeSensor, ActorClass.HubitatTankModule, ActorClass.HubitatPoller]
-        sensor_nodes = list(filter(lambda x: (x.actor_class in actor_classes), all_nodes))
+        actor_classes = [
+            ActorClass.PowerMeter,
+            ActorClass.MultipurposeSensor,
+            ActorClass.HubitatTankModule,
+            ActorClass.HubitatPoller,
+        ]
+        sensor_nodes = list(
+            filter(lambda x: (x.actor_class in actor_classes), all_nodes)
+        )
         return sensor_nodes

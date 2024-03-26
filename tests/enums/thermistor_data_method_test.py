@@ -1,6 +1,7 @@
 """
 Tests for enum thermistor.data.method.000 from the GridWorks Type Registry.
 """
+
 from gwproto.enums import ThermistorDataMethod
 
 

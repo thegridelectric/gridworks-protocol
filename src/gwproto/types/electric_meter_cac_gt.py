@@ -1,4 +1,5 @@
 """Type electric.meter.cac.gt, version 001"""
+
 import json
 import logging
 from typing import Any

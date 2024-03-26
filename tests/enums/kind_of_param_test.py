@@ -1,6 +1,7 @@
 """
 Tests for enum spaceheat.kind.of.param.000 from the GridWorks Type Registry.
 """
+
 from gwproto.enums import KindOfParam
 
 

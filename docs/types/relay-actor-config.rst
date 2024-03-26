@@ -6,21 +6,21 @@ Python pydantic class corresponding to json type `relay.actor.config`, version `
     :members:
 
 **RelayIdx**:
-    - Description: Relay Index. 
+    - Description: Relay Index.
     - Format: PositiveInteger
 
 **ActorName**:
-    - Description: Name of the Actor's SpaceheatNode. 
+    - Description: Name of the Actor's SpaceheatNode.
     - Format: SpaceheatName
 
 **WiringConfig**:
     - Description: Wiring Config. Is the relay a simple Normally Open or Normally Closed or is it a double throw relay?
 
 **EventType**:
-    - Description: Finite State Machine Event Type. Every pair of  energization/de-energization actions for a relay are associated with two events for an associated finite state event. 
+    - Description: Finite State Machine Event Type. Every pair of  energization/de-energization actions for a relay are associated with two events for an associated finite state event.
 
 **DeEnergizingEvent**:
-    - Description: DeEnergizing Action. Which of the two choices provided by the EventType is intended to result in de-energizing the pin for the relay? 
+    - Description: DeEnergizing Action. Which of the two choices provided by the EventType is intended to result in de-energizing the pin for the relay?
 
 **TypeName**:
     - Description: All GridWorks Versioned Types have a fixed TypeName, which is a string of lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character, and final word NOT all Hindu-Arabic numerals.

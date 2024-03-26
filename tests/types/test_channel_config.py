@@ -1,4 +1,5 @@
 """Tests channel.config type, version 000"""
+
 import json
 
 import pytest

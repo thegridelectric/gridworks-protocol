@@ -1,4 +1,5 @@
 """Sphinx configuration."""
+
 project = "Gridworks Protocol"
 author = "Jessica Millar"
 copyright = "2022, Jessica Millar"

@@ -1,18 +1,28 @@
 {
-    "gtr_asl": "001",
-    "enum_name": "sh.fsm.name",
-    "enum_version": "000",
-    "description": "The name of a specific Spaceheat finite state machine. That name is used as a literal enum for a set of staets.",
-    "url": "https://gridworks-protocol.readthedocs.io/en/latest/house-0.html",
-    "ssot": "https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shfsmname",
-    "values": ["Unknown", "IsoValve", "StoreFlowDirection", "RelayState"],
-    "value_to_symbol": { "Unknown": "00000000",  "IsoValve": "0cce8d12",  "StoreFlowDirection": "cfd57bec",  "RelayState": "1f560b73"},
-    "value_to_version": { "Unknown": "000",  "IsoValve": "000",  "StoreFlowDirection": "000",  "RelayState": "000"},
-    "value_descriptions": {
-                "Unknown": "",
-                "IsoValve": "Finite State Machine reflecting the state of the Iso Valve in a House 0 design",
-                "StoreFlowDirection": "",
-                "RelayState": ""
-            },
-    "default_value": "IsoValve"
+  "gtr_asl": "001",
+  "enum_name": "sh.fsm.name",
+  "enum_version": "000",
+  "description": "The name of a specific Spaceheat finite state machine. That name is used as a literal enum for a set of staets.",
+  "url": "https://gridworks-protocol.readthedocs.io/en/latest/house-0.html",
+  "ssot": "https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shfsmname",
+  "values": ["Unknown", "IsoValve", "StoreFlowDirection", "RelayState"],
+  "value_to_symbol": {
+    "Unknown": "00000000",
+    "IsoValve": "0cce8d12",
+    "StoreFlowDirection": "cfd57bec",
+    "RelayState": "1f560b73"
+  },
+  "value_to_version": {
+    "Unknown": "000",
+    "IsoValve": "000",
+    "StoreFlowDirection": "000",
+    "RelayState": "000"
+  },
+  "value_descriptions": {
+    "Unknown": "",
+    "IsoValve": "Finite State Machine reflecting the state of the Iso Valve in a House 0 design",
+    "StoreFlowDirection": "",
+    "RelayState": ""
+  },
+  "default_value": "IsoValve"
 }

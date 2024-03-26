@@ -10,11 +10,11 @@ Python pydantic class corresponding to json type `spaceheat.node.gt`, version `2
     - Format: UuidCanonicalTextual
 
 **Name**:
-    - Description: Name. Most human readable locally unique identifier. Immutable. Words (separated by dots) shows actor startup hierarchy. That is,  if the node 's.analog-temp' has an actor, then that actor is spawned by node 's'. 
+    - Description: Name. Most human readable locally unique identifier. Immutable. Words (separated by dots) shows actor startup hierarchy. That is,  if the node 's.analog-temp' has an actor, then that actor is spawned by node 's'.
     - Format: SpaceheatName
 
 **Handle**:
-    - Description: Handle. Word structure shows Terminal Asset Finite State Machine hierarchy. Locally unique, but mutable.  If there is a dot, then the predecessor handle (handle with the final word removed) is the handle for the 'boss' node.  Only nodes with actors that can take actions that change the state of the Terminal Asset have dots in their handles. For example, the analog temperature sensor in the LocalName description above does NOT take actions and its handle would likely be analog-temp. If a node's actor CAN take actions that change the state of the TerminalAsset, it only takes commands from its boss node. For example, a relay actor will only agree to energize or de-energize its relay as a result of a command from its (current) boss. 
+    - Description: Handle. Word structure shows Terminal Asset Finite State Machine hierarchy. Locally unique, but mutable.  If there is a dot, then the predecessor handle (handle with the final word removed) is the handle for the 'boss' node.  Only nodes with actors that can take actions that change the state of the Terminal Asset have dots in their handles. For example, the analog temperature sensor in the LocalName description above does NOT take actions and its handle would likely be analog-temp. If a node's actor CAN take actions that change the state of the TerminalAsset, it only takes commands from its boss node. For example, a relay actor will only agree to energize or de-energize its relay as a result of a command from its (current) boss.
     - Format: SpaceheatName
 
 **ActorClass**:
@@ -27,7 +27,7 @@ Python pydantic class corresponding to json type `spaceheat.node.gt`, version `2
     - Description: Unique identifier for Spaceheat Node's Component. Used if a Spaceheat Node is associated with a physical device.
 
 **InPowerMetering**:
-    - Description: In Power Metering. This exists and is True if the SpaceheatNode is part of the power metering that is used for market participation. Small loads like circulator pumps and fans may be metered to determine their behavior but are are likely NOT part of the power metering used for market participation. 
+    - Description: In Power Metering. This exists and is True if the SpaceheatNode is part of the power metering that is used for market participation. Small loads like circulator pumps and fans may be metered to determine their behavior but are are likely NOT part of the power metering used for market participation.
 
 **TypeName**:
     - Description: All GridWorks Versioned Types have a fixed TypeName, which is a string of lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character, and final word NOT all Hindu-Arabic numerals.

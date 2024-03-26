@@ -88,9 +88,9 @@ class HubitatPollerComponent(Component, ComponentResolver):
         return [
             ChannelConfig_Maker(
                 channel_name=attribute.channel_name,
-                poll_period_ms = int(self.rest.poll_period_seconds * 1000),
-                async_capture = False,
-                capture_period_s = int(self.rest.poll_period_seconds),
+                poll_period_ms=int(self.rest.poll_period_seconds * 1000),
+                async_capture=False,
+                capture_period_s=int(self.rest.poll_period_seconds),
                 exponent=attribute.exponent,
                 unit=attribute.unit,
             )

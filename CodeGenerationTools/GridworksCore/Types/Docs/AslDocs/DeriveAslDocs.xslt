@@ -37,7 +37,7 @@
                 <xsl:variable name="overwrite-mode">
 
                     <xsl:if test="not (Status = 'Pending')">
-                    <xsl:text>Always</xsl:text>
+                    <xsl:text>Never</xsl:text>
                     </xsl:if>
                     <xsl:if test="(Status = 'Pending')">
                     <xsl:text>Always</xsl:text>

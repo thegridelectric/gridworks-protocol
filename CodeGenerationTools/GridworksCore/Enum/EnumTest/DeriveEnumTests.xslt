@@ -42,6 +42,7 @@
 Tests for enum </xsl:text><xsl:value-of select="Name"/><xsl:text>.</xsl:text><xsl:value-of select="$version"/>
     <xsl:text> from the GridWorks Type Registry.
 """
+
 from gwproto.enums import </xsl:text><xsl:value-of select="$local-class-name"/><xsl:text>
 
 

@@ -1,4 +1,5 @@
 """Type keyparam.change.log, version 000"""
+
 import json
 import logging
 from typing import Any

@@ -1,4 +1,5 @@
 """Type fsm.full.report, version 000"""
+
 import json
 import logging
 from typing import Any

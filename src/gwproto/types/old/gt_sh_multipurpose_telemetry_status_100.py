@@ -1,4 +1,5 @@
 """Type gt.sh.multipurpose.telemetry.status, version 100"""
+
 import json
 import logging
 from typing import Any
@@ -65,9 +66,9 @@ class GtShMultipurposeTelemetryStatus100(BaseModel):
         title="List of Read Times",
         description="The times that the MultipurposeSensor took the readings, in unix milliseconds",
     )
-    TypeName: Literal[
+    TypeName: Literal["gt.sh.multipurpose.telemetry.status"] = (
         "gt.sh.multipurpose.telemetry.status"
-    ] = "gt.sh.multipurpose.telemetry.status"
+    )
     Version: Literal["100"] = "100"
 
     @validator("AboutNodeAlias")

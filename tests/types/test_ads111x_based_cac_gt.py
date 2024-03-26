@@ -1,4 +1,5 @@
 """Tests ads111x.based.cac.gt type, version 000"""
+
 import json
 import uuid
 

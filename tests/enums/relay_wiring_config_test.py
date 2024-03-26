@@ -1,6 +1,7 @@
 """
 Tests for enum relay.wiring.config.000 from the GridWorks Type Registry.
 """
+
 from gwproto.enums import RelayWiringConfig
 
 

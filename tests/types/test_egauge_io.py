@@ -1,4 +1,5 @@
 """Tests egauge.io type, version 001"""
+
 import json
 
 import pytest

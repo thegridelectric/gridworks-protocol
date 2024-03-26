@@ -1,4 +1,5 @@
 """ ChannelConfig"""
+
 from abc import ABC
 from typing import Dict
 from typing import Optional

@@ -1,6 +1,7 @@
 """
 Tests for enum relay.closed.or.open.000 from the GridWorks Type Registry.
 """
+
 from gwproto.enums import RelayClosedOrOpen
 
 

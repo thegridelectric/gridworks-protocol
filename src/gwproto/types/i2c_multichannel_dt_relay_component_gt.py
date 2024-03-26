@@ -1,4 +1,5 @@
 """Type i2c.multichannel.dt.relay.component.gt, version 000"""
+
 import json
 import logging
 from typing import Any
@@ -78,9 +79,9 @@ class I2cMultichannelDtRelayComponentGt(BaseModel):
         title="Hardware Unique Id",
         default=None,
     )
-    TypeName: Literal[
+    TypeName: Literal["i2c.multichannel.dt.relay.component.gt"] = (
         "i2c.multichannel.dt.relay.component.gt"
-    ] = "i2c.multichannel.dt.relay.component.gt"
+    )
     Version: Literal["000"] = "000"
 
     @validator("ComponentId")

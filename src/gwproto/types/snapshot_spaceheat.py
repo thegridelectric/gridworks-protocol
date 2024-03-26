@@ -1,4 +1,5 @@
 """Type snapshot.spaceheat, version 001"""
+
 import json
 import logging
 from typing import Any

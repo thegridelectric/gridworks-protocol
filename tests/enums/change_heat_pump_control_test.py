@@ -1,6 +1,7 @@
 """
 Tests for enum change.heat.pump.control.000 from the GridWorks Type Registry.
 """
+
 from gwproto.enums import ChangeHeatPumpControl
 
 

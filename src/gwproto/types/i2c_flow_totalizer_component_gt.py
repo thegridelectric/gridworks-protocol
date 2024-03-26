@@ -1,4 +1,5 @@
 """Type i2c.flow.totalizer.component.gt, version 000"""
+
 import json
 import logging
 from typing import Any
@@ -89,9 +90,9 @@ class I2cFlowTotalizerComponentGt(BaseModel):
         title="Hardware Unique Id",
         default=None,
     )
-    TypeName: Literal[
+    TypeName: Literal["i2c.flow.totalizer.component.gt"] = (
         "i2c.flow.totalizer.component.gt"
-    ] = "i2c.flow.totalizer.component.gt"
+    )
     Version: Literal["000"] = "000"
 
     @validator("ComponentId")

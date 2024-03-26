@@ -1,6 +1,7 @@
 """
 Tests for enum change.relay.pin.000 from the GridWorks Type Registry.
 """
+
 from gwproto.enums import ChangeRelayPin
 
 

@@ -1,4 +1,5 @@
 """Tests fsm.event type, version 000"""
+
 import json
 
 import pytest

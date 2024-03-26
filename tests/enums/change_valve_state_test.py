@@ -1,6 +1,7 @@
 """
 Tests for enum change.valve.state.000 from the GridWorks Type Registry.
 """
+
 from gwproto.enums import ChangeValveState
 
 

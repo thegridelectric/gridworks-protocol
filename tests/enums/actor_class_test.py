@@ -19,7 +19,7 @@ def test_actor_class() -> None:
         "HubitatTelemetryReader",
         "HubitatTankModule",
         "HubitatPoller",
-        "KridaI2cMultiplexer",
+        "I2cRelayMultiplexer",
         "FlowTotalizer",
         "Relay",
         "Admin",
@@ -42,7 +42,7 @@ def test_actor_class() -> None:
     assert ActorClass.version("HubitatTelemetryReader") == "001"
     assert ActorClass.version("HubitatTankModule") == "001"
     assert ActorClass.version("HubitatPoller") == "001"
-    assert ActorClass.version("KridaI2cMultiplexer") == "001"
+    assert ActorClass.version("I2cRelayMultiplexer") == "001"
     assert ActorClass.version("FlowTotalizer") == "001"
     assert ActorClass.version("Relay") == "001"
     assert ActorClass.version("Admin") == "001"

@@ -55,7 +55,7 @@ class ActorClass(StrEnum):
         thermal storage tank. [More Info](https://drive.google.com/drive/u/0/folders/1GSxDd8Naf1GKK_fSOgQU933M1UcJ4r8q).
       - HubitatPoller (00000100): An actor for representing a somewhat generic ShNode (like a thermostat)
         that can be polled through the Hubitat.
-      - KridaI2cMultiplexer (cdf7df88): Responsible for maintaining a single i2c bus object
+      - I2cRelayMultiplexer (cdf7df88): Responsible for maintaining a single i2c bus object
       - FlowTotalizer (06b306e7): Attached to a driver that reads liquid flow by counting pulses
         from a flow meter that creates pulses and integrating the result (known as a totalizer
         in the industry).
@@ -79,7 +79,7 @@ class ActorClass(StrEnum):
     HubitatTelemetryReader = auto()
     HubitatTankModule = auto()
     HubitatPoller = auto()
-    KridaI2cMultiplexer = auto()
+    I2cRelayMultiplexer = auto()
     FlowTotalizer = auto()
     Relay = auto()
     Admin = auto()
@@ -210,7 +210,7 @@ symbol_to_value = {
     "0401b27e": "HubitatTelemetryReader",
     "e2877329": "HubitatTankModule",
     "00000100": "HubitatPoller",
-    "cdf7df88": "KridaI2cMultiplexer",
+    "cdf7df88": "I2cRelayMultiplexer",
     "06b306e7": "FlowTotalizer",
     "49951f59": "Relay",
     "4d5f791b": "Admin",
@@ -232,7 +232,7 @@ value_to_version = {
     "HubitatTelemetryReader": "001",
     "HubitatTankModule": "001",
     "HubitatPoller": "001",
-    "KridaI2cMultiplexer": "001",
+    "I2cRelayMultiplexer": "001",
     "FlowTotalizer": "001",
     "Relay": "001",
     "Admin": "001",

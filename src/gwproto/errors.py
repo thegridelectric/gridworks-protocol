@@ -1,4 +1,22 @@
-from gridworks.errors import AlgoError
-from gridworks.errors import DcError
-from gridworks.errors import RegistryError
-from gridworks.errors import SchemaError
+class SchemaError(Exception):
+    """Base class for Schema errors"""
+
+    pass
+
+
+class AlgoError(Exception):
+    """Base class for errors related to Algorand"""
+
+    pass
+
+
+class DcError(Exception):
+    """Base class for dataclass errors"""
+
+    pass
+
+
+class RegistryError(Exception):
+    """Base class for registry errors"""
+
+    pass

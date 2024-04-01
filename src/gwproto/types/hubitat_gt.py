@@ -1,9 +1,9 @@
 from typing import Optional
 
 import yarl
-from gridworks.property_format import predicate_validator
 from pydantic import BaseModel
 
+from gwproto.property_format import predicate_validator
 from gwproto.types.rest_poller_gt import URLArgs
 from gwproto.types.rest_poller_gt import URLConfig
 from gwproto.utils import has_mac_address_format

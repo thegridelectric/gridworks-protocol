@@ -1,4 +1,5 @@
 """Type egauge.register.config, version 000"""
+
 import json
 import logging
 from typing import Any

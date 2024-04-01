@@ -4,6 +4,7 @@ This will probably be refactored as we implement our local registry. Currently s
 because content is static (except for needing a path to the houses.json file, which we should be able to do
 away with).
 """
+
 import copy
 import json
 import re
@@ -82,10 +83,10 @@ def load_cacs(
     ]:
         for d in layout.get(type_name, []):
             try:
-                cacs[
-                    d["ComponentAttributeClassId"]
-                ] = maker_class.dict_to_dc(  # type:ignore[attr-defined]
-                    d
+                cacs[d["ComponentAttributeClassId"]] = (
+                    maker_class.dict_to_dc(  # type:ignore[attr-defined]
+                        d
+                    )
                 )
             except Exception as e:
                 if raise_errors:
@@ -129,10 +130,10 @@ def load_components(
     ]:
         for d in layout.get(type_name, []):
             try:
-                components[
-                    d["ComponentId"]
-                ] = maker_class.dict_to_dc(  # type:ignore[attr-defined]
-                    d
+                components[d["ComponentId"]] = (
+                    maker_class.dict_to_dc(  # type:ignore[attr-defined]
+                        d
+                    )
                 )
             except Exception as e:
                 if raise_errors:

@@ -1,4 +1,5 @@
 """Tests gt.sh.cli.atn.cmd type, version 110"""
+
 import json
 
 import pytest

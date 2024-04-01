@@ -1,4 +1,5 @@
 """Type gt.sh.cli.atn.cmd, version 110"""
+
 import json
 import logging
 from typing import Any

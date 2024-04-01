@@ -1,4 +1,5 @@
 """Tests gt.telemetry type, version 110"""
+
 import json
 
 import pytest

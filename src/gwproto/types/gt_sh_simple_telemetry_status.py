@@ -1,4 +1,5 @@
 """Type gt.sh.simple.telemetry.status, version 100"""
+
 import json
 import logging
 from typing import Any

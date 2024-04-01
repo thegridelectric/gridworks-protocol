@@ -1,4 +1,5 @@
 """Tests spaceheat.node.gt type, version 100"""
+
 import json
 
 import pytest

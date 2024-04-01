@@ -1,4 +1,5 @@
 """Type gt.driver.booleanactuator.cmd, version 100"""
+
 import json
 import logging
 from typing import Any

@@ -1,6 +1,7 @@
 """
 Tests for enum spaceheat.telemetry.name.001 from the GridWorks Type Registry.
 """
+
 from gwproto.enums import TelemetryName
 
 

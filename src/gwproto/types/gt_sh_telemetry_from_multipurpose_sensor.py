@@ -1,4 +1,5 @@
 """Type gt.sh.telemetry.from.multipurpose.sensor, version 100"""
+
 import json
 import logging
 from typing import Any
@@ -51,9 +52,9 @@ class GtShTelemetryFromMultipurposeSensor(BaseModel):
     ValueList: List[int] = Field(
         title="ValueList",
     )
-    TypeName: Literal[
+    TypeName: Literal["gt.sh.telemetry.from.multipurpose.sensor"] = (
         "gt.sh.telemetry.from.multipurpose.sensor"
-    ] = "gt.sh.telemetry.from.multipurpose.sensor"
+    )
     Version: Literal["100"] = "100"
 
     @validator("ScadaReadTimeUnixMs")

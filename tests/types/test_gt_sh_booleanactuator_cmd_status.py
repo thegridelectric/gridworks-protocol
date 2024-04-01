@@ -1,4 +1,5 @@
 """Tests gt.sh.booleanactuator.cmd.status type, version 100"""
+
 import json
 
 import pytest

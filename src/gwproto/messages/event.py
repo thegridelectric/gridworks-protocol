@@ -71,44 +71,43 @@ class CommEvent(EventBase):
     PeerName: str
 
 
-class MQTTCommEvent(CommEvent):
-    ...
+class MQTTCommEvent(CommEvent): ...
 
 
 class MQTTConnectEvent(MQTTCommEvent):
-    TypeName: Literal[
+    TypeName: Literal["gridworks.event.comm.mqtt.connect"] = (
         "gridworks.event.comm.mqtt.connect"
-    ] = "gridworks.event.comm.mqtt.connect"
+    )
 
 
 class MQTTConnectFailedEvent(MQTTCommEvent):
-    TypeName: Literal[
+    TypeName: Literal["gridworks.event.comm.mqtt.connect.failed"] = (
         "gridworks.event.comm.mqtt.connect.failed"
-    ] = "gridworks.event.comm.mqtt.connect.failed"
+    )
 
 
 class MQTTDisconnectEvent(MQTTCommEvent):
-    TypeName: Literal[
+    TypeName: Literal["gridworks.event.comm.mqtt.disconnect"] = (
         "gridworks.event.comm.mqtt.disconnect"
-    ] = "gridworks.event.comm.mqtt.disconnect"
+    )
 
 
 class MQTTFullySubscribedEvent(CommEvent):
-    TypeName: Literal[
+    TypeName: Literal["gridworks.event.comm.mqtt.fully.subscribed"] = (
         "gridworks.event.comm.mqtt.fully.subscribed"
-    ] = "gridworks.event.comm.mqtt.fully.subscribed"
+    )
 
 
 class ResponseTimeoutEvent(CommEvent):
-    TypeName: Literal[
+    TypeName: Literal["gridworks.event.comm.response.timeout"] = (
         "gridworks.event.comm.response.timeout"
-    ] = "gridworks.event.comm.response.timeout"
+    )
 
 
 class PeerActiveEvent(CommEvent):
-    TypeName: Literal[
+    TypeName: Literal["gridworks.event.comm.peer.active"] = (
         "gridworks.event.comm.peer.active"
-    ] = "gridworks.event.comm.peer.active"
+    )
 
 
 class GtShStatusEvent(EventBase):
@@ -118,6 +117,6 @@ class GtShStatusEvent(EventBase):
 
 class SnapshotSpaceheatEvent(EventBase):
     snap: SnapshotSpaceheat | dict
-    TypeName: Literal[
+    TypeName: Literal["gridworks.event.snapshot.spaceheat"] = (
         "gridworks.event.snapshot.spaceheat"
-    ] = "gridworks.event.snapshot.spaceheat"
+    )

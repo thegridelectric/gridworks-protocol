@@ -1,4 +1,5 @@
 """Tests hubitat.tank.cac.gt type, version 000"""
+
 import json
 
 import pytest

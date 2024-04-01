@@ -1,4 +1,5 @@
 """Tests gt.sh.telemetry.from.multipurpose.sensor type, version 100"""
+
 import json
 
 import pytest

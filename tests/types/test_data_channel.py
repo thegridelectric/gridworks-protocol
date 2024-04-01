@@ -1,4 +1,5 @@
 """Tests data.channel type, version 000"""
+
 import json
 
 import pytest

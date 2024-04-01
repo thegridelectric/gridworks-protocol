@@ -1,4 +1,5 @@
 """Type simple.temp.sensor.component.gt, version 000"""
+
 import json
 import logging
 from typing import Any
@@ -66,9 +67,9 @@ class SimpleTempSensorComponentGt(BaseModel):
         title="Channel",
         default=None,
     )
-    TypeName: Literal[
+    TypeName: Literal["simple.temp.sensor.component.gt"] = (
         "simple.temp.sensor.component.gt"
-    ] = "simple.temp.sensor.component.gt"
+    )
     Version: Literal["000"] = "000"
 
     @validator("ComponentId")

@@ -1,4 +1,5 @@
 """Tests gt.sh.status type, version 110"""
+
 import json
 
 import pytest

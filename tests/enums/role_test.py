@@ -1,6 +1,7 @@
 """
 Tests for enum sh.node.role.000 from the GridWorks Type Registry.
 """
+
 from gwproto.enums import Role
 
 

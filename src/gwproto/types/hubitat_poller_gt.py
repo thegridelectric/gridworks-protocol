@@ -14,6 +14,7 @@ class MakerAPIAttributeGt(BaseModel):
     unit_gt_enum_symbol: str = "ec14bd47"
     exponent: int = 3
     enabled: bool = True
+    listen_enabled: bool = True
     report_missing: bool = True
     report_parse_error: bool = True
 
@@ -48,6 +49,7 @@ class HubitatPollerGt(BaseModel):
     device_id: int
     attributes: list[MakerAPIAttributeGt] = []
     enabled: bool = True
+    listen_enabled: bool = True
     poll_period_seconds: float = 60
 
     class Config:

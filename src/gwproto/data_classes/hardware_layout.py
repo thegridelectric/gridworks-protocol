@@ -9,12 +9,15 @@ import copy
 import json
 import re
 import typing
+from collections import defaultdict
 from dataclasses import dataclass
 from functools import cached_property
 from pathlib import Path
 from typing import Any
 from typing import List
 from typing import Optional
+from typing import Type
+from typing import TypeVar
 
 from gwproto.data_classes.cacs.electric_meter_cac import ElectricMeterCac
 from gwproto.data_classes.component import Component
@@ -49,6 +52,8 @@ from gwproto.types.multipurpose_sensor_component_gt import (
     MultipurposeSensorComponentGt_Maker,
 )
 
+
+T = TypeVar("T")
 
 snake_add_underscore_to_camel_pattern = re.compile(r"(?<!^)(?=[A-Z])")
 
@@ -210,6 +215,7 @@ class HardwareLayout:
     layout: dict[Any, Any]
     cacs: dict[str, ComponentAttributeClass]
     components: dict[str, Component]
+    components_by_type: dict[Type, list[Component]]
     nodes: dict[str, ShNode]
 
     def __init__(
@@ -226,6 +232,9 @@ class HardwareLayout:
         if components is None:
             components = Component.by_id
         self.components = dict(components)
+        self.components_by_type = defaultdict(list)
+        for component in components.values():
+            self.components_by_type[type(component)].append(component)
         if nodes is None:
             nodes = ShNode.by_id
         self.nodes = dict(nodes)
@@ -302,11 +311,22 @@ class HardwareLayout:
     def node(self, alias: str, default: Any = None) -> ShNode:
         return self.nodes.get(alias, default)
 
-    def component(self, alias: str) -> Optional[Component]:
-        return self.component_from_node(self.node(alias, None))
+    def component(self, node_alias: str) -> Optional[Component]:
+        return self.component_from_node(self.node(node_alias, None))
 
-    def cac(self, alias: str) -> Optional[ComponentAttributeClass]:
-        return self.cac_from_component(self.component(alias))
+    def cac(self, node_alias: str) -> Optional[ComponentAttributeClass]:
+        return self.cac_from_component(self.component(node_alias))
+
+    def get_components_by_type(self, type_: Type[T]) -> list[T]:
+        entries = self.components_by_type.get(type_, [])
+        for i, entry in enumerate(entries):
+            if not isinstance(entry, type_):
+                raise ValueError(
+                    f"ERROR. Entry {i+1} in "
+                    f"HardwareLayout.components_by_typ[{type_}] "
+                    f"has the wrong type {type(entry)}"
+                )
+        return entries
 
     def component_from_node(self, node: Optional[ShNode]) -> Optional[Component]:
         return (

@@ -19,7 +19,7 @@ class HubitatComponentGt(ComponentGt):
     Version: Literal["000"] = "000"
 
     def __hash__(self):
-        return hash((type(self),) + tuple(self.__dict__.values()))
+        return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
     def url_config(self) -> URLConfig:
         return self.Hubitat.url_config()
@@ -74,7 +74,7 @@ class HubitatComponentGt(ComponentGt):
     @classmethod
     def from_component_id(
         cls, component_id: str, components: dict[str, Component]
-    ) -> "HubitatComponentGt":
+    ) -> "HubitatComponent":
         hubitat_component = components.get(component_id, None)
         if hubitat_component is None:
             raise ValueError(
@@ -88,7 +88,7 @@ class HubitatComponentGt(ComponentGt):
                 "must be instance of HubitatComponent. "
                 f"Hubitat component id: {component_id}"
             )
-        return HubitatComponentGt.from_data_class(hubitat_component)
+        return hubitat_component
 
 
 class HubitatRESTResolutionSettings:

@@ -67,6 +67,7 @@ class ActorClass(StrEnum):
     HubitatTelemetryReader = auto()
     HubitatTankModule = auto()
     HubitatPoller = auto()
+    Hubitat = auto()
 
     @classmethod
     def default(cls) -> "ActorClass":
@@ -172,6 +173,7 @@ class ActorClass(StrEnum):
             "0401b27e",
             "e2877329",
             "00000100",
+            "00000101",
         ]
 
 
@@ -188,6 +190,7 @@ symbol_to_value = {
     "0401b27e": "HubitatTelemetryReader",
     "e2877329": "HubitatTankModule",
     "00000100": "HubitatPoller",
+    "00000101": "Hubitat",
 }
 
 value_to_symbol = {value: key for key, value in symbol_to_value.items()}
@@ -205,4 +208,5 @@ value_to_version = {
     "HubitatTelemetryReader": "001",
     "HubitatTankModule": "001",
     "HubitatPoller": "001",
+    "Hubitat": "001",
 }

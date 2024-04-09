@@ -217,6 +217,7 @@ class HardwareLayout:
     components: dict[str, Component]
     components_by_type: dict[Type, list[Component]]
     nodes: dict[str, ShNode]
+    nodes_by_component: dict[str, str]
 
     def __init__(
         self,
@@ -238,6 +239,9 @@ class HardwareLayout:
         if nodes is None:
             nodes = ShNode.by_id
         self.nodes = dict(nodes)
+        self.nodes_by_component = {
+            node.component_id: node.alias for node in self.nodes.values()
+        }
 
     def clear_property_cache(self) -> None:
         for cached_prop_name in [
@@ -317,6 +321,14 @@ class HardwareLayout:
     def cac(self, node_alias: str) -> Optional[ComponentAttributeClass]:
         return self.cac_from_component(self.component(node_alias))
 
+    def get_component_as_type(self, component_id: str, type_: Type[T]) -> Optional[T]:
+        component = self.components.get(component_id, None)
+        if component is not None and not isinstance(component, type_):
+            raise ValueError(
+                f"ERROR. Component <{component_id}> has type {type(component)} not {type_}"
+            )
+        return component
+
     def get_components_by_type(self, type_: Type[T]) -> list[T]:
         entries = self.components_by_type.get(type_, [])
         for i, entry in enumerate(entries):
@@ -327,6 +339,9 @@ class HardwareLayout:
                     f"has the wrong type {type(entry)}"
                 )
         return entries
+
+    def node_from_component(self, component_id: str) -> Optional[ShNode]:
+        return self.nodes.get(self.nodes_by_component.get(component_id, ""), None)
 
     def component_from_node(self, node: Optional[ShNode]) -> Optional[Component]:
         return (

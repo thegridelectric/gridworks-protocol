@@ -16,10 +16,10 @@ def test_hubitat_gt() -> None:
         AccessToken="foo",
         MacAddress=mac,
     )
-    assert h.ListenEnabled is True
+    assert h.WebListenEnabled is True
     assert h.listen_path == listen_path_exp
-    h2 = HubitatGt(ListenEnabled=False, **h.dict(exclude_unset=True))
-    assert h2.ListenEnabled is False
+    h2 = HubitatGt(WebListenEnabled=False, **h.dict(exclude_unset=True))
+    assert h2.WebListenEnabled is False
     url = yarl.URL.build(scheme="http", host="192.168.1.20", port=1)
     assert str(h.listen_url(url)) == f"http://192.168.1.20:1/{listen_path_exp}"  # noqa
 

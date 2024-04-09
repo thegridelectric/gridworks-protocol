@@ -16,7 +16,7 @@ class HubitatGt(BaseModel):
     MakerApiId: int
     AccessToken: str
     MacAddress: str
-    ListenEnabled: bool = True
+    WebListenEnabled: bool = True
 
     class Config:
         extra = Extra.allow

@@ -19,6 +19,7 @@ def test_actor_class() -> None:
         "HubitatTelemetryReader",
         "HubitatTankModule",
         "HubitatPoller",
+        "Hubitat",
     }
 
     assert ActorClass.default() == ActorClass.NoActor

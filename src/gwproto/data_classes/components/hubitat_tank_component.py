@@ -19,6 +19,7 @@ class HubitatTankComponent(Component, ComponentResolver):
     default_poll_period_seconds: Optional[float] = None
     devices_gt: list[FibaroTempSensorSettingsGt]
     devices: list[FibaroTempSensorSettings] = []
+    web_listen_enabled: bool
 
     def __init__(
         self,
@@ -36,6 +37,7 @@ class HubitatTankComponent(Component, ComponentResolver):
         self.sensor_supply_voltage = tank_gt.sensor_supply_voltage
         self.default_poll_period_seconds = tank_gt.default_poll_period_seconds
         self.devices_gt = list(tank_gt.devices)
+        self.web_listen_enabled = tank_gt.web_listen_enabled
         super().__init__(
             display_name=display_name,
             component_id=component_id,
@@ -49,9 +51,10 @@ class HubitatTankComponent(Component, ComponentResolver):
         nodes: dict[str, ShNode],
         components: dict[str, Component],
     ):
-        hubitat_component_gt = HubitatComponentGt.from_component_id(
+        hubitat_component = HubitatComponentGt.from_component_id(
             self.hubitat.ComponentId, components
         )
+        hubitat_component_gt = HubitatComponentGt.from_data_class(hubitat_component)
         hubitat_settings = HubitatRESTResolutionSettings(hubitat_component_gt)
         devices = [
             FibaroTempSensorSettings.create(
@@ -72,6 +75,12 @@ class HubitatTankComponent(Component, ComponentResolver):
         # with the actual hubitat component containing data.
         self.hubitat = hubitat_component_gt
         self.devices = devices
+
+        # register voltage attribute for fibaros which accept web posts
+        if self.web_listen_enabled and hubitat_component.hubitat_gt.WebListenEnabled:
+            for device in self.devices:
+                if device.web_listen_enabled:
+                    hubitat_component.add_web_listener(tank_node_name)
 
     def urls(self) -> dict[str, Optional[yarl.URL]]:
         urls = self.hubitat.urls()

@@ -21,9 +21,9 @@ Changelog = "https://github.com/thegridelectric/gridworks-protocol/releases"
 [tool.poetry.dependencies]
 python = "^3.10"
 pydantic = "^1.10.2"
-pendulum = "^3"
+pendulum = "^2.1.2"
 fastapi-utils = "^0.2.1"
-gridworks = "^0.2.11"
+gridworks = "^0.2.10"
 yarl = "^1.9.2"
 
 [tool.poetry.dev-dependencies]

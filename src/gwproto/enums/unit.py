@@ -26,6 +26,7 @@ class Unit(StrEnum):
       - AmpsRms (a969ac7c)
       - VoltsRms (e5d7555c)
       - Gallons (8e123a26)
+      - ThermostatStateEnum (00003000)
     """
 
     Unknown = auto()
@@ -38,6 +39,7 @@ class Unit(StrEnum):
     AmpsRms = auto()
     VoltsRms = auto()
     Gallons = auto()
+    ThermostatStateEnum = auto()
 
     @classmethod
     def default(cls) -> "Unit":
@@ -141,6 +143,7 @@ class Unit(StrEnum):
             "a969ac7c",
             "e5d7555c",
             "8e123a26",
+            "00003000",
         ]
 
 
@@ -155,6 +158,7 @@ symbol_to_value = {
     "a969ac7c": "AmpsRms",
     "e5d7555c": "VoltsRms",
     "8e123a26": "Gallons",
+    "00003000": "ThermostatStateEnum",
 }
 
 value_to_symbol = {value: key for key, value in symbol_to_value.items()}
@@ -170,4 +174,5 @@ value_to_version = {
     "AmpsRms": "000",
     "VoltsRms": "000",
     "Gallons": "000",
+    "ThermostatStateEnum": "000"
 }

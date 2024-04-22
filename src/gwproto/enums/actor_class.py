@@ -53,6 +53,10 @@ class ActorClass(StrEnum):
         thermal storage tank. [More Info](https://drive.google.com/drive/u/0/folders/1GSxDd8Naf1GKK_fSOgQU933M1UcJ4r8q).
       - HubitatPoller (00000100): An actor for representing a somewhat generic ShNode (like a thermostat)
         that can be polled through the Hubitat.
+      - Hubitat: (0000101): An actor for representing a Hubitat for receiving Hubitat events over HTTP.
+      - HoneywellThermostat: (0000102): An actor for representing a Honeywell Hubitat thermostat which
+        can load thermostat heating state change messages into status reports.
+
     """
 
     NoActor = auto()
@@ -67,6 +71,8 @@ class ActorClass(StrEnum):
     HubitatTelemetryReader = auto()
     HubitatTankModule = auto()
     HubitatPoller = auto()
+    Hubitat = auto()
+    HoneywellThermostat = auto()
 
     @classmethod
     def default(cls) -> "ActorClass":
@@ -172,6 +178,8 @@ class ActorClass(StrEnum):
             "0401b27e",
             "e2877329",
             "00000100",
+            "00000101",
+            "00000102",
         ]
 
 
@@ -188,6 +196,8 @@ symbol_to_value = {
     "0401b27e": "HubitatTelemetryReader",
     "e2877329": "HubitatTankModule",
     "00000100": "HubitatPoller",
+    "00000101": "Hubitat",
+    "00000102": "HoneywellThermostat",
 }
 
 value_to_symbol = {value: key for key, value in symbol_to_value.items()}
@@ -205,4 +215,6 @@ value_to_version = {
     "HubitatTelemetryReader": "001",
     "HubitatTankModule": "001",
     "HubitatPoller": "001",
+    "Hubitat": "001",
+    "HoneywellThermostat": "001",
 }

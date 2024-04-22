@@ -53,9 +53,10 @@ class Message(GenericModel, Generic[PayloadT]):
     Payload: PayloadT
     TypeName: str = Field(GRIDWORKS_ENVELOPE_TYPE, const=True)
 
-    def __init__(self, **kwargs: Any):
-        kwargs["Header"] = self._header_from_kwargs(kwargs)
-        super().__init__(**kwargs)
+    def __init__(self, header: Optional[Header] = None, **kwargs: Any):
+        if header is None:
+            header = self._header_from_kwargs(kwargs)
+        super().__init__(Header=header, **kwargs)
 
     def message_type(self) -> str:
         return self.Header.MessageType
@@ -91,7 +92,7 @@ class Message(GenericModel, Generic[PayloadT]):
                             val = payload[payload_field]
                 if val is not None:
                     header_kwargs[header_field] = val
-        header: Optional[Union[Header, dict[str, Any]]] = kwargs.get("Header", None)
+        header: Optional[Union[Header, dict[str, Any]]] = kwargs.pop("Header", None)
         if isinstance(header, Header):
             header = header.copy(update=header_kwargs, deep=True)
         else:

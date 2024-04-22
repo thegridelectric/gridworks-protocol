@@ -41,6 +41,7 @@ class TelemetryName(StrEnum):
         6234 means 6.234 deg Celcius.
       - AirTempFTimes1000 (4c3f8c78): Air temperature, in Degrees F multiplied by 1000. Example:
         69329 means 69.329 deg Fahrenheit.
+      - ThermostatState (00002000): An enum representing the state of the thermostat heat call.
     """
 
     Unknown = auto()
@@ -56,6 +57,7 @@ class TelemetryName(StrEnum):
     FrequencyMicroHz = auto()
     AirTempCTimes1000 = auto()
     AirTempFTimes1000 = auto()
+    ThermostatState = auto()
 
     @classmethod
     def default(cls) -> "TelemetryName":
@@ -162,6 +164,7 @@ class TelemetryName(StrEnum):
             "337b8659",
             "0f627faa",
             "4c3f8c78",
+            "00002000",
         ]
 
 
@@ -179,6 +182,7 @@ symbol_to_value = {
     "337b8659": "FrequencyMicroHz",
     "0f627faa": "AirTempCTimes1000",
     "4c3f8c78": "AirTempFTimes1000",
+    "00002000": "ThermostatState",
 }
 
 value_to_symbol = {value: key for key, value in symbol_to_value.items()}
@@ -197,4 +201,5 @@ value_to_version = {
     "FrequencyMicroHz": "001",
     "AirTempCTimes1000": "001",
     "AirTempFTimes1000": "001",
+    "ThermostatState": "001",
 }

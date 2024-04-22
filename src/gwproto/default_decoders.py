@@ -13,6 +13,8 @@ import gwproto.types.hubitat_tank_cac_gt  # noqa
 import gwproto.types.hubitat_tank_component_gt  # noqa
 import gwproto.types.rest_poller_cac_gt  # noqa
 import gwproto.types.rest_poller_component_gt  # noqa
+import gwproto.types.web_server_cac_gt  # noqa
+import gwproto.types.web_server_component_gt  # noqa
 from gwproto.data_classes.component import Component
 from gwproto.data_classes.component_attribute_class import ComponentAttributeClass
 from gwproto.decoders import PydanticTypeNameDecoder
@@ -86,6 +88,7 @@ default_cac_decoder = CacDecoder(
         "gwproto.types.hubitat_poller_cac_gt",
         "gwproto.types.hubitat_tank_cac_gt",
         "gwproto.types.rest_poller_cac_gt",
+        "gwproto.types.web_server_cac_gt",
     ],
 )
 
@@ -97,5 +100,6 @@ default_component_decoder = ComponentDecoder(
         "gwproto.types.hubitat_poller_component_gt",
         "gwproto.types.hubitat_tank_component_gt",
         "gwproto.types.rest_poller_component_gt",
+        "gwproto.types.web_server_component_gt",
     ],
 )

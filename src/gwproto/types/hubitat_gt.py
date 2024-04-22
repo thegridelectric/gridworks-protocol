@@ -27,7 +27,7 @@ class HubitatGt(BaseModel):
 
     @property
     def listen_path(self) -> str:
-        return self.MacAddress.replace(":", "-")
+        return "/" + self.MacAddress.replace(":", "-")
 
     def listen_url(self, url: yarl.URL) -> yarl.URL:
         return url / self.listen_path

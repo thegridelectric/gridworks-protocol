@@ -17,6 +17,7 @@ def test_unit() -> None:
         "AmpsRms",
         "VoltsRms",
         "Gallons",
+        "ThermostatStateEnum",
     }
 
     assert Unit.default() == Unit.Unknown

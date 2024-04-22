@@ -44,7 +44,7 @@ class HubitatPollerComponent(Component, ComponentResolver):
 
     def resolve(
         self,
-        tank_node_name: str,
+        node_name: str,
         nodes: dict[str, ShNode],
         components: dict[str, Component],
     ):
@@ -56,10 +56,11 @@ class HubitatPollerComponent(Component, ComponentResolver):
 
         # replace proxy hubitat component, which only had component id.
         # with the actual hubitat component containing data.
-        self.hubitat_gt = HubitatComponentGt.from_component_id(
+        hubitat_component = HubitatComponentGt.from_component_id(
             self.hubitat_gt.ComponentId,
             components,
         )
+        self.hubitat_gt = HubitatComponentGt.from_data_class(hubitat_component)
 
         # Constuct url config on top of maker api url url config
         self._rest = RESTPollerSettings(
@@ -68,6 +69,15 @@ class HubitatPollerComponent(Component, ComponentResolver):
             ),
             poll_period_seconds=self.poller_gt.poll_period_seconds,
         )
+
+        # register attributes which accept web posts
+        if (
+            self.poller_gt.web_listen_enabled
+            and hubitat_component.hubitat_gt.WebListenEnabled
+        ):
+            for attribute in self.poller_gt.attributes:
+                if attribute.web_listen_enabled:
+                    hubitat_component.add_web_listener(node_name)
 
     def urls(self) -> dict[str, Optional[yarl.URL]]:
         urls = self.hubitat_gt.urls()

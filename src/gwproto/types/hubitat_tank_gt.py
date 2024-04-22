@@ -38,6 +38,7 @@ class FibaroTempSensorSettingsGt(BaseModel):
     telemetry_name_gt_enum_symbol: str = "c89d0ba1"
     temp_unit_gt_enum_symbol: str = "ec14bd47"
     enabled: bool = True
+    web_listen_enabled: bool = True
     poll_period_seconds: Optional[float] = None
     """The actual poll_seconds_used will be the first of:
     1. Any value specified in an explicit 'rest' member, if 'rest' member is not None.
@@ -236,6 +237,7 @@ class HubitatTankSettingsGt(BaseModel):
     sensor_supply_voltage: float = DEFAULT_TANK_MODULE_VOLTAGE
     default_poll_period_seconds: Optional[float] = None
     devices: list[FibaroTempSensorSettingsGt] = []
+    web_listen_enabled: bool = True
 
     class Config:
         extra = Extra.allow

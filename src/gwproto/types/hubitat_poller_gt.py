@@ -13,7 +13,10 @@ class MakerAPIAttributeGt(BaseModel):
     telemetry_name_gt_enum_symbol: str = "c89d0ba1"
     unit_gt_enum_symbol: str = "ec14bd47"
     exponent: int = 3
+    interpret_as_number: bool = True
     enabled: bool = True
+    web_poll_enabled: bool = True
+    web_listen_enabled: bool = True
     report_missing: bool = True
     report_parse_error: bool = True
 
@@ -48,6 +51,7 @@ class HubitatPollerGt(BaseModel):
     device_id: int
     attributes: list[MakerAPIAttributeGt] = []
     enabled: bool = True
+    web_listen_enabled: bool = True
     poll_period_seconds: float = 60
 
     class Config:

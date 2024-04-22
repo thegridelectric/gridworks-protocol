@@ -2,11 +2,13 @@ from typing import Optional
 
 import yarl
 from pydantic import BaseModel
+from pydantic import Extra
 
 from gwproto.property_format import predicate_validator
 from gwproto.types.rest_poller_gt import URLArgs
 from gwproto.types.rest_poller_gt import URLConfig
 from gwproto.utils import has_mac_address_format
+from gwproto.utils import snake_to_camel
 
 
 class HubitatGt(BaseModel):
@@ -14,8 +16,21 @@ class HubitatGt(BaseModel):
     MakerApiId: int
     AccessToken: str
     MacAddress: str
+    WebListenEnabled: bool = True
+
+    class Config:
+        extra = Extra.allow
+        alias_generator = snake_to_camel
+        allow_population_by_field_name = True
 
     _is_mac_address = predicate_validator("MacAddress", has_mac_address_format)
+
+    @property
+    def listen_path(self) -> str:
+        return self.MacAddress.replace(":", "-")
+
+    def listen_url(self, url: yarl.URL) -> yarl.URL:
+        return url / self.listen_path
 
     def url_config(self) -> URLConfig:
         return URLConfig(

@@ -20,7 +20,6 @@ class HubitatGt(BaseModel):
 
     class Config:
         extra = Extra.allow
-        alias_generator = snake_to_camel
         allow_population_by_field_name = True
 
     _is_mac_address = predicate_validator("MacAddress", has_mac_address_format)

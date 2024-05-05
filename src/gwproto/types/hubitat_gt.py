@@ -8,7 +8,6 @@ from gwproto.property_format import predicate_validator
 from gwproto.types.rest_poller_gt import URLArgs
 from gwproto.types.rest_poller_gt import URLConfig
 from gwproto.utils import has_mac_address_format
-from gwproto.utils import snake_to_camel
 
 
 class HubitatGt(BaseModel):

@@ -1,13 +1,5 @@
 """Tests fibaro.smart.implant.cac.gt type, version 000"""
 
-import json
-
-import pytest
-from pydantic import ValidationError
-
-from gwproto.errors import SchemaError
-from gwproto.types import FibaroSmartImplantCacGt_Maker as Maker
-
 
 def test_fibaro_smart_implant_cac_gt_generated() -> None:
     ...

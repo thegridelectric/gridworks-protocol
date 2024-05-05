@@ -6,7 +6,6 @@ import pytest
 from pydantic import ValidationError
 
 from gwproto.enums import MakeModel
-from gwproto.enums import TelemetryName
 from gwproto.enums import Unit
 from gwproto.errors import SchemaError
 from gwproto.types import MultipurposeSensorCacGt_Maker as Maker

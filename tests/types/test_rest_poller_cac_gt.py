@@ -1,15 +1,5 @@
 """Tests rest.poller.cac.gt type, version 000"""
 
-import json
-
-import pytest
-from pydantic import ValidationError
-
-from gwproto.errors import SchemaError
-
-
-# from gwproto.types import RestPollerCacGt_Maker as Maker
-
 
 def test_rest_poller_cac_gt_generated() -> None:
     ...

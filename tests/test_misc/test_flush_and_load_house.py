@@ -1,33 +1,8 @@
 """Test load_house module"""
 
 # from actors.config import ScadaSettings
-from gwproto.data_classes.component import Component
-from gwproto.data_classes.component_attribute_class import ComponentAttributeClass
-from gwproto.data_classes.components.electric_meter_component import ElectricMeterCac
-from gwproto.data_classes.components.electric_meter_component import (
-    ElectricMeterComponent,
-)
-from gwproto.data_classes.components.pipe_flow_sensor_component import PipeFlowSensorCac
-from gwproto.data_classes.components.pipe_flow_sensor_component import (
-    PipeFlowSensorComponent,
-)
-from gwproto.data_classes.components.relay_component import RelayCac
-from gwproto.data_classes.components.relay_component import RelayComponent
-from gwproto.data_classes.components.resistive_heater_component import (
-    ResistiveHeaterCac,
-)
-from gwproto.data_classes.components.resistive_heater_component import (
-    ResistiveHeaterComponent,
-)
-from gwproto.data_classes.components.simple_temp_sensor_component import (
-    SimpleTempSensorCac,
-)
-from gwproto.data_classes.components.simple_temp_sensor_component import (
-    SimpleTempSensorComponent,
-)
 from gwproto.data_classes.hardware_layout import HardwareLayout
 from gwproto.data_classes.sh_node import ShNode
-from gwproto.enums import Role
 from gwproto.types import ElectricMeterCacGt_Maker
 from gwproto.types import SpaceheatNodeGt_Maker
 from gwproto.types.electric_meter_component_gt import ElectricMeterComponentGt_Maker

@@ -7,7 +7,6 @@ from pydantic import ValidationError
 
 from gwproto.enums import LocalCommInterface
 from gwproto.enums import MakeModel
-from gwproto.enums import TelemetryName
 from gwproto.errors import SchemaError
 from gwproto.types import ElectricMeterCacGt_Maker as Maker
 

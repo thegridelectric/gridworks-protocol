@@ -5,7 +5,6 @@ import json
 import pytest
 from pydantic import ValidationError
 
-from gwproto.enums import TelemetryName
 from gwproto.errors import SchemaError
 from gwproto.types import GtShTelemetryFromMultipurposeSensor_Maker as Maker
 

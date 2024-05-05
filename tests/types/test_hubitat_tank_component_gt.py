@@ -1,13 +1,5 @@
 """Tests hubitat.tank.component.gt type, version 000"""
 
-import json
-
-import pytest
-from pydantic import ValidationError
-
-from gwproto.errors import SchemaError
-from gwproto.types import HubitatTankComponentGt_Maker as Maker
-
 
 def test_hubitat_tank_component_gt_generated() -> None:
     ...

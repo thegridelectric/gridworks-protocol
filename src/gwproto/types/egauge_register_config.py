@@ -131,7 +131,7 @@ class EgaugeRegisterConfig_Maker:
         address: int,
         name: str,
         description: str,
-        type: str,
+        type: str,  # noqa
         denominator: int,
         unit: str,
     ):
@@ -145,11 +145,11 @@ class EgaugeRegisterConfig_Maker:
         )
 
     @classmethod
-    def tuple_to_type(cls, tuple: EgaugeRegisterConfig) -> bytes:
+    def tuple_to_type(cls, tpl: EgaugeRegisterConfig) -> bytes:
         """
         Given a Python class object, returns the serialized JSON type object.
         """
-        return tuple.as_type()
+        return tpl.as_type()
 
     @classmethod
     def type_to_tuple(cls, t: bytes) -> EgaugeRegisterConfig:

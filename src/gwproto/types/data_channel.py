@@ -149,11 +149,11 @@ class DataChannel_Maker:
         )
 
     @classmethod
-    def tuple_to_type(cls, tuple: DataChannel) -> bytes:
+    def tuple_to_type(cls, tpl: DataChannel) -> bytes:
         """
         Given a Python class object, returns the serialized JSON type object.
         """
-        return tuple.as_type()
+        return tpl.as_type()
 
     @classmethod
     def type_to_tuple(cls, t: bytes) -> DataChannel:
@@ -223,7 +223,7 @@ def check_is_spaceheat_name(v: str) -> None:
     or a hyphen, and the first word starts with an alphabet character.
 
     Args:
-        candidate (str): The string to be validated.
+        v (str): The string to be validated.
 
     Raises:
         ValueError: If the provided string is not in SpaceheatName format.

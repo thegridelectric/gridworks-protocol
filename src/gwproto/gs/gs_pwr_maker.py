@@ -8,18 +8,18 @@ class GsPwr_Maker:
     type_name = "p"
 
     def __init__(self, power):
-        tuple = GsPwr(Power=power)
-        tuple.check_for_errors()
-        self.tuple = tuple
+        tpl = GsPwr(Power=power)
+        tpl.check_for_errors()
+        self.tuple = tpl
 
     @classmethod
-    def tuple_to_type(cls, tuple: GsPwr) -> bytes:
-        tuple.check_for_errors()
-        return tuple.as_type()
+    def tuple_to_type(cls, tpl: GsPwr) -> bytes:
+        tpl.check_for_errors()
+        return tpl.as_type()
 
     @classmethod
     def type_to_tuple(cls, b: bytes) -> GsPwr:
         (power,) = struct.unpack("<h", b)
-        tuple = GsPwr(Power=power)
-        tuple.check_for_errors
-        return tuple
+        tpl = GsPwr(Power=power)
+        tpl.check_for_errors()
+        return tpl

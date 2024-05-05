@@ -184,11 +184,11 @@ class GtShMultipurposeTelemetryStatus_Maker:
         )
 
     @classmethod
-    def tuple_to_type(cls, tuple: GtShMultipurposeTelemetryStatus) -> bytes:
+    def tuple_to_type(cls, tpl: GtShMultipurposeTelemetryStatus) -> bytes:
         """
         Given a Python class object, returns the serialized JSON type object.
         """
-        return tuple.as_type()
+        return tpl.as_type()
 
     @classmethod
     def type_to_tuple(cls, t: bytes) -> GtShMultipurposeTelemetryStatus:

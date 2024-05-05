@@ -8,18 +8,18 @@ class GsDispatch_Maker:
     type_name = "d"
 
     def __init__(self, relay_state):
-        tuple = GsDispatch(RelayState=relay_state)
-        tuple.check_for_errors()
-        self.tuple = tuple
+        tpl = GsDispatch(RelayState=relay_state)
+        tpl.check_for_errors()
+        self.tuple = tpl
 
     @classmethod
-    def tuple_to_type(cls, tuple: GsDispatch) -> bytes:
-        tuple.check_for_errors()
-        return tuple.as_type()
+    def tuple_to_type(cls, tpl: GsDispatch) -> bytes:
+        tpl.check_for_errors()
+        return tpl.as_type()
 
     @classmethod
     def type_to_tuple(cls, b: bytes) -> GsDispatch:
         (relay_state,) = struct.unpack("<h", b)
-        tuple = GsDispatch(RelayState=relay_state)
-        tuple.check_for_errors
-        return tuple
+        tpl = GsDispatch(RelayState=relay_state)
+        tpl.check_for_errors()
+        return tpl

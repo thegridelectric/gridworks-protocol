@@ -10,9 +10,7 @@ from gwproto.data_classes.mixin import StreamlinedSerializerMixin
 class ComponentAttributeClass(ABC, StreamlinedSerializerMixin):
     by_id: Dict[str, "ComponentAttributeClass"] = {}
 
-    base_props = []
-    base_props.append("component_attribute_class_id")
-    base_props.append("display_name")
+    base_props = ["component_attribute_class_id", "display_name"]
 
     def __new__(cls, component_attribute_class_id, *args, **kwargs):
         try:

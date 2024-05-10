@@ -95,7 +95,7 @@ def test_resistive_heater_cac_gt_generated() -> None:
     ######################################
 
     d2 = dict(d, MakeModelGtEnumSymbol="unknown_symbol")
-    Maker.dict_to_tuple(d2).MakeModel == MakeModel.default()
+    assert Maker.dict_to_tuple(d2).MakeModel == MakeModel.default()
 
     d2 = dict(d, NameplateMaxPowerW="4500.1")
     with pytest.raises(ValidationError):

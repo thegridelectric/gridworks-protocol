@@ -110,14 +110,14 @@ def test_electric_meter_cac_gt_generated() -> None:
     ######################################
 
     d2 = dict(d, MakeModelGtEnumSymbol="unknown_symbol")
-    Maker.dict_to_tuple(d2).MakeModel == MakeModel.default()
+    assert Maker.dict_to_tuple(d2).MakeModel == MakeModel.default()
 
     d2 = dict(d, PollPeriodMs="1000.1")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d, InterfaceGtEnumSymbol="unknown_symbol")
-    Maker.dict_to_tuple(d2).Interface == LocalCommInterface.default()
+    assert Maker.dict_to_tuple(d2).Interface == LocalCommInterface.default()
 
     d2 = dict(d, DefaultBaud="9600.1")
     with pytest.raises(ValidationError):

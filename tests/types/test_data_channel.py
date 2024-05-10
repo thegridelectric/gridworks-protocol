@@ -76,7 +76,7 @@ def test_data_channel_generated() -> None:
     ######################################
 
     d2 = dict(d, TelemetryNameGtEnumSymbol="unknown_symbol")
-    Maker.dict_to_tuple(d2).TelemetryName == TelemetryName.default()
+    assert Maker.dict_to_tuple(d2).TelemetryName == TelemetryName.default()
 
     ######################################
     # SchemaError raised if TypeName is incorrect

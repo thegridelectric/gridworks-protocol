@@ -9,5 +9,5 @@ class GsDispatch(GsDispatchBase):
         if len(errors) > 0:
             raise SchemaError(f" Errors making making gs.pwr.100 for {self}: {errors}")
 
-    def hand_coded_errors(self):
+    def hand_coded_errors(self): # noqa
         return []

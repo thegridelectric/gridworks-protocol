@@ -112,7 +112,7 @@ def test_telemetry_reporting_config_generated() -> None:
     ######################################
 
     d2 = dict(d, TelemetryNameGtEnumSymbol="unknown_symbol")
-    Maker.dict_to_tuple(d2).TelemetryName == TelemetryName.default()
+    assert Maker.dict_to_tuple(d2).TelemetryName == TelemetryName.default()
 
     d2 = dict(d, ReportOnChange="this is not a boolean")
     with pytest.raises(ValidationError):
@@ -127,7 +127,7 @@ def test_telemetry_reporting_config_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d, UnitGtEnumSymbol="unknown_symbol")
-    Maker.dict_to_tuple(d2).Unit == Unit.default()
+    assert Maker.dict_to_tuple(d2).Unit == Unit.default()
 
     d2 = dict(d, AsyncReportThreshold="this is not a float")
     with pytest.raises(ValidationError):

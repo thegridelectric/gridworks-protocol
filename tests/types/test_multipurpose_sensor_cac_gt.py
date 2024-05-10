@@ -124,7 +124,7 @@ def test_multipurpose_sensor_cac_gt_generated() -> None:
     ######################################
 
     d2 = dict(d, MakeModelGtEnumSymbol="unknown_symbol")
-    Maker.dict_to_tuple(d2).MakeModel == MakeModel.default()
+    assert Maker.dict_to_tuple(d2).MakeModel == MakeModel.default()
 
     d2 = dict(d, PollPeriodMs="880.1")
     with pytest.raises(ValidationError):
@@ -135,7 +135,7 @@ def test_multipurpose_sensor_cac_gt_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d, TempUnitGtEnumSymbol="unknown_symbol")
-    Maker.dict_to_tuple(d2).TempUnit == Unit.default()
+    assert Maker.dict_to_tuple(d2).TempUnit == Unit.default()
 
     d2 = dict(d, MaxThermistors="12.1")
     with pytest.raises(ValidationError):

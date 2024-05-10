@@ -84,7 +84,7 @@ def test_gt_telemetry_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d, NameGtEnumSymbol="unknown_symbol")
-    Maker.dict_to_tuple(d2).Name == TelemetryName.default()
+    assert Maker.dict_to_tuple(d2).Name == TelemetryName.default()
 
     d2 = dict(d, Exponent="3.1")
     with pytest.raises(ValidationError):

@@ -118,7 +118,7 @@ def test_simple_temp_sensor_cac_gt_generated() -> None:
     ######################################
 
     d2 = dict(d, MakeModelGtEnumSymbol="unknown_symbol")
-    Maker.dict_to_tuple(d2).MakeModel == MakeModel.default()
+    assert Maker.dict_to_tuple(d2).MakeModel == MakeModel.default()
 
     d2 = dict(d, TypicalResponseTimeMs="880.1")
     with pytest.raises(ValidationError):
@@ -129,10 +129,10 @@ def test_simple_temp_sensor_cac_gt_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d, TempUnitGtEnumSymbol="unknown_symbol")
-    Maker.dict_to_tuple(d2).TempUnit == Unit.default()
+    assert Maker.dict_to_tuple(d2).TempUnit == Unit.default()
 
     d2 = dict(d, TelemetryNameGtEnumSymbol="unknown_symbol")
-    Maker.dict_to_tuple(d2).TelemetryName == TelemetryName.default()
+    assert Maker.dict_to_tuple(d2).TelemetryName == TelemetryName.default()
 
     ######################################
     # SchemaError raised if TypeName is incorrect

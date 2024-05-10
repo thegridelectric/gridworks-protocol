@@ -88,7 +88,7 @@ def test_pipe_flow_sensor_cac_gt_generated() -> None:
     ######################################
 
     d2 = dict(d, MakeModelGtEnumSymbol="unknown_symbol")
-    Maker.dict_to_tuple(d2).MakeModel == MakeModel.default()
+    assert Maker.dict_to_tuple(d2).MakeModel == MakeModel.default()
 
     ######################################
     # SchemaError raised if TypeName is incorrect

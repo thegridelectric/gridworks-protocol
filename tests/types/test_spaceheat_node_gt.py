@@ -131,10 +131,10 @@ def test_spaceheat_node_gt_generated() -> None:
     ######################################
 
     d2 = dict(d, ActorClassGtEnumSymbol="unknown_symbol")
-    Maker.dict_to_tuple(d2).ActorClass == ActorClass.default()
+    assert Maker.dict_to_tuple(d2).ActorClass == ActorClass.default()
 
     d2 = dict(d, RoleGtEnumSymbol="unknown_symbol")
-    Maker.dict_to_tuple(d2).Role == Role.default()
+    assert Maker.dict_to_tuple(d2).Role == Role.default()
 
     d2 = dict(d, ReportingSamplePeriodS="300.1")
     with pytest.raises(ValidationError):

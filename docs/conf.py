@@ -2,7 +2,7 @@
 
 project = "Gridworks Protocol"
 author = "Jessica Millar"
-copyright = "2022, Jessica Millar"
+copyright = "2022, Jessica Millar"  # noqa
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.napoleon",

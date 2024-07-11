@@ -7,9 +7,9 @@ from gwproto.enums import ChangePrimaryPumpState
 
 def test_change_primary_pump_state() -> None:
     assert set(ChangePrimaryPumpState.values()) == {
-        "AllowPumpToRun",
+        "TurnPumpOn",
         "TurnPumpOff",
     }
 
-    assert ChangePrimaryPumpState.default() == ChangePrimaryPumpState.AllowPumpToRun
+    assert ChangePrimaryPumpState.default() == ChangePrimaryPumpState.TurnPumpOn
     assert ChangePrimaryPumpState.enum_name() == "change.primary.pump.state"

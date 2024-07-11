@@ -14,7 +14,7 @@ class ChangePrimaryPumpState(StrEnum):
     on its circulatory pumpprimary pump
     """
 
-    AllowPumpToRun = auto()
+    TurnPumpOn = auto()
     TurnPumpOff = auto()
 
     @classmethod
@@ -26,7 +26,7 @@ class ChangePrimaryPumpState(StrEnum):
 
     @classmethod
     def default(cls) -> "ChangePrimaryPumpState":
-        return cls.AllowPumpToRun
+        return cls.TurnPumpOn
 
     @classmethod
     def enum_name(cls) -> str:

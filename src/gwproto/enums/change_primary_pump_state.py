@@ -5,10 +5,10 @@
 from enum import auto
 from typing import List
 
-from gridworks.enums import GwStrEnum
+from fastapi_utils.enums import StrEnum
 
 
-class ChangePrimaryPumpState(GwStrEnum):
+class ChangePrimaryPumpState(StrEnum):
     """
     Either forces the heat pump's primary circulator pump off, or allows the heat pump to turn
     on its circulatory pumpprimary pump

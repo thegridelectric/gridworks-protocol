@@ -1,0 +1,70 @@
+{
+  "gtr_asl": "001",
+  "type_name": "relay.actor.config",
+  "version": "000",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": "Relay Actor Config. Used to associate individual relays on a multi-channel relay board to specific SpaceheatNode actors. Each actor managed by the Spaceheat SCADA has an associated SpaceheatNode. That Node will be associated to a relay board component with multiple relays. Th relay board will have a list of relay actor configs so that the actor can identify which relay it has purview over.",
+  "url": "https://gridworks-protocol.readthedocs.io/en/latest/spaceheat-actor.html",
+  "properties": {
+    "RelayIdx": {
+      "type": "integer",
+      "format": "PositiveInteger",
+      "title": "Relay Index",
+      "required": true
+    },
+    "ActorName": {
+      "type": "string",
+      "format": "SpaceheatName",
+      "title": "Name of the Actor's SpaceheatNode",
+      "required": true
+    },
+    "WiringConfig": {
+      "type": "string",
+      "format": "relay.wiring.config",
+      "title": "Wiring Config",
+      "description": "Is the relay a simple Normally Open or Normally Closed or is it a double throw relay?",
+      "required": true
+    },
+    "EventType": {
+      "type": "string",
+      "format": "sh.fsm.event.type",
+      "title": "Finite State Machine Event Type",
+      "description": "Every pair of energization/de-energization actions for a relay are associated with two events for an associated finite state event.",
+      "required": true
+    },
+    "DeEnergizingEvent": {
+      "type": "string",
+      "description": "Which of the two choices provided by the EventType is intended to result in de-energizing the pin for the relay?",
+      "required": true
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "relay.actor.config",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "000",
+      "required": true
+    }
+  },
+  "axioms": {
+    "Axiom1": {
+      "title": "EventType, DeEnergizingEvent consistency",
+      "description": "a) The EventType must belong to one of the boolean choices for FsmEventType (for example, it is NOT SetAnalog010V): ChangeRelayState ChangeValveState ChangeStoreFlowDirection ChangeHeatcallSource ChangeBoilerControl ChangeHeatPumpControl ChangeLgOperatingMode b) The DeEnergizingEvent string must be one of the two choices for the EventType as an enum. For example, if the EventType is ChangeValveState then the DeEnergizingEvent must either be OpenValve or CloseValve. c) If the EventType is ChangeRelayState, then i) the WiringConfig cannot be DoubleThrow ii) if the Wiring Config is NormallyOpen then the DeEnergizingEvent must be OpenRelay and iii) if the WiringConfig is NormallyClosed then the DeEnergizingEvent must be CloseRelay."
+    }
+  },
+  "formats": {
+    "SpaceheatName": {
+      "type": "string",
+      "description": "Lowercase alphanumeric words separated by hypens, where first word starts with an alphabet character.",
+      "example": "store-hot-pipe"
+    },
+    "PositiveInteger": {
+      "type": "string",
+      "description": "Must be positive when interpreted as an integer. Interpretation as an integer follows the pydantic rules for this - which will round down rational numbers. So 1.7 will be interpreted as 1 and is also fine, while 0.5 is interpreted as 0 and will raise an exception.",
+      "example": ""
+    }
+  }
+}

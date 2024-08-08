@@ -1,17 +1,16 @@
 from enum import auto
-from typing import List
+from typing import List, Optional
 
-from fastapi_utils.enums import StrEnum
+from gw.enums import GwStrEnum
 
 
-class Unit(StrEnum):
+class Unit(GwStrEnum):
     """
     Specifies the physical unit of sensed data reported by SCADA
 
-    Enum spaceheat.unit version 000 in the GridWorks Type registry.
+    Enum spaceheat.unit version 001 in the GridWorks Type registry.
 
-    Used by used by multiple Application Shared Languages (ASLs), including but not limited to
-    gwproto. For more information:
+    Used by multiple Application Shared Languages (ASLs). For more information:
       - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
       - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatunit)
 
@@ -56,24 +55,27 @@ class Unit(StrEnum):
         return [elt.value for elt in cls]
 
     @classmethod
-    def version(cls, value: str) -> str:
+    def version(cls, value: Optional[str] = None) -> str:
         """
-        Returns the version of an enum value.
-
-        Once a value belongs to one version of the enum, it belongs
-        to all future versions.
+        Returns the version of the class (default) used by this package or the
+        version of a candidate enum value (always less than or equal to the version
+        of the class)
 
         Args:
-            value (str): The candidate enum value.
+            value (Optional[str]): None (for version of the Enum itself) or
+            the candidate enum value.
 
         Raises:
-            ValueError: If value is not one of the enum values.
+            ValueError: If the value is not one of the enum values.
 
         Returns:
-            str: The earliest version of the enum containing value.
+            str: The version of the enum used by this code (if given no
+            value) OR the earliest version of the enum containing the value.
         """
+        if value is None:
+            return "001"
         if not isinstance(value, str):
-            raise ValueError(f"This method applies to strings, not enums")
+            raise ValueError("This method applies to strings, not enums")
         if value not in value_to_version.keys():
             raise ValueError(f"Unknown enum value: {value}")
         return value_to_version[value]
@@ -88,9 +90,9 @@ class Unit(StrEnum):
     @classmethod
     def enum_version(cls) -> str:
         """
-        The version in the GridWorks Type Registry (000)
+        The version in the GridWorks Type Registry (001)
         """
-        return "000"
+        return "001"
 
     @classmethod
     def symbol_to_value(cls, symbol: str) -> str:
@@ -115,7 +117,7 @@ class Unit(StrEnum):
         Provides the encoding symbol for a Unit enum to send in seriliazed messages.
 
         Args:
-            value (str): The candidate value.
+            symbol (str): The candidate value.
 
         Returns:
             str: The symbol encoding that value. If the value is not recognized -
@@ -174,5 +176,5 @@ value_to_version = {
     "AmpsRms": "000",
     "VoltsRms": "000",
     "Gallons": "000",
-    "ThermostatStateEnum": "000"
+    "ThermostatStateEnum": "001",
 }

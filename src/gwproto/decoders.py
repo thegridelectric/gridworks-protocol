@@ -5,24 +5,23 @@ import re
 import sys
 from abc import abstractmethod
 from dataclasses import dataclass
-from typing import Any
-from typing import Callable
-from typing import Literal
-from typing import NamedTuple
-from typing import Optional
-from typing import Sequence
-from typing import Type
-from typing import TypeVar
-from typing import Union
-from typing import get_origin
+from typing import (
+    Any,
+    Callable,
+    Literal,
+    NamedTuple,
+    Optional,
+    Sequence,
+    Type,
+    TypeVar,
+    Union,
+    get_origin,
+)
 
 import pydantic
-from pydantic import BaseModel
-from pydantic import Field
-from pydantic import create_model
+from pydantic import BaseModel, Field, create_model
 
-from gwproto.message import Header
-from gwproto.message import Message
+from gwproto.message import Header, Message
 from gwproto.messages import AnyEvent
 from gwproto.topic import MQTTTopic
 
@@ -141,7 +140,7 @@ class OneDecoderExtractor:
 
     def get_type_name(self, obj: Any) -> str:
         if not (type_name := getattr(obj, self.type_name_field, "")):
-            if (decoder_fields := getattr(obj, "__fields__", None)) is not None:
+            if (decoder_fields := getattr(obj, "model_fields", None)) is not None:
                 if (
                     model_field := decoder_fields.get(self.type_name_field, None)
                 ) is not None:
@@ -274,10 +273,10 @@ class MQTTCodec(abc.ABC):
 def get_pydantic_literal_type_name(
     o: Any, type_name_field: str = DEFAULT_TYPE_NAME_FIELD
 ) -> str:
-    if hasattr(o, "__fields__"):
-        if type_name_field in o.__fields__:
-            if get_origin(o.__fields__[type_name_field].annotation) == Literal:
-                return str(o.__fields__[type_name_field].default)
+    if hasattr(o, "model_fields"):
+        if type_name_field in o.model_fields:
+            if get_origin(o.model_fields[type_name_field].annotation) == Literal:
+                return str(o.model_fields[type_name_field].default)
     return ""
 
 
@@ -290,7 +289,7 @@ def pydantic_named_types(
     if isinstance(module_names, str):
         module_names = [module_names]
     if unimported := [
-        module_name for module_name in module_names if not module_name in sys.modules
+        module_name for module_name in module_names if module_name not in sys.modules
     ]:
         raise ValueError(f"ERROR. modules {unimported} have not been imported.")
     named_types = []
@@ -406,17 +405,18 @@ class PydanticTypeNameDecoder(Decoder):
             type_name_regex=type_name_regex,
             payload_field_name=payload_field_name,
         )
-        payload_field = self.loader.__fields__[self.payload_field_name]
-        if payload_field.sub_fields_mapping is not None:
-            self.contains = set(payload_field.sub_fields_mapping.keys())
-        else:
-            self.contains = {payload_field.type_.__fields__["TypeName"].default}
+        self.contains = {}
+        # payload_field = self.loader.model_fields[self.payload_field_name]
+        # if payload_field.sub_fields_mapping is not None:
+        #     self.contains = set(payload_field.sub_fields_mapping.keys())
+        # else:
+        #     self.contains = {payload_field.type_.__fields__["TypeName"].default}
 
     def __contains__(self, type_name: str) -> bool:
         return type_name in self.contains
 
     def decode_obj(self, data: dict) -> BaseModel:
         return getattr(
-            self.loader.parse_obj({self.payload_field_name: data}),
+            self.loader.model_validate({self.payload_field_name: data}),
             self.payload_field_name,
         )

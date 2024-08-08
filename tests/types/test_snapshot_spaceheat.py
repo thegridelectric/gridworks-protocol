@@ -1,81 +1,98 @@
-"""Tests snapshot.spaceheat type, version 000"""
+"""Tests snapshot.spaceheat type, version 001"""
 
 import json
 
 import pytest
+from gw.errors import GwTypeError
+from gwproto.types import SnapshotSpaceheat
+from gwproto.types import SnapshotSpaceheatMaker as Maker
 from pydantic import ValidationError
-
-from gwproto.errors import SchemaError
-from gwproto.types import SnapshotSpaceheat_Maker as Maker
 
 
 def test_snapshot_spaceheat_generated() -> None:
+    t = SnapshotSpaceheat(
+        from_g_node_alias="d1.isone.ct.newhaven.rose.scada",
+        from_g_node_instance_id="0384ef21-648b-4455-b917-58a1172d7fc1",
+        snapshot_time_unix_ms=1709915800472,
+        latest_reading_list=[],
+    )
+
     d = {
-        "FromGNodeAlias": "dwtest.isone.ct.newhaven.orange1.ta.scada",
+        "FromGNodeAlias": "d1.isone.ct.newhaven.rose.scada",
         "FromGNodeInstanceId": "0384ef21-648b-4455-b917-58a1172d7fc1",
-        "Snapshot": {
-            "TelemetryNameList": ["5a71d4b3"],
-            "AboutNodeAliasList": ["a.elt1.relay"],
-            "ReportTimeUnixMs": 1656363448000,
-            "ValueList": [1],
-            "TypeName": "telemetry.snapshot.spaceheat",
-            "Version": "000",
-        },
+        "SnapshotTimeUnixMs": 1709915800472,
+        "LatestReadingList": [],
         "TypeName": "snapshot.spaceheat",
-        "Version": "000",
+        "Version": "001",
     }
 
-    with pytest.raises(SchemaError):
+    assert t.as_dict() == d
+
+    with pytest.raises(GwTypeError):
         Maker.type_to_tuple(d)
 
-    with pytest.raises(SchemaError):
+    with pytest.raises(GwTypeError):
         Maker.type_to_tuple('"not a dict"')
 
     # Test type_to_tuple
     gtype = json.dumps(d)
     gtuple = Maker.type_to_tuple(gtype)
+    assert gtuple == t
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple
 
-    # test Maker init
-    t = Maker(
-        from_g_node_alias=gtuple.FromGNodeAlias,
-        from_g_node_instance_id=gtuple.FromGNodeInstanceId,
-        snapshot=gtuple.Snapshot,
-    ).tuple
-    assert t == gtuple
-
     ######################################
-    # SchemaError raised if missing a required attribute
+    # GwTypeError raised if missing a required attribute
     ######################################
 
-    d2 = dict(d)
+    d2 = d.copy()
     del d2["TypeName"]
-    with pytest.raises(SchemaError):
+    with pytest.raises(GwTypeError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d)
+    d2 = d.copy()
     del d2["FromGNodeAlias"]
-    with pytest.raises(SchemaError):
+    with pytest.raises(GwTypeError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d)
+    d2 = d.copy()
     del d2["FromGNodeInstanceId"]
-    with pytest.raises(SchemaError):
+    with pytest.raises(GwTypeError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d)
-    del d2["Snapshot"]
-    with pytest.raises(SchemaError):
+    d2 = d.copy()
+    del d2["SnapshotTimeUnixMs"]
+    with pytest.raises(GwTypeError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = d.copy()
+    del d2["LatestReadingList"]
+    with pytest.raises(GwTypeError):
         Maker.dict_to_tuple(d2)
 
     ######################################
     # Behavior on incorrect types
     ######################################
 
+    d2 = dict(d, SnapshotTimeUnixMs="1709915800472.1")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, LatestReadingList="Not a list.")
+    with pytest.raises(GwTypeError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, LatestReadingList=["Not a list of dicts"])
+    with pytest.raises(GwTypeError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, LatestReadingList=[{"Failed": "Not a GtSimpleSingleStatus"}])
+    with pytest.raises(GwTypeError):
+        Maker.dict_to_tuple(d2)
+
     ######################################
-    # SchemaError raised if TypeName is incorrect
+    # ValidationError raised if TypeName is incorrect
     ######################################
 
     d2 = dict(d, TypeName="not the type name")
@@ -83,7 +100,7 @@ def test_snapshot_spaceheat_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     ######################################
-    # SchemaError raised if primitive attributes do not have appropriate property_format
+    # ValidationError raised if primitive attributes do not have appropriate property_format
     ######################################
 
     d2 = dict(d, FromGNodeAlias="a.b-h")
@@ -94,4 +111,6 @@ def test_snapshot_spaceheat_generated() -> None:
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    # End of Test
+    d2 = dict(d, SnapshotTimeUnixMs=1656245000)
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)

@@ -3,18 +3,28 @@
 import json
 
 import pytest
+from gw.errors import GwTypeError
+from gwproto.types import HeartbeatB
+from gwproto.types import HeartbeatBMaker as Maker
 from pydantic import ValidationError
-
-from gwproto.errors import SchemaError
-from gwproto.types import HeartbeatB_Maker as Maker
 
 
 def test_heartbeat_b_generated() -> None:
+    t = HeartbeatB(
+        from_g_node_alias="d1.isone.ver.keene.holly",
+        from_g_node_instance_id="97eba574-bd20-45b5-bf82-9ba2f492d8f6",
+        my_hex="a",
+        your_last_hex="2",
+        last_received_time_unix_ms=1673635764282,
+        send_time_unix_ms=1673635765317,
+        starting_over=False,
+    )
+
     d = {
         "FromGNodeAlias": "d1.isone.ver.keene.holly",
         "FromGNodeInstanceId": "97eba574-bd20-45b5-bf82-9ba2f492d8f6",
         "MyHex": "a",
-        "YourLastHex": 2,
+        "YourLastHex": "2",
         "LastReceivedTimeUnixMs": 1673635764282,
         "SendTimeUnixMs": 1673635765317,
         "StartingOver": False,
@@ -22,73 +32,64 @@ def test_heartbeat_b_generated() -> None:
         "Version": "001",
     }
 
-    with pytest.raises(SchemaError):
+    assert t.as_dict() == d
+
+    with pytest.raises(GwTypeError):
         Maker.type_to_tuple(d)
 
-    with pytest.raises(SchemaError):
+    with pytest.raises(GwTypeError):
         Maker.type_to_tuple('"not a dict"')
 
     # Test type_to_tuple
     gtype = json.dumps(d)
     gtuple = Maker.type_to_tuple(gtype)
+    assert gtuple == t
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple
 
-    # test Maker init
-    t = Maker(
-        from_g_node_alias=gtuple.FromGNodeAlias,
-        from_g_node_instance_id=gtuple.FromGNodeInstanceId,
-        my_hex=gtuple.MyHex,
-        your_last_hex=gtuple.YourLastHex,
-        last_received_time_unix_ms=gtuple.LastReceivedTimeUnixMs,
-        send_time_unix_ms=gtuple.SendTimeUnixMs,
-        starting_over=gtuple.StartingOver,
-    ).tuple
-    assert t == gtuple
-
     ######################################
-    # SchemaError raised if missing a required attribute
+    # GwTypeError raised if missing a required attribute
     ######################################
 
-    d2 = dict(d)
+    d2 = d.copy()
     del d2["TypeName"]
-    with pytest.raises(SchemaError):
+    with pytest.raises(GwTypeError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d)
+    d2 = d.copy()
     del d2["FromGNodeAlias"]
-    with pytest.raises(SchemaError):
+    with pytest.raises(GwTypeError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d)
+    d2 = d.copy()
     del d2["FromGNodeInstanceId"]
-    with pytest.raises(SchemaError):
+    with pytest.raises(GwTypeError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d)
+    d2 = d.copy()
     del d2["MyHex"]
-    with pytest.raises(SchemaError):
+    with pytest.raises(GwTypeError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d)
+    d2 = d.copy()
     del d2["YourLastHex"]
-    with pytest.raises(SchemaError):
+    with pytest.raises(GwTypeError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d)
+    d2 = d.copy()
     del d2["LastReceivedTimeUnixMs"]
-    with pytest.raises(SchemaError):
+    with pytest.raises(GwTypeError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d)
+    d2 = d.copy()
     del d2["SendTimeUnixMs"]
-    with pytest.raises(SchemaError):
+    with pytest.raises(GwTypeError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d)
+    d2 = d.copy()
     del d2["StartingOver"]
-    with pytest.raises(SchemaError):
+    with pytest.raises(GwTypeError):
         Maker.dict_to_tuple(d2)
 
     ######################################
@@ -108,7 +109,7 @@ def test_heartbeat_b_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     ######################################
-    # SchemaError raised if TypeName is incorrect
+    # ValidationError raised if TypeName is incorrect
     ######################################
 
     d2 = dict(d, TypeName="not the type name")
@@ -116,7 +117,7 @@ def test_heartbeat_b_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     ######################################
-    # SchemaError raised if primitive attributes do not have appropriate property_format
+    # ValidationError raised if primitive attributes do not have appropriate property_format
     ######################################
 
     d2 = dict(d, FromGNodeAlias="a.b-h")
@@ -142,5 +143,3 @@ def test_heartbeat_b_generated() -> None:
     d2 = dict(d, SendTimeUnixMs=1656245000)
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
-
-    # End of Test

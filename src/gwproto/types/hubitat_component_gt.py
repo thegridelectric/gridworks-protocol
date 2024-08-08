@@ -1,10 +1,9 @@
 import json
 import typing
-from typing import Any
-from typing import Literal
-from typing import Optional
+from typing import Any, Literal, Optional
 
 import yarl
+from gw.utils import snake_to_pascal
 
 from gwproto.data_classes.component import Component
 from gwproto.data_classes.components.hubitat_component import HubitatComponent
@@ -14,48 +13,52 @@ from gwproto.types.rest_poller_gt import URLConfig
 
 
 class HubitatComponentGt(ComponentGt):
-    Hubitat: HubitatGt
-    TypeName: Literal["hubitat.component.gt"] = "hubitat.component.gt"
-    Version: Literal["000"] = "000"
+    hubitat: HubitatGt
+    type_name: Literal["hubitat.component.gt"] = "hubitat.component.gt"
+    version: Literal["000"] = "000"
+
+    class Config:
+        populate_by_name = True
+        alias_generator = snake_to_pascal
 
     def __hash__(self):
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
     def url_config(self) -> URLConfig:
-        return self.Hubitat.url_config()
+        return self.hubitat.url_config()
 
     def maker_api_url_config(self) -> URLConfig:
-        return self.Hubitat.maker_api_url_config()
+        return self.hubitat.maker_api_url_config()
 
     def urls(self) -> dict[str, Optional[yarl.URL]]:
-        return self.Hubitat.urls()
+        return self.hubitat.urls()
 
     def refresh_url_config(self, device_id: int) -> URLConfig:
-        return self.Hubitat.refresh_url_config(device_id)
+        return self.hubitat.refresh_url_config(device_id)
 
     def refresh_url(self, device_id: int) -> yarl.URL:
-        return self.Hubitat.refresh_url(device_id)
+        return self.hubitat.refresh_url(device_id)
 
     @classmethod
     def from_data_class(cls, component: HubitatComponent) -> "HubitatComponentGt":
         return HubitatComponentGt(
             ComponentId=component.component_id,
             ComponentAttributeClassId=component.component_attribute_class_id,
-            Hubitat=component.hubitat_gt,
+            hubitat=component.hubitat_gt,
             DisplayName=component.display_name,
             HwUid=component.hw_uid,
         )
 
     def to_data_class(self) -> HubitatComponent:
-        component = Component.by_id.get(self.ComponentId, None)
+        component = Component.by_id.get(self.component_id, None)
         if component is not None:
             return typing.cast(HubitatComponent, component)
         return HubitatComponent(
-            component_id=self.ComponentId,
-            component_attribute_class_id=self.ComponentAttributeClassId,
-            hubitat_gt=self.Hubitat,
-            display_name=self.DisplayName,
-            hw_uid=self.HwUid,
+            component_id=self.component_id,
+            component_attribute_class_id=self.component_attribute_class_id,
+            hubitat_gt=self.hubitat,
+            display_name=self.display_name,
+            hw_uid=self.hw_uid,
         )
 
     @classmethod
@@ -63,7 +66,7 @@ class HubitatComponentGt(ComponentGt):
         return HubitatComponentGt(
             ComponentId=component_id,
             ComponentAttributeClassId="00000000-0000-0000-0000-000000000000",
-            Hubitat=HubitatGt(
+            hubitat=HubitatGt(
                 Host="",
                 MakerApiId=-1,
                 AccessToken="",
@@ -100,8 +103,8 @@ class HubitatRESTResolutionSettings:
         self.maker_api_url_config = self.component_gt.maker_api_url_config()
 
 
-class HubitatComponentGt_Maker:
-    type_name: str = HubitatComponentGt.__fields__["TypeName"].default
+class HubitatComponentGtMaker:
+    type_name: str = HubitatComponentGt.model_fields["type_name"].default
     version = "000"
     tuple: HubitatComponentGt
 

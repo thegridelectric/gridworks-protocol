@@ -1,0 +1,21 @@
+{
+  "gtr_asl": "001",
+  "enum_name": "relay.closed.or.open",
+  "enum_version": "000",
+  "description": "These are fsm states (as opposed to readings from a pin).",
+  "ssot": "https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relayclosedoropen",
+  "values": ["RelayClosed", "RelayOpen"],
+  "value_to_symbol": {
+    "": "00000000",
+    "": "c29948aa"
+  },
+  "value_to_version": {
+    "": "000",
+    "": "000"
+  },
+  "value_descriptions": {
+    "RelayClosed": "",
+    "RelayOpen": ""
+  },
+  "default_value": "RelayClosed"
+}

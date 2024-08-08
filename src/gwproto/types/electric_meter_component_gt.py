@@ -1,27 +1,26 @@
-"""Type electric.meter.component.gt, version 000"""
+"""Type electric.meter.component.gt, version 001"""
 
 import json
 import logging
-from typing import Any
-from typing import Dict
-from typing import List
-from typing import Literal
-from typing import Optional
+import os
+from typing import Any, Dict, List, Literal, Optional
 
-from pydantic import BaseModel
-from pydantic import Field
-from pydantic import root_validator
-from pydantic import validator
+import dotenv
+from gw.errors import GwTypeError
+from gw.utils import is_pascal_case, pascal_to_snake, snake_to_pascal
+from pydantic import Field, field_validator, model_validator
+from typing_extensions import Self
 
 from gwproto.data_classes.components.electric_meter_component import (
     ElectricMeterComponent,
 )
-from gwproto.errors import SchemaError
-from gwproto.types.egauge_io import EgaugeIo
-from gwproto.types.egauge_io import EgaugeIo_Maker
-from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
-from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig_Maker
+from gwproto.types.channel_config import ChannelConfig, ChannelConfigMaker
+from gwproto.types.component_gt import ComponentGt
+from gwproto.types.egauge_io import EgaugeIo, EgaugeIoMaker
 
+dotenv.load_dotenv()
+
+ENCODE_ENUMS = int(os.getenv("ENUM_ENCODE", "1"))
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -30,7 +29,7 @@ LOG_FORMAT = (
 LOGGER = logging.getLogger(__name__)
 
 
-class ElectricMeterComponentGt(BaseModel):
+class ElectricMeterComponentGt(ComponentGt):
     """
     Type for tracking Electric Meter Components.
 
@@ -46,14 +45,14 @@ class ElectricMeterComponentGt(BaseModel):
     [More info](https://g-node-registry.readthedocs.io/en/latest/electric-meters.html)
     """
 
-    ComponentId: str = Field(
+    component_id: str = Field(
         title="Component Id",
         description=(
             "Primary GridWorks identifier for a specific physical instance of an ElectricMeter, "
             "and also as a more generic Component."
         ),
     )
-    ComponentAttributeClassId: str = Field(
+    component_attribute_class_id: str = Field(
         title="ComponentAttributeClassId",
         description=(
             "Unique identifier for the device class. Authority for these, as well as the relationship "
@@ -61,33 +60,33 @@ class ElectricMeterComponentGt(BaseModel):
             "Registry."
         ),
     )
-    DisplayName: Optional[str] = Field(
+    display_name: Optional[str] = Field(
         title="Display Name for the Power Meter",
         description="Sample: Oak EGauge6074",
         default=None,
     )
-    ConfigList: List[TelemetryReportingConfig] = Field(
+    config_list: List[ChannelConfig] = Field(
         title="List of Data Channel configs ",
         description=(
-            "This power meter will produce multiple data channels. Each data channel measures "
-            "a certain quantities (like power, current) for certain ShNodes (like a boost element "
-            "or heat pump)."
+            "Information re timing of data polling and capture for the channels read by the node "
+            "(i.e. channels that convey power, current, voltage, frequency for various power "
+            "consuming elements of the system)."
         ),
     )
-    HwUid: Optional[str] = Field(
+    hw_uid: Optional[str] = Field(
         title="Unique Hardware Id for the Power Meter",
         description="For eGauge, use what comes back over modbus address 100.",
         default=None,
     )
-    ModbusHost: Optional[str] = Field(
+    modbus_host: Optional[str] = Field(
         title="Host on LAN when power meter is modbus over Ethernet",
         default=None,
     )
-    ModbusPort: Optional[int] = Field(
+    modbus_port: Optional[int] = Field(
         title="ModbusPort",
         default=None,
     )
-    EgaugeIoList: List[EgaugeIo] = Field(
+    egauge_io_list: List[EgaugeIo] = Field(
         title="Bijecton from EGauge4030 input to ConfigList output",
         description=(
             "This should be empty unless the MakeModel of the corresponding component attribute "
@@ -97,137 +96,182 @@ class ElectricMeterComponentGt(BaseModel):
             "the data from this map to the data that the SCADA expects to see."
         ),
     )
-    TypeName: Literal["electric.meter.component.gt"] = "electric.meter.component.gt"
-    Version: Literal["000"] = "000"
+    type_name: Literal["electric.meter.component.gt"] = "electric.meter.component.gt"
+    version: Literal["001"] = "001"
 
-    @validator("ComponentId")
+    class Config:
+        populate_by_name = True
+        alias_generator = snake_to_pascal
+
+    @field_validator("component_id")
+    @classmethod
     def _check_component_id(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
         except ValueError as e:
             raise ValueError(
-                f"ComponentId failed UuidCanonicalTextual format validation: {e}"
-            )
+                f"ComponentId failed UuidCanonicalTextual format validation: {e}",
+            ) from e
         return v
 
-    @validator("ComponentAttributeClassId")
+    @field_validator("component_attribute_class_id")
+    @classmethod
     def _check_component_attribute_class_id(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
         except ValueError as e:
             raise ValueError(
-                f"ComponentAttributeClassId failed UuidCanonicalTextual format validation: {e}"
-            )
+                f"ComponentAttributeClassId failed UuidCanonicalTextual format validation: {e}",
+            ) from e
         return v
 
-    @validator("ModbusPort")
+    @field_validator("modbus_port")
+    @classmethod
     def _check_modbus_port(cls, v: Optional[int]) -> Optional[int]:
         if v is None:
             return v
         try:
-            check_is_non_negative_integer(v)
+            check_is_positive_integer(v)
         except ValueError as e:
             raise ValueError(
-                f"ModbusPort failed NonNegativeInteger format validation: {e}"
-            )
+                f"ModbusPort failed PositiveInteger format validation: {e}",
+            ) from e
         return v
 
-    @root_validator
-    def check_axiom_1(cls, v: dict) -> dict:
+    @model_validator(mode="after")
+    def check_axiom_1(self) -> Self:
         """
         Axiom 1: Modbus consistency.
         ModbusHost is None if and only if ModbusPort is None
         """
-        # TODO: Implement check for axiom 1"
-        ModbusHost = v.get("ModbusHost", None)
-        ModbusPort = v.get("ModbusHost", None)
-        if ModbusHost is None and not (ModbusPort is None):
-            raise ValueError("Axiom 1: ModbusHost None iff ModbusPort None! ")
-        if not (ModbusHost is None) and ModbusPort is None:
-            raise ValueError("Axiom 1: ModbusHost None iff ModbusPort None! ")
-        return v
+        axiom_passes = True
+        if self.modbus_host is not None:
+            if self.modbus_port is None:
+                axiom_passes = False
 
-    @root_validator
-    def check_axiom_2(cls, v: dict) -> dict:
-        """
-        Axiom 2: Egauge4030 consistency.
-        If the EgaugeIoList has non-zero length, then the ModbusHost is not None and
-        the set of output configs is equal to ConfigList as a set
-        """
-        # TODO: Implement check for axiom 2"
-        EgaugeIoList = v.get("EgaugeIoList", None)
-        ModbusHost = v.get("ModbusHost", None)
-        ConfigList = v.get("ConfigList", None)
-        if len(EgaugeIoList) == 0:
-            return v
+        if self.modbus_port is not None:
+            if self.modbus_host is None:
+                axiom_passes = False
+        if not axiom_passes:
+            raise ValueError(
+                f"Violates Axiom 1:  ModbusHost is None if and only if ModbusPort is None:\n <{self}>"
+            )
+        return self
 
-        if ModbusHost is None:
+    @model_validator(mode="after")
+    def check_axiom_2(self) -> Self:
+        """
+        Axiom 2: Egauge4030 Means Modbus.
+        If the EgaugeIoList has non-zero length, then the ModbusHost is not None
+        """
+        if len(self.egauge_io_list) == 0:
+            return self
+
+        # If the EgaugeIoList has non-zero length, then the ModbusHost is not Non
+        if self.modbus_host is None:
             raise ValueError(
-                f"Axiom 2: If EgaugeIoList has non-zero length then ModbusHost must exist!"
+                "Axiom 2 fails: If the EgaugeIoList has non-zero "
+                "length, then the ModbusHost is not None "
             )
-        output_configs = set(map(lambda x: x.OutputConfig, EgaugeIoList))
-        if output_configs != set(ConfigList):
+        return self
+
+    @model_validator(mode="after")
+    def check_axiom_3(self) -> Self:
+        """
+        Axiom 3: Channel Name Consistency.
+        If the EgaugeIoList has non-zero length:
+          1) Len(EgaugeIoList) == Len(ConfigList)
+          2) There are no duplicates of ChannelName in the ConfigList or EgaugeIoList
+          3) The set of ChannelNames in IoConfig is equal to the set of ChannelNames in ConfigList
+        """
+
+        if len(self.egauge_io_list) == 0:
+            return self
+
+        # If the EgaugeIoList has non-zero length, then Len(EgaugeIoList) == Len(ConfigList)
+        if len(self.egauge_io_list) != len(self.config_list):
             raise ValueError(
-                "Axiom 2: If EgaugeIoList has non-zero length then then the set of"
-                "output configs must equal ConfigList as a set"
+                "Axiom 3 fails: EgaugeIoList and ConfigList must have equal length"
             )
-        return v
+
+        config_channel_names = list(map(lambda x: x.channel_name, self.config_list))
+        if len(config_channel_names) != len(set(config_channel_names)):
+            raise ValueError(
+                f"Axiom 3 fails: duplicate channel name(s) in ConfigList:\n {self}"
+            )
+
+        io_channel_names = list(map(lambda x: x.channel_name, self.egauge_io_list))
+        if len(io_channel_names) != len(set(io_channel_names)):
+            raise ValueError(
+                f"Axiom 3 fails: duplicate channel name(s) in EgaugeIoList:\n {self}"
+            )
+
+        if set(config_channel_names) != set(io_channel_names):
+            raise ValueError(
+                "Axiom 3 fails: The set of ChannelNames in IoConfig is NOT "
+                f"equal to the set of ChannelNames in ConfigList:\n {self} "
+            )
+
+        return self
 
     def as_dict(self) -> Dict[str, Any]:
         """
-        Translate the object into a dictionary representation that can be serialized into a
-        electric.meter.component.gt.000 object.
+        Main step in serializing the object. Encodes enums as their 8-digit random hex symbol if
+        settings.encode_enums = 1.
+        """
+        if ENCODE_ENUMS:
+            return self.enum_encoded_dict()
+        else:
+            return self.plain_enum_dict()
 
-        This method prepares the object for serialization by the as_type method, creating a
-        dictionary with key-value pairs that follow the requirements for an instance of the
-        electric.meter.component.gt.000 type. Unlike the standard python dict method,
-        it makes the following substantive changes:
-        - Enum Values: Translates between the values used locally by the actor to the symbol
-        sent in messages.
-        - Removes any key-value pairs where the value is None for a clearer message, especially
-        in cases with many optional attributes.
-
-        It also applies these changes recursively to sub-types.
+    def plain_enum_dict(self) -> Dict[str, Any]:
+        """
+        Returns enums as their values.
         """
         d = {
-            key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
-            ).items()
+            snake_to_pascal(key): value
+            for key, value in self.model_dump().items()
             if value is not None
         }
         # Recursively calling as_dict()
         config_list = []
-        for elt in self.ConfigList:
+        for elt in self.config_list:
             config_list.append(elt.as_dict())
         d["ConfigList"] = config_list
         # Recursively calling as_dict()
         egauge_io_list = []
-        for elt in self.EgaugeIoList:
+        for elt in self.egauge_io_list:
+            egauge_io_list.append(elt.as_dict())
+        d["EgaugeIoList"] = egauge_io_list
+        return d
+
+    def enum_encoded_dict(self) -> Dict[str, Any]:
+        """
+        Encodes enums as their 8-digit random hex symbol
+        """
+        d = {
+            snake_to_pascal(key): value
+            for key, value in self.model_dump().items()
+            if value is not None
+        }
+        # Recursively calling as_dict()
+        config_list = []
+        for elt in self.config_list:
+            config_list.append(elt.as_dict())
+        d["ConfigList"] = config_list
+        # Recursively calling as_dict()
+        egauge_io_list = []
+        for elt in self.egauge_io_list:
             egauge_io_list.append(elt.as_dict())
         d["EgaugeIoList"] = egauge_io_list
         return d
 
     def as_type(self) -> bytes:
         """
-        Serialize to the electric.meter.component.gt.000 representation.
+        Serialize to the electric.meter.component.gt.001 representation designed to send in a message.
 
-        Instances in the class are python-native representations of electric.meter.component.gt.000
-        objects, while the actual electric.meter.component.gt.000 object is the serialized UTF-8 byte
-        string designed for sending in a message.
-
-        This method calls the as_dict() method, which differs from the native python dict()
-        in the following key ways:
-        - Enum Values: Translates between the values used locally by the actor to the symbol
-        sent in messages.
-        - - Removes any key-value pairs where the value is None for a clearer message, especially
-        in cases with many optional attributes.
-
-        It also applies these changes recursively to sub-types.
-
-        Its near-inverse is ElectricMeterComponentGt.type_to_tuple(). If the type (or any sub-types)
-        includes an enum, then the type_to_tuple will map an unrecognized symbol to the
-        default enum value. This is why these two methods are only 'near' inverses.
+        Recursively encodes enums as hard-to-remember 8-digit random hex symbols
+        unless settings.encode_enums is set to 0.
         """
         json_string = json.dumps(self.as_dict())
         return json_string.encode("utf-8")
@@ -236,138 +280,111 @@ class ElectricMeterComponentGt(BaseModel):
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
-class ElectricMeterComponentGt_Maker:
+class ElectricMeterComponentGtMaker:
     type_name = "electric.meter.component.gt"
-    version = "000"
-
-    def __init__(
-        self,
-        component_id: str,
-        component_attribute_class_id: str,
-        display_name: Optional[str],
-        config_list: List[TelemetryReportingConfig],
-        hw_uid: Optional[str],
-        modbus_host: Optional[str],
-        modbus_port: Optional[int],
-        egauge_io_list: List[EgaugeIo],
-    ):
-        self.tuple = ElectricMeterComponentGt(
-            ComponentId=component_id,
-            ComponentAttributeClassId=component_attribute_class_id,
-            DisplayName=display_name,
-            ConfigList=config_list,
-            HwUid=hw_uid,
-            ModbusHost=modbus_host,
-            ModbusPort=modbus_port,
-            EgaugeIoList=egauge_io_list,
-        )
+    version = "001"
 
     @classmethod
-    def tuple_to_type(cls, tpl: ElectricMeterComponentGt) -> bytes:
+    def tuple_to_type(cls, tuple: ElectricMeterComponentGt) -> bytes:
         """
         Given a Python class object, returns the serialized JSON type object.
         """
-        return tpl.as_type()
+        return tuple.as_type()
 
     @classmethod
-    def type_to_tuple(cls, t: bytes) -> ElectricMeterComponentGt:
+    def type_to_tuple(cls, b: bytes) -> ElectricMeterComponentGt:
         """
-        Given a serialized JSON type object, returns the Python class object.
+        Given the bytes in a message, returns the corresponding class object.
+
+        Args:
+            b (bytes): candidate type instance
+
+        Raises:
+           GwTypeError: if the bytes are not a electric.meter.component.gt.001 type
+
+        Returns:
+            ElectricMeterComponentGt instance
         """
         try:
-            d = json.loads(t)
-        except TypeError:
-            raise SchemaError("Type must be string or bytes!")
+            d = json.loads(b)
+        except TypeError as e:
+            raise GwTypeError("Type must be string or bytes!") from e
         if not isinstance(d, dict):
-            raise SchemaError(f"Deserializing <{t}> must result in dict!")
+            raise GwTypeError(f"Deserializing  must result in dict!\n <{b}>")
         return cls.dict_to_tuple(d)
 
     @classmethod
     def dict_to_tuple(cls, d: dict[str, Any]) -> ElectricMeterComponentGt:
         """
-        Deserialize a dictionary representation of a electric.meter.component.gt.000 message object
-        into a ElectricMeterComponentGt python object for internal use.
-
-        This is the near-inverse of the ElectricMeterComponentGt.as_dict() method:
-          - Enums: translates between the symbols sent in messages between actors and
-        the values used by the actors internally once they've deserialized the messages.
-          - Types: recursively validates and deserializes sub-types.
-
-        Note that if a required attribute with a default value is missing in a dict, this method will
-        raise a SchemaError. This differs from the pydantic BaseModel practice of auto-completing
-        missing attributes with default values when they exist.
-
-        Args:
-            d (dict): the dictionary resulting from json.loads(t) for a serialized JSON type object t.
-
-        Raises:
-           SchemaError: if the dict cannot be turned into a ElectricMeterComponentGt object.
-
-        Returns:
-            ElectricMeterComponentGt
+        Translates a dict representation of a electric.meter.component.gt.001 message object
+        into the Python class object.
         """
+        for key in d.keys():
+            if not is_pascal_case(key):
+                raise GwTypeError(f"Key '{key}' is not PascalCase")
         d2 = dict(d)
         if "ComponentId" not in d2.keys():
-            raise SchemaError(f"dict missing ComponentId: <{d2}>")
+            raise GwTypeError(f"dict missing ComponentId: <{d2}>")
         if "ComponentAttributeClassId" not in d2.keys():
-            raise SchemaError(f"dict missing ComponentAttributeClass: <{d2}>")
+            raise GwTypeError(f"dict missing ComponentAttributeClass: <{d2}>")
         if "ConfigList" not in d2.keys():
-            raise SchemaError(f"dict missing ConfigList: <{d2}>")
+            raise GwTypeError(f"dict missing ConfigList: <{d2}>")
         if not isinstance(d2["ConfigList"], List):
-            raise SchemaError(f"ConfigList <{d2['ConfigList']}> must be a List!")
+            raise GwTypeError(f"ConfigList <{d2['ConfigList']}> must be a List!")
         config_list = []
         for elt in d2["ConfigList"]:
             if not isinstance(elt, dict):
-                raise SchemaError(
-                    f"ConfigList <{d2['ConfigList']}> must be a List of TelemetryReportingConfig types"
+                raise GwTypeError(
+                    f"ConfigList <{d2['ConfigList']}> must be a List of ChannelConfig types"
                 )
-            t = TelemetryReportingConfig_Maker.dict_to_tuple(elt)
+            t = ChannelConfigMaker.dict_to_tuple(elt)
             config_list.append(t)
         d2["ConfigList"] = config_list
         if "EgaugeIoList" not in d2.keys():
-            raise SchemaError(f"dict missing EgaugeIoList: <{d2}>")
+            raise GwTypeError(f"dict missing EgaugeIoList: <{d2}>")
         if not isinstance(d2["EgaugeIoList"], List):
-            raise SchemaError(f"EgaugeIoList <{d2['EgaugeIoList']}> must be a List!")
+            raise GwTypeError(f"EgaugeIoList <{d2['EgaugeIoList']}> must be a List!")
         egauge_io_list = []
         for elt in d2["EgaugeIoList"]:
             if not isinstance(elt, dict):
-                raise SchemaError(
+                raise GwTypeError(
                     f"EgaugeIoList <{d2['EgaugeIoList']}> must be a List of EgaugeIo types"
                 )
-            t = EgaugeIo_Maker.dict_to_tuple(elt)
+            t = EgaugeIoMaker.dict_to_tuple(elt)
             egauge_io_list.append(t)
         d2["EgaugeIoList"] = egauge_io_list
         if "TypeName" not in d2.keys():
-            raise SchemaError(f"TypeName missing from dict <{d2}>")
+            raise GwTypeError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():
-            raise SchemaError(f"Version missing from dict <{d2}>")
-        if d2["Version"] != "000":
+            raise GwTypeError(f"Version missing from dict <{d2}>")
+        if d2["Version"] != "001":
             LOGGER.debug(
-                f"Attempting to interpret electric.meter.component.gt version {d2['Version']} as version 000"
+                f"Attempting to interpret electric.meter.component.gt version {d2['Version']} as version 001"
             )
-            d2["Version"] = "000"
-        return ElectricMeterComponentGt(**d2)
+            d2["Version"] = "001"
+        d3 = {pascal_to_snake(key): value for key, value in d2.items()}
+        return ElectricMeterComponentGt(**d3)
 
     @classmethod
     def tuple_to_dc(cls, t: ElectricMeterComponentGt) -> ElectricMeterComponent:
-        if t.ComponentId in ElectricMeterComponent.by_id.keys():
-            dc = ElectricMeterComponent.by_id[t.ComponentId]
+        if t.component_id in ElectricMeterComponent.by_id.keys():
+            dc = ElectricMeterComponent.by_id[t.component_id]
         else:
             dc = ElectricMeterComponent(
-                component_id=t.ComponentId,
-                component_attribute_class_id=t.ComponentAttributeClassId,
-                display_name=t.DisplayName,
-                config_list=t.ConfigList,
-                hw_uid=t.HwUid,
-                modbus_host=t.ModbusHost,
-                modbus_port=t.ModbusPort,
-                egauge_io_list=t.EgaugeIoList,
+                component_id=t.component_id,
+                component_attribute_class_id=t.component_attribute_class_id,
+                display_name=t.display_name,
+                config_list=t.config_list,
+                hw_uid=t.hw_uid,
+                modbus_host=t.modbus_host,
+                modbus_port=t.modbus_port,
+                egauge_io_list=t.egauge_io_list,
             )
         return dc
 
     @classmethod
     def dc_to_tuple(cls, dc: ElectricMeterComponent) -> ElectricMeterComponentGt:
-        t = ElectricMeterComponentGt_Maker(
+        return ElectricMeterComponentGt(
             component_id=dc.component_id,
             component_attribute_class_id=dc.component_attribute_class_id,
             display_name=dc.display_name,
@@ -376,8 +393,7 @@ class ElectricMeterComponentGt_Maker:
             modbus_host=dc.modbus_host,
             modbus_port=dc.modbus_port,
             egauge_io_list=dc.egauge_io_list,
-        ).tuple
-        return t
+        )
 
     @classmethod
     def type_to_dc(cls, t: str) -> ElectricMeterComponent:
@@ -390,24 +406,6 @@ class ElectricMeterComponentGt_Maker:
     @classmethod
     def dict_to_dc(cls, d: dict[Any, str]) -> ElectricMeterComponent:
         return cls.tuple_to_dc(cls.dict_to_tuple(d))
-
-
-def check_is_non_negative_integer(v: int) -> None:
-    """
-    Must be non-negative when interpreted as an integer. Interpretation
-    as an integer follows the pydantic rules for this - which will round
-    down rational numbers. So 0 is fine, and 1.7 will be interpreted as
-    1 and is also fine.
-
-    Args:
-        v (int): the candidate
-
-    Raises:
-        ValueError: if v < 0
-    """
-    v2 = int(v)
-    if v2 < 0:
-        raise ValueError(f"<{v}> is not NonNegativeInteger")
 
 
 def check_is_positive_integer(v: int) -> None:
@@ -440,24 +438,28 @@ def check_is_uuid_canonical_textual(v: str) -> None:
     Raises:
         ValueError: if v is not UuidCanonicalTextual format
     """
+    phi_fun_check_it_out = 5
+    two_cubed_too_cute = 8
+    bachets_fun_four = 4
+    the_sublime_twelve = 12
     try:
         x = v.split("-")
     except AttributeError as e:
-        raise ValueError(f"Failed to split on -: {e}")
-    if len(x) != 5:
+        raise ValueError(f"Failed to split on -: {e}") from e
+    if len(x) != phi_fun_check_it_out:
         raise ValueError(f"<{v}> split by '-' did not have 5 words")
     for hex_word in x:
         try:
             int(hex_word, 16)
-        except ValueError:
-            raise ValueError(f"Words of <{v}> are not all hex")
-    if len(x[0]) != 8:
+        except ValueError as e:
+            raise ValueError(f"Words of <{v}> are not all hex") from e
+    if len(x[0]) != two_cubed_too_cute:
         raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
-    if len(x[1]) != 4:
+    if len(x[1]) != bachets_fun_four:
         raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
-    if len(x[2]) != 4:
+    if len(x[2]) != bachets_fun_four:
         raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
-    if len(x[3]) != 4:
+    if len(x[3]) != bachets_fun_four:
         raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
-    if len(x[4]) != 12:
+    if len(x[4]) != the_sublime_twelve:
         raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")

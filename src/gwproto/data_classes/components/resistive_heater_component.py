@@ -1,11 +1,11 @@
 """ResistiveHeaterComponent definition"""
 
-from typing import Dict
-from typing import Optional
+from typing import Dict, List, Optional
 
 from gwproto.data_classes.cacs.resistive_heater_cac import ResistiveHeaterCac
 from gwproto.data_classes.component import Component
 from gwproto.enums import MakeModel
+from gwproto.types.channel_config import ChannelConfig
 
 
 class ResistiveHeaterComponent(Component):
@@ -15,6 +15,7 @@ class ResistiveHeaterComponent(Component):
         self,
         component_id: str,
         component_attribute_class_id: str,
+        config_list: List[ChannelConfig],
         tested_max_hot_milli_ohms: Optional[int] = None,
         tested_max_cold_milli_ohms: Optional[int] = None,
         hw_uid: Optional[str] = None,
@@ -23,6 +24,7 @@ class ResistiveHeaterComponent(Component):
         super(self.__class__, self).__init__(
             display_name=display_name,
             component_id=component_id,
+            config_list=config_list,
             hw_uid=hw_uid,
             component_attribute_class_id=component_attribute_class_id,
         )

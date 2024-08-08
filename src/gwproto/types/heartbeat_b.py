@@ -2,16 +2,17 @@
 
 import json
 import logging
-from typing import Any
-from typing import Dict
-from typing import Literal
+import os
+from typing import Any, Dict, Literal
 
-from pydantic import BaseModel
-from pydantic import Field
-from pydantic import validator
+import dotenv
+from gw.errors import GwTypeError
+from gw.utils import is_pascal_case, pascal_to_snake, snake_to_pascal
+from pydantic import BaseModel, Field, field_validator
 
-from gwproto.errors import SchemaError
+dotenv.load_dotenv()
 
+ENCODE_ENUMS = int(os.getenv("ENUM_ENCODE", "1"))
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -30,26 +31,26 @@ class HeartbeatB(BaseModel):
     [More info](https://gridworks.readthedocs.io/en/latest/dispatch-contract.html)
     """
 
-    FromGNodeAlias: str = Field(
+    from_g_node_alias: str = Field(
         title="My GNodeAlias",
     )
-    FromGNodeInstanceId: str = Field(
+    from_g_node_instance_id: str = Field(
         title="My GNodeInstanceId",
     )
-    MyHex: str = Field(
+    my_hex: str = Field(
         title="Hex character getting sent",
         default="0",
     )
-    YourLastHex: str = Field(
+    your_last_hex: str = Field(
         title="Last hex character received from heartbeat partner.",
     )
-    LastReceivedTimeUnixMs: int = Field(
+    last_received_time_unix_ms: int = Field(
         title="Time YourLastHex was received on my clock",
     )
-    SendTimeUnixMs: int = Field(
+    send_time_unix_ms: int = Field(
         title="Time this message is made and sent on my clock",
     )
-    StartingOver: bool = Field(
+    starting_over: bool = Field(
         title="True if the heartbeat initiator wants to start the volley over",
         description=(
             "(typically the AtomicTNode in an AtomicTNode / SCADA pair) wants to start the heartbeating "
@@ -57,110 +58,115 @@ class HeartbeatB(BaseModel):
             "its last Hex."
         ),
     )
-    TypeName: Literal["heartbeat.b"] = "heartbeat.b"
-    Version: Literal["001"] = "001"
+    type_name: Literal["heartbeat.b"] = "heartbeat.b"
+    version: Literal["001"] = "001"
 
-    @validator("FromGNodeAlias")
+    class Config:
+        populate_by_name = True
+        alias_generator = snake_to_pascal
+
+    @field_validator("from_g_node_alias")
+    @classmethod
     def _check_from_g_node_alias(cls, v: str) -> str:
         try:
             check_is_left_right_dot(v)
         except ValueError as e:
             raise ValueError(
-                f"FromGNodeAlias failed LeftRightDot format validation: {e}"
-            )
+                f"FromGNodeAlias failed LeftRightDot format validation: {e}",
+            ) from e
         return v
 
-    @validator("FromGNodeInstanceId")
+    @field_validator("from_g_node_instance_id")
+    @classmethod
     def _check_from_g_node_instance_id(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
         except ValueError as e:
             raise ValueError(
-                f"FromGNodeInstanceId failed UuidCanonicalTextual format validation: {e}"
-            )
+                f"FromGNodeInstanceId failed UuidCanonicalTextual format validation: {e}",
+            ) from e
         return v
 
-    @validator("MyHex")
+    @field_validator("my_hex")
+    @classmethod
     def _check_my_hex(cls, v: str) -> str:
         try:
             check_is_hex_char(v)
         except ValueError as e:
-            raise ValueError(f"MyHex failed HexChar format validation: {e}")
+            raise ValueError(f"MyHex failed HexChar format validation: {e}") from e
         return v
 
-    @validator("YourLastHex")
+    @field_validator("your_last_hex")
+    @classmethod
     def _check_your_last_hex(cls, v: str) -> str:
         try:
             check_is_hex_char(v)
         except ValueError as e:
-            raise ValueError(f"YourLastHex failed HexChar format validation: {e}")
+            raise ValueError(
+                f"YourLastHex failed HexChar format validation: {e}"
+            ) from e
         return v
 
-    @validator("LastReceivedTimeUnixMs")
+    @field_validator("last_received_time_unix_ms")
+    @classmethod
     def _check_last_received_time_unix_ms(cls, v: int) -> int:
         try:
             check_is_reasonable_unix_time_ms(v)
         except ValueError as e:
             raise ValueError(
-                f"LastReceivedTimeUnixMs failed ReasonableUnixTimeMs format validation: {e}"
-            )
+                f"LastReceivedTimeUnixMs failed ReasonableUnixTimeMs format validation: {e}",
+            ) from e
         return v
 
-    @validator("SendTimeUnixMs")
+    @field_validator("send_time_unix_ms")
+    @classmethod
     def _check_send_time_unix_ms(cls, v: int) -> int:
         try:
             check_is_reasonable_unix_time_ms(v)
         except ValueError as e:
             raise ValueError(
-                f"SendTimeUnixMs failed ReasonableUnixTimeMs format validation: {e}"
-            )
+                f"SendTimeUnixMs failed ReasonableUnixTimeMs format validation: {e}",
+            ) from e
         return v
 
     def as_dict(self) -> Dict[str, Any]:
         """
-        Translate the object into a dictionary representation that can be serialized into a
-        heartbeat.b.001 object.
+        Main step in serializing the object. Encodes enums as their 8-digit random hex symbol if
+        settings.encode_enums = 1.
+        """
+        if ENCODE_ENUMS:
+            return self.enum_encoded_dict()
+        else:
+            return self.plain_enum_dict()
 
-        This method prepares the object for serialization by the as_type method, creating a
-        dictionary with key-value pairs that follow the requirements for an instance of the
-        heartbeat.b.001 type. Unlike the standard python dict method,
-        it makes the following substantive changes:
-        - Enum Values: Translates between the values used locally by the actor to the symbol
-        sent in messages.
-        - Removes any key-value pairs where the value is None for a clearer message, especially
-        in cases with many optional attributes.
-
-        It also applies these changes recursively to sub-types.
+    def plain_enum_dict(self) -> Dict[str, Any]:
+        """
+        Returns enums as their values.
         """
         d = {
-            key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
-            ).items()
+            snake_to_pascal(key): value
+            for key, value in self.model_dump().items()
+            if value is not None
+        }
+        return d
+
+    def enum_encoded_dict(self) -> Dict[str, Any]:
+        """
+        Encodes enums as their 8-digit random hex symbol
+        """
+        d = {
+            snake_to_pascal(key): value
+            for key, value in self.model_dump().items()
             if value is not None
         }
         return d
 
     def as_type(self) -> bytes:
         """
-        Serialize to the heartbeat.b.001 representation.
+        Serialize to the heartbeat.b.001 representation designed to send in a message.
 
-        Instances in the class are python-native representations of heartbeat.b.001
-        objects, while the actual heartbeat.b.001 object is the serialized UTF-8 byte
-        string designed for sending in a message.
-
-        This method calls the as_dict() method, which differs from the native python dict()
-        in the following key ways:
-        - Enum Values: Translates between the values used locally by the actor to the symbol
-        sent in messages.
-        - - Removes any key-value pairs where the value is None for a clearer message, especially
-        in cases with many optional attributes.
-
-        It also applies these changes recursively to sub-types.
-
-        Its near-inverse is HeartbeatB.type_to_tuple(). If the type (or any sub-types)
-        includes an enum, then the type_to_tuple will map an unrecognized symbol to the
-        default enum value. This is why these two methods are only 'near' inverses.
+        Recursively encodes enums as hard-to-remember 8-digit random hex symbols
+        unless settings.encode_enums is set to 0.
         """
         json_string = json.dumps(self.as_dict())
         return json_string.encode("utf-8")
@@ -169,99 +175,74 @@ class HeartbeatB(BaseModel):
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
-class HeartbeatB_Maker:
+class HeartbeatBMaker:
     type_name = "heartbeat.b"
     version = "001"
 
-    def __init__(
-        self,
-        from_g_node_alias: str,
-        from_g_node_instance_id: str,
-        my_hex: str,
-        your_last_hex: str,
-        last_received_time_unix_ms: int,
-        send_time_unix_ms: int,
-        starting_over: bool,
-    ):
-        self.tuple = HeartbeatB(
-            FromGNodeAlias=from_g_node_alias,
-            FromGNodeInstanceId=from_g_node_instance_id,
-            MyHex=my_hex,
-            YourLastHex=your_last_hex,
-            LastReceivedTimeUnixMs=last_received_time_unix_ms,
-            SendTimeUnixMs=send_time_unix_ms,
-            StartingOver=starting_over,
-        )
-
     @classmethod
-    def tuple_to_type(cls, tpl: HeartbeatB) -> bytes:
+    def tuple_to_type(cls, tuple: HeartbeatB) -> bytes:
         """
         Given a Python class object, returns the serialized JSON type object.
         """
-        return tpl.as_type()
+        return tuple.as_type()
 
     @classmethod
-    def type_to_tuple(cls, t: bytes) -> HeartbeatB:
+    def type_to_tuple(cls, b: bytes) -> HeartbeatB:
         """
-        Given a serialized JSON type object, returns the Python class object.
+        Given the bytes in a message, returns the corresponding class object.
+
+        Args:
+            b (bytes): candidate type instance
+
+        Raises:
+           GwTypeError: if the bytes are not a heartbeat.b.001 type
+
+        Returns:
+            HeartbeatB instance
         """
         try:
-            d = json.loads(t)
-        except TypeError:
-            raise SchemaError("Type must be string or bytes!")
+            d = json.loads(b)
+        except TypeError as e:
+            raise GwTypeError("Type must be string or bytes!") from e
         if not isinstance(d, dict):
-            raise SchemaError(f"Deserializing <{t}> must result in dict!")
+            raise GwTypeError(f"Deserializing  must result in dict!\n <{b}>")
         return cls.dict_to_tuple(d)
 
     @classmethod
     def dict_to_tuple(cls, d: dict[str, Any]) -> HeartbeatB:
         """
-        Deserialize a dictionary representation of a heartbeat.b.001 message object
-        into a HeartbeatB python object for internal use.
-
-        This is the near-inverse of the HeartbeatB.as_dict() method:
-          - Enums: translates between the symbols sent in messages between actors and
-        the values used by the actors internally once they've deserialized the messages.
-          - Types: recursively validates and deserializes sub-types.
-
-        Note that if a required attribute with a default value is missing in a dict, this method will
-        raise a SchemaError. This differs from the pydantic BaseModel practice of auto-completing
-        missing attributes with default values when they exist.
-
-        Args:
-            d (dict): the dictionary resulting from json.loads(t) for a serialized JSON type object t.
-
-        Raises:
-           SchemaError: if the dict cannot be turned into a HeartbeatB object.
-
-        Returns:
-            HeartbeatB
+        Translates a dict representation of a heartbeat.b.001 message object
+        into the Python class object.
         """
+        for key in d.keys():
+            if not is_pascal_case(key):
+                raise GwTypeError(f"Key '{key}' is not PascalCase")
         d2 = dict(d)
         if "FromGNodeAlias" not in d2.keys():
-            raise SchemaError(f"dict missing FromGNodeAlias: <{d2}>")
+            raise GwTypeError(f"dict missing FromGNodeAlias: <{d2}>")
         if "FromGNodeInstanceId" not in d2.keys():
-            raise SchemaError(f"dict missing FromGNodeInstanceId: <{d2}>")
+            raise GwTypeError(f"dict missing FromGNodeInstanceId: <{d2}>")
         if "MyHex" not in d2.keys():
-            raise SchemaError(f"dict missing MyHex: <{d2}>")
+            raise GwTypeError(f"dict missing MyHex: <{d2}>")
         if "YourLastHex" not in d2.keys():
-            raise SchemaError(f"dict missing YourLastHex: <{d2}>")
+            raise GwTypeError(f"dict missing YourLastHex: <{d2}>")
         if "LastReceivedTimeUnixMs" not in d2.keys():
-            raise SchemaError(f"dict missing LastReceivedTimeUnixMs: <{d2}>")
+            raise GwTypeError(f"dict missing LastReceivedTimeUnixMs: <{d2}>")
         if "SendTimeUnixMs" not in d2.keys():
-            raise SchemaError(f"dict missing SendTimeUnixMs: <{d2}>")
+            raise GwTypeError(f"dict missing SendTimeUnixMs: <{d2}>")
         if "StartingOver" not in d2.keys():
-            raise SchemaError(f"dict missing StartingOver: <{d2}>")
+            raise GwTypeError(f"dict missing StartingOver: <{d2}>")
         if "TypeName" not in d2.keys():
-            raise SchemaError(f"TypeName missing from dict <{d2}>")
+            raise GwTypeError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():
-            raise SchemaError(f"Version missing from dict <{d2}>")
+            raise GwTypeError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "001":
             LOGGER.debug(
                 f"Attempting to interpret heartbeat.b version {d2['Version']} as version 001"
             )
             d2["Version"] = "001"
-        return HeartbeatB(**d2)
+        d3 = {pascal_to_snake(key): value for key, value in d2.items()}
+        return HeartbeatB(**d3)
 
 
 def check_is_hex_char(v: str) -> None:
@@ -295,12 +276,10 @@ def check_is_left_right_dot(v: str) -> None:
     Raises:
         ValueError: if v is not LeftRightDot format
     """
-    from typing import List
-
     try:
-        x: List[str] = v.split(".")
-    except:
-        raise ValueError(f"Failed to seperate <{v}> into words with split'.'")
+        x = v.split(".")
+    except Exception as e:
+        raise ValueError(f"Failed to seperate <{v}> into words with split'.'") from e
     first_word = x[0]
     first_char = first_word[0]
     if not first_char.isalpha():
@@ -325,12 +304,18 @@ def check_is_reasonable_unix_time_ms(v: int) -> None:
     Raises:
         ValueError: if v is not ReasonableUnixTimeMs format
     """
-    import pendulum
+    from datetime import datetime, timezone
 
-    if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp * 1000 > v:  # type: ignore[attr-defined]
-        raise ValueError(f"<{v}> must be after Jan 1 2000")
-    if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp * 1000 < v:  # type: ignore[attr-defined]
-        raise ValueError(f"<{v}> must be before Jan 1 3000")
+    start_date = datetime(2000, 1, 1, tzinfo=timezone.utc)
+    end_date = datetime(3000, 1, 1, tzinfo=timezone.utc)
+
+    start_timestamp_ms = int(start_date.timestamp() * 1000)
+    end_timestamp_ms = int(end_date.timestamp() * 1000)
+
+    if v < start_timestamp_ms:
+        raise ValueError(f"{v} must be after Jan 1 2000")
+    if v > end_timestamp_ms:
+        raise ValueError(f"{v} must be before Jan 1 3000")
 
 
 def check_is_uuid_canonical_textual(v: str) -> None:
@@ -345,24 +330,28 @@ def check_is_uuid_canonical_textual(v: str) -> None:
     Raises:
         ValueError: if v is not UuidCanonicalTextual format
     """
+    phi_fun_check_it_out = 5
+    two_cubed_too_cute = 8
+    bachets_fun_four = 4
+    the_sublime_twelve = 12
     try:
         x = v.split("-")
     except AttributeError as e:
-        raise ValueError(f"Failed to split on -: {e}")
-    if len(x) != 5:
+        raise ValueError(f"Failed to split on -: {e}") from e
+    if len(x) != phi_fun_check_it_out:
         raise ValueError(f"<{v}> split by '-' did not have 5 words")
     for hex_word in x:
         try:
             int(hex_word, 16)
-        except ValueError:
-            raise ValueError(f"Words of <{v}> are not all hex")
-    if len(x[0]) != 8:
+        except ValueError as e:
+            raise ValueError(f"Words of <{v}> are not all hex") from e
+    if len(x[0]) != two_cubed_too_cute:
         raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
-    if len(x[1]) != 4:
+    if len(x[1]) != bachets_fun_four:
         raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
-    if len(x[2]) != 4:
+    if len(x[2]) != bachets_fun_four:
         raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
-    if len(x[3]) != 4:
+    if len(x[3]) != bachets_fun_four:
         raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")
-    if len(x[4]) != 12:
+    if len(x[4]) != the_sublime_twelve:
         raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")

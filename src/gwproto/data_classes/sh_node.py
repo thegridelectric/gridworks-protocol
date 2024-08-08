@@ -1,12 +1,10 @@
 """ShNode definition"""
 
-from typing import Dict
-from typing import Optional
+from typing import Dict, Optional
 
+from gw.errors import DcError
 from gwproto.data_classes.component import Component
-from gwproto.data_classes.errors import DataClassLoadingError
 from gwproto.enums import ActorClass
-from gwproto.enums import Role
 
 
 class ShNode:
@@ -19,39 +17,43 @@ class ShNode:
     """
 
     by_id: Dict[str, "ShNode"] = {}
+    by_name: Dict[str, "ShNode"] = {}
+
+    def __new__(cls, name, sh_node_id, *args, **kwargs):
+        try:
+            return cls.by_name[name]
+        except KeyError:
+            instance = super().__new__(cls)
+            cls.by_name[name] = instance
+            cls.by_id[sh_node_id] = instance
+            return instance
 
     def __init__(
         self,
         sh_node_id: str,
-        alias: str,
+        name: str,
+        handle: str,
+        actor_hierarchy_name: str,
         actor_class: ActorClass,
-        role: Role,
         display_name: Optional[str] = None,
         component_id: Optional[str] = None,
-        reporting_sample_period_s: Optional[int] = None,
-        rated_voltage_v: Optional[int] = None,
-        typical_voltage_v: Optional[int] = None,
+        nameplate_power_w: Optional[int] = None,
         in_power_metering: Optional[bool] = None,
     ):
         self.sh_node_id = sh_node_id
-        self.alias = alias
+        self.name = name
+        self.handle = handle
+        self.actor_hierarchy_name = actor_hierarchy_name
         self.actor_class = actor_class
-        self.role = role
         self.display_name = display_name
         self.component_id = component_id
-        self.reporting_sample_period_s = reporting_sample_period_s
-        self.rated_voltage_v = rated_voltage_v
-        self.typical_voltage_v = typical_voltage_v
+        self.nameplate_power_w = nameplate_power_w
         self.in_power_metering = in_power_metering
         ShNode.by_id[self.sh_node_id] = self
+        ShNode.by_name[self.name] = self
 
     def __repr__(self):
-        rs = f"ShNode {self.display_name} => {self.role.value} {self.alias}, "
-        if self.has_actor:
-            rs += " (has actor)"
-        else:
-            rs += " (passive, no actor)"
-        return rs
+        return f"ShNode {self.display_name} => {self.actor_class.value} {self.name}"
 
     @property
     def has_actor(self) -> bool:
@@ -64,7 +66,5 @@ class ShNode:
         if self.component_id is None:
             return None
         if self.component_id not in Component.by_id.keys():
-            raise DataClassLoadingError(
-                f"{self.alias} component {self.component_id} not loaded!"
-            )
+            raise DcError(f"{self.name} component {self.component_id} not loaded!")
         return Component.by_id[self.component_id]

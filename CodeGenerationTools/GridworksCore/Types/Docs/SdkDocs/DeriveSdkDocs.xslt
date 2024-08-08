@@ -33,7 +33,7 @@
                 <xsl:variable name="overwrite-mode">
 
                     <xsl:if test="not (Status = 'Pending')">
-                    <xsl:text>Always</xsl:text>
+                    <xsl:text>Never</xsl:text>
                     </xsl:if>
                     <xsl:if test="(Status = 'Pending')">
                     <xsl:text>Always</xsl:text>
@@ -68,7 +68,7 @@ Python pydantic class corresponding to json type `</xsl:text>
     - Description: </xsl:text>
     <xsl:if test="normalize-space(Title) !=''">
     <xsl:value-of select="Title"/>
-     <xsl:text>. </xsl:text>
+     <xsl:text>.</xsl:text>
     </xsl:if>
     <xsl:if test="normalize-space(Description) !=''">
     <xsl:value-of select="Description"/>

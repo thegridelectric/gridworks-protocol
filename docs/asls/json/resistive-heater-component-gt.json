@@ -36,6 +36,13 @@
       "type": "integer",
       "required": false
     },
+    "ConfigList": {
+      "type": "array",
+      "items": {
+        "type": "channel.config.000"
+      },
+      "required": true
+    },
     "TypeName": {
       "type": "string",
       "value": "resistive.heater.component.gt",

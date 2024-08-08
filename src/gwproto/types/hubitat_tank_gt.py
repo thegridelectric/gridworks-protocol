@@ -4,21 +4,18 @@ from functools import cached_property
 from typing import Optional
 
 import yarl
-from pydantic import BaseModel
-from pydantic import Extra
-from pydantic import conint
-from pydantic import validator
+from gw.utils import snake_to_pascal
+from pydantic import BaseModel, conint, field_validator
 
-from gwproto.enums import TelemetryName
-from gwproto.enums import Unit
+from gwproto.enums import TelemetryName, Unit
 from gwproto.types.hubitat_component_gt import HubitatRESTResolutionSettings
-from gwproto.types.rest_poller_gt import DEFAULT_REST_POLL_PERIOD_SECONDS
-from gwproto.types.rest_poller_gt import RequestArgs
-from gwproto.types.rest_poller_gt import RESTPollerSettings
-from gwproto.types.rest_poller_gt import URLArgs
-from gwproto.types.rest_poller_gt import URLConfig
-from gwproto.utils import snake_to_camel
-
+from gwproto.types.rest_poller_gt import (
+    DEFAULT_REST_POLL_PERIOD_SECONDS,
+    RequestArgs,
+    RESTPollerSettings,
+    URLArgs,
+    URLConfig,
+)
 
 HUBITAT_ID_REGEX = re.compile(
     r".*/apps/api/(?P<api_id>-?\d+)/devices/(?P<device_id>-?\d+).*?"
@@ -49,17 +46,19 @@ class FibaroTempSensorSettingsGt(BaseModel):
     rest: Optional[RESTPollerSettings] = None
 
     class Config:
-        extra = Extra.allow
-        alias_generator = snake_to_camel
-        allow_population_by_field_name = True
+        extra = "allow"
+        alias_generator = snake_to_pascal
+        populate_by_name = True
 
-    @validator("telemetry_name_gt_enum_symbol")
+    @field_validator("telemetry_name_gt_enum_symbol")
+    @classmethod
     def _check_telemetry_name_symbol(cls, v: str) -> str:
         if v not in TelemetryName.symbols():
             v = TelemetryName.value_to_symbol(TelemetryName.default())
         return v
 
-    @validator("temp_unit_gt_enum_symbol")
+    @field_validator("temp_unit_gt_enum_symbol")
+    @classmethod
     def _checktemp_unit_gt_enum_symbol(cls, v: str) -> str:
         if v not in Unit.symbols():
             v = Unit.value_to_symbol(Unit.default())
@@ -73,9 +72,10 @@ class FibaroTempSensorSettings(FibaroTempSensorSettingsGt):
     node_name: str
 
     class Config:
-        keep_untouched = (cached_property, TelemetryName)
+        ignored_types = (cached_property, TelemetryName)
 
-    @validator("rest")
+    @field_validator("rest")
+    @classmethod
     def _collapse_rest_url(cls, v: Optional[RESTPollerSettings]):
         if v is not None:
             # Collapse session.base_url and request.url into
@@ -143,31 +143,29 @@ class FibaroTempSensorSettings(FibaroTempSensorSettingsGt):
                 poll_period_seconds=poll_period_seconds,
                 request=RequestArgs(url=constructed_config),
             )
+        elif self.rest.request.url is None:
+            self.rest.request.url = constructed_config
         else:
-            # Again, no inline url config is found; use constructed url config
-            if self.rest.request.url is None:
-                self.rest.request.url = constructed_config
+            # An inline config exists; take items *not* in inline config from
+            # constructed config (inline config 'wins' on disagreement)
+            existing_config = self.rest.request.url
+            if not existing_config.url_args.host:
+                existing_config.url_args.host = constructed_config.url_args.host
+            if existing_config.url_path_format is None:
+                existing_config.url_path_format = constructed_config.url_path_format
+            if existing_config.url_path_args is None:
+                existing_config.url_path_args = constructed_config.url_path_args
             else:
-                # An inline config exists; take items *not* in inline config from
-                # constructed config (inline config 'wins' on disagreement)
-                existing_config = self.rest.request.url
-                if not existing_config.url_args.host:
-                    existing_config.url_args.host = constructed_config.url_args.host
-                if existing_config.url_path_format is None:
-                    existing_config.url_path_format = constructed_config.url_path_format
-                if existing_config.url_path_args is None:
-                    existing_config.url_path_args = constructed_config.url_path_args
-                else:
-                    existing_config.url_path_args = dict(
-                        constructed_config.url_path_args,
-                        **existing_config.url_path_args,
-                    )
+                existing_config.url_path_args = dict(
+                    constructed_config.url_path_args,
+                    **existing_config.url_path_args,
+                )
         self.rest.clear_property_cache()
 
         # Verify new URL produced by combining any inline REST configuration
         # with hubitat configuration is valid.
         url_str = str(self.rest.url)
-        hubitat_gt = hubitat.component_gt.Hubitat
+        hubitat_gt = hubitat.component_gt.hubitat
         # check host
         if hubitat_gt.Host != self.rest.url.host:
             raise ValueError(
@@ -240,6 +238,6 @@ class HubitatTankSettingsGt(BaseModel):
     web_listen_enabled: bool = True
 
     class Config:
-        extra = Extra.allow
-        alias_generator = snake_to_camel
-        allow_population_by_field_name = True
+        extra = "allow"
+        alias_generator = snake_to_pascal
+        populate_by_name = True

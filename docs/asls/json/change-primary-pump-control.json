@@ -1,0 +1,21 @@
+{
+  "gtr_asl": "001",
+  "enum_name": "change.primary.pump.control",
+  "enum_version": "000",
+  "description": "Change control between the fallback HP control and SCADA",
+  "ssot": "https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeprimarypumpcontrol",
+  "values": ["SwitchToScada", "SwitchToHeatPump"],
+  "value_to_symbol": {
+    "": "",
+    "": ""
+  },
+  "value_to_version": {
+    "": "000",
+    "": "000"
+  },
+  "value_descriptions": {
+    "SwitchToScada": "",
+    "SwitchToHeatPump": ""
+  },
+  "default_value": "SwitchToHeatPump"
+}

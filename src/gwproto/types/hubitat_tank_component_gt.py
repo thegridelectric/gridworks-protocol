@@ -1,8 +1,9 @@
 import copy
 import json
 import typing
-from typing import Any
-from typing import Literal
+from typing import Any, Literal
+
+from gw.utils import snake_to_pascal
 
 from gwproto.data_classes.component import Component
 from gwproto.data_classes.components.hubitat_tank_component import HubitatTankComponent
@@ -11,9 +12,13 @@ from gwproto.types.hubitat_tank_gt import HubitatTankSettingsGt
 
 
 class HubitatTankComponentGt(ComponentGt):
-    Tank: HubitatTankSettingsGt
-    TypeName: Literal["hubitat.tank.component.gt"] = "hubitat.tank.component.gt"
-    Version: Literal["000"] = "000"
+    tank: HubitatTankSettingsGt
+    type_name: Literal["hubitat.tank.component.gt"] = "hubitat.tank.component.gt"
+    version: Literal["000"] = "000"
+
+    class Config:
+        populate_by_name = True
+        alias_generator = snake_to_pascal
 
     def __hash__(self):
         return hash((type(self),) + tuple(self.__dict__.values()))
@@ -23,31 +28,31 @@ class HubitatTankComponentGt(ComponentGt):
         cls, component: HubitatTankComponent
     ) -> "HubitatTankComponentGt":
         return HubitatTankComponentGt(
-            ComponentId=component.component_id,
-            ComponentAttributeClassId=component.component_attribute_class_id,
-            Tank=HubitatTankSettingsGt(
-                hubitat_component_id=component.hubitat.ComponentId,
+            component_id=component.component_id,
+            component_attribute_class_id=component.component_attribute_class_id,
+            tank=HubitatTankSettingsGt(
+                hubitat_component_id=component.hubitat.component_id,
                 devices=copy.deepcopy(component.devices),
             ),
-            DisplayName=component.display_name,
-            HwUid=component.hw_uid,
+            display_name=component.display_name,
+            hw_uid=component.hw_uid,
         )
 
     def to_data_class(self) -> HubitatTankComponent:
-        component = Component.by_id.get(self.ComponentId, None)
+        component = Component.by_id.get(self.component_id, None)
         if component is not None:
             return typing.cast(HubitatTankComponent, component)
         return HubitatTankComponent(
-            component_id=self.ComponentId,
-            component_attribute_class_id=self.ComponentAttributeClassId,
-            tank_gt=self.Tank,
-            display_name=self.DisplayName,
-            hw_uid=self.HwUid,
+            component_id=self.component_id,
+            component_attribute_class_id=self.component_attribute_class_id,
+            tank_gt=self.tank,
+            display_name=self.display_name,
+            hw_uid=self.hw_uid,
         )
 
 
-class HubitatTankComponentGt_Maker:
-    type_name: str = HubitatTankComponentGt.__fields__["TypeName"].default
+class HubitatTankComponentGtMaker:
+    type_name: str = HubitatTankComponentGt.model_fields["type_name"].default
     version = "000"
     tuple: HubitatTankComponentGt
 

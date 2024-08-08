@@ -1,3 +1,5 @@
+# type: ignore
+
 """Nox sessions."""
 
 import os
@@ -7,13 +9,10 @@ import sys
 from pathlib import Path
 from textwrap import dedent
 
-# noinspection PyUnresolvedReferences
-import nox
-
+import nox  # noqa
 
 try:
-    from nox_poetry import Session
-    from nox_poetry import session
+    from nox_poetry import Session, session
 except ImportError:
     message = f"""\
     Nox failed to import the 'nox-poetry' package.
@@ -25,14 +24,12 @@ except ImportError:
 
 
 package = "gwproto"
-python_versions = ["3.11", "3.10"]
-
+python_versions = ["3.11", "3.12"]
 nox.needs_version = ">= 2021.6.6"
 nox.options.sessions = (
     "pre-commit",
-    # "mypy",
+    "mypy",
     "tests",
-    # "typeguard",
     "xdoctest",
     "docs-build",
 )
@@ -112,7 +109,7 @@ def activate_virtualenv_in_precommit_hooks(session: Session) -> None:
                 break
 
 
-@session(name="pre-commit", python=python_versions[0])
+@session(name="pre-commit", python=python_versions[1])
 def precommit(session: Session) -> None:
     """Lint using pre-commit."""
     args = session.posargs or [
@@ -122,14 +119,7 @@ def precommit(session: Session) -> None:
         "--show-diff-on-failure",
     ]
     session.install(
-        "black",
-        # "darglint",
-        # "flake8",
-        # "flake8-bandit",
-        # "flake8-bugbear",
-        # "flake8-docstrings",
-        # "flake8-rst-docstrings",
-        "isort",
+        "ruff",
         "pep8-naming",
         "pre-commit",
         "pre-commit-hooks",
@@ -145,7 +135,7 @@ def mypy(session: Session) -> None:
     """Type-check using mypy."""
     args = session.posargs or ["src", "tests", "docs/conf.py"]
     session.install(".")
-    session.install("mypy", "pytest", "types-pytz")
+    session.install("mypy", "pytest")
     session.run("mypy", *args)
     if not session.posargs:
         session.run("mypy", f"--python-executable={sys.executable}", "noxfile.py")
@@ -174,14 +164,6 @@ def coverage(session: Session) -> None:
         session.run("coverage", "combine")
 
     session.run("coverage", *args)
-
-
-@session(python=python_versions[0])
-def typeguard(session: Session) -> None:
-    """Runtime type checking using Typeguard."""
-    session.install(".")
-    session.install("pytest", "typeguard", "pygments")
-    session.run("pytest", f"--typeguard-packages={package}", *session.posargs)
 
 
 @session(python=python_versions)

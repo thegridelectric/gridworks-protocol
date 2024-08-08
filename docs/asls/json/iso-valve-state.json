@@ -1,0 +1,27 @@
+{
+  "gtr_asl": "001",
+  "enum_name": "iso.valve.state",
+  "enum_version": "000",
+  "description": "The list of states associated to the House 0 "IsoValve" Finite State Machine.",
+  "ssot": "https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#isovalvestate",
+  "values": ["Open", "Closing", "Closed", "Opening"],
+  "value_to_symbol": {
+    "": "",
+    "": "",
+    "": "",
+    "": ""
+  },
+  "value_to_version": {
+    "": "000",
+    "": "000",
+    "": "000",
+    "": "000"
+  },
+  "value_descriptions": {
+    "Open": "",
+    "Closing": "",
+    "Closed": "",
+    "Opening": ""
+  },
+  "default_value": "Open"
+}

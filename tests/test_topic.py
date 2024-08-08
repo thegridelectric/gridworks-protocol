@@ -1,7 +1,5 @@
 import pytest
-
-from gwproto import DecodedMQTTTopic
-from gwproto import MQTTTopic
+from gwproto import DecodedMQTTTopic, MQTTTopic
 
 
 def test_mqtt_topic_encode():

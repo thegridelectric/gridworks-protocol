@@ -2,12 +2,61 @@ import datetime
 import json
 import re
 import subprocess
-from typing import Any
+from typing import Any, Callable
 
+import pydantic
 import pytz
 
-
 snake_add_underscore_to_camel_pattern = re.compile(r"(?<!^)(?=[A-Z])")
+
+
+def predicate_validator(
+    field_name: str, predicate: Callable[[Any], bool], error_format: str = "", **kwargs
+) -> classmethod:  # type: ignore
+    """
+    Produce a pydantic validator from a function returning a bool.
+
+    Example:
+
+        from typing import Any
+        from pydantic import BaseModel, ValidationError
+        from gwproto.property_format import predicate_validator
+
+        def is_truthy(v: Any) -> bool:
+            return bool(v)
+
+        class Foo(BaseModel):
+            an_int: int
+
+            _validate_an_int = predicate_validator("an_int", is_truthy)
+
+        print(Foo(an_int=1))
+
+        try:
+            print(Foo(an_int=0))
+        except ValidationError as e:
+            print(e)
+
+    Args:
+        field_name: the name of the field to validate.
+        predicate: the validation function. A truthy return value indicates success.
+        error_format: Optional format string for use in exception raised by validation failure. Takes one parameter, 'v'.
+        **kwargs: Passed to pydantic.validator()
+
+    Returns:
+        The passed in object v.
+    """
+
+    def _validator(v: Any) -> Any:
+        if not predicate(v):
+            if error_format:
+                err_str = error_format.format(value=v)
+            else:
+                err_str = f"Failure of predicate on [{v}] with predicate {predicate}"
+            raise ValueError(err_str)
+        return v
+
+    return pydantic.field_validator(field_name, **kwargs)(_validator)
 
 
 def camel_to_snake(name: str) -> str:

@@ -1,0 +1,21 @@
+{
+  "gtr_asl": "001",
+  "enum_name": "relay.energization.state",
+  "enum_version": "000",
+  "description": "The basic two-state enum for a double-throw relay where nothing is known about its energized/de-energized legs. This can only ever have two states. This is an old-school enum, where DeEnergized encodes 0 and Energized encodes 1.",
+  "ssot": "https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relayenergizationstate",
+  "values": ["DeEnergized", "Energized"],
+  "value_to_symbol": {
+    "": "0",
+    "": "1"
+  },
+  "value_to_version": {
+    "": "000",
+    "": "000"
+  },
+  "value_descriptions": {
+    "DeEnergized": "Common is connected to the Normally Closed pole.",
+    "Energized": "Common is connected to the Normally Open pole."
+  },
+  "default_value": "DeEnergized"
+}

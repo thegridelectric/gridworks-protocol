@@ -1,17 +1,16 @@
 from enum import auto
-from typing import List
+from typing import List, Optional
 
-from fastapi_utils.enums import StrEnum
+from gw.enums import GwStrEnum
 
 
-class TelemetryName(StrEnum):
+class TelemetryName(GwStrEnum):
     """
     Specifies the name of sensed data reported by a Spaceheat SCADA
 
     Enum spaceheat.telemetry.name version 001 in the GridWorks Type registry.
 
-    Used by used by multiple Application Shared Languages (ASLs), including but not limited to
-    gwproto. For more information:
+    Used by multiple Application Shared Languages (ASLs). For more information:
       - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
       - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheattelemetryname)
       - [More Info](https://gridworks-protocol.readthedocs.io/en/latest/telemetry-name.html)
@@ -19,12 +18,8 @@ class TelemetryName(StrEnum):
     Values (with symbols in parens):
       - Unknown (00000000): Default Value - unknown telemetry name.
       - PowerW (af39eec9): Power in Watts.
-      - RelayState (5a71d4b3): An associated read must be either 0 or 1, with 0 meaning that the
-        relay is open and current CANNOT flow and 1 meaning that the relay is closed and current
-        CAN flow. Note in particular that this TelemetryName is NOT meant to be used to reflect
-        whether a relay is energized or de-energized and in particular '1' means the same thing
-        for both Normally Open and Normally Closed relays. Also, it is not meant to be used
-        for a double-throw relay.
+      - RelayState (5a71d4b3): The Telemetry reading belongs to ['Energized', 'DeEnergized'] (relay.energization.state
+        enum).
       - WaterTempCTimes1000 (c89d0ba1): Water temperature, in Degrees Celcius multiplied by 1000.
         Example: 43200 means 43.2 deg Celcius.
       - WaterTempFTimes1000 (793505aa): Water temperature, in Degrees F multiplied by 1000. Example:
@@ -41,7 +36,8 @@ class TelemetryName(StrEnum):
         6234 means 6.234 deg Celcius.
       - AirTempFTimes1000 (4c3f8c78): Air temperature, in Degrees F multiplied by 1000. Example:
         69329 means 69.329 deg Fahrenheit.
-      - ThermostatState (00002000): An enum representing the state of the thermostat heat call.
+      - ThermostatState (00002000): Thermostat State: 0 means idle, 1 means heating, 2 means pending
+        heat
     """
 
     Unknown = auto()
@@ -74,24 +70,27 @@ class TelemetryName(StrEnum):
         return [elt.value for elt in cls]
 
     @classmethod
-    def version(cls, value: str) -> str:
+    def version(cls, value: Optional[str] = None) -> str:
         """
-        Returns the version of an enum value.
-
-        Once a value belongs to one version of the enum, it belongs
-        to all future versions.
+        Returns the version of the class (default) used by this package or the
+        version of a candidate enum value (always less than or equal to the version
+        of the class)
 
         Args:
-            value (str): The candidate enum value.
+            value (Optional[str]): None (for version of the Enum itself) or
+            the candidate enum value.
 
         Raises:
-            ValueError: If value is not one of the enum values.
+            ValueError: If the value is not one of the enum values.
 
         Returns:
-            str: The earliest version of the enum containing value.
+            str: The version of the enum used by this code (if given no
+            value) OR the earliest version of the enum containing the value.
         """
+        if value is None:
+            return "001"
         if not isinstance(value, str):
-            raise ValueError(f"This method applies to strings, not enums")
+            raise ValueError("This method applies to strings, not enums")
         if value not in value_to_version.keys():
             raise ValueError(f"Unknown enum value: {value}")
         return value_to_version[value]
@@ -133,7 +132,7 @@ class TelemetryName(StrEnum):
         Provides the encoding symbol for a TelemetryName enum to send in seriliazed messages.
 
         Args:
-            value (str): The candidate value.
+            symbol (str): The candidate value.
 
         Returns:
             str: The symbol encoding that value. If the value is not recognized -

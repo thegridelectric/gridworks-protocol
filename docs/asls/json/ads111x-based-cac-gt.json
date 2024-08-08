@@ -1,0 +1,97 @@
+{
+  "gtr_asl": "001",
+  "type_name": "ads111x.based.cac.gt",
+  "version": "000",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": "TI ADS111x Based Temp Sensing Component Attribute Class. Component Attribute Class for sensors using the Texas Instrument ADS111X series of chips used with 10K thermistors for reading temperature. The ADS111X is a class of I2C-based 16-bit Analog Digital Convertors. The chip has 4 possible I2C addresses, and the address can be set by jumpering the 'Addr' pin of the ADS111X chip to one of the 4 I2C pins. 0x48: GND, 0x49: VDD, 0x4A: SDA, 0x4B: SCL. GridWorks Spaceheat SCADA uses the GridWorks GNodeRegistry structures and abstractions for managing relational device data. The Cac, or ComponentAttributeClass, is part of this structure.",
+  "url": "https://drive.google.com/drive/u/0/folders/1oFvs4-kvwyzt220eYlFnwdzEgVCIbbt6",
+  "properties": {
+    "ComponentAttributeClassId": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "ComponentAttributeClassId",
+      "description": "Unique identifier for the device class (aka 'cac' or Component Attribute Class). Authority is maintained by the World Registry.",
+      "required": true
+    },
+    "MinPollPeriodMs": {
+      "type": "integer",
+      "format": "PositiveInteger",
+      "title": "Min Poll Period in Milliseconds",
+      "description": "Poll Period refers to the period of time between two readings by the local actor. This is in contrast to Capture Period, which refers to the period between readings that are sent up to the cloud (or otherwise saved for the long-term).",
+      "required": true
+    },
+    "MakeModel": {
+      "type": "string",
+      "format": "spaceheat.make.model",
+      "title": "MakeModel",
+      "description": "Meant to be enough to articulate any difference in how GridWorks code would interact with a device. Should be able to use this information to buy or build a device.",
+      "required": true
+    },
+    "AdsI2cAddressList": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "format": "Ads1115I2cAddress",
+      "title": "Ads I2c Address List",
+      "description": "The list of I2C Addresses for the Texas Instrument Ads111X chips comprising this device.",
+      "required": true
+    },
+    "TotalTerminalBlocks": {
+      "type": "integer",
+      "format": "PositiveInteger",
+      "title": "Total Thermistor Channels",
+      "description": "There are at most 4 thermisters per Ads111X chip. The channels always start with the number 1, and the channels are expected to follow the natural enumeration set by the AdsI2cAddressList and the associated AI0 through AI3 on those chips. Analog In 3 on the final chip may be reserved for calculating a reference open voltage. The total number of channels may also be constrained by the screw terminal situation.",
+      "required": true
+    },
+    "TelemetryNameList": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "format": "spaceheat.telemetry.name",
+      "title": "Telemetry Name List",
+      "description": "The list of TelemetryNames that this device/driver combination is capable of producing.",
+      "required": true
+    },
+    "DisplayName": {
+      "type": "string",
+      "description": "Sample: GridWorks TSnap1.0 as 12-channel analog temp sensor",
+      "required": false
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "ads111x.based.cac.gt",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "000",
+      "required": true
+    }
+  },
+  "axioms": {
+    "Axiom1": {
+      "title": "TerminalBlock Ads Chip consistency",
+      "description": "TotalTerminalBlocks should be greater than 4 * (len(AdsI2cAddressList) - 1 ) and less than or equal to 4*len(AdsI2cAddressList)"
+    }
+  },
+  "formats": {
+    "UuidCanonicalTextual": {
+      "type": "string",
+      "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
+      "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"
+    },
+    "Ads1115I2cAddress": {
+      "type": "string",
+      "description": "ToLower(v) in ['0x48', '0x49', '0x4a', '0x4b']. One of the 4 allowable I2C addresses for Texas Instrument Ads1115 chips.",
+      "example": ""
+    },
+    "PositiveInteger": {
+      "type": "string",
+      "description": "Must be positive when interpreted as an integer. Interpretation as an integer follows the pydantic rules for this - which will round down rational numbers. So 1.7 will be interpreted as 1 and is also fine, while 0.5 is interpreted as 0 and will raise an exception.",
+      "example": ""
+    }
+  }
+}

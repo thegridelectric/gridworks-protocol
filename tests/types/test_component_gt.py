@@ -1,45 +1,61 @@
-"""Tests component.gt type, version 000"""
+"""Tests component.gt type, version 001"""
 
 import json
 
 import pytest
+from gw.errors import GwTypeError
+from gwproto.enums import MakeModel
+from gwproto.type_helpers import CACS_BY_MAKE_MODEL
+from gwproto.types import ComponentAttributeClassGt as CacGt
+from gwproto.types import ComponentAttributeClassGtMaker as CacMaker
+from gwproto.types import ComponentGt
+from gwproto.types import ComponentGtMaker as Maker
 from pydantic import ValidationError
 
-from gwproto.errors import SchemaError
-from gwproto.types import ComponentGt_Maker as Maker
+from tests.utils import flush_all
 
 
 def test_component_gt_generated() -> None:
+    flush_all()
+    cac_gt = CacGt(
+        ComponentAttributeClassId=CACS_BY_MAKE_MODEL[MakeModel.EGAUGE__4030],
+        MakeModel=MakeModel.EGAUGE__4030,
+        DisplayName="Egauge 4030",
+    )
+    CacMaker.tuple_to_dc(cac_gt)
+    t = ComponentGt(
+        component_id="c6ec1ddb-5f51-4902-9807-a5ebc74d1102",
+        component_attribute_class_id="739a6e32-bb9c-43bc-a28d-fb61be665522",
+        config_list=[],
+        display_name="Demo eGauge Power Meter",
+        hw_uid="000aaa",
+    )
+
     d = {
-        "ComponentId": "987e0a5f-9036-411e-ba30-bac1075114ba",
-        "ComponentAttributeClassId": "0a2fed00-8ff9-4391-a6d8-4b08ab94dfe1",
-        "DisplayName": "Sample Component",
+        "ComponentId": "c6ec1ddb-5f51-4902-9807-a5ebc74d1102",
+        "ComponentAttributeClassId": "739a6e32-bb9c-43bc-a28d-fb61be665522",
+        "ConfigList": [],
+        "DisplayName": "Demo eGauge Power Meter",
         "HwUid": "000aaa",
         "TypeName": "component.gt",
-        "Version": "000",
+        "Version": "001",
     }
 
-    with pytest.raises(SchemaError):
+    assert t.as_dict() == d
+
+    with pytest.raises(GwTypeError):
         Maker.type_to_tuple(d)
 
-    with pytest.raises(SchemaError):
+    with pytest.raises(GwTypeError):
         Maker.type_to_tuple('"not a dict"')
 
     # Test type_to_tuple
     gtype = json.dumps(d)
     gtuple = Maker.type_to_tuple(gtype)
+    assert gtuple == t
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple
-
-    # test Maker init
-    t = Maker(
-        component_id=gtuple.ComponentId,
-        component_attribute_class_id=gtuple.ComponentAttributeClassId,
-        display_name=gtuple.DisplayName,
-        hw_uid=gtuple.HwUid,
-    ).tuple
-    assert t == gtuple
 
     ######################################
     # Dataclass related tests
@@ -50,22 +66,27 @@ def test_component_gt_generated() -> None:
     assert Maker.type_to_dc(Maker.dc_to_type(dc)) == dc
 
     ######################################
-    # SchemaError raised if missing a required attribute
+    # GwTypeError raised if missing a required attribute
     ######################################
 
-    d2 = dict(d)
+    d2 = d.copy()
     del d2["TypeName"]
-    with pytest.raises(SchemaError):
+    with pytest.raises(GwTypeError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d)
+    d2 = d.copy()
     del d2["ComponentId"]
-    with pytest.raises(SchemaError):
+    with pytest.raises(GwTypeError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d)
+    d2 = d.copy()
     del d2["ComponentAttributeClassId"]
-    with pytest.raises(SchemaError):
+    with pytest.raises(GwTypeError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = d.copy()
+    del d2["ConfigList"]
+    with pytest.raises(GwTypeError):
         Maker.dict_to_tuple(d2)
 
     ######################################
@@ -86,8 +107,20 @@ def test_component_gt_generated() -> None:
     # Behavior on incorrect types
     ######################################
 
+    d2 = dict(d, ConfigList="Not a list.")
+    with pytest.raises(GwTypeError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, ConfigList=["Not a list of dicts"])
+    with pytest.raises(GwTypeError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, ConfigList=[{"Failed": "Not a GtSimpleSingleStatus"}])
+    with pytest.raises(GwTypeError):
+        Maker.dict_to_tuple(d2)
+
     ######################################
-    # SchemaError raised if TypeName is incorrect
+    # ValidationError raised if TypeName is incorrect
     ######################################
 
     d2 = dict(d, TypeName="not the type name")
@@ -95,11 +128,9 @@ def test_component_gt_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     ######################################
-    # SchemaError raised if primitive attributes do not have appropriate property_format
+    # ValidationError raised if primitive attributes do not have appropriate property_format
     ######################################
 
     d2 = dict(d, ComponentId="d4be12d5-33ba-4f1f-b9e5")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
-
-    # End of Test

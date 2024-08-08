@@ -1,16 +1,22 @@
 from typing import Optional
 
 import yarl
-
 from gwproto.data_classes.component import Component
+from gwproto.data_classes.component_attribute_class import (
+    ComponentAttributeClass as Cac,
+)
 from gwproto.data_classes.resolver import ComponentResolver
 from gwproto.data_classes.sh_node import ShNode
-from gwproto.types.hubitat_component_gt import HubitatComponentGt
-from gwproto.types.hubitat_component_gt import HubitatRESTResolutionSettings
-from gwproto.types.hubitat_tank_gt import FibaroTempSensorSettings
-from gwproto.types.hubitat_tank_gt import FibaroTempSensorSettingsGt
-from gwproto.types.hubitat_tank_gt import HubitatTankSettingsGt
-from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
+from gwproto.types.channel_config import ChannelConfig, ChannelConfigMaker
+from gwproto.types.hubitat_component_gt import (
+    HubitatComponentGt,
+    HubitatRESTResolutionSettings,
+)
+from gwproto.types.hubitat_tank_gt import (
+    FibaroTempSensorSettings,
+    FibaroTempSensorSettingsGt,
+    HubitatTankSettingsGt,
+)
 
 
 class HubitatTankComponent(Component, ComponentResolver):
@@ -19,7 +25,6 @@ class HubitatTankComponent(Component, ComponentResolver):
     default_poll_period_seconds: Optional[float] = None
     devices_gt: list[FibaroTempSensorSettingsGt]
     devices: list[FibaroTempSensorSettings] = []
-    web_listen_enabled: bool
 
     def __init__(
         self,
@@ -37,28 +42,30 @@ class HubitatTankComponent(Component, ComponentResolver):
         self.sensor_supply_voltage = tank_gt.sensor_supply_voltage
         self.default_poll_period_seconds = tank_gt.default_poll_period_seconds
         self.devices_gt = list(tank_gt.devices)
-        self.web_listen_enabled = tank_gt.web_listen_enabled
+        self.my_node_name = tank_gt.my_node_name
         super().__init__(
             display_name=display_name,
             component_id=component_id,
             hw_uid=hw_uid,
+            config_list=self.make_config_list(),
             component_attribute_class_id=component_attribute_class_id,
         )
 
+    @property
+    def cac(self) -> Cac:
+        return Cac.by_id[self.component_attribute_class_id]
+
     def resolve(
         self,
-        tank_node_name: str,
         nodes: dict[str, ShNode],
         components: dict[str, Component],
     ):
-        hubitat_component = HubitatComponentGt.from_component_id(
-            self.hubitat.ComponentId, components
+        hubitat_component_gt = HubitatComponentGt.from_component_id(
+            self.hubitat.component_id, components
         )
-        hubitat_component_gt = HubitatComponentGt.from_data_class(hubitat_component)
         hubitat_settings = HubitatRESTResolutionSettings(hubitat_component_gt)
         devices = [
             FibaroTempSensorSettings.create(
-                tank_name=tank_node_name,
                 settings_gt=device_gt,
                 hubitat=hubitat_settings,
                 default_poll_period_seconds=self.default_poll_period_seconds,
@@ -67,37 +74,30 @@ class HubitatTankComponent(Component, ComponentResolver):
             if device_gt.enabled
         ]
         for device in devices:
-            if device.node_name not in nodes:
+            if device.channel_name not in nodes:
                 raise ValueError(
-                    f"ERROR. Node not found for tank temp sensor <{device.node_name}>"
+                    f"ERROR. Node <{device.channel_name}> not found for <{self.my_node_name}> (thermistor <{device.stack_depth}>)"
                 )
         # replace proxy hubitat component, which only had component id.
         # with the actual hubitat component containing data.
         self.hubitat = hubitat_component_gt
         self.devices = devices
 
-        # register voltage attribute for fibaros which accept web posts
-        if self.web_listen_enabled and hubitat_component.hubitat_gt.WebListenEnabled:
-            for device in self.devices:
-                if device.web_listen_enabled:
-                    hubitat_component.add_web_listener(tank_node_name)
-
     def urls(self) -> dict[str, Optional[yarl.URL]]:
         urls = self.hubitat.urls()
         for device in self.devices:
-            urls[device.node_name] = device.url
+            urls[device.channel_name] = device.url
         return urls
 
-    @property
-    def config_list(self) -> list[TelemetryReportingConfig]:
+    def make_config_list(self) -> list[ChannelConfig]:
         return [
-            TelemetryReportingConfig(
-                TelemetryName=device.telemetry_name,
-                AboutNodeName=device.node_name,
-                ReportOnChange=False,
-                SamplePeriodS=int(device.rest.poll_period_seconds),
-                Exponent=device.exponent,
-                Unit=device.unit,
+            ChannelConfigMaker(
+                channel_name=device.channel_name,
+                poll_period_ms=int(device.rest.poll_period_seconds * 1000),
+                async_capture=False,
+                capture_period_s=int(device.rest.poll_period_seconds * 1000),
+                exponent=device.exponent,
+                unit=device.unit,
             )
             for device in self.devices
         ]

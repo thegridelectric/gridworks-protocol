@@ -1,10 +1,7 @@
-from pydantic import BaseModel
-from pydantic import Extra
-from pydantic import validator
+from gw.utils import snake_to_pascal
+from pydantic import BaseModel, field_validator
 
-from gwproto.enums import TelemetryName
-from gwproto.enums import Unit
-from gwproto.utils import snake_to_camel
+from gwproto.enums import TelemetryName, Unit
 
 
 class MakerAPIAttributeGt(BaseModel):
@@ -35,11 +32,12 @@ class MakerAPIAttributeGt(BaseModel):
         return Unit(value)
 
     class Config:
-        extra = Extra.allow
-        alias_generator = snake_to_camel
-        allow_population_by_field_name = True
+        extra = "allow"
+        alias_generator = snake_to_pascal
+        populate_by_name = True
 
-    @validator("telemetry_name_gt_enum_symbol")
+    @field_validator("telemetry_name_gt_enum_symbol")
+    @classmethod
     def _check_telemetry_name_symbol(cls, v: str) -> str:
         if v not in TelemetryName.symbols():
             v = TelemetryName.value_to_symbol(TelemetryName.default())
@@ -55,6 +53,6 @@ class HubitatPollerGt(BaseModel):
     poll_period_seconds: float = 60
 
     class Config:
-        extra = Extra.allow
-        alias_generator = snake_to_camel
-        allow_population_by_field_name = True
+        extra = "allow"
+        alias_generator = snake_to_pascal
+        populate_by_name = True

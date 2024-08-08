@@ -1,59 +1,59 @@
-"""Tests spaceheat.node.gt type, version 100"""
+"""Tests spaceheat.node.gt type, version 200"""
 
 import json
 
 import pytest
-from pydantic import ValidationError
-
+from gw.errors import GwTypeError
 from gwproto.enums import ActorClass
-from gwproto.enums import Role
-from gwproto.errors import SchemaError
-from gwproto.types import SpaceheatNodeGt_Maker as Maker
+from gwproto.types import SpaceheatNodeGt
+from gwproto.types import SpaceheatNodeGtMaker as Maker
+from pydantic import ValidationError
 
 
 def test_spaceheat_node_gt_generated() -> None:
+    t = SpaceheatNodeGt(
+        name="aquastat-ctrl-relay",
+        actor_hierarchy_name="pi2.aquastat-ctrl-relay",
+        handle="admin.aquastat-ctrl-relay",
+        actor_class=ActorClass.Relay,
+        display_name="Aquastat Control Relay",
+        component_id="80f95280-e999-49e0-a0e4-a7faf3b5b3bd",
+        sh_node_id="92091523-4fa7-4a3e-820b-fddee089222f",
+    )
+
     d = {
-        "ShNodeId": "41f2ae73-8782-406d-bda7-a95b5abe317e",
-        "Alias": "a.elt1",
-        "ActorClassGtEnumSymbol": "638bf97b",
-        "RoleGtEnumSymbol": "5a28eb2e",
-        "DisplayName": "First boost element",
+        "Name": "aquastat-ctrl-relay",
+        "ActorHierarchyName": "pi2.aquastat-ctrl-relay",
+        "Handle": "admin.aquastat-ctrl-relay",
+        "ActorClassGtEnumSymbol": "49951f59",
+        "DisplayName": "Aquastat Control Relay",
         "ComponentId": "80f95280-e999-49e0-a0e4-a7faf3b5b3bd",
-        "ReportingSamplePeriodS": 300,
-        "RatedVoltageV": 240,
-        "TypicalVoltageV": 225,
-        "InPowerMetering": False,
+        "ShNodeId": "92091523-4fa7-4a3e-820b-fddee089222f",
         "TypeName": "spaceheat.node.gt",
-        "Version": "100",
+        "Version": "200",
     }
 
-    with pytest.raises(SchemaError):
+    assert t.as_dict() == d
+
+    d2 = d.copy()
+
+    del d2["ActorClassGtEnumSymbol"]
+    d2["ActorClass"] = ActorClass.Relay.value
+    assert t == Maker.dict_to_tuple(d2)
+
+    with pytest.raises(GwTypeError):
         Maker.type_to_tuple(d)
 
-    with pytest.raises(SchemaError):
+    with pytest.raises(GwTypeError):
         Maker.type_to_tuple('"not a dict"')
 
     # Test type_to_tuple
     gtype = json.dumps(d)
     gtuple = Maker.type_to_tuple(gtype)
+    assert gtuple == t
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple
-
-    # test Maker init
-    t = Maker(
-        sh_node_id=gtuple.ShNodeId,
-        alias=gtuple.Alias,
-        actor_class=gtuple.ActorClass,
-        role=gtuple.Role,
-        display_name=gtuple.DisplayName,
-        component_id=gtuple.ComponentId,
-        reporting_sample_period_s=gtuple.ReportingSamplePeriodS,
-        rated_voltage_v=gtuple.RatedVoltageV,
-        typical_voltage_v=gtuple.TypicalVoltageV,
-        in_power_metering=gtuple.InPowerMetering,
-    ).tuple
-    assert t == gtuple
 
     ######################################
     # Dataclass related tests
@@ -64,37 +64,42 @@ def test_spaceheat_node_gt_generated() -> None:
     assert Maker.type_to_dc(Maker.dc_to_type(dc)) == dc
 
     ######################################
-    # SchemaError raised if missing a required attribute
+    # GwTypeError raised if missing a required attribute
     ######################################
 
-    d2 = dict(d)
+    d2 = d.copy()
     del d2["TypeName"]
-    with pytest.raises(SchemaError):
+    with pytest.raises(GwTypeError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d)
-    del d2["ShNodeId"]
-    with pytest.raises(SchemaError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d)
-    del d2["Alias"]
-    with pytest.raises(SchemaError):
+    d2 = d.copy()
+    del d2["Name"]
+    with pytest.raises(GwTypeError):
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
     del d2["ActorClassGtEnumSymbol"]
-    with pytest.raises(SchemaError):
+    with pytest.raises(GwTypeError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d)
-    del d2["RoleGtEnumSymbol"]
-    with pytest.raises(SchemaError):
+    d2 = d.copy()
+    del d2["ShNodeId"]
+    with pytest.raises(GwTypeError):
         Maker.dict_to_tuple(d2)
 
     ######################################
     # Optional attributes can be removed from type
     ######################################
+
+    d2 = dict(d)
+    if "ActorHierarchyName" in d2.keys():
+        del d2["ActorHierarchyName"]
+    Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    if "Handle" in d2.keys():
+        del d2["Handle"]
+    Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
     if "DisplayName" in d2.keys():
@@ -107,18 +112,8 @@ def test_spaceheat_node_gt_generated() -> None:
     Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    if "ReportingSamplePeriodS" in d2.keys():
-        del d2["ReportingSamplePeriodS"]
-    Maker.dict_to_tuple(d2)
-
-    d2 = dict(d)
-    if "RatedVoltageV" in d2.keys():
-        del d2["RatedVoltageV"]
-    Maker.dict_to_tuple(d2)
-
-    d2 = dict(d)
-    if "TypicalVoltageV" in d2.keys():
-        del d2["TypicalVoltageV"]
+    if "NameplatePowerW" in d2.keys():
+        del d2["NameplatePowerW"]
     Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
@@ -131,20 +126,9 @@ def test_spaceheat_node_gt_generated() -> None:
     ######################################
 
     d2 = dict(d, ActorClassGtEnumSymbol="unknown_symbol")
-    assert Maker.dict_to_tuple(d2).ActorClass == ActorClass.default()
+    assert Maker.dict_to_tuple(d2).actor_class == ActorClass.default()
 
-    d2 = dict(d, RoleGtEnumSymbol="unknown_symbol")
-    assert Maker.dict_to_tuple(d2).Role == Role.default()
-
-    d2 = dict(d, ReportingSamplePeriodS="300.1")
-    with pytest.raises(ValidationError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d, RatedVoltageV="240.1")
-    with pytest.raises(ValidationError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d, TypicalVoltageV="225.1")
+    d2 = dict(d, NameplatePowerW=".1")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
@@ -153,7 +137,7 @@ def test_spaceheat_node_gt_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     ######################################
-    # SchemaError raised if TypeName is incorrect
+    # ValidationError raised if TypeName is incorrect
     ######################################
 
     d2 = dict(d, TypeName="not the type name")
@@ -161,23 +145,13 @@ def test_spaceheat_node_gt_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     ######################################
-    # SchemaError raised if primitive attributes do not have appropriate property_format
+    # ValidationError raised if primitive attributes do not have appropriate property_format
     ######################################
+
+    d2 = dict(d, Name="A.hot-stuff")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
 
     d2 = dict(d, ShNodeId="d4be12d5-33ba-4f1f-b9e5")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
-
-    d2 = dict(d, Alias="a.b-h")
-    with pytest.raises(ValidationError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d, RatedVoltageV=0)
-    with pytest.raises(ValidationError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d, TypicalVoltageV=0)
-    with pytest.raises(ValidationError):
-        Maker.dict_to_tuple(d2)
-
-    # End of Test

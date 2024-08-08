@@ -6,7 +6,7 @@ Python pydantic class corresponding to json type `resistive.heater.cac.gt`, vers
     :members:
 
 **ComponentAttributeClassId**:
-    - Description: ComponentAttributeClassId. Unique identifier for the device class (aka 'cac' or Component Attribute Class). Authority is maintained by the World Registry.
+    - Description: ComponentAttributeClassId.Unique identifier for the device class (aka 'cac' or Component Attribute Class). Authority is maintained by the World Registry.
     - Format: UuidCanonicalTextual
 
 **MakeModel**:

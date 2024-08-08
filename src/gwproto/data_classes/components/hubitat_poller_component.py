@@ -1,15 +1,16 @@
 from typing import Optional
 
 import yarl
-
 from gwproto.data_classes.component import Component
+from gwproto.data_classes.component_attribute_class import (
+    ComponentAttributeClass as Cac,
+)
 from gwproto.data_classes.resolver import ComponentResolver
 from gwproto.data_classes.sh_node import ShNode
+from gwproto.types.channel_config import ChannelConfig, ChannelConfigMaker
 from gwproto.types.hubitat_component_gt import HubitatComponentGt
 from gwproto.types.hubitat_poller_gt import HubitatPollerGt
-from gwproto.types.rest_poller_gt import RequestArgs
-from gwproto.types.rest_poller_gt import RESTPollerSettings
-from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
+from gwproto.types.rest_poller_gt import RequestArgs, RESTPollerSettings
 
 
 class HubitatPollerComponent(Component, ComponentResolver):
@@ -30,9 +31,14 @@ class HubitatPollerComponent(Component, ComponentResolver):
         super().__init__(
             component_id=component_id,
             component_attribute_class_id=component_attribute_class_id,
+            config_list=self.make_config_list(),
             display_name=display_name,
             hw_uid=hw_uid,
         )
+
+    @property
+    def cac(self) -> Cac:
+        return Cac.by_id[self.component_attribute_class_id]
 
     @property
     def rest(self) -> RESTPollerSettings:
@@ -44,7 +50,7 @@ class HubitatPollerComponent(Component, ComponentResolver):
 
     def resolve(
         self,
-        node_name: str,
+        tank_node_name: str,
         nodes: dict[str, ShNode],
         components: dict[str, Component],
     ):
@@ -56,11 +62,10 @@ class HubitatPollerComponent(Component, ComponentResolver):
 
         # replace proxy hubitat component, which only had component id.
         # with the actual hubitat component containing data.
-        hubitat_component = HubitatComponentGt.from_component_id(
+        self.hubitat_gt = HubitatComponentGt.from_component_id(
             self.hubitat_gt.ComponentId,
             components,
         )
-        self.hubitat_gt = HubitatComponentGt.from_data_class(hubitat_component)
 
         # Constuct url config on top of maker api url url config
         self._rest = RESTPollerSettings(
@@ -70,31 +75,21 @@ class HubitatPollerComponent(Component, ComponentResolver):
             poll_period_seconds=self.poller_gt.poll_period_seconds,
         )
 
-        # register attributes which accept web posts
-        if (
-            self.poller_gt.web_listen_enabled
-            and hubitat_component.hubitat_gt.WebListenEnabled
-        ):
-            for attribute in self.poller_gt.attributes:
-                if attribute.web_listen_enabled:
-                    hubitat_component.add_web_listener(node_name)
-
     def urls(self) -> dict[str, Optional[yarl.URL]]:
         urls = self.hubitat_gt.urls()
         for attribute in self.poller_gt.attributes:
-            urls[attribute.node_name] = self.rest.url
+            urls[attribute.channel_name] = self.rest.url
         return urls
 
-    @property
-    def config_list(self) -> list[TelemetryReportingConfig]:
+    def make_config_list(self) -> list[ChannelConfig]:
         return [
-            TelemetryReportingConfig(
-                TelemetryName=attribute.telemetry_name,
-                AboutNodeName=attribute.node_name,
-                ReportOnChange=False,
-                SamplePeriodS=int(self.rest.poll_period_seconds),
-                Exponent=attribute.exponent,
-                Unit=attribute.unit,
+            ChannelConfigMaker(
+                channel_name=attribute.channel_name,
+                poll_period_ms=int(self.rest.poll_period_seconds * 1000),
+                async_capture=False,
+                capture_period_s=int(self.rest.poll_period_seconds),
+                exponent=attribute.exponent,
+                unit=attribute.unit,
             )
             for attribute in self.poller_gt.attributes
         ]

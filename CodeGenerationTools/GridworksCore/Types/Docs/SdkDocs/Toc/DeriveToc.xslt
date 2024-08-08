@@ -43,23 +43,23 @@ forth between type instances and Python objects.
 .. toctree::
    :maxdepth: 1
    :caption: TYPE SDKS
-
-    </xsl:text>
+</xsl:text>
 <xsl:for-each select="$airtable//ProtocolTypes/ProtocolType[(normalize-space(ProtocolName) ='gwproto')]">
 <xsl:sort select="VersionedTypeName" data-type="text"/>
 <xsl:variable name="versioned-type-id" select="VersionedType"/>
 <xsl:for-each select="$airtable//VersionedTypes/VersionedType[(VersionedTypeId = $versioned-type-id)  and (Status = 'Active' or Status = 'Pending') and (ProtocolCategory = 'Json' or ProtocolCategory = 'GwAlgoSerial')]">
+<xsl:text>&#10;    </xsl:text>
 <xsl:call-template name="nt-case">
     <xsl:with-param name="type-name-text" select="TypeName" />
 </xsl:call-template>
 <xsl:text>  &lt;types/</xsl:text>
 <xsl:value-of select="translate(TypeName,'.','-')"/>
-<xsl:text>&gt;
-    </xsl:text>
+<xsl:text>&gt;</xsl:text>
 
 </xsl:for-each>
-</xsl:for-each>
 
+</xsl:for-each>
+<xsl:text>&#10;</xsl:text>
                 </xsl:element>
             </FileSetFile>
 

@@ -1,17 +1,16 @@
 from enum import auto
-from typing import List
+from typing import List, Optional
 
-from fastapi_utils.enums import StrEnum
+from gw.enums import GwStrEnum
 
 
-class ActorClass(StrEnum):
+class ActorClass(GwStrEnum):
     """
     Determines the code running Spaceheat Nodes supervised by Spaceheat SCADA software
 
     Enum sh.actor.class version 001 in the GridWorks Type registry.
 
-    Used by used by multiple Application Shared Languages (ASLs), including but not limited to
-    gwproto. For more information:
+    Used by multiple Application Shared Languages (ASLs). For more information:
       - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
       - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shactorclass)
       - [More Info](https://gridworks-protocol.readthedocs.io/en/latest/actor-class.html)
@@ -31,7 +30,9 @@ class ActorClass(StrEnum):
       - HomeAlone (32d3d19f): HomeAlone is an abstract Spaceheat Actor responsible for dispatching
         the SCADA when it is not talking with the AtomicTNode.
       - BooleanActuator (fddd0064): A SpaceheatNode representing a generic boolean actuator capable
-        of turning on (closing a circuit) or turning off (opening a circuit).
+        of turning on (closing a circuit) or turning off (opening a circuit). If the device
+        is a relay that can be directly energized or de-energized, recommend using Relay actor
+        instead.
       - PowerMeter (2ea112b9): A SpaceheatNode representing the power meter that is used to settle
         financial transactions with the TerminalAsset. That is, this is the power meter whose
         accuracy is certified in the creation of the TerminalAsset GNode via creation of the
@@ -53,10 +54,25 @@ class ActorClass(StrEnum):
         thermal storage tank. [More Info](https://drive.google.com/drive/u/0/folders/1GSxDd8Naf1GKK_fSOgQU933M1UcJ4r8q).
       - HubitatPoller (00000100): An actor for representing a somewhat generic ShNode (like a thermostat)
         that can be polled through the Hubitat.
-      - Hubitat: (0000101): An actor for representing a Hubitat for receiving Hubitat events over HTTP.
-      - HoneywellThermostat: (0000102): An actor for representing a Honeywell Hubitat thermostat which
-        can load thermostat heating state change messages into status reports.
-
+      - I2cRelayMultiplexer (cdf7df88): Responsible for maintaining a single i2c bus object
+      - FlowTotalizer (06b306e7): Attached to a driver that reads liquid flow by counting pulses
+        from a flow meter that creates pulses and integrating the result (known as a totalizer
+        in the industry).
+      - Relay (49951f59): An actor representing a relay. If the device is indeed relay that can be
+        directly energized or de-energized, recommend using Relay instead of BooleanActuator
+      - Admin (4d5f791b): Actor for taking control of all of the actuators - flattening the hierarchy
+        and disabling all finite state machines.
+      - Fsm (2abcea3d): Actor Class for Finite State Machine actors. For these actors, the code is
+        determined by the ShNode Name instead of just the ActorClass.
+      - Parentless (65136bd8): An actor that has no parent and is also not the primary SCADA. Used
+        when there are multiple devices in the SCADA's system. For example, two Pis - one running
+        the primary SCADA code and temp sensors, the other running relays and 0-10V output devices.
+        A Parentless actor on the second Pi is responsible for spinning up the relay- and 0-10V
+        output actors.
+      - Hubitat (00000101): An actor for representing a Hubitat for receiving Hubitat events over
+        HTTP.
+      - HoneywellThermostat (00000102): An actor for representing a Honeywell Hubitat thermostat
+        which can load thermostat heating state change messages into status reports.
     """
 
     NoActor = auto()
@@ -71,6 +87,12 @@ class ActorClass(StrEnum):
     HubitatTelemetryReader = auto()
     HubitatTankModule = auto()
     HubitatPoller = auto()
+    I2cRelayMultiplexer = auto()
+    FlowTotalizer = auto()
+    Relay = auto()
+    Admin = auto()
+    Fsm = auto()
+    Parentless = auto()
     Hubitat = auto()
     HoneywellThermostat = auto()
 
@@ -89,24 +111,27 @@ class ActorClass(StrEnum):
         return [elt.value for elt in cls]
 
     @classmethod
-    def version(cls, value: str) -> str:
+    def version(cls, value: Optional[str] = None) -> str:
         """
-        Returns the version of an enum value.
-
-        Once a value belongs to one version of the enum, it belongs
-        to all future versions.
+        Returns the version of the class (default) used by this package or the
+        version of a candidate enum value (always less than or equal to the version
+        of the class)
 
         Args:
-            value (str): The candidate enum value.
+            value (Optional[str]): None (for version of the Enum itself) or
+            the candidate enum value.
 
         Raises:
-            ValueError: If value is not one of the enum values.
+            ValueError: If the value is not one of the enum values.
 
         Returns:
-            str: The earliest version of the enum containing value.
+            str: The version of the enum used by this code (if given no
+            value) OR the earliest version of the enum containing the value.
         """
+        if value is None:
+            return "001"
         if not isinstance(value, str):
-            raise ValueError(f"This method applies to strings, not enums")
+            raise ValueError("This method applies to strings, not enums")
         if value not in value_to_version.keys():
             raise ValueError(f"Unknown enum value: {value}")
         return value_to_version[value]
@@ -148,7 +173,7 @@ class ActorClass(StrEnum):
         Provides the encoding symbol for a ActorClass enum to send in seriliazed messages.
 
         Args:
-            value (str): The candidate value.
+            symbol (str): The candidate value.
 
         Returns:
             str: The symbol encoding that value. If the value is not recognized -
@@ -178,6 +203,12 @@ class ActorClass(StrEnum):
             "0401b27e",
             "e2877329",
             "00000100",
+            "cdf7df88",
+            "06b306e7",
+            "49951f59",
+            "4d5f791b",
+            "2abcea3d",
+            "65136bd8",
             "00000101",
             "00000102",
         ]
@@ -196,6 +227,12 @@ symbol_to_value = {
     "0401b27e": "HubitatTelemetryReader",
     "e2877329": "HubitatTankModule",
     "00000100": "HubitatPoller",
+    "cdf7df88": "I2cRelayMultiplexer",
+    "06b306e7": "FlowTotalizer",
+    "49951f59": "Relay",
+    "4d5f791b": "Admin",
+    "2abcea3d": "Fsm",
+    "65136bd8": "Parentless",
     "00000101": "Hubitat",
     "00000102": "HoneywellThermostat",
 }
@@ -215,6 +252,12 @@ value_to_version = {
     "HubitatTelemetryReader": "001",
     "HubitatTankModule": "001",
     "HubitatPoller": "001",
+    "I2cRelayMultiplexer": "001",
+    "FlowTotalizer": "001",
+    "Relay": "001",
+    "Admin": "001",
+    "Fsm": "001",
+    "Parentless": "001",
     "Hubitat": "001",
     "HoneywellThermostat": "001",
 }

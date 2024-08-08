@@ -1,21 +1,21 @@
-""" SCADA Component Class Definition """
+"""SCADA Component Class Definition"""
 
 from abc import ABC
-from typing import Dict
-from typing import Optional
+from typing import Dict, List, Optional
 
+from gw.errors import DcError
 from gwproto.data_classes.component_attribute_class import ComponentAttributeClass
 from gwproto.data_classes.mixin import StreamlinedSerializerMixin
 
 
 class Component(ABC, StreamlinedSerializerMixin):
     by_id: Dict[str, "Component"] = {}
-    base_props = [
-        "component_id",
-        "display_name",
-        "component_attribute_class_id",
-        "hw_uid",
-    ]
+    base_props = []
+    base_props.append("component_id")
+    base_props.append("component_attribute_class_id")
+    base_props.append("config_list")
+    base_props.append("display_name")
+    base_props.append("hw_uid")
 
     def __new__(cls, component_id, *args, **kwargs):
         try:
@@ -29,12 +29,19 @@ class Component(ABC, StreamlinedSerializerMixin):
         self,
         component_id: str,
         component_attribute_class_id: str,
+        config_list: Optional[List[str]] = None,
         display_name: Optional[str] = None,
         hw_uid: Optional[str] = None,
     ):
+        if component_attribute_class_id not in ComponentAttributeClass.by_id.keys():
+            raise DcError(
+                f"Error loading component <{display_name}. CacId "
+                f"<{component_attribute_class_id}> not in ComponentAttributeClass.by_id!"
+            )
         self.component_id = component_id
-        self.display_name = display_name
         self.component_attribute_class_id = component_attribute_class_id
+        self.config_list = config_list
+        self.display_name = display_name
         self.hw_uid = hw_uid
 
     @property
@@ -42,4 +49,7 @@ class Component(ABC, StreamlinedSerializerMixin):
         return ComponentAttributeClass.by_id[self.component_attribute_class_id]
 
     def __repr__(self):
-        return self.display_name
+        if self.display_name:
+            return self.display_name
+        else:
+            return f"{self.component_id} (MakeModel {self.component_attribute_class.make_model.value})"

@@ -2,15 +2,17 @@
 
 import json
 import logging
-from typing import Any
-from typing import Dict
-from typing import Literal
+import os
+from typing import Any, Dict, Literal
 
-from pydantic import BaseModel
-from pydantic import Field
+import dotenv
+from gw.errors import GwTypeError
+from gw.utils import is_pascal_case, pascal_to_snake, snake_to_pascal
+from pydantic import BaseModel, Field
 
-from gwproto.errors import SchemaError
+dotenv.load_dotenv()
 
+ENCODE_ENUMS = int(os.getenv("ENUM_ENCODE", "1"))
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -30,57 +32,54 @@ class PowerWatts(BaseModel):
     bytes so comes in JSON format.
     """
 
-    Watts: int = Field(
+    watts: int = Field(
         title="Current Power in Watts",
     )
-    TypeName: Literal["power.watts"] = "power.watts"
-    Version: Literal["000"] = "000"
+    type_name: Literal["power.watts"] = "power.watts"
+    version: Literal["000"] = "000"
+
+    class Config:
+        populate_by_name = True
+        alias_generator = snake_to_pascal
 
     def as_dict(self) -> Dict[str, Any]:
         """
-        Translate the object into a dictionary representation that can be serialized into a
-        power.watts.000 object.
+        Main step in serializing the object. Encodes enums as their 8-digit random hex symbol if
+        settings.encode_enums = 1.
+        """
+        if ENCODE_ENUMS:
+            return self.enum_encoded_dict()
+        else:
+            return self.plain_enum_dict()
 
-        This method prepares the object for serialization by the as_type method, creating a
-        dictionary with key-value pairs that follow the requirements for an instance of the
-        power.watts.000 type. Unlike the standard python dict method,
-        it makes the following substantive changes:
-        - Enum Values: Translates between the values used locally by the actor to the symbol
-        sent in messages.
-        - Removes any key-value pairs where the value is None for a clearer message, especially
-        in cases with many optional attributes.
-
-        It also applies these changes recursively to sub-types.
+    def plain_enum_dict(self) -> Dict[str, Any]:
+        """
+        Returns enums as their values.
         """
         d = {
-            key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
-            ).items()
+            snake_to_pascal(key): value
+            for key, value in self.model_dump().items()
+            if value is not None
+        }
+        return d
+
+    def enum_encoded_dict(self) -> Dict[str, Any]:
+        """
+        Encodes enums as their 8-digit random hex symbol
+        """
+        d = {
+            snake_to_pascal(key): value
+            for key, value in self.model_dump().items()
             if value is not None
         }
         return d
 
     def as_type(self) -> bytes:
         """
-        Serialize to the power.watts.000 representation.
+        Serialize to the power.watts.000 representation designed to send in a message.
 
-        Instances in the class are python-native representations of power.watts.000
-        objects, while the actual power.watts.000 object is the serialized UTF-8 byte
-        string designed for sending in a message.
-
-        This method calls the as_dict() method, which differs from the native python dict()
-        in the following key ways:
-        - Enum Values: Translates between the values used locally by the actor to the symbol
-        sent in messages.
-        - - Removes any key-value pairs where the value is None for a clearer message, especially
-        in cases with many optional attributes.
-
-        It also applies these changes recursively to sub-types.
-
-        Its near-inverse is PowerWatts.type_to_tuple(). If the type (or any sub-types)
-        includes an enum, then the type_to_tuple will map an unrecognized symbol to the
-        default enum value. This is why these two methods are only 'near' inverses.
+        Recursively encodes enums as hard-to-remember 8-digit random hex symbols
+        unless settings.encode_enums is set to 0.
         """
         json_string = json.dumps(self.as_dict())
         return json_string.encode("utf-8")
@@ -89,72 +88,59 @@ class PowerWatts(BaseModel):
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
-class PowerWatts_Maker:
+class PowerWattsMaker:
     type_name = "power.watts"
     version = "000"
 
-    def __init__(
-        self,
-        watts: int,
-    ):
-        self.tuple = PowerWatts(
-            Watts=watts,
-        )
-
     @classmethod
-    def tuple_to_type(cls, tpl: PowerWatts) -> bytes:
+    def tuple_to_type(cls, tuple: PowerWatts) -> bytes:
         """
         Given a Python class object, returns the serialized JSON type object.
         """
-        return tpl.as_type()
+        return tuple.as_type()
 
     @classmethod
-    def type_to_tuple(cls, t: bytes) -> PowerWatts:
+    def type_to_tuple(cls, b: bytes) -> PowerWatts:
         """
-        Given a serialized JSON type object, returns the Python class object.
+        Given the bytes in a message, returns the corresponding class object.
+
+        Args:
+            b (bytes): candidate type instance
+
+        Raises:
+           GwTypeError: if the bytes are not a power.watts.000 type
+
+        Returns:
+            PowerWatts instance
         """
         try:
-            d = json.loads(t)
-        except TypeError:
-            raise SchemaError("Type must be string or bytes!")
+            d = json.loads(b)
+        except TypeError as e:
+            raise GwTypeError("Type must be string or bytes!") from e
         if not isinstance(d, dict):
-            raise SchemaError(f"Deserializing <{t}> must result in dict!")
+            raise GwTypeError(f"Deserializing  must result in dict!\n <{b}>")
         return cls.dict_to_tuple(d)
 
     @classmethod
     def dict_to_tuple(cls, d: dict[str, Any]) -> PowerWatts:
         """
-        Deserialize a dictionary representation of a power.watts.000 message object
-        into a PowerWatts python object for internal use.
-
-        This is the near-inverse of the PowerWatts.as_dict() method:
-          - Enums: translates between the symbols sent in messages between actors and
-        the values used by the actors internally once they've deserialized the messages.
-          - Types: recursively validates and deserializes sub-types.
-
-        Note that if a required attribute with a default value is missing in a dict, this method will
-        raise a SchemaError. This differs from the pydantic BaseModel practice of auto-completing
-        missing attributes with default values when they exist.
-
-        Args:
-            d (dict): the dictionary resulting from json.loads(t) for a serialized JSON type object t.
-
-        Raises:
-           SchemaError: if the dict cannot be turned into a PowerWatts object.
-
-        Returns:
-            PowerWatts
+        Translates a dict representation of a power.watts.000 message object
+        into the Python class object.
         """
+        for key in d.keys():
+            if not is_pascal_case(key):
+                raise GwTypeError(f"Key '{key}' is not PascalCase")
         d2 = dict(d)
         if "Watts" not in d2.keys():
-            raise SchemaError(f"dict missing Watts: <{d2}>")
+            raise GwTypeError(f"dict missing Watts: <{d2}>")
         if "TypeName" not in d2.keys():
-            raise SchemaError(f"TypeName missing from dict <{d2}>")
+            raise GwTypeError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():
-            raise SchemaError(f"Version missing from dict <{d2}>")
+            raise GwTypeError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "000":
             LOGGER.debug(
                 f"Attempting to interpret power.watts version {d2['Version']} as version 000"
             )
             d2["Version"] = "000"
-        return PowerWatts(**d2)
+        d3 = {pascal_to_snake(key): value for key, value in d2.items()}
+        return PowerWatts(**d3)

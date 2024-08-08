@@ -1,8 +1,5 @@
+from gw.utils import snake_to_pascal
 from pydantic import BaseModel
-from pydantic import Extra
-
-from gwproto.utils import snake_to_camel
-
 
 DEFAULT_WEB_SERVER_NAME = "default"
 
@@ -15,6 +12,6 @@ class WebServerGt(BaseModel):
     Kwargs: dict = {}
 
     class Config:
-        extra = Extra.allow
-        alias_generator = snake_to_camel
-        allow_population_by_field_name = True
+        extra = "allow"
+        populate_by_name = True
+        alias_generator = snake_to_pascal

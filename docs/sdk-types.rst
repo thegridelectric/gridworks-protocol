@@ -18,47 +18,39 @@ forth between type instances and Python objects.
    :maxdepth: 1
    :caption: TYPE SDKS
 
+    Ads111xBasedCacGt  <types/ads111x-based-cac-gt>
+    Ads111xBasedComponentGt  <types/ads111x-based-component-gt>
+    BatchedReadings  <types/batched-readings>
+    ChannelConfig  <types/channel-config>
+    ChannelReadings  <types/channel-readings>
     ComponentAttributeClassGt  <types/component-attribute-class-gt>
     ComponentGt  <types/component-gt>
-    DataChannel  <types/data-channel>
+    DataChannelGt  <types/data-channel-gt>
     EgaugeIo  <types/egauge-io>
     EgaugeRegisterConfig  <types/egauge-register-config>
     ElectricMeterCacGt  <types/electric-meter-cac-gt>
     ElectricMeterComponentGt  <types/electric-meter-component-gt>
-    FibaroSmartImplantCacGt  <types/fibaro-smart-implant-cac-gt>
     FibaroSmartImplantComponentGt  <types/fibaro-smart-implant-component-gt>
-    GtDispatchBoolean  <types/gt-dispatch-boolean>
-    GtDispatchBooleanLocal  <types/gt-dispatch-boolean-local>
-    GtDriverBooleanactuatorCmd  <types/gt-driver-booleanactuator-cmd>
-    GtShBooleanactuatorCmdStatus  <types/gt-sh-booleanactuator-cmd-status>
+    FsmAtomicReport  <types/fsm-atomic-report>
+    FsmEvent  <types/fsm-event>
+    FsmFullReport  <types/fsm-full-report>
+    FsmTriggerFromAtn  <types/fsm-trigger-from-atn>
     GtShCliAtnCmd  <types/gt-sh-cli-atn-cmd>
-    GtShMultipurposeTelemetryStatus  <types/gt-sh-multipurpose-telemetry-status>
-    GtShSimpleTelemetryStatus  <types/gt-sh-simple-telemetry-status>
-    GtShStatus  <types/gt-sh-status>
-    GtShTelemetryFromMultipurposeSensor  <types/gt-sh-telemetry-from-multipurpose-sensor>
-    GtTelemetry  <types/gt-telemetry>
     HeartbeatB  <types/heartbeat-b>
-    HubitatCacGt  <types/hubitat-cac-gt>
     HubitatComponentGt  <types/hubitat-component-gt>
-    HubitatPollerCacGt  <types/hubitat-poller-cac-gt>
     HubitatPollerComponentGt  <types/hubitat-poller-component-gt>
-    HubitatTankCacGt  <types/hubitat-tank-cac-gt>
     HubitatTankComponentGt  <types/hubitat-tank-component-gt>
-    MultipurposeSensorCacGt  <types/multipurpose-sensor-cac-gt>
-    MultipurposeSensorComponentGt  <types/multipurpose-sensor-component-gt>
-    PipeFlowSensorCacGt  <types/pipe-flow-sensor-cac-gt>
-    PipeFlowSensorComponentGt  <types/pipe-flow-sensor-component-gt>
+    I2cFlowTotalizerComponentGt  <types/i2c-flow-totalizer-component-gt>
+    I2cMultichannelDtRelayComponentGt  <types/i2c-multichannel-dt-relay-component-gt>
+    KeyparamChangeLog  <types/keyparam-change-log>
     PowerWatts  <types/power-watts>
-    RelayCacGt  <types/relay-cac-gt>
-    RelayComponentGt  <types/relay-component-gt>
+    RelayActorConfig  <types/relay-actor-config>
     ResistiveHeaterCacGt  <types/resistive-heater-cac-gt>
     ResistiveHeaterComponentGt  <types/resistive-heater-component-gt>
-    RestPollerCacGt  <types/rest-poller-cac-gt>
     RestPollerComponentGt  <types/rest-poller-component-gt>
-    SimpleTempSensorCacGt  <types/simple-temp-sensor-cac-gt>
-    SimpleTempSensorComponentGt  <types/simple-temp-sensor-component-gt>
+    SingleReading  <types/single-reading>
     SnapshotSpaceheat  <types/snapshot-spaceheat>
     SpaceheatNodeGt  <types/spaceheat-node-gt>
-    TaDataChannels  <types/ta-data-channels>
-    TelemetryReportingConfig  <types/telemetry-reporting-config>
-    TelemetrySnapshotSpaceheat  <types/telemetry-snapshot-spaceheat>
+    SyncedReadings  <types/synced-readings>
+    ThermistorDataProcessingConfig  <types/thermistor-data-processing-config>
+    WebServerComponentGt  <types/web-server-component-gt>

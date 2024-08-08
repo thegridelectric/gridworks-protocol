@@ -1,16 +1,16 @@
 ElectricMeterCacGt
 ==========================
-Python pydantic class corresponding to json type `electric.meter.cac.gt`, version `000`.
+Python pydantic class corresponding to json type `electric.meter.cac.gt`, version `001`.
 
 .. autoclass:: gwproto.types.ElectricMeterCacGt
     :members:
 
 **ComponentAttributeClassId**:
-    - Description: ComponentAttributeClassId. Unique identifier for the device class (aka 'cac' or Component Attribute Class). Authority is maintained by the World Registry.
+    - Description: ComponentAttributeClassId.Unique identifier for the device class (aka 'cac' or Component Attribute Class). Authority is maintained by the World Registry.
     - Format: UuidCanonicalTextual
 
 **MakeModel**:
-    - Description: MakeModel. The brand name identifier for the electric meter (what you would specify in order to buy one).
+    - Description: MakeModel.The brand name identifier for the electric meter (what you would specify in order to buy one).
 
 **DisplayName**:
     - Description: Sample: EGauge 4030
@@ -18,11 +18,8 @@ Python pydantic class corresponding to json type `electric.meter.cac.gt`, versio
 **TelemetryNameList**:
     - Description: TelemetryNames read by this power meter.
 
-**PollPeriodMs**:
-    - Description: Poll Period in Milliseconds. Poll Period refers to the period of time between two readings by the local actor. This is in contrast to Capture Period, which refers to the period between readings that are sent up to the cloud (or otherwise saved for the long-term).
-
-**Interface**:
-    - Description:
+**MinPollPeriodMs**:
+    - Description: Poll Period in Milliseconds.Poll Period refers to the period of time between two readings by the local actor. This is in contrast to Capture Period, which refers to the period between readings that are sent up to the cloud (or otherwise saved for the long-term).
 
 **DefaultBaud**:
     - Description: To be used when the comms method requires a baud rate.

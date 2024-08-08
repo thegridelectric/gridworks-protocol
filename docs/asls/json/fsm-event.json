@@ -1,0 +1,81 @@
+{
+  "gtr_asl": "001",
+  "type_name": "fsm.event",
+  "version": "000",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": "Finite State Machine Event Command. A message sent to a SpaceheatNode wher ethe Node implements a finite state machine. The message is intended to be an FSM Events (aka Trigger) that allow a state machine to react (by starting a Transition and any side-effect Actions).",
+  "url": "https://gridworks-protocol.readthedocs.io/en/latest/finite-state-machines.html",
+  "properties": {
+    "FromHandle": {
+      "type": "string",
+      "format": "HandleName",
+      "title": "From Handle",
+      "required": true
+    },
+    "ToHandle": {
+      "type": "string",
+      "format": "HandleName",
+      "title": "To Handle",
+      "required": true
+    },
+    "EventType": {
+      "type": "string",
+      "format": "sh.fsm.event.type",
+      "title": "Event Type",
+      "description": "Typically the set of events allowed will be determined implicitly by the ToHandle. This is clarified in the message; and if the message does not clarify the appropriate understanding of the finite state machine and its events then the message will likely be ignored.",
+      "required": true
+    },
+    "EventName": {
+      "type": "string",
+      "description": "This should be the name that the receiving Spaceheat Node's finite state machine uses for an event that triggers a transition.",
+      "required": true
+    },
+    "TriggerId": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "Trigger Id",
+      "description": "Reference uuid for the triggering event that started a cascade of transitions, events and side-effect actions - of which this event is one.",
+      "required": true
+    },
+    "SendTimeUnixMs": {
+      "type": "integer",
+      "format": "ReasonableUnixTimeMs",
+      "title": "Sent Time Unix Ms",
+      "required": true
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "fsm.event",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "000",
+      "required": true
+    }
+  },
+  "axioms": {
+    "Axiom1": {
+      "title": "EventName must belong to the enum selected in the EventType",
+      "description": ""
+    }
+  },
+  "formats": {
+    "UuidCanonicalTextual": {
+      "type": "string",
+      "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
+      "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"
+    },
+    "SpaceheatName": {
+      "type": "string",
+      "description": "Lowercase alphanumeric words separated by hypens, where first word starts with an alphabet character.",
+      "example": "store-hot-pipe"
+    },
+    "ReasonableUnixTimeMs": {
+      "type": "string",
+      "description": "An integer reflecting unix time in MILLISECONDS between midnight Jan 1 2000 and midnight Jan 1 3000 UTC",
+      "example": "1702327940710"
+    }
+  }
+}

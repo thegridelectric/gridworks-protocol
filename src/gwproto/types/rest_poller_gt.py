@@ -4,17 +4,12 @@ REST commands into a message posted to main processing thread.
 """
 
 from functools import cached_property
-from typing import Literal
-from typing import Optional
-from typing import Tuple
+from typing import Literal, Optional, Tuple
 
 import yarl
-from pydantic import BaseModel
-from pydantic import Extra
-from pydantic import HttpUrl
-from pydantic import root_validator
-
-from gwproto.utils import snake_to_camel
+from gw.utils import snake_to_pascal
+from pydantic import BaseModel, HttpUrl, model_validator
+from typing_extensions import Self
 
 
 class URLArgs(BaseModel):
@@ -31,8 +26,8 @@ class URLArgs(BaseModel):
     encoded: bool = True
 
     class Config:
-        alias_generator = snake_to_camel
-        allow_population_by_field_name = True
+        alias_generator = snake_to_pascal
+        populate_by_name = True
 
     @classmethod
     def dict_from_url(cls, url: str | yarl.URL) -> dict:
@@ -88,8 +83,8 @@ class URLConfig(BaseModel):
     """
 
     class Config:
-        alias_generator = snake_to_camel
-        allow_population_by_field_name = True
+        alias_generator = snake_to_pascal
+        populate_by_name = True
 
     def to_url(self) -> yarl.URL:
         return self.make_url(self)
@@ -133,8 +128,8 @@ class AioHttpClientTimeout(BaseModel):
     sock_connect: Optional[float] = None
 
     class Config:
-        alias_generator = snake_to_camel
-        allow_population_by_field_name = True
+        alias_generator = snake_to_pascal
+        populate_by_name = True
 
 
 class SessionArgs(BaseModel):
@@ -142,9 +137,9 @@ class SessionArgs(BaseModel):
     timeout: Optional[AioHttpClientTimeout] = None
 
     class Config:
-        extra = Extra.allow
-        alias_generator = snake_to_camel
-        allow_population_by_field_name = True
+        extra = "allow"
+        alias_generator = snake_to_pascal
+        populate_by_name = True
 
 
 class RequestArgs(BaseModel):
@@ -157,9 +152,9 @@ class RequestArgs(BaseModel):
     ssl: Optional[bool] = None
 
     class Config:
-        extra = Extra.allow
-        alias_generator = snake_to_camel
-        allow_population_by_field_name = True
+        extra = "allow"
+        alias_generator = snake_to_pascal
+        populate_by_name = True
 
 
 class ErrorResponse(BaseModel):
@@ -168,9 +163,9 @@ class ErrorResponse(BaseModel):
     report: bool = True
 
     class Config:
-        extra = Extra.allow
-        alias_generator = snake_to_camel
-        allow_population_by_field_name = True
+        extra = "allow"
+        alias_generator = snake_to_pascal
+        populate_by_name = True
 
 
 class ErrorResponses(BaseModel):
@@ -178,9 +173,9 @@ class ErrorResponses(BaseModel):
     convert: ErrorResponse = ErrorResponse()
 
     class Config:
-        extra = Extra.allow
-        alias_generator = snake_to_camel
-        allow_population_by_field_name = True
+        extra = "allow"
+        alias_generator = snake_to_pascal
+        populate_by_name = True
 
 
 DEFAULT_REST_POLL_PERIOD_SECONDS = 60.0
@@ -193,10 +188,10 @@ class RESTPollerSettings(BaseModel):
     errors: ErrorResponses = ErrorResponses()
 
     class Config:
-        extra = Extra.allow
-        alias_generator = snake_to_camel
-        allow_population_by_field_name = True
-        keep_untouched = (cached_property,)
+        extra = "allow"
+        alias_generator = snake_to_pascal
+        populate_by_name = True
+        ignored_types = (cached_property,)
 
     def url_args(self) -> dict:
         session_args = URLConfig.make_url_args(self.session.base_url)
@@ -231,10 +226,11 @@ class RESTPollerSettings(BaseModel):
     def clear_property_cache(self):
         self.__dict__.pop("url", None)
 
-    @root_validator(skip_on_failure=True)
-    def post_root_validator(cls, values: dict) -> dict:
-        base_url = URLConfig.make_url(values["session"].base_url)
-        url = URLConfig.make_url(values["request"].url)
+    # @root_validator(skip_on_failure=True)
+    @model_validator(mode="after")
+    def post_root_validator(self) -> Self:
+        base_url = URLConfig.make_url(self.session.base_url)
+        url = URLConfig.make_url(self.request.url)
         if base_url is None and url is None:
             raise ValueError(
                 "ERROR. At least one of session.base_url and request.url must be specified"
@@ -264,4 +260,4 @@ class RESTPollerSettings(BaseModel):
                     f"  request.url:      <{url}>\n"
                     f"  request.url.path: <{url.path}>\n"
                 )
-        return values
+        return self

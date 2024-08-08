@@ -2,15 +2,17 @@
 
 import json
 import logging
-from typing import Any
-from typing import Dict
-from typing import Literal
+import os
+from typing import Any, Dict, Literal
 
-from pydantic import BaseModel
-from pydantic import Field
+import dotenv
+from gw.errors import GwTypeError
+from gw.utils import is_pascal_case, pascal_to_snake, snake_to_pascal
+from pydantic import BaseModel, Field
 
-from gwproto.errors import SchemaError
+dotenv.load_dotenv()
 
+ENCODE_ENUMS = int(os.getenv("ENUM_ENCODE", "1"))
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -27,7 +29,7 @@ class EgaugeRegisterConfig(BaseModel):
     current, power, energy, voltage, frequency etc from an eGauge 4030.
     """
 
-    Address: int = Field(
+    address: int = Field(
         title="Address",
         description=(
             "EGauge's modbus holding address. Note that the EGauge modbus map for holding address "
@@ -35,7 +37,7 @@ class EgaugeRegisterConfig(BaseModel):
             "address after the '3'."
         ),
     )
-    Name: str = Field(
+    name: str = Field(
         title="Name",
         description=(
             "The name assigned in the EGauge's modbus map. This is configured by the user (see "
@@ -43,11 +45,11 @@ class EgaugeRegisterConfig(BaseModel):
             "[More info](https://docs.google.com/document/d/1VeAt-V_AVqqiB0EVf-4JL_k_hVOsgbqldeAPVNwG1yI/edit#heading=h.7ct5hku166ut)"
         ),
     )
-    Description: str = Field(
+    description: str = Field(
         title="Description",
         description="Again, assigned by the EGauge modbus map. Is usually 'change in value'",
     )
-    Type: str = Field(
+    type: str = Field(
         title="Type",
         description=(
             "EGauge's numerical data type. Typically our power measurements are f32 ( 32-bit "
@@ -55,65 +57,62 @@ class EgaugeRegisterConfig(BaseModel):
             "as 16-bit unsigned integer) and timestamps are u32 (32-bit unsigned integer)."
         ),
     )
-    Denominator: int = Field(
+    denominator: int = Field(
         title="Denominator",
         description=(
             "Some of the modbus registers divide by 3.60E+06 (cumulative energy registers typically). "
             "For the power, current, voltage and phase angle the denominator is 1."
         ),
     )
-    Unit: str = Field(
+    unit: str = Field(
         title="Unit",
         description="The EGauge unit - typically A, Hz, or W.",
     )
-    TypeName: Literal["egauge.register.config"] = "egauge.register.config"
-    Version: Literal["000"] = "000"
+    type_name: Literal["egauge.register.config"] = "egauge.register.config"
+    version: Literal["000"] = "000"
+
+    class Config:
+        populate_by_name = True
+        alias_generator = snake_to_pascal
 
     def as_dict(self) -> Dict[str, Any]:
         """
-        Translate the object into a dictionary representation that can be serialized into a
-        egauge.register.config.000 object.
+        Main step in serializing the object. Encodes enums as their 8-digit random hex symbol if
+        settings.encode_enums = 1.
+        """
+        if ENCODE_ENUMS:
+            return self.enum_encoded_dict()
+        else:
+            return self.plain_enum_dict()
 
-        This method prepares the object for serialization by the as_type method, creating a
-        dictionary with key-value pairs that follow the requirements for an instance of the
-        egauge.register.config.000 type. Unlike the standard python dict method,
-        it makes the following substantive changes:
-        - Enum Values: Translates between the values used locally by the actor to the symbol
-        sent in messages.
-        - Removes any key-value pairs where the value is None for a clearer message, especially
-        in cases with many optional attributes.
-
-        It also applies these changes recursively to sub-types.
+    def plain_enum_dict(self) -> Dict[str, Any]:
+        """
+        Returns enums as their values.
         """
         d = {
-            key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
-            ).items()
+            snake_to_pascal(key): value
+            for key, value in self.model_dump().items()
+            if value is not None
+        }
+        return d
+
+    def enum_encoded_dict(self) -> Dict[str, Any]:
+        """
+        Encodes enums as their 8-digit random hex symbol
+        """
+        d = {
+            snake_to_pascal(key): value
+            for key, value in self.model_dump().items()
             if value is not None
         }
         return d
 
     def as_type(self) -> bytes:
         """
-        Serialize to the egauge.register.config.000 representation.
+        Serialize to the egauge.register.config.000 representation designed to send in a message.
 
-        Instances in the class are python-native representations of egauge.register.config.000
-        objects, while the actual egauge.register.config.000 object is the serialized UTF-8 byte
-        string designed for sending in a message.
-
-        This method calls the as_dict() method, which differs from the native python dict()
-        in the following key ways:
-        - Enum Values: Translates between the values used locally by the actor to the symbol
-        sent in messages.
-        - - Removes any key-value pairs where the value is None for a clearer message, especially
-        in cases with many optional attributes.
-
-        It also applies these changes recursively to sub-types.
-
-        Its near-inverse is EgaugeRegisterConfig.type_to_tuple(). If the type (or any sub-types)
-        includes an enum, then the type_to_tuple will map an unrecognized symbol to the
-        default enum value. This is why these two methods are only 'near' inverses.
+        Recursively encodes enums as hard-to-remember 8-digit random hex symbols
+        unless settings.encode_enums is set to 0.
         """
         json_string = json.dumps(self.as_dict())
         return json_string.encode("utf-8")
@@ -122,92 +121,69 @@ class EgaugeRegisterConfig(BaseModel):
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
-class EgaugeRegisterConfig_Maker:
+class EgaugeRegisterConfigMaker:
     type_name = "egauge.register.config"
     version = "000"
 
-    def __init__(
-        self,
-        address: int,
-        name: str,
-        description: str,
-        type: str,  # noqa
-        denominator: int,
-        unit: str,
-    ):
-        self.tuple = EgaugeRegisterConfig(
-            Address=address,
-            Name=name,
-            Description=description,
-            Type=type,
-            Denominator=denominator,
-            Unit=unit,
-        )
-
     @classmethod
-    def tuple_to_type(cls, tpl: EgaugeRegisterConfig) -> bytes:
+    def tuple_to_type(cls, tuple: EgaugeRegisterConfig) -> bytes:
         """
         Given a Python class object, returns the serialized JSON type object.
         """
-        return tpl.as_type()
+        return tuple.as_type()
 
     @classmethod
-    def type_to_tuple(cls, t: bytes) -> EgaugeRegisterConfig:
+    def type_to_tuple(cls, b: bytes) -> EgaugeRegisterConfig:
         """
-        Given a serialized JSON type object, returns the Python class object.
+        Given the bytes in a message, returns the corresponding class object.
+
+        Args:
+            b (bytes): candidate type instance
+
+        Raises:
+           GwTypeError: if the bytes are not a egauge.register.config.000 type
+
+        Returns:
+            EgaugeRegisterConfig instance
         """
         try:
-            d = json.loads(t)
-        except TypeError:
-            raise SchemaError("Type must be string or bytes!")
+            d = json.loads(b)
+        except TypeError as e:
+            raise GwTypeError("Type must be string or bytes!") from e
         if not isinstance(d, dict):
-            raise SchemaError(f"Deserializing <{t}> must result in dict!")
+            raise GwTypeError(f"Deserializing  must result in dict!\n <{b}>")
         return cls.dict_to_tuple(d)
 
     @classmethod
     def dict_to_tuple(cls, d: dict[str, Any]) -> EgaugeRegisterConfig:
         """
-        Deserialize a dictionary representation of a egauge.register.config.000 message object
-        into a EgaugeRegisterConfig python object for internal use.
-
-        This is the near-inverse of the EgaugeRegisterConfig.as_dict() method:
-          - Enums: translates between the symbols sent in messages between actors and
-        the values used by the actors internally once they've deserialized the messages.
-          - Types: recursively validates and deserializes sub-types.
-
-        Note that if a required attribute with a default value is missing in a dict, this method will
-        raise a SchemaError. This differs from the pydantic BaseModel practice of auto-completing
-        missing attributes with default values when they exist.
-
-        Args:
-            d (dict): the dictionary resulting from json.loads(t) for a serialized JSON type object t.
-
-        Raises:
-           SchemaError: if the dict cannot be turned into a EgaugeRegisterConfig object.
-
-        Returns:
-            EgaugeRegisterConfig
+        Translates a dict representation of a egauge.register.config.000 message object
+        into the Python class object.
         """
+        for key in d.keys():
+            if not is_pascal_case(key):
+                raise GwTypeError(f"Key '{key}' is not PascalCase")
         d2 = dict(d)
         if "Address" not in d2.keys():
-            raise SchemaError(f"dict missing Address: <{d2}>")
+            raise GwTypeError(f"dict missing Address: <{d2}>")
         if "Name" not in d2.keys():
-            raise SchemaError(f"dict missing Name: <{d2}>")
+            raise GwTypeError(f"dict missing Name: <{d2}>")
         if "Description" not in d2.keys():
-            raise SchemaError(f"dict missing Description: <{d2}>")
+            raise GwTypeError(f"dict missing Description: <{d2}>")
         if "Type" not in d2.keys():
-            raise SchemaError(f"dict missing Type: <{d2}>")
+            raise GwTypeError(f"dict missing Type: <{d2}>")
         if "Denominator" not in d2.keys():
-            raise SchemaError(f"dict missing Denominator: <{d2}>")
+            raise GwTypeError(f"dict missing Denominator: <{d2}>")
         if "Unit" not in d2.keys():
-            raise SchemaError(f"dict missing Unit: <{d2}>")
+            raise GwTypeError(f"dict missing Unit: <{d2}>")
         if "TypeName" not in d2.keys():
-            raise SchemaError(f"TypeName missing from dict <{d2}>")
+            raise GwTypeError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2.keys():
-            raise SchemaError(f"Version missing from dict <{d2}>")
+            raise GwTypeError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "000":
             LOGGER.debug(
                 f"Attempting to interpret egauge.register.config version {d2['Version']} as version 000"
             )
             d2["Version"] = "000"
-        return EgaugeRegisterConfig(**d2)
+        d3 = {pascal_to_snake(key): value for key, value in d2.items()}
+        return EgaugeRegisterConfig(**d3)

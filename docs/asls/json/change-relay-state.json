@@ -1,0 +1,21 @@
+{
+  "gtr_asl": "001",
+  "enum_name": "change.relay.state",
+  "enum_version": "000",
+  "description": "This is meant for relays in either NormallyOpen or NormallyClosed configuration (i.e. not configured as DoubleThrow). It provides the natural Finite State Machine actions that go along with simple.relay.state states of RelayOpen and RelayClosed. Open = PowerOff = 0 and Closed = PowerOn = 1",
+  "ssot": "https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changerelaystate",
+  "values": ["CloseRelay", "OpenRelay"],
+  "value_to_symbol": {
+    "": "",
+    "": ""
+  },
+  "value_to_version": {
+    "": "000",
+    "": "000"
+  },
+  "value_descriptions": {
+    "CloseRelay": "",
+    "OpenRelay": ""
+  },
+  "default_value": "OpenRelay"
+}

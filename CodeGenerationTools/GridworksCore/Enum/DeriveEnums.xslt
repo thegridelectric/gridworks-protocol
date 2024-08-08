@@ -19,13 +19,13 @@
     <xsl:template match="/">
         <FileSet>
             <FileSetFiles>
-                <xsl:for-each select="$airtable//ProtocolEnums/ProtocolEnum[(normalize-space(ProtocolName) ='gwproto')]">
+                <xsl:for-each select="$airtable//ProtocolEnums/ProtocolEnum[(normalize-space(ProtocolName) ='gwproto') and not (NoVersions = 'true')]">
                 <xsl:variable name="enum-id" select="GtEnumId"/>
                 <xsl:variable name="enum-version" select="EnumVersion"/>
                 <xsl:variable name="enum-name" select="EnumName"/>
                 <xsl:variable name="local-name" select="LocalName"/>
                 <xsl:for-each select="$airtable//GtEnums/GtEnum[GtEnumId=$enum-id]">
-                    <xsl:variable name="enum-name-style" select="PythonEnumNameStyle" />
+                    <xsl:variable name="enum-type" select="EnumType" />
                     <xsl:variable name="enum-class-name">
                         <xsl:call-template name="nt-case">
                             <xsl:with-param name="type-name-text" select="LocalName" />
@@ -41,12 +41,13 @@
 
 <xsl:text>from enum import auto
 from typing import List
+from typing import Optional
 
-from fastapi_utils.enums import StrEnum
+from gw.enums import GwStrEnum
 
 
 class </xsl:text><xsl:value-of select="$enum-class-name"/>
-<xsl:text>(StrEnum):
+<xsl:text>(GwStrEnum):
     """
     </xsl:text>
     <!-- Enum description, wrapped, if it exists -->
@@ -62,8 +63,7 @@ class </xsl:text><xsl:value-of select="$enum-class-name"/>
     Enum </xsl:text><xsl:value-of select="Name"/><xsl:text> version </xsl:text><xsl:value-of select="$enum-version"/>
     <xsl:text> in the GridWorks Type registry.
 
-    Used by used by multiple Application Shared Languages (ASLs), including but not limited to
-    gwproto. For more information:
+    Used by multiple Application Shared Languages (ASLs). For more information:
       - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
       - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#</xsl:text>
     <xsl:value-of select="translate($enum-name,'.','')"/>
@@ -116,10 +116,10 @@ class </xsl:text><xsl:value-of select="$enum-class-name"/>
  <xsl:call-template name="insert-spaces">
     <xsl:with-param name="count" select="4"/>
 </xsl:call-template>
-<xsl:if test="$enum-name-style = 'Upper'">
+<xsl:if test="$enum-type = 'Upper'">
     <xsl:value-of select="translate(translate(LocalValue,'-',''),$lcletters, $ucletters)"/>
 </xsl:if>
-<xsl:if test="$enum-name-style ='UpperPython'">
+<xsl:if test="$enum-type ='UpperPython'">
     <xsl:value-of select="LocalValue"/>
 </xsl:if>
 
@@ -133,19 +133,19 @@ class </xsl:text><xsl:value-of select="$enum-class-name"/>
     <xsl:text>":
         """
         Returns default value (in this case </xsl:text>
-        <xsl:if test="$enum-name-style = 'Upper'">
+        <xsl:if test="$enum-type = 'Upper'">
             <xsl:value-of select="translate(translate(DefaultEnumValue,'-',''),$lcletters, $ucletters)"/>
         </xsl:if>
-        <xsl:if test="$enum-name-style ='UpperPython'">
+        <xsl:if test="$enum-type ='UpperPython'">
             <xsl:value-of select="DefaultEnumValue"/>
         </xsl:if>
         <xsl:text>)
         """
         return cls.</xsl:text>
-        <xsl:if test="$enum-name-style = 'Upper'">
+        <xsl:if test="$enum-type = 'Upper'">
             <xsl:value-of select="translate(translate(DefaultEnumValue,'-',''),$lcletters, $ucletters)"/>
         </xsl:if>
-        <xsl:if test="$enum-name-style ='UpperPython'">
+        <xsl:if test="$enum-type ='UpperPython'">
             <xsl:value-of select="DefaultEnumValue"/>
         </xsl:if>
 
@@ -159,24 +159,27 @@ class </xsl:text><xsl:value-of select="$enum-class-name"/>
         return [elt.value for elt in cls]
 
     @classmethod
-    def version(cls, value: str) -> str:
+    def version(cls, value: Optional[str] = None) -> str:
         """
-        Returns the version of an enum value.
-
-        Once a value belongs to one version of the enum, it belongs
-        to all future versions.
+        Returns the version of the class (default) used by this package or the
+        version of a candidate enum value (always less than or equal to the version
+        of the class)
 
         Args:
-            value (str): The candidate enum value.
+            value (Optional[str]): None (for version of the Enum itself) or
+            the candidate enum value.
 
         Raises:
-            ValueError: If value is not one of the enum values.
+            ValueError: If the value is not one of the enum values.
 
         Returns:
-            str: The earliest version of the enum containing value.
+            str: The version of the enum used by this code (if given no
+            value) OR the earliest version of the enum containing the value.
         """
+        if value is None:
+            return "</xsl:text><xsl:value-of select="$enum-version"/><xsl:text>"
         if not isinstance(value, str):
-            raise ValueError(f"This method applies to strings, not enums")
+            raise ValueError("This method applies to strings, not enums")
         if value not in value_to_version.keys():
             raise ValueError(f"Unknown enum value: {value}")
         return value_to_version[value]
@@ -258,10 +261,10 @@ symbol_to_value = {</xsl:text>
 <xsl:sort select="Idx" data-type="number"/>
     <xsl:text>
     "</xsl:text><xsl:value-of select="Symbol"/><xsl:text>": "</xsl:text>
-    <xsl:if test="$enum-name-style = 'Upper'">
+    <xsl:if test="$enum-type = 'Upper'">
         <xsl:value-of select="translate(translate(LocalValue,'-',''),$lcletters, $ucletters)"/>
     </xsl:if>
-    <xsl:if test="$enum-name-style ='UpperPython'">
+    <xsl:if test="$enum-type ='UpperPython'">
         <xsl:value-of select="LocalValue"/>
     </xsl:if>
 <xsl:text>",</xsl:text>
@@ -276,10 +279,10 @@ value_to_version = {</xsl:text>
 <xsl:sort select="Idx" data-type="number"/>
     <xsl:text>
     "</xsl:text>
-    <xsl:if test="$enum-name-style = 'Upper'">
+    <xsl:if test="$enum-type = 'Upper'">
         <xsl:value-of select="translate(translate(LocalValue,'-',''),$lcletters, $ucletters)"/>
     </xsl:if>
-    <xsl:if test="$enum-name-style ='UpperPython'">
+    <xsl:if test="$enum-type ='UpperPython'">
         <xsl:value-of select="LocalValue"/>
     </xsl:if>
 <xsl:text>": "</xsl:text> <xsl:value-of select="Version"/><xsl:text>",</xsl:text>

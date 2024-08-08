@@ -3,13 +3,19 @@
 import json
 
 import pytest
+from gw.errors import GwTypeError
+from gwproto.types import GtShCliAtnCmd
+from gwproto.types import GtShCliAtnCmdMaker as Maker
 from pydantic import ValidationError
-
-from gwproto.errors import SchemaError
-from gwproto.types import GtShCliAtnCmd_Maker as Maker
 
 
 def test_gt_sh_cli_atn_cmd_generated() -> None:
+    t = GtShCliAtnCmd(
+        from_g_node_alias="dwtest.isone.ct.newhaven.orange1",
+        send_snapshot=True,
+        from_g_node_id="e7f7d6cc-08b0-4b36-bbbb-0a1f8447fd32",
+    )
+
     d = {
         "FromGNodeAlias": "dwtest.isone.ct.newhaven.orange1",
         "SendSnapshot": True,
@@ -18,49 +24,44 @@ def test_gt_sh_cli_atn_cmd_generated() -> None:
         "Version": "110",
     }
 
-    with pytest.raises(SchemaError):
+    assert t.as_dict() == d
+
+    with pytest.raises(GwTypeError):
         Maker.type_to_tuple(d)
 
-    with pytest.raises(SchemaError):
+    with pytest.raises(GwTypeError):
         Maker.type_to_tuple('"not a dict"')
 
     # Test type_to_tuple
     gtype = json.dumps(d)
     gtuple = Maker.type_to_tuple(gtype)
+    assert gtuple == t
 
     # test type_to_tuple and tuple_to_type maps
     assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple
 
-    # test Maker init
-    t = Maker(
-        from_g_node_alias=gtuple.FromGNodeAlias,
-        send_snapshot=gtuple.SendSnapshot,
-        from_g_node_id=gtuple.FromGNodeId,
-    ).tuple
-    assert t == gtuple
-
     ######################################
-    # SchemaError raised if missing a required attribute
+    # GwTypeError raised if missing a required attribute
     ######################################
 
-    d2 = dict(d)
+    d2 = d.copy()
     del d2["TypeName"]
-    with pytest.raises(SchemaError):
+    with pytest.raises(GwTypeError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d)
+    d2 = d.copy()
     del d2["FromGNodeAlias"]
-    with pytest.raises(SchemaError):
+    with pytest.raises(GwTypeError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d)
+    d2 = d.copy()
     del d2["SendSnapshot"]
-    with pytest.raises(SchemaError):
+    with pytest.raises(GwTypeError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d)
+    d2 = d.copy()
     del d2["FromGNodeId"]
-    with pytest.raises(SchemaError):
+    with pytest.raises(GwTypeError):
         Maker.dict_to_tuple(d2)
 
     ######################################
@@ -72,7 +73,7 @@ def test_gt_sh_cli_atn_cmd_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     ######################################
-    # SchemaError raised if TypeName is incorrect
+    # ValidationError raised if TypeName is incorrect
     ######################################
 
     d2 = dict(d, TypeName="not the type name")
@@ -80,7 +81,7 @@ def test_gt_sh_cli_atn_cmd_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     ######################################
-    # SchemaError raised if primitive attributes do not have appropriate property_format
+    # ValidationError raised if primitive attributes do not have appropriate property_format
     ######################################
 
     d2 = dict(d, FromGNodeAlias="a.b-h")
@@ -90,5 +91,3 @@ def test_gt_sh_cli_atn_cmd_generated() -> None:
     d2 = dict(d, FromGNodeId="d4be12d5-33ba-4f1f-b9e5")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
-
-    # End of Test

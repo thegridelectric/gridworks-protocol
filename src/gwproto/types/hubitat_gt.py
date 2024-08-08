@@ -1,31 +1,30 @@
 from typing import Optional
 
 import yarl
+from gw.utils import snake_to_pascal
 from pydantic import BaseModel
-from pydantic import Extra
 
-from gwproto.property_format import predicate_validator
-from gwproto.types.rest_poller_gt import URLArgs
-from gwproto.types.rest_poller_gt import URLConfig
-from gwproto.utils import has_mac_address_format
+from gwproto.types.rest_poller_gt import URLArgs, URLConfig
+from gwproto.utils import has_mac_address_format, predicate_validator
 
 
 class HubitatGt(BaseModel):
-    Host: str
-    MakerApiId: int
-    AccessToken: str
-    MacAddress: str
-    WebListenEnabled: bool = True
+    host: str
+    maker_api_id: int
+    access_token: str
+    mac_address: str
+    web_listen_enabled: bool = True
 
     class Config:
-        extra = Extra.allow
-        allow_population_by_field_name = True
+        extra = "allow"
+        populate_by_name = True
+        alias_generator = snake_to_pascal
 
-    _is_mac_address = predicate_validator("MacAddress", has_mac_address_format)
+    _is_mac_address = predicate_validator("mac_address", has_mac_address_format)
 
     @property
     def listen_path(self) -> str:
-        return self.MacAddress.replace(":", "-")
+        return self.mac_address.replace(":", "-")
 
     def listen_url(self, url: yarl.URL) -> yarl.URL:
         return url / self.listen_path
@@ -34,7 +33,7 @@ class HubitatGt(BaseModel):
         return URLConfig(
             url_args=URLArgs(
                 scheme="http",
-                host=self.Host,
+                host=self.host,
             ),
         )
 
@@ -42,13 +41,13 @@ class HubitatGt(BaseModel):
         config = self.url_config()
         if config.url_args.query is None:
             config.url_args.query = []
-        config.url_args.query.append(("access_token", self.AccessToken))
+        config.url_args.query.append(("access_token", self.access_token))
         if config.url_path_format is None:
             config.url_path_format = ""
         config.url_path_format += "/apps/api/{app_id}"
         if config.url_path_args is None:
             config.url_path_args = {}
-        config.url_path_args.update({"app_id": self.MakerApiId})
+        config.url_path_args.update({"app_id": self.maker_api_id})
         return config
 
     def devices_url_config(self) -> URLConfig:

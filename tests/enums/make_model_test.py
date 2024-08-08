@@ -1,5 +1,5 @@
 """
-Tests for enum spaceheat.make.model.001 from the GridWorks Type Registry.
+Tests for enum spaceheat.make.model.002 from the GridWorks Type Registry.
 """
 
 from gwproto.enums import MakeModel
@@ -27,11 +27,28 @@ def test_make_model() -> None:
         "MAGNELAB__SCT0300050",
         "GRIDWORKS__MULTITEMP1",
         "KRIDA__EMR16I2CV3",
+        "OMEGA__FTB8007HWPT",
+        "ISTEC_4440",
+        "OMEGA__FTB8010HWPT",
+        "BELIMO__BALLVALVE232VS",
+        "BELIMO__DIVERTERB332L",
+        "TACO__0034EPLUS",
+        "TACO__007E",
+        "ARMSTRONG__COMPASSH",
+        "HONEYWELL__T6ZWAVETHERMOSTAT",
+        "PRMFILTRATION__WM075",
+        "BELLGOSSETT__ECOCIRC20_18",
+        "TEWA__TT0P10KC3T1051500",
+        "EKM__HOTSPWM075HD",
+        "GRIDWORKS__SIMMULTITEMP",
+        "GRIDWORKS__SIMTOTALIZER",
+        "KRIDA__DOUBLEEMR16I2CV3",
+        "GRIDWORKS__SIMDOUBLE16PINI2CRELAY",
     }
 
     assert MakeModel.default() == MakeModel.UNKNOWNMAKE__UNKNOWNMODEL
     assert MakeModel.enum_name() == "spaceheat.make.model"
-    assert MakeModel.enum_version() == "001"
+    assert MakeModel.enum_version() == "002"
 
     assert MakeModel.version("UNKNOWNMAKE__UNKNOWNMODEL") == "000"
     assert MakeModel.version("EGAUGE__4030") == "000"
@@ -53,6 +70,23 @@ def test_make_model() -> None:
     assert MakeModel.version("MAGNELAB__SCT0300050") == "001"
     assert MakeModel.version("GRIDWORKS__MULTITEMP1") == "001"
     assert MakeModel.version("KRIDA__EMR16I2CV3") == "001"
+    assert MakeModel.version("OMEGA__FTB8007HWPT") == "002"
+    assert MakeModel.version("ISTEC_4440") == "002"
+    assert MakeModel.version("OMEGA__FTB8010HWPT") == "002"
+    assert MakeModel.version("BELIMO__BALLVALVE232VS") == "002"
+    assert MakeModel.version("BELIMO__DIVERTERB332L") == "002"
+    assert MakeModel.version("TACO__0034EPLUS") == "002"
+    assert MakeModel.version("TACO__007E") == "002"
+    assert MakeModel.version("ARMSTRONG__COMPASSH") == "002"
+    assert MakeModel.version("HONEYWELL__T6ZWAVETHERMOSTAT") == "002"
+    assert MakeModel.version("PRMFILTRATION__WM075") == "002"
+    assert MakeModel.version("BELLGOSSETT__ECOCIRC20_18") == "002"
+    assert MakeModel.version("TEWA__TT0P10KC3T1051500") == "002"
+    assert MakeModel.version("EKM__HOTSPWM075HD") == "002"
+    assert MakeModel.version("GRIDWORKS__SIMMULTITEMP") == "002"
+    assert MakeModel.version("GRIDWORKS__SIMTOTALIZER") == "002"
+    assert MakeModel.version("KRIDA__DOUBLEEMR16I2CV3") == "002"
+    assert MakeModel.version("GRIDWORKS__SIMDOUBLE16PINI2CRELAY") == "002"
 
     for value in MakeModel.values():
         symbol = MakeModel.value_to_symbol(value)

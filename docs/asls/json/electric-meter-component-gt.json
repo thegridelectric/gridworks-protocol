@@ -1,7 +1,7 @@
 {
   "gtr_asl": "001",
   "type_name": "electric.meter.component.gt",
-  "version": "000",
+  "version": "001",
   "owner": "gridworks@gridworks-consulting.com",
   "description": "Type for tracking Electric Meter Components. Designed for specific instances of Electric Meters. It extends the component.gt.000 type. Authority for the attributes of the component.gt.000 (ComponentId, ComponentAttributeClassId, DisplayName, HwUid) belongs to the WorldRegistry. The WorldRegistry is part of the GridWorks 'BackOffice' structure for managing relational device data . Notably, ComponentId and ComponentAttributeClass are both required and immutable. HwUid is optional but once it is set to a non-null value that is also immutable - it is meant to be an immutable identifier associated to a specific physical device, ideally one that can be read remotely by the SCADA and also by the naked eye. The DisplayName is mutable, with its current value in time governed by the WorldRegistry.",
   "url": "https://g-node-registry.readthedocs.io/en/latest/electric-meters.html",
@@ -28,9 +28,9 @@
     "ConfigList": {
       "type": "array",
       "items": {
-        "type": "telemetry.reporting.config.000"
+        "type": "channel.config.000"
       },
-      "description": "This power meter will produce multiple data channels. Each data channel measures a certain quantities (like power, current) for certain ShNodes (like a boost element or heat pump).",
+      "description": "Information re timing of data polling and capture for the channels read by the node (i.e. channels that convey power, current, voltage, frequency for various power consuming elements of the system).",
       "required": true
     },
     "HwUid": {
@@ -44,14 +44,14 @@
     },
     "ModbusPort": {
       "type": "integer",
-      "format": "NonNegativeInteger",
+      "format": "PositiveInteger",
       "title": "",
       "required": false
     },
     "EgaugeIoList": {
       "type": "array",
       "items": {
-        "type": "egauge.io.000"
+        "type": "egauge.io.001"
       },
       "description": "This should be empty unless the MakeModel of the corresponding component attribute class is EGauge 4030. The channels that can be read from an EGauge 4030 are configurable by the person who installs the device. The information is encapsulated in a modbus map provided by eGauge as a csv from a device-specific API. The EGaugeIoList maps the data from this map to the data that the SCADA expects to see.",
       "required": true
@@ -64,7 +64,7 @@
     "Version": {
       "type": "string",
       "title": "The type version",
-      "default": "000",
+      "default": "001",
       "required": true
     }
   },
@@ -74,99 +74,13 @@
       "description": "ModbusHost is None if and only if ModbusPort is None"
     },
     "Axiom2": {
-      "title": "Egauge4030 consistency",
-      "description": "If the EgaugeIoList has non-zero length, then the ModbusHost is not None and the set of output configs is equal to ConfigList as a set"
+      "title": "Egauge4030 Means Modbus",
+      "description": "If the EgaugeIoList has non-zero length, then the ModbusHost is not None"
+    },
+    "Axiom3": {
+      "title": "Channel Name Consistency",
+      "description": "If the EgaugeIoList has non-zero length: 1) Len(EgaugeIoList) == Len(ConfigList) 2) There are no duplicates of ChannelName in the ConfigList or EgaugeIoList 3) The set of ChannelNames in IoConfig is equal to the set of ChannelNames in ConfigList"
     }
-  },
-  "example": {
-    "ComponentAttributeClassId": "739a6e32-bb9c-43bc-a28d-fb61be665522",
-    "ComponentId": "36a31af8-5ff6-4105-a751-fb858889bc60",
-    "DisplayName": "Oak EGauge6074",
-    "HwUid": "BP01954",
-    "ModbusHost": "eGauge6074.local",
-    "ModbusPort": 502,
-    "ConfigList": [
-      {
-        "AboutNodeName": "a.m.house.panel.power",
-        "AsyncReportThreshold": 0.02,
-        "Exponent": 0,
-        "NameplateMaxValue": 3500,
-        "ReportOnChange": true,
-        "SamplePeriodS": 300,
-        "TelemetryNameGtEnumSymbol": "af39eec9",
-        "TypeName": "telemetry.reporting.config",
-        "UnitGtEnumSymbol": "f459a9c3",
-        "Version": "000"
-      },
-      {
-        "AboutNodeName": "oilpluspumpspower",
-        "AsyncReportThreshold": 0.02,
-        "Exponent": 0,
-        "NameplateMaxValue": 1000,
-        "ReportOnChange": true,
-        "SamplePeriodS": 300,
-        "TelemetryNameGtEnumSymbol": "af39eec9",
-        "TypeName": "telemetry.reporting.config",
-        "UnitGtEnumSymbol": "f459a9c3",
-        "Version": "000"
-      }
-    ],
-    "EgaugeIoList": [
-      {
-        "InputConfig": {
-          "Address": 9016,
-          "Denominator": 1,
-          "Description": "change in value",
-          "Name": "house-panel-power",
-          "Type": "f32",
-          "TypeName": "egauge.register.config",
-          "Unit": "W",
-          "Version": "000"
-        },
-        "OutputConfig": {
-          "AboutNodeName": "a.m.house.panel.power",
-          "AsyncReportThreshold": 0.02,
-          "Exponent": 0,
-          "NameplateMaxValue": 3500,
-          "ReportOnChange": true,
-          "SamplePeriodS": 300,
-          "TelemetryNameGtEnumSymbol": "af39eec9",
-          "TypeName": "telemetry.reporting.config",
-          "UnitGtEnumSymbol": "f459a9c3",
-          "Version": "000"
-        },
-        "TypeName": "egauge.io",
-        "Version": "000"
-      },
-      {
-        "InputConfig": {
-          "Address": 9018,
-          "Denominator": 1,
-          "Description": "change in value",
-          "Name": "oil-boiler-plus-pumps",
-          "Type": "f32",
-          "TypeName": "egauge.register.config",
-          "Unit": "W",
-          "Version": "000"
-        },
-        "OutputConfig": {
-          "AboutNodeName": "oilpluspumpspower",
-          "AsyncReportThreshold": 0.02,
-          "Exponent": 0,
-          "NameplateMaxValue": 1000,
-          "ReportOnChange": true,
-          "SamplePeriodS": 300,
-          "TelemetryNameGtEnumSymbol": "af39eec9",
-          "TypeName": "telemetry.reporting.config",
-          "UnitGtEnumSymbol": "f459a9c3",
-          "Version": "000"
-        },
-        "TypeName": "egauge.io",
-        "Version": "000"
-      }
-    ],
-    "TypeName": "electric.meter.component.gt",
-    "Version": "000"
   },
   "formats": {
     "UuidCanonicalTextual": {
@@ -177,11 +91,6 @@
     "PositiveInteger": {
       "type": "string",
       "description": "Must be positive when interpreted as an integer. Interpretation as an integer follows the pydantic rules for this - which will round down rational numbers. So 1.7 will be interpreted as 1 and is also fine, while 0.5 is interpreted as 0 and will raise an exception.",
-      "example": ""
-    },
-    "NonNegativeInteger": {
-      "type": "string",
-      "description": "Must be non-negative when interpreted as an integer. Interpretation as an integer follows the pydantic rules for this - which will round down rational numbers. So 0 is fine, and 1.7 will be interpreted as 1 and is also fine.",
       "example": ""
     }
   }

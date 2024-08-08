@@ -1,17 +1,10 @@
-from typing import Any
-from typing import Callable
-from typing import Generic
-from typing import Mapping
-from typing import Optional
-from typing import TypeVar
-from typing import Union
+from typing import Any, Callable, Generic, Literal, Mapping, Optional, TypeVar, Union
 
 from pydantic import BaseModel
-from pydantic import Field
-from pydantic.generics import GenericModel
 
+# from pydantic.generics import GenericModel
+# UserWarning: `pydantic.generics:GenericModel` has been moved to `pydantic.BaseModel`.
 from gwproto.topic import MQTTTopic
-
 
 EnumType = TypeVar("EnumType")
 
@@ -31,14 +24,13 @@ class Header(BaseModel):
     MessageType: str
     MessageId: str = ""
     AckRequired: bool = False
-    TypeName: str = Field("gridworks.header", const=True)
+    TypeName: Literal["gridworks.header"] = "gridworks.header"
+    Version: Literal["000"] = "000"
 
 
 PayloadT = TypeVar("PayloadT")
 
 PAYLOAD_TYPE_FIELDS = ["TypeName", "type_alias", "TypeName", "type_name"]
-
-GRIDWORKS_ENVELOPE_TYPE = "gw"
 
 
 def ensure_arg(arg_name: str, default_value: Any, kwargs_dict: dict) -> None:
@@ -48,10 +40,10 @@ def ensure_arg(arg_name: str, default_value: Any, kwargs_dict: dict) -> None:
             kwargs_dict[arg_name] = default_value
 
 
-class Message(GenericModel, Generic[PayloadT]):
+class Message(BaseModel, Generic[PayloadT]):
     Header: Header
     Payload: PayloadT
-    TypeName: str = Field(GRIDWORKS_ENVELOPE_TYPE, const=True)
+    TypeName: Literal["gw"] = "gw"
 
     def __init__(self, header: Optional[Header] = None, **kwargs: Any):
         if header is None:
@@ -66,7 +58,7 @@ class Message(GenericModel, Generic[PayloadT]):
 
     @classmethod
     def type_name(cls) -> str:
-        return Message.__fields__["TypeName"].default
+        return Message.model_fields["type_name"].default
 
     def mqtt_topic(self) -> str:
         return MQTTTopic.encode(self.type_name(), self.src(), self.message_type())

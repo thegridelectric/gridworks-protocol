@@ -8,48 +8,27 @@
     "TypeName": "gridworks.header"
   },
   "Payload": {
-    "FromGNodeAlias": "hw1.isone.ct.newhaven.orange1.ta.scada",
-    "FromGNodeInstanceId": "28817671-3899-4e24-a337-abcb8633e47a",
-    "Snapshot": {
-      "AboutNodeAliasList": [
-        "a.elt1.relay",
-        "a.tank.out.pump.relay",
-        "a.tank.out.pump.baseboard1.fan.relay",
-        "a.tank.out.temp1",
-        "a.tank.out.far.temp1",
-        "a.tank.in.temp1",
-        "a.tank.temp0",
-        "a.garage.temp1",
-        "a.elt1",
-        "a.tank.out.temp2",
-        "a.tank.in.temp2",
-        "a.garage.temp2",
-        "a.tankoutside.temp2"
-      ],
-      "ValueList": [
-        0, 0, 0, 17812, 15250, 14312, 21812, 15062, 0, -44, -3626, -3015, 3041
-      ],
-      "ReportTimeUnixMs": 1676592300011,
-      "TypeName": "telemetry.snapshot.spaceheat",
-      "Version": "100",
-      "TelemetryNameList": [
-        "5a71d4b3",
-        "5a71d4b3",
-        "5a71d4b3",
-        "c89d0ba1",
-        "c89d0ba1",
-        "c89d0ba1",
-        "c89d0ba1",
-        "c89d0ba1",
-        "af39eec9",
-        "c89d0ba1",
-        "c89d0ba1",
-        "c89d0ba1",
-        "c89d0ba1"
-      ]
-    },
+    "FromGNodeAlias": "d1.isone.ct.newhaven.rose.scada",
+    "FromGNodeInstanceId": "0384ef21-648b-4455-b917-58a1172d7fc1",
+    "SnapshotTimeUnixMs": 1709915800472,
+    "LatestReadingList": [
+      {
+        "ScadaReadTimeUnixMs": 1709915801222,
+        "ChannelName": "hp-ewt",
+        "Value": 63430,
+        "TypeName": "single.reading",
+        "Version": "000"
+      },
+      {
+        "ScadaReadTimeUnixMs": 1709915801250,
+        "ChannelName": "hp-lwt",
+        "Value": 69200,
+        "TypeName": "single.reading",
+        "Version": "000"
+      }
+    ],
     "TypeName": "snapshot.spaceheat",
-    "Version": "100"
+    "Version": "001"
   },
   "TypeName": "gw"
 }

@@ -1,4 +1,4 @@
-""" SCADA Component Class Definition """
+"""SCADA Component Class Definition"""
 
 from abc import ABC
 from typing import Dict, Optional

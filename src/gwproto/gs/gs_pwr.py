@@ -1,4 +1,5 @@
 """GridWorks serial message protocol gs.pwr.100 with MpAlias p"""
+
 from gwproto.errors import SchemaError
 from gwproto.gs.gs_pwr_base import GsPwrBase
 
@@ -9,5 +10,5 @@ class GsPwr(GsPwrBase):
         if len(errors) > 0:
             raise SchemaError(f" Errors making making gs.pwr.100 for {self}: {errors}")
 
-    def hand_coded_errors(self): # noqa
+    def hand_coded_errors(self):  # noqa
         return []

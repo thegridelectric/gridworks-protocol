@@ -1,4 +1,4 @@
-""" List of all the types """
+"""List of all the types"""
 
 from gwproto.types.component_attribute_class_gt import (
     ComponentAttributeClassGt,

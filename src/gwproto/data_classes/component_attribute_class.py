@@ -1,4 +1,4 @@
-""" ComponentAttributeClass"""
+"""ComponentAttributeClass"""
 
 from abc import ABC
 from typing import Dict, Optional

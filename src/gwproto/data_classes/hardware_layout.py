@@ -85,10 +85,8 @@ def load_cacs(
     ]:
         for d in layout.get(type_name, []):
             try:
-                cacs[d["ComponentAttributeClassId"]] = (
-                    maker_class.dict_to_dc(  # type:ignore[attr-defined]
-                        d
-                    )
+                cacs[d["ComponentAttributeClassId"]] = maker_class.dict_to_dc(  # type:ignore[attr-defined]
+                    d
                 )
             except Exception as e:
                 if raise_errors:
@@ -132,10 +130,8 @@ def load_components(
     ]:
         for d in layout.get(type_name, []):
             try:
-                components[d["ComponentId"]] = (
-                    maker_class.dict_to_dc(  # type:ignore[attr-defined]
-                        d
-                    )
+                components[d["ComponentId"]] = maker_class.dict_to_dc(  # type:ignore[attr-defined]
+                    d
                 )
             except Exception as e:
                 if raise_errors:
@@ -331,7 +327,7 @@ class HardwareLayout:
         for i, entry in enumerate(entries):
             if not isinstance(entry, type_):
                 raise ValueError(
-                    f"ERROR. Entry {i+1} in "
+                    f"ERROR. Entry {i + 1} in "
                     f"HardwareLayout.components_by_typ[{type_}] "
                     f"has the wrong type {type(entry)}"
                 )

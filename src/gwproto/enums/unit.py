@@ -174,5 +174,5 @@ value_to_version = {
     "AmpsRms": "000",
     "VoltsRms": "000",
     "Gallons": "000",
-    "ThermostatStateEnum": "000"
+    "ThermostatStateEnum": "000",
 }

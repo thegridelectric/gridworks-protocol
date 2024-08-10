@@ -1,4 +1,5 @@
 """Base for GridWorks gwproto gs.pwr.100 with TypeName p"""
+
 import struct
 from typing import List, NamedTuple
 

@@ -334,7 +334,7 @@ def check_is_uuid_canonical_textual(candidate: str) -> None:
     except AttributeError as e:
         raise ValueError(f"Failed to split on -: {e}")
     if len(x) != 5:
-        raise ValueError(f"Did not have 5 words")
+        raise ValueError("Did not have 5 words")
     for hex_word in x:
         try:
             int(hex_word, 16)

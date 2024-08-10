@@ -534,7 +534,7 @@ class HardwareLayout:
         )
         telemetry_tuples = []
         for node in multi_nodes:
-            for config in getattr(node.component, "config_list"):
+            for config in node.component.config_list:
                 telemetry_tuples.append(
                     TelemetryTuple(
                         AboutNode=self.node(config.AboutNodeName),

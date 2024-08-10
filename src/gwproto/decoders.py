@@ -289,7 +289,7 @@ def pydantic_named_types(
     if isinstance(module_names, str):
         module_names = [module_names]
     if unimported := [
-        module_name for module_name in module_names if not module_name in sys.modules
+        module_name for module_name in module_names if module_name not in sys.modules
     ]:
         raise ValueError(f"ERROR. modules {unimported} have not been imported.")
     named_types = []

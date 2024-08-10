@@ -1,12 +1,13 @@
-from gwproto import CallableDecoder
-from gwproto import Decoders
-from gwproto import MQTTCodec
-from gwproto import create_message_payload_discriminator
+from gwproto import (
+    CallableDecoder,
+    Decoders,
+    MQTTCodec,
+    create_message_payload_discriminator,
+)
 from gwproto.gs import GsPwr_Maker
-from gwproto.messages import GtShStatus_Maker
-from gwproto.messages import SnapshotSpaceheat_Maker
-from tests.dummy_decoders import CHILD
+from gwproto.messages import GtShStatus_Maker, SnapshotSpaceheat_Maker
 
+from tests.dummy_decoders import CHILD
 
 ParentMessageDecoder = create_message_payload_discriminator(
     model_name="ParentMessageDecoder",

@@ -1,7 +1,6 @@
 """RelayComponent definition"""
 
-from typing import Dict
-from typing import Optional
+from typing import Dict, Optional
 
 from gwproto.data_classes.cacs.relay_cac import RelayCac
 from gwproto.data_classes.component import Component

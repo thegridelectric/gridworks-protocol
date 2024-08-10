@@ -3,10 +3,9 @@
 import json
 
 import pytest
-from pydantic import ValidationError
-
 from gwproto.errors import SchemaError
 from gwproto.types import GtDispatchBooleanLocal_Maker as Maker
+from pydantic import ValidationError
 
 
 def test_gt_dispatch_boolean_local_generated() -> None:

@@ -6,7 +6,6 @@ from typing import Any
 
 import pytz
 
-
 snake_add_underscore_to_camel_pattern = re.compile(r"(?<!^)(?=[A-Z])")
 
 

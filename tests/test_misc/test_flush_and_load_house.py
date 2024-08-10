@@ -3,9 +3,9 @@
 # from actors.config import ScadaSettings
 from gwproto.data_classes.hardware_layout import HardwareLayout
 from gwproto.data_classes.sh_node import ShNode
-from gwproto.types import ElectricMeterCacGt_Maker
-from gwproto.types import SpaceheatNodeGt_Maker
+from gwproto.types import ElectricMeterCacGt_Maker, SpaceheatNodeGt_Maker
 from gwproto.types.electric_meter_component_gt import ElectricMeterComponentGt_Maker
+
 from tests.utils import flush_all
 
 

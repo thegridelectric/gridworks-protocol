@@ -4,21 +4,18 @@ from functools import cached_property
 from typing import Optional
 
 import yarl
-from pydantic import BaseModel
-from pydantic import Extra
-from pydantic import conint
-from pydantic import validator
+from pydantic import BaseModel, Extra, conint, validator
 
-from gwproto.enums import TelemetryName
-from gwproto.enums import Unit
+from gwproto.enums import TelemetryName, Unit
 from gwproto.types.hubitat_component_gt import HubitatRESTResolutionSettings
-from gwproto.types.rest_poller_gt import DEFAULT_REST_POLL_PERIOD_SECONDS
-from gwproto.types.rest_poller_gt import RequestArgs
-from gwproto.types.rest_poller_gt import RESTPollerSettings
-from gwproto.types.rest_poller_gt import URLArgs
-from gwproto.types.rest_poller_gt import URLConfig
+from gwproto.types.rest_poller_gt import (
+    DEFAULT_REST_POLL_PERIOD_SECONDS,
+    RequestArgs,
+    RESTPollerSettings,
+    URLArgs,
+    URLConfig,
+)
 from gwproto.utils import snake_to_camel
-
 
 HUBITAT_ID_REGEX = re.compile(
     r".*/apps/api/(?P<api_id>-?\d+)/devices/(?P<device_id>-?\d+).*?"

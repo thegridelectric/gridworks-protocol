@@ -3,12 +3,10 @@
 import json
 
 import pytest
-from pydantic import ValidationError
-
-from gwproto.enums import MakeModel
-from gwproto.enums import Unit
+from gwproto.enums import MakeModel, Unit
 from gwproto.errors import SchemaError
 from gwproto.types import MultipurposeSensorCacGt_Maker as Maker
+from pydantic import ValidationError
 
 
 def test_multipurpose_sensor_cac_gt_generated() -> None:

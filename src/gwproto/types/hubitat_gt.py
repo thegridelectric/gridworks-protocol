@@ -1,12 +1,10 @@
 from typing import Optional
 
 import yarl
-from pydantic import BaseModel
-from pydantic import Extra
+from pydantic import BaseModel, Extra
 
 from gwproto.property_format import predicate_validator
-from gwproto.types.rest_poller_gt import URLArgs
-from gwproto.types.rest_poller_gt import URLConfig
+from gwproto.types.rest_poller_gt import URLArgs, URLConfig
 from gwproto.utils import has_mac_address_format
 
 

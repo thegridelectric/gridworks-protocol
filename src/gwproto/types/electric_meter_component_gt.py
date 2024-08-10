@@ -2,26 +2,19 @@
 
 import json
 import logging
-from typing import Any
-from typing import Dict
-from typing import List
-from typing import Literal
-from typing import Optional
+from typing import Any, Dict, List, Literal, Optional
 
-from pydantic import BaseModel
-from pydantic import Field
-from pydantic import root_validator
-from pydantic import validator
+from pydantic import BaseModel, Field, root_validator, validator
 
 from gwproto.data_classes.components.electric_meter_component import (
     ElectricMeterComponent,
 )
 from gwproto.errors import SchemaError
-from gwproto.types.egauge_io import EgaugeIo
-from gwproto.types.egauge_io import EgaugeIo_Maker
-from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
-from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig_Maker
-
+from gwproto.types.egauge_io import EgaugeIo, EgaugeIo_Maker
+from gwproto.types.telemetry_reporting_config import (
+    TelemetryReportingConfig,
+    TelemetryReportingConfig_Maker,
+)
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "

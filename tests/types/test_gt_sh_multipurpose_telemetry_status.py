@@ -3,11 +3,10 @@
 import json
 
 import pytest
-from pydantic import ValidationError
-
 from gwproto.enums import TelemetryName
 from gwproto.errors import SchemaError
 from gwproto.types import GtShMultipurposeTelemetryStatus_Maker as Maker
+from pydantic import ValidationError
 
 
 def test_gt_sh_multipurpose_telemetry_status_generated() -> None:

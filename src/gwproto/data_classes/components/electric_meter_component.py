@@ -1,14 +1,11 @@
 """ElectricMeterComponent definition"""
 
-from typing import Dict
-from typing import List
-from typing import Optional
+from typing import Dict, List, Optional
 
 from gwproto.data_classes.cacs.electric_meter_cac import ElectricMeterCac
 from gwproto.data_classes.component import Component
 from gwproto.enums import MakeModel
-from gwproto.types import EgaugeIo
-from gwproto.types import TelemetryReportingConfig
+from gwproto.types import EgaugeIo, TelemetryReportingConfig
 
 
 class ElectricMeterComponent(Component):

@@ -4,7 +4,6 @@ from gwproto.types import *
 from .event import *
 from .misc import *
 
-
 __all__ = [
     # gs
     "GsDispatch",

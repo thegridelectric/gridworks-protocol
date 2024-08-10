@@ -2,18 +2,15 @@
 
 import json
 import logging
-from typing import Any
-from typing import Dict
-from typing import Literal
+from typing import Any, Dict, Literal
 
-from pydantic import BaseModel
-from pydantic import Field
-from pydantic import validator
+from pydantic import BaseModel, Field, validator
 
 from gwproto.errors import SchemaError
-from gwproto.types.telemetry_snapshot_spaceheat import TelemetrySnapshotSpaceheat
-from gwproto.types.telemetry_snapshot_spaceheat import TelemetrySnapshotSpaceheat_Maker
-
+from gwproto.types.telemetry_snapshot_spaceheat import (
+    TelemetrySnapshotSpaceheat,
+    TelemetrySnapshotSpaceheat_Maker,
+)
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "

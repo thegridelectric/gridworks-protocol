@@ -1,7 +1,6 @@
 import re
 import typing
-from typing import Type
-from typing import TypeVar
+from typing import Type, TypeVar
 
 import gwproto.types.fibaro_smart_implant_cac_gt  # noqa
 import gwproto.types.fibaro_smart_implant_component_gt  # noqa
@@ -18,7 +17,6 @@ import gwproto.types.web_server_component_gt  # noqa
 from gwproto.data_classes.component import Component
 from gwproto.data_classes.component_attribute_class import ComponentAttributeClass
 from gwproto.decoders import PydanticTypeNameDecoder
-
 
 T = TypeVar("T")
 

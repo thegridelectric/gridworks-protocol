@@ -4,15 +4,10 @@ REST commands into a message posted to main processing thread.
 """
 
 from functools import cached_property
-from typing import Literal
-from typing import Optional
-from typing import Tuple
+from typing import Literal, Optional, Tuple
 
 import yarl
-from pydantic import BaseModel
-from pydantic import Extra
-from pydantic import HttpUrl
-from pydantic import root_validator
+from pydantic import BaseModel, Extra, HttpUrl, root_validator
 
 from gwproto.utils import snake_to_camel
 

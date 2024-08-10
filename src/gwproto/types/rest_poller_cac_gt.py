@@ -1,7 +1,6 @@
 import json
 import typing
-from typing import Any
-from typing import Literal
+from typing import Any, Literal
 
 from gwproto.data_classes.cacs.rest_poller_cac import RESTPollerCac
 from gwproto.data_classes.component_attribute_class import ComponentAttributeClass

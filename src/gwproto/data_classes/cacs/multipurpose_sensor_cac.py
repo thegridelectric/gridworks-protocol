@@ -1,13 +1,9 @@
 """MultipurposeSensorCac definition"""
 
-from typing import Dict
-from typing import List
-from typing import Optional
+from typing import Dict, List, Optional
 
 from gwproto.data_classes.component_attribute_class import ComponentAttributeClass
-from gwproto.enums import MakeModel
-from gwproto.enums import TelemetryName
-from gwproto.enums import Unit
+from gwproto.enums import MakeModel, TelemetryName, Unit
 
 
 class MultipurposeSensorCac(ComponentAttributeClass):

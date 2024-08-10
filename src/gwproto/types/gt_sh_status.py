@@ -2,29 +2,23 @@
 
 import json
 import logging
-from typing import Any
-from typing import Dict
-from typing import List
-from typing import Literal
+from typing import Any, Dict, List, Literal
 
-from pydantic import BaseModel
-from pydantic import Field
-from pydantic import validator
+from pydantic import BaseModel, Field, validator
 
 from gwproto.errors import SchemaError
-from gwproto.types.gt_sh_booleanactuator_cmd_status import GtShBooleanactuatorCmdStatus
 from gwproto.types.gt_sh_booleanactuator_cmd_status import (
+    GtShBooleanactuatorCmdStatus,
     GtShBooleanactuatorCmdStatus_Maker,
 )
 from gwproto.types.gt_sh_multipurpose_telemetry_status import (
     GtShMultipurposeTelemetryStatus,
-)
-from gwproto.types.gt_sh_multipurpose_telemetry_status import (
     GtShMultipurposeTelemetryStatus_Maker,
 )
-from gwproto.types.gt_sh_simple_telemetry_status import GtShSimpleTelemetryStatus
-from gwproto.types.gt_sh_simple_telemetry_status import GtShSimpleTelemetryStatus_Maker
-
+from gwproto.types.gt_sh_simple_telemetry_status import (
+    GtShSimpleTelemetryStatus,
+    GtShSimpleTelemetryStatus_Maker,
+)
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "

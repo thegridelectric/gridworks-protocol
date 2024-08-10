@@ -1,8 +1,6 @@
-from pydantic import BaseModel
-from pydantic import Extra
+from pydantic import BaseModel, Extra
 
 from gwproto.utils import snake_to_camel
-
 
 DEFAULT_WEB_SERVER_NAME = "default"
 

@@ -2,13 +2,9 @@ import enum
 from typing import Literal
 
 import pytest
-from pydantic import BaseModel
-from pydantic import ValidationError
-
-from gwproto import Header
-from gwproto import Message
-from gwproto import as_enum
+from gwproto import Header, Message, as_enum
 from gwproto.message import PAYLOAD_TYPE_FIELDS
+from pydantic import BaseModel, ValidationError
 
 
 class E(enum.Enum):

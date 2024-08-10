@@ -38,7 +38,6 @@ from gwproto.enums.role import Role
 from gwproto.enums.telemetry_name import TelemetryName
 from gwproto.enums.unit import Unit
 
-
 __all__ = [
     "ActorClass",   # [sh.actor.class.001](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shactorclass)
     "LocalCommInterface",   # [local.comm.interface.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#localcomminterface)

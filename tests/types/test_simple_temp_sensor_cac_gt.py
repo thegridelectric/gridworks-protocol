@@ -3,13 +3,10 @@
 import json
 
 import pytest
-from pydantic import ValidationError
-
-from gwproto.enums import MakeModel
-from gwproto.enums import TelemetryName
-from gwproto.enums import Unit
+from gwproto.enums import MakeModel, TelemetryName, Unit
 from gwproto.errors import SchemaError
 from gwproto.types import SimpleTempSensorCacGt_Maker as Maker
+from pydantic import ValidationError
 
 
 def test_simple_temp_sensor_cac_gt_generated() -> None:

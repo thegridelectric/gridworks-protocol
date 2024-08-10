@@ -1,17 +1,9 @@
-from typing import Any
-from typing import Callable
-from typing import Generic
-from typing import Mapping
-from typing import Optional
-from typing import TypeVar
-from typing import Union
+from typing import Any, Callable, Generic, Mapping, Optional, TypeVar, Union
 
-from pydantic import BaseModel
-from pydantic import Field
+from pydantic import BaseModel, Field
 from pydantic.generics import GenericModel
 
 from gwproto.topic import MQTTTopic
-
 
 EnumType = TypeVar("EnumType")
 

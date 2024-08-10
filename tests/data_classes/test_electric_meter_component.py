@@ -4,7 +4,6 @@ from gwproto.data_classes.components.electric_meter_component import (
 from gwproto.data_classes.hardware_layout import HardwareLayout
 from gwproto.types.electric_meter_component_gt import ElectricMeterComponentGt_Maker
 
-
 # Running the below disrupts other tests. Need to set up the
 # test isolation as per scada
 

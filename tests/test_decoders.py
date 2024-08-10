@@ -1,49 +1,44 @@
 import json
 import time
 import uuid
-from dataclasses import dataclass
-from dataclasses import field
+from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any
-from typing import Optional
-from typing import Type
-
-from pydantic import ValidationError
+from typing import Any, Optional, Type
 
 from gwproto.messages import AnyEvent
-
+from pydantic import ValidationError
 
 try:
     from rich import print
 except ImportError:
     pass
 
-from gwproto import Message
-from gwproto import MQTTCodec
-from gwproto.messages import Ack
-from gwproto.messages import GtDispatchBoolean_Maker
-from gwproto.messages import GtShCliAtnCmd_Maker
-from gwproto.messages import GtShStatus_Maker
-from gwproto.messages import GtShStatusEvent
-from gwproto.messages import MQTTConnectEvent
-from gwproto.messages import MQTTConnectFailedEvent
-from gwproto.messages import MQTTDisconnectEvent
-from gwproto.messages import MQTTFullySubscribedEvent
-from gwproto.messages import PeerActiveEvent
-from gwproto.messages import PingMessage
-from gwproto.messages import PowerWatts_Maker
-from gwproto.messages import ProblemEvent
-from gwproto.messages import Problems
-from gwproto.messages import ResponseTimeoutEvent
-from gwproto.messages import ShutdownEvent
-from gwproto.messages import SnapshotSpaceheat_Maker
-from gwproto.messages import SnapshotSpaceheatEvent
-from gwproto.messages import StartupEvent
-from tests.dummy_decoders import CHILD
-from tests.dummy_decoders import PARENT
+from gwproto import Message, MQTTCodec
+from gwproto.messages import (
+    Ack,
+    GtDispatchBoolean_Maker,
+    GtShCliAtnCmd_Maker,
+    GtShStatus_Maker,
+    GtShStatusEvent,
+    MQTTConnectEvent,
+    MQTTConnectFailedEvent,
+    MQTTDisconnectEvent,
+    MQTTFullySubscribedEvent,
+    PeerActiveEvent,
+    PingMessage,
+    PowerWatts_Maker,
+    ProblemEvent,
+    Problems,
+    ResponseTimeoutEvent,
+    ShutdownEvent,
+    SnapshotSpaceheat_Maker,
+    SnapshotSpaceheatEvent,
+    StartupEvent,
+)
+
+from tests.dummy_decoders import CHILD, PARENT
 from tests.dummy_decoders.child.codec import ChildMQTTCodec
 from tests.dummy_decoders.parent.codec import ParentMQTTCodec
-
 
 TEST_DATA_DIR = Path(__file__).parent / "data"
 

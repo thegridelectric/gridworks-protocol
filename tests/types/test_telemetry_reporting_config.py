@@ -3,12 +3,10 @@
 import json
 
 import pytest
-from pydantic import ValidationError
-
-from gwproto.enums import TelemetryName
-from gwproto.enums import Unit
+from gwproto.enums import TelemetryName, Unit
 from gwproto.errors import SchemaError
 from gwproto.types import TelemetryReportingConfig_Maker as Maker
+from pydantic import ValidationError
 
 
 def test_telemetry_reporting_config_generated() -> None:

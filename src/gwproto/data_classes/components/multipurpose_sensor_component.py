@@ -1,8 +1,6 @@
 """MutlipurposeSensorComponent definition"""
 
-from typing import Dict
-from typing import List
-from typing import Optional
+from typing import Dict, List, Optional
 
 from gwproto.data_classes.cacs.multipurpose_sensor_cac import MultipurposeSensorCac
 from gwproto.data_classes.component import Component

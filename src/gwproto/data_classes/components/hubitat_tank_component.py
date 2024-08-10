@@ -1,15 +1,18 @@
 from typing import Optional
 
 import yarl
-
 from gwproto.data_classes.component import Component
 from gwproto.data_classes.resolver import ComponentResolver
 from gwproto.data_classes.sh_node import ShNode
-from gwproto.types.hubitat_component_gt import HubitatComponentGt
-from gwproto.types.hubitat_component_gt import HubitatRESTResolutionSettings
-from gwproto.types.hubitat_tank_gt import FibaroTempSensorSettings
-from gwproto.types.hubitat_tank_gt import FibaroTempSensorSettingsGt
-from gwproto.types.hubitat_tank_gt import HubitatTankSettingsGt
+from gwproto.types.hubitat_component_gt import (
+    HubitatComponentGt,
+    HubitatRESTResolutionSettings,
+)
+from gwproto.types.hubitat_tank_gt import (
+    FibaroTempSensorSettings,
+    FibaroTempSensorSettingsGt,
+    HubitatTankSettingsGt,
+)
 from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
 
 

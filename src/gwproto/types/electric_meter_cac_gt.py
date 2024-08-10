@@ -2,22 +2,14 @@
 
 import json
 import logging
-from typing import Any
-from typing import Dict
-from typing import List
-from typing import Literal
-from typing import Optional
+from typing import Any, Dict, List, Literal, Optional
 
-from pydantic import BaseModel
-from pydantic import Field
-from pydantic import validator
+from pydantic import BaseModel, Field, validator
 
 from gwproto.data_classes.cacs.electric_meter_cac import ElectricMeterCac
-from gwproto.enums import LocalCommInterface
+from gwproto.enums import LocalCommInterface, TelemetryName
 from gwproto.enums import MakeModel as EnumMakeModel
-from gwproto.enums import TelemetryName
 from gwproto.errors import SchemaError
-
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "

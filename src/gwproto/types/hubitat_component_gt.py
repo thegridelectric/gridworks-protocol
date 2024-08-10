@@ -1,8 +1,6 @@
 import json
 import typing
-from typing import Any
-from typing import Literal
-from typing import Optional
+from typing import Any, Literal, Optional
 
 import yarl
 

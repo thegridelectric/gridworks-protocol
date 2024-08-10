@@ -3,10 +3,9 @@
 import json
 
 import pytest
-from pydantic import ValidationError
-
 from gwproto.errors import SchemaError
 from gwproto.types import RelayComponentGt_Maker as Maker
+from pydantic import ValidationError
 
 
 def test_relay_component_gt_generated() -> None:

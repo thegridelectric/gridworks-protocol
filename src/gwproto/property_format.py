@@ -1,8 +1,6 @@
 import string
 import struct
-from typing import Any
-from typing import Callable
-from typing import List
+from typing import Any, Callable, List
 
 import pendulum
 import pydantic

@@ -1,7 +1,6 @@
 """SimpleTempSensorComponent definition"""
 
-from typing import Dict
-from typing import Optional
+from typing import Dict, Optional
 
 from gwproto.data_classes.cacs.simple_temp_sensor_cac import SimpleTempSensorCac
 from gwproto.data_classes.component import Component

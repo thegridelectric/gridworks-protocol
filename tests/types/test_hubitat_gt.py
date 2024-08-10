@@ -1,7 +1,6 @@
 """Test HubitatGt"""
 
 import yarl
-
 from gwproto.types.hubitat_gt import HubitatGt
 
 

@@ -3,10 +3,9 @@
 import json
 
 import pytest
-from pydantic import ValidationError
-
 from gwproto.errors import SchemaError
 from gwproto.types import GtShBooleanactuatorCmdStatus_Maker as Maker
+from pydantic import ValidationError
 
 
 def test_gt_sh_booleanactuator_cmd_status_generated() -> None:

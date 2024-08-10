@@ -2,7 +2,6 @@ from gwproto.data_classes.cacs.electric_meter_cac import ElectricMeterCac
 from gwproto.data_classes.hardware_layout import HardwareLayout
 from gwproto.types import ElectricMeterCacGt_Maker
 
-
 # Running the below disrupts other tests. Need to set up the
 # test isolation as per scada
 

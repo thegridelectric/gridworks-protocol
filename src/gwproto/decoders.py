@@ -5,24 +5,23 @@ import re
 import sys
 from abc import abstractmethod
 from dataclasses import dataclass
-from typing import Any
-from typing import Callable
-from typing import Literal
-from typing import NamedTuple
-from typing import Optional
-from typing import Sequence
-from typing import Type
-from typing import TypeVar
-from typing import Union
-from typing import get_origin
+from typing import (
+    Any,
+    Callable,
+    Literal,
+    NamedTuple,
+    Optional,
+    Sequence,
+    Type,
+    TypeVar,
+    Union,
+    get_origin,
+)
 
 import pydantic
-from pydantic import BaseModel
-from pydantic import Field
-from pydantic import create_model
+from pydantic import BaseModel, Field, create_model
 
-from gwproto.message import Header
-from gwproto.message import Message
+from gwproto.message import Header, Message
 from gwproto.messages import AnyEvent
 from gwproto.topic import MQTTTopic
 

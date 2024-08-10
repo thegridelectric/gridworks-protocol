@@ -2,19 +2,19 @@
 
 import json
 import logging
-from typing import Any
-from typing import Dict
-from typing import Literal
+from typing import Any, Dict, Literal
 
-from pydantic import BaseModel
-from pydantic import Field
+from pydantic import BaseModel, Field
 
 from gwproto.errors import SchemaError
-from gwproto.types.egauge_register_config import EgaugeRegisterConfig
-from gwproto.types.egauge_register_config import EgaugeRegisterConfig_Maker
-from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
-from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig_Maker
-
+from gwproto.types.egauge_register_config import (
+    EgaugeRegisterConfig,
+    EgaugeRegisterConfig_Maker,
+)
+from gwproto.types.telemetry_reporting_config import (
+    TelemetryReportingConfig,
+    TelemetryReportingConfig_Maker,
+)
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "

@@ -1,8 +1,7 @@
 """ ComponentAttributeClass"""
 
 from abc import ABC
-from typing import Dict
-from typing import Optional
+from typing import Dict, Optional
 
 from gwproto.data_classes.mixin import StreamlinedSerializerMixin
 

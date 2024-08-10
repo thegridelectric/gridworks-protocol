@@ -13,11 +13,7 @@ from collections import defaultdict
 from dataclasses import dataclass
 from functools import cached_property
 from pathlib import Path
-from typing import Any
-from typing import List
-from typing import Optional
-from typing import Type
-from typing import TypeVar
+from typing import Any, List, Optional, Type, TypeVar
 
 from gwproto.data_classes.cacs.electric_meter_cac import ElectricMeterCac
 from gwproto.data_classes.component import Component
@@ -29,29 +25,30 @@ from gwproto.data_classes.errors import DataClassLoadingError
 from gwproto.data_classes.resolver import ComponentResolver
 from gwproto.data_classes.sh_node import ShNode
 from gwproto.data_classes.telemetry_tuple import TelemetryTuple
-from gwproto.default_decoders import CacDecoder
-from gwproto.default_decoders import ComponentDecoder
-from gwproto.default_decoders import default_cac_decoder
-from gwproto.default_decoders import default_component_decoder
-from gwproto.enums import ActorClass
-from gwproto.enums import Role
-from gwproto.enums import TelemetryName
-from gwproto.types import ElectricMeterCacGt_Maker
-from gwproto.types import MultipurposeSensorCacGt_Maker
-from gwproto.types import PipeFlowSensorCacGt_Maker
-from gwproto.types import PipeFlowSensorComponentGt_Maker
-from gwproto.types import RelayCacGt_Maker
-from gwproto.types import RelayComponentGt_Maker
-from gwproto.types import ResistiveHeaterCacGt_Maker
-from gwproto.types import ResistiveHeaterComponentGt_Maker
-from gwproto.types import SimpleTempSensorCacGt_Maker
-from gwproto.types import SimpleTempSensorComponentGt_Maker
-from gwproto.types import SpaceheatNodeGt_Maker
+from gwproto.default_decoders import (
+    CacDecoder,
+    ComponentDecoder,
+    default_cac_decoder,
+    default_component_decoder,
+)
+from gwproto.enums import ActorClass, Role, TelemetryName
+from gwproto.types import (
+    ElectricMeterCacGt_Maker,
+    MultipurposeSensorCacGt_Maker,
+    PipeFlowSensorCacGt_Maker,
+    PipeFlowSensorComponentGt_Maker,
+    RelayCacGt_Maker,
+    RelayComponentGt_Maker,
+    ResistiveHeaterCacGt_Maker,
+    ResistiveHeaterComponentGt_Maker,
+    SimpleTempSensorCacGt_Maker,
+    SimpleTempSensorComponentGt_Maker,
+    SpaceheatNodeGt_Maker,
+)
 from gwproto.types.electric_meter_component_gt import ElectricMeterComponentGt_Maker
 from gwproto.types.multipurpose_sensor_component_gt import (
     MultipurposeSensorComponentGt_Maker,
 )
-
 
 T = TypeVar("T")
 

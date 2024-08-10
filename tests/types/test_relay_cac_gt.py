@@ -3,11 +3,10 @@
 import json
 
 import pytest
-from pydantic import ValidationError
-
 from gwproto.enums import MakeModel
 from gwproto.errors import SchemaError
 from gwproto.types import RelayCacGt_Maker as Maker
+from pydantic import ValidationError
 
 
 def test_relay_cac_gt_generated() -> None:

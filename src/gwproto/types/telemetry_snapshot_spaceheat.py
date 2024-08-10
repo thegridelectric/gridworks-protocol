@@ -2,19 +2,12 @@
 
 import json
 import logging
-from typing import Any
-from typing import Dict
-from typing import List
-from typing import Literal
+from typing import Any, Dict, List, Literal
 
-from pydantic import BaseModel
-from pydantic import Field
-from pydantic import root_validator
-from pydantic import validator
+from pydantic import BaseModel, Field, root_validator, validator
 
 from gwproto.enums import TelemetryName
 from gwproto.errors import SchemaError
-
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "

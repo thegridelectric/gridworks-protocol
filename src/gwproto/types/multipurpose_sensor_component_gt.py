@@ -2,23 +2,18 @@
 
 import json
 import logging
-from typing import Any
-from typing import Dict
-from typing import List
-from typing import Literal
-from typing import Optional
+from typing import Any, Dict, List, Literal, Optional
 
-from pydantic import BaseModel
-from pydantic import Field
-from pydantic import validator
+from pydantic import BaseModel, Field, validator
 
 from gwproto.data_classes.components.multipurpose_sensor_component import (
     MultipurposeSensorComponent,
 )
 from gwproto.errors import SchemaError
-from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
-from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig_Maker
-
+from gwproto.types.telemetry_reporting_config import (
+    TelemetryReportingConfig,
+    TelemetryReportingConfig_Maker,
+)
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "

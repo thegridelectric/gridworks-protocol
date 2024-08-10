@@ -3,12 +3,11 @@
 import json
 
 import pytest
-from pydantic import ValidationError
-
 from gwproto.errors import SchemaError
 from gwproto.types.multipurpose_sensor_component_gt import (
     MultipurposeSensorComponentGt_Maker as Maker,
 )
+from pydantic import ValidationError
 
 
 def test_multipurpose_sensor_component_gt_generated() -> None:

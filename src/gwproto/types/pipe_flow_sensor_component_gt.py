@@ -2,20 +2,14 @@
 
 import json
 import logging
-from typing import Any
-from typing import Dict
-from typing import Literal
-from typing import Optional
+from typing import Any, Dict, Literal, Optional
 
-from pydantic import BaseModel
-from pydantic import Field
-from pydantic import validator
+from pydantic import BaseModel, Field, validator
 
 from gwproto.data_classes.components.pipe_flow_sensor_component import (
     PipeFlowSensorComponent,
 )
 from gwproto.errors import SchemaError
-
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "

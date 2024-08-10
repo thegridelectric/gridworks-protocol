@@ -1,7 +1,6 @@
 import json
 import typing
-from typing import Any
-from typing import Literal
+from typing import Any, Literal
 
 from gwproto.data_classes.component import Component
 from gwproto.data_classes.components.fibaro_smart_implant_component import (

@@ -1,14 +1,12 @@
 from typing import Optional
 
 import yarl
-
 from gwproto.data_classes.component import Component
 from gwproto.data_classes.resolver import ComponentResolver
 from gwproto.data_classes.sh_node import ShNode
 from gwproto.types.hubitat_component_gt import HubitatComponentGt
 from gwproto.types.hubitat_poller_gt import HubitatPollerGt
-from gwproto.types.rest_poller_gt import RequestArgs
-from gwproto.types.rest_poller_gt import RESTPollerSettings
+from gwproto.types.rest_poller_gt import RequestArgs, RESTPollerSettings
 from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
 
 

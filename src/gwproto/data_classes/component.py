@@ -1,8 +1,7 @@
 """ SCADA Component Class Definition """
 
 from abc import ABC
-from typing import Dict
-from typing import Optional
+from typing import Dict, Optional
 
 from gwproto.data_classes.component_attribute_class import ComponentAttributeClass
 from gwproto.data_classes.mixin import StreamlinedSerializerMixin

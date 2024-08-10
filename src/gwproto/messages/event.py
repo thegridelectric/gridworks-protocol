@@ -1,21 +1,12 @@
 import time
 import uuid
 from enum import Enum
-from typing import Any
-from typing import Generic
-from typing import Literal
-from typing import Optional
-from typing import TypeVar
+from typing import Any, Generic, Literal, Optional, TypeVar
 
-from pydantic import BaseModel
-from pydantic import Extra
-from pydantic import Field
-from pydantic import validator
+from pydantic import BaseModel, Extra, Field, validator
 
-from gwproto.message import Message
-from gwproto.message import as_enum
-from gwproto.types import GtShStatus
-from gwproto.types import SnapshotSpaceheat
+from gwproto.message import Message, as_enum
+from gwproto.types import GtShStatus, SnapshotSpaceheat
 
 
 class EventBase(BaseModel):

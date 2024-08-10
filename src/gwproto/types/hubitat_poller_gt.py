@@ -1,9 +1,6 @@
-from pydantic import BaseModel
-from pydantic import Extra
-from pydantic import validator
+from pydantic import BaseModel, Extra, validator
 
-from gwproto.enums import TelemetryName
-from gwproto.enums import Unit
+from gwproto.enums import TelemetryName, Unit
 from gwproto.utils import snake_to_camel
 
 

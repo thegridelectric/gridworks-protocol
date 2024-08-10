@@ -1,8 +1,7 @@
 import copy
 import json
 import typing
-from typing import Any
-from typing import Literal
+from typing import Any, Literal
 
 from gwproto.data_classes.component import Component
 from gwproto.data_classes.components.hubitat_tank_component import HubitatTankComponent

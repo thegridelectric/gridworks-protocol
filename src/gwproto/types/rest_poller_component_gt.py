@@ -5,9 +5,7 @@ REST commands into a message posted to main processing thread.
 
 import json
 import typing
-from typing import Any
-from typing import Literal
-from typing import Optional
+from typing import Any, Literal, Optional
 
 from gwproto.data_classes.component import Component
 from gwproto.data_classes.components.rest_poller_component import RESTPollerComponent

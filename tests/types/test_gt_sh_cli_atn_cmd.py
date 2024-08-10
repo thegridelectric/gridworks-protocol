@@ -3,10 +3,9 @@
 import json
 
 import pytest
-from pydantic import ValidationError
-
 from gwproto.errors import SchemaError
 from gwproto.types import GtShCliAtnCmd_Maker as Maker
+from pydantic import ValidationError
 
 
 def test_gt_sh_cli_atn_cmd_generated() -> None:

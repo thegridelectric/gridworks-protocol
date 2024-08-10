@@ -3,10 +3,9 @@
 import json
 
 import pytest
-from pydantic import ValidationError
-
 from gwproto.errors import SchemaError
 from gwproto.types import ResistiveHeaterComponentGt_Maker as Maker
+from pydantic import ValidationError
 
 
 def test_resistive_heater_component_gt_generated() -> None:

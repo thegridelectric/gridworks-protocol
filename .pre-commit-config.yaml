@@ -28,4 +28,4 @@ repos:
     hooks:
       - id: ruff
         args: ["--select", "I"]
-      # - id: ruff-format
+      - id: ruff-format

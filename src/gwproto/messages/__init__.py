@@ -1,3 +1,5 @@
+# ruff: noqa: F405, F403
+
 from gwproto.gs import *
 from gwproto.types import *
 

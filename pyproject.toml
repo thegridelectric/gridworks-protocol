@@ -128,6 +128,7 @@ ignore = [
     "D",
     "E501",
     "EM",
+    "FA", # We only support Python >= 3.10, so we shouldn't need this
     "ISC001",
     "PLR0904",
     "PLW1514",

@@ -35,7 +35,7 @@ GRIDWORKS_ENVELOPE_TYPE = "gw"
 
 def ensure_arg(arg_name: str, default_value: Any, kwargs_dict: dict) -> None:
     if arg_name not in kwargs_dict:
-        payload = kwargs_dict.get("Payload", None)
+        payload = kwargs_dict.get("Payload")
         if payload is None or not hasattr(payload, arg_name):
             kwargs_dict[arg_name] = default_value
 
@@ -75,7 +75,7 @@ class Message(GenericModel, Generic[PayloadT]):
                 ("MessageType", PAYLOAD_TYPE_FIELDS),
                 ("AckRequired", ["AckRequired"]),
             ]:
-                val = kwargs.get(header_field, None)
+                val = kwargs.get(header_field)
                 if val is None:
                     for payload_field in payload_fields:
                         if hasattr(payload, payload_field):

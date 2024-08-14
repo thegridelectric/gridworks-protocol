@@ -83,8 +83,8 @@ class TelemetryReportingConfig(BaseModel):
         Axiom 1: Async reporting consistency.
         If AsyncReportThreshold exists, so does NameplateMaxValue
         """
-        AsyncReportThreshold = v.get("AsyncReportThreshold", None)
-        NameplateMaxValue = v.get("NameplateMaxValue", None)
+        AsyncReportThreshold = v.get("AsyncReportThreshold")
+        NameplateMaxValue = v.get("NameplateMaxValue")
         if AsyncReportThreshold is not None:
             if NameplateMaxValue is None:
                 raise ValueError(

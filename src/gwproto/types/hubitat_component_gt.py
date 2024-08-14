@@ -73,7 +73,7 @@ class HubitatComponentGt(ComponentGt):
     def from_component_id(
         cls, component_id: str, components: dict[str, Component]
     ) -> "HubitatComponent":
-        hubitat_component = components.get(component_id, None)
+        hubitat_component = components.get(component_id)
         if hubitat_component is None:
             raise ValueError(
                 "ERROR. No component found for "

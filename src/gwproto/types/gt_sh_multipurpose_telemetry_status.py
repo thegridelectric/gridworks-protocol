@@ -91,8 +91,8 @@ class GtShMultipurposeTelemetryStatus(BaseModel):
         Axiom 1: ListLengthConsistency.
         ValueList and ReadTimeUnixMsList must have the same length.
         """
-        value_list: List[int] = v.get("ValueList", None)
-        time_list: List[int] = v.get("ReadTimeUnixMsList", None)
+        value_list: List[int] = v.get("ValueList")
+        time_list: List[int] = v.get("ReadTimeUnixMsList")
         if len(value_list) != len(time_list):
             raise ValueError(
                 "Axiom 1: ValueList and ReadTimeUnixMsList must have the same length."

@@ -78,9 +78,9 @@ class TelemetrySnapshotSpaceheat(BaseModel):
         Axiom 1: ListLengthConsistency.
         AboutNodeAliasList, ValueList and TelemetryNameList must all have the same length.
         """
-        alias_list: List[str] = v.get("AboutNodeAliasList", None)
-        value_list: List[int] = v.get("ValueList", None)
-        tn_list: List[TelemetryName] = v.get("TelemetryNameList", None)
+        alias_list: List[str] = v.get("AboutNodeAliasList")
+        value_list: List[int] = v.get("ValueList")
+        tn_list: List[TelemetryName] = v.get("TelemetryNameList")
         if (len(value_list) != len(alias_list)) or (len(value_list) != len(tn_list)):
             raise ValueError(
                 "Axiom 1: AboutNodeAliasList, ValueList and TelemetryNameList must all have the same length."

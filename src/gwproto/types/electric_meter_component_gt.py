@@ -132,8 +132,8 @@ class ElectricMeterComponentGt(BaseModel):
         ModbusHost is None if and only if ModbusPort is None
         """
         # TODO: Implement check for axiom 1"
-        ModbusHost = v.get("ModbusHost", None)
-        ModbusPort = v.get("ModbusHost", None)
+        ModbusHost = v.get("ModbusHost")
+        ModbusPort = v.get("ModbusHost")
         if ModbusHost is None and not (ModbusPort is None):
             raise ValueError("Axiom 1: ModbusHost None iff ModbusPort None! ")
         if not (ModbusHost is None) and ModbusPort is None:
@@ -148,9 +148,9 @@ class ElectricMeterComponentGt(BaseModel):
         the set of output configs is equal to ConfigList as a set
         """
         # TODO: Implement check for axiom 2"
-        EgaugeIoList = v.get("EgaugeIoList", None)
-        ModbusHost = v.get("ModbusHost", None)
-        ConfigList = v.get("ConfigList", None)
+        EgaugeIoList = v.get("EgaugeIoList")
+        ModbusHost = v.get("ModbusHost")
+        ConfigList = v.get("ConfigList")
         if len(EgaugeIoList) == 0:
             return v
 

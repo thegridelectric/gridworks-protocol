@@ -344,18 +344,12 @@ class HardwareLayout:
         )
 
     @classmethod
-    def parent_name(cls, name: str) -> str:
-        last_delimiter = name.rfind(".")
-        if last_delimiter == -1:
-            return ""
-        else:
-            return name[:last_delimiter]
-
-    @classmethod
-    def boss_handle(cls, handle: str) -> str:
+    def boss_handle(cls, handle: Optional[str]) -> Optional[str]:
+        if handle is None:
+            return None
         last_delimiter = handle.rfind(".")
         if last_delimiter == -1:
-            return ""
+            return None
         else:
             return handle[:last_delimiter]
 
@@ -369,20 +363,8 @@ class HardwareLayout:
                 raise DcError(f"{node.name} is missing boss {boss_handle}!")
             return self.node_by_handle(boss_handle)
 
-    def parent_node(self, node: ShNode) -> Optional[ShNode]:
-        parent_name = self.parent_name(node.name)
-        if not parent_name:
-            return None
-        else:
-            if parent_name not in self.nodes:
-                raise DcError(f"{node.name} is missing parent {parent_name}!")
-            return self.node(parent_name)
-
-    def children(self, node: ShNode) -> List[ShNode]:
-        return list(filter(lambda x: self.parent_node(x) == node, self.nodes.values()))
-
-    def descendants(self, node: ShNode) -> List[ShNode]:
-        return list(filter(lambda x: x.name.startswith(node.name), self.nodes.values()))
+    def direct_reports(self, node: ShNode) -> List[ShNode]:
+        return list(filter(lambda x: self.boss_node(x) == node, self.nodes.values()))
 
     @cached_property
     def atn_g_node_alias(self) -> str:

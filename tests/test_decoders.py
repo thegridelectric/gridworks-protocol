@@ -200,7 +200,7 @@ def assert_encode_decode(
     errors = []
     for i, case in enumerate(messages):
         path_dbg = 0
-        # old_len = len(errors)
+        # old_len = len(errors)  # noqa: ERA001
         try:
             decoded = dst_codec.decode(
                 case.src_message.mqtt_topic(),
@@ -262,7 +262,7 @@ def assert_encode_decode(
                             print(f"FIRST ERROR, at index {i}")
                             print(f"exp: {case.exp_payload}")
                             print(f"got: {decoded.Payload}")
-        # print(f"{decoded.message_type():50s}: path:0x{path_dbg:08X}  {len(errors) == old_len}")
+        # print(f"{decoded.message_type():50s}: path:0x{path_dbg:08X}  {len(errors) == old_len}")    # noqa: ERA001
     if errors:
         raise ValueError(f"ERROR. Got codec matching errors at indices {errors}")
 

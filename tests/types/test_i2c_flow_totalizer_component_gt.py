@@ -21,39 +21,39 @@ from tests.utils import flush_all
 def test_i2c_flow_totalizer_component_gt_generated() -> None:
     flush_all()
     cac_gt = CacGt(
-        ComponentAttributeClassId=CACS_BY_MAKE_MODEL[MakeModel.ATLAS__EZFLO],
-        MakeModel=MakeModel.ATLAS__EZFLO,
+        component_attribute_class_id=CACS_BY_MAKE_MODEL[MakeModel.ATLAS__EZFLO],
+        make_model=MakeModel.ATLAS__EZFLO,
         DisplayName="Atlas EZ FLO",
     )
     CacMaker.tuple_to_dc(cac_gt)
     t = I2cFlowTotalizerComponentGt(
-        ComponentId="dd5ac673-91a8-40e2-a233-b67479cec709",
-        ComponentAttributeClassId="13d916dc-8764-4b16-b85d-b8ead3e2fc80",
-        I2cAddressList=[100],
-        ConfigList=[
+        component_id="dd5ac673-91a8-40e2-a233-b67479cec709",
+        component_attribute_class_id="13d916dc-8764-4b16-b85d-b8ead3e2fc80",
+        i2c_address_list=[100],
+        config_list=[
             ChannelConfig(
-                ChannelName="dist-volume",
-                PollPeriodMs=300,
-                CapturePeriodS=30,
-                AsyncCapture=True,
-                AsyncCaptureDelta=5,
-                Exponent=2,
-                Unit=Unit.Gallons,
+                channel_name="dist-volume",
+                poll_period_ms=300,
+                capture_period_s=30,
+                async_capture=True,
+                async_capture_delta=5,
+                exponent=2,
+                unit=Unit.Gallons,
             ),
             ChannelConfig(
-                ChannelName="dist-flow",
-                PollPeriodMs=300,
-                CapturePeriodS=30,
-                AsyncCapture=True,
-                AsyncCaptureDelta=20,
-                Exponent=2,
-                Unit=Unit.Gpm,
+                channel_name="dist-flow",
+                poll_period_ms=300,
+                capture_period_s=30,
+                async_capture=True,
+                async_capture_delta=20,
+                exponent=2,
+                unit=Unit.Gpm,
             ),
         ],
-        PulseFlowMeterMakeModelList=[MakeModel.EKM__HOTSPWM075HD],
-        ConversionFactorList=[0.08322],
-        DisplayName="Flow meter on pipe out of tank",
-        HwUid="1234",
+        pulse_flow_meter_make_model_list=[MakeModel.EKM__HOTSPWM075HD],
+        conversion_factor_list=[0.08322],
+        display_name="Flow meter on pipe out of tank",
+        hw_uid="1234",
     )
 
     d = {

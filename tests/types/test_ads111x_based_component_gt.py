@@ -21,9 +21,9 @@ from tests.utils import flush_all
 def test_ads111x_based_component_gt_generated() -> None:
     flush_all()
     cac_gt = CacGt(
-        ComponentAttributeClassId=CACS_BY_MAKE_MODEL[MakeModel.GRIDWORKS__MULTITEMP1],
-        MakeModel=MakeModel.GRIDWORKS__MULTITEMP1,
-        DisplayName="GridWorks MultiTemp1 (12-block temp sensor)",
+        component_attribute_class_id=CACS_BY_MAKE_MODEL[MakeModel.GRIDWORKS__MULTITEMP1],
+        make_model=MakeModel.GRIDWORKS__MULTITEMP1,
+        display_name="GridWorks MultiTemp1 (12-block temp sensor)",
     )
     CacMaker.tuple_to_dc(cac_gt)
     t = Ads111xBasedComponentGt(

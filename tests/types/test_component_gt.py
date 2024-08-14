@@ -18,9 +18,9 @@ from tests.utils import flush_all
 def test_component_gt_generated() -> None:
     flush_all()
     cac_gt = CacGt(
-        ComponentAttributeClassId=CACS_BY_MAKE_MODEL[MakeModel.EGAUGE__4030],
-        MakeModel=MakeModel.EGAUGE__4030,
-        DisplayName="Egauge 4030",
+        component_attribute_class_id=CACS_BY_MAKE_MODEL[MakeModel.EGAUGE__4030],
+        make_model=MakeModel.EGAUGE__4030,
+        display_name="Egauge 4030",
     )
     CacMaker.tuple_to_dc(cac_gt)
     t = ComponentGt(

@@ -19,8 +19,8 @@ from tests.utils import flush_all
 def test_resistive_heater_component_gt_generated() -> None:
     flush_all()
     cac_gt = CacGt(
-        ComponentAttributeClassId="cf1f2587-7462-4701-b962-d2b264744c1d",
-        MakeModel=MakeModel.UNKNOWNMAKE__UNKNOWNMODEL,
+        component_attribute_class_id="cf1f2587-7462-4701-b962-d2b264744c1d",
+        make_model=MakeModel.UNKNOWNMAKE__UNKNOWNMODEL,
     )
     CacMaker.tuple_to_dc(cac_gt)
     t = ResistiveHeaterComponentGt(

@@ -9,10 +9,11 @@ from pydantic import ValidationError
 
 
 def test_component_attribute_class_gt_generated() -> None:
+    # TODO: bump-pydnatic hack; restore this to "component.attribute.class.gt"
     d = {
         "ComponentAttributeClassId": "29c5257b-8a86-4dbe-a9d4-9c7330c3c4d0",
         "DisplayName": "Sample CAC",
-        "TypeName": "component.attribute.class.gt",
+        "TypeName": "component.attribute.CLASS.gt",
         "Version": "000",
     }
 

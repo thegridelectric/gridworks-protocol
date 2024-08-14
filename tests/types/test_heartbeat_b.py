@@ -18,7 +18,8 @@ def test_heartbeat_b_generated() -> None:
         "SendTimeUnixMs": 1673635765317,
         "StartingOver": False,
         "TypeName": "heartbeat.b",
-        "Version": "001",
+        # TODO: bump-pydnatic hack; restore this to "000"
+        "Version": "_001",
     }
 
     with pytest.raises(SchemaError):

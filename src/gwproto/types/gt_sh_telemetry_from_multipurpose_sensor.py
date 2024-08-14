@@ -45,8 +45,8 @@ class GtShTelemetryFromMultipurposeSensor(BaseModel):
     ValueList: List[int] = Field(
         title="ValueList",
     )
-    TypeName: Literal["gt.sh.telemetry.from.multipurpose.sensor"] = (
-        "gt.sh.telemetry.from.multipurpose.sensor"
+    TypeName: Literal["gt.sh.telemetry.FROM.multipurpose.sensor"] = (
+        "gt.sh.telemetry.FROM.multipurpose.sensor"  # TODO: bump-pydnatic hack; restore this to "gt.sh.telemetry.from.multipurpose.sensor"
     )
     Version: Literal["100"] = "100"
 

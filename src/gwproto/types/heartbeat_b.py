@@ -53,7 +53,7 @@ class HeartbeatB(BaseModel):
         ),
     )
     TypeName: Literal["heartbeat.b"] = "heartbeat.b"
-    Version: Literal["001"] = "001"
+    Version: Literal["_001"] = "_001"  # TODO: bump-pydnatic hack; restore this to "000"
 
     @validator("FromGNodeAlias")
     def _check_from_g_node_alias(cls, v: str) -> str:
@@ -251,7 +251,7 @@ class HeartbeatB_Maker:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
         if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
-        if d2["Version"] != "001":
+        if d2["Version"] != "_001":  # TODO: bump-pydnatic hack; restore this to "000"
             LOGGER.debug(
                 f"Attempting to interpret heartbeat.b version {d2['Version']} as version 001"
             )

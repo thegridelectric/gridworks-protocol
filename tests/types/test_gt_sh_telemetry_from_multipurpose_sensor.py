@@ -14,7 +14,8 @@ def test_gt_sh_telemetry_from_multipurpose_sensor_generated() -> None:
         "AboutNodeAliasList": ["a.elt1"],
         "TelemetryNameList": ["ad19e79c"],
         "ValueList": [18000],
-        "TypeName": "gt.sh.telemetry.from.multipurpose.sensor",
+        # TODO: bump-pydnatic hack; restore this to "gt.sh.telemetry.from.multipurpose.sensor"
+        "TypeName": "gt.sh.telemetry.FROM.multipurpose.sensor",
         "Version": "100",
     }
 

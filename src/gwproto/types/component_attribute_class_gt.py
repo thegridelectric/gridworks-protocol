@@ -45,7 +45,8 @@ class ComponentAttributeClassGt(BaseModel):
         ),
         default=None,
     )
-    TypeName: Literal["component.attribute.class.gt"] = "component.attribute.class.gt"
+    # TODO: bump-pydnatic hack; restore this to "component.attribute.class.gt"
+    TypeName: Literal["component.attribute.CLASS.gt"] = "component.attribute.CLASS.gt"
     Version: Literal["000"] = "000"
 
     @validator("ComponentAttributeClassId")

@@ -1,6 +1,6 @@
-from typing import Any, Callable, Generic, Mapping, Optional, TypeVar, Union
+from typing import Any, Callable, Generic, Literal, Mapping, Optional, TypeVar, Union
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 from pydantic.generics import GenericModel
 
 from gwproto.topic import MQTTTopic
@@ -23,7 +23,7 @@ class Header(BaseModel):
     MessageType: str
     MessageId: str = ""
     AckRequired: bool = False
-    TypeName: str = Field("gridworks.header", const=True)
+    TypeName: Literal["gridworks.header"] = "gridworks.header"
 
 
 PayloadT = TypeVar("PayloadT")
@@ -43,7 +43,7 @@ def ensure_arg(arg_name: str, default_value: Any, kwargs_dict: dict) -> None:
 class Message(GenericModel, Generic[PayloadT]):
     Header: Header
     Payload: PayloadT
-    TypeName: str = Field(GRIDWORKS_ENVELOPE_TYPE, const=True)
+    TypeName: Literal[GRIDWORKS_ENVELOPE_TYPE] = GRIDWORKS_ENVELOPE_TYPE
 
     def __init__(self, header: Optional[Header] = None, **kwargs: Any):
         if header is None:

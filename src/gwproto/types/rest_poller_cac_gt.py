@@ -41,7 +41,7 @@ class RESTPollerCacGt_Maker:
 
     @classmethod
     def tuple_to_type(cls, tpl: RESTPollerCacGt) -> str:
-        return tpl.as_type()  # noqa
+        return tpl.as_type()
 
     @classmethod
     def type_to_tuple(cls, t: str) -> RESTPollerCacGt:
@@ -65,7 +65,7 @@ class RESTPollerCacGt_Maker:
 
     @classmethod
     def dc_to_type(cls, dc: RESTPollerCac) -> str:
-        return cls.dc_to_tuple(dc).as_type()  # noqa
+        return cls.dc_to_tuple(dc).as_type()
 
     @classmethod
     def dict_to_dc(cls, d: dict[Any, str]) -> RESTPollerCac:

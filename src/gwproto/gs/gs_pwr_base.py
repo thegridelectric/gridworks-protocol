@@ -3,10 +3,10 @@
 import struct
 from typing import List, NamedTuple
 
-import gwproto.property_format as property_format
+from gwproto import property_format
 
 
-class GsPwrBase(NamedTuple):  #
+class GsPwrBase(NamedTuple):
     Power: int
     TypeName: str = "p"
 

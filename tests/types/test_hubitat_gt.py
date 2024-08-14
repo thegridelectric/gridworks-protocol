@@ -20,7 +20,7 @@ def test_hubitat_gt() -> None:
     h2 = HubitatGt(WebListenEnabled=False, **h.dict(exclude_unset=True))
     assert h2.WebListenEnabled is False
     url = yarl.URL.build(scheme="http", host="192.168.1.20", port=1)
-    assert str(h.listen_url(url)) == f"http://192.168.1.20:1/{listen_path_exp}"  # noqa
+    assert str(h.listen_url(url)) == f"http://192.168.1.20:1/{listen_path_exp}"
 
     assert h.url_config().to_url() == yarl.URL("http://192.168.1.10")
     assert h.maker_api_url_config().to_url() == yarl.URL(

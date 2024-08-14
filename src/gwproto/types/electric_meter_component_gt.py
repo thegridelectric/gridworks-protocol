@@ -134,9 +134,9 @@ class ElectricMeterComponentGt(BaseModel):
         # TODO: Implement check for axiom 1"
         ModbusHost = v.get("ModbusHost")
         ModbusPort = v.get("ModbusHost")
-        if ModbusHost is None and not (ModbusPort is None):
+        if ModbusHost is None and ModbusPort is not None:
             raise ValueError("Axiom 1: ModbusHost None iff ModbusPort None! ")
-        if not (ModbusHost is None) and ModbusPort is None:
+        if ModbusHost is not None and ModbusPort is None:
             raise ValueError("Axiom 1: ModbusHost None iff ModbusPort None! ")
         return v
 
@@ -156,7 +156,7 @@ class ElectricMeterComponentGt(BaseModel):
 
         if ModbusHost is None:
             raise ValueError(
-                f"Axiom 2: If EgaugeIoList has non-zero length then ModbusHost must exist!"
+                "Axiom 2: If EgaugeIoList has non-zero length then ModbusHost must exist!"
             )
         output_configs = set(map(lambda x: x.OutputConfig, EgaugeIoList))
         if output_configs != set(ConfigList):

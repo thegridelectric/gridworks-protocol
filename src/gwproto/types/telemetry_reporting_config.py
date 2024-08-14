@@ -88,7 +88,7 @@ class TelemetryReportingConfig(BaseModel):
         if AsyncReportThreshold is not None:
             if NameplateMaxValue is None:
                 raise ValueError(
-                    f"Violates Axiom 1: If AsyncReportThreshold exists, so does NameplateMaxValue"
+                    "Violates Axiom 1: If AsyncReportThreshold exists, so does NameplateMaxValue"
                 )
         return v
 

@@ -140,25 +140,23 @@ class FibaroTempSensorSettings(FibaroTempSensorSettingsGt):
                 poll_period_seconds=poll_period_seconds,
                 request=RequestArgs(url=constructed_config),
             )
+        elif self.rest.request.url is None:
+            self.rest.request.url = constructed_config
         else:
-            # Again, no inline url config is found; use constructed url config
-            if self.rest.request.url is None:
-                self.rest.request.url = constructed_config
+            # An inline config exists; take items *not* in inline config from
+            # constructed config (inline config 'wins' on disagreement)
+            existing_config = self.rest.request.url
+            if not existing_config.url_args.host:
+                existing_config.url_args.host = constructed_config.url_args.host
+            if existing_config.url_path_format is None:
+                existing_config.url_path_format = constructed_config.url_path_format
+            if existing_config.url_path_args is None:
+                existing_config.url_path_args = constructed_config.url_path_args
             else:
-                # An inline config exists; take items *not* in inline config from
-                # constructed config (inline config 'wins' on disagreement)
-                existing_config = self.rest.request.url
-                if not existing_config.url_args.host:
-                    existing_config.url_args.host = constructed_config.url_args.host
-                if existing_config.url_path_format is None:
-                    existing_config.url_path_format = constructed_config.url_path_format
-                if existing_config.url_path_args is None:
-                    existing_config.url_path_args = constructed_config.url_path_args
-                else:
-                    existing_config.url_path_args = dict(
-                        constructed_config.url_path_args,
-                        **existing_config.url_path_args,
-                    )
+                existing_config.url_path_args = dict(
+                    constructed_config.url_path_args,
+                    **existing_config.url_path_args,
+                )
         self.rest.clear_property_cache()
 
         # Verify new URL produced by combining any inline REST configuration

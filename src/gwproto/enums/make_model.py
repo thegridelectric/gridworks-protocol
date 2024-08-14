@@ -114,7 +114,7 @@ class MakeModel(StrEnum):
             str: The earliest version of the enum containing value.
         """
         if not isinstance(value, str):
-            raise ValueError(f"This method applies to strings, not enums")
+            raise ValueError("This method applies to strings, not enums")
         if value not in value_to_version:
             raise ValueError(f"Unknown enum value: {value}")
         return value_to_version[value]

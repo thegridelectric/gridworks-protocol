@@ -205,11 +205,11 @@ class ComponentAttributeClassGt_Maker:
 
     @classmethod
     def type_to_dc(cls, t: str) -> ComponentAttributeClass:
-        return cls.tuple_to_dc(cls.type_to_tuple(t))  # noqa
+        return cls.tuple_to_dc(cls.type_to_tuple(t))
 
     @classmethod
     def dc_to_type(cls, dc: ComponentAttributeClass) -> str:
-        return cls.dc_to_tuple(dc).as_type()  # noqa
+        return cls.dc_to_tuple(dc).as_type()
 
     @classmethod
     def dict_to_dc(cls, d: dict[Any, str]) -> ComponentAttributeClass:

@@ -222,25 +222,25 @@ class TelemetryReportingConfig_Maker:
             TelemetryReportingConfig
         """
         d2 = dict(d)
-        if "TelemetryNameGtEnumSymbol" not in d2.keys():
+        if "TelemetryNameGtEnumSymbol" not in d2:
             raise SchemaError(f"TelemetryNameGtEnumSymbol missing from dict <{d2}>")
         value = EnumTelemetryName.symbol_to_value(d2["TelemetryNameGtEnumSymbol"])
         d2["TelemetryName"] = EnumTelemetryName(value)
-        if "AboutNodeName" not in d2.keys():
+        if "AboutNodeName" not in d2:
             raise SchemaError(f"dict missing AboutNodeName: <{d2}>")
-        if "ReportOnChange" not in d2.keys():
+        if "ReportOnChange" not in d2:
             raise SchemaError(f"dict missing ReportOnChange: <{d2}>")
-        if "SamplePeriodS" not in d2.keys():
+        if "SamplePeriodS" not in d2:
             raise SchemaError(f"dict missing SamplePeriodS: <{d2}>")
-        if "Exponent" not in d2.keys():
+        if "Exponent" not in d2:
             raise SchemaError(f"dict missing Exponent: <{d2}>")
-        if "UnitGtEnumSymbol" not in d2.keys():
+        if "UnitGtEnumSymbol" not in d2:
             raise SchemaError(f"UnitGtEnumSymbol missing from dict <{d2}>")
         value = EnumUnit.symbol_to_value(d2["UnitGtEnumSymbol"])
         d2["Unit"] = EnumUnit(value)
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "000":
             LOGGER.debug(

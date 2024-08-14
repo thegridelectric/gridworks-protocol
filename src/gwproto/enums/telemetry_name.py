@@ -92,7 +92,7 @@ class TelemetryName(StrEnum):
         """
         if not isinstance(value, str):
             raise ValueError(f"This method applies to strings, not enums")
-        if value not in value_to_version.keys():
+        if value not in value_to_version:
             raise ValueError(f"Unknown enum value: {value}")
         return value_to_version[value]
 
@@ -123,7 +123,7 @@ class TelemetryName(StrEnum):
             recognized - which could happen if the actor making the symbol is using
             a later version of this enum, returns the default value of "Unknown".
         """
-        if symbol not in symbol_to_value.keys():
+        if symbol not in symbol_to_value:
             return cls.default().value
         return symbol_to_value[symbol]
 
@@ -141,7 +141,7 @@ class TelemetryName(StrEnum):
             of this enum than the actor decoding the message, returns the default
             symbol of "00000000".
         """
-        if value not in value_to_symbol.keys():
+        if value not in value_to_symbol:
             return value_to_symbol[cls.default().value]
         return value_to_symbol[value]
 

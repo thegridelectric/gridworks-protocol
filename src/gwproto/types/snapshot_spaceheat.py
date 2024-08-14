@@ -169,11 +169,11 @@ class SnapshotSpaceheat_Maker:
             SnapshotSpaceheat
         """
         d2 = dict(d)
-        if "FromGNodeAlias" not in d2.keys():
+        if "FromGNodeAlias" not in d2:
             raise SchemaError(f"dict missing FromGNodeAlias: <{d2}>")
-        if "FromGNodeInstanceId" not in d2.keys():
+        if "FromGNodeInstanceId" not in d2:
             raise SchemaError(f"dict missing FromGNodeInstanceId: <{d2}>")
-        if "Snapshot" not in d2.keys():
+        if "Snapshot" not in d2:
             raise SchemaError(f"dict missing Snapshot: <{d2}>")
         if not isinstance(d2["Snapshot"], dict):
             raise SchemaError(
@@ -181,9 +181,9 @@ class SnapshotSpaceheat_Maker:
             )
         snapshot = TelemetrySnapshotSpaceheat_Maker.dict_to_tuple(d2["Snapshot"])
         d2["Snapshot"] = snapshot
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "000":
             LOGGER.debug(

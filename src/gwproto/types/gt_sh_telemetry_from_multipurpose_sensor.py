@@ -207,11 +207,11 @@ class GtShTelemetryFromMultipurposeSensor_Maker:
             GtShTelemetryFromMultipurposeSensor
         """
         d2 = dict(d)
-        if "ScadaReadTimeUnixMs" not in d2.keys():
+        if "ScadaReadTimeUnixMs" not in d2:
             raise SchemaError(f"dict missing ScadaReadTimeUnixMs: <{d2}>")
-        if "AboutNodeAliasList" not in d2.keys():
+        if "AboutNodeAliasList" not in d2:
             raise SchemaError(f"dict missing AboutNodeAliasList: <{d2}>")
-        if "TelemetryNameList" not in d2.keys():
+        if "TelemetryNameList" not in d2:
             raise SchemaError(f"dict <{d2}> missing TelemetryNameList")
         if not isinstance(d2["TelemetryNameList"], List):
             raise SchemaError("TelemetryNameList must be a List!")
@@ -220,11 +220,11 @@ class GtShTelemetryFromMultipurposeSensor_Maker:
             value = TelemetryName.symbol_to_value(elt)
             telemetry_name_list.append(TelemetryName(value))
         d2["TelemetryNameList"] = telemetry_name_list
-        if "ValueList" not in d2.keys():
+        if "ValueList" not in d2:
             raise SchemaError(f"dict missing ValueList: <{d2}>")
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "100":
             LOGGER.debug(

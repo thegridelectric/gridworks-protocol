@@ -219,15 +219,15 @@ class TaDataChannels_Maker:
             TaDataChannels
         """
         d2 = dict(d)
-        if "TerminalAssetGNodeAlias" not in d2.keys():
+        if "TerminalAssetGNodeAlias" not in d2:
             raise SchemaError(f"dict missing TerminalAssetGNodeAlias: <{d2}>")
-        if "TerminalAssetGNodeId" not in d2.keys():
+        if "TerminalAssetGNodeId" not in d2:
             raise SchemaError(f"dict missing TerminalAssetGNodeId: <{d2}>")
-        if "TimeUnixS" not in d2.keys():
+        if "TimeUnixS" not in d2:
             raise SchemaError(f"dict missing TimeUnixS: <{d2}>")
-        if "Author" not in d2.keys():
+        if "Author" not in d2:
             raise SchemaError(f"dict missing Author: <{d2}>")
-        if "Channels" not in d2.keys():
+        if "Channels" not in d2:
             raise SchemaError(f"dict missing Channels: <{d2}>")
         if not isinstance(d2["Channels"], List):
             raise SchemaError(f"Channels <{d2['Channels']}> must be a List!")
@@ -240,11 +240,11 @@ class TaDataChannels_Maker:
             t = DataChannel_Maker.dict_to_tuple(elt)
             channels.append(t)
         d2["Channels"] = channels
-        if "Identifier" not in d2.keys():
+        if "Identifier" not in d2:
             raise SchemaError(f"dict missing Identifier: <{d2}>")
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "000":
             LOGGER.debug(

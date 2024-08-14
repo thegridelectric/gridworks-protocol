@@ -253,17 +253,17 @@ class GtShStatus_Maker:
             GtShStatus
         """
         d2 = dict(d)
-        if "FromGNodeAlias" not in d2.keys():
+        if "FromGNodeAlias" not in d2:
             raise SchemaError(f"dict missing FromGNodeAlias: <{d2}>")
-        if "FromGNodeId" not in d2.keys():
+        if "FromGNodeId" not in d2:
             raise SchemaError(f"dict missing FromGNodeId: <{d2}>")
-        if "AboutGNodeAlias" not in d2.keys():
+        if "AboutGNodeAlias" not in d2:
             raise SchemaError(f"dict missing AboutGNodeAlias: <{d2}>")
-        if "SlotStartUnixS" not in d2.keys():
+        if "SlotStartUnixS" not in d2:
             raise SchemaError(f"dict missing SlotStartUnixS: <{d2}>")
-        if "ReportingPeriodS" not in d2.keys():
+        if "ReportingPeriodS" not in d2:
             raise SchemaError(f"dict missing ReportingPeriodS: <{d2}>")
-        if "SimpleTelemetryList" not in d2.keys():
+        if "SimpleTelemetryList" not in d2:
             raise SchemaError(f"dict missing SimpleTelemetryList: <{d2}>")
         if not isinstance(d2["SimpleTelemetryList"], List):
             raise SchemaError(
@@ -278,7 +278,7 @@ class GtShStatus_Maker:
             t = GtShSimpleTelemetryStatus_Maker.dict_to_tuple(elt)
             simple_telemetry_list.append(t)
         d2["SimpleTelemetryList"] = simple_telemetry_list
-        if "MultipurposeTelemetryList" not in d2.keys():
+        if "MultipurposeTelemetryList" not in d2:
             raise SchemaError(f"dict missing MultipurposeTelemetryList: <{d2}>")
         if not isinstance(d2["MultipurposeTelemetryList"], List):
             raise SchemaError(
@@ -293,7 +293,7 @@ class GtShStatus_Maker:
             t = GtShMultipurposeTelemetryStatus_Maker.dict_to_tuple(elt)
             multipurpose_telemetry_list.append(t)
         d2["MultipurposeTelemetryList"] = multipurpose_telemetry_list
-        if "BooleanactuatorCmdList" not in d2.keys():
+        if "BooleanactuatorCmdList" not in d2:
             raise SchemaError(f"dict missing BooleanactuatorCmdList: <{d2}>")
         if not isinstance(d2["BooleanactuatorCmdList"], List):
             raise SchemaError(
@@ -308,11 +308,11 @@ class GtShStatus_Maker:
             t = GtShBooleanactuatorCmdStatus_Maker.dict_to_tuple(elt)
             booleanactuator_cmd_list.append(t)
         d2["BooleanactuatorCmdList"] = booleanactuator_cmd_list
-        if "StatusUid" not in d2.keys():
+        if "StatusUid" not in d2:
             raise SchemaError(f"dict missing StatusUid: <{d2}>")
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "110":
             LOGGER.debug(

@@ -221,21 +221,21 @@ class GtShMultipurposeTelemetryStatus_Maker:
             GtShMultipurposeTelemetryStatus
         """
         d2 = dict(d)
-        if "AboutNodeAlias" not in d2.keys():
+        if "AboutNodeAlias" not in d2:
             raise SchemaError(f"dict missing AboutNodeAlias: <{d2}>")
-        if "SensorNodeAlias" not in d2.keys():
+        if "SensorNodeAlias" not in d2:
             raise SchemaError(f"dict missing SensorNodeAlias: <{d2}>")
-        if "TelemetryNameGtEnumSymbol" not in d2.keys():
+        if "TelemetryNameGtEnumSymbol" not in d2:
             raise SchemaError(f"TelemetryNameGtEnumSymbol missing from dict <{d2}>")
         value = EnumTelemetryName.symbol_to_value(d2["TelemetryNameGtEnumSymbol"])
         d2["TelemetryName"] = EnumTelemetryName(value)
-        if "ValueList" not in d2.keys():
+        if "ValueList" not in d2:
             raise SchemaError(f"dict missing ValueList: <{d2}>")
-        if "ReadTimeUnixMsList" not in d2.keys():
+        if "ReadTimeUnixMsList" not in d2:
             raise SchemaError(f"dict missing ReadTimeUnixMsList: <{d2}>")
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "100":
             LOGGER.debug(

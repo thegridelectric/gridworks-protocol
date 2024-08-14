@@ -210,13 +210,13 @@ class ElectricMeterCacGt_Maker:
             ElectricMeterCacGt
         """
         d2 = dict(d)
-        if "ComponentAttributeClassId" not in d2.keys():
+        if "ComponentAttributeClassId" not in d2:
             raise SchemaError(f"dict missing ComponentAttributeClassId: <{d2}>")
-        if "MakeModelGtEnumSymbol" not in d2.keys():
+        if "MakeModelGtEnumSymbol" not in d2:
             raise SchemaError(f"MakeModelGtEnumSymbol missing from dict <{d2}>")
         value = EnumMakeModel.symbol_to_value(d2["MakeModelGtEnumSymbol"])
         d2["MakeModel"] = EnumMakeModel(value)
-        if "TelemetryNameList" not in d2.keys():
+        if "TelemetryNameList" not in d2:
             raise SchemaError(f"dict <{d2}> missing TelemetryNameList")
         if not isinstance(d2["TelemetryNameList"], List):
             raise SchemaError("TelemetryNameList must be a List!")
@@ -225,15 +225,15 @@ class ElectricMeterCacGt_Maker:
             value = TelemetryName.symbol_to_value(elt)
             telemetry_name_list.append(TelemetryName(value))
         d2["TelemetryNameList"] = telemetry_name_list
-        if "PollPeriodMs" not in d2.keys():
+        if "PollPeriodMs" not in d2:
             raise SchemaError(f"dict missing PollPeriodMs: <{d2}>")
-        if "InterfaceGtEnumSymbol" not in d2.keys():
+        if "InterfaceGtEnumSymbol" not in d2:
             raise SchemaError(f"InterfaceGtEnumSymbol missing from dict <{d2}>")
         value = LocalCommInterface.symbol_to_value(d2["InterfaceGtEnumSymbol"])
         d2["Interface"] = LocalCommInterface(value)
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "000":
             LOGGER.debug(

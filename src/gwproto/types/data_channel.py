@@ -188,19 +188,19 @@ class DataChannel_Maker:
             DataChannel
         """
         d2 = dict(d)
-        if "DisplayName" not in d2.keys():
+        if "DisplayName" not in d2:
             raise SchemaError(f"dict missing DisplayName: <{d2}>")
-        if "AboutName" not in d2.keys():
+        if "AboutName" not in d2:
             raise SchemaError(f"dict missing AboutName: <{d2}>")
-        if "CapturedByName" not in d2.keys():
+        if "CapturedByName" not in d2:
             raise SchemaError(f"dict missing CapturedByName: <{d2}>")
-        if "TelemetryNameGtEnumSymbol" not in d2.keys():
+        if "TelemetryNameGtEnumSymbol" not in d2:
             raise SchemaError(f"TelemetryNameGtEnumSymbol missing from dict <{d2}>")
         value = EnumTelemetryName.symbol_to_value(d2["TelemetryNameGtEnumSymbol"])
         d2["TelemetryName"] = EnumTelemetryName(value)
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "000":
             LOGGER.debug(

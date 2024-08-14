@@ -257,21 +257,21 @@ class SpaceheatNodeGt_Maker:
             SpaceheatNodeGt
         """
         d2 = dict(d)
-        if "ShNodeId" not in d2.keys():
+        if "ShNodeId" not in d2:
             raise SchemaError(f"dict missing ShNodeId: <{d2}>")
-        if "Alias" not in d2.keys():
+        if "Alias" not in d2:
             raise SchemaError(f"dict missing Alias: <{d2}>")
-        if "ActorClassGtEnumSymbol" not in d2.keys():
+        if "ActorClassGtEnumSymbol" not in d2:
             raise SchemaError(f"ActorClassGtEnumSymbol missing from dict <{d2}>")
         value = EnumActorClass.symbol_to_value(d2["ActorClassGtEnumSymbol"])
         d2["ActorClass"] = EnumActorClass(value)
-        if "RoleGtEnumSymbol" not in d2.keys():
+        if "RoleGtEnumSymbol" not in d2:
             raise SchemaError(f"RoleGtEnumSymbol missing from dict <{d2}>")
         value = EnumRole.symbol_to_value(d2["RoleGtEnumSymbol"])
         d2["Role"] = EnumRole(value)
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "100":
             LOGGER.debug(

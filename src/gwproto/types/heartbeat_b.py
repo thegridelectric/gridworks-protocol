@@ -233,23 +233,23 @@ class HeartbeatB_Maker:
             HeartbeatB
         """
         d2 = dict(d)
-        if "FromGNodeAlias" not in d2.keys():
+        if "FromGNodeAlias" not in d2:
             raise SchemaError(f"dict missing FromGNodeAlias: <{d2}>")
-        if "FromGNodeInstanceId" not in d2.keys():
+        if "FromGNodeInstanceId" not in d2:
             raise SchemaError(f"dict missing FromGNodeInstanceId: <{d2}>")
-        if "MyHex" not in d2.keys():
+        if "MyHex" not in d2:
             raise SchemaError(f"dict missing MyHex: <{d2}>")
-        if "YourLastHex" not in d2.keys():
+        if "YourLastHex" not in d2:
             raise SchemaError(f"dict missing YourLastHex: <{d2}>")
-        if "LastReceivedTimeUnixMs" not in d2.keys():
+        if "LastReceivedTimeUnixMs" not in d2:
             raise SchemaError(f"dict missing LastReceivedTimeUnixMs: <{d2}>")
-        if "SendTimeUnixMs" not in d2.keys():
+        if "SendTimeUnixMs" not in d2:
             raise SchemaError(f"dict missing SendTimeUnixMs: <{d2}>")
-        if "StartingOver" not in d2.keys():
+        if "StartingOver" not in d2:
             raise SchemaError(f"dict missing StartingOver: <{d2}>")
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "001":
             LOGGER.debug(

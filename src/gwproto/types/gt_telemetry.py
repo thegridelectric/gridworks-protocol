@@ -180,19 +180,19 @@ class GtTelemetry_Maker:
             GtTelemetry
         """
         d2 = dict(d)
-        if "ScadaReadTimeUnixMs" not in d2.keys():
+        if "ScadaReadTimeUnixMs" not in d2:
             raise SchemaError(f"dict missing ScadaReadTimeUnixMs: <{d2}>")
-        if "Value" not in d2.keys():
+        if "Value" not in d2:
             raise SchemaError(f"dict missing Value: <{d2}>")
-        if "NameGtEnumSymbol" not in d2.keys():
+        if "NameGtEnumSymbol" not in d2:
             raise SchemaError(f"NameGtEnumSymbol missing from dict <{d2}>")
         value = TelemetryName.symbol_to_value(d2["NameGtEnumSymbol"])
         d2["Name"] = TelemetryName(value)
-        if "Exponent" not in d2.keys():
+        if "Exponent" not in d2:
             raise SchemaError(f"dict missing Exponent: <{d2}>")
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "110":
             LOGGER.debug(

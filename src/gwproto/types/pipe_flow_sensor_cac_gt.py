@@ -177,15 +177,15 @@ class PipeFlowSensorCacGt_Maker:
             PipeFlowSensorCacGt
         """
         d2 = dict(d)
-        if "ComponentAttributeClassId" not in d2.keys():
+        if "ComponentAttributeClassId" not in d2:
             raise SchemaError(f"dict missing ComponentAttributeClassId: <{d2}>")
-        if "MakeModelGtEnumSymbol" not in d2.keys():
+        if "MakeModelGtEnumSymbol" not in d2:
             raise SchemaError(f"MakeModelGtEnumSymbol missing from dict <{d2}>")
         value = EnumMakeModel.symbol_to_value(d2["MakeModelGtEnumSymbol"])
         d2["MakeModel"] = EnumMakeModel(value)
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "000":
             LOGGER.debug(

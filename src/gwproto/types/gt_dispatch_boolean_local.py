@@ -199,17 +199,17 @@ class GtDispatchBooleanLocal_Maker:
             GtDispatchBooleanLocal
         """
         d2 = dict(d)
-        if "RelayState" not in d2.keys():
+        if "RelayState" not in d2:
             raise SchemaError(f"dict missing RelayState: <{d2}>")
-        if "AboutNodeName" not in d2.keys():
+        if "AboutNodeName" not in d2:
             raise SchemaError(f"dict missing AboutNodeName: <{d2}>")
-        if "FromNodeName" not in d2.keys():
+        if "FromNodeName" not in d2:
             raise SchemaError(f"dict missing FromNodeName: <{d2}>")
-        if "SendTimeUnixMs" not in d2.keys():
+        if "SendTimeUnixMs" not in d2:
             raise SchemaError(f"dict missing SendTimeUnixMs: <{d2}>")
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "110":
             LOGGER.debug(

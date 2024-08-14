@@ -185,21 +185,21 @@ class EgaugeRegisterConfig_Maker:
             EgaugeRegisterConfig
         """
         d2 = dict(d)
-        if "Address" not in d2.keys():
+        if "Address" not in d2:
             raise SchemaError(f"dict missing Address: <{d2}>")
-        if "Name" not in d2.keys():
+        if "Name" not in d2:
             raise SchemaError(f"dict missing Name: <{d2}>")
-        if "Description" not in d2.keys():
+        if "Description" not in d2:
             raise SchemaError(f"dict missing Description: <{d2}>")
-        if "Type" not in d2.keys():
+        if "Type" not in d2:
             raise SchemaError(f"dict missing Type: <{d2}>")
-        if "Denominator" not in d2.keys():
+        if "Denominator" not in d2:
             raise SchemaError(f"dict missing Denominator: <{d2}>")
-        if "Unit" not in d2.keys():
+        if "Unit" not in d2:
             raise SchemaError(f"dict missing Unit: <{d2}>")
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "000":
             LOGGER.debug(

@@ -166,7 +166,7 @@ class EgaugeIo_Maker:
             EgaugeIo
         """
         d2 = dict(d)
-        if "InputConfig" not in d2.keys():
+        if "InputConfig" not in d2:
             raise SchemaError(f"dict missing InputConfig: <{d2}>")
         if not isinstance(d2["InputConfig"], dict):
             raise SchemaError(
@@ -174,7 +174,7 @@ class EgaugeIo_Maker:
             )
         input_config = EgaugeRegisterConfig_Maker.dict_to_tuple(d2["InputConfig"])
         d2["InputConfig"] = input_config
-        if "OutputConfig" not in d2.keys():
+        if "OutputConfig" not in d2:
             raise SchemaError(f"dict missing OutputConfig: <{d2}>")
         if not isinstance(d2["OutputConfig"], dict):
             raise SchemaError(
@@ -182,9 +182,9 @@ class EgaugeIo_Maker:
             )
         output_config = TelemetryReportingConfig_Maker.dict_to_tuple(d2["OutputConfig"])
         d2["OutputConfig"] = output_config
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "000":
             LOGGER.debug(

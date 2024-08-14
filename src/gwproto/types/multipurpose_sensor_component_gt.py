@@ -218,13 +218,13 @@ class MultipurposeSensorComponentGt_Maker:
             MultipurposeSensorComponentGt
         """
         d2 = dict(d)
-        if "ComponentId" not in d2.keys():
+        if "ComponentId" not in d2:
             raise SchemaError(f"dict missing ComponentId: <{d2}>")
-        if "ComponentAttributeClassId" not in d2.keys():
+        if "ComponentAttributeClassId" not in d2:
             raise SchemaError(f"dict missing ComponentAttributeClass: <{d2}>")
-        if "ChannelList" not in d2.keys():
+        if "ChannelList" not in d2:
             raise SchemaError(f"dict missing ChannelList: <{d2}>")
-        if "ConfigList" not in d2.keys():
+        if "ConfigList" not in d2:
             raise SchemaError(f"dict missing ConfigList: <{d2}>")
         if not isinstance(d2["ConfigList"], List):
             raise SchemaError(f"ConfigList <{d2['ConfigList']}> must be a List!")
@@ -237,9 +237,9 @@ class MultipurposeSensorComponentGt_Maker:
             t = TelemetryReportingConfig_Maker.dict_to_tuple(elt)
             config_list.append(t)
         d2["ConfigList"] = config_list
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "000":
             LOGGER.debug(

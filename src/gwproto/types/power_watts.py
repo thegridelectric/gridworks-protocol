@@ -142,11 +142,11 @@ class PowerWatts_Maker:
             PowerWatts
         """
         d2 = dict(d)
-        if "Watts" not in d2.keys():
+        if "Watts" not in d2:
             raise SchemaError(f"dict missing Watts: <{d2}>")
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "000":
             LOGGER.debug(

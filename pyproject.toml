@@ -23,7 +23,6 @@ python = "^3.10"
 pydantic = "^1.10.11"
 yarl = "^1.9.2"
 pytz = "^2024.1"
-fastapi-utils = "^0.7.0"
 pendulum = "2.1.2"
 ruff = "^0.5.7"
 
@@ -116,7 +115,7 @@ exclude = [
     "dist",
 ]
 output-format = "concise"
-fix = false
+fix = true
 show-fixes = true
 
 [tool.ruff.lint]
@@ -126,7 +125,9 @@ select = ["ALL"]
 ignore = [
     "B027",
     "COM812",
+    "CPY",
     "D",
+    "DOC",
     "E501",
     "EM",
     "FA", # We only support Python >= 3.10, so we shouldn't need this

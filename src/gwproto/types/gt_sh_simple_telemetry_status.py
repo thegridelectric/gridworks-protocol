@@ -4,7 +4,7 @@ import json
 import logging
 from typing import Any, Dict, List, Literal
 
-from pydantic import BaseModel, Field, root_validator, validator
+from pydantic import BaseModel, Field, model_validator, validator
 
 from gwproto.enums import TelemetryName as EnumTelemetryName
 from gwproto.errors import SchemaError
@@ -72,19 +72,17 @@ class GtShSimpleTelemetryStatus(BaseModel):
                 )
         return v
 
-    @root_validator
-    def check_axiom_1(cls, v: dict) -> dict:
+    @model_validator(mode="after")
+    def check_axiom_1(self) -> dict:
         """
         Axiom 1: ListLengthConsistency.
         ValueList and ReadTimeUnixMsList must have the same length.
         """
-        value_list: List[int] = v.get("ValueList")
-        time_list: List[int] = v.get("ReadTimeUnixMsList")
-        if len(value_list) != len(time_list):
+        if len(self.ValueList) != len(self.ReadTimeUnixMsList):
             raise ValueError(
                 "Axiom 1: ValueList and ReadTimeUnixMsList must have the same length."
             )
-        return v
+        return self
 
     def as_dict(self) -> Dict[str, Any]:
         """

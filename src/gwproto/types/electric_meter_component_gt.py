@@ -2,9 +2,9 @@
 
 import json
 import logging
-from typing import Any, Dict, List, Literal, Optional
+from typing import Any, Dict, List, Literal, Optional, Self
 
-from pydantic import BaseModel, Field, root_validator, validator
+from pydantic import BaseModel, Field, model_validator, validator
 
 from gwproto.data_classes.components.electric_meter_component import (
     ElectricMeterComponent,
@@ -125,46 +125,38 @@ class ElectricMeterComponentGt(BaseModel):
             )
         return v
 
-    @root_validator
-    def check_axiom_1(cls, v: dict) -> dict:
+    @model_validator(mode="after")
+    def check_axiom_1(self) -> Self:
         """
         Axiom 1: Modbus consistency.
         ModbusHost is None if and only if ModbusPort is None
         """
-        # TODO: Implement check for axiom 1"
-        ModbusHost = v.get("ModbusHost")
-        ModbusPort = v.get("ModbusHost")
-        if ModbusHost is None and ModbusPort is not None:
+        if self.ModbusHost is None and self.ModbusPort is not None:
             raise ValueError("Axiom 1: ModbusHost None iff ModbusPort None! ")
-        if ModbusHost is not None and ModbusPort is None:
+        if self.ModbusHost is not None and self.ModbusPort is None:
             raise ValueError("Axiom 1: ModbusHost None iff ModbusPort None! ")
-        return v
+        return self
 
-    @root_validator
-    def check_axiom_2(cls, v: dict) -> dict:
+    @model_validator(mode="after")
+    def check_axiom_2(self) -> Self:
         """
         Axiom 2: Egauge4030 consistency.
         If the EgaugeIoList has non-zero length, then the ModbusHost is not None and
         the set of output configs is equal to ConfigList as a set
         """
-        # TODO: Implement check for axiom 2"
-        EgaugeIoList = v.get("EgaugeIoList")
-        ModbusHost = v.get("ModbusHost")
-        ConfigList = v.get("ConfigList")
-        if len(EgaugeIoList) == 0:
-            return v
+        if len(self.EgaugeIoList) == 0:
+            return self
 
-        if ModbusHost is None:
+        if self.ModbusHost is None:
             raise ValueError(
                 "Axiom 2: If EgaugeIoList has non-zero length then ModbusHost must exist!"
             )
-        output_configs = set(map(lambda x: x.OutputConfig, EgaugeIoList))
-        if output_configs != set(ConfigList):
+        if {x.OutputConfig for x in self.EgaugeIoList} != set(self.ConfigList):
             raise ValueError(
-                "Axiom 2: If EgaugeIoList has non-zero length then then the set of"
+                "Axiom 2: If EgaugeIoList has non-zero length then the set of"
                 "output configs must equal ConfigList as a set"
             )
-        return v
+        return self
 
     def as_dict(self) -> Dict[str, Any]:
         """

@@ -4,10 +4,10 @@ REST commands into a message posted to main processing thread.
 """
 
 from functools import cached_property
-from typing import Literal, Optional, Tuple
+from typing import Literal, Optional, Self, Tuple
 
 import yarl
-from pydantic import BaseModel, Extra, HttpUrl, root_validator
+from pydantic import BaseModel, Extra, HttpUrl, model_validator
 
 from gwproto.utils import snake_to_camel
 
@@ -96,7 +96,7 @@ class URLConfig(BaseModel):
 
         # args from self.url
         if url_config.url is None:
-            url_args = dict()
+            url_args = {}
         else:
             url_args = dict(URLArgs.from_url(yarl.URL(url_config.url)))
 
@@ -226,20 +226,19 @@ class RESTPollerSettings(BaseModel):
     def clear_property_cache(self):
         self.__dict__.pop("url", None)
 
-    @root_validator(skip_on_failure=True)
-    def post_root_validator(cls, values: dict) -> dict:
-        base_url = URLConfig.make_url(values["session"].base_url)
-        url = URLConfig.make_url(values["request"].url)
+    @model_validator(mode="after")
+    def post_model_validator(self) -> Self:
+        base_url = URLConfig.make_url(self.session.base_url)
+        url = URLConfig.make_url(self.request.url)
         if base_url is None and url is None:
             raise ValueError(
                 "ERROR. At least one of session.base_url and request.url must be specified"
             )
-        if base_url is None:
-            if not url.is_absolute():
-                raise ValueError(
-                    "ERROR. if session.base_url is None, request.url must be absolute\n"
-                    f"  request.url:      <{url}>\n"
-                )
+        if base_url is None and not url.is_absolute():
+            raise ValueError(
+                "ERROR. if session.base_url is None, request.url must be absolute\n"
+                f"  request.url:      <{url}>\n"
+            )
         if base_url is not None and not base_url.is_absolute():
             raise ValueError(
                 f"ERROR. session.base_url is not absolute.\n"
@@ -259,4 +258,4 @@ class RESTPollerSettings(BaseModel):
                     f"  request.url:      <{url}>\n"
                     f"  request.url.path: <{url.path}>\n"
                 )
-        return values
+        return self

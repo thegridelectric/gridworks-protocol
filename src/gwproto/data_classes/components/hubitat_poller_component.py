@@ -1,6 +1,7 @@
 from typing import Optional
 
 import yarl
+
 from gwproto.data_classes.component import Component
 from gwproto.data_classes.resolver import ComponentResolver
 from gwproto.data_classes.sh_node import ShNode

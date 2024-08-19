@@ -1,6 +1,7 @@
 from typing import Optional
 
 import yarl
+
 from gwproto.data_classes.component import Component
 from gwproto.types.hubitat_gt import HubitatGt
 

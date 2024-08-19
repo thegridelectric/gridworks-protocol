@@ -68,9 +68,7 @@ def is_hex_char(v: str) -> bool:
         return False
     if len(v) > 1:
         return False
-    if v not in "0123456789abcdefABCDEF":
-        return False
-    return True
+    return not v not in "0123456789abcdefABCDEF"
 
 
 def is_valid_asa_name(candidate: str) -> bool:
@@ -86,9 +84,7 @@ def is_valid_asa_name(candidate: str) -> bool:
         l = len(candidate)
     except:  # noqa
         return False
-    if l > 32:
-        return False
-    return True
+    return not l > 32
 
 
 def check_is_valid_asa_name(candidate: str) -> None:
@@ -105,9 +101,7 @@ def check_is_valid_asa_name(candidate: str) -> None:
 def is_64_bit_hex(candidate: str) -> bool:
     if len(candidate) != 8:
         return False
-    if not all(c in string.hexdigits for c in candidate):
-        return False
-    return True
+    return all(c in string.hexdigits for c in candidate)
 
 
 def check_is_64_bit_hex(candidate: str) -> None:
@@ -118,9 +112,7 @@ def check_is_64_bit_hex(candidate: str) -> None:
 
 
 def is_bit(candidate: int) -> bool:
-    if candidate not in {0, 1}:
-        return False
-    return True
+    return not candidate not in {0, 1}
 
 
 def check_is_bit(candidate: int) -> None:
@@ -152,9 +144,7 @@ def is_left_right_dot(candidate: str) -> bool:
     for word in x:
         if not word.isalnum():
             return False
-    if not candidate.islower():
-        return False
-    return True
+    return candidate.islower()
 
 
 def check_is_left_right_dot(candidate: str) -> None:
@@ -204,9 +194,7 @@ def is_lru_alias_format(candidate: str) -> bool:
     for word in x:
         if not word.isalnum():
             return False
-    if not candidate.islower():
-        return False
-    return True
+    return candidate.islower()
 
 
 def is_lrh_alias_format(candidate: str) -> bool:
@@ -226,17 +214,13 @@ def is_lrh_alias_format(candidate: str) -> bool:
     for word in x:
         if not word.isalnum():
             return False
-    if not candidate.islower():
-        return False
-    return True
+    return candidate.islower()
 
 
 def is_positive_integer(candidate: int) -> bool:
     if not isinstance(candidate, int):
         return False  # type: ignore[unreachable]
-    if candidate <= 0:
-        return False
-    return True
+    return not candidate <= 0
 
 
 def check_is_positive_integer(candidate: int) -> None:
@@ -326,9 +310,7 @@ def is_uuid_canonical_textual(candidate: str) -> bool:
         return False
     if len(x[3]) != 4:
         return False
-    if len(x[4]) != 12:
-        return False
-    return True
+    return not len(x[4]) != 12
 
 
 def check_is_uuid_canonical_textual(candidate: str) -> None:
@@ -384,6 +366,4 @@ def is_world_instance_name_format(candidate: str) -> bool:
         root_g_node_alias_words = words[0].split(".")
     except:  # noqa
         return False
-    if len(root_g_node_alias_words) > 1:
-        return False
-    return True
+    return not len(root_g_node_alias_words) > 1

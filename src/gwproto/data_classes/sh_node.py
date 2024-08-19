@@ -53,9 +53,7 @@ class ShNode:
 
     @property
     def has_actor(self) -> bool:
-        if self.actor_class == ActorClass.NoActor:
-            return False
-        return True
+        return not self.actor_class == ActorClass.NoActor
 
     @property
     def component(self) -> Optional[Component]:

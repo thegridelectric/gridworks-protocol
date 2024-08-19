@@ -7,8 +7,11 @@ import pydantic
 
 
 def predicate_validator(
-    field_name: str, predicate: Callable[[Any], bool], error_format: str = "", **kwargs
-) -> classmethod:  # type: ignore
+    field_name: str,
+    predicate: Callable[[Any], bool],
+    error_format: str = "",
+    **kwargs: dict[str, Any],
+) -> classmethod:
     """
     Produce a pydantic validator from a function returning a bool.
 
@@ -52,7 +55,7 @@ def predicate_validator(
             raise ValueError(err_str)
         return v
 
-    return pydantic.validator(field_name, allow_reuse=True, **kwargs)(_validator)
+    return pydantic.field_validator(field_name, **kwargs)(_validator)
 
 
 def is_hex_char(v: str) -> bool:

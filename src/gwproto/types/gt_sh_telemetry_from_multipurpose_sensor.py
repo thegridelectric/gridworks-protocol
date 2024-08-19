@@ -2,9 +2,9 @@
 
 import json
 import logging
-from typing import Any, Dict, List, Literal
+from typing import Any, Dict, List, Literal, Self
 
-from pydantic import BaseModel, Field, root_validator, validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 from gwproto.enums import TelemetryName
 from gwproto.errors import SchemaError
@@ -50,7 +50,8 @@ class GtShTelemetryFromMultipurposeSensor(BaseModel):
     )
     Version: Literal["100"] = "100"
 
-    @validator("ScadaReadTimeUnixMs")
+    @field_validator("ScadaReadTimeUnixMs")
+    @classmethod
     def _check_scada_read_time_unix_ms(cls, v: int) -> int:
         try:
             check_is_reasonable_unix_time_ms(v)
@@ -60,7 +61,8 @@ class GtShTelemetryFromMultipurposeSensor(BaseModel):
             )
         return v
 
-    @validator("AboutNodeAliasList")
+    @field_validator("AboutNodeAliasList")
+    @classmethod
     def _check_about_node_alias_list(cls, v: List[str]) -> List[str]:
         for elt in v:
             try:
@@ -71,20 +73,21 @@ class GtShTelemetryFromMultipurposeSensor(BaseModel):
                 )
         return v
 
-    @root_validator
-    def check_axiom_1(cls, v: dict) -> dict:
+    @model_validator(mode="after")
+    def check_axiom_1(self) -> Self:
         """
         Axiom 1: ListLengthConsistency.
         AboutNodeAliasList, ValueList and TelemetryNameList must all have the same length.
         """
-        alias_list: List[str] = v.get("AboutNodeAliasList")
-        value_list: List[int] = v.get("ValueList")
-        tn_list: List[TelemetryName] = v.get("TelemetryNameList")
-        if (len(value_list) != len(alias_list)) or (len(value_list) != len(tn_list)):
+        if not (
+            len(self.ValueList)
+            == len(self.AboutNodeAliasList)
+            == len(self.TelemetryNameList)
+        ):
             raise ValueError(
                 "Axiom 1: AboutNodeAliasList, ValueList and TelemetryNameList must all have the same length."
             )
-        return v
+        return self
 
     def as_dict(self) -> Dict[str, Any]:
         """
@@ -104,8 +107,8 @@ class GtShTelemetryFromMultipurposeSensor(BaseModel):
         """
         d = {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }

@@ -46,7 +46,7 @@ class HubitatTankComponentGt(ComponentGt):
 
 
 class HubitatTankComponentGt_Maker:
-    type_name: str = HubitatTankComponentGt.__fields__["TypeName"].default
+    type_name: str = HubitatTankComponentGt.model_fields["TypeName"].default
     version = "000"
     tuple: HubitatTankComponentGt
 

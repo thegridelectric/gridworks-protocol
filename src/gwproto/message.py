@@ -1,7 +1,8 @@
-from typing import Any, Callable, Generic, Mapping, Optional, TypeVar, Union
+# ruff: noqa: ANN401
 
-from pydantic import BaseModel, Field
-from pydantic.generics import GenericModel
+from typing import Any, Callable, Generic, Literal, Mapping, Optional, TypeVar, Union
+
+from pydantic import BaseModel
 
 from gwproto.topic import MQTTTopic
 
@@ -23,7 +24,7 @@ class Header(BaseModel):
     MessageType: str
     MessageId: str = ""
     AckRequired: bool = False
-    TypeName: str = Field("gridworks.header", const=True)
+    TypeName: Literal["gridworks.header"] = "gridworks.header"
 
 
 PayloadT = TypeVar("PayloadT")
@@ -40,12 +41,12 @@ def ensure_arg(arg_name: str, default_value: Any, kwargs_dict: dict) -> None:
             kwargs_dict[arg_name] = default_value
 
 
-class Message(GenericModel, Generic[PayloadT]):
+class Message(BaseModel, Generic[PayloadT]):
     Header: Header
     Payload: PayloadT
-    TypeName: str = Field(GRIDWORKS_ENVELOPE_TYPE, const=True)
+    TypeName: Literal["gw"] = GRIDWORKS_ENVELOPE_TYPE
 
-    def __init__(self, header: Optional[Header] = None, **kwargs: Any):
+    def __init__(self, header: Optional[Header] = None, **kwargs: Any) -> None:
         if header is None:
             header = self._header_from_kwargs(kwargs)
         super().__init__(Header=header, **kwargs)
@@ -58,14 +59,14 @@ class Message(GenericModel, Generic[PayloadT]):
 
     @classmethod
     def type_name(cls) -> str:
-        return Message.__fields__["TypeName"].default
+        return Message.model_fields["TypeName"].default
 
     def mqtt_topic(self) -> str:
         return MQTTTopic.encode(self.type_name(), self.src(), self.message_type())
 
     @classmethod
     def _header_from_kwargs(cls, kwargs: dict[str, Any]) -> Header:
-        header_kwargs = dict()
+        header_kwargs = {}
         if "Payload" in kwargs:
             payload = kwargs["Payload"]
             for header_field, payload_fields in [
@@ -86,7 +87,7 @@ class Message(GenericModel, Generic[PayloadT]):
                     header_kwargs[header_field] = val
         header: Optional[Union[Header, dict[str, Any]]] = kwargs.pop("Header", None)
         if isinstance(header, Header):
-            header = header.copy(update=header_kwargs, deep=True)
+            header = header.model_copy(update=header_kwargs, deep=True)
         else:
             if header is not None:
                 header_kwargs = dict(header, **header_kwargs)

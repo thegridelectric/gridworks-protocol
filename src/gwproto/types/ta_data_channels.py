@@ -4,7 +4,7 @@ import json
 import logging
 from typing import Any, Dict, List, Literal
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 
 from gwproto.errors import SchemaError
 from gwproto.types.data_channel import DataChannel, DataChannel_Maker
@@ -54,7 +54,8 @@ class TaDataChannels(BaseModel):
     TypeName: Literal["ta.data.channels"] = "ta.data.channels"
     Version: Literal["000"] = "000"
 
-    @validator("TerminalAssetGNodeAlias")
+    @field_validator("TerminalAssetGNodeAlias")
+    @classmethod
     def _check_terminal_asset_g_node_alias(cls, v: str) -> str:
         try:
             check_is_left_right_dot(v)
@@ -64,7 +65,8 @@ class TaDataChannels(BaseModel):
             )
         return v
 
-    @validator("TerminalAssetGNodeId")
+    @field_validator("TerminalAssetGNodeId")
+    @classmethod
     def _check_terminal_asset_g_node_id(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
@@ -74,7 +76,8 @@ class TaDataChannels(BaseModel):
             )
         return v
 
-    @validator("TimeUnixS")
+    @field_validator("TimeUnixS")
+    @classmethod
     def _check_time_unix_s(cls, v: int) -> int:
         try:
             check_is_reasonable_unix_time_s(v)
@@ -84,7 +87,8 @@ class TaDataChannels(BaseModel):
             )
         return v
 
-    @validator("Identifier")
+    @field_validator("Identifier")
+    @classmethod
     def _check_identifier(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
@@ -112,8 +116,8 @@ class TaDataChannels(BaseModel):
         """
         d = {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }

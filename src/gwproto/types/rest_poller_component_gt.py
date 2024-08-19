@@ -46,7 +46,7 @@ class RESTPollerComponentGt(ComponentGt):
 
 
 class RESTPollerComponentGt_Maker:
-    type_name: str = RESTPollerComponentGt.__fields__["TypeName"].default
+    type_name: str = RESTPollerComponentGt.model_fields["TypeName"].default
     version = "000"
     tuple: RESTPollerComponentGt
 

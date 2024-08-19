@@ -4,7 +4,7 @@ import json
 import logging
 from typing import Any, Dict, Literal
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 
 from gwproto.errors import SchemaError
 
@@ -37,7 +37,8 @@ class GtDriverBooleanactuatorCmd(BaseModel):
     TypeName: Literal["gt.driver.booleanactuator.cmd"] = "gt.driver.booleanactuator.cmd"
     Version: Literal["100"] = "100"
 
-    @validator("RelayState", pre=True)
+    @field_validator("RelayState", mode="before")
+    @classmethod
     def _check_relay_state(cls, v: int) -> int:
         try:
             check_is_bit(v)
@@ -45,7 +46,8 @@ class GtDriverBooleanactuatorCmd(BaseModel):
             raise ValueError(f"RelayState failed Bit format validation: {e}")
         return v
 
-    @validator("ShNodeAlias")
+    @field_validator("ShNodeAlias")
+    @classmethod
     def _check_sh_node_alias(cls, v: str) -> str:
         try:
             check_is_left_right_dot(v)
@@ -53,7 +55,8 @@ class GtDriverBooleanactuatorCmd(BaseModel):
             raise ValueError(f"ShNodeAlias failed LeftRightDot format validation: {e}")
         return v
 
-    @validator("CommandTimeUnixMs")
+    @field_validator("CommandTimeUnixMs")
+    @classmethod
     def _check_command_time_unix_ms(cls, v: int) -> int:
         try:
             check_is_reasonable_unix_time_ms(v)
@@ -81,8 +84,8 @@ class GtDriverBooleanactuatorCmd(BaseModel):
         """
         d = {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }

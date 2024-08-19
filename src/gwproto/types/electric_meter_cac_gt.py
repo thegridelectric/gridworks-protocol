@@ -4,7 +4,7 @@ import json
 import logging
 from typing import Any, Dict, List, Literal, Optional
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 
 from gwproto.data_classes.cacs.electric_meter_cac import ElectricMeterCac
 from gwproto.enums import LocalCommInterface, TelemetryName
@@ -69,7 +69,8 @@ class ElectricMeterCacGt(BaseModel):
     TypeName: Literal["electric.meter.cac.gt"] = "electric.meter.cac.gt"
     Version: Literal["000"] = "000"
 
-    @validator("ComponentAttributeClassId")
+    @field_validator("ComponentAttributeClassId")
+    @classmethod
     def _check_component_attribute_class_id(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
@@ -97,8 +98,8 @@ class ElectricMeterCacGt(BaseModel):
         """
         d = {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }

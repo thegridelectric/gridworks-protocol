@@ -4,7 +4,7 @@ import json
 import logging
 from typing import Any, Dict, Literal, Optional
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 
 from gwproto.data_classes.sh_node import ShNode
 from gwproto.enums import ActorClass as EnumActorClass
@@ -71,7 +71,8 @@ class SpaceheatNodeGt(BaseModel):
     TypeName: Literal["spaceheat.node.gt"] = "spaceheat.node.gt"
     Version: Literal["100"] = "100"
 
-    @validator("ShNodeId")
+    @field_validator("ShNodeId")
+    @classmethod
     def _check_sh_node_id(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
@@ -81,7 +82,8 @@ class SpaceheatNodeGt(BaseModel):
             )
         return v
 
-    @validator("Alias")
+    @field_validator("Alias")
+    @classmethod
     def _check_alias(cls, v: str) -> str:
         try:
             check_is_left_right_dot(v)
@@ -89,7 +91,8 @@ class SpaceheatNodeGt(BaseModel):
             raise ValueError(f"Alias failed LeftRightDot format validation: {e}")
         return v
 
-    @validator("ComponentId")
+    @field_validator("ComponentId")
+    @classmethod
     def _check_component_id(cls, v: Optional[str]) -> Optional[str]:
         if v is None:
             return v
@@ -101,7 +104,8 @@ class SpaceheatNodeGt(BaseModel):
             )
         return v
 
-    @validator("RatedVoltageV")
+    @field_validator("RatedVoltageV")
+    @classmethod
     def _check_rated_voltage_v(cls, v: Optional[int]) -> Optional[int]:
         if v is None:
             return v
@@ -113,7 +117,8 @@ class SpaceheatNodeGt(BaseModel):
             )
         return v
 
-    @validator("TypicalVoltageV")
+    @field_validator("TypicalVoltageV")
+    @classmethod
     def _check_typical_voltage_v(cls, v: Optional[int]) -> Optional[int]:
         if v is None:
             return v
@@ -143,8 +148,8 @@ class SpaceheatNodeGt(BaseModel):
         """
         d = {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }

@@ -4,7 +4,7 @@ import json
 import logging
 from typing import Any, Dict, Literal
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 
 from gwproto.enums import TelemetryName as EnumTelemetryName
 from gwproto.errors import SchemaError
@@ -50,7 +50,8 @@ class DataChannel(BaseModel):
     TypeName: Literal["data.channel"] = "data.channel"
     Version: Literal["000"] = "000"
 
-    @validator("AboutName")
+    @field_validator("AboutName")
+    @classmethod
     def _check_about_name(cls, v: str) -> str:
         try:
             check_is_spaceheat_name(v)
@@ -58,7 +59,8 @@ class DataChannel(BaseModel):
             raise ValueError(f"AboutName failed SpaceheatName format validation: {e}")
         return v
 
-    @validator("CapturedByName")
+    @field_validator("CapturedByName")
+    @classmethod
     def _check_captured_by_name(cls, v: str) -> str:
         try:
             check_is_spaceheat_name(v)
@@ -86,8 +88,8 @@ class DataChannel(BaseModel):
         """
         d = {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }

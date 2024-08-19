@@ -4,7 +4,7 @@ import json
 import logging
 from typing import Any, Dict, List, Literal, Optional
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 
 from gwproto.data_classes.components.multipurpose_sensor_component import (
     MultipurposeSensorComponent,
@@ -73,7 +73,8 @@ class MultipurposeSensorComponentGt(BaseModel):
     )
     Version: Literal["000"] = "000"
 
-    @validator("ComponentId")
+    @field_validator("ComponentId")
+    @classmethod
     def _check_component_id(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
@@ -83,7 +84,8 @@ class MultipurposeSensorComponentGt(BaseModel):
             )
         return v
 
-    @validator("ComponentAttributeClassId")
+    @field_validator("ComponentAttributeClassId")
+    @classmethod
     def _check_component_attribute_class_id(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
@@ -111,8 +113,8 @@ class MultipurposeSensorComponentGt(BaseModel):
         """
         d = {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }

@@ -32,7 +32,7 @@ class RESTPollerCacGt(ComponentAttributeClassGt):
 
 
 class RESTPollerCacGt_Maker:
-    type_name: str = RESTPollerCacGt.__fields__["TypeName"].default
+    type_name: str = RESTPollerCacGt.model_fields["TypeName"].default
     version = "000"
     tuple: RESTPollerCacGt
 

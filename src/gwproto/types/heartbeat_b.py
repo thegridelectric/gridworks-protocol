@@ -4,7 +4,7 @@ import json
 import logging
 from typing import Any, Dict, Literal
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 
 from gwproto.errors import SchemaError
 
@@ -55,7 +55,8 @@ class HeartbeatB(BaseModel):
     TypeName: Literal["heartbeat.b"] = "heartbeat.b"
     Version: Literal["001"] = "001"
 
-    @validator("FromGNodeAlias")
+    @field_validator("FromGNodeAlias")
+    @classmethod
     def _check_from_g_node_alias(cls, v: str) -> str:
         try:
             check_is_left_right_dot(v)
@@ -65,7 +66,8 @@ class HeartbeatB(BaseModel):
             )
         return v
 
-    @validator("FromGNodeInstanceId")
+    @field_validator("FromGNodeInstanceId")
+    @classmethod
     def _check_from_g_node_instance_id(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
@@ -75,7 +77,8 @@ class HeartbeatB(BaseModel):
             )
         return v
 
-    @validator("MyHex")
+    @field_validator("MyHex")
+    @classmethod
     def _check_my_hex(cls, v: str) -> str:
         try:
             check_is_hex_char(v)
@@ -83,7 +86,8 @@ class HeartbeatB(BaseModel):
             raise ValueError(f"MyHex failed HexChar format validation: {e}")
         return v
 
-    @validator("YourLastHex")
+    @field_validator("YourLastHex")
+    @classmethod
     def _check_your_last_hex(cls, v: str) -> str:
         try:
             check_is_hex_char(v)
@@ -91,7 +95,8 @@ class HeartbeatB(BaseModel):
             raise ValueError(f"YourLastHex failed HexChar format validation: {e}")
         return v
 
-    @validator("LastReceivedTimeUnixMs")
+    @field_validator("LastReceivedTimeUnixMs")
+    @classmethod
     def _check_last_received_time_unix_ms(cls, v: int) -> int:
         try:
             check_is_reasonable_unix_time_ms(v)
@@ -101,7 +106,8 @@ class HeartbeatB(BaseModel):
             )
         return v
 
-    @validator("SendTimeUnixMs")
+    @field_validator("SendTimeUnixMs")
+    @classmethod
     def _check_send_time_unix_ms(cls, v: int) -> int:
         try:
             check_is_reasonable_unix_time_ms(v)
@@ -129,8 +135,8 @@ class HeartbeatB(BaseModel):
         """
         d = {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }

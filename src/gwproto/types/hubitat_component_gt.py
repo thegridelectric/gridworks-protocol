@@ -99,7 +99,7 @@ class HubitatRESTResolutionSettings:
 
 
 class HubitatComponentGt_Maker:
-    type_name: str = HubitatComponentGt.__fields__["TypeName"].default
+    type_name: str = HubitatComponentGt.model_fields["TypeName"].default
     version = "000"
     tuple: HubitatComponentGt
 

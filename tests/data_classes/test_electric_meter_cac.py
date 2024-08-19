@@ -20,7 +20,7 @@ def test_electric_meter_cac():
     }
 
     gw_tuple = ElectricMeterCacGt_Maker.dict_to_tuple(d)
-    assert gw_tuple.ComponentAttributeClassId in ElectricMeterCac.by_id.keys()
+    assert gw_tuple.ComponentAttributeClassId in ElectricMeterCac.by_id
     dc = ElectricMeterCac.by_id[gw_tuple.ComponentAttributeClassId]
 
     assert dc.__repr__() == "GRIDWORKS__SIMPM1 Gridworks Pm1 Simulated Power Meter"

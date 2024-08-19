@@ -187,7 +187,7 @@ class ComponentAttributeClassGt_Maker:
 
     @classmethod
     def tuple_to_dc(cls, t: ComponentAttributeClassGt) -> ComponentAttributeClass:
-        if t.ComponentAttributeClassId in ComponentAttributeClass.by_id.keys():
+        if t.ComponentAttributeClassId in ComponentAttributeClass.by_id:
             dc = ComponentAttributeClass.by_id[t.ComponentAttributeClassId]
         else:
             dc = ComponentAttributeClass(

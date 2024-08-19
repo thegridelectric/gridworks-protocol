@@ -74,17 +74,17 @@ def test_simple_temp_sensor_component_gt_generated() -> None:
     ######################################
 
     d2 = dict(d)
-    if "DisplayName" in d2.keys():
+    if "DisplayName" in d2:
         del d2["DisplayName"]
     Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    if "HwUid" in d2.keys():
+    if "HwUid" in d2:
         del d2["HwUid"]
     Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    if "Channel" in d2.keys():
+    if "Channel" in d2:
         del d2["Channel"]
     Maker.dict_to_tuple(d2)
 

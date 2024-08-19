@@ -47,7 +47,7 @@ def test_electric_meter_component():
     }
 
     gw_tuple = ElectricMeterComponentGt_Maker.dict_to_tuple(d)
-    assert gw_tuple.ComponentId in ElectricMeterComponent.by_id.keys()
+    assert gw_tuple.ComponentId in ElectricMeterComponent.by_id
     component_as_dc = ElectricMeterComponent.by_id[gw_tuple.ComponentId]
     assert gw_tuple.HwUid == "9999"
     assert component_as_dc.hw_uid == "1001ab"

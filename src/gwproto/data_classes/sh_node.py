@@ -61,7 +61,7 @@ class ShNode:
     def component(self) -> Optional[Component]:
         if self.component_id is None:
             return None
-        if self.component_id not in Component.by_id.keys():
+        if self.component_id not in Component.by_id:
             raise DataClassLoadingError(
                 f"{self.alias} component {self.component_id} not loaded!"
             )

@@ -197,7 +197,7 @@ class PipeFlowSensorCacGt_Maker:
 
     @classmethod
     def tuple_to_dc(cls, t: PipeFlowSensorCacGt) -> PipeFlowSensorCac:
-        if t.ComponentAttributeClassId in PipeFlowSensorCac.by_id.keys():
+        if t.ComponentAttributeClassId in PipeFlowSensorCac.by_id:
             dc = PipeFlowSensorCac.by_id[t.ComponentAttributeClassId]
         else:
             dc = PipeFlowSensorCac(

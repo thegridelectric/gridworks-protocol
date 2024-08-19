@@ -287,7 +287,7 @@ class SpaceheatNodeGt_Maker:
 
     @classmethod
     def tuple_to_dc(cls, t: SpaceheatNodeGt) -> ShNode:
-        if t.ShNodeId in ShNode.by_id.keys():
+        if t.ShNodeId in ShNode.by_id:
             dc = ShNode.by_id[t.ShNodeId]
         else:
             dc = ShNode(

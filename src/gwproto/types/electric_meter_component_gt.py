@@ -336,7 +336,7 @@ class ElectricMeterComponentGt_Maker:
 
     @classmethod
     def tuple_to_dc(cls, t: ElectricMeterComponentGt) -> ElectricMeterComponent:
-        if t.ComponentId in ElectricMeterComponent.by_id.keys():
+        if t.ComponentId in ElectricMeterComponent.by_id:
             dc = ElectricMeterComponent.by_id[t.ComponentId]
         else:
             dc = ElectricMeterComponent(

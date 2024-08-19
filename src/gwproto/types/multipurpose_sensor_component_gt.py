@@ -254,7 +254,7 @@ class MultipurposeSensorComponentGt_Maker:
     def tuple_to_dc(
         cls, t: MultipurposeSensorComponentGt
     ) -> MultipurposeSensorComponent:
-        if t.ComponentId in MultipurposeSensorComponent.by_id.keys():
+        if t.ComponentId in MultipurposeSensorComponent.by_id:
             dc = MultipurposeSensorComponent.by_id[t.ComponentId]
         else:
             dc = MultipurposeSensorComponent(

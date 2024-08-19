@@ -197,7 +197,7 @@ class RelayCacGt_Maker:
 
     @classmethod
     def tuple_to_dc(cls, t: RelayCacGt) -> RelayCac:
-        if t.ComponentAttributeClassId in RelayCac.by_id.keys():
+        if t.ComponentAttributeClassId in RelayCac.by_id:
             dc = RelayCac.by_id[t.ComponentAttributeClassId]
         else:
             dc = RelayCac(

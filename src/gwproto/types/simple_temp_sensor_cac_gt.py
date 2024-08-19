@@ -241,7 +241,7 @@ class SimpleTempSensorCacGt_Maker:
 
     @classmethod
     def tuple_to_dc(cls, t: SimpleTempSensorCacGt) -> SimpleTempSensorCac:
-        if t.ComponentAttributeClassId in SimpleTempSensorCac.by_id.keys():
+        if t.ComponentAttributeClassId in SimpleTempSensorCac.by_id:
             dc = SimpleTempSensorCac.by_id[t.ComponentAttributeClassId]
         else:
             dc = SimpleTempSensorCac(

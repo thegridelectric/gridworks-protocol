@@ -232,7 +232,7 @@ class RelayComponentGt_Maker:
 
     @classmethod
     def tuple_to_dc(cls, t: RelayComponentGt) -> RelayComponent:
-        if t.ComponentId in RelayComponent.by_id.keys():
+        if t.ComponentId in RelayComponent.by_id:
             dc = RelayComponent.by_id[t.ComponentId]
         else:
             dc = RelayComponent(

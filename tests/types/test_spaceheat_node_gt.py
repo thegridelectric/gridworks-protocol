@@ -95,32 +95,32 @@ def test_spaceheat_node_gt_generated() -> None:
     ######################################
 
     d2 = dict(d)
-    if "DisplayName" in d2.keys():
+    if "DisplayName" in d2:
         del d2["DisplayName"]
     Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    if "ComponentId" in d2.keys():
+    if "ComponentId" in d2:
         del d2["ComponentId"]
     Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    if "ReportingSamplePeriodS" in d2.keys():
+    if "ReportingSamplePeriodS" in d2:
         del d2["ReportingSamplePeriodS"]
     Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    if "RatedVoltageV" in d2.keys():
+    if "RatedVoltageV" in d2:
         del d2["RatedVoltageV"]
     Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    if "TypicalVoltageV" in d2.keys():
+    if "TypicalVoltageV" in d2:
         del d2["TypicalVoltageV"]
     Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    if "InPowerMetering" in d2.keys():
+    if "InPowerMetering" in d2:
         del d2["InPowerMetering"]
     Maker.dict_to_tuple(d2)
 

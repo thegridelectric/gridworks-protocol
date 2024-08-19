@@ -216,7 +216,7 @@ class ComponentGt_Maker:
 
     @classmethod
     def tuple_to_dc(cls, t: ComponentGt) -> Component:
-        if t.ComponentId in Component.by_id.keys():
+        if t.ComponentId in Component.by_id:
             dc = Component.by_id[t.ComponentId]
         else:
             dc = Component(

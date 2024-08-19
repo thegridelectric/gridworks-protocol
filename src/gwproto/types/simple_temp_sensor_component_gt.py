@@ -223,7 +223,7 @@ class SimpleTempSensorComponentGt_Maker:
 
     @classmethod
     def tuple_to_dc(cls, t: SimpleTempSensorComponentGt) -> SimpleTempSensorComponent:
-        if t.ComponentId in SimpleTempSensorComponent.by_id.keys():
+        if t.ComponentId in SimpleTempSensorComponent.by_id:
             dc = SimpleTempSensorComponent.by_id[t.ComponentId]
         else:
             dc = SimpleTempSensorComponent(

@@ -227,7 +227,7 @@ class ResistiveHeaterComponentGt_Maker:
 
     @classmethod
     def tuple_to_dc(cls, t: ResistiveHeaterComponentGt) -> ResistiveHeaterComponent:
-        if t.ComponentId in ResistiveHeaterComponent.by_id.keys():
+        if t.ComponentId in ResistiveHeaterComponent.by_id:
             dc = ResistiveHeaterComponent.by_id[t.ComponentId]
         else:
             dc = ResistiveHeaterComponent(

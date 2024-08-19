@@ -264,7 +264,7 @@ class MultipurposeSensorCacGt_Maker:
 
     @classmethod
     def tuple_to_dc(cls, t: MultipurposeSensorCacGt) -> MultipurposeSensorCac:
-        if t.ComponentAttributeClassId in MultipurposeSensorCac.by_id.keys():
+        if t.ComponentAttributeClassId in MultipurposeSensorCac.by_id:
             dc = MultipurposeSensorCac.by_id[t.ComponentAttributeClassId]
         else:
             dc = MultipurposeSensorCac(

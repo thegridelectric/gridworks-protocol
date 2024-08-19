@@ -236,7 +236,7 @@ class PipeFlowSensorComponentGt_Maker:
 
     @classmethod
     def tuple_to_dc(cls, t: PipeFlowSensorComponentGt) -> PipeFlowSensorComponent:
-        if t.ComponentId in PipeFlowSensorComponent.by_id.keys():
+        if t.ComponentId in PipeFlowSensorComponent.by_id:
             dc = PipeFlowSensorComponent.by_id[t.ComponentId]
         else:
             dc = PipeFlowSensorComponent(

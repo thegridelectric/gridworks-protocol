@@ -85,7 +85,7 @@ def test_resistive_heater_cac_gt_generated() -> None:
     ######################################
 
     d2 = dict(d)
-    if "DisplayName" in d2.keys():
+    if "DisplayName" in d2:
         del d2["DisplayName"]
     Maker.dict_to_tuple(d2)
 

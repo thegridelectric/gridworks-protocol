@@ -245,7 +245,7 @@ class ElectricMeterCacGt_Maker:
 
     @classmethod
     def tuple_to_dc(cls, t: ElectricMeterCacGt) -> ElectricMeterCac:
-        if t.ComponentAttributeClassId in ElectricMeterCac.by_id.keys():
+        if t.ComponentAttributeClassId in ElectricMeterCac.by_id:
             dc = ElectricMeterCac.by_id[t.ComponentAttributeClassId]
         else:
             dc = ElectricMeterCac(

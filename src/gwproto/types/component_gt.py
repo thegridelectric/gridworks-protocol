@@ -98,7 +98,7 @@ class ComponentGt(BaseModel):
 
         It also applies these changes recursively to sub-types.
         """
-        d = {
+        return {
             key: value
             for key, value in self.model_dump(
                 include=self.model_fields_set | {"TypeName", "Version"},
@@ -106,7 +106,6 @@ class ComponentGt(BaseModel):
             ).items()
             if value is not None
         }
-        return d
 
     def as_type(self) -> bytes:
         """
@@ -229,13 +228,12 @@ class ComponentGt_Maker:
 
     @classmethod
     def dc_to_tuple(cls, dc: Component) -> ComponentGt:
-        t = ComponentGt_Maker(
+        return ComponentGt_Maker(
             component_id=dc.component_id,
             component_attribute_class_id=dc.component_attribute_class_id,
             display_name=dc.display_name,
             hw_uid=dc.hw_uid,
         ).tuple
-        return t
 
     @classmethod
     def type_to_dc(cls, t: str) -> Component:

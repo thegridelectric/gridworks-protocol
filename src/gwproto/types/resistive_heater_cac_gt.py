@@ -229,14 +229,13 @@ class ResistiveHeaterCacGt_Maker:
 
     @classmethod
     def dc_to_tuple(cls, dc: ResistiveHeaterCac) -> ResistiveHeaterCacGt:
-        t = ResistiveHeaterCacGt_Maker(
+        return ResistiveHeaterCacGt_Maker(
             component_attribute_class_id=dc.component_attribute_class_id,
             make_model=dc.make_model,
             display_name=dc.display_name,
             nameplate_max_power_w=dc.nameplate_max_power_w,
             rated_voltage_v=dc.rated_voltage_v,
         ).tuple
-        return t
 
     @classmethod
     def type_to_dc(cls, t: str) -> ResistiveHeaterCac:

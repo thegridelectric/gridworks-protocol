@@ -282,7 +282,7 @@ class MultipurposeSensorCacGt_Maker:
 
     @classmethod
     def dc_to_tuple(cls, dc: MultipurposeSensorCac) -> MultipurposeSensorCacGt:
-        t = MultipurposeSensorCacGt_Maker(
+        return MultipurposeSensorCacGt_Maker(
             component_attribute_class_id=dc.component_attribute_class_id,
             make_model=dc.make_model,
             poll_period_ms=dc.poll_period_ms,
@@ -293,7 +293,6 @@ class MultipurposeSensorCacGt_Maker:
             display_name=dc.display_name,
             comms_method=dc.comms_method,
         ).tuple
-        return t
 
     @classmethod
     def type_to_dc(cls, t: str) -> MultipurposeSensorCac:

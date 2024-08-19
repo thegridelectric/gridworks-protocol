@@ -353,7 +353,7 @@ class ElectricMeterComponentGt_Maker:
 
     @classmethod
     def dc_to_tuple(cls, dc: ElectricMeterComponent) -> ElectricMeterComponentGt:
-        t = ElectricMeterComponentGt_Maker(
+        return ElectricMeterComponentGt_Maker(
             component_id=dc.component_id,
             component_attribute_class_id=dc.component_attribute_class_id,
             display_name=dc.display_name,
@@ -363,7 +363,6 @@ class ElectricMeterComponentGt_Maker:
             modbus_port=dc.modbus_port,
             egauge_io_list=dc.egauge_io_list,
         ).tuple
-        return t
 
     @classmethod
     def type_to_dc(cls, t: str) -> ElectricMeterComponent:

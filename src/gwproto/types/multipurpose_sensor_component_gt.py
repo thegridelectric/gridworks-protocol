@@ -271,7 +271,7 @@ class MultipurposeSensorComponentGt_Maker:
     def dc_to_tuple(
         cls, dc: MultipurposeSensorComponent
     ) -> MultipurposeSensorComponentGt:
-        t = MultipurposeSensorComponentGt_Maker(
+        return MultipurposeSensorComponentGt_Maker(
             component_id=dc.component_id,
             component_attribute_class_id=dc.component_attribute_class_id,
             channel_list=dc.channel_list,
@@ -279,7 +279,6 @@ class MultipurposeSensorComponentGt_Maker:
             hw_uid=dc.hw_uid,
             display_name=dc.display_name,
         ).tuple
-        return t
 
     @classmethod
     def type_to_dc(cls, t: str) -> MultipurposeSensorComponent:

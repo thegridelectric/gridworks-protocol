@@ -104,14 +104,13 @@ class SimpleTempSensorComponentGt(BaseModel):
 
         It also applies these changes recursively to sub-types.
         """
-        d = {
+        return {
             key: value
             for key, value in self.model_dump(
                 include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }
-        return d
 
     def as_type(self) -> bytes:
         """
@@ -237,14 +236,13 @@ class SimpleTempSensorComponentGt_Maker:
 
     @classmethod
     def dc_to_tuple(cls, dc: SimpleTempSensorComponent) -> SimpleTempSensorComponentGt:
-        t = SimpleTempSensorComponentGt_Maker(
+        return SimpleTempSensorComponentGt_Maker(
             component_id=dc.component_id,
             component_attribute_class_id=dc.component_attribute_class_id,
             display_name=dc.display_name,
             hw_uid=dc.hw_uid,
             channel=dc.channel,
         ).tuple
-        return t
 
     @classmethod
     def type_to_dc(cls, t: str) -> SimpleTempSensorComponent:

@@ -210,13 +210,12 @@ class PipeFlowSensorCacGt_Maker:
 
     @classmethod
     def dc_to_tuple(cls, dc: PipeFlowSensorCac) -> PipeFlowSensorCacGt:
-        t = PipeFlowSensorCacGt_Maker(
+        return PipeFlowSensorCacGt_Maker(
             component_attribute_class_id=dc.component_attribute_class_id,
             make_model=dc.make_model,
             display_name=dc.display_name,
             comms_method=dc.comms_method,
         ).tuple
-        return t
 
     @classmethod
     def type_to_dc(cls, t: str) -> PipeFlowSensorCac:

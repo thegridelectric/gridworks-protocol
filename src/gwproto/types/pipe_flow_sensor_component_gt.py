@@ -109,14 +109,13 @@ class PipeFlowSensorComponentGt(BaseModel):
 
         It also applies these changes recursively to sub-types.
         """
-        d = {
+        return {
             key: value
             for key, value in self.model_dump(
                 include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }
-        return d
 
     def as_type(self) -> bytes:
         """
@@ -252,7 +251,7 @@ class PipeFlowSensorComponentGt_Maker:
 
     @classmethod
     def dc_to_tuple(cls, dc: PipeFlowSensorComponent) -> PipeFlowSensorComponentGt:
-        t = PipeFlowSensorComponentGt_Maker(
+        return PipeFlowSensorComponentGt_Maker(
             component_id=dc.component_id,
             component_attribute_class_id=dc.component_attribute_class_id,
             i2c_address=dc.i2c_address,
@@ -261,7 +260,6 @@ class PipeFlowSensorComponentGt_Maker:
             hw_uid=dc.hw_uid,
             expected_max_gpm_times100=dc.expected_max_gpm_times100,
         ).tuple
-        return t
 
     @classmethod
     def type_to_dc(cls, t: str) -> PipeFlowSensorComponent:

@@ -306,7 +306,7 @@ class SpaceheatNodeGt_Maker:
 
     @classmethod
     def dc_to_tuple(cls, dc: ShNode) -> SpaceheatNodeGt:
-        t = SpaceheatNodeGt_Maker(
+        return SpaceheatNodeGt_Maker(
             sh_node_id=dc.sh_node_id,
             alias=dc.alias,
             actor_class=dc.actor_class,
@@ -318,7 +318,6 @@ class SpaceheatNodeGt_Maker:
             typical_voltage_v=dc.typical_voltage_v,
             in_power_metering=dc.in_power_metering,
         ).tuple
-        return t
 
     @classmethod
     def type_to_dc(cls, t: str) -> ShNode:

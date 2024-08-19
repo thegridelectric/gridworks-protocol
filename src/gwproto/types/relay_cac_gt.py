@@ -210,13 +210,12 @@ class RelayCacGt_Maker:
 
     @classmethod
     def dc_to_tuple(cls, dc: RelayCac) -> RelayCacGt:
-        t = RelayCacGt_Maker(
+        return RelayCacGt_Maker(
             component_attribute_class_id=dc.component_attribute_class_id,
             make_model=dc.make_model,
             display_name=dc.display_name,
             typical_response_time_ms=dc.typical_response_time_ms,
         ).tuple
-        return t
 
     @classmethod
     def type_to_dc(cls, t: str) -> RelayCac:

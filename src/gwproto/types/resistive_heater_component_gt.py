@@ -106,14 +106,13 @@ class ResistiveHeaterComponentGt(BaseModel):
 
         It also applies these changes recursively to sub-types.
         """
-        d = {
+        return {
             key: value
             for key, value in self.model_dump(
                 include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }
-        return d
 
     def as_type(self) -> bytes:
         """
@@ -242,7 +241,7 @@ class ResistiveHeaterComponentGt_Maker:
 
     @classmethod
     def dc_to_tuple(cls, dc: ResistiveHeaterComponent) -> ResistiveHeaterComponentGt:
-        t = ResistiveHeaterComponentGt_Maker(
+        return ResistiveHeaterComponentGt_Maker(
             component_id=dc.component_id,
             component_attribute_class_id=dc.component_attribute_class_id,
             display_name=dc.display_name,
@@ -250,7 +249,6 @@ class ResistiveHeaterComponentGt_Maker:
             tested_max_hot_milli_ohms=dc.tested_max_hot_milli_ohms,
             tested_max_cold_milli_ohms=dc.tested_max_cold_milli_ohms,
         ).tuple
-        return t
 
     @classmethod
     def type_to_dc(cls, t: str) -> ResistiveHeaterComponent:

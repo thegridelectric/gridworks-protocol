@@ -446,10 +446,7 @@ class HardwareLayout:
     @cached_property
     def power_meter_node(self) -> ShNode:
         """Schema for input data enforces exactly one Spaceheat Node with role PowerMeter"""
-        power_meter_node = list(
-            filter(lambda x: x.role == Role.PowerMeter, self.nodes.values())
-        )[0]
-        return power_meter_node
+        return list(filter(lambda x: x.role == Role.PowerMeter, self.nodes.values()))[0]
 
     @cached_property
     def power_meter_component(self) -> ElectricMeterComponent:
@@ -457,8 +454,7 @@ class HardwareLayout:
             raise ValueError(
                 f"ERROR. power_meter_node {self.power_meter_node} has no component."
             )
-        c = typing.cast(ElectricMeterComponent, self.power_meter_node.component)
-        return c
+        return typing.cast(ElectricMeterComponent, self.power_meter_node.component)
 
     @cached_property
     def power_meter_cac(self) -> ElectricMeterCac:

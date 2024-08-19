@@ -109,14 +109,13 @@ class RelayComponentGt(BaseModel):
 
         It also applies these changes recursively to sub-types.
         """
-        d = {
+        return {
             key: value
             for key, value in self.model_dump(
                 include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }
-        return d
 
     def as_type(self) -> bytes:
         """
@@ -247,7 +246,7 @@ class RelayComponentGt_Maker:
 
     @classmethod
     def dc_to_tuple(cls, dc: RelayComponent) -> RelayComponentGt:
-        t = RelayComponentGt_Maker(
+        return RelayComponentGt_Maker(
             component_id=dc.component_id,
             component_attribute_class_id=dc.component_attribute_class_id,
             display_name=dc.display_name,
@@ -255,7 +254,6 @@ class RelayComponentGt_Maker:
             hw_uid=dc.hw_uid,
             normally_open=dc.normally_open,
         ).tuple
-        return t
 
     @classmethod
     def type_to_dc(cls, t: str) -> RelayComponent:

@@ -261,7 +261,7 @@ class ElectricMeterCacGt_Maker:
 
     @classmethod
     def dc_to_tuple(cls, dc: ElectricMeterCac) -> ElectricMeterCacGt:
-        t = ElectricMeterCacGt_Maker(
+        return ElectricMeterCacGt_Maker(
             component_attribute_class_id=dc.component_attribute_class_id,
             make_model=dc.make_model,
             display_name=dc.display_name,
@@ -270,7 +270,6 @@ class ElectricMeterCacGt_Maker:
             interface=dc.interface,
             default_baud=dc.default_baud,
         ).tuple
-        return t
 
     @classmethod
     def type_to_dc(cls, t: str) -> ElectricMeterCac:

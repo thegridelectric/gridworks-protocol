@@ -12,7 +12,7 @@ class WebServerComponentGt(ComponentGt):
     TypeName: Literal["web.server.component.gt"] = "web.server.component.gt"
     Version: Literal["000"] = "000"
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
     @classmethod

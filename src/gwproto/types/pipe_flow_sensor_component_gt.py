@@ -141,7 +141,7 @@ class PipeFlowSensorComponentGt(BaseModel):
         json_string = json.dumps(self.as_dict())
         return json_string.encode("utf-8")
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 

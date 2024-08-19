@@ -1,3 +1,5 @@
+# ruff: noqa: ANN401
+
 import string
 import struct
 from typing import Any, Callable, List
@@ -81,18 +83,18 @@ def is_valid_asa_name(candidate: str) -> bool:
         bool: True if a string no more than 32 cars
     """
     try:
-        l = len(candidate)
-    except:  # noqa
+        candidate_len = len(candidate)
+    except:  # noqa: E722
         return False
-    return not l > 32
+    return not candidate_len > 32
 
 
 def check_is_valid_asa_name(candidate: str) -> None:
     try:
-        l = len(candidate)
+        candidate_len = len(candidate)
     except Exception as e:
-        raise ValueError(f"Not ValidAsaName: {e} /n {candidate} ")
-    if l > 32:
+        raise ValueError(f"Not ValidAsaName: {e} /n {candidate} ") from e
+    if candidate_len > 32:
         raise ValueError(
             f"Not ValidAsaName: AsaNames must be <= 32 /n {candidate} is {len(candidate)}"
         )
@@ -160,8 +162,8 @@ def check_is_left_right_dot(candidate: str) -> None:
     """
     try:
         x: List[str] = candidate.split(".")
-    except:
-        raise ValueError("Failed to seperate into words with split'.'")
+    except Exception as e:
+        raise ValueError("Failed to seperate into words with split'.'") from e
     first_word = x[0]
     first_char = first_word[0]
     if not first_char.isalpha():
@@ -225,7 +227,7 @@ def is_positive_integer(candidate: int) -> bool:
 
 def check_is_positive_integer(candidate: int) -> None:
     if not isinstance(candidate, int):
-        raise ValueError("Must be an integer")
+        raise ValueError("Must be an integer")  # noqa: TRY004
     if candidate <= 0:
         raise ValueError("Must be positive integer")
 
@@ -271,7 +273,7 @@ def is_unsigned_short(candidate: int) -> bool:
 def check_is_unsigned_short(candidate: int) -> None:
     try:
         struct.pack("H", candidate)
-    except:
+    except:  # noqa: E722
         raise ValueError("requires 0 <= number <= 65535")
 
 
@@ -286,7 +288,7 @@ def is_short_integer(candidate: int) -> bool:
 def check_is_short_integer(candidate: int) -> None:
     try:
         struct.pack("h", candidate)
-    except:
+    except:  # noqa: E722
         raise ValueError("short format requires (-32767 -1) <= number <= 32767")
 
 

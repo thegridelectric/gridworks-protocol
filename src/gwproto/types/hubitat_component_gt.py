@@ -16,7 +16,7 @@ class HubitatComponentGt(ComponentGt):
     TypeName: Literal["hubitat.component.gt"] = "hubitat.component.gt"
     Version: Literal["000"] = "000"
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
     def url_config(self) -> URLConfig:

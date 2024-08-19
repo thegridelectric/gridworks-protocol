@@ -4,7 +4,7 @@ import json
 import logging
 from typing import Any, Dict, Literal
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 
 from gwproto.errors import SchemaError
 
@@ -41,7 +41,8 @@ class GtShCliAtnCmd(BaseModel):
     TypeName: Literal["gt.sh.cli.atn.cmd"] = "gt.sh.cli.atn.cmd"
     Version: Literal["110"] = "110"
 
-    @validator("FromGNodeAlias")
+    @field_validator("FromGNodeAlias")
+    @classmethod
     def _check_from_g_node_alias(cls, v: str) -> str:
         try:
             check_is_left_right_dot(v)
@@ -51,7 +52,8 @@ class GtShCliAtnCmd(BaseModel):
             )
         return v
 
-    @validator("FromGNodeId")
+    @field_validator("FromGNodeId")
+    @classmethod
     def _check_from_g_node_id(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
@@ -79,8 +81,8 @@ class GtShCliAtnCmd(BaseModel):
         """
         d = {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }

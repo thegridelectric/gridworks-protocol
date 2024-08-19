@@ -4,7 +4,7 @@ import json
 import logging
 from typing import Any, Dict, List, Literal
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 
 from gwproto.errors import SchemaError
 
@@ -45,7 +45,8 @@ class GtShBooleanactuatorCmdStatus(BaseModel):
     )
     Version: Literal["100"] = "100"
 
-    @validator("ShNodeAlias")
+    @field_validator("ShNodeAlias")
+    @classmethod
     def _check_sh_node_alias(cls, v: str) -> str:
         try:
             check_is_left_right_dot(v)
@@ -53,7 +54,8 @@ class GtShBooleanactuatorCmdStatus(BaseModel):
             raise ValueError(f"ShNodeAlias failed LeftRightDot format validation: {e}")
         return v
 
-    @validator("CommandTimeUnixMsList")
+    @field_validator("CommandTimeUnixMsList")
+    @classmethod
     def _check_command_time_unix_ms_list(cls, v: List[int]) -> List[int]:
         for elt in v:
             try:
@@ -82,8 +84,8 @@ class GtShBooleanactuatorCmdStatus(BaseModel):
         """
         d = {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }

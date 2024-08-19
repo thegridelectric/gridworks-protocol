@@ -4,7 +4,7 @@ import json
 import logging
 from typing import Any, Dict, Literal, Optional
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 
 from gwproto.data_classes.component_attribute_class import ComponentAttributeClass
 from gwproto.errors import SchemaError
@@ -45,11 +45,11 @@ class ComponentAttributeClassGt(BaseModel):
         ),
         default=None,
     )
-    # TODO: bump-pydnatic hack; restore this to "component.attribute.class.gt"
-    TypeName: Literal["component.attribute.CLASS.gt"] = "component.attribute.CLASS.gt"
+    TypeName: Literal["component.attribute.class.gt"] = "component.attribute.class.gt"
     Version: Literal["000"] = "000"
 
-    @validator("ComponentAttributeClassId")
+    @field_validator("ComponentAttributeClassId")
+    @classmethod
     def _check_component_attribute_class_id(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
@@ -77,8 +77,8 @@ class ComponentAttributeClassGt(BaseModel):
         """
         d = {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"},
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"},
                 by_alias=True,
             ).items()
             if value is not None

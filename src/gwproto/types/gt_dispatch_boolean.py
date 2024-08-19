@@ -4,7 +4,7 @@ import json
 import logging
 from typing import Any, Dict, Literal
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 
 from gwproto.errors import SchemaError
 
@@ -52,7 +52,8 @@ class GtDispatchBoolean(BaseModel):
     TypeName: Literal["gt.dispatch.boolean"] = "gt.dispatch.boolean"
     Version: Literal["110"] = "110"
 
-    @validator("AboutNodeName")
+    @field_validator("AboutNodeName")
+    @classmethod
     def _check_about_node_name(cls, v: str) -> str:
         try:
             check_is_left_right_dot(v)
@@ -62,7 +63,8 @@ class GtDispatchBoolean(BaseModel):
             )
         return v
 
-    @validator("ToGNodeAlias")
+    @field_validator("ToGNodeAlias")
+    @classmethod
     def _check_to_g_node_alias(cls, v: str) -> str:
         try:
             check_is_left_right_dot(v)
@@ -70,7 +72,8 @@ class GtDispatchBoolean(BaseModel):
             raise ValueError(f"ToGNodeAlias failed LeftRightDot format validation: {e}")
         return v
 
-    @validator("FromGNodeAlias")
+    @field_validator("FromGNodeAlias")
+    @classmethod
     def _check_from_g_node_alias(cls, v: str) -> str:
         try:
             check_is_left_right_dot(v)
@@ -80,7 +83,8 @@ class GtDispatchBoolean(BaseModel):
             )
         return v
 
-    @validator("FromGNodeInstanceId")
+    @field_validator("FromGNodeInstanceId")
+    @classmethod
     def _check_from_g_node_instance_id(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
@@ -90,7 +94,8 @@ class GtDispatchBoolean(BaseModel):
             )
         return v
 
-    @validator("RelayState", pre=True)
+    @field_validator("RelayState", mode="before")
+    @classmethod
     def _check_relay_state(cls, v: int) -> int:
         try:
             check_is_bit(v)
@@ -98,7 +103,8 @@ class GtDispatchBoolean(BaseModel):
             raise ValueError(f"RelayState failed Bit format validation: {e}")
         return v
 
-    @validator("SendTimeUnixMs")
+    @field_validator("SendTimeUnixMs")
+    @classmethod
     def _check_send_time_unix_ms(cls, v: int) -> int:
         try:
             check_is_reasonable_unix_time_ms(v)
@@ -126,8 +132,8 @@ class GtDispatchBoolean(BaseModel):
         """
         d = {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }

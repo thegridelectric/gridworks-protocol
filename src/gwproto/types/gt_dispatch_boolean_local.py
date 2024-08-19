@@ -4,7 +4,7 @@ import json
 import logging
 from typing import Any, Dict, Literal
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 
 from gwproto.errors import SchemaError
 
@@ -47,7 +47,8 @@ class GtDispatchBooleanLocal(BaseModel):
     TypeName: Literal["gt.dispatch.boolean.local"] = "gt.dispatch.boolean.local"
     Version: Literal["110"] = "110"
 
-    @validator("RelayState", pre=True)
+    @field_validator("RelayState", mode="before")
+    @classmethod
     def _check_relay_state(cls, v: int) -> int:
         try:
             check_is_bit(v)
@@ -55,7 +56,8 @@ class GtDispatchBooleanLocal(BaseModel):
             raise ValueError(f"RelayState failed Bit format validation: {e}")
         return v
 
-    @validator("AboutNodeName")
+    @field_validator("AboutNodeName")
+    @classmethod
     def _check_about_node_name(cls, v: str) -> str:
         try:
             check_is_left_right_dot(v)
@@ -65,7 +67,8 @@ class GtDispatchBooleanLocal(BaseModel):
             )
         return v
 
-    @validator("FromNodeName")
+    @field_validator("FromNodeName")
+    @classmethod
     def _check_from_node_name(cls, v: str) -> str:
         try:
             check_is_left_right_dot(v)
@@ -73,7 +76,8 @@ class GtDispatchBooleanLocal(BaseModel):
             raise ValueError(f"FromNodeName failed LeftRightDot format validation: {e}")
         return v
 
-    @validator("SendTimeUnixMs")
+    @field_validator("SendTimeUnixMs")
+    @classmethod
     def _check_send_time_unix_ms(cls, v: int) -> int:
         try:
             check_is_reasonable_unix_time_ms(v)
@@ -101,8 +105,8 @@ class GtDispatchBooleanLocal(BaseModel):
         """
         d = {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }

@@ -4,7 +4,7 @@ import json
 import logging
 from typing import Any, Dict, List, Literal, Self
 
-from pydantic import BaseModel, Field, model_validator, validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 from gwproto.enums import TelemetryName as EnumTelemetryName
 from gwproto.errors import SchemaError
@@ -64,7 +64,8 @@ class GtShMultipurposeTelemetryStatus(BaseModel):
     )
     Version: Literal["100"] = "100"
 
-    @validator("AboutNodeAlias")
+    @field_validator("AboutNodeAlias")
+    @classmethod
     def _check_about_node_alias(cls, v: str) -> str:
         try:
             check_is_left_right_dot(v)
@@ -74,7 +75,8 @@ class GtShMultipurposeTelemetryStatus(BaseModel):
             )
         return v
 
-    @validator("ReadTimeUnixMsList")
+    @field_validator("ReadTimeUnixMsList")
+    @classmethod
     def _check_read_time_unix_ms_list(cls, v: List[int]) -> List[int]:
         for elt in v:
             try:
@@ -115,8 +117,8 @@ class GtShMultipurposeTelemetryStatus(BaseModel):
         """
         d = {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }

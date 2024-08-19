@@ -4,7 +4,7 @@ import json
 import logging
 from typing import Any, Dict, Literal
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 
 from gwproto.errors import SchemaError
 from gwproto.types.telemetry_snapshot_spaceheat import (
@@ -34,7 +34,8 @@ class SnapshotSpaceheat(BaseModel):
     TypeName: Literal["snapshot.spaceheat"] = "snapshot.spaceheat"
     Version: Literal["000"] = "000"
 
-    @validator("FromGNodeAlias")
+    @field_validator("FromGNodeAlias")
+    @classmethod
     def _check_from_g_node_alias(cls, v: str) -> str:
         try:
             check_is_left_right_dot(v)
@@ -44,7 +45,8 @@ class SnapshotSpaceheat(BaseModel):
             )
         return v
 
-    @validator("FromGNodeInstanceId")
+    @field_validator("FromGNodeInstanceId")
+    @classmethod
     def _check_from_g_node_instance_id(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
@@ -72,8 +74,8 @@ class SnapshotSpaceheat(BaseModel):
         """
         d = {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }

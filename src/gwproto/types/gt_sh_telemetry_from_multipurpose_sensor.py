@@ -4,7 +4,7 @@ import json
 import logging
 from typing import Any, Dict, List, Literal, Self
 
-from pydantic import BaseModel, Field, model_validator, validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 from gwproto.enums import TelemetryName
 from gwproto.errors import SchemaError
@@ -45,12 +45,13 @@ class GtShTelemetryFromMultipurposeSensor(BaseModel):
     ValueList: List[int] = Field(
         title="ValueList",
     )
-    TypeName: Literal["gt.sh.telemetry.FROM.multipurpose.sensor"] = (
-        "gt.sh.telemetry.FROM.multipurpose.sensor"  # TODO: bump-pydnatic hack; restore this to "gt.sh.telemetry.from.multipurpose.sensor"
+    TypeName: Literal["gt.sh.telemetry.from.multipurpose.sensor"] = (
+        "gt.sh.telemetry.from.multipurpose.sensor"
     )
     Version: Literal["100"] = "100"
 
-    @validator("ScadaReadTimeUnixMs")
+    @field_validator("ScadaReadTimeUnixMs")
+    @classmethod
     def _check_scada_read_time_unix_ms(cls, v: int) -> int:
         try:
             check_is_reasonable_unix_time_ms(v)
@@ -60,7 +61,8 @@ class GtShTelemetryFromMultipurposeSensor(BaseModel):
             )
         return v
 
-    @validator("AboutNodeAliasList")
+    @field_validator("AboutNodeAliasList")
+    @classmethod
     def _check_about_node_alias_list(cls, v: List[str]) -> List[str]:
         for elt in v:
             try:
@@ -85,7 +87,7 @@ class GtShTelemetryFromMultipurposeSensor(BaseModel):
             raise ValueError(
                 "Axiom 1: AboutNodeAliasList, ValueList and TelemetryNameList must all have the same length."
             )
-        return v
+        return self
 
     def as_dict(self) -> Dict[str, Any]:
         """
@@ -105,8 +107,8 @@ class GtShTelemetryFromMultipurposeSensor(BaseModel):
         """
         d = {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }

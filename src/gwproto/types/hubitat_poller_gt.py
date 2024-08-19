@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Extra, validator
+from pydantic import BaseModel, ConfigDict, field_validator
 
 from gwproto.enums import TelemetryName, Unit
 from gwproto.utils import snake_to_camel
@@ -31,12 +31,12 @@ class MakerAPIAttributeGt(BaseModel):
         )
         return Unit(value)
 
-    class Config:
-        extra = Extra.allow
-        alias_generator = snake_to_camel
-        allow_population_by_field_name = True
+    model_config = ConfigDict(
+        extra="allow", alias_generator=snake_to_camel, populate_by_name=True
+    )
 
-    @validator("telemetry_name_gt_enum_symbol")
+    @field_validator("telemetry_name_gt_enum_symbol")
+    @classmethod
     def _check_telemetry_name_symbol(cls, v: str) -> str:
         if v not in TelemetryName.symbols():
             v = TelemetryName.value_to_symbol(TelemetryName.default())
@@ -50,8 +50,6 @@ class HubitatPollerGt(BaseModel):
     enabled: bool = True
     web_listen_enabled: bool = True
     poll_period_seconds: float = 60
-
-    class Config:
-        extra = Extra.allow
-        alias_generator = snake_to_camel
-        allow_population_by_field_name = True
+    model_config = ConfigDict(
+        extra="allow", alias_generator=snake_to_camel, populate_by_name=True
+    )

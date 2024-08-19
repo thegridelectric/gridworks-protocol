@@ -32,7 +32,7 @@ class HubitatCacGt(ComponentAttributeClassGt):
 
 
 class HubitatCacGt_Maker:
-    type_name: str = HubitatCacGt.__fields__["TypeName"].default
+    type_name: str = HubitatCacGt.model_fields["TypeName"].default
     version = "000"
     tuple: HubitatCacGt
 

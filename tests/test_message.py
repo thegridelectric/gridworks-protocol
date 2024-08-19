@@ -43,7 +43,7 @@ def test_naive_payload():
     assert m.Header.Dst == ""
     assert m.Header.MessageType == message_type
     assert m.Header.MessageId == ""
-    assert m.Header.AckRequired == False
+    assert m.Header.AckRequired is False
     assert m.Header.TypeName == "gridworks.header"
 
     # Explicit src, message_type fields, naive payload
@@ -60,7 +60,7 @@ def test_naive_payload():
     assert m.Header.Dst == ""
     assert m.Header.MessageType == message_type
     assert m.Header.MessageId == ""
-    assert m.Header.AckRequired == False
+    assert m.Header.AckRequired is False
     assert m.Header.TypeName == "gridworks.header"
 
     # Explicit Header, naive payload
@@ -72,18 +72,18 @@ def test_naive_payload():
         Payload=NaivePayload(x=1),
     )
     assert m == m2
-    assert m.dict() == m2.dict()
+    assert m.model_dump() == m2.model_dump()
 
     # Explicit header from dict, naive payload
     m2 = Message(
         Header=Header(
             Src=src,
             MessageType=message_type,
-        ).dict(),
+        ).model_dump(),
         Payload=NaivePayload(x=1),
     )
     assert m == m2
-    assert m.dict() == m2.dict()
+    assert m.model_dump() == m2.model_dump()
 
     # All header fields in kwargs
     dst = "bar"
@@ -136,13 +136,14 @@ def test_from_payload():
     assert m.Header.Dst == ""
     assert m.Header.MessageType == message_type
     assert m.Header.MessageId == ""
-    assert m.Header.AckRequired == False
+    assert m.Header.AckRequired is False
     assert m.Header.TypeName == "gridworks.header"
 
     # Payload dict provides fields
-    m2 = Message(Payload=PayloadProvides(Src=src, x=1).dict())
-    assert m == m2
-    assert m.dict() == m2.dict()
+    m2 = Message(Payload=PayloadProvides(Src=src, x=1).model_dump())
+    assert m.model_dump() == m2.model_dump()
+    m3 = Message[PayloadProvides](Payload=m2.Payload)
+    assert m == m3
 
     # *All* header fields from payload object
     dst = "bar"
@@ -169,12 +170,14 @@ def test_from_payload():
     assert m.Header.TypeName == "gridworks.header"
 
     # *All* header fields from payload dict
-    m2 = Message(Payload=p.dict())
-    assert m == m2
+    m2 = Message(Payload=p.model_dump())
+    assert m.model_dump() == m2.model_dump()
+    m3 = Message[PayloadProvidesMore](Payload=m2.Payload)
+    assert m == m3
 
     # other message type fields
     for message_type_field_name in PAYLOAD_TYPE_FIELDS:
-        payload_dict = p.dict()
+        payload_dict = p.model_dump()
         del payload_dict["TypeName"]
         payload_dict[message_type_field_name] = p.TypeName
         m3 = Message(Payload=payload_dict)

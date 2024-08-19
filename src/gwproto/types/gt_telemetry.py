@@ -4,7 +4,7 @@ import json
 import logging
 from typing import Any, Dict, Literal
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 
 from gwproto.enums import TelemetryName
 from gwproto.errors import SchemaError
@@ -52,7 +52,8 @@ class GtTelemetry(BaseModel):
     TypeName: Literal["gt.telemetry"] = "gt.telemetry"
     Version: Literal["110"] = "110"
 
-    @validator("ScadaReadTimeUnixMs")
+    @field_validator("ScadaReadTimeUnixMs")
+    @classmethod
     def _check_scada_read_time_unix_ms(cls, v: int) -> int:
         try:
             check_is_reasonable_unix_time_ms(v)
@@ -80,8 +81,8 @@ class GtTelemetry(BaseModel):
         """
         d = {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }

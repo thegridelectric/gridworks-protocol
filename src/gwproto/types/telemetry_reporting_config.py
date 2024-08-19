@@ -4,7 +4,7 @@ import json
 import logging
 from typing import Any, Dict, Literal, Optional, Self
 
-from pydantic import BaseModel, Field, model_validator, validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 from gwproto.enums import TelemetryName as EnumTelemetryName
 from gwproto.enums import Unit as EnumUnit
@@ -55,7 +55,8 @@ class TelemetryReportingConfig(BaseModel):
     TypeName: Literal["telemetry.reporting.config"] = "telemetry.reporting.config"
     Version: Literal["000"] = "000"
 
-    @validator("AboutNodeName")
+    @field_validator("AboutNodeName")
+    @classmethod
     def _check_about_node_name(cls, v: str) -> str:
         try:
             check_is_left_right_dot(v)
@@ -65,7 +66,8 @@ class TelemetryReportingConfig(BaseModel):
             )
         return v
 
-    @validator("NameplateMaxValue")
+    @field_validator("NameplateMaxValue")
+    @classmethod
     def _check_nameplate_max_value(cls, v: Optional[int]) -> Optional[int]:
         if v is None:
             return v
@@ -107,8 +109,8 @@ class TelemetryReportingConfig(BaseModel):
         """
         d = {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }

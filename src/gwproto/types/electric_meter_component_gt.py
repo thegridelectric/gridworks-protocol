@@ -4,7 +4,7 @@ import json
 import logging
 from typing import Any, Dict, List, Literal, Optional, Self
 
-from pydantic import BaseModel, Field, model_validator, validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 from gwproto.data_classes.components.electric_meter_component import (
     ElectricMeterComponent,
@@ -93,7 +93,8 @@ class ElectricMeterComponentGt(BaseModel):
     TypeName: Literal["electric.meter.component.gt"] = "electric.meter.component.gt"
     Version: Literal["000"] = "000"
 
-    @validator("ComponentId")
+    @field_validator("ComponentId")
+    @classmethod
     def _check_component_id(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
@@ -103,7 +104,8 @@ class ElectricMeterComponentGt(BaseModel):
             )
         return v
 
-    @validator("ComponentAttributeClassId")
+    @field_validator("ComponentAttributeClassId")
+    @classmethod
     def _check_component_attribute_class_id(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
@@ -113,7 +115,8 @@ class ElectricMeterComponentGt(BaseModel):
             )
         return v
 
-    @validator("ModbusPort")
+    @field_validator("ModbusPort")
+    @classmethod
     def _check_modbus_port(cls, v: Optional[int]) -> Optional[int]:
         if v is None:
             return v
@@ -129,10 +132,8 @@ class ElectricMeterComponentGt(BaseModel):
     def check_axiom_1(self) -> Self:
         """
         Axiom 1: Modbus consistency.
-        ModbusHost is None if and only if ModbusPort is None
+        ModbusHost requires a ModbusPort
         """
-        if self.ModbusHost is None and self.ModbusPort is not None:
-            raise ValueError("Axiom 1: ModbusHost None iff ModbusPort None! ")
         if self.ModbusHost is not None and self.ModbusPort is None:
             raise ValueError("Axiom 1: ModbusHost None iff ModbusPort None! ")
         return self
@@ -176,8 +177,8 @@ class ElectricMeterComponentGt(BaseModel):
         """
         d = {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }

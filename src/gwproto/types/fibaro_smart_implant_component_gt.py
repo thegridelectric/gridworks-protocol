@@ -43,7 +43,7 @@ class FibaroSmartImplantComponentGt(ComponentGt):
 
 
 class FibaroSmartImplantComponentGt_Maker:
-    type_name: str = FibaroSmartImplantComponentGt.__fields__["TypeName"].default
+    type_name: str = FibaroSmartImplantComponentGt.model_fields["TypeName"].default
     version = "000"
     tuple: FibaroSmartImplantComponentGt
 

@@ -3,7 +3,7 @@ import uuid
 from enum import Enum
 from typing import Any, Generic, Literal, Optional, TypeVar
 
-from pydantic import BaseModel, Extra, Field, validator
+from pydantic import BaseModel, Field, field_validator
 
 from gwproto.message import Message, as_enum
 from gwproto.types import GtShStatus, SnapshotSpaceheat
@@ -13,10 +13,10 @@ class EventBase(BaseModel):
     MessageId: str = Field(default_factory=lambda: str(uuid.uuid4()))
     TimeNS: int = Field(default_factory=time.time_ns)
     Src: str = ""
-    TypeName: str = Field(const=True)
+    TypeName: str
 
 
-class AnyEvent(EventBase, extra=Extra.allow):
+class AnyEvent(EventBase, extra="allow"):
     MessageId: str
     TimeNS: int
     Src: str
@@ -53,7 +53,8 @@ class ProblemEvent(EventBase):
     Details: str = ""
     TypeName: Literal["gridworks.event.problem"] = "gridworks.event.problem"
 
-    @validator("ProblemType", pre=True)
+    @field_validator("ProblemType", mode="before")
+    @classmethod
     def problem_type_value(cls, v: Any) -> Optional[Problems]:
         return as_enum(v, Problems, Problems.error)
 
@@ -102,12 +103,12 @@ class PeerActiveEvent(CommEvent):
 
 
 class GtShStatusEvent(EventBase):
-    status: GtShStatus | dict
+    status: GtShStatus
     TypeName: Literal["gridworks.event.gt.sh.status"] = "gridworks.event.gt.sh.status"
 
 
 class SnapshotSpaceheatEvent(EventBase):
-    snap: SnapshotSpaceheat | dict
+    snap: SnapshotSpaceheat
     TypeName: Literal["gridworks.event.snapshot.spaceheat"] = (
         "gridworks.event.snapshot.spaceheat"
     )

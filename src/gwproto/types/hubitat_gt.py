@@ -1,7 +1,7 @@
 from typing import Optional
 
 import yarl
-from pydantic import BaseModel, Extra
+from pydantic import BaseModel, ConfigDict
 
 from gwproto.property_format import predicate_validator
 from gwproto.types.rest_poller_gt import URLArgs, URLConfig
@@ -14,10 +14,7 @@ class HubitatGt(BaseModel):
     AccessToken: str
     MacAddress: str
     WebListenEnabled: bool = True
-
-    class Config:
-        extra = Extra.allow
-        allow_population_by_field_name = True
+    model_config = ConfigDict(extra="allow", populate_by_name=True)
 
     _is_mac_address = predicate_validator("MacAddress", has_mac_address_format)
 

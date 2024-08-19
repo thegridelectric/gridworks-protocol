@@ -17,8 +17,10 @@ class ElectricMeterCac(ComponentAttributeClass):
         poll_period_ms: int,
         default_baud: int,
         display_name: Optional[str] = None,
-        telemetry_name_list: List[TelemetryName] = [],
+        telemetry_name_list: Optional[List[TelemetryName]] = None,
     ) -> None:
+        if telemetry_name_list is None:
+            telemetry_name_list = []
         super(self.__class__, self).__init__(
             component_attribute_class_id=component_attribute_class_id,
             display_name=display_name,

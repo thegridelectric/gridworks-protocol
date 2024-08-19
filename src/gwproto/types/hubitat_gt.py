@@ -52,11 +52,11 @@ class HubitatGt(BaseModel):
         return config
 
     def url_configs(self) -> dict[str, URLConfig]:
-        return dict(
-            base=self.url_config(),
-            maker_api=self.maker_api_url_config(),
-            devices=self.devices_url_config(),
-        )
+        return {
+            "base": self.url_config(),
+            "maker_api": self.maker_api_url_config(),
+            "devices": self.devices_url_config(),
+        }
 
     def urls(self) -> dict[str, Optional[yarl.URL]]:
         return {

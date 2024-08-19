@@ -30,16 +30,16 @@ class URLArgs(BaseModel):
     def dict_from_url(cls, url: str | yarl.URL) -> dict:
         if isinstance(url, str):
             url = yarl.URL(url)
-        return dict(
-            scheme=url.scheme,
-            user=url.user,
-            password=url.password,
-            host=url.host,
-            port=url.port,
-            path=url.path,
-            query=list(url.query.items()),
-            fragment=url.fragment,
-        )
+        return {
+            "scheme": url.scheme,
+            "user": url.user,
+            "password": url.password,
+            "host": url.host,
+            "port": url.port,
+            "path": url.path,
+            "query": list(url.query.items()),
+            "fragment": url.fragment,
+        }
 
     @classmethod
     def from_url(cls, url: str | yarl.URL) -> "URLArgs":

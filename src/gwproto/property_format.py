@@ -310,7 +310,7 @@ def is_uuid_canonical_textual(candidate: str) -> bool:
         return False
     if len(x[3]) != 4:
         return False
-    return not len(x[4]) != 12
+    return len(x[4]) == 12
 
 
 def check_is_uuid_canonical_textual(candidate: str) -> None:
@@ -344,11 +344,10 @@ def check_world_alias_matches_universe(g_node_alias: str, universe: str) -> None
     """
     check_is_left_right_dot(g_node_alias)
     world_alias = g_node_alias.split(".")[0]
-    if universe == "dev":
-        if world_alias[0] != "d":
-            raise ValueError(
-                f"World alias for dev universe must start with d. Got {world_alias}"
-            )
+    if universe == "dev" and world_alias[0] != "d":
+        raise ValueError(
+            f"World alias for dev universe must start with d. Got {world_alias}"
+        )
 
 
 def is_world_instance_name_format(candidate: str) -> bool:

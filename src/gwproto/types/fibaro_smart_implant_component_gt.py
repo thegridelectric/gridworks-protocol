@@ -17,7 +17,7 @@ class FibaroSmartImplantComponentGt(ComponentGt):
     Version: Literal["000"] = "000"
 
     def __hash__(self):
-        return hash((type(self),) + tuple(self.__dict__.values()))
+        return hash((type(self), *tuple(self.__dict__.values())))
 
     @classmethod
     def from_data_class(

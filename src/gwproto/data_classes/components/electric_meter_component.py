@@ -19,9 +19,13 @@ class ElectricMeterComponent(Component):
         hw_uid: Optional[str] = None,
         modbus_host: Optional[str] = None,
         modbus_port: Optional[int] = None,
-        config_list: List[TelemetryReportingConfig] = [],
-        egauge_io_list: List[EgaugeIo] = [],
+        config_list: Optional[List[TelemetryReportingConfig]] = None,
+        egauge_io_list: Optional[List[EgaugeIo]] = None,
     ) -> None:
+        if egauge_io_list is None:
+            egauge_io_list = []
+        if config_list is None:
+            config_list = []
         super(self.__class__, self).__init__(
             display_name=display_name,
             component_id=component_id,

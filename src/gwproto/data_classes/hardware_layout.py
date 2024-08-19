@@ -74,7 +74,7 @@ def load_cacs(
 ) -> dict[str, Any]:
     if errors is None:
         errors = []
-    cacs = dict()
+    cacs = {}
     for type_name, maker_class in [
         ("RelayCacs", RelayCacGt_Maker),
         ("ResistiveHeaterCacs", ResistiveHeaterCacGt_Maker),
@@ -90,7 +90,7 @@ def load_cacs(
                 )
             except Exception as e:
                 if raise_errors:
-                    raise e
+                    raise
                 errors.append(LoadError(type_name, d, e))
     if cac_decoder is None:
         cac_decoder = default_cac_decoder
@@ -106,7 +106,7 @@ def load_cacs(
             cacs[d["ComponentAttributeClassId"]] = cac
         except Exception as e:
             if raise_errors:
-                raise e
+                raise
             errors.append(LoadError("OtherCacs", d, e))
     return cacs
 
@@ -119,7 +119,7 @@ def load_components(
 ) -> dict[Any, Any]:
     if errors is None:
         errors = []
-    components = dict()
+    components = {}
     for type_name, maker_class in [
         ("RelayComponents", RelayComponentGt_Maker),
         ("ResistiveHeaterComponents", ResistiveHeaterComponentGt_Maker),
@@ -135,7 +135,7 @@ def load_components(
                 )
             except Exception as e:
                 if raise_errors:
-                    raise e
+                    raise
                 errors.append(LoadError(type_name, d, e))
     if component_decoder is None:
         component_decoder = default_component_decoder
@@ -149,7 +149,7 @@ def load_components(
             components[d["ComponentId"]] = component
         except Exception as e:
             if raise_errors:
-                raise e
+                raise
             errors.append(LoadError("OtherComponents", d, e))
     return components
 
@@ -170,7 +170,7 @@ def load_nodes(
                 nodes[node_name] = SpaceheatNodeGt_Maker.dict_to_dc(d)
         except Exception as e:
             if raise_errors:
-                raise e
+                raise
             errors.append(LoadError("ShNode", d, e))
     return nodes
 
@@ -184,7 +184,7 @@ def resolve_links(
     if errors is None:
         errors = []
     for node_name, node in nodes.items():
-        d = dict(node=dict(name=node_name, node=node))
+        d = {"node": {"name": node_name, "node": node}}
         try:
             if node.component_id is not None:
                 component = components.get(node.component_id, None)
@@ -200,7 +200,7 @@ def resolve_links(
                     )
         except Exception as e:
             if raise_errors:
-                raise e
+                raise
             errors.append(LoadError("ShNode", d, e))
 
 
@@ -277,26 +277,26 @@ class HardwareLayout:
     ) -> "HardwareLayout":
         if errors is None:
             errors = []
-        load_args = dict(
-            cacs=load_cacs(
+        load_args = {
+            "cacs": load_cacs(
                 layout=layout,
                 raise_errors=raise_errors,
                 errors=errors,
                 cac_decoder=cac_decoder,
             ),
-            components=load_components(
+            "components": load_components(
                 layout=layout,
                 raise_errors=raise_errors,
                 errors=errors,
                 component_decoder=component_decoder,
             ),
-            nodes=load_nodes(
+            "nodes": load_nodes(
                 layout=layout,
                 raise_errors=raise_errors,
                 errors=errors,
                 included_node_names=included_node_names,
             ),
-        )
+        }
         resolve_links(
             load_args["nodes"],
             load_args["components"],
@@ -446,7 +446,7 @@ class HardwareLayout:
     @cached_property
     def power_meter_node(self) -> ShNode:
         """Schema for input data enforces exactly one Spaceheat Node with role PowerMeter"""
-        return list(filter(lambda x: x.role == Role.PowerMeter, self.nodes.values()))[0]
+        return next(filter(lambda x: x.role == Role.PowerMeter, self.nodes.values()))
 
     @cached_property
     def power_meter_component(self) -> ElectricMeterComponent:
@@ -505,8 +505,8 @@ class HardwareLayout:
         return list(
             filter(
                 lambda x: (
-                    x.actor_class == ActorClass.SimpleSensor
-                    or x.actor_class == ActorClass.BooleanActuator
+                    x.actor_class
+                    in (ActorClass.SimpleSensor, ActorClass.BooleanActuator)
                 ),
                 all_nodes,
             )
@@ -518,10 +518,13 @@ class HardwareLayout:
             filter(
                 lambda x: (
                     (
-                        x.actor_class == ActorClass.MultipurposeSensor
-                        or x.actor_class == ActorClass.HubitatTankModule
-                        or x.actor_class == ActorClass.HubitatPoller
-                        or x.actor_class == ActorClass.HoneywellThermostat
+                        x.actor_class
+                        in (
+                            ActorClass.MultipurposeSensor,
+                            ActorClass.HubitatTankModule,
+                            ActorClass.HubitatPoller,
+                            ActorClass.HoneywellThermostat,
+                        )
                     )
                     and hasattr(x.component, "config_list")
                 ),

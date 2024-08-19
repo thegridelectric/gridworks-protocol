@@ -29,11 +29,11 @@ def test_hubitat_gt() -> None:
         "http://192.168.1.10/apps/api/1/devices?access_token=foo"
     )
     url_configs_got = {k: v.to_url() for k, v in h.url_configs().items()}
-    url_configs_exp = dict(
-        base=yarl.URL("http://192.168.1.10"),
-        maker_api=yarl.URL("http://192.168.1.10/apps/api/1?access_token=foo"),
-        devices=yarl.URL("http://192.168.1.10/apps/api/1/devices?access_token=foo"),
-    )
+    url_configs_exp = {
+        "base": yarl.URL("http://192.168.1.10"),
+        "maker_api": yarl.URL("http://192.168.1.10/apps/api/1?access_token=foo"),
+        "devices": yarl.URL("http://192.168.1.10/apps/api/1/devices?access_token=foo"),
+    }
     assert url_configs_got == url_configs_exp
     assert h.urls() == url_configs_exp
     device_id = 1

@@ -28,7 +28,7 @@ class HubitatPollerCacGt(ComponentAttributeClassGt):
         )
 
     def __hash__(self):
-        return hash((type(self),) + tuple(self.__dict__.values()))
+        return hash((type(self), *tuple(self.__dict__.values())))
 
 
 class HubitatPollerCacGt_Maker:

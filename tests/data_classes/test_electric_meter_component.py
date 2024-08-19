@@ -8,7 +8,7 @@ from gwproto.types.electric_meter_component_gt import ElectricMeterComponentGt_M
 # test isolation as per scada
 
 
-def test_electric_meter_component():
+def test_electric_meter_component() -> None:
     HardwareLayout.load("tests/config/hardware-layout.json")
     d = {
         "ComponentId": "2bfd0036-0b0e-4732-8790-bc7d0536a85e",

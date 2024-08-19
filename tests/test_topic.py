@@ -2,14 +2,14 @@ import pytest
 from gwproto import DecodedMQTTTopic, MQTTTopic
 
 
-def test_mqtt_topic_encode():
+def test_mqtt_topic_encode() -> None:
     assert MQTTTopic.encode("foo", "bar", "baz") == "foo/bar/baz"
     assert MQTTTopic.encode("foo.bar", "baz.bla", "bla") == "foo-bar/baz-bla/bla"
     assert MQTTTopic.encode_subscription("foo", "bar") == "foo/bar/#"
     assert MQTTTopic.encode_subscription("foo.bar", "baz.bla") == "foo-bar/baz-bla/#"
 
 
-def test_mqtt_topic_decode():
+def test_mqtt_topic_decode() -> None:
     with pytest.raises(ValueError):
         MQTTTopic.decode("")
 

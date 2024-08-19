@@ -111,7 +111,7 @@ class FibaroTempSensorSettings(FibaroTempSensorSettingsGt):
             return match.group("access_token")
         return None
 
-    def clear_property_cache(self):
+    def clear_property_cache(self) -> None:
         if self.rest is not None:
             self.rest.clear_property_cache()
         for prop in [

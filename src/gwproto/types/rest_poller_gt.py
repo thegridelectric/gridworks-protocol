@@ -206,7 +206,7 @@ class RESTPollerSettings(BaseModel):
             url_args = request_args
         return yarl.URL.build(**url_args)
 
-    def clear_property_cache(self):
+    def clear_property_cache(self) -> None:
         self.__dict__.pop("url", None)
 
     @model_validator(mode="after")

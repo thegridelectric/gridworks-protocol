@@ -45,7 +45,7 @@ class HubitatPollerComponent(Component, ComponentResolver):
         node_name: str,
         nodes: dict[str, ShNode],
         components: dict[str, Component],
-    ):
+    ) -> None:
         if self._rest is not None:
             raise ValueError(
                 f"resolve() must be called exactly once. "

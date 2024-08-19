@@ -3,7 +3,7 @@ from gwproto.errors import SchemaError
 from gwproto.messages import GsDispatch_Maker as Maker
 
 
-def test_gs_dispatch():
+def test_gs_dispatch() -> None:
     gw_tuple = Maker(relay_state=1).tuple
 
     assert Maker.tuple_to_type(gw_tuple) == b"\x01\x00"  # type: ignore

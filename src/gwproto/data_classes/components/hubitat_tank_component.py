@@ -53,7 +53,7 @@ class HubitatTankComponent(Component, ComponentResolver):
         tank_node_name: str,
         nodes: dict[str, ShNode],
         components: dict[str, Component],
-    ):
+    ) -> None:
         hubitat_component = HubitatComponentGt.from_component_id(
             self.hubitat.ComponentId, components
         )

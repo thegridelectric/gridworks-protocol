@@ -6,7 +6,7 @@ from gwproto.types import ElectricMeterCacGt_Maker
 # test isolation as per scada
 
 
-def test_electric_meter_cac():
+def test_electric_meter_cac() -> None:
     HardwareLayout.load("tests/config/hardware-layout.json")
     d = {
         "ComponentAttributeClassId": "28897ac1-ea42-4633-96d3-196f63f5a951",

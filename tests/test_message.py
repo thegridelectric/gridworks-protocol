@@ -12,7 +12,7 @@ class E(enum.Enum):
     b = 2
 
 
-def test_as_enum():
+def test_as_enum() -> None:
     assert as_enum(1, E) == E.a
     assert as_enum(2, E) == E.b
     assert as_enum(3, E) is None
@@ -23,7 +23,7 @@ class NaivePayload(BaseModel):
     x: int
 
 
-def test_naive_payload():
+def test_naive_payload() -> None:
     assert Message.type_name() == "gw"
 
     # Explicit src, message_type fields, pydantic-known-type payload
@@ -121,7 +121,7 @@ class PayloadProvidesMore(PayloadProvides):
     TypeName: Literal["payload.provides.more"] = "payload.provides.more"
 
 
-def test_from_payload():
+def test_from_payload() -> None:
     x = 1
     src = "foo"
     message_type = "payload.provides"
@@ -184,7 +184,7 @@ def test_from_payload():
         assert m.Header == m3.Header
 
 
-def test_errors():
+def test_errors() -> None:
     # no Payload
     with pytest.raises(ValidationError):
         Message()

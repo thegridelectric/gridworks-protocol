@@ -24,7 +24,7 @@ from gwproto.data_classes.components.simple_temp_sensor_component import (
 from gwproto.data_classes.sh_node import ShNode
 
 
-def flush_components():
+def flush_components() -> None:
     RelayComponent.by_id = {}
     ElectricMeterComponent.by_id = {}
     PipeFlowSensorComponent.by_id = {}
@@ -34,7 +34,7 @@ def flush_components():
     Component.by_id = {}
 
 
-def flush_cacs():
+def flush_cacs() -> None:
     RelayCac.by_id = {}
     ElectricMeterCac.by_id = {}
     MultipurposeSensorCac.by_id = {}
@@ -44,11 +44,11 @@ def flush_cacs():
     ComponentAttributeClass.by_id = {}
 
 
-def flush_spaceheat_nodes():
+def flush_spaceheat_nodes() -> None:
     ShNode.by_id = {}
 
 
-def flush_all():
+def flush_all() -> None:
     flush_components()
     flush_cacs()
     flush_spaceheat_nodes()

@@ -8,7 +8,7 @@ from gwproto.types.electric_meter_component_gt import ElectricMeterComponentGt_M
 from tests.utils import flush_all
 
 
-def test_flush_and_load_house():
+def test_flush_and_load_house() -> None:
     """Verify that flush_house() successfully removes all dictionary data from relevant dataclasses, and
     load_house() successfully loads test objects"""
     flush_all()
@@ -53,7 +53,7 @@ def test_flush_and_load_house():
     flush_all()
 
 
-def test_load_real_house():
+def test_load_real_house() -> None:
     layout = HardwareLayout(
         {
             "MyAtomicTNodeGNode": {

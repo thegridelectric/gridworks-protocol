@@ -159,7 +159,7 @@ class PipeFlowSensorComponentGt_Maker:
         display_name: Optional[str],
         hw_uid: Optional[str],
         expected_max_gpm_times100: Optional[int],
-    ):
+    ) -> None:
         self.tuple = PipeFlowSensorComponentGt(
             ComponentId=component_id,
             ComponentAttributeClassId=component_attribute_class_id,

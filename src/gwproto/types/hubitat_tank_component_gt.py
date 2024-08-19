@@ -50,7 +50,7 @@ class HubitatTankComponentGt_Maker:
     version = "000"
     tuple: HubitatTankComponentGt
 
-    def __init__(self, component: HubitatTankComponent):
+    def __init__(self, component: HubitatTankComponent) -> None:
         self.tuple = HubitatTankComponentGt.from_data_class(component)
 
     @classmethod

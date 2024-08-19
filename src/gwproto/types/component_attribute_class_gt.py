@@ -121,7 +121,7 @@ class ComponentAttributeClassGt_Maker:
         self,
         component_attribute_class_id: str,
         display_name: Optional[str],
-    ):
+    ) -> None:
         self.tuple = ComponentAttributeClassGt(
             ComponentAttributeClassId=component_attribute_class_id,
             DisplayName=display_name,

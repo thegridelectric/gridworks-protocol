@@ -92,7 +92,7 @@ class PowerWatts_Maker:
     def __init__(
         self,
         watts: int,
-    ):
+    ) -> None:
         self.tuple = PowerWatts(
             Watts=watts,
         )

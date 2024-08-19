@@ -170,7 +170,7 @@ class MultipurposeSensorCacGt_Maker:
         max_thermistors: Optional[int],
         display_name: Optional[str],
         comms_method: Optional[str],
-    ):
+    ) -> None:
         self.tuple = MultipurposeSensorCacGt(
             ComponentAttributeClassId=component_attribute_class_id,
             MakeModel=make_model,

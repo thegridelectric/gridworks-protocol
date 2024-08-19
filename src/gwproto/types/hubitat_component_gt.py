@@ -93,7 +93,7 @@ class HubitatRESTResolutionSettings:
     component_gt: HubitatComponentGt
     maker_api_url_config: URLConfig
 
-    def __init__(self, component_gt: HubitatComponentGt):
+    def __init__(self, component_gt: HubitatComponentGt) -> None:
         self.component_gt = component_gt
         self.maker_api_url_config = self.component_gt.maker_api_url_config()
 
@@ -103,7 +103,7 @@ class HubitatComponentGt_Maker:
     version = "000"
     tuple: HubitatComponentGt
 
-    def __init__(self, component: HubitatComponent):
+    def __init__(self, component: HubitatComponent) -> None:
         self.tuple = HubitatComponentGt.from_data_class(component)
 
     @classmethod

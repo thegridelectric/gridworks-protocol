@@ -130,7 +130,7 @@ class EgaugeRegisterConfig_Maker:
         type: str,  # noqa
         denominator: int,
         unit: str,
-    ):
+    ) -> None:
         self.tuple = EgaugeRegisterConfig(
             Address=address,
             Name=name,

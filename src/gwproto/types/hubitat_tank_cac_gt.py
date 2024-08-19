@@ -36,7 +36,7 @@ class HubitatTankCacGt_Maker:
     version = "000"
     tuple: HubitatTankCacGt
 
-    def __init__(self, cac: HubitatTankModuleCac):
+    def __init__(self, cac: HubitatTankModuleCac) -> None:
         self.tuple = HubitatTankCacGt.from_data_class(cac)
 
     @classmethod

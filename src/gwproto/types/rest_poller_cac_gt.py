@@ -36,7 +36,7 @@ class RESTPollerCacGt_Maker:
     version = "000"
     tuple: RESTPollerCacGt
 
-    def __init__(self, cac: RESTPollerCac):
+    def __init__(self, cac: RESTPollerCac) -> None:
         self.tuple = RESTPollerCacGt.from_data_class(cac)
 
     @classmethod

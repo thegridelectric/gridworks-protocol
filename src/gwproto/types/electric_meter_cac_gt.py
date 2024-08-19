@@ -155,7 +155,7 @@ class ElectricMeterCacGt_Maker:
         poll_period_ms: int,
         interface: LocalCommInterface,
         default_baud: Optional[int],
-    ):
+    ) -> None:
         self.tuple = ElectricMeterCacGt(
             ComponentAttributeClassId=component_attribute_class_id,
             MakeModel=make_model,

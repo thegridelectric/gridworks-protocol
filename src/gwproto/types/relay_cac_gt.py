@@ -123,7 +123,7 @@ class RelayCacGt_Maker:
         make_model: EnumMakeModel,
         display_name: Optional[str],
         typical_response_time_ms: int,
-    ):
+    ) -> None:
         self.tuple = RelayCacGt(
             ComponentAttributeClassId=component_attribute_class_id,
             MakeModel=make_model,

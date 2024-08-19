@@ -128,7 +128,7 @@ class GtShBooleanactuatorCmdStatus_Maker:
         sh_node_alias: str,
         relay_state_command_list: List[int],
         command_time_unix_ms_list: List[int],
-    ):
+    ) -> None:
         self.tuple = GtShBooleanactuatorCmdStatus(
             ShNodeAlias=sh_node_alias,
             RelayStateCommandList=relay_state_command_list,

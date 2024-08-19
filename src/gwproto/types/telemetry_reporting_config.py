@@ -164,7 +164,7 @@ class TelemetryReportingConfig_Maker:
         unit: EnumUnit,
         async_report_threshold: Optional[float],
         nameplate_max_value: Optional[int],
-    ):
+    ) -> None:
         self.tuple = TelemetryReportingConfig(
             TelemetryName=telemetry_name,
             AboutNodeName=about_node_name,

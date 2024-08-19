@@ -22,7 +22,7 @@ class HubitatPollerComponent(Component, ComponentResolver):
         poller_gt: HubitatPollerGt,
         display_name: Optional[str] = None,
         hw_uid: Optional[str] = None,
-    ):
+    ) -> None:
         self.hubitat_gt = HubitatComponentGt.make_stub(poller_gt.hubitat_component_id)
         self.poller_gt = poller_gt
         super().__init__(

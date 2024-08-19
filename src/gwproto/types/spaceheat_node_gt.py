@@ -203,7 +203,7 @@ class SpaceheatNodeGt_Maker:
         rated_voltage_v: Optional[int],
         typical_voltage_v: Optional[int],
         in_power_metering: Optional[bool],
-    ):
+    ) -> None:
         self.tuple = SpaceheatNodeGt(
             ShNodeId=sh_node_id,
             Alias=alias,

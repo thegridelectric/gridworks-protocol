@@ -45,7 +45,7 @@ def decode_to_data_class(
 class CacDecoder(PydanticTypeNameDecoder):
     TYPE_NAME_REGEX = re.compile(r".*\.cac\.gt")
 
-    def __init__(self, model_name: str, **kwargs):
+    def __init__(self, model_name: str, **kwargs) -> None:
         if "type_name_regex" not in kwargs:
             kwargs["type_name_regex"] = CacDecoder.TYPE_NAME_REGEX
         super().__init__(model_name, **kwargs)
@@ -63,7 +63,7 @@ class CacDecoder(PydanticTypeNameDecoder):
 class ComponentDecoder(PydanticTypeNameDecoder):
     TYPE_NAME_REGEX = re.compile(r".*\.component\.gt")
 
-    def __init__(self, model_name: str, **kwargs):
+    def __init__(self, model_name: str, **kwargs) -> None:
         if "type_name_regex" not in kwargs:
             kwargs["type_name_regex"] = ComponentDecoder.TYPE_NAME_REGEX
         super().__init__(model_name, **kwargs)

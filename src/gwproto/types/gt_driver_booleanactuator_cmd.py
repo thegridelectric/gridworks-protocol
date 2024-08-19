@@ -128,7 +128,7 @@ class GtDriverBooleanactuatorCmd_Maker:
         relay_state: int,
         sh_node_alias: str,
         command_time_unix_ms: int,
-    ):
+    ) -> None:
         self.tuple = GtDriverBooleanactuatorCmd(
             RelayState=relay_state,
             ShNodeAlias=sh_node_alias,

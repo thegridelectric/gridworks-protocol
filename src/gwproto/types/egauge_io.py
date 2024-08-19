@@ -115,7 +115,7 @@ class EgaugeIo_Maker:
         self,
         input_config: EgaugeRegisterConfig,
         output_config: TelemetryReportingConfig,
-    ):
+    ) -> None:
         self.tuple = EgaugeIo(
             InputConfig=input_config,
             OutputConfig=output_config,

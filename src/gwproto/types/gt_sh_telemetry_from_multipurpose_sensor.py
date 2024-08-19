@@ -157,7 +157,7 @@ class GtShTelemetryFromMultipurposeSensor_Maker:
         about_node_alias_list: List[str],
         telemetry_name_list: List[TelemetryName],
         value_list: List[int],
-    ):
+    ) -> None:
         self.tuple = GtShTelemetryFromMultipurposeSensor(
             ScadaReadTimeUnixMs=scada_read_time_unix_ms,
             AboutNodeAliasList=about_node_alias_list,

@@ -21,7 +21,7 @@ class ElectricMeterComponent(Component):
         modbus_port: Optional[int] = None,
         config_list: List[TelemetryReportingConfig] = [],
         egauge_io_list: List[EgaugeIo] = [],
-    ):
+    ) -> None:
         super(self.__class__, self).__init__(
             display_name=display_name,
             component_id=component_id,
@@ -43,5 +43,5 @@ class ElectricMeterComponent(Component):
     def make_model(self) -> MakeModel:
         return self.cac.make_model
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"{self.display_name}  ({self.cac.make_model.value})"

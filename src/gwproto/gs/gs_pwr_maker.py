@@ -8,7 +8,7 @@ from gwproto.gs.gs_pwr import GsPwr
 class GsPwr_Maker:
     type_name = "p"
 
-    def __init__(self, power):
+    def __init__(self, power) -> None:
         tpl = GsPwr(Power=power)
         tpl.check_for_errors()
         self.tuple = tpl

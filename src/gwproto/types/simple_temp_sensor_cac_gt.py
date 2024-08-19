@@ -153,7 +153,7 @@ class SimpleTempSensorCacGt_Maker:
         telemetry_name: EnumTelemetryName,
         display_name: Optional[str],
         comms_method: Optional[str],
-    ):
+    ) -> None:
         self.tuple = SimpleTempSensorCacGt(
             ComponentAttributeClassId=component_attribute_class_id,
             MakeModel=make_model,

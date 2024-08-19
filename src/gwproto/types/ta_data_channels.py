@@ -168,7 +168,7 @@ class TaDataChannels_Maker:
         author: str,
         channels: List[DataChannel],
         identifier: str,
-    ):
+    ) -> None:
         self.tuple = TaDataChannels(
             TerminalAssetGNodeAlias=terminal_asset_g_node_alias,
             TerminalAssetGNodeId=terminal_asset_g_node_id,

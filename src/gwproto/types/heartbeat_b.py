@@ -183,7 +183,7 @@ class HeartbeatB_Maker:
         last_received_time_unix_ms: int,
         send_time_unix_ms: int,
         starting_over: bool,
-    ):
+    ) -> None:
         self.tuple = HeartbeatB(
             FromGNodeAlias=from_g_node_alias,
             FromGNodeInstanceId=from_g_node_instance_id,

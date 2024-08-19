@@ -158,7 +158,7 @@ class RelayComponentGt_Maker:
         gpio: Optional[int],
         hw_uid: Optional[str],
         normally_open: bool,
-    ):
+    ) -> None:
         self.tuple = RelayComponentGt(
             ComponentId=component_id,
             ComponentAttributeClassId=component_attribute_class_id,

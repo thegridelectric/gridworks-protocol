@@ -125,7 +125,7 @@ class PipeFlowSensorCacGt_Maker:
         make_model: EnumMakeModel,
         display_name: Optional[str],
         comms_method: Optional[str],
-    ):
+    ) -> None:
         self.tuple = PipeFlowSensorCacGt(
             ComponentAttributeClassId=component_attribute_class_id,
             MakeModel=make_model,

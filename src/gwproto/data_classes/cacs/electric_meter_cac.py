@@ -18,7 +18,7 @@ class ElectricMeterCac(ComponentAttributeClass):
         default_baud: int,
         display_name: Optional[str] = None,
         telemetry_name_list: List[TelemetryName] = [],
-    ):
+    ) -> None:
         super(self.__class__, self).__init__(
             component_attribute_class_id=component_attribute_class_id,
             display_name=display_name,
@@ -31,5 +31,5 @@ class ElectricMeterCac(ComponentAttributeClass):
         ElectricMeterCac.by_id[self.component_attribute_class_id] = self
         ComponentAttributeClass.by_id[self.component_attribute_class_id] = self
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"{self.make_model.value} {self.display_name}"

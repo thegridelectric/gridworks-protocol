@@ -200,7 +200,7 @@ class GtShStatus_Maker:
         multipurpose_telemetry_list: List[GtShMultipurposeTelemetryStatus],
         booleanactuator_cmd_list: List[GtShBooleanactuatorCmdStatus],
         status_uid: str,
-    ):
+    ) -> None:
         self.tuple = GtShStatus(
             FromGNodeAlias=from_g_node_alias,
             FromGNodeId=from_g_node_id,

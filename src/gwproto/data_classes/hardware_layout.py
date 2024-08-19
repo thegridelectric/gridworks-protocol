@@ -218,7 +218,7 @@ class HardwareLayout:
         cacs: Optional[dict[str, ComponentAttributeClass]] = None,
         components: Optional[dict[str, Component]] = None,
         nodes: Optional[dict[str, ShNode]] = None,
-    ):
+    ) -> None:
         self.layout = copy.deepcopy(layout)
         if cacs is None:
             cacs = ComponentAttributeClass.by_id

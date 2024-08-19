@@ -16,7 +16,7 @@ class ResistiveHeaterCac(ComponentAttributeClass):
         nameplate_max_power_w: int,
         rated_voltage_v: int,
         display_name: Optional[str] = None,
-    ):
+    ) -> None:
         super(
             self.__class__,
             self,
@@ -30,5 +30,5 @@ class ResistiveHeaterCac(ComponentAttributeClass):
         ResistiveHeaterCac.by_id[self.component_attribute_class_id] = self
         ComponentAttributeClass.by_id[self.component_attribute_class_id] = self
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"{self.make_model.value} {self.display_name}"

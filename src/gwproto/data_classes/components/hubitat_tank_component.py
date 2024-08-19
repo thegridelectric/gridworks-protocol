@@ -31,7 +31,7 @@ class HubitatTankComponent(Component, ComponentResolver):
         tank_gt: HubitatTankSettingsGt,
         display_name: Optional[str] = None,
         hw_uid: Optional[str] = None,
-    ):
+    ) -> None:
         # Create self.hubitat as a proxy containing only the id
         # of the hubitat; the actual component data will be resolved
         # when resolve() is called; Here in the constructor we cannot

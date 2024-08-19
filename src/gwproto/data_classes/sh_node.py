@@ -30,7 +30,7 @@ class ShNode:
         rated_voltage_v: Optional[int] = None,
         typical_voltage_v: Optional[int] = None,
         in_power_metering: Optional[bool] = None,
-    ):
+    ) -> None:
         self.sh_node_id = sh_node_id
         self.alias = alias
         self.actor_class = actor_class
@@ -43,7 +43,7 @@ class ShNode:
         self.in_power_metering = in_power_metering
         ShNode.by_id[self.sh_node_id] = self
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         rs = f"ShNode {self.display_name} => {self.role.value} {self.alias}, "
         if self.has_actor:
             rs += " (has actor)"

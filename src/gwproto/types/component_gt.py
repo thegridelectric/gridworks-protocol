@@ -146,7 +146,7 @@ class ComponentGt_Maker:
         component_attribute_class_id: str,
         display_name: Optional[str],
         hw_uid: Optional[str],
-    ):
+    ) -> None:
         self.tuple = ComponentGt(
             ComponentId=component_id,
             ComponentAttributeClassId=component_attribute_class_id,

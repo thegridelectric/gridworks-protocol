@@ -16,7 +16,7 @@ ParentMessageDecoder = create_message_payload_discriminator(
 
 
 class ParentMQTTCodec(MQTTCodec):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(
             Decoders.from_objects(
                 [

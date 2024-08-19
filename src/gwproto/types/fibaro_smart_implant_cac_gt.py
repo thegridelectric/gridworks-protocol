@@ -40,7 +40,7 @@ class FibaroSmartImplantCacGt_Maker:
     version = "000"
     tuple: FibaroSmartImplantCacGt
 
-    def __init__(self, cac: FibaroSmartImplantCac):
+    def __init__(self, cac: FibaroSmartImplantCac) -> None:
         self.tuple = FibaroSmartImplantCacGt.from_data_class(cac)
 
     @classmethod

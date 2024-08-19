@@ -153,7 +153,7 @@ class GtShSimpleTelemetryStatus_Maker:
         telemetry_name: EnumTelemetryName,
         value_list: List[int],
         read_time_unix_ms_list: List[int],
-    ):
+    ) -> None:
         self.tuple = GtShSimpleTelemetryStatus(
             ShNodeAlias=sh_node_alias,
             TelemetryName=telemetry_name,

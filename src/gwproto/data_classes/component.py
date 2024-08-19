@@ -30,7 +30,7 @@ class Component(ABC, StreamlinedSerializerMixin):
         component_attribute_class_id: str,
         display_name: Optional[str] = None,
         hw_uid: Optional[str] = None,
-    ):
+    ) -> None:
         self.component_id = component_id
         self.display_name = display_name
         self.component_attribute_class_id = component_attribute_class_id
@@ -40,5 +40,5 @@ class Component(ABC, StreamlinedSerializerMixin):
     def component_attribute_class(self) -> ComponentAttributeClass:
         return ComponentAttributeClass.by_id[self.component_attribute_class_id]
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return self.display_name

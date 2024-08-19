@@ -158,7 +158,7 @@ class TelemetrySnapshotSpaceheat_Maker:
         about_node_alias_list: List[str],
         value_list: List[int],
         telemetry_name_list: List[TelemetryName],
-    ):
+    ) -> None:
         self.tuple = TelemetrySnapshotSpaceheat(
             ReportTimeUnixMs=report_time_unix_ms,
             AboutNodeAliasList=about_node_alias_list,

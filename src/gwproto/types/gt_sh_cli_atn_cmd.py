@@ -125,7 +125,7 @@ class GtShCliAtnCmd_Maker:
         from_g_node_alias: str,
         send_snapshot: bool,
         from_g_node_id: str,
-    ):
+    ) -> None:
         self.tuple = GtShCliAtnCmd(
             FromGNodeAlias=from_g_node_alias,
             SendSnapshot=send_snapshot,

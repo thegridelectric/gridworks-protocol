@@ -167,7 +167,7 @@ class GtShMultipurposeTelemetryStatus_Maker:
         telemetry_name: EnumTelemetryName,
         value_list: List[int],
         read_time_unix_ms_list: List[int],
-    ):
+    ) -> None:
         self.tuple = GtShMultipurposeTelemetryStatus(
             AboutNodeAlias=about_node_alias,
             SensorNodeAlias=sensor_node_alias,

@@ -47,7 +47,7 @@ class FibaroSmartImplantComponentGt_Maker:
     version = "000"
     tuple: FibaroSmartImplantComponentGt
 
-    def __init__(self, component: FibaroSmartImplantComponent):
+    def __init__(self, component: FibaroSmartImplantComponent) -> None:
         self.tuple = FibaroSmartImplantComponentGt.from_data_class(component)
 
     @classmethod

@@ -14,7 +14,7 @@ class RESTPollerComponent(Component):
         rest: RESTPollerSettings,
         display_name: Optional[str] = None,
         hw_uid: Optional[str] = None,
-    ):
+    ) -> None:
         self.rest = rest
         super().__init__(
             display_name=display_name,

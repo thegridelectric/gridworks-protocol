@@ -18,7 +18,7 @@ class RelayComponent(Component):
         display_name: Optional[str] = None,
         gpio: Optional[int] = None,
         hw_uid: Optional[str] = None,
-    ):
+    ) -> None:
         super(self.__class__, self).__init__(
             display_name=display_name,
             component_id=component_id,
@@ -39,5 +39,5 @@ class RelayComponent(Component):
     def make_model(self) -> MakeModel:
         return self.cac.make_model
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"{self.display_name}  ({self.cac.make_model.value})"

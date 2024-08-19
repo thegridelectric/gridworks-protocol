@@ -27,7 +27,7 @@ EventT = TypeVar("EventT", bound=EventBase)
 
 
 class EventMessage(Message[EventT], Generic[EventT]):
-    def __init__(self, **data: Any):
+    def __init__(self, **data: Any) -> None:
         if "AckRequired" not in data:
             data["AckRequired"] = True
         super().__init__(**data)

@@ -50,7 +50,7 @@ class RESTPollerComponentGt_Maker:
     version = "000"
     tuple: RESTPollerComponentGt
 
-    def __init__(self, component: RESTPollerComponent):
+    def __init__(self, component: RESTPollerComponent) -> None:
         self.tuple = RESTPollerComponentGt.from_data_class(component)
 
     @classmethod

@@ -137,7 +137,7 @@ class DataChannel_Maker:
         about_name: str,
         captured_by_name: str,
         telemetry_name: EnumTelemetryName,
-    ):
+    ) -> None:
         self.tuple = DataChannel(
             DisplayName=display_name,
             AboutName=about_name,

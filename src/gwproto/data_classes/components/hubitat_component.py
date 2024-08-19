@@ -16,7 +16,7 @@ class HubitatComponent(Component):
         hubitat_gt: HubitatGt,
         display_name: Optional[str] = None,
         hw_uid: Optional[str] = None,
-    ):
+    ) -> None:
         self.hubitat_gt = hubitat_gt
         self.web_listener_nodes = set()
         super().__init__(

@@ -8,7 +8,7 @@ from gwproto.gs.gs_dispatch import GsDispatch
 class GsDispatch_Maker:
     type_name = "d"
 
-    def __init__(self, relay_state):
+    def __init__(self, relay_state) -> None:
         tpl = GsDispatch(RelayState=relay_state)
         tpl.check_for_errors()
         self.tuple = tpl

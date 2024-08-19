@@ -152,7 +152,7 @@ class SimpleTempSensorComponentGt_Maker:
         display_name: Optional[str],
         hw_uid: Optional[str],
         channel: Optional[int],
-    ):
+    ) -> None:
         self.tuple = SimpleTempSensorComponentGt(
             ComponentId=component_id,
             ComponentAttributeClassId=component_attribute_class_id,

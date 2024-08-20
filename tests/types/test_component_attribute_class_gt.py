@@ -3,9 +3,10 @@
 import json
 
 import pytest
+from pydantic import ValidationError
+
 from gwproto.errors import SchemaError
 from gwproto.types import ComponentAttributeClassGt_Maker as Maker
-from pydantic import ValidationError
 
 
 def test_component_attribute_class_gt_generated() -> None:

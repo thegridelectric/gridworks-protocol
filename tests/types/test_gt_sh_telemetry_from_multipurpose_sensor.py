@@ -3,9 +3,10 @@
 import json
 
 import pytest
+from pydantic import ValidationError
+
 from gwproto.errors import SchemaError
 from gwproto.types import GtShTelemetryFromMultipurposeSensor_Maker as Maker
-from pydantic import ValidationError
 
 
 def test_gt_sh_telemetry_from_multipurpose_sensor_generated() -> None:

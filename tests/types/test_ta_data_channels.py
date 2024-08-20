@@ -3,9 +3,10 @@
 import json
 
 import pytest
+from pydantic import ValidationError
+
 from gwproto.errors import SchemaError
 from gwproto.types import TaDataChannels_Maker as Maker
-from pydantic import ValidationError
 
 
 def test_ta_data_channels_generated() -> None:

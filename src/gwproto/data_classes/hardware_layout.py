@@ -362,19 +362,15 @@ class HardwareLayout:
         last_delimiter = alias.rfind(".")
         if last_delimiter == -1:
             return ""
-        else:
-            return alias[:last_delimiter]
+        return alias[:last_delimiter]
 
     def parent_node(self, alias: str) -> Optional[ShNode]:
         parent_alias = self.parent_alias(alias)
         if not parent_alias:
             return None
-        else:
-            if parent_alias not in self.nodes:
-                raise DataClassLoadingError(
-                    f"{alias} is missing parent {parent_alias}!"
-                )
-            return self.node(parent_alias)
+        if parent_alias not in self.nodes:
+            raise DataClassLoadingError(f"{alias} is missing parent {parent_alias}!")
+        return self.node(parent_alias)
 
     def descendants(self, alias: str) -> List[ShNode]:
         return list(filter(lambda x: x.alias.startswith(alias), self.nodes.values()))

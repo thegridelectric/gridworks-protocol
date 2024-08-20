@@ -3,10 +3,11 @@
 import json
 
 import pytest
+from pydantic import ValidationError
+
 from gwproto.enums import ActorClass, Role
 from gwproto.errors import SchemaError
 from gwproto.types import SpaceheatNodeGt_Maker as Maker
-from pydantic import ValidationError
 
 
 def test_spaceheat_node_gt_generated() -> None:

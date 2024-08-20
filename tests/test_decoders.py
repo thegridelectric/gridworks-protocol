@@ -3,6 +3,8 @@ import time
 import uuid
 from pathlib import Path
 
+from pydantic import ValidationError
+
 from gwproto import Message
 from gwproto.messages import (
     Ack,
@@ -26,8 +28,6 @@ from gwproto.messages import (
     SnapshotSpaceheatEvent,
     StartupEvent,
 )
-from pydantic import ValidationError
-
 from tests.dummy_decoders import CHILD, PARENT
 from tests.dummy_decoders.child.codec import ChildMQTTCodec
 from tests.dummy_decoders.parent.codec import ParentMQTTCodec

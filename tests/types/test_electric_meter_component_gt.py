@@ -3,11 +3,12 @@
 import json
 
 import pytest
+from pydantic import ValidationError
+
 from gwproto.errors import SchemaError
 from gwproto.types.electric_meter_component_gt import (
     ElectricMeterComponentGt_Maker as Maker,
 )
-from pydantic import ValidationError
 
 
 def test_electric_meter_component_gt_generated() -> None:

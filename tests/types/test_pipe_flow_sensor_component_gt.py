@@ -3,9 +3,10 @@
 import json
 
 import pytest
+from pydantic import ValidationError
+
 from gwproto.errors import SchemaError
 from gwproto.types import PipeFlowSensorComponentGt_Maker as Maker
-from pydantic import ValidationError
 
 
 def test_pipe_flow_sensor_component_gt_generated() -> None:

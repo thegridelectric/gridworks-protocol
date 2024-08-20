@@ -3,9 +3,10 @@
 import json
 
 import pytest
+from pydantic import ValidationError
+
 from gwproto.errors import SchemaError
 from gwproto.types import GtDriverBooleanactuatorCmd_Maker as Maker
-from pydantic import ValidationError
 
 
 def test_gt_driver_booleanactuator_cmd_generated() -> None:

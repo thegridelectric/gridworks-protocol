@@ -3,9 +3,10 @@
 import json
 
 import pytest
+from pydantic import ValidationError
+
 from gwproto.errors import SchemaError
 from gwproto.types import SimpleTempSensorComponentGt_Maker as Maker
-from pydantic import ValidationError
 
 
 def test_simple_temp_sensor_component_gt_generated() -> None:

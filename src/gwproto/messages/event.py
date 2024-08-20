@@ -27,10 +27,8 @@ EventT = TypeVar("EventT", bound=EventBase)
 
 
 class EventMessage(Message[EventT], Generic[EventT]):
-    def __init__(self, **data: Any) -> None:
-        if "AckRequired" not in data:
-            data["AckRequired"] = True
-        super().__init__(**data)
+    def __init__(self, AckRequired: bool = True, **kwargs: Any) -> None:  # noqa: ANN401, FBT001, FBT002, N803
+        super().__init__(AckRequired=AckRequired, **kwargs)
 
 
 class StartupEvent(EventBase):
@@ -55,7 +53,7 @@ class ProblemEvent(EventBase):
 
     @field_validator("ProblemType", mode="before")
     @classmethod
-    def problem_type_value(cls, v: Any) -> Optional[Problems]:
+    def problem_type_value(cls, v: Any) -> Optional[Problems]:  # noqa: ANN401
         return as_enum(v, Problems, Problems.error)
 
 

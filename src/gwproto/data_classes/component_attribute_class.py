@@ -26,8 +26,4 @@ class ComponentAttributeClass(ABC, StreamlinedSerializerMixin):
         self.display_name = display_name
 
     def __repr__(self) -> str:
-        return (
-            self.display_name
-            if self.display_name
-            else self.component_attribute_class_id
-        )
+        return self.display_name or self.component_attribute_class_id

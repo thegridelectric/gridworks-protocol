@@ -44,7 +44,7 @@ class HubitatPollerComponent(Component, ComponentResolver):
     def resolve(
         self,
         node_name: str,
-        nodes: dict[str, ShNode],
+        _nodes: dict[str, ShNode],
         components: dict[str, Component],
     ) -> None:
         if self._rest is not None:

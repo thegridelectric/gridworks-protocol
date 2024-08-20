@@ -9,14 +9,14 @@ from gwproto.data_classes.mixin import StreamlinedSerializerMixin
 
 class Component(ABC, StreamlinedSerializerMixin):
     by_id: Dict[str, "Component"] = {}  # noqa: RUF012
-    base_props = [
+    base_props = [  # noqa: RUF012
         "component_id",
         "display_name",
         "component_attribute_class_id",
         "hw_uid",
     ]
 
-    def __new__(cls, component_id, *args, **kwargs):
+    def __new__(cls, component_id, *args, **kwargs) -> "Component":  # noqa: ANN001, ANN002, ANN003, ARG003
         try:
             return cls.by_id[component_id]
         except KeyError:

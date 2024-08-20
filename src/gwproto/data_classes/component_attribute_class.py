@@ -1,7 +1,7 @@
 """ComponentAttributeClass"""
 
 from abc import ABC
-from typing import Dict, Optional
+from typing import Any, Dict, Optional
 
 from gwproto.data_classes.mixin import StreamlinedSerializerMixin
 
@@ -9,9 +9,9 @@ from gwproto.data_classes.mixin import StreamlinedSerializerMixin
 class ComponentAttributeClass(ABC, StreamlinedSerializerMixin):
     by_id: Dict[str, "ComponentAttributeClass"] = {}  # noqa: RUF012
 
-    base_props = ["component_attribute_class_id", "display_name"]
+    base_props = ["component_attribute_class_id", "display_name"]  # noqa: RUF012
 
-    def __new__(cls, component_attribute_class_id, *args, **kwargs):
+    def __new__(cls, component_attribute_class_id, *args: Any, **kwargs: Any):  # noqa: ANN001, ANN204, ANN401, ARG003
         try:
             return cls.by_id[component_attribute_class_id]
         except KeyError:

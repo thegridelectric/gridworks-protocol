@@ -8,7 +8,7 @@ from gwproto.enums import MakeModel
 
 
 class SimpleTempSensorComponent(Component):
-    by_id: Dict[str, "SimpleTempSensorComponent"] = {}
+    by_id: Dict[str, "SimpleTempSensorComponent"] = {}  # noqa: RUF012
 
     def __init__(
         self,

@@ -30,5 +30,5 @@ class RelayCac(ComponentAttributeClass):
         return f"{self.make_model.value} {self.display_name}"
 
     @property
-    def telemetry_name(self):
+    def telemetry_name(self) -> TelemetryName:
         return TelemetryName.RelayState

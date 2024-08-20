@@ -9,7 +9,7 @@ from gwproto.types import TelemetryReportingConfig
 
 
 class MultipurposeSensorComponent(Component):
-    by_id: Dict[str, "MultipurposeSensorComponent"] = {}
+    by_id: Dict[str, "MultipurposeSensorComponent"] = {}  # noqa: RUF012
 
     def __init__(  # noqa: PLR0913, PLR0917, RUF100
         self,

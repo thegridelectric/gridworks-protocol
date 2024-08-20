@@ -22,7 +22,7 @@ class HubitatTankComponent(Component, ComponentResolver):
     sensor_supply_voltage: float
     default_poll_period_seconds: Optional[float] = None
     devices_gt: list[FibaroTempSensorSettingsGt]
-    devices: list[FibaroTempSensorSettings] = []
+    devices: list[FibaroTempSensorSettings]
     web_listen_enabled: bool
 
     def __init__(
@@ -42,6 +42,7 @@ class HubitatTankComponent(Component, ComponentResolver):
         self.default_poll_period_seconds = tank_gt.default_poll_period_seconds
         self.devices_gt = list(tank_gt.devices)
         self.web_listen_enabled = tank_gt.web_listen_enabled
+        self.devices = []
         super().__init__(
             display_name=display_name,
             component_id=component_id,

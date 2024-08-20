@@ -14,7 +14,7 @@ class RelayComponent(Component):
         self,
         component_id: str,
         component_attribute_class_id: str,
-        normally_open: bool,
+        normally_open: bool,  # noqa: FBT001
         display_name: Optional[str] = None,
         gpio: Optional[int] = None,
         hw_uid: Optional[str] = None,

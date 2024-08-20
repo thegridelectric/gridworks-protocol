@@ -11,7 +11,7 @@ def test_mqtt_topic_encode() -> None:
 
 
 def test_mqtt_topic_decode() -> None:
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError):  # noqa: PT011
         MQTTTopic.decode("")
 
     decoded = MQTTTopic.decode("foo/bar/baz")
@@ -22,7 +22,7 @@ def test_mqtt_topic_decode() -> None:
     assert decoded == DecodedMQTTTopic(
         envelope_type="foo", src="bar", message_type="baz"
     )
-    assert str(decoded) != ""
+    assert str(decoded)
 
     decoded = MQTTTopic.decode("foo-bar/baz-bla/bla")
     assert decoded.envelope_type == "foo.bar"
@@ -35,14 +35,14 @@ def test_mqtt_topic_decode() -> None:
 
     decoded = MQTTTopic.decode("foo")
     assert decoded.envelope_type == "foo"
-    assert decoded.src == ""
-    assert decoded.message_type == ""
+    assert not decoded.src
+    assert not decoded.message_type
     assert decoded.remainder == []
 
     decoded = MQTTTopic.decode("foo/bar")
     assert decoded.envelope_type == "foo"
     assert decoded.src == "bar"
-    assert decoded.message_type == ""
+    assert not decoded.message_type
     assert decoded.remainder == []
 
     decoded = MQTTTopic.decode("foo/bar/baz/a/b/c")

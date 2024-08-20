@@ -245,7 +245,7 @@ class HardwareLayout:
             self.__dict__.pop(cached_prop_name, None)
 
     @classmethod
-    def load(  # noqa: PLR0913, PLR0917
+    def load(  # noqa: PLR0913, PLR0917, RUF100
         cls,
         layout_path: Path | str,
         included_node_names: Optional[set[str]] = None,
@@ -266,7 +266,7 @@ class HardwareLayout:
         )
 
     @classmethod
-    def load_dict(  # noqa: PLR0913, PLR0917
+    def load_dict(  # noqa: PLR0913, PLR0917, RUF100
         cls,
         layout: dict[Any, Any],
         included_node_names: Optional[set[str]] = None,

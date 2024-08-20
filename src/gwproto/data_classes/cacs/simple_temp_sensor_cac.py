@@ -34,7 +34,7 @@ class SimpleTempSensorCac(ComponentAttributeClass):
 
         SimpleTempSensorCac.by_id[self.component_attribute_class_id] = self
         ComponentAttributeClass.by_id[self.component_attribute_class_id] = self
-        if self.temp_unit not in [Unit.Celcius, Unit.Fahrenheit, Unit.Unitless]:
+        if self.temp_unit not in {Unit.Celcius, Unit.Fahrenheit, Unit.Unitless}:
             raise Exception(
                 "TempSensorCac units must be Fahrenheit, Celsius or Unitless"
             )

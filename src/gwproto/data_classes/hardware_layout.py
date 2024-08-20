@@ -502,7 +502,7 @@ class HardwareLayout:
             filter(
                 lambda x: (
                     x.actor_class
-                    in (ActorClass.SimpleSensor, ActorClass.BooleanActuator)
+                    in {ActorClass.SimpleSensor, ActorClass.BooleanActuator}
                 ),
                 all_nodes,
             )
@@ -515,12 +515,12 @@ class HardwareLayout:
                 lambda x: (
                     (
                         x.actor_class
-                        in (
+                        in {
                             ActorClass.MultipurposeSensor,
                             ActorClass.HubitatTankModule,
                             ActorClass.HubitatPoller,
                             ActorClass.HoneywellThermostat,
-                        )
+                        }
                     )
                     and hasattr(x.component, "config_list")
                 ),

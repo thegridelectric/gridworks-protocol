@@ -272,7 +272,7 @@ def check_is_bit(v: int) -> None:
     Raises:
         ValueError: if v is not 0 or 1
     """
-    if v not in [0, 1]:
+    if v not in {0, 1}:
         raise ValueError(f"<{v}> must be 0 or 1")
 
 

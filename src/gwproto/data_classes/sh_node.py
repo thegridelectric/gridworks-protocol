@@ -18,7 +18,7 @@ class ShNode:
 
     by_id: Dict[str, "ShNode"] = {}
 
-    def __init__(
+    def __init__(  # noqa: PLR0913, PLR0917, RUF100
         self,
         sh_node_id: str,
         alias: str,

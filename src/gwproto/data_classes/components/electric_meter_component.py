@@ -11,7 +11,7 @@ from gwproto.types import EgaugeIo, TelemetryReportingConfig
 class ElectricMeterComponent(Component):
     by_id: Dict[str, "ElectricMeterComponent"] = {}
 
-    def __init__(
+    def __init__(  # noqa: PLR0913, PLR0917, RUF100
         self,
         component_id: str,
         component_attribute_class_id: str,

@@ -189,7 +189,7 @@ class GtShStatus_Maker:
     type_name = "gt.sh.status"
     version = "110"
 
-    def __init__(
+    def __init__(  # noqa: PLR0913, PLR0917, RUF100
         self,
         from_g_node_alias: str,
         from_g_node_id: str,

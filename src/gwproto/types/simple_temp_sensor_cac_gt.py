@@ -143,7 +143,7 @@ class SimpleTempSensorCacGt_Maker:
     type_name = "simple.temp.sensor.cac.gt"
     version = "000"
 
-    def __init__(
+    def __init__(  # noqa: PLR0913, PLR0917, RUF100
         self,
         component_attribute_class_id: str,
         make_model: EnumMakeModel,

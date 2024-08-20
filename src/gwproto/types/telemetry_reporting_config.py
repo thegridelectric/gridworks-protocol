@@ -154,7 +154,7 @@ class TelemetryReportingConfig_Maker:
     type_name = "telemetry.reporting.config"
     version = "000"
 
-    def __init__(
+    def __init__(  # noqa: PLR0913, PLR0917, RUF100
         self,
         telemetry_name: EnumTelemetryName,
         about_node_name: str,

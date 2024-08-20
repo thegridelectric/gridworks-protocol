@@ -121,7 +121,7 @@ class EgaugeRegisterConfig_Maker:
     type_name = "egauge.register.config"
     version = "000"
 
-    def __init__(
+    def __init__(  # noqa: PLR0913, PLR0917, RUF100
         self,
         address: int,
         name: str,

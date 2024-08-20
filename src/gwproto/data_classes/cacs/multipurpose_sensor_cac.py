@@ -9,7 +9,7 @@ from gwproto.enums import MakeModel, TelemetryName, Unit
 class MultipurposeSensorCac(ComponentAttributeClass):
     by_id: Dict[str, "MultipurposeSensorCac"] = {}
 
-    def __init__(
+    def __init__(  # noqa: PLR0913, PLR0917, RUF100
         self,
         component_attribute_class_id: str,
         exponent: int,

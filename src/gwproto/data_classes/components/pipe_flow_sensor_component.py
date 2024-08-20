@@ -10,7 +10,7 @@ from gwproto.enums import MakeModel
 class PipeFlowSensorComponent(Component):
     by_id: Dict[str, "PipeFlowSensorComponent"] = {}
 
-    def __init__(
+    def __init__(  # noqa: PLR0913, PLR0917, RUF100
         self,
         component_id: str,
         component_attribute_class_id: str,

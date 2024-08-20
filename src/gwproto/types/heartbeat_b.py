@@ -173,7 +173,7 @@ class HeartbeatB_Maker:
     type_name = "heartbeat.b"
     version = "001"
 
-    def __init__(
+    def __init__(  # noqa: PLR0913, PLR0917, RUF100
         self,
         from_g_node_alias: str,
         from_g_node_instance_id: str,

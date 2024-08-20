@@ -170,7 +170,7 @@ class GtDispatchBoolean_Maker:
     type_name = "gt.dispatch.boolean"
     version = "110"
 
-    def __init__(
+    def __init__(  # noqa: PLR0913, PLR0917, RUF100
         self,
         about_node_name: str,
         to_g_node_alias: str,

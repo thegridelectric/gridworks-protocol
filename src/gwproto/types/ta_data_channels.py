@@ -160,7 +160,7 @@ class TaDataChannels_Maker:
     type_name = "ta.data.channels"
     version = "000"
 
-    def __init__(
+    def __init__(  # noqa: PLR0913, PLR0917, RUF100
         self,
         terminal_asset_g_node_alias: str,
         terminal_asset_g_node_id: str,

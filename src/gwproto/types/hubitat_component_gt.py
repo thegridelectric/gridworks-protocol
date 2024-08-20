@@ -1,6 +1,5 @@
-import json
 import typing
-from typing import Any, Literal, Optional
+from typing import Literal, Optional
 
 import yarl
 
@@ -57,7 +56,7 @@ class HubitatComponentGt(ComponentGt):
         )
 
     @classmethod
-    def make_stub(cls, component_id):
+    def make_stub(cls, component_id: str) -> "HubitatComponentGt":
         return HubitatComponentGt(
             ComponentId=component_id,
             ComponentAttributeClassId="00000000-0000-0000-0000-000000000000",
@@ -80,7 +79,7 @@ class HubitatComponentGt(ComponentGt):
                 f"HubitatTankComponent.hubitat.CompnentId {component_id}"
             )
         if not isinstance(hubitat_component, HubitatComponent):
-            raise ValueError(
+            raise TypeError(
                 "ERROR. Referenced hubitat component has type "
                 f"{type(hubitat_component)}; "
                 "must be instance of HubitatComponent. "
@@ -96,44 +95,3 @@ class HubitatRESTResolutionSettings:
     def __init__(self, component_gt: HubitatComponentGt) -> None:
         self.component_gt = component_gt
         self.maker_api_url_config = self.component_gt.maker_api_url_config()
-
-
-class HubitatComponentGt_Maker:
-    type_name: str = HubitatComponentGt.model_fields["TypeName"].default
-    version = "000"
-    tuple: HubitatComponentGt
-
-    def __init__(self, component: HubitatComponent) -> None:
-        self.tuple = HubitatComponentGt.from_data_class(component)
-
-    @classmethod
-    def tuple_to_type(cls, tpl: HubitatComponentGt) -> str:
-        return tpl.as_type()
-
-    @classmethod
-    def type_to_tuple(cls, t: str) -> HubitatComponentGt:
-        return cls.dict_to_tuple(json.loads(t))
-
-    @classmethod
-    def dict_to_tuple(cls, d: dict[str, Any]) -> HubitatComponentGt:
-        return HubitatComponentGt(**d)
-
-    @classmethod
-    def tuple_to_dc(cls, t: HubitatComponentGt) -> HubitatComponent:
-        return t.to_data_class()
-
-    @classmethod
-    def dc_to_tuple(cls, dc: HubitatComponent) -> HubitatComponentGt:
-        return HubitatComponentGt.from_data_class(dc)
-
-    @classmethod
-    def type_to_dc(cls, t: str) -> HubitatComponent:
-        return cls.tuple_to_dc(cls.type_to_tuple(t))
-
-    @classmethod
-    def dc_to_type(cls, dc: HubitatComponent) -> str:
-        return cls.dc_to_tuple(dc).as_type()
-
-    @classmethod
-    def dict_to_dc(cls, d: dict[Any, str]) -> HubitatComponent:
-        return cls.tuple_to_dc(cls.dict_to_tuple(d))

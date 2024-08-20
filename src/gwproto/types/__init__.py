@@ -52,10 +52,9 @@ from gwproto.types.gt_sh_telemetry_from_multipurpose_sensor import (
 )
 from gwproto.types.gt_telemetry import GtTelemetry, GtTelemetry_Maker
 from gwproto.types.heartbeat_b import HeartbeatB, HeartbeatB_Maker
-from gwproto.types.hubitat_cac_gt import HubitatCacGt, HubitatCacGt_Maker
+from gwproto.types.hubitat_cac_gt import HubitatCacGt
 from gwproto.types.hubitat_component_gt import (
     HubitatComponentGt,
-    HubitatComponentGt_Maker,
 )
 from gwproto.types.hubitat_poller_cac_gt import (
     HubitatPollerCacGt,
@@ -161,9 +160,7 @@ __all__ = [
     "HeartbeatB",
     "HeartbeatB_Maker",
     "HubitatCacGt",
-    "HubitatCacGt_Maker",
     "HubitatComponentGt",
-    "HubitatComponentGt_Maker",
     "HubitatPollerCacGt",
     "HubitatPollerCacGt_Maker",
     "HubitatPollerComponentGt",

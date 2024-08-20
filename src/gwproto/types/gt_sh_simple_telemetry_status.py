@@ -2,8 +2,9 @@
 
 import json
 import logging
-from typing import Any, Dict, List, Literal
+from typing import Any, Dict, List, Literal, Self
 
+import pendulum
 from pydantic import BaseModel, Field, field_validator, model_validator
 
 from gwproto.enums import TelemetryName as EnumTelemetryName
@@ -68,14 +69,14 @@ class GtShSimpleTelemetryStatus(BaseModel):
         for elt in v:
             try:
                 check_is_reasonable_unix_time_ms(elt)
-            except ValueError as e:
+            except ValueError as e:  # noqa: PERF203
                 raise ValueError(
                     f"ReadTimeUnixMsList element {elt} failed ReasonableUnixTimeMs format validation: {e}"
                 )
         return v
 
     @model_validator(mode="after")
-    def check_axiom_1(self) -> dict:
+    def check_axiom_1(self) -> Self:
         """
         Axiom 1: ListLengthConsistency.
         ValueList and ReadTimeUnixMsList must have the same length.
@@ -240,12 +241,10 @@ def check_is_left_right_dot(v: str) -> None:
     Raises:
         ValueError: if v is not LeftRightDot format
     """
-    from typing import List
-
     try:
         x: List[str] = v.split(".")
-    except:
-        raise ValueError(f"Failed to seperate <{v}> into words with split'.'")
+    except Exception as e:
+        raise ValueError(f"Failed to seperate <{v}> into words with split'.'") from e
     first_word = x[0]
     first_char = first_word[0]
     if not first_char.isalpha():
@@ -270,8 +269,6 @@ def check_is_reasonable_unix_time_ms(v: int) -> None:
     Raises:
         ValueError: if v is not ReasonableUnixTimeMs format
     """
-    import pendulum
-
     if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp * 1000 > v:  # type: ignore[attr-defined]
         raise ValueError(f"<{v}> must be after Jan 1 2000")
     if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp * 1000 < v:  # type: ignore[attr-defined]

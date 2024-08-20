@@ -60,7 +60,7 @@ class GtShBooleanactuatorCmdStatus(BaseModel):
         for elt in v:
             try:
                 check_is_reasonable_unix_time_ms(elt)
-            except ValueError as e:
+            except ValueError as e:  # noqa: PERF203
                 raise ValueError(
                     f"CommandTimeUnixMsList element {elt} failed ReasonableUnixTimeMs format validation: {e}"
                 )

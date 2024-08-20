@@ -402,7 +402,7 @@ def check_is_uuid_canonical_textual(v: str) -> None:
     for hex_word in x:
         try:
             int(hex_word, 16)
-        except ValueError:
+        except ValueError:  # noqa: PERF203
             raise ValueError(f"Words of <{v}> are not all hex")
     if len(x[0]) != 8:
         raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")

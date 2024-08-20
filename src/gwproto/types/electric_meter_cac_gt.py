@@ -106,10 +106,10 @@ class ElectricMeterCacGt(BaseModel):
         del d["MakeModel"]
         d["MakeModelGtEnumSymbol"] = EnumMakeModel.value_to_symbol(self.MakeModel)
         del d["TelemetryNameList"]
-        telemetry_name_list = []
-        for elt in self.TelemetryNameList:
-            telemetry_name_list.append(TelemetryName.value_to_symbol(elt.value))
-        d["TelemetryNameList"] = telemetry_name_list
+        d["TelemetryNameList"] = [
+            TelemetryName.value_to_symbol(str(elt.value))
+            for elt in self.TelemetryNameList
+        ]
         del d["Interface"]
         d["InterfaceGtEnumSymbol"] = LocalCommInterface.value_to_symbol(self.Interface)
         return d
@@ -187,7 +187,7 @@ class ElectricMeterCacGt_Maker:
         return cls.dict_to_tuple(d)
 
     @classmethod
-    def dict_to_tuple(cls, d: dict[str, Any]) -> ElectricMeterCacGt:
+    def dict_to_tuple(cls, d: dict[str, Any]) -> ElectricMeterCacGt:  # noqa: C901
         """
         Deserialize a dictionary representation of a electric.meter.cac.gt.000 message object
         into a ElectricMeterCacGt python object for internal use.
@@ -273,11 +273,11 @@ class ElectricMeterCacGt_Maker:
 
     @classmethod
     def type_to_dc(cls, t: str) -> ElectricMeterCac:
-        return cls.tuple_to_dc(cls.type_to_tuple(t))
+        return cls.tuple_to_dc(cls.type_to_tuple(t.encode()))
 
     @classmethod
     def dc_to_type(cls, dc: ElectricMeterCac) -> str:
-        return cls.dc_to_tuple(dc).as_type()
+        return cls.dc_to_tuple(dc).as_type().decode("utf-8")
 
     @classmethod
     def dict_to_dc(cls, d: dict[Any, str]) -> ElectricMeterCac:

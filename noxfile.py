@@ -7,12 +7,12 @@ import sys
 from pathlib import Path
 from textwrap import dedent
 
-import nox  # type: ignore
+import nox  # noqa: ALL
 
 try:
-    from nox_poetry import (  # type: ignore
+    from nox_poetry import (
         Session,
-        session,  # type: ignore
+        session,
     )
 except ImportError:
     message = f"""\

@@ -4,6 +4,7 @@ import json
 import logging
 from typing import Any, Dict, List, Literal
 
+import pendulum
 from pydantic import BaseModel, Field, field_validator
 
 from gwproto.errors import SchemaError
@@ -141,20 +142,15 @@ class GtShStatus(BaseModel):
             if value is not None
         }
         # Recursively calling as_dict()
-        simple_telemetry_list = []
-        for elt in self.SimpleTelemetryList:
-            simple_telemetry_list.append(elt.as_dict())
-        d["SimpleTelemetryList"] = simple_telemetry_list
+        d["SimpleTelemetryList"] = [elt.as_dict() for elt in self.SimpleTelemetryList]
         # Recursively calling as_dict()
-        multipurpose_telemetry_list = []
-        for elt in self.MultipurposeTelemetryList:
-            multipurpose_telemetry_list.append(elt.as_dict())
-        d["MultipurposeTelemetryList"] = multipurpose_telemetry_list
+        d["MultipurposeTelemetryList"] = [
+            elt.as_dict() for elt in self.MultipurposeTelemetryList
+        ]
         # Recursively calling as_dict()
-        booleanactuator_cmd_list = []
-        for elt in self.BooleanactuatorCmdList:
-            booleanactuator_cmd_list.append(elt.as_dict())
-        d["BooleanactuatorCmdList"] = booleanactuator_cmd_list
+        d["BooleanactuatorCmdList"] = [
+            elt.as_dict() for elt in self.BooleanactuatorCmdList
+        ]
         return d
 
     def as_type(self) -> bytes:
@@ -234,7 +230,7 @@ class GtShStatus_Maker:
         return cls.dict_to_tuple(d)
 
     @classmethod
-    def dict_to_tuple(cls, d: dict[str, Any]) -> GtShStatus:
+    def dict_to_tuple(cls, d: dict[str, Any]) -> GtShStatus:  # noqa: C901, PLR0912, PLR0915
         """
         Deserialize a dictionary representation of a gt.sh.status.110 message object
         into a GtShStatus python object for internal use.
@@ -339,12 +335,10 @@ def check_is_left_right_dot(v: str) -> None:
     Raises:
         ValueError: if v is not LeftRightDot format
     """
-    from typing import List
-
     try:
         x: List[str] = v.split(".")
-    except:
-        raise ValueError(f"Failed to seperate <{v}> into words with split'.'")
+    except Exception as e:
+        raise ValueError(f"Failed to seperate <{v}> into words with split'.'") from e
     first_word = x[0]
     first_char = first_word[0]
     if not first_char.isalpha():
@@ -369,8 +363,6 @@ def check_is_reasonable_unix_time_s(v: int) -> None:
     Raises:
         ValueError: if v is not ReasonableUnixTimeS format
     """
-    import pendulum
-
     if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp > v:  # type: ignore[attr-defined]
         raise ValueError(f"<{v}> must be after Jan 1 2000")
     if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp < v:  # type: ignore[attr-defined]

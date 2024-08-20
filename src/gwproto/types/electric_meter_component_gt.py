@@ -183,15 +183,9 @@ class ElectricMeterComponentGt(BaseModel):
             if value is not None
         }
         # Recursively calling as_dict()
-        config_list = []
-        for elt in self.ConfigList:
-            config_list.append(elt.as_dict())
-        d["ConfigList"] = config_list
+        d["ConfigList"] = [elt.as_dict() for elt in self.ConfigList]
         # Recursively calling as_dict()
-        egauge_io_list = []
-        for elt in self.EgaugeIoList:
-            egauge_io_list.append(elt.as_dict())
-        d["EgaugeIoList"] = egauge_io_list
+        d["EgaugeIoList"] = [elt.as_dict() for elt in self.EgaugeIoList]
         return d
 
     def as_type(self) -> bytes:
@@ -269,7 +263,7 @@ class ElectricMeterComponentGt_Maker:
         return cls.dict_to_tuple(d)
 
     @classmethod
-    def dict_to_tuple(cls, d: dict[str, Any]) -> ElectricMeterComponentGt:
+    def dict_to_tuple(cls, d: dict[str, Any]) -> ElectricMeterComponentGt:  # noqa: C901, PLR0912
         """
         Deserialize a dictionary representation of a electric.meter.component.gt.000 message object
         into a ElectricMeterComponentGt python object for internal use.
@@ -366,11 +360,11 @@ class ElectricMeterComponentGt_Maker:
 
     @classmethod
     def type_to_dc(cls, t: str) -> ElectricMeterComponent:
-        return cls.tuple_to_dc(cls.type_to_tuple(t))
+        return cls.tuple_to_dc(cls.type_to_tuple(t.encode()))
 
     @classmethod
     def dc_to_type(cls, dc: ElectricMeterComponent) -> str:
-        return cls.dc_to_tuple(dc).as_type()
+        return cls.dc_to_tuple(dc).as_type().decode("utf-8")
 
     @classmethod
     def dict_to_dc(cls, d: dict[Any, str]) -> ElectricMeterComponent:

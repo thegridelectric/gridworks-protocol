@@ -113,11 +113,10 @@ class GtShTelemetryFromMultipurposeSensor(BaseModel):
             ).items()
             if value is not None
         }
-        del d["TelemetryNameList"]
-        telemetry_name_list = []
-        for elt in self.TelemetryNameList:
-            telemetry_name_list.append(TelemetryName.value_to_symbol(elt.value))
-        d["TelemetryNameList"] = telemetry_name_list
+        d["TelemetryNameList"] = [
+            TelemetryName.value_to_symbol(str(elt.value))
+            for elt in self.TelemetryNameList
+        ]
         return d
 
     def as_type(self) -> bytes:

@@ -246,11 +246,11 @@ class SimpleTempSensorComponentGt_Maker:
 
     @classmethod
     def type_to_dc(cls, t: str) -> SimpleTempSensorComponent:
-        return cls.tuple_to_dc(cls.type_to_tuple(t))
+        return cls.tuple_to_dc(cls.type_to_tuple(t.encode("utf-8")))
 
     @classmethod
     def dc_to_type(cls, dc: SimpleTempSensorComponent) -> str:
-        return cls.dc_to_tuple(dc).as_type()
+        return cls.dc_to_tuple(dc).as_type().decode("utf-8")
 
     @classmethod
     def dict_to_dc(cls, d: dict[Any, str]) -> SimpleTempSensorComponent:

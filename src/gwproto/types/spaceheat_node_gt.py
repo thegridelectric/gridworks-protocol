@@ -321,11 +321,11 @@ class SpaceheatNodeGt_Maker:
 
     @classmethod
     def type_to_dc(cls, t: str) -> ShNode:
-        return cls.tuple_to_dc(cls.type_to_tuple(t))
+        return cls.tuple_to_dc(cls.type_to_tuple(t.encode("utf-8")))
 
     @classmethod
     def dc_to_type(cls, dc: ShNode) -> str:
-        return cls.dc_to_tuple(dc).as_type()
+        return cls.dc_to_tuple(dc).as_type().decode("utf-8")
 
     @classmethod
     def dict_to_dc(cls, d: dict[Any, str]) -> ShNode:
@@ -344,12 +344,10 @@ def check_is_left_right_dot(v: str) -> None:
     Raises:
         ValueError: if v is not LeftRightDot format
     """
-    from typing import List
-
     try:
-        x: List[str] = v.split(".")
-    except:
-        raise ValueError(f"Failed to seperate <{v}> into words with split'.'")
+        x: list[str] = v.split(".")
+    except Exception as e:
+        raise ValueError(f"Failed to seperate <{v}> into words with split'.'") from e
     first_word = x[0]
     first_char = first_word[0]
     if not first_char.isalpha():

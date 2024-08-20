@@ -73,7 +73,9 @@ class FibaroTempSensorSettings(FibaroTempSensorSettingsGt):
 
     @field_validator("rest")
     @classmethod
-    def _collapse_rest_url(cls, v: Optional[RESTPollerSettings]):
+    def _collapse_rest_url(
+        cls, v: Optional[RESTPollerSettings]
+    ) -> Optional[RESTPollerSettings]:
         if v is not None:
             # Collapse session.base_url and request.url into
             # request.url.
@@ -121,7 +123,7 @@ class FibaroTempSensorSettings(FibaroTempSensorSettingsGt):
         ]:
             self.__dict__.pop(prop, None)
 
-    def resolve_rest(
+    def resolve_rest(  # noqa: C901, PLR0912
         self,
         hubitat: HubitatRESTResolutionSettings,
     ) -> None:

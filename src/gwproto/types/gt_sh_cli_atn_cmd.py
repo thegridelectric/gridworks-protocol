@@ -122,7 +122,7 @@ class GtShCliAtnCmd_Maker:
     def __init__(
         self,
         from_g_node_alias: str,
-        send_snapshot: bool,
+        send_snapshot: bool,  # noqa: FBT001
         from_g_node_id: str,
     ) -> None:
         self.tuple = GtShCliAtnCmd(
@@ -206,12 +206,10 @@ def check_is_left_right_dot(v: str) -> None:
     Raises:
         ValueError: if v is not LeftRightDot format
     """
-    from typing import List
-
     try:
-        x: List[str] = v.split(".")
-    except:
-        raise ValueError(f"Failed to seperate <{v}> into words with split'.'")
+        x: list[str] = v.split(".")
+    except Exception as e:
+        raise ValueError(f"Failed to seperate <{v}> into words with split'.'") from e
     first_word = x[0]
     first_char = first_word[0]
     if not first_char.isalpha():

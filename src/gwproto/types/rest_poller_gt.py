@@ -179,11 +179,13 @@ class RESTPollerSettings(BaseModel):
     def url_args(self) -> dict:
         session_args = URLConfig.make_url_args(self.session.base_url)
         request_args = URLConfig.make_url_args(self.request.url)
-        if session_args is None and request_args is None:
-            if session_args is None and request_args is None:
-                raise ValueError(
-                    "Neither session.base_url nor request.url produces a URL"
-                )
+        if (
+            session_args is None
+            and request_args is None
+            and session_args is None
+            and request_args is None
+        ):
+            raise ValueError("Neither session.base_url nor request.url produces a URL")
         if session_args is not None:
             url_args = session_args
             if request_args is not None:

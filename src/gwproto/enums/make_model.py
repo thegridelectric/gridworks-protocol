@@ -94,7 +94,7 @@ class MakeModel(StrEnum):
         """
         Returns enum choices
         """
-        return [elt.value for elt in cls]
+        return [elt.value for elt in cls]  # noqa: ALL
 
     @classmethod
     def version(cls, value: str) -> str:
@@ -114,7 +114,7 @@ class MakeModel(StrEnum):
             str: The earliest version of the enum containing value.
         """
         if not isinstance(value, str):
-            raise ValueError("This method applies to strings, not enums")
+            raise ValueError("This method applies to strings, not enums")  # noqa: TRY004
         if value not in value_to_version:
             raise ValueError(f"Unknown enum value: {value}")
         return value_to_version[value]
@@ -147,7 +147,7 @@ class MakeModel(StrEnum):
             a later version of this enum, returns the default value of "UnknownMake__UnknownModel".
         """
         if symbol not in symbol_to_value:
-            return cls.default().value
+            return cls.default().value  # noqa: ALL
         return symbol_to_value[symbol]
 
     @classmethod

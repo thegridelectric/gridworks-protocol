@@ -158,7 +158,7 @@ class TelemetryReportingConfig_Maker:
         self,
         telemetry_name: EnumTelemetryName,
         about_node_name: str,
-        report_on_change: bool,
+        report_on_change: bool,  # noqa: FBT001
         sample_period_s: int,
         exponent: int,
         unit: EnumUnit,
@@ -261,12 +261,10 @@ def check_is_left_right_dot(v: str) -> None:
     Raises:
         ValueError: if v is not LeftRightDot format
     """
-    from typing import List
-
     try:
-        x: List[str] = v.split(".")
-    except:
-        raise ValueError(f"Failed to seperate <{v}> into words with split'.'")
+        x: list[str] = v.split(".")
+    except Exception as e:
+        raise ValueError(f"Failed to seperate <{v}> into words with split'.'") from e
     first_word = x[0]
     first_char = first_word[0]
     if not first_char.isalpha():

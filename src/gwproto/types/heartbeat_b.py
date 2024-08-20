@@ -4,6 +4,7 @@ import json
 import logging
 from typing import Any, Dict, Literal
 
+import pendulum
 from pydantic import BaseModel, Field, field_validator
 
 from gwproto.errors import SchemaError
@@ -92,7 +93,9 @@ class HeartbeatB(BaseModel):
         try:
             check_is_hex_char(v)
         except ValueError as e:
-            raise ValueError(f"YourLastHex failed HexChar format validation: {e}")
+            raise ValueError(
+                f"YourLastHex failed HexChar format validation: {e}"
+            ) from e
         return v
 
     @field_validator("LastReceivedTimeUnixMs")
@@ -181,7 +184,7 @@ class HeartbeatB_Maker:
         your_last_hex: str,
         last_received_time_unix_ms: int,
         send_time_unix_ms: int,
-        starting_over: bool,
+        starting_over: bool,  # noqa: FBT001
     ) -> None:
         self.tuple = HeartbeatB(
             FromGNodeAlias=from_g_node_alias,
@@ -214,7 +217,7 @@ class HeartbeatB_Maker:
         return cls.dict_to_tuple(d)
 
     @classmethod
-    def dict_to_tuple(cls, d: dict[str, Any]) -> HeartbeatB:
+    def dict_to_tuple(cls, d: dict[str, Any]) -> HeartbeatB:  # noqa: C901
         """
         Deserialize a dictionary representation of a heartbeat.b.001 message object
         into a HeartbeatB python object for internal use.
@@ -276,7 +279,7 @@ def check_is_hex_char(v: str) -> None:
         ValueError: if v is not HexChar format
     """
     if not isinstance(v, str):
-        raise ValueError(f"<{v}> must be a hex char, but not even a string")
+        raise ValueError(f"<{v}> must be a hex char, but not even a string")  # noqa: TRY004
     if len(v) > 1:
         raise ValueError(f"<{v}> must be a hex char, but not of len 1")
     if v not in "0123456789abcdefABCDEF":
@@ -295,12 +298,10 @@ def check_is_left_right_dot(v: str) -> None:
     Raises:
         ValueError: if v is not LeftRightDot format
     """
-    from typing import List
-
     try:
-        x: List[str] = v.split(".")
-    except:
-        raise ValueError(f"Failed to seperate <{v}> into words with split'.'")
+        x: list[str] = v.split(".")
+    except Exception as e:
+        raise ValueError(f"Failed to seperate <{v}> into words with split'.'") from e
     first_word = x[0]
     first_char = first_word[0]
     if not first_char.isalpha():
@@ -325,8 +326,6 @@ def check_is_reasonable_unix_time_ms(v: int) -> None:
     Raises:
         ValueError: if v is not ReasonableUnixTimeMs format
     """
-    import pendulum
-
     if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp * 1000 > v:  # type: ignore[attr-defined]
         raise ValueError(f"<{v}> must be after Jan 1 2000")
     if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp * 1000 < v:  # type: ignore[attr-defined]

@@ -62,7 +62,7 @@ class RelayComponentGt(BaseModel):
     NormallyOpen: bool = Field(
         title="Normally Open",
         description=(
-            "Normally open relays default in the open position, meaning that when they're not "
+            "Normally open relays default in the open position, meaning that when they're not "
             "in use, there is no contact between the circuits. When power is introduced, an electromagnet "
             "pulls the first circuit into contact with the second, thereby closing the circuit "
             "and allowing power to flow through"
@@ -156,7 +156,7 @@ class RelayComponentGt_Maker:
         display_name: Optional[str],
         gpio: Optional[int],
         hw_uid: Optional[str],
-        normally_open: bool,
+        normally_open: bool,  # noqa: FBT001
     ) -> None:
         self.tuple = RelayComponentGt(
             ComponentId=component_id,
@@ -257,11 +257,11 @@ class RelayComponentGt_Maker:
 
     @classmethod
     def type_to_dc(cls, t: str) -> RelayComponent:
-        return cls.tuple_to_dc(cls.type_to_tuple(t))
+        return cls.tuple_to_dc(cls.type_to_tuple(t.encode("utf-8"))) or t
 
     @classmethod
     def dc_to_type(cls, dc: RelayComponent) -> str:
-        return cls.dc_to_tuple(dc).as_type()
+        return cls.dc_to_tuple(dc).as_type().decode("utf-8")
 
     @classmethod
     def dict_to_dc(cls, d: dict[Any, str]) -> RelayComponent:

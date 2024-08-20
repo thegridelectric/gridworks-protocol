@@ -225,12 +225,10 @@ def check_is_spaceheat_name(v: str) -> None:
     Raises:
         ValueError: If the provided string is not in SpaceheatName format.
     """
-    from typing import List
-
     try:
-        x: List[str] = v.split(".")
-    except:
-        raise ValueError(f"Failed to seperate <{v}> into words with split'.'")
+        x: list[str] = v.split(".")
+    except Exception as e:
+        raise ValueError(f"Failed to seperate <{v}> into words with split'.'") from e
     first_word = x[0]
     first_char = first_word[0]
     if not first_char.isalpha():

@@ -119,10 +119,7 @@ class MultipurposeSensorComponentGt(BaseModel):
             if value is not None
         }
         # Recursively calling as_dict()
-        config_list = []
-        for elt in self.ConfigList:
-            config_list.append(elt.as_dict())
-        d["ConfigList"] = config_list
+        d["ConfigList"] = [elt.as_dict() for elt in self.ConfigList]
         return d
 
     def as_type(self) -> bytes:
@@ -196,7 +193,7 @@ class MultipurposeSensorComponentGt_Maker:
         return cls.dict_to_tuple(d)
 
     @classmethod
-    def dict_to_tuple(cls, d: dict[str, Any]) -> MultipurposeSensorComponentGt:
+    def dict_to_tuple(cls, d: dict[str, Any]) -> MultipurposeSensorComponentGt:  # noqa: C901
         """
         Deserialize a dictionary representation of a multipurpose.sensor.component.gt.000 message object
         into a MultipurposeSensorComponentGt python object for internal use.
@@ -282,11 +279,11 @@ class MultipurposeSensorComponentGt_Maker:
 
     @classmethod
     def type_to_dc(cls, t: str) -> MultipurposeSensorComponent:
-        return cls.tuple_to_dc(cls.type_to_tuple(t))
+        return cls.tuple_to_dc(cls.type_to_tuple(t.encode()))
 
     @classmethod
     def dc_to_type(cls, dc: MultipurposeSensorComponent) -> str:
-        return cls.dc_to_tuple(dc).as_type()
+        return cls.dc_to_tuple(dc).as_type().decode("utf-8")
 
     @classmethod
     def dict_to_dc(cls, d: dict[Any, str]) -> MultipurposeSensorComponent:
@@ -305,12 +302,10 @@ def check_is_left_right_dot(v: str) -> None:
     Raises:
         ValueError: if v is not LeftRightDot format
     """
-    from typing import List
-
     try:
-        x: List[str] = v.split(".")
-    except:
-        raise ValueError(f"Failed to seperate <{v}> into words with split'.'")
+        x: list[str] = v.split(".")
+    except Exception as e:
+        raise ValueError(f"Failed to seperate <{v}> into words with split'.'") from e
     first_word = x[0]
     first_char = first_word[0]
     if not first_char.isalpha():

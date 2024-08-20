@@ -120,11 +120,9 @@ class MultipurposeSensorCacGt(BaseModel):
         d["MakeModelGtEnumSymbol"] = EnumMakeModel.value_to_symbol(self.MakeModel)
         del d["TempUnit"]
         d["TempUnitGtEnumSymbol"] = Unit.value_to_symbol(self.TempUnit)
-        del d["TelemetryNameList"]
-        telemetry_name_list = []
-        for elt in self.TelemetryNameList:
-            telemetry_name_list.append(TelemetryName.value_to_symbol(elt.value))
-        d["TelemetryNameList"] = telemetry_name_list
+        d["TelemetryNameList"] = [
+            TelemetryName.value_to_symbol(elt) for elt in self.TelemetryNameList
+        ]
         return d
 
     def as_type(self) -> bytes:
@@ -204,7 +202,7 @@ class MultipurposeSensorCacGt_Maker:
         return cls.dict_to_tuple(d)
 
     @classmethod
-    def dict_to_tuple(cls, d: dict[str, Any]) -> MultipurposeSensorCacGt:
+    def dict_to_tuple(cls, d: dict[str, Any]) -> MultipurposeSensorCacGt:  # noqa: C901
         """
         Deserialize a dictionary representation of a multipurpose.sensor.cac.gt.000 message object
         into a MultipurposeSensorCacGt python object for internal use.
@@ -296,11 +294,11 @@ class MultipurposeSensorCacGt_Maker:
 
     @classmethod
     def type_to_dc(cls, t: str) -> MultipurposeSensorCac:
-        return cls.tuple_to_dc(cls.type_to_tuple(t))
+        return cls.tuple_to_dc(cls.type_to_tuple(t.encode()))
 
     @classmethod
     def dc_to_type(cls, dc: MultipurposeSensorCac) -> str:
-        return cls.dc_to_tuple(dc).as_type()
+        return cls.dc_to_tuple(dc).as_type().decode("utf-8")
 
     @classmethod
     def dict_to_dc(cls, d: dict[Any, str]) -> MultipurposeSensorCac:

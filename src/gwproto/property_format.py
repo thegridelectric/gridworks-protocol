@@ -84,7 +84,7 @@ def is_valid_asa_name(candidate: str) -> bool:
     """
     try:
         candidate_len = len(candidate)
-    except:  # noqa: E722
+    except:  # noqa
         return False
     return not candidate_len > 32
 
@@ -235,9 +235,7 @@ def check_is_positive_integer(candidate: int) -> None:
 def is_reasonable_unix_time_ms(candidate: int) -> bool:
     if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp * 1000 > candidate:  # type: ignore[attr-defined]
         return False
-    if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp * 1000 < candidate:  # type: ignore[attr-defined]
-        return False
-    return True
+    return pendulum.parse("3000-01-01T00:00:00Z").int_timestamp * 1000 >= candidate
 
 
 def check_is_reasonable_unix_time_ms(candidate: int) -> None:
@@ -250,9 +248,7 @@ def check_is_reasonable_unix_time_ms(candidate: int) -> None:
 def is_reasonable_unix_time_s(candidate: int) -> bool:
     if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp > candidate:  # type: ignore[attr-defined]
         return False
-    if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp < candidate:  # type: ignore[attr-defined]
-        return False
-    return True
+    return pendulum.parse("3000-01-01T00:00:00Z").int_timestamp >= candidate  # type: ignore[attr-defined]
 
 
 def check_is_reasonable_unix_time_s(candidate: int) -> None:
@@ -292,7 +288,7 @@ def check_is_short_integer(candidate: int) -> None:
         raise ValueError("short format requires (-32767 -1) <= number <= 32767")
 
 
-def is_uuid_canonical_textual(candidate: str) -> bool:
+def is_uuid_canonical_textual(candidate: str) -> bool:  # noqa: PLR0911
     try:
         x = candidate.split("-")
     except AttributeError:
@@ -302,7 +298,7 @@ def is_uuid_canonical_textual(candidate: str) -> bool:
     for hex_word in x:
         try:
             int(hex_word, 16)
-        except ValueError:
+        except ValueError:  # noqa: PERF203
             return False
     if len(x[0]) != 8:
         return False
@@ -325,7 +321,7 @@ def check_is_uuid_canonical_textual(candidate: str) -> None:
     for hex_word in x:
         try:
             int(hex_word, 16)
-        except ValueError:
+        except ValueError:  # noqa: PERF203
             raise ValueError("Words are not all hex")
     if len(x[0]) != 8:
         raise ValueError("Word 0  not of length 8")

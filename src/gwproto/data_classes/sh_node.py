@@ -16,7 +16,7 @@ class ShNode:
     temperature data for the purposes of thermostatic control).
     """
 
-    by_id: Dict[str, "ShNode"] = {}
+    by_id: Dict[str, "ShNode"] = {}  # noqa: RUF012
 
     def __init__(  # noqa: PLR0913, PLR0917, RUF100
         self,

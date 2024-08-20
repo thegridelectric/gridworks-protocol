@@ -8,7 +8,7 @@ from gwproto.enums import MakeModel
 
 
 class RelayComponent(Component):
-    by_id: Dict[str, "RelayComponent"] = {}
+    by_id: Dict[str, "RelayComponent"] = {}  # noqa: RUF012
 
     def __init__(  # noqa: PLR0913, PLR0917, RUF100
         self,

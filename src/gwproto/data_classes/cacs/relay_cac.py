@@ -7,7 +7,7 @@ from gwproto.enums import MakeModel, TelemetryName
 
 
 class RelayCac(ComponentAttributeClass):
-    by_id: Dict[str, "RelayCac"] = {}
+    by_id: Dict[str, "RelayCac"] = {}  # noqa: RUF012
 
     def __init__(
         self,

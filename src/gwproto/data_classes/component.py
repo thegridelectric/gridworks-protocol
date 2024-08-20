@@ -8,7 +8,7 @@ from gwproto.data_classes.mixin import StreamlinedSerializerMixin
 
 
 class Component(ABC, StreamlinedSerializerMixin):
-    by_id: Dict[str, "Component"] = {}
+    by_id: Dict[str, "Component"] = {}  # noqa: RUF012
     base_props = [
         "component_id",
         "display_name",

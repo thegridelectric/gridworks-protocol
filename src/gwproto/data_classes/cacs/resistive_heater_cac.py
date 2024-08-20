@@ -7,7 +7,7 @@ from gwproto.enums import MakeModel
 
 
 class ResistiveHeaterCac(ComponentAttributeClass):
-    by_id: Dict[str, "ResistiveHeaterCac"] = {}
+    by_id: Dict[str, "ResistiveHeaterCac"] = {}  # noqa: RUF012
 
     def __init__(
         self,

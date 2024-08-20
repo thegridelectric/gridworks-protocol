@@ -7,7 +7,7 @@ from gwproto.enums import MakeModel
 
 
 class PipeFlowSensorCac(ComponentAttributeClass):
-    by_id: Dict[str, "PipeFlowSensorCac"] = {}
+    by_id: Dict[str, "PipeFlowSensorCac"] = {}  # noqa: RUF012
 
     def __init__(
         self,

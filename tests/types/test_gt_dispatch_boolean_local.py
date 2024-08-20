@@ -9,7 +9,7 @@ from gwproto.errors import SchemaError
 from gwproto.types import GtDispatchBooleanLocal_Maker as Maker
 
 
-def test_gt_dispatch_boolean_local_generated() -> None:
+def test_gt_dispatch_boolean_local_generated() -> None:  # noqa: PLR0915
     d = {
         "RelayState": 1,
         "AboutNodeName": "a.elt1.relay",

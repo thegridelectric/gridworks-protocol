@@ -9,7 +9,7 @@ from gwproto.errors import SchemaError
 from gwproto.types import ResistiveHeaterComponentGt_Maker as Maker
 
 
-def test_resistive_heater_component_gt_generated() -> None:
+def test_resistive_heater_component_gt_generated() -> None:  # noqa: PLR0915
     d = {
         "ComponentId": "80f95280-e999-49e0-a0e4-a7faf3b5b3bd",
         "ComponentAttributeClassId": "cf1f2587-7462-4701-b962-d2b264744c1d",

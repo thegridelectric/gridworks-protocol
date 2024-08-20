@@ -10,7 +10,7 @@ from gwproto.errors import SchemaError
 from gwproto.types import SimpleTempSensorCacGt_Maker as Maker
 
 
-def test_simple_temp_sensor_cac_gt_generated() -> None:
+def test_simple_temp_sensor_cac_gt_generated() -> None:  # noqa: PLR0915
     d = {
         "ComponentAttributeClassId": "8a1a1538-ed2d-4829-9c03-f9be1c9f9c83",
         "MakeModelGtEnumSymbol": "acd93fb3",

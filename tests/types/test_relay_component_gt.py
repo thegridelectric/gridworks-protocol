@@ -9,7 +9,7 @@ from gwproto.errors import SchemaError
 from gwproto.types import RelayComponentGt_Maker as Maker
 
 
-def test_relay_component_gt_generated() -> None:
+def test_relay_component_gt_generated() -> None:  # noqa: PLR0915
     d = {
         "ComponentId": "798fe14a-4073-41eb-bce2-075906aee6bb",
         "ComponentAttributeClassId": "69f101fc-22e4-4caa-8103-50b8aeb66028",

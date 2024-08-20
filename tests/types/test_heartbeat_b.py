@@ -9,7 +9,7 @@ from gwproto.errors import SchemaError
 from gwproto.types import HeartbeatB_Maker as Maker
 
 
-def test_heartbeat_b_generated() -> None:
+def test_heartbeat_b_generated() -> None:  # noqa: PLR0915
     d = {
         "FromGNodeAlias": "d1.isone.ver.keene.holly",
         "FromGNodeInstanceId": "97eba574-bd20-45b5-bf82-9ba2f492d8f6",

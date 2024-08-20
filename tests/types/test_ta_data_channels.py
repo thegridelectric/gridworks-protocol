@@ -9,7 +9,7 @@ from gwproto.errors import SchemaError
 from gwproto.types import TaDataChannels_Maker as Maker
 
 
-def test_ta_data_channels_generated() -> None:
+def test_ta_data_channels_generated() -> None:  # noqa: PLR0915
     d = {
         "TerminalAssetGNodeAlias": "hw1.isone.me.versant.keene.oak.ta",
         "TerminalAssetGNodeId": "7e152072-c91b-49d2-9ebd-f4fe1b684d06",

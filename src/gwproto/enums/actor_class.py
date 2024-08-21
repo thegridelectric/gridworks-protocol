@@ -83,10 +83,11 @@ class ActorClass(StrEnum):
 
     @classmethod
     def values(cls) -> List[str]:
+        # ruff: noqa: RUF100
         """
         Returns enum choices
         """
-        return [elt.value for elt in cls]  # noqa: ALL
+        return [elt.value for elt in cls]  # noqa
 
     @classmethod
     def version(cls, value: str) -> str:

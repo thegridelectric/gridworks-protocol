@@ -1,6 +1,5 @@
 def check_is_spaceheat_name(v: str) -> None:
-    """Check SpaceheatName Format. Used in data_classes.utls
-    """
+    """Check SpaceheatName Format. Used in data_classes.utls"""
     try:
         x = v.split("-")
     except Exception as e:

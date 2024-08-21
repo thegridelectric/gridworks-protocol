@@ -82,7 +82,9 @@ def add_i2c_relay_board(
                 ComponentGt,
                 I2cMultichannelDtRelayComponentGt(
                     component_id=db.make_component_id(board.ComponentDisplayName),
-                    component_attribute_class_id=CACS_BY_MAKE_MODEL[board.RelayMakeModel],
+                    component_attribute_class_id=CACS_BY_MAKE_MODEL[
+                        board.RelayMakeModel
+                    ],
                     i2c_address_list=[0x20, 0x21],
                     config_list=[
                         ChannelConfig(
@@ -102,9 +104,7 @@ def add_i2c_relay_board(
                             actor_name=v,
                             wiring_config=board.PinCfgByName[v].WiringConfig,
                             event_type=board.PinCfgByName[v].EventType,
-                            de_energizing_event=board.PinCfgByName[
-                                v
-                            ].DeEnergizingEvent,
+                            de_energizing_event=board.PinCfgByName[v].DeEnergizingEvent,
                         )
                         for v in board.PinCfgByName
                     ],
@@ -149,17 +149,15 @@ def add_i2c_relay_board(
         ]
     )
 
-    db.add_channels(
-        [
-            DataChannelGt(
-                name=f"{name}-energization",
-                display_name=f"{v.DisplayName}",
-                about_node_name=name,
-                captured_by_node_name=KRIDA_MULTIPLEXER_NAME,
-                telemetry_name=TelemetryName.RelayState,
-                terminal_asset_alias=board.TerminalAssetAlias,
-                id=db.make_channel_id(f"{name}-energization"),
-            )
-            for name, v in board.PinCfgByName.items()
-        ]
-    )
+    db.add_channels([
+        DataChannelGt(
+            name=f"{name}-energization",
+            display_name=f"{v.DisplayName}",
+            about_node_name=name,
+            captured_by_node_name=KRIDA_MULTIPLEXER_NAME,
+            telemetry_name=TelemetryName.RelayState,
+            terminal_asset_alias=board.TerminalAssetAlias,
+            id=db.make_channel_id(f"{name}-energization"),
+        )
+        for name, v in board.PinCfgByName.items()
+    ])

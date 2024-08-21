@@ -230,7 +230,8 @@ class LayoutDb:
         for cac in cacs:
             if cac.component_attribute_class_id in self.cacs_by_id:
                 print(
-                    f"cac with id <{cac.component_attribute_class_id}> " "already present"
+                    f"cac with id <{cac.component_attribute_class_id}> "
+                    "already present"
                 )
 
             elif cac.make_model in self.maps.cacs_by_make_model:

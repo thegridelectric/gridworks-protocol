@@ -22,5 +22,5 @@ EVENT_ENUM_BY_NAME = {
     FsmEventType.ChangeLgOperatingMode.value: ChangeLgOperatingMode,
     FsmEventType.ChangePrimaryPumpControl.value: ChangePrimaryPumpControl,
     FsmEventType.ChangePrimaryPumpState.value: ChangePrimaryPumpState,
-    FsmEventType.ChangeRelayPin.value: ChangeRelayPin
+    FsmEventType.ChangeRelayPin.value: ChangeRelayPin,
 }

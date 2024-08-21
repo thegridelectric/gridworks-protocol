@@ -23,7 +23,9 @@ from tests.utils import flush_all
 def test_i2c_multichannel_dt_relay_component_gt_generated() -> None:
     flush_all()
     cac_gt = CacGt(
-        component_attribute_class_id=CACS_BY_MAKE_MODEL[MakeModel.KRIDA__DOUBLEEMR16I2CV3],
+        component_attribute_class_id=CACS_BY_MAKE_MODEL[
+            MakeModel.KRIDA__DOUBLEEMR16I2CV3
+        ],
         make_model=MakeModel.KRIDA__DOUBLEEMR16I2CV3,
         display_name="Krida EMR16 16-pin Relay Board",
     )

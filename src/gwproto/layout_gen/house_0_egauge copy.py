@@ -1,5 +1,8 @@
 from typing import Optional, cast
 
+from layout_gen.house_0 import House0LayoutDb
+from pydantic import BaseModel
+
 from gwproto.enums import ActorClass, MakeModel, TelemetryName
 from gwproto.enums import Unit as UnitEnum
 from gwproto.type_helpers import CACS_BY_MAKE_MODEL
@@ -14,9 +17,6 @@ from gwproto.types import (
     SpaceheatNodeGt,
 )
 from gwproto.types.electric_meter_component_gt import ElectricMeterComponentGt
-from pydantic import BaseModel
-
-from layout_gen.house_0 import House0LayoutDb
 
 
 class EGaugeIOGenCfg(BaseModel):
@@ -157,36 +157,34 @@ def add_house0_egauge(
         + [io.node(db) for io in egauge.IOs]
     )
 
-    db.add_channels(
-        [
-            DataChannelGt(
-                Name=stub.ChannelName,
-                AboutNodeName=stub.AboutName,
-                TelemetryName=stub.TelemetryName,
-                CapturedByNodeName=f"s.{db.short_names.REV_GRADE_POWER_METER}",
-                DisplayName=stub.DisplayName,
-                Id=db.make_channel_id(stub.ChannelName),
-            )
-            for stub in db.channel_stubs.power
-        ]
-    )
+    db.add_channels([
+        DataChannelGt(
+            Name=stub.ChannelName,
+            AboutNodeName=stub.AboutName,
+            TelemetryName=stub.TelemetryName,
+            CapturedByNodeName=f"s.{db.short_names.REV_GRADE_POWER_METER}",
+            DisplayName=stub.DisplayName,
+            Id=db.make_channel_id(stub.ChannelName),
+        )
+        for stub in db.channel_stubs.power
+    ])
 
     given_names = set(map(lambda x: x.AboutNodeName, egauge.IOs))
-    required_names= set(map(lambda x: x.AboutName, db.channel_stubs.power))
+    required_names = set(map(lambda x: x.AboutName, db.channel_stubs.power))
     missing_names = required_names - given_names
     if missing_names:
-        raise ValueError(f"EGauge config is missing these node names:  {', '.join(missing_names)} ")
-    
-    db.add_channels(
-        [
-            DataChannelGt(
-                Name=f"{node_name}-pwr",
-                AboutNodeName=node_name,
-                TelemetryName=TelemetryName.PowerW,
-                CapturedByNodeName=f"s.{db.short_names.REV_GRADE_POWER_METER}",
-                DisplayName=f"{node_name} Power",
-                Id=db.make_channel_id(f"{node_name}-pwr"),
-            )
-            for node_name in (given_names - required_names)
-        ]
-    )
+        raise ValueError(
+            f"EGauge config is missing these node names:  {', '.join(missing_names)} "
+        )
+
+    db.add_channels([
+        DataChannelGt(
+            Name=f"{node_name}-pwr",
+            AboutNodeName=node_name,
+            TelemetryName=TelemetryName.PowerW,
+            CapturedByNodeName=f"s.{db.short_names.REV_GRADE_POWER_METER}",
+            DisplayName=f"{node_name} Power",
+            Id=db.make_channel_id(f"{node_name}-pwr"),
+        )
+        for node_name in (given_names - required_names)
+    ])

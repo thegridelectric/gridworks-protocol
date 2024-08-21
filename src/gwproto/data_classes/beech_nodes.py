@@ -7,6 +7,7 @@ class BeechNames(House0RequiredNames):
     These are immutable identifiers of the Spaceheat Nodes associated
     to the Beech SCADA GNode ("hw1.isone.me.versant.keene.beech.scada")
     """
+
     # zone names
     ZONE1_DOWN = "zone1-down"
     ZONE2_UP = "zone2-up"
@@ -31,5 +32,6 @@ class BeechNames(House0RequiredNames):
     PRIMARY_POWER_METER = "primary-pwr-meter"
     # Actor / reader Nodes
     KRIDA_MULTIPLEXER = "krida-multiplexer"
+
     def __init__(self):
         super().__init__(total_store_tanks=3, zone_list=["down", "up"])

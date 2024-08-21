@@ -21,6 +21,7 @@ class TankTempName:
     def depth4(self) -> str:
         return f"{self.tank_prefix}-depth4"
 
+
 class House0TempName:
     HP_LWT = "hp-lwt"
     HP_EWT = "hp-ewt"

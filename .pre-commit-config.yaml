@@ -41,5 +41,5 @@ repos:
     rev: v0.6.1
     hooks:
       - id: ruff
-        args: ["--select", "I"]
+        args: ["--select", "I", "--fix"]
       - id: ruff-format

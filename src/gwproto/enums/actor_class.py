@@ -1,3 +1,4 @@
+# ruff: noqa: RUF100
 from enum import auto
 from typing import List
 
@@ -83,7 +84,6 @@ class ActorClass(StrEnum):
 
     @classmethod
     def values(cls) -> List[str]:
-        # ruff: noqa: RUF100
         """
         Returns enum choices
         """

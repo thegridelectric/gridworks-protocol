@@ -149,15 +149,17 @@ def add_i2c_relay_board(
         ]
     )
 
-    db.add_channels([
-        DataChannelGt(
-            name=f"{name}-energization",
-            display_name=f"{v.DisplayName}",
-            about_node_name=name,
-            captured_by_node_name=KRIDA_MULTIPLEXER_NAME,
-            telemetry_name=TelemetryName.RelayState,
-            terminal_asset_alias=board.TerminalAssetAlias,
-            id=db.make_channel_id(f"{name}-energization"),
-        )
-        for name, v in board.PinCfgByName.items()
-    ])
+    db.add_channels(
+        [
+            DataChannelGt(
+                name=f"{name}-energization",
+                display_name=f"{v.DisplayName}",
+                about_node_name=name,
+                captured_by_node_name=KRIDA_MULTIPLEXER_NAME,
+                telemetry_name=TelemetryName.RelayState,
+                terminal_asset_alias=board.TerminalAssetAlias,
+                id=db.make_channel_id(f"{name}-energization"),
+            )
+            for name, v in board.PinCfgByName.items()
+        ]
+    )

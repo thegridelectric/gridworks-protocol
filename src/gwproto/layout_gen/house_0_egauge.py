@@ -159,19 +159,21 @@ def add_house0_egauge(
         + [io.node(db) for io in egauge.IOs]
     )
 
-    db.add_channels([
-        DataChannelGt(
-            name=stub.ChannelName,
-            about_node_name=stub.AboutName,
-            telemetry_name=stub.TelemetryName,
-            captured_by_node_name=db.names.PRIMARY_POWER_METER,
-            display_name=stub.ChannelName,
-            terminal_asset_alias=egauge.TerminalAssetAlias,
-            in_power_metering=stub.InPowerMetering,
-            id=db.make_channel_id(stub.ChannelName),
-        )
-        for stub in db.channel_stubs.power
-    ])
+    db.add_channels(
+        [
+            DataChannelGt(
+                name=stub.ChannelName,
+                about_node_name=stub.AboutName,
+                telemetry_name=stub.TelemetryName,
+                captured_by_node_name=db.names.PRIMARY_POWER_METER,
+                display_name=stub.ChannelName,
+                terminal_asset_alias=egauge.TerminalAssetAlias,
+                in_power_metering=stub.InPowerMetering,
+                id=db.make_channel_id(stub.ChannelName),
+            )
+            for stub in db.channel_stubs.power
+        ]
+    )
 
     given_names = set(map(lambda x: x.AboutNodeName, egauge.IOs))
     required_names = set(map(lambda x: x.AboutName, db.channel_stubs.power))
@@ -181,15 +183,17 @@ def add_house0_egauge(
             f"EGauge config is missing these node names:  {', '.join(missing_names)} "
         )
 
-    db.add_channels([
-        DataChannelGt(
-            name=f"{node_name}-pwr",
-            about_node_name=node_name,
-            telemetry_name=TelemetryName.PowerW,
-            captured_by_node_name=db.names.PRIMARY_POWER_METER,
-            terminal_asset_alias=egauge.TerminalAssetAlias,
-            display_name=f"{node_name} Power",
-            id=db.make_channel_id(f"{node_name}-pwr"),
-        )
-        for node_name in (given_names - required_names)
-    ])
+    db.add_channels(
+        [
+            DataChannelGt(
+                name=f"{node_name}-pwr",
+                about_node_name=node_name,
+                telemetry_name=TelemetryName.PowerW,
+                captured_by_node_name=db.names.PRIMARY_POWER_METER,
+                terminal_asset_alias=egauge.TerminalAssetAlias,
+                display_name=f"{node_name} Power",
+                id=db.make_channel_id(f"{node_name}-pwr"),
+            )
+            for node_name in (given_names - required_names)
+        ]
+    )

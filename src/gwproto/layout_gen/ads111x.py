@@ -155,15 +155,17 @@ def add_ads1115(db: LayoutDb, tsnap: AdsGenCfg) -> None:
         ]
     )
 
-    db.add_channels([
-        DataChannelGt(
-            name=v.ChannelName,
-            display_name=f"{v.DisplayName} Temperature",
-            about_node_name=k,
-            captured_by_node_name=tsnap.NodeName,
-            telemetry_name=v.TName,
-            terminal_asset_alias=tsnap.TerminalAssetAlias,
-            id=db.make_channel_id(v.ChannelName),
-        )
-        for k, v in tsnap.CfgByAboutName.items()
-    ])
+    db.add_channels(
+        [
+            DataChannelGt(
+                name=v.ChannelName,
+                display_name=f"{v.DisplayName} Temperature",
+                about_node_name=k,
+                captured_by_node_name=tsnap.NodeName,
+                telemetry_name=v.TName,
+                terminal_asset_alias=tsnap.TerminalAssetAlias,
+                id=db.make_channel_id(v.ChannelName),
+            )
+            for k, v in tsnap.CfgByAboutName.items()
+        ]
+    )

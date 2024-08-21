@@ -150,26 +150,30 @@ def add_i2c_flow_totalizer(
         ]
     )
 
-    db.add_channels([
-        DataChannelGt(
-            Name=ch_prefix,
-            AboutNodeName=ch_prefix,
-            TelemetryName=TelemetryName.GpmTimes100,
-            CapturedByNodeName=meter.NodeName,
-            DisplayName=f"{ch_prefix}",
-            Id=db.make_channel_id(ch_prefix),
-        )
-        for ch_prefix in meter.CfgByChannelNamePrefix
-    ])
+    db.add_channels(
+        [
+            DataChannelGt(
+                Name=ch_prefix,
+                AboutNodeName=ch_prefix,
+                TelemetryName=TelemetryName.GpmTimes100,
+                CapturedByNodeName=meter.NodeName,
+                DisplayName=f"{ch_prefix}",
+                Id=db.make_channel_id(ch_prefix),
+            )
+            for ch_prefix in meter.CfgByChannelNamePrefix
+        ]
+    )
 
-    db.add_channels([
-        DataChannelGt(
-            Name=f"{ch_prefix}-integrated",
-            AboutNodeName=ch_prefix,
-            TelemetryName=TelemetryName.GallonsTimes100,
-            CapturedByNodeName=meter.NodeName,
-            DisplayName=f"{ch_prefix}, totalized",
-            Id=db.make_channel_id(f"{ch_prefix}-integrated"),
-        )
-        for ch_prefix in meter.CfgByChannelNamePrefix
-    ])
+    db.add_channels(
+        [
+            DataChannelGt(
+                Name=f"{ch_prefix}-integrated",
+                AboutNodeName=ch_prefix,
+                TelemetryName=TelemetryName.GallonsTimes100,
+                CapturedByNodeName=meter.NodeName,
+                DisplayName=f"{ch_prefix}, totalized",
+                Id=db.make_channel_id(f"{ch_prefix}-integrated"),
+            )
+            for ch_prefix in meter.CfgByChannelNamePrefix
+        ]
+    )

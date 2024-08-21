@@ -157,17 +157,19 @@ def add_house0_egauge(
         + [io.node(db) for io in egauge.IOs]
     )
 
-    db.add_channels([
-        DataChannelGt(
-            Name=stub.ChannelName,
-            AboutNodeName=stub.AboutName,
-            TelemetryName=stub.TelemetryName,
-            CapturedByNodeName=f"s.{db.short_names.REV_GRADE_POWER_METER}",
-            DisplayName=stub.DisplayName,
-            Id=db.make_channel_id(stub.ChannelName),
-        )
-        for stub in db.channel_stubs.power
-    ])
+    db.add_channels(
+        [
+            DataChannelGt(
+                Name=stub.ChannelName,
+                AboutNodeName=stub.AboutName,
+                TelemetryName=stub.TelemetryName,
+                CapturedByNodeName=f"s.{db.short_names.REV_GRADE_POWER_METER}",
+                DisplayName=stub.DisplayName,
+                Id=db.make_channel_id(stub.ChannelName),
+            )
+            for stub in db.channel_stubs.power
+        ]
+    )
 
     given_names = set(map(lambda x: x.AboutNodeName, egauge.IOs))
     required_names = set(map(lambda x: x.AboutName, db.channel_stubs.power))
@@ -177,14 +179,16 @@ def add_house0_egauge(
             f"EGauge config is missing these node names:  {', '.join(missing_names)} "
         )
 
-    db.add_channels([
-        DataChannelGt(
-            Name=f"{node_name}-pwr",
-            AboutNodeName=node_name,
-            TelemetryName=TelemetryName.PowerW,
-            CapturedByNodeName=f"s.{db.short_names.REV_GRADE_POWER_METER}",
-            DisplayName=f"{node_name} Power",
-            Id=db.make_channel_id(f"{node_name}-pwr"),
-        )
-        for node_name in (given_names - required_names)
-    ])
+    db.add_channels(
+        [
+            DataChannelGt(
+                Name=f"{node_name}-pwr",
+                AboutNodeName=node_name,
+                TelemetryName=TelemetryName.PowerW,
+                CapturedByNodeName=f"s.{db.short_names.REV_GRADE_POWER_METER}",
+                DisplayName=f"{node_name} Power",
+                Id=db.make_channel_id(f"{node_name}-pwr"),
+            )
+            for node_name in (given_names - required_names)
+        ]
+    )

@@ -253,32 +253,34 @@ class House0LayoutDb(LayoutDb):
                 "PrimaryGNodeRoleAlias": "TerminalAsset",
             }
 
-        self.add_nodes([
-            SpaceheatNodeGt(
-                sh_node_id=self.make_node_id(self.names.SCADA),
-                name=self.names.SCADA,
-                handle=SCADA_START_HANDLE,
-                actor_class=ActorClass.Scada,
-                display_name=cfg.scada_display_name,
-                strategy=SCADA_STRATEGY,
-                zone_list=self.zone_list,
-                total_store_tanks=self.total_store_tanks,
-            ),
-            SpaceheatNodeGt(
-                ShNodeId=self.make_node_id(self.names.HOME_ALONE),
-                Name=self.names.HOME_ALONE,
-                Handle=self.names.HOME_ALONE,
-                ActorClass=ActorClass.HomeAlone,
-                DisplayName="HomeAlone",
-            ),
-            SpaceheatNodeGt(
-                ShNodeId=self.make_node_id(SCADA_2_NAME),
-                Name=SCADA_2_NAME,
-                Handle=SCADA_2_NAME,
-                ActorClass=ActorClass.Parentless,
-                DisplayName="Scada 2",
-            ),
-        ])
+        self.add_nodes(
+            [
+                SpaceheatNodeGt(
+                    sh_node_id=self.make_node_id(self.names.SCADA),
+                    name=self.names.SCADA,
+                    handle=SCADA_START_HANDLE,
+                    actor_class=ActorClass.Scada,
+                    display_name=cfg.scada_display_name,
+                    strategy=SCADA_STRATEGY,
+                    zone_list=self.zone_list,
+                    total_store_tanks=self.total_store_tanks,
+                ),
+                SpaceheatNodeGt(
+                    ShNodeId=self.make_node_id(self.names.HOME_ALONE),
+                    Name=self.names.HOME_ALONE,
+                    Handle=self.names.HOME_ALONE,
+                    ActorClass=ActorClass.HomeAlone,
+                    DisplayName="HomeAlone",
+                ),
+                SpaceheatNodeGt(
+                    ShNodeId=self.make_node_id(SCADA_2_NAME),
+                    Name=SCADA_2_NAME,
+                    Handle=SCADA_2_NAME,
+                    ActorClass=ActorClass.Parentless,
+                    DisplayName="Scada 2",
+                ),
+            ]
+        )
 
     def add_stub_power_meter(self, cfg: Optional[House0StubConfig] = None):
         if cfg is None:
@@ -331,21 +333,23 @@ class House0LayoutDb(LayoutDb):
             "ElectricMeterComponents",
         )
 
-        self.add_nodes([
-            SpaceheatNodeGt(
-                ShNodeId=self.make_node_id(f"s.{self.names.PRIMARY_POWER_METER}"),
-                Name=self.names.PRIMARY_POWER_METER,
-                ActorClass=ActorClass.PowerMeter,
-                DisplayName=cfg.power_meter_node_display_name,
-                ComponentId=self.component_id_by_display_name(
-                    cfg.power_meter_component_display_name
+        self.add_nodes(
+            [
+                SpaceheatNodeGt(
+                    ShNodeId=self.make_node_id(f"s.{self.names.PRIMARY_POWER_METER}"),
+                    Name=self.names.PRIMARY_POWER_METER,
+                    ActorClass=ActorClass.PowerMeter,
+                    DisplayName=cfg.power_meter_node_display_name,
+                    ComponentId=self.component_id_by_display_name(
+                        cfg.power_meter_component_display_name
+                    ),
                 ),
-            ),
-            SpaceheatNodeGt(
-                ShNodeId=self.make_node_id(self.names.HP_IDU),
-                Name=self.names.HP_IDU,
-                ActorClass=ActorClass.NoActor,
-                DisplayName=cfg.hp_pwr_display_name,
-                InPowerMetering=True,
-            ),
-        ])
+                SpaceheatNodeGt(
+                    ShNodeId=self.make_node_id(self.names.HP_IDU),
+                    Name=self.names.HP_IDU,
+                    ActorClass=ActorClass.NoActor,
+                    DisplayName=cfg.hp_pwr_display_name,
+                    InPowerMetering=True,
+                ),
+            ]
+        )

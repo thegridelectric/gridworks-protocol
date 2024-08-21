@@ -113,6 +113,7 @@ exclude = [
     "buck-out",
     "build",
     "dist",
+    "docs",
 ]
 output-format = "concise"
 fix = true

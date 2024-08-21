@@ -20,8 +20,6 @@ class BeechNames(House0RequiredNames):
     HP_FOSSIL_LWT = "hp-fossil-lwt"
     AMPHA_DIST_SWT = "ampha-dist-swt"
     AMPHB_DIST_SWT = "amphb-dist-swt"
-    ZONE1_DOWN_GW_TEMP = "zone1-down-gw-temp"
-    ZONE2_UP_GW_TEMP = "zone2-up-gw-temp"
     # readers
     ANALOG_TEMP = "analog-temp"
     BUFFER_READER = "buffer-reader"
@@ -29,7 +27,5 @@ class BeechNames(House0RequiredNames):
     TANK2_READER = "tank2-reader"
     TANK3_READER = "tank3-reader"
     PRIMARY_POWER_METER = "primary-pwr-meter"
-    # Actor / reader Nodes
-    KRIDA_MULTIPLEXER = "krida-multiplexer"
     def __init__(self):
         super().__init__(total_store_tanks=3, zone_list=["down", "up"])

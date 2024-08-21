@@ -22,13 +22,21 @@ class TankTempName:
         return f"{self.tank_prefix}-depth4"
 
 class House0TempName:
-    TANK: Dict[int, TankTempName]
-    ZONE_LIST: List[str]
-    OAT = "oat"
+    HP_LWT = "hp-lwt"
+    HP_EWT = "hp-ewt"
+    DIST_SWT = "dist-swt"
+    DIST_RWT = "dist-rwt"
+    STORE_HOT_PIPE = "store-hot-pipe"
+    STORE_COLD_PIPE = "store-cold-pipe"
+    BUFFER_HOT_PIPE = "buffer-hot-pipe"
+    BUFFER_COLD_PIPE = "buffer-cold-pipe"
     BUFFER_DEPTH1 = "buffer-depth1"
     BUFFER_DEPTH2 = "buffer-depth2"
     BUFFER_DEPTH3 = "buffer-depth3"
     BUFFER_DEPTH4 = "buffer-depth4"
+    TANK: Dict[int, TankTempName]
+    ZONE_LIST: List[str]
+    OAT = "oat"
 
     def __init__(self, total_store_tanks: int, zone_list: List[str]):
         self.TANK = {}
@@ -48,14 +56,6 @@ class House0RequiredNames:
     HP_ODU = "hp-odu"
     PRIMARY_PUMP = "primary-pump"
     STORE_PUMP = "store-pump"
-    HP_LWT = "hp-lwt"
-    HP_EWT = "hp-ewt"
-    DIST_SWT = "dist-swt"
-    DIST_RWT = "dist-rwt"
-    STORE_HOT_PIPE = "store-hot-pipe"
-    STORE_COLD_PIPE = "store-cold-pipe"
-    BUFFER_HOT_PIPE = "buffer-hot-pipe"
-    BUFFER_COLD_PIPE = "buffer-cold-pipe"
     ISO_VALVE = "iso-valve"
     ISO_VALVE_RELAY = "iso-valve-relay"
     CHARGE_DISCHARGE_VALVE = "chg-dschg-valve"

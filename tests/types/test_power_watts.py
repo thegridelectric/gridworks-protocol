@@ -4,9 +4,10 @@ import json
 
 import pytest
 from gw.errors import GwTypeError
+from pydantic import ValidationError
+
 from gwproto.types import PowerWatts
 from gwproto.types import PowerWattsMaker as Maker
-from pydantic import ValidationError
 
 
 def test_power_watts_generated() -> None:

@@ -4,10 +4,11 @@ import json
 
 import pytest
 from gw.errors import GwTypeError
+from pydantic import ValidationError
+
 from gwproto.enums import KindOfParam
 from gwproto.types import KeyparamChangeLog
 from gwproto.types import KeyparamChangeLogMaker as Maker
-from pydantic import ValidationError
 
 
 def test_keyparam_change_log_generated() -> None:

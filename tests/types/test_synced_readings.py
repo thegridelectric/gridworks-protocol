@@ -4,9 +4,10 @@ import json
 
 import pytest
 from gw.errors import GwTypeError
+from pydantic import ValidationError
+
 from gwproto.types import SyncedReadings
 from gwproto.types import SyncedReadingsMaker as Maker
-from pydantic import ValidationError
 
 
 def test_synced_readings_generated() -> None:

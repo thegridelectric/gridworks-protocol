@@ -2,6 +2,8 @@ import json
 from pathlib import Path
 from typing import Any, List, Optional
 
+from pydantic import BaseModel
+
 from gwproto.data_classes.component import Component
 from gwproto.data_classes.component_attribute_class import ComponentAttributeClass
 from gwproto.data_classes.data_channel import DataChannel
@@ -31,7 +33,6 @@ from gwproto.enums import (
     FsmEventType,
     RelayWiringConfig,
 )
-from pydantic import BaseModel
 
 #####################################################
 # Relay related

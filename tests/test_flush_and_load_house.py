@@ -10,7 +10,6 @@ from gwproto.types import (
     SpaceheatNodeGtMaker,
 )
 from gwproto.types.electric_meter_component_gt import ElectricMeterComponentGtMaker
-
 from tests.utils import flush_all
 
 

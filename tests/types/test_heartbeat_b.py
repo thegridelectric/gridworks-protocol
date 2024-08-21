@@ -4,9 +4,10 @@ import json
 
 import pytest
 from gw.errors import GwTypeError
+from pydantic import ValidationError
+
 from gwproto.types import HeartbeatB
 from gwproto.types import HeartbeatBMaker as Maker
-from pydantic import ValidationError
 
 
 def test_heartbeat_b_generated() -> None:

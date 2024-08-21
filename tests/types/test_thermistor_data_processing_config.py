@@ -4,10 +4,11 @@ import json
 
 import pytest
 from gw.errors import GwTypeError
+from pydantic import ValidationError
+
 from gwproto.enums import MakeModel, ThermistorDataMethod
 from gwproto.types import ThermistorDataProcessingConfig
 from gwproto.types import ThermistorDataProcessingConfigMaker as Maker
-from pydantic import ValidationError
 
 
 def test_thermistor_data_processing_config_generated() -> None:

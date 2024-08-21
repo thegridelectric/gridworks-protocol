@@ -4,6 +4,8 @@ import json
 
 import pytest
 from gw.errors import GwTypeError
+from pydantic import ValidationError
+
 from gwproto.enums import MakeModel, ThermistorDataMethod, Unit
 from gwproto.type_helpers import CACS_BY_MAKE_MODEL
 from gwproto.types import ChannelConfig, ThermistorDataProcessingConfig
@@ -13,8 +15,6 @@ from gwproto.types.ads111x_based_component_gt import Ads111xBasedComponentGt
 from gwproto.types.ads111x_based_component_gt import (
     Ads111xBasedComponentGtMaker as Maker,
 )
-from pydantic import ValidationError
-
 from tests.utils import flush_all
 
 

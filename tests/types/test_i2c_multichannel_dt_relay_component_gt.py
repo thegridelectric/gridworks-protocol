@@ -4,6 +4,8 @@ import json
 
 import pytest
 from gw.errors import GwTypeError
+from pydantic import ValidationError
+
 from gwproto.enums import FsmEventType, MakeModel, RelayWiringConfig, Unit
 from gwproto.type_helpers import CACS_BY_MAKE_MODEL
 from gwproto.types import ChannelConfig, RelayActorConfig
@@ -15,8 +17,6 @@ from gwproto.types.i2c_multichannel_dt_relay_component_gt import (
 from gwproto.types.i2c_multichannel_dt_relay_component_gt import (
     I2cMultichannelDtRelayComponentGtMaker as Maker,
 )
-from pydantic import ValidationError
-
 from tests.utils import flush_all
 
 

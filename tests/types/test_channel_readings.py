@@ -4,9 +4,10 @@ import json
 
 import pytest
 from gw.errors import GwTypeError
+from pydantic import ValidationError
+
 from gwproto.types import ChannelReadings
 from gwproto.types import ChannelReadingsMaker as Maker
-from pydantic import ValidationError
 
 
 def test_channel_readings_generated() -> None:

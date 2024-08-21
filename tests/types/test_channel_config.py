@@ -4,10 +4,11 @@ import json
 
 import pytest
 from gw.errors import GwTypeError
+from pydantic import ValidationError
+
 from gwproto.enums import Unit
 from gwproto.types import ChannelConfig
 from gwproto.types import ChannelConfigMaker as Maker
-from pydantic import ValidationError
 
 
 def test_channel_config_generated() -> None:

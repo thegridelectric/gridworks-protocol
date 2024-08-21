@@ -4,10 +4,11 @@ import json
 
 import pytest
 from gw.errors import GwTypeError
+from pydantic import ValidationError
+
 from gwproto.enums import MakeModel, TelemetryName
 from gwproto.types import ElectricMeterCacGt
 from gwproto.types import ElectricMeterCacGtMaker as Maker
-from pydantic import ValidationError
 
 
 def test_electric_meter_cac_gt_generated() -> None:

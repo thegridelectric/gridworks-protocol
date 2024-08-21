@@ -4,6 +4,8 @@ import json
 
 import pytest
 from gw.errors import GwTypeError
+from pydantic import ValidationError
+
 from gwproto.enums import MakeModel, Unit
 from gwproto.type_helpers import CACS_BY_MAKE_MODEL
 from gwproto.types import ChannelConfig
@@ -13,8 +15,6 @@ from gwproto.types.i2c_flow_totalizer_component_gt import I2cFlowTotalizerCompon
 from gwproto.types.i2c_flow_totalizer_component_gt import (
     I2cFlowTotalizerComponentGtMaker as Maker,
 )
-from pydantic import ValidationError
-
 from tests.utils import flush_all
 
 

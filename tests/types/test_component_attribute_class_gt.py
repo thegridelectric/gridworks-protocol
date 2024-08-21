@@ -5,10 +5,11 @@ import uuid
 
 import pytest
 from gw.errors import GwTypeError
+from pydantic import ValidationError
+
 from gwproto.enums import MakeModel
 from gwproto.types import ComponentAttributeClassGt
 from gwproto.types import ComponentAttributeClassGtMaker as Maker
-from pydantic import ValidationError
 
 
 def test_component_attribute_class_gt_generated() -> None:

@@ -6,7 +6,6 @@ from gwproto import (
 )
 from gwproto.gs import PowerMaker
 from gwproto.messages import BatchedReadingsMaker, SnapshotSpaceheatMaker
-
 from tests.dummy_decoders import CHILD
 
 ParentMessageDecoder = create_message_payload_discriminator(

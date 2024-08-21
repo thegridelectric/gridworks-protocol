@@ -4,9 +4,10 @@ import json
 
 import pytest
 from gw.errors import GwTypeError
+from pydantic import ValidationError
+
 from gwproto.types import SingleReading
 from gwproto.types import SingleReadingMaker as Maker
-from pydantic import ValidationError
 
 
 def test_single_reading_generated() -> None:

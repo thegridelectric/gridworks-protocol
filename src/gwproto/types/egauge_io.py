@@ -8,7 +8,7 @@ from typing import Any, Dict, Literal
 import dotenv
 from gw.errors import GwTypeError
 from gw.utils import is_pascal_case, pascal_to_snake, snake_to_pascal
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from gwproto.types.egauge_register_config import (
     EgaugeRegisterConfig,
@@ -58,10 +58,7 @@ class EgaugeIo(BaseModel):
     )
     type_name: Literal["egauge.io"] = "egauge.io"
     version: Literal["001"] = "001"
-
-    class Config:
-        populate_by_name = True
-        alias_generator = snake_to_pascal
+    model_config = ConfigDict(populate_by_name=True, alias_generator=snake_to_pascal)
 
     @field_validator("channel_name")
     @classmethod

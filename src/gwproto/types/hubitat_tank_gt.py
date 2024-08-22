@@ -5,7 +5,8 @@ from typing import Optional
 
 import yarl
 from gw.utils import snake_to_pascal
-from pydantic import BaseModel, conint, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator
+from typing_extensions import Annotated
 
 from gwproto.enums import TelemetryName, Unit
 from gwproto.types.hubitat_component_gt import HubitatRESTResolutionSettings
@@ -26,10 +27,10 @@ HUBITAT_ACCESS_TOKEN_REGEX = re.compile(
 
 
 class FibaroTempSensorSettingsGt(BaseModel):
-    stack_depth: conint(ge=1)
+    stack_depth: Annotated[int, Field(ge=1)]
     device_id: int
     fibaro_component_id: str
-    analog_input_id: conint(ge=1, le=2)
+    analog_input_id: Annotated[int, Field(ge=1, le=2)]
     tank_label: str = ""
     exponent: int = 1
     telemetry_name_gt_enum_symbol: str = "c89d0ba1"
@@ -44,11 +45,9 @@ class FibaroTempSensorSettingsGt(BaseModel):
     4. The default value.
     """
     rest: Optional[RESTPollerSettings] = None
-
-    class Config:
-        extra = "allow"
-        alias_generator = snake_to_pascal
-        populate_by_name = True
+    model_config = ConfigDict(
+        extra="allow", alias_generator=snake_to_pascal, populate_by_name=True
+    )
 
     @field_validator("telemetry_name_gt_enum_symbol")
     @classmethod
@@ -70,9 +69,7 @@ DEFAULT_SENSOR_NODE_NAME_FORMAT = "{tank_name}.temp.depth{stack_depth}"
 
 class FibaroTempSensorSettings(FibaroTempSensorSettingsGt):
     node_name: str
-
-    class Config:
-        ignored_types = (cached_property, TelemetryName)
+    model_config = ConfigDict(ignored_types=(cached_property, TelemetryName))
 
     @field_validator("rest")
     @classmethod
@@ -236,8 +233,6 @@ class HubitatTankSettingsGt(BaseModel):
     default_poll_period_seconds: Optional[float] = None
     devices: list[FibaroTempSensorSettingsGt] = []
     web_listen_enabled: bool = True
-
-    class Config:
-        extra = "allow"
-        alias_generator = snake_to_pascal
-        populate_by_name = True
+    model_config = ConfigDict(
+        extra="allow", alias_generator=snake_to_pascal, populate_by_name=True
+    )

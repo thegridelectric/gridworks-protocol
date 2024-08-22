@@ -2,7 +2,7 @@ from typing import Optional
 
 import yarl
 from gw.utils import snake_to_pascal
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from gwproto.types.rest_poller_gt import URLArgs, URLConfig
 from gwproto.utils import has_mac_address_format, predicate_validator
@@ -14,11 +14,9 @@ class HubitatGt(BaseModel):
     access_token: str
     mac_address: str
     web_listen_enabled: bool = True
-
-    class Config:
-        extra = "allow"
-        populate_by_name = True
-        alias_generator = snake_to_pascal
+    model_config = ConfigDict(
+        extra="allow", populate_by_name=True, alias_generator=snake_to_pascal
+    )
 
     _is_mac_address = predicate_validator("mac_address", has_mac_address_format)
 

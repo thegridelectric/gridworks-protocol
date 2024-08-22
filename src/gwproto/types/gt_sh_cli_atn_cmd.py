@@ -8,7 +8,7 @@ from typing import Any, Dict, Literal
 import dotenv
 from gw.errors import GwTypeError
 from gw.utils import is_pascal_case, pascal_to_snake, snake_to_pascal
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 dotenv.load_dotenv()
 
@@ -46,10 +46,7 @@ class GtShCliAtnCmd(BaseModel):
     )
     type_name: Literal["gt.sh.cli.atn.cmd"] = "gt.sh.cli.atn.cmd"
     version: Literal["110"] = "110"
-
-    class Config:
-        populate_by_name = True
-        alias_generator = snake_to_pascal
+    model_config = ConfigDict(populate_by_name=True, alias_generator=snake_to_pascal)
 
     @field_validator("from_g_node_alias")
     @classmethod

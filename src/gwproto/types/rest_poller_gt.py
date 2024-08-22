@@ -8,7 +8,7 @@ from typing import Literal, Optional, Tuple
 
 import yarl
 from gw.utils import snake_to_pascal
-from pydantic import BaseModel, HttpUrl, model_validator
+from pydantic import BaseModel, ConfigDict, HttpUrl, model_validator
 from typing_extensions import Self
 
 
@@ -24,10 +24,7 @@ class URLArgs(BaseModel):
     query: Optional[list[Tuple[str, str | int | float]]] = None
     fragment: str = ""
     encoded: bool = True
-
-    class Config:
-        alias_generator = snake_to_pascal
-        populate_by_name = True
+    model_config = ConfigDict(alias_generator=snake_to_pascal, populate_by_name=True)
 
     @classmethod
     def dict_from_url(cls, url: str | yarl.URL) -> dict:
@@ -81,10 +78,7 @@ class URLConfig(BaseModel):
     produce the URL 'path' field. The formatting operation is done as
     url_path_format.format(**URLPathArgs). See make_url() for details.
     """
-
-    class Config:
-        alias_generator = snake_to_pascal
-        populate_by_name = True
+    model_config = ConfigDict(alias_generator=snake_to_pascal, populate_by_name=True)
 
     def to_url(self) -> yarl.URL:
         return self.make_url(self)
@@ -126,20 +120,15 @@ class AioHttpClientTimeout(BaseModel):
     connect: Optional[float] = None
     sock_read: Optional[float] = None
     sock_connect: Optional[float] = None
-
-    class Config:
-        alias_generator = snake_to_pascal
-        populate_by_name = True
+    model_config = ConfigDict(alias_generator=snake_to_pascal, populate_by_name=True)
 
 
 class SessionArgs(BaseModel):
     base_url: Optional[URLConfig] = None
     timeout: Optional[AioHttpClientTimeout] = None
-
-    class Config:
-        extra = "allow"
-        alias_generator = snake_to_pascal
-        populate_by_name = True
+    model_config = ConfigDict(
+        extra="allow", alias_generator=snake_to_pascal, populate_by_name=True
+    )
 
 
 class RequestArgs(BaseModel):
@@ -150,32 +139,26 @@ class RequestArgs(BaseModel):
     headers: Optional[dict] = None
     timeout: AioHttpClientTimeout = None
     ssl: Optional[bool] = None
-
-    class Config:
-        extra = "allow"
-        alias_generator = snake_to_pascal
-        populate_by_name = True
+    model_config = ConfigDict(
+        extra="allow", alias_generator=snake_to_pascal, populate_by_name=True
+    )
 
 
 class ErrorResponse(BaseModel):
     error_for_http_status: bool = True
     raise_exception: bool = False
     report: bool = True
-
-    class Config:
-        extra = "allow"
-        alias_generator = snake_to_pascal
-        populate_by_name = True
+    model_config = ConfigDict(
+        extra="allow", alias_generator=snake_to_pascal, populate_by_name=True
+    )
 
 
 class ErrorResponses(BaseModel):
     request: ErrorResponse = ErrorResponse()
     convert: ErrorResponse = ErrorResponse()
-
-    class Config:
-        extra = "allow"
-        alias_generator = snake_to_pascal
-        populate_by_name = True
+    model_config = ConfigDict(
+        extra="allow", alias_generator=snake_to_pascal, populate_by_name=True
+    )
 
 
 DEFAULT_REST_POLL_PERIOD_SECONDS = 60.0
@@ -186,12 +169,12 @@ class RESTPollerSettings(BaseModel):
     request: RequestArgs = RequestArgs()
     poll_period_seconds: float = DEFAULT_REST_POLL_PERIOD_SECONDS
     errors: ErrorResponses = ErrorResponses()
-
-    class Config:
-        extra = "allow"
-        alias_generator = snake_to_pascal
-        populate_by_name = True
-        ignored_types = (cached_property,)
+    model_config = ConfigDict(
+        extra="allow",
+        alias_generator=snake_to_pascal,
+        populate_by_name=True,
+        ignored_types=(cached_property,),
+    )
 
     def url_args(self) -> dict:
         session_args = URLConfig.make_url_args(self.session.base_url)

@@ -219,7 +219,7 @@ class FibaroTempSensorSettings(FibaroTempSensorSettingsGt):
                 tank_name=tank_name,
                 stack_depth=settings_gt.stack_depth,
             ),
-            **settings_gt.dict(),
+            **settings_gt.model_dump(),
         )
         if settings.poll_period_seconds is None:
             settings.poll_period_seconds = default_poll_period_seconds

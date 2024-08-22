@@ -2,8 +2,6 @@ from typing import Any, Callable, Generic, Literal, Mapping, Optional, TypeVar, 
 
 from pydantic import BaseModel
 
-# from pydantic.generics import GenericModel
-# UserWarning: `pydantic.generics:GenericModel` has been moved to `pydantic.BaseModel`.
 from gwproto.topic import MQTTTopic
 
 EnumType = TypeVar("EnumType")
@@ -86,7 +84,7 @@ class Message(BaseModel, Generic[PayloadT]):
                     header_kwargs[header_field] = val
         header: Optional[Union[Header, dict[str, Any]]] = kwargs.pop("Header", None)
         if isinstance(header, Header):
-            header = header.copy(update=header_kwargs, deep=True)
+            header = header.model_copy(update=header_kwargs, deep=True)
         else:
             if header is not None:
                 header_kwargs = dict(header, **header_kwargs)

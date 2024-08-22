@@ -114,7 +114,7 @@ class PeerActiveEvent(CommEvent):
 
 
 class BatchedReadingsEvent(EventBase):
-    Batch: BatchedReadings | dict
+    Batch: BatchedReadings
     TypeName: Literal["gridworks.event.batched.readings"] = (
         "gridworks.event.batched.readings"
     )
@@ -122,7 +122,7 @@ class BatchedReadingsEvent(EventBase):
 
 
 class SnapshotSpaceheatEvent(EventBase):
-    Snap: SnapshotSpaceheat | dict
+    Snap: SnapshotSpaceheat
     TypeName: Literal["gridworks.event.snapshot.spaceheat"] = (
         "gridworks.event.snapshot.spaceheat"
     )

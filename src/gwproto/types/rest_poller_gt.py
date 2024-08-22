@@ -226,9 +226,8 @@ class RESTPollerSettings(BaseModel):
     def clear_property_cache(self):
         self.__dict__.pop("url", None)
 
-    # @root_validator(skip_on_failure=True)
     @model_validator(mode="after")
-    def post_root_validator(self) -> Self:
+    def model_validator_after(self) -> Self:
         base_url = URLConfig.make_url(self.session.base_url)
         url = URLConfig.make_url(self.request.url)
         if base_url is None and url is None:

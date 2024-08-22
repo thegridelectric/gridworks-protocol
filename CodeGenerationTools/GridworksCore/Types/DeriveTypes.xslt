@@ -80,7 +80,8 @@ import algosdk</xsl:text>
 import dotenv
 from gw.errors import GwTypeError
 from gw.utils import is_pascal_case, pascal_to_snake, snake_to_pascal
-from pydantic import BaseModel</xsl:text>
+from pydantic import BaseModel
+from pydantic import ConfigDict</xsl:text>
 <xsl:text>
 from pydantic import Field</xsl:text>
 <xsl:if test="count($airtable//TypeAxioms/TypeAxiom[MultiPropertyAxiom=$versioned-type-id]) > 0">
@@ -398,16 +399,15 @@ class </xsl:text>
 
 <xsl:if test="ExtraAllowed='true'"><xsl:text>
 
-    class Config:
-        extra = "allow"
-        populate_by_name = True
-        alias_generator = snake_to_pascal</xsl:text>
+    model_config = ConfigDict(
+        extra="allow", alias_generator=snake_to_pascal, populate_by_name=True
+    )</xsl:text>
 </xsl:if>
 <xsl:if test="not(ExtraAllowed='true')"><xsl:text>
 
-    class Config:
-        populate_by_name = True
-        alias_generator = snake_to_pascal</xsl:text>
+    model_config = ConfigDict(
+        alias_generator=snake_to_pascal, populate_by_name=True
+    )</xsl:text>
 </xsl:if>
 
 <!-- CONSTRUCTING VALIDATORS CONSTRUCTING VALIDATORS  CONSTRUCTING VALIDATORS  CONSTRUCTING VALIDATORS  CONSTRUCTING VALIDATORS -->

@@ -4,6 +4,7 @@ import typing
 from typing import Any, Literal
 
 from gw.utils import snake_to_pascal
+from pydantic import ConfigDict
 
 from gwproto.data_classes.component import Component
 from gwproto.data_classes.components.hubitat_tank_component import HubitatTankComponent
@@ -15,10 +16,7 @@ class HubitatTankComponentGt(ComponentGt):
     tank: HubitatTankSettingsGt
     type_name: Literal["hubitat.tank.component.gt"] = "hubitat.tank.component.gt"
     version: Literal["000"] = "000"
-
-    class Config:
-        populate_by_name = True
-        alias_generator = snake_to_pascal
+    model_config = ConfigDict(populate_by_name=True, alias_generator=snake_to_pascal)
 
     def __hash__(self):
         return hash((type(self),) + tuple(self.__dict__.values()))

@@ -3,17 +3,15 @@ from typing import Literal
 
 from gw.errors import GwTypeError
 from gw.utils import snake_to_pascal
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel, ConfigDict, field_validator
 
 
 class Dispatch(BaseModel):
     turn_on_or_off: int
     type_name: Literal["d"] = "d"
-
-    class Config:
-        populate_by_name = True
-        alias_generator = snake_to_pascal
-        extra = "forbid"
+    model_config = ConfigDict(
+        populate_by_name=True, alias_generator=snake_to_pascal, extra="forbid"
+    )
 
     @field_validator("turn_on_or_off")
     @classmethod

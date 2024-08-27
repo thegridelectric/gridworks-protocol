@@ -3,6 +3,7 @@ import typing
 from typing import Any, Literal
 
 from gw.utils import snake_to_pascal
+from pydantic import ConfigDict
 
 from gwproto.data_classes.component import Component
 from gwproto.data_classes.components.web_server_component import WebServerComponent
@@ -14,11 +15,9 @@ class WebServerComponentGt(ComponentGt):
     web_server: WebServerGt
     type_name: Literal["web.server.component.gt"] = "web.server.component.gt"
     version: Literal["000"] = "000"
-
-    class Config:
-        extra = "allow"
-        populate_by_name = True
-        alias_generator = snake_to_pascal
+    model_config = ConfigDict(
+        extra="allow", populate_by_name=True, alias_generator=snake_to_pascal
+    )
 
     def __hash__(self):
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa

@@ -8,7 +8,7 @@ from typing import Any, Dict, Literal
 import dotenv
 from gw.errors import GwTypeError
 from gw.utils import is_pascal_case, pascal_to_snake, snake_to_pascal
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 dotenv.load_dotenv()
 
@@ -37,10 +37,7 @@ class PowerWatts(BaseModel):
     )
     type_name: Literal["power.watts"] = "power.watts"
     version: Literal["000"] = "000"
-
-    class Config:
-        populate_by_name = True
-        alias_generator = snake_to_pascal
+    model_config = ConfigDict(populate_by_name=True, alias_generator=snake_to_pascal)
 
     def as_dict(self) -> Dict[str, Any]:
         """

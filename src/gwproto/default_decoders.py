@@ -32,7 +32,7 @@ def decode_to_data_class(
         raise ValueError(
             f"ERROR. Decoded type {type(decoded_gt)} has no" f" to_data_class() method."
         )
-    return Component(**decoded_gt.dict())
+    return Component(**decoded_gt.model_dump())
 
 
 class ComponentDecoder(PydanticTypeNameDecoder):

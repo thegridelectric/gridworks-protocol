@@ -9,10 +9,11 @@ import copy
 import json
 import re
 import typing
+from collections import defaultdict
 from dataclasses import dataclass
 from functools import cached_property
 from pathlib import Path
-from typing import Any, List, Optional
+from typing import Any, List, Optional, Type, TypeVar
 
 from gw.errors import DcError
 
@@ -52,6 +53,9 @@ snake_add_underscore_to_camel_pattern = re.compile(r"(?<!^)(?=[A-Z])")
 
 def camel_to_snake(name: str) -> str:
     return snake_add_underscore_to_camel_pattern.sub("_", name).lower()
+
+
+T = TypeVar("T")
 
 
 @dataclass
@@ -207,6 +211,8 @@ class HardwareLayout:
     nodes: dict[str, ShNode]
     nodes_by_handle: dict[str, ShNode]
     channels: dict[str, DataChannelGt]
+    components_by_type: dict[Type, list[Component]]
+    nodes_by_component: dict[str, str]
 
     def __init__(
         self,
@@ -223,9 +229,15 @@ class HardwareLayout:
         if components is None:
             components = Component.by_id
         self.components = dict(components)
+        self.components_by_type = defaultdict(list)
+        for component in components.values():
+            self.components_by_type[type(component)].append(component)
         if nodes is None:
             nodes = ShNode.by_name
         self.nodes = dict(nodes)
+        self.nodes_by_component = {
+            node.component_id: node.name for node in self.nodes.values()
+        }
         self.make_node_handle_dict()
         if channels is None:
             channels = DataChannel.by_name
@@ -323,6 +335,28 @@ class HardwareLayout:
     def cac(self, name: str) -> Optional[ComponentAttributeClass]:
         return self.cac_from_component(self.component(name))
 
+    def get_component_as_type(self, component_id: str, type_: Type[T]) -> Optional[T]:
+        component = self.components.get(component_id, None)
+        if component is not None and not isinstance(component, type_):
+            raise ValueError(
+                f"ERROR. Component <{component_id}> has type {type(component)} not {type_}"
+            )
+        return component
+
+    def get_components_by_type(self, type_: Type[T]) -> list[T]:
+        entries = self.components_by_type.get(type_, [])
+        for i, entry in enumerate(entries):
+            if not isinstance(entry, type_):
+                raise TypeError(
+                    f"ERROR. Entry {i + 1} in "
+                    f"HardwareLayout.components_by_typ[{type_}] "
+                    f"has the wrong type {type(entry)}"
+                )
+        return entries
+
+    def node_from_component(self, component_id: str) -> Optional[ShNode]:
+        return self.nodes.get(self.nodes_by_component.get(component_id, ""), None)
+
     def component_from_node(self, node: Optional[ShNode]) -> Optional[Component]:
         return (
             self.components.get(
@@ -351,18 +385,16 @@ class HardwareLayout:
         last_delimiter = handle.rfind(".")
         if last_delimiter == -1:
             return None
-        else:
-            return handle[:last_delimiter]
+        return handle[:last_delimiter]
 
     def boss_node(self, node: ShNode) -> Optional[ShNode]:
         boss_handle = self.boss_handle(node.handle)
         if not boss_handle:
             return None
-        else:
-            handles = list(map(lambda x: x.handle, self.nodes.values()))
-            if boss_handle not in handles:
-                raise DcError(f"{node.name} is missing boss {boss_handle}!")
-            return self.node_by_handle(boss_handle)
+        handles = list(map(lambda x: x.handle, self.nodes.values()))
+        if boss_handle not in handles:
+            raise DcError(f"{node.name} is missing boss {boss_handle}!")
+        return self.node_by_handle(boss_handle)
 
     def direct_reports(self, node: ShNode) -> List[ShNode]:
         return list(filter(lambda x: self.boss_node(x) == node, self.nodes.values()))

@@ -44,6 +44,7 @@ from gwproto.types.web_server_component_gt import (
     WebServerComponentGt,
     WebServerComponentGtMaker,
 )
+from gwproto.types.web_server_gt import WebServerGt
 
 __all__ = [
     "Ads111xBasedCacGt",
@@ -118,4 +119,5 @@ __all__ = [
     "ThermistorDataProcessingConfigMaker",
     "WebServerComponentGt",
     "WebServerComponentGtMaker",
+    "WebServerGt",
 ]

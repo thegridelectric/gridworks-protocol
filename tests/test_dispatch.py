@@ -1,7 +1,8 @@
 import pytest
 from gw.errors import GwTypeError
-from gwproto.messages import Dispatch, DispatchMaker
 from pydantic import ValidationError
+
+from gwproto.messages import Dispatch, DispatchMaker
 
 
 def test_dispatch():

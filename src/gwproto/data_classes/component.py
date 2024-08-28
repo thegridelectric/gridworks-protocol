@@ -4,6 +4,7 @@ from abc import ABC
 from typing import Dict, List, Optional
 
 from gw.errors import DcError
+
 from gwproto.data_classes.component_attribute_class import ComponentAttributeClass
 from gwproto.data_classes.mixin import StreamlinedSerializerMixin
 

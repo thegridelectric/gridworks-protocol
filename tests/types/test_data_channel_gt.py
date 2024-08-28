@@ -4,10 +4,11 @@ import json
 
 import pytest
 from gw.errors import GwTypeError
+from pydantic import ValidationError
+
 from gwproto.enums import TelemetryName
 from gwproto.types import DataChannelGt
 from gwproto.types import DataChannelGtMaker as Maker
-from pydantic import ValidationError
 
 
 def test_data_channel_gt_generated() -> None:

@@ -4,6 +4,8 @@ import json
 
 import pytest
 from gw.errors import GwTypeError
+from pydantic import ValidationError
+
 from gwproto.enums import MakeModel
 from gwproto.types import ComponentAttributeClassGt as CacGt
 from gwproto.types import ComponentAttributeClassGtMaker as CacMaker
@@ -11,8 +13,6 @@ from gwproto.types.resistive_heater_component_gt import ResistiveHeaterComponent
 from gwproto.types.resistive_heater_component_gt import (
     ResistiveHeaterComponentGtMaker as Maker,
 )
-from pydantic import ValidationError
-
 from tests.utils import flush_all
 
 

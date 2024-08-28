@@ -4,10 +4,11 @@ import json
 
 import pytest
 from gw.errors import GwTypeError
+from pydantic import ValidationError
+
 from gwproto.enums import TelemetryName
 from gwproto.types import BatchedReadings, ChannelReadings, DataChannelGt
 from gwproto.types import BatchedReadingsMaker as Maker
-from pydantic import ValidationError
 
 
 def test_batched_readings_generated() -> None:

@@ -3,7 +3,7 @@ from typing import Literal
 
 from gw.errors import GwTypeError
 from gw.utils import snake_to_pascal
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel, ConfigDict, field_validator
 
 MAX_SHORT = 32767
 
@@ -11,11 +11,9 @@ MAX_SHORT = 32767
 class Power(BaseModel):
     value: int
     type_name: Literal["p"] = "p"
-
-    class Config:
-        populate_by_name = True
-        alias_generator = snake_to_pascal
-        extra = "forbid"
+    model_config = ConfigDict(
+        populate_by_name=True, alias_generator=snake_to_pascal, extra="forbid"
+    )
 
     @field_validator("value")
     @classmethod

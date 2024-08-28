@@ -8,7 +8,7 @@ from typing import Any, Dict, List, Literal, Optional
 import dotenv
 from gw.errors import GwTypeError
 from gw.utils import is_pascal_case, pascal_to_snake, snake_to_pascal
-from pydantic import Field, field_validator, model_validator
+from pydantic import ConfigDict, Field, field_validator, model_validator
 from typing_extensions import Self
 
 from gwproto.data_classes.components.ads111x_based_component import (
@@ -93,11 +93,9 @@ class Ads111xBasedComponentGt(ComponentGt):
     )
     type_name: Literal["ads111x.based.component.gt"] = "ads111x.based.component.gt"
     version: Literal["000"] = "000"
-
-    class Config:
-        extra = "allow"
-        populate_by_name = True
-        alias_generator = snake_to_pascal
+    model_config = ConfigDict(
+        extra="allow", populate_by_name=True, alias_generator=snake_to_pascal
+    )
 
     @field_validator("component_id")
     @classmethod

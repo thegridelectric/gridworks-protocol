@@ -3,6 +3,7 @@
 from typing import Dict, Optional
 
 from gw.errors import DcError
+
 from gwproto.data_classes.component import Component
 from gwproto.enums import ActorClass
 

@@ -29,8 +29,6 @@ KRIDA_MULTIPLEXER_NAME = "krida-multiplexer"
 SCADA_STRATEGY = "House0"
 
 
-
-
 class ChStub(BaseModel):
     ChannelName: str
     AboutName: str
@@ -78,54 +76,55 @@ class House0ChStubs:
             ),
         ]
 
-        self.core_temp = [
-            ChStub(
-                ChannelName=required_names.TEMP.DIST_SWT,
-                AboutName=required_names.TEMP.DIST_SWT,
-                TelemetryName=TelemetryName.WaterTempCTimes1000,
-            ),
-            ChStub(
-                ChannelName=required_names.TEMP.DIST_RWT,
-                AboutName=required_names.TEMP.DIST_RWT,
-                TelemetryName=TelemetryName.WaterTempCTimes1000,
-
-            ),
-            ChStub(
-                ChannelName=required_names.TEMP.HP_LWT,
-                AboutName=required_names.TEMP.HP_LWT,
-                TelemetryName=TelemetryName.WaterTempCTimes1000,
-            ),
-            ChStub(
-                ChannelName=required_names.TEMP.HP_EWT,
-                AboutName=required_names.TEMP.HP_EWT,
-                TelemetryName=TelemetryName.WaterTempCTimes1000,
-            ),
-            ChStub(
-                ChannelName=required_names.TEMP.STORE_HOT_PIPE,
-                AboutName=required_names.TEMP.STORE_HOT_PIPE,
-                TelemetryName=TelemetryName.WaterTempCTimes1000,
-            ),
-            ChStub(
-                ChannelName=required_names.TEMP.STORE_COLD_PIPE,
-                AboutName=required_names.TEMP.STORE_COLD_PIPE,
-                TelemetryName=TelemetryName.WaterTempCTimes1000,
-            ),
-            ChStub(
-                ChannelName=required_names.TEMP.BUFFER_HOT_PIPE,
-                AboutName=required_names.TEMP.BUFFER_HOT_PIPE,
-                TelemetryName=TelemetryName.WaterTempCTimes1000,
-            ),
-            ChStub(
-                ChannelName=required_names.TEMP.BUFFER_COLD_PIPE,
-                AboutName=required_names.TEMP.BUFFER_COLD_PIPE,
-                TelemetryName=TelemetryName.WaterTempCTimes1000,
-            ),
-            ChStub(
-                ChannelName=required_names.TEMP.OAT,
-                AboutName=required_names.TEMP.OAT,
-                TelemetryName=TelemetryName.AirTempCTimes1000,
-            ),
-        ],
+        self.core_temp = (
+            [
+                ChStub(
+                    ChannelName=required_names.TEMP.DIST_SWT,
+                    AboutName=required_names.TEMP.DIST_SWT,
+                    TelemetryName=TelemetryName.WaterTempCTimes1000,
+                ),
+                ChStub(
+                    ChannelName=required_names.TEMP.DIST_RWT,
+                    AboutName=required_names.TEMP.DIST_RWT,
+                    TelemetryName=TelemetryName.WaterTempCTimes1000,
+                ),
+                ChStub(
+                    ChannelName=required_names.TEMP.HP_LWT,
+                    AboutName=required_names.TEMP.HP_LWT,
+                    TelemetryName=TelemetryName.WaterTempCTimes1000,
+                ),
+                ChStub(
+                    ChannelName=required_names.TEMP.HP_EWT,
+                    AboutName=required_names.TEMP.HP_EWT,
+                    TelemetryName=TelemetryName.WaterTempCTimes1000,
+                ),
+                ChStub(
+                    ChannelName=required_names.TEMP.STORE_HOT_PIPE,
+                    AboutName=required_names.TEMP.STORE_HOT_PIPE,
+                    TelemetryName=TelemetryName.WaterTempCTimes1000,
+                ),
+                ChStub(
+                    ChannelName=required_names.TEMP.STORE_COLD_PIPE,
+                    AboutName=required_names.TEMP.STORE_COLD_PIPE,
+                    TelemetryName=TelemetryName.WaterTempCTimes1000,
+                ),
+                ChStub(
+                    ChannelName=required_names.TEMP.BUFFER_HOT_PIPE,
+                    AboutName=required_names.TEMP.BUFFER_HOT_PIPE,
+                    TelemetryName=TelemetryName.WaterTempCTimes1000,
+                ),
+                ChStub(
+                    ChannelName=required_names.TEMP.BUFFER_COLD_PIPE,
+                    AboutName=required_names.TEMP.BUFFER_COLD_PIPE,
+                    TelemetryName=TelemetryName.WaterTempCTimes1000,
+                ),
+                ChStub(
+                    ChannelName=required_names.TEMP.OAT,
+                    AboutName=required_names.TEMP.OAT,
+                    TelemetryName=TelemetryName.AirTempCTimes1000,
+                ),
+            ],
+        )
         self.flow = [
             ChStub(
                 ChannelName=required_names.DIST_FLOW,
@@ -279,7 +278,7 @@ class House0LayoutDb(LayoutDb):
                     Handle=SCADA_2_NAME,
                     ActorClass=ActorClass.Parentless,
                     DisplayName="Scada 2",
-                )
+                ),
             ]
         )
 
@@ -337,9 +336,7 @@ class House0LayoutDb(LayoutDb):
         self.add_nodes(
             [
                 SpaceheatNodeGt(
-                    ShNodeId=self.make_node_id(
-                        f"s.{self.names.PRIMARY_POWER_METER}"
-                    ),
+                    ShNodeId=self.make_node_id(f"s.{self.names.PRIMARY_POWER_METER}"),
                     Name=self.names.PRIMARY_POWER_METER,
                     ActorClass=ActorClass.PowerMeter,
                     DisplayName=cfg.power_meter_node_display_name,

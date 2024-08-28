@@ -1,4 +1,5 @@
 import pytest
+
 from gwproto import DecodedMQTTTopic, MQTTTopic
 
 

@@ -4,6 +4,8 @@ import json
 
 import pytest
 from gw.errors import GwTypeError
+from pydantic import ValidationError
+
 from gwproto.enums import (
     FsmActionType,
     FsmEventType,
@@ -13,7 +15,6 @@ from gwproto.enums import (
 )
 from gwproto.types import FsmAtomicReport
 from gwproto.types import FsmAtomicReportMaker as Maker
-from pydantic import ValidationError
 
 
 def test_fsm_atomic_report_generated() -> None:

@@ -176,10 +176,12 @@ def add_house0_egauge(
     )
 
     given_names = set(map(lambda x: x.AboutNodeName, egauge.IOs))
-    required_names= set(map(lambda x: x.AboutName, db.channel_stubs.power))
+    required_names = set(map(lambda x: x.AboutName, db.channel_stubs.power))
     missing_names = required_names - given_names
     if missing_names:
-        raise ValueError(f"EGauge config is missing these node names:  {', '.join(missing_names)} ")
+        raise ValueError(
+            f"EGauge config is missing these node names:  {', '.join(missing_names)} "
+        )
 
     db.add_channels(
         [

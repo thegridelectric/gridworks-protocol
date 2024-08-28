@@ -1,7 +1,8 @@
 import pytest
 from gw.errors import GwTypeError
-from gwproto.messages import Power, PowerMaker
 from pydantic import ValidationError
+
+from gwproto.messages import Power, PowerMaker
 
 
 def test_power():

@@ -4,6 +4,8 @@ import json
 
 import pytest
 from gw.errors import GwTypeError
+from pydantic import ValidationError
+
 from gwproto.enums import MakeModel, Unit
 from gwproto.type_helpers import CACS_BY_MAKE_MODEL
 from gwproto.types import ChannelConfig, EgaugeIo, EgaugeRegisterConfig
@@ -13,8 +15,6 @@ from gwproto.types.electric_meter_component_gt import ElectricMeterComponentGt
 from gwproto.types.electric_meter_component_gt import (
     ElectricMeterComponentGtMaker as Maker,
 )
-from pydantic import ValidationError
-
 from tests.utils import flush_all
 
 

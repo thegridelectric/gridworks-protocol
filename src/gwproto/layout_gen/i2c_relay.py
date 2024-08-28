@@ -82,7 +82,9 @@ def add_i2c_relay_board(
                 ComponentGt,
                 I2cMultichannelDtRelayComponentGt(
                     component_id=db.make_component_id(board.ComponentDisplayName),
-                    component_attribute_class_id=CACS_BY_MAKE_MODEL[board.RelayMakeModel],
+                    component_attribute_class_id=CACS_BY_MAKE_MODEL[
+                        board.RelayMakeModel
+                    ],
                     i2c_address_list=[0x20, 0x21],
                     config_list=[
                         ChannelConfig(
@@ -102,9 +104,7 @@ def add_i2c_relay_board(
                             actor_name=v,
                             wiring_config=board.PinCfgByName[v].WiringConfig,
                             event_type=board.PinCfgByName[v].EventType,
-                            de_energizing_event=board.PinCfgByName[
-                                v
-                            ].DeEnergizingEvent,
+                            de_energizing_event=board.PinCfgByName[v].DeEnergizingEvent,
                         )
                         for v in board.PinCfgByName
                     ],

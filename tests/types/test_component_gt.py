@@ -4,14 +4,14 @@ import json
 
 import pytest
 from gw.errors import GwTypeError
+from pydantic import ValidationError
+
 from gwproto.enums import MakeModel
 from gwproto.type_helpers import CACS_BY_MAKE_MODEL
 from gwproto.types import ComponentAttributeClassGt as CacGt
 from gwproto.types import ComponentAttributeClassGtMaker as CacMaker
 from gwproto.types import ComponentGt
 from gwproto.types import ComponentGtMaker as Maker
-from pydantic import ValidationError
-
 from tests.utils import flush_all
 
 

@@ -4,10 +4,11 @@ import json
 
 import pytest
 from gw.errors import GwTypeError
+from pydantic import ValidationError
+
 from gwproto.enums import MakeModel
 from gwproto.types import ResistiveHeaterCacGt
 from gwproto.types import ResistiveHeaterCacGtMaker as Maker
-from pydantic import ValidationError
 
 
 def test_resistive_heater_cac_gt_generated() -> None:

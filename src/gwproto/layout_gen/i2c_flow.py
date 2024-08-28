@@ -139,7 +139,7 @@ def add_i2c_flow_totalizer(
             )
         ]
         + [
-             SpaceheatNodeGt(
+            SpaceheatNodeGt(
                 ShNodeId=db.make_node_id(ch_prefix),
                 Name=ch_prefix,
                 ActorClass=ActorClass.NoActor,
@@ -148,7 +148,6 @@ def add_i2c_flow_totalizer(
             )
             for ch_prefix in meter.CfgByChannelNamePrefix
         ]
-
     )
 
     db.add_channels(

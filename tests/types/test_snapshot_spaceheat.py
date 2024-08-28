@@ -4,9 +4,10 @@ import json
 
 import pytest
 from gw.errors import GwTypeError
+from pydantic import ValidationError
+
 from gwproto.types import SnapshotSpaceheat
 from gwproto.types import SnapshotSpaceheatMaker as Maker
-from pydantic import ValidationError
 
 
 def test_snapshot_spaceheat_generated() -> None:

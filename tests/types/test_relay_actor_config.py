@@ -4,10 +4,11 @@ import json
 
 import pytest
 from gw.errors import GwTypeError
+from pydantic import ValidationError
+
 from gwproto.enums import FsmEventType, RelayWiringConfig
 from gwproto.types import RelayActorConfig
 from gwproto.types import RelayActorConfigMaker as Maker
-from pydantic import ValidationError
 
 
 def test_relay_actor_config_generated() -> None:

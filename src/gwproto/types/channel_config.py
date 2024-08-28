@@ -8,7 +8,7 @@ from typing import Any, Dict, Literal, Optional
 import dotenv
 from gw.errors import GwTypeError
 from gw.utils import is_pascal_case, pascal_to_snake, snake_to_pascal
-from pydantic import BaseModel, Field, field_validator, model_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 from typing_extensions import Self
 
 from gwproto.enums import Unit
@@ -89,11 +89,9 @@ class ChannelConfig(BaseModel):
     )
     type_name: Literal["channel.config"] = "channel.config"
     version: Literal["000"] = "000"
-
-    class Config:
-        extra = "allow"
-        populate_by_name = True
-        alias_generator = snake_to_pascal
+    model_config = ConfigDict(
+        extra="allow", populate_by_name=True, alias_generator=snake_to_pascal
+    )
 
     @field_validator("channel_name")
     @classmethod

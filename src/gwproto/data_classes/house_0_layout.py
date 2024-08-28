@@ -2,6 +2,8 @@ import json
 from pathlib import Path
 from typing import Any, List, Optional
 
+from pydantic import BaseModel
+
 from gwproto.data_classes.component import Component
 from gwproto.data_classes.component_attribute_class import ComponentAttributeClass
 from gwproto.data_classes.data_channel import DataChannel
@@ -31,7 +33,6 @@ from gwproto.enums import (
     FsmEventType,
     RelayWiringConfig,
 )
-from pydantic import BaseModel
 
 #####################################################
 # Relay related
@@ -42,7 +43,9 @@ class House0RelayIdx:
     VDC_RELAY = 1
     TSTAT_COMMON = 2
     ISO_VALVE = 3  # 16 seconds to open, 62 seconds to close
-    CHARGE_DISCHARGE_VALVE = 4 # 16 seconds to go to discharge, 62 seconds to go to charge
+    CHARGE_DISCHARGE_VALVE = (
+        4  # 16 seconds to go to discharge, 62 seconds to go to charge
+    )
     HP_FAILSAFE = 5
     HP_SCADA_OPS = 6
     HP_DHW_VS_HEAT = 7
@@ -52,7 +55,6 @@ class House0RelayIdx:
     PICOS = 13
     EMPTY = 15
     OPEN_ALL_THERMS = 16
-
 
 
 class RelayAction:
@@ -134,7 +136,6 @@ RELAY_INSTRUCTION = {
     RelayAction(
         RelayWiringConfig.NormallyClosed, ChangePrimaryPumpState.AllowPumpToRun
     ): ChangeRelayPin.Energize,
-
 }
 
 
@@ -151,8 +152,6 @@ class RelayActionChoice(BaseModel):
 ####################################################
 # Temp Sensor Related
 ###################################################
-
-
 
 
 class House0Layout(HardwareLayout):
@@ -177,9 +176,7 @@ class House0Layout(HardwareLayout):
 
         scada_dict = next((x for x in self.layout["ShNodes"] if x["Name"] == "s"), None)
         if not {"Strategy", "TotalStoreTanks", "ZoneList"} <= set(scada_dict.keys()):
-            raise Exception(
-                "Scada ShNode s needs Strategy, TotalStoreTanks, ZoneList"
-            )
+            raise Exception("Scada ShNode s needs Strategy, TotalStoreTanks, ZoneList")
 
         if not scada_dict["Strategy"] == "House0":
             raise Exception("Scada node (name s) must have Strategy House0")
@@ -195,7 +192,6 @@ class House0Layout(HardwareLayout):
         if not 1 <= len(self.zone_list) <= 6:
             raise Exception("Must have between 1 and 6 store zones")
         self.short_names = House0RequiredNames(self.total_store_tanks, self.zone_list)
-
 
     @classmethod
     def load(
@@ -264,4 +260,10 @@ class House0Layout(HardwareLayout):
     # TODO: house 0 layout axioms that all these relay nodes exist
     @property
     def iso_valve_relay(self) -> ShNode:
-        return next((node for name, node in self.nodes.items() if name.split(".")[-1] == self.short_names.ISO_VALVE_RELAY))
+        return next(
+            (
+                node
+                for name, node in self.nodes.items()
+                if name.split(".")[-1] == self.short_names.ISO_VALVE_RELAY
+            )
+        )

@@ -138,7 +138,9 @@ def add_ads1115(db: LayoutDb, tsnap: AdsGenCfg) -> None:
                 name=tsnap.NodeName,
                 actor_class=ActorClass.MultipurposeSensor,
                 display_name=tsnap.NodeDisplayName,
-                component_id=db.component_id_by_display_name(tsnap.ComponentDisplayName),
+                component_id=db.component_id_by_display_name(
+                    tsnap.ComponentDisplayName
+                ),
             )
         ]
         + [

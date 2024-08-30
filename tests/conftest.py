@@ -6,5 +6,5 @@ from tests.utils import flush_all
 
 
 @pytest.fixture(autouse=True)
-def flush_local_registries():
+def flush_local_registries() -> None:
     flush_all()

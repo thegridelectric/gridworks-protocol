@@ -2,22 +2,14 @@
 
 import json
 import logging
-from typing import Any
-from typing import Dict
-from typing import List
-from typing import Literal
-from typing import Optional
+from typing import Any, Dict, List, Literal, Optional
 
-from pydantic import BaseModel
-from pydantic import Field
-from pydantic import validator
+from pydantic import BaseModel, Field, field_validator
 
 from gwproto.data_classes.cacs.electric_meter_cac import ElectricMeterCac
-from gwproto.enums import LocalCommInterface
+from gwproto.enums import LocalCommInterface, TelemetryName
 from gwproto.enums import MakeModel as EnumMakeModel
-from gwproto.enums import TelemetryName
 from gwproto.errors import SchemaError
-
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -77,7 +69,8 @@ class ElectricMeterCacGt(BaseModel):
     TypeName: Literal["electric.meter.cac.gt"] = "electric.meter.cac.gt"
     Version: Literal["000"] = "000"
 
-    @validator("ComponentAttributeClassId")
+    @field_validator("ComponentAttributeClassId")
+    @classmethod
     def _check_component_attribute_class_id(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
@@ -105,18 +98,18 @@ class ElectricMeterCacGt(BaseModel):
         """
         d = {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }
         del d["MakeModel"]
         d["MakeModelGtEnumSymbol"] = EnumMakeModel.value_to_symbol(self.MakeModel)
         del d["TelemetryNameList"]
-        telemetry_name_list = []
-        for elt in self.TelemetryNameList:
-            telemetry_name_list.append(TelemetryName.value_to_symbol(elt.value))
-        d["TelemetryNameList"] = telemetry_name_list
+        d["TelemetryNameList"] = [
+            TelemetryName.value_to_symbol(str(elt.value))
+            for elt in self.TelemetryNameList
+        ]
         del d["Interface"]
         d["InterfaceGtEnumSymbol"] = LocalCommInterface.value_to_symbol(self.Interface)
         return d
@@ -145,7 +138,7 @@ class ElectricMeterCacGt(BaseModel):
         json_string = json.dumps(self.as_dict())
         return json_string.encode("utf-8")
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
@@ -153,7 +146,7 @@ class ElectricMeterCacGt_Maker:
     type_name = "electric.meter.cac.gt"
     version = "000"
 
-    def __init__(
+    def __init__(  # noqa: PLR0913, PLR0917, RUF100
         self,
         component_attribute_class_id: str,
         make_model: EnumMakeModel,
@@ -162,7 +155,7 @@ class ElectricMeterCacGt_Maker:
         poll_period_ms: int,
         interface: LocalCommInterface,
         default_baud: Optional[int],
-    ):
+    ) -> None:
         self.tuple = ElectricMeterCacGt(
             ComponentAttributeClassId=component_attribute_class_id,
             MakeModel=make_model,
@@ -194,7 +187,7 @@ class ElectricMeterCacGt_Maker:
         return cls.dict_to_tuple(d)
 
     @classmethod
-    def dict_to_tuple(cls, d: dict[str, Any]) -> ElectricMeterCacGt:
+    def dict_to_tuple(cls, d: dict[str, Any]) -> ElectricMeterCacGt:  # noqa: C901
         """
         Deserialize a dictionary representation of a electric.meter.cac.gt.000 message object
         into a ElectricMeterCacGt python object for internal use.
@@ -218,13 +211,13 @@ class ElectricMeterCacGt_Maker:
             ElectricMeterCacGt
         """
         d2 = dict(d)
-        if "ComponentAttributeClassId" not in d2.keys():
+        if "ComponentAttributeClassId" not in d2:
             raise SchemaError(f"dict missing ComponentAttributeClassId: <{d2}>")
-        if "MakeModelGtEnumSymbol" not in d2.keys():
+        if "MakeModelGtEnumSymbol" not in d2:
             raise SchemaError(f"MakeModelGtEnumSymbol missing from dict <{d2}>")
         value = EnumMakeModel.symbol_to_value(d2["MakeModelGtEnumSymbol"])
         d2["MakeModel"] = EnumMakeModel(value)
-        if "TelemetryNameList" not in d2.keys():
+        if "TelemetryNameList" not in d2:
             raise SchemaError(f"dict <{d2}> missing TelemetryNameList")
         if not isinstance(d2["TelemetryNameList"], List):
             raise SchemaError("TelemetryNameList must be a List!")
@@ -233,15 +226,15 @@ class ElectricMeterCacGt_Maker:
             value = TelemetryName.symbol_to_value(elt)
             telemetry_name_list.append(TelemetryName(value))
         d2["TelemetryNameList"] = telemetry_name_list
-        if "PollPeriodMs" not in d2.keys():
+        if "PollPeriodMs" not in d2:
             raise SchemaError(f"dict missing PollPeriodMs: <{d2}>")
-        if "InterfaceGtEnumSymbol" not in d2.keys():
+        if "InterfaceGtEnumSymbol" not in d2:
             raise SchemaError(f"InterfaceGtEnumSymbol missing from dict <{d2}>")
         value = LocalCommInterface.symbol_to_value(d2["InterfaceGtEnumSymbol"])
         d2["Interface"] = LocalCommInterface(value)
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "000":
             LOGGER.debug(
@@ -252,7 +245,7 @@ class ElectricMeterCacGt_Maker:
 
     @classmethod
     def tuple_to_dc(cls, t: ElectricMeterCacGt) -> ElectricMeterCac:
-        if t.ComponentAttributeClassId in ElectricMeterCac.by_id.keys():
+        if t.ComponentAttributeClassId in ElectricMeterCac.by_id:
             dc = ElectricMeterCac.by_id[t.ComponentAttributeClassId]
         else:
             dc = ElectricMeterCac(
@@ -268,7 +261,7 @@ class ElectricMeterCacGt_Maker:
 
     @classmethod
     def dc_to_tuple(cls, dc: ElectricMeterCac) -> ElectricMeterCacGt:
-        t = ElectricMeterCacGt_Maker(
+        return ElectricMeterCacGt_Maker(
             component_attribute_class_id=dc.component_attribute_class_id,
             make_model=dc.make_model,
             display_name=dc.display_name,
@@ -277,15 +270,14 @@ class ElectricMeterCacGt_Maker:
             interface=dc.interface,
             default_baud=dc.default_baud,
         ).tuple
-        return t
 
     @classmethod
     def type_to_dc(cls, t: str) -> ElectricMeterCac:
-        return cls.tuple_to_dc(cls.type_to_tuple(t))
+        return cls.tuple_to_dc(cls.type_to_tuple(t.encode()))
 
     @classmethod
     def dc_to_type(cls, dc: ElectricMeterCac) -> str:
-        return cls.dc_to_tuple(dc).as_type()
+        return cls.dc_to_tuple(dc).as_type().decode("utf-8")
 
     @classmethod
     def dict_to_dc(cls, d: dict[Any, str]) -> ElectricMeterCac:
@@ -331,7 +323,7 @@ def check_is_uuid_canonical_textual(v: str) -> None:
     for hex_word in x:
         try:
             int(hex_word, 16)
-        except ValueError:
+        except ValueError:  # noqa: PERF203
             raise ValueError(f"Words of <{v}> are not all hex")
     if len(x[0]) != 8:
         raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")

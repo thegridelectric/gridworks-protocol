@@ -2,15 +2,11 @@
 
 import json
 import logging
-from typing import Any
-from typing import Dict
-from typing import Literal
+from typing import Any, Dict, Literal
 
-from pydantic import BaseModel
-from pydantic import Field
+from pydantic import BaseModel, Field
 
 from gwproto.errors import SchemaError
-
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -85,14 +81,13 @@ class EgaugeRegisterConfig(BaseModel):
 
         It also applies these changes recursively to sub-types.
         """
-        d = {
+        return {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }
-        return d
 
     def as_type(self) -> bytes:
         """
@@ -118,7 +113,7 @@ class EgaugeRegisterConfig(BaseModel):
         json_string = json.dumps(self.as_dict())
         return json_string.encode("utf-8")
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
@@ -126,7 +121,7 @@ class EgaugeRegisterConfig_Maker:
     type_name = "egauge.register.config"
     version = "000"
 
-    def __init__(
+    def __init__(  # noqa: PLR0913, PLR0917, RUF100
         self,
         address: int,
         name: str,
@@ -134,7 +129,7 @@ class EgaugeRegisterConfig_Maker:
         type: str,  # noqa
         denominator: int,
         unit: str,
-    ):
+    ) -> None:
         self.tuple = EgaugeRegisterConfig(
             Address=address,
             Name=name,
@@ -189,21 +184,21 @@ class EgaugeRegisterConfig_Maker:
             EgaugeRegisterConfig
         """
         d2 = dict(d)
-        if "Address" not in d2.keys():
+        if "Address" not in d2:
             raise SchemaError(f"dict missing Address: <{d2}>")
-        if "Name" not in d2.keys():
+        if "Name" not in d2:
             raise SchemaError(f"dict missing Name: <{d2}>")
-        if "Description" not in d2.keys():
+        if "Description" not in d2:
             raise SchemaError(f"dict missing Description: <{d2}>")
-        if "Type" not in d2.keys():
+        if "Type" not in d2:
             raise SchemaError(f"dict missing Type: <{d2}>")
-        if "Denominator" not in d2.keys():
+        if "Denominator" not in d2:
             raise SchemaError(f"dict missing Denominator: <{d2}>")
-        if "Unit" not in d2.keys():
+        if "Unit" not in d2:
             raise SchemaError(f"dict missing Unit: <{d2}>")
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "000":
             LOGGER.debug(

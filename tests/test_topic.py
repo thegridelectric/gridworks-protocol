@@ -1,17 +1,16 @@
 import pytest
 
-from gwproto import DecodedMQTTTopic
-from gwproto import MQTTTopic
+from gwproto import DecodedMQTTTopic, MQTTTopic
 
 
-def test_mqtt_topic_encode():
+def test_mqtt_topic_encode() -> None:
     assert MQTTTopic.encode("foo", "bar", "baz") == "foo/bar/baz"
     assert MQTTTopic.encode("foo.bar", "baz.bla", "bla") == "foo-bar/baz-bla/bla"
     assert MQTTTopic.encode_subscription("foo", "bar") == "foo/bar/#"
     assert MQTTTopic.encode_subscription("foo.bar", "baz.bla") == "foo-bar/baz-bla/#"
 
 
-def test_mqtt_topic_decode():
+def test_mqtt_topic_decode() -> None:
     with pytest.raises(ValueError):
         MQTTTopic.decode("")
 
@@ -23,7 +22,7 @@ def test_mqtt_topic_decode():
     assert decoded == DecodedMQTTTopic(
         envelope_type="foo", src="bar", message_type="baz"
     )
-    assert str(decoded) != ""
+    assert str(decoded)
 
     decoded = MQTTTopic.decode("foo-bar/baz-bla/bla")
     assert decoded.envelope_type == "foo.bar"
@@ -36,14 +35,14 @@ def test_mqtt_topic_decode():
 
     decoded = MQTTTopic.decode("foo")
     assert decoded.envelope_type == "foo"
-    assert decoded.src == ""
-    assert decoded.message_type == ""
+    assert not decoded.src
+    assert not decoded.message_type
     assert decoded.remainder == []
 
     decoded = MQTTTopic.decode("foo/bar")
     assert decoded.envelope_type == "foo"
     assert decoded.src == "bar"
-    assert decoded.message_type == ""
+    assert not decoded.message_type
     assert decoded.remainder == []
 
     decoded = MQTTTopic.decode("foo/bar/baz/a/b/c")

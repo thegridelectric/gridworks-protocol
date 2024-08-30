@@ -2,17 +2,13 @@
 
 import json
 import logging
-from typing import Any
-from typing import Dict
-from typing import Literal
+from datetime import datetime, timezone
+from typing import Any, Dict, Literal
 
-from pydantic import BaseModel
-from pydantic import Field
-from pydantic import validator
+from pydantic import BaseModel, Field, field_validator
 
 from gwproto.enums import TelemetryName
 from gwproto.errors import SchemaError
-
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -57,7 +53,8 @@ class GtTelemetry(BaseModel):
     TypeName: Literal["gt.telemetry"] = "gt.telemetry"
     Version: Literal["110"] = "110"
 
-    @validator("ScadaReadTimeUnixMs")
+    @field_validator("ScadaReadTimeUnixMs")
+    @classmethod
     def _check_scada_read_time_unix_ms(cls, v: int) -> int:
         try:
             check_is_reasonable_unix_time_ms(v)
@@ -85,8 +82,8 @@ class GtTelemetry(BaseModel):
         """
         d = {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }
@@ -118,7 +115,7 @@ class GtTelemetry(BaseModel):
         json_string = json.dumps(self.as_dict())
         return json_string.encode("utf-8")
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
@@ -132,7 +129,7 @@ class GtTelemetry_Maker:
         value: int,
         name: TelemetryName,
         exponent: int,
-    ):
+    ) -> None:
         self.tuple = GtTelemetry(
             ScadaReadTimeUnixMs=scada_read_time_unix_ms,
             Value=value,
@@ -185,19 +182,19 @@ class GtTelemetry_Maker:
             GtTelemetry
         """
         d2 = dict(d)
-        if "ScadaReadTimeUnixMs" not in d2.keys():
+        if "ScadaReadTimeUnixMs" not in d2:
             raise SchemaError(f"dict missing ScadaReadTimeUnixMs: <{d2}>")
-        if "Value" not in d2.keys():
+        if "Value" not in d2:
             raise SchemaError(f"dict missing Value: <{d2}>")
-        if "NameGtEnumSymbol" not in d2.keys():
+        if "NameGtEnumSymbol" not in d2:
             raise SchemaError(f"NameGtEnumSymbol missing from dict <{d2}>")
         value = TelemetryName.symbol_to_value(d2["NameGtEnumSymbol"])
         d2["Name"] = TelemetryName(value)
-        if "Exponent" not in d2.keys():
+        if "Exponent" not in d2:
             raise SchemaError(f"dict missing Exponent: <{d2}>")
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "110":
             LOGGER.debug(
@@ -218,9 +215,7 @@ def check_is_reasonable_unix_time_ms(v: int) -> None:
     Raises:
         ValueError: if v is not ReasonableUnixTimeMs format
     """
-    import pendulum
-
-    if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp * 1000 > v:  # type: ignore[attr-defined]
+    if int(datetime(2000, 1, 1, tzinfo=timezone.utc).timestamp() * 1000) > v:
         raise ValueError(f"<{v}> must be after Jan 1 2000")
-    if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp * 1000 < v:  # type: ignore[attr-defined]
+    if int(datetime(3000, 1, 1, tzinfo=timezone.utc).timestamp() * 1000) < v:
         raise ValueError(f"<{v}> must be before Jan 1 3000")

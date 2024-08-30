@@ -1,9 +1,9 @@
 """Base for GridWorks gwproto gs.dispatch.100 with TypeName d"""
-import struct
-from typing import List
-from typing import NamedTuple
 
-import gwproto.property_format as property_format
+import struct
+from typing import List, NamedTuple
+
+from gwproto import property_format
 
 
 class GsDispatchBase(NamedTuple):

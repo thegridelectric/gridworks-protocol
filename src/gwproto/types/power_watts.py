@@ -2,15 +2,11 @@
 
 import json
 import logging
-from typing import Any
-from typing import Dict
-from typing import Literal
+from typing import Any, Dict, Literal
 
-from pydantic import BaseModel
-from pydantic import Field
+from pydantic import BaseModel, Field
 
 from gwproto.errors import SchemaError
-
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -52,14 +48,13 @@ class PowerWatts(BaseModel):
 
         It also applies these changes recursively to sub-types.
         """
-        d = {
+        return {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }
-        return d
 
     def as_type(self) -> bytes:
         """
@@ -85,7 +80,7 @@ class PowerWatts(BaseModel):
         json_string = json.dumps(self.as_dict())
         return json_string.encode("utf-8")
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
@@ -96,7 +91,7 @@ class PowerWatts_Maker:
     def __init__(
         self,
         watts: int,
-    ):
+    ) -> None:
         self.tuple = PowerWatts(
             Watts=watts,
         )
@@ -146,11 +141,11 @@ class PowerWatts_Maker:
             PowerWatts
         """
         d2 = dict(d)
-        if "Watts" not in d2.keys():
+        if "Watts" not in d2:
             raise SchemaError(f"dict missing Watts: <{d2}>")
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "000":
             LOGGER.debug(

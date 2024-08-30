@@ -4,12 +4,11 @@ from gwproto.data_classes.components.electric_meter_component import (
 from gwproto.data_classes.hardware_layout import HardwareLayout
 from gwproto.types.electric_meter_component_gt import ElectricMeterComponentGt_Maker
 
-
 # Running the below disrupts other tests. Need to set up the
 # test isolation as per scada
 
 
-def test_electric_meter_component():
+def test_electric_meter_component() -> None:
     HardwareLayout.load("tests/config/hardware-layout.json")
     d = {
         "ComponentId": "2bfd0036-0b0e-4732-8790-bc7d0536a85e",
@@ -48,7 +47,7 @@ def test_electric_meter_component():
     }
 
     gw_tuple = ElectricMeterComponentGt_Maker.dict_to_tuple(d)
-    assert gw_tuple.ComponentId in ElectricMeterComponent.by_id.keys()
+    assert gw_tuple.ComponentId in ElectricMeterComponent.by_id
     component_as_dc = ElectricMeterComponent.by_id[gw_tuple.ComponentId]
     assert gw_tuple.HwUid == "9999"
     assert component_as_dc.hw_uid == "1001ab"

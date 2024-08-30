@@ -2,29 +2,24 @@
 
 import json
 import logging
-from typing import Any
-from typing import Dict
-from typing import List
-from typing import Literal
+from datetime import datetime, timezone
+from typing import Any, Dict, List, Literal
 
-from pydantic import BaseModel
-from pydantic import Field
-from pydantic import validator
+from pydantic import BaseModel, Field, field_validator
 
 from gwproto.errors import SchemaError
-from gwproto.types.gt_sh_booleanactuator_cmd_status import GtShBooleanactuatorCmdStatus
 from gwproto.types.gt_sh_booleanactuator_cmd_status import (
+    GtShBooleanactuatorCmdStatus,
     GtShBooleanactuatorCmdStatus_Maker,
 )
 from gwproto.types.gt_sh_multipurpose_telemetry_status import (
     GtShMultipurposeTelemetryStatus,
-)
-from gwproto.types.gt_sh_multipurpose_telemetry_status import (
     GtShMultipurposeTelemetryStatus_Maker,
 )
-from gwproto.types.gt_sh_simple_telemetry_status import GtShSimpleTelemetryStatus
-from gwproto.types.gt_sh_simple_telemetry_status import GtShSimpleTelemetryStatus_Maker
-
+from gwproto.types.gt_sh_simple_telemetry_status import (
+    GtShSimpleTelemetryStatus,
+    GtShSimpleTelemetryStatus_Maker,
+)
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -68,7 +63,8 @@ class GtShStatus(BaseModel):
     TypeName: Literal["gt.sh.status"] = "gt.sh.status"
     Version: Literal["110"] = "110"
 
-    @validator("FromGNodeAlias")
+    @field_validator("FromGNodeAlias")
+    @classmethod
     def _check_from_g_node_alias(cls, v: str) -> str:
         try:
             check_is_left_right_dot(v)
@@ -78,7 +74,8 @@ class GtShStatus(BaseModel):
             )
         return v
 
-    @validator("FromGNodeId")
+    @field_validator("FromGNodeId")
+    @classmethod
     def _check_from_g_node_id(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
@@ -88,7 +85,8 @@ class GtShStatus(BaseModel):
             )
         return v
 
-    @validator("AboutGNodeAlias")
+    @field_validator("AboutGNodeAlias")
+    @classmethod
     def _check_about_g_node_alias(cls, v: str) -> str:
         try:
             check_is_left_right_dot(v)
@@ -98,7 +96,8 @@ class GtShStatus(BaseModel):
             )
         return v
 
-    @validator("SlotStartUnixS")
+    @field_validator("SlotStartUnixS")
+    @classmethod
     def _check_slot_start_unix_s(cls, v: int) -> int:
         try:
             check_is_reasonable_unix_time_s(v)
@@ -108,7 +107,8 @@ class GtShStatus(BaseModel):
             )
         return v
 
-    @validator("StatusUid")
+    @field_validator("StatusUid")
+    @classmethod
     def _check_status_uid(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
@@ -136,26 +136,21 @@ class GtShStatus(BaseModel):
         """
         d = {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }
         # Recursively calling as_dict()
-        simple_telemetry_list = []
-        for elt in self.SimpleTelemetryList:
-            simple_telemetry_list.append(elt.as_dict())
-        d["SimpleTelemetryList"] = simple_telemetry_list
+        d["SimpleTelemetryList"] = [elt.as_dict() for elt in self.SimpleTelemetryList]
         # Recursively calling as_dict()
-        multipurpose_telemetry_list = []
-        for elt in self.MultipurposeTelemetryList:
-            multipurpose_telemetry_list.append(elt.as_dict())
-        d["MultipurposeTelemetryList"] = multipurpose_telemetry_list
+        d["MultipurposeTelemetryList"] = [
+            elt.as_dict() for elt in self.MultipurposeTelemetryList
+        ]
         # Recursively calling as_dict()
-        booleanactuator_cmd_list = []
-        for elt in self.BooleanactuatorCmdList:
-            booleanactuator_cmd_list.append(elt.as_dict())
-        d["BooleanactuatorCmdList"] = booleanactuator_cmd_list
+        d["BooleanactuatorCmdList"] = [
+            elt.as_dict() for elt in self.BooleanactuatorCmdList
+        ]
         return d
 
     def as_type(self) -> bytes:
@@ -182,7 +177,7 @@ class GtShStatus(BaseModel):
         json_string = json.dumps(self.as_dict())
         return json_string.encode("utf-8")
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
@@ -190,7 +185,7 @@ class GtShStatus_Maker:
     type_name = "gt.sh.status"
     version = "110"
 
-    def __init__(
+    def __init__(  # noqa: PLR0913, PLR0917, RUF100
         self,
         from_g_node_alias: str,
         from_g_node_id: str,
@@ -201,7 +196,7 @@ class GtShStatus_Maker:
         multipurpose_telemetry_list: List[GtShMultipurposeTelemetryStatus],
         booleanactuator_cmd_list: List[GtShBooleanactuatorCmdStatus],
         status_uid: str,
-    ):
+    ) -> None:
         self.tuple = GtShStatus(
             FromGNodeAlias=from_g_node_alias,
             FromGNodeId=from_g_node_id,
@@ -235,7 +230,7 @@ class GtShStatus_Maker:
         return cls.dict_to_tuple(d)
 
     @classmethod
-    def dict_to_tuple(cls, d: dict[str, Any]) -> GtShStatus:
+    def dict_to_tuple(cls, d: dict[str, Any]) -> GtShStatus:  # noqa: C901, PLR0912, PLR0915
         """
         Deserialize a dictionary representation of a gt.sh.status.110 message object
         into a GtShStatus python object for internal use.
@@ -259,17 +254,17 @@ class GtShStatus_Maker:
             GtShStatus
         """
         d2 = dict(d)
-        if "FromGNodeAlias" not in d2.keys():
+        if "FromGNodeAlias" not in d2:
             raise SchemaError(f"dict missing FromGNodeAlias: <{d2}>")
-        if "FromGNodeId" not in d2.keys():
+        if "FromGNodeId" not in d2:
             raise SchemaError(f"dict missing FromGNodeId: <{d2}>")
-        if "AboutGNodeAlias" not in d2.keys():
+        if "AboutGNodeAlias" not in d2:
             raise SchemaError(f"dict missing AboutGNodeAlias: <{d2}>")
-        if "SlotStartUnixS" not in d2.keys():
+        if "SlotStartUnixS" not in d2:
             raise SchemaError(f"dict missing SlotStartUnixS: <{d2}>")
-        if "ReportingPeriodS" not in d2.keys():
+        if "ReportingPeriodS" not in d2:
             raise SchemaError(f"dict missing ReportingPeriodS: <{d2}>")
-        if "SimpleTelemetryList" not in d2.keys():
+        if "SimpleTelemetryList" not in d2:
             raise SchemaError(f"dict missing SimpleTelemetryList: <{d2}>")
         if not isinstance(d2["SimpleTelemetryList"], List):
             raise SchemaError(
@@ -284,7 +279,7 @@ class GtShStatus_Maker:
             t = GtShSimpleTelemetryStatus_Maker.dict_to_tuple(elt)
             simple_telemetry_list.append(t)
         d2["SimpleTelemetryList"] = simple_telemetry_list
-        if "MultipurposeTelemetryList" not in d2.keys():
+        if "MultipurposeTelemetryList" not in d2:
             raise SchemaError(f"dict missing MultipurposeTelemetryList: <{d2}>")
         if not isinstance(d2["MultipurposeTelemetryList"], List):
             raise SchemaError(
@@ -299,7 +294,7 @@ class GtShStatus_Maker:
             t = GtShMultipurposeTelemetryStatus_Maker.dict_to_tuple(elt)
             multipurpose_telemetry_list.append(t)
         d2["MultipurposeTelemetryList"] = multipurpose_telemetry_list
-        if "BooleanactuatorCmdList" not in d2.keys():
+        if "BooleanactuatorCmdList" not in d2:
             raise SchemaError(f"dict missing BooleanactuatorCmdList: <{d2}>")
         if not isinstance(d2["BooleanactuatorCmdList"], List):
             raise SchemaError(
@@ -314,11 +309,11 @@ class GtShStatus_Maker:
             t = GtShBooleanactuatorCmdStatus_Maker.dict_to_tuple(elt)
             booleanactuator_cmd_list.append(t)
         d2["BooleanactuatorCmdList"] = booleanactuator_cmd_list
-        if "StatusUid" not in d2.keys():
+        if "StatusUid" not in d2:
             raise SchemaError(f"dict missing StatusUid: <{d2}>")
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "110":
             LOGGER.debug(
@@ -340,12 +335,10 @@ def check_is_left_right_dot(v: str) -> None:
     Raises:
         ValueError: if v is not LeftRightDot format
     """
-    from typing import List
-
     try:
         x: List[str] = v.split(".")
-    except:
-        raise ValueError(f"Failed to seperate <{v}> into words with split'.'")
+    except Exception as e:
+        raise ValueError(f"Failed to seperate <{v}> into words with split'.'") from e
     first_word = x[0]
     first_char = first_word[0]
     if not first_char.isalpha():
@@ -370,11 +363,9 @@ def check_is_reasonable_unix_time_s(v: int) -> None:
     Raises:
         ValueError: if v is not ReasonableUnixTimeS format
     """
-    import pendulum
-
-    if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp > v:  # type: ignore[attr-defined]
+    if int(datetime(2000, 1, 1, tzinfo=timezone.utc).timestamp()) > v:
         raise ValueError(f"<{v}> must be after Jan 1 2000")
-    if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp < v:  # type: ignore[attr-defined]
+    if int(datetime(3000, 1, 1, tzinfo=timezone.utc).timestamp()) < v:
         raise ValueError(f"<{v}> must be before Jan 1 3000")
 
 
@@ -399,7 +390,7 @@ def check_is_uuid_canonical_textual(v: str) -> None:
     for hex_word in x:
         try:
             int(hex_word, 16)
-        except ValueError:
+        except ValueError:  # noqa: PERF203
             raise ValueError(f"Words of <{v}> are not all hex")
     if len(x[0]) != 8:
         raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")

@@ -7,13 +7,13 @@ import sys
 from pathlib import Path
 from textwrap import dedent
 
-# noinspection PyUnresolvedReferences
-import nox
-
+import nox  # noqa: ALL
 
 try:
-    from nox_poetry import Session
-    from nox_poetry import session
+    from nox_poetry import (
+        Session,
+        session,
+    )
 except ImportError:
     message = f"""\
     Nox failed to import the 'nox-poetry' package.
@@ -25,7 +25,7 @@ except ImportError:
 
 
 package = "gwproto"
-python_versions = ["3.11", "3.10"]
+python_versions = ["3.12", "3.11"]
 
 nox.needs_version = ">= 2021.6.6"
 nox.options.sessions = (
@@ -98,7 +98,8 @@ def activate_virtualenv_in_precommit_hooks(session: Session) -> None:
         text = hook.read_text()
 
         if not any(
-            Path("A") == Path("a") and bindir.lower() in text.lower() or bindir in text
+            (Path("A") == Path("a") and bindir.lower() in text.lower())
+            or bindir in text
             for bindir in bindirs
         ):
             continue
@@ -122,14 +123,7 @@ def precommit(session: Session) -> None:
         "--show-diff-on-failure",
     ]
     session.install(
-        "black",
-        # "darglint",
-        # "flake8",
-        # "flake8-bandit",
-        # "flake8-bugbear",
-        # "flake8-docstrings",
-        # "flake8-rst-docstrings",
-        "isort",
+        "ruff",
         "pep8-naming",
         "pre-commit",
         "pre-commit-hooks",

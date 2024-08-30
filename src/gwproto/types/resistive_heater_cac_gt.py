@@ -2,19 +2,13 @@
 
 import json
 import logging
-from typing import Any
-from typing import Dict
-from typing import Literal
-from typing import Optional
+from typing import Any, Dict, Literal, Optional
 
-from pydantic import BaseModel
-from pydantic import Field
-from pydantic import validator
+from pydantic import BaseModel, Field, field_validator
 
 from gwproto.data_classes.cacs.resistive_heater_cac import ResistiveHeaterCac
 from gwproto.enums import MakeModel as EnumMakeModel
 from gwproto.errors import SchemaError
-
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -56,7 +50,8 @@ class ResistiveHeaterCacGt(BaseModel):
     TypeName: Literal["resistive.heater.cac.gt"] = "resistive.heater.cac.gt"
     Version: Literal["000"] = "000"
 
-    @validator("ComponentAttributeClassId")
+    @field_validator("ComponentAttributeClassId")
+    @classmethod
     def _check_component_attribute_class_id(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
@@ -66,7 +61,8 @@ class ResistiveHeaterCacGt(BaseModel):
             )
         return v
 
-    @validator("RatedVoltageV")
+    @field_validator("RatedVoltageV")
+    @classmethod
     def _check_rated_voltage_v(cls, v: int) -> int:
         try:
             check_is_positive_integer(v)
@@ -94,8 +90,8 @@ class ResistiveHeaterCacGt(BaseModel):
         """
         d = {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }
@@ -127,7 +123,7 @@ class ResistiveHeaterCacGt(BaseModel):
         json_string = json.dumps(self.as_dict())
         return json_string.encode("utf-8")
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
@@ -142,7 +138,7 @@ class ResistiveHeaterCacGt_Maker:
         display_name: Optional[str],
         nameplate_max_power_w: int,
         rated_voltage_v: int,
-    ):
+    ) -> None:
         self.tuple = ResistiveHeaterCacGt(
             ComponentAttributeClassId=component_attribute_class_id,
             MakeModel=make_model,
@@ -196,19 +192,19 @@ class ResistiveHeaterCacGt_Maker:
             ResistiveHeaterCacGt
         """
         d2 = dict(d)
-        if "ComponentAttributeClassId" not in d2.keys():
+        if "ComponentAttributeClassId" not in d2:
             raise SchemaError(f"dict missing ComponentAttributeClassId: <{d2}>")
-        if "MakeModelGtEnumSymbol" not in d2.keys():
+        if "MakeModelGtEnumSymbol" not in d2:
             raise SchemaError(f"MakeModelGtEnumSymbol missing from dict <{d2}>")
         value = EnumMakeModel.symbol_to_value(d2["MakeModelGtEnumSymbol"])
         d2["MakeModel"] = EnumMakeModel(value)
-        if "NameplateMaxPowerW" not in d2.keys():
+        if "NameplateMaxPowerW" not in d2:
             raise SchemaError(f"dict missing NameplateMaxPowerW: <{d2}>")
-        if "RatedVoltageV" not in d2.keys():
+        if "RatedVoltageV" not in d2:
             raise SchemaError(f"dict missing RatedVoltageV: <{d2}>")
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "000":
             LOGGER.debug(
@@ -219,7 +215,7 @@ class ResistiveHeaterCacGt_Maker:
 
     @classmethod
     def tuple_to_dc(cls, t: ResistiveHeaterCacGt) -> ResistiveHeaterCac:
-        if t.ComponentAttributeClassId in ResistiveHeaterCac.by_id.keys():
+        if t.ComponentAttributeClassId in ResistiveHeaterCac.by_id:
             dc = ResistiveHeaterCac.by_id[t.ComponentAttributeClassId]
         else:
             dc = ResistiveHeaterCac(
@@ -233,14 +229,13 @@ class ResistiveHeaterCacGt_Maker:
 
     @classmethod
     def dc_to_tuple(cls, dc: ResistiveHeaterCac) -> ResistiveHeaterCacGt:
-        t = ResistiveHeaterCacGt_Maker(
+        return ResistiveHeaterCacGt_Maker(
             component_attribute_class_id=dc.component_attribute_class_id,
             make_model=dc.make_model,
             display_name=dc.display_name,
             nameplate_max_power_w=dc.nameplate_max_power_w,
             rated_voltage_v=dc.rated_voltage_v,
         ).tuple
-        return t
 
     @classmethod
     def type_to_dc(cls, t: str) -> ResistiveHeaterCac:
@@ -294,7 +289,7 @@ def check_is_uuid_canonical_textual(v: str) -> None:
     for hex_word in x:
         try:
             int(hex_word, 16)
-        except ValueError:
+        except ValueError:  # noqa: PERF203
             raise ValueError(f"Words of <{v}> are not all hex")
     if len(x[0]) != 8:
         raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")

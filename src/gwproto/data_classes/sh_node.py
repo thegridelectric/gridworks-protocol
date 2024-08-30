@@ -1,12 +1,10 @@
 """ShNode definition"""
 
-from typing import Dict
-from typing import Optional
+from typing import Dict, Optional
 
 from gwproto.data_classes.component import Component
 from gwproto.data_classes.errors import DataClassLoadingError
-from gwproto.enums import ActorClass
-from gwproto.enums import Role
+from gwproto.enums import ActorClass, Role
 
 
 class ShNode:
@@ -18,9 +16,9 @@ class ShNode:
     temperature data for the purposes of thermostatic control).
     """
 
-    by_id: Dict[str, "ShNode"] = {}
+    by_id: Dict[str, "ShNode"] = {}  # noqa: RUF012
 
-    def __init__(
+    def __init__(  # noqa: PLR0913, PLR0917, RUF100
         self,
         sh_node_id: str,
         alias: str,
@@ -32,7 +30,7 @@ class ShNode:
         rated_voltage_v: Optional[int] = None,
         typical_voltage_v: Optional[int] = None,
         in_power_metering: Optional[bool] = None,
-    ):
+    ) -> None:
         self.sh_node_id = sh_node_id
         self.alias = alias
         self.actor_class = actor_class
@@ -45,7 +43,7 @@ class ShNode:
         self.in_power_metering = in_power_metering
         ShNode.by_id[self.sh_node_id] = self
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         rs = f"ShNode {self.display_name} => {self.role.value} {self.alias}, "
         if self.has_actor:
             rs += " (has actor)"
@@ -55,15 +53,13 @@ class ShNode:
 
     @property
     def has_actor(self) -> bool:
-        if self.actor_class == ActorClass.NoActor:
-            return False
-        return True
+        return self.actor_class != ActorClass.NoActor
 
     @property
     def component(self) -> Optional[Component]:
         if self.component_id is None:
             return None
-        if self.component_id not in Component.by_id.keys():
+        if self.component_id not in Component.by_id:
             raise DataClassLoadingError(
                 f"{self.alias} component {self.component_id} not loaded!"
             )

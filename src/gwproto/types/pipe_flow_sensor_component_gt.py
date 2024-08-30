@@ -2,20 +2,14 @@
 
 import json
 import logging
-from typing import Any
-from typing import Dict
-from typing import Literal
-from typing import Optional
+from typing import Any, Dict, Literal, Optional
 
-from pydantic import BaseModel
-from pydantic import Field
-from pydantic import validator
+from pydantic import BaseModel, Field, field_validator
 
 from gwproto.data_classes.components.pipe_flow_sensor_component import (
     PipeFlowSensorComponent,
 )
 from gwproto.errors import SchemaError
-
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -77,7 +71,8 @@ class PipeFlowSensorComponentGt(BaseModel):
     TypeName: Literal["pipe.flow.sensor.component.gt"] = "pipe.flow.sensor.component.gt"
     Version: Literal["000"] = "000"
 
-    @validator("ComponentId")
+    @field_validator("ComponentId")
+    @classmethod
     def _check_component_id(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
@@ -87,7 +82,8 @@ class PipeFlowSensorComponentGt(BaseModel):
             )
         return v
 
-    @validator("ComponentAttributeClassId")
+    @field_validator("ComponentAttributeClassId")
+    @classmethod
     def _check_component_attribute_class_id(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
@@ -113,14 +109,13 @@ class PipeFlowSensorComponentGt(BaseModel):
 
         It also applies these changes recursively to sub-types.
         """
-        d = {
+        return {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }
-        return d
 
     def as_type(self) -> bytes:
         """
@@ -146,7 +141,7 @@ class PipeFlowSensorComponentGt(BaseModel):
         json_string = json.dumps(self.as_dict())
         return json_string.encode("utf-8")
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
@@ -154,7 +149,7 @@ class PipeFlowSensorComponentGt_Maker:
     type_name = "pipe.flow.sensor.component.gt"
     version = "000"
 
-    def __init__(
+    def __init__(  # noqa: PLR0913, PLR0917, RUF100
         self,
         component_id: str,
         component_attribute_class_id: str,
@@ -163,7 +158,7 @@ class PipeFlowSensorComponentGt_Maker:
         display_name: Optional[str],
         hw_uid: Optional[str],
         expected_max_gpm_times100: Optional[int],
-    ):
+    ) -> None:
         self.tuple = PipeFlowSensorComponentGt(
             ComponentId=component_id,
             ComponentAttributeClassId=component_attribute_class_id,
@@ -219,17 +214,17 @@ class PipeFlowSensorComponentGt_Maker:
             PipeFlowSensorComponentGt
         """
         d2 = dict(d)
-        if "ComponentId" not in d2.keys():
+        if "ComponentId" not in d2:
             raise SchemaError(f"dict missing ComponentId: <{d2}>")
-        if "ComponentAttributeClassId" not in d2.keys():
+        if "ComponentAttributeClassId" not in d2:
             raise SchemaError(f"dict missing ComponentAttributeClass: <{d2}>")
-        if "I2cAddress" not in d2.keys():
+        if "I2cAddress" not in d2:
             raise SchemaError(f"dict missing I2cAddress: <{d2}>")
-        if "ConversionFactor" not in d2.keys():
+        if "ConversionFactor" not in d2:
             raise SchemaError(f"dict missing ConversionFactor: <{d2}>")
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "000":
             LOGGER.debug(
@@ -240,7 +235,7 @@ class PipeFlowSensorComponentGt_Maker:
 
     @classmethod
     def tuple_to_dc(cls, t: PipeFlowSensorComponentGt) -> PipeFlowSensorComponent:
-        if t.ComponentId in PipeFlowSensorComponent.by_id.keys():
+        if t.ComponentId in PipeFlowSensorComponent.by_id:
             dc = PipeFlowSensorComponent.by_id[t.ComponentId]
         else:
             dc = PipeFlowSensorComponent(
@@ -256,7 +251,7 @@ class PipeFlowSensorComponentGt_Maker:
 
     @classmethod
     def dc_to_tuple(cls, dc: PipeFlowSensorComponent) -> PipeFlowSensorComponentGt:
-        t = PipeFlowSensorComponentGt_Maker(
+        return PipeFlowSensorComponentGt_Maker(
             component_id=dc.component_id,
             component_attribute_class_id=dc.component_attribute_class_id,
             i2c_address=dc.i2c_address,
@@ -265,7 +260,6 @@ class PipeFlowSensorComponentGt_Maker:
             hw_uid=dc.hw_uid,
             expected_max_gpm_times100=dc.expected_max_gpm_times100,
         ).tuple
-        return t
 
     @classmethod
     def type_to_dc(cls, t: str) -> PipeFlowSensorComponent:
@@ -301,7 +295,7 @@ def check_is_uuid_canonical_textual(v: str) -> None:
     for hex_word in x:
         try:
             int(hex_word, 16)
-        except ValueError:
+        except ValueError:  # noqa: PERF203
             raise ValueError(f"Words of <{v}> are not all hex")
     if len(x[0]) != 8:
         raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")

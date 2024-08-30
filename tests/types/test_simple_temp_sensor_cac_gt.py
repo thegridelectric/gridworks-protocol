@@ -5,9 +5,7 @@ import json
 import pytest
 from pydantic import ValidationError
 
-from gwproto.enums import MakeModel
-from gwproto.enums import TelemetryName
-from gwproto.enums import Unit
+from gwproto.enums import MakeModel, TelemetryName, Unit
 from gwproto.errors import SchemaError
 from gwproto.types import SimpleTempSensorCacGt_Maker as Maker
 
@@ -104,12 +102,12 @@ def test_simple_temp_sensor_cac_gt_generated() -> None:
     ######################################
 
     d2 = dict(d)
-    if "DisplayName" in d2.keys():
+    if "DisplayName" in d2:
         del d2["DisplayName"]
     Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    if "CommsMethod" in d2.keys():
+    if "CommsMethod" in d2:
         del d2["CommsMethod"]
     Maker.dict_to_tuple(d2)
 

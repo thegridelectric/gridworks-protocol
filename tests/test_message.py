@@ -2,12 +2,9 @@ import enum
 from typing import Literal
 
 import pytest
-from pydantic import BaseModel
-from pydantic import ValidationError
+from pydantic import BaseModel, ValidationError
 
-from gwproto import Header
-from gwproto import Message
-from gwproto import as_enum
+from gwproto import Header, Message, as_enum
 from gwproto.message import PAYLOAD_TYPE_FIELDS
 
 
@@ -16,7 +13,7 @@ class E(enum.Enum):
     b = 2
 
 
-def test_as_enum():
+def test_as_enum() -> None:
     assert as_enum(1, E) == E.a
     assert as_enum(2, E) == E.b
     assert as_enum(3, E) is None
@@ -27,7 +24,7 @@ class NaivePayload(BaseModel):
     x: int
 
 
-def test_naive_payload():
+def test_naive_payload() -> None:
     assert Message.type_name() == "gw"
 
     # Explicit src, message_type fields, pydantic-known-type payload
@@ -47,7 +44,7 @@ def test_naive_payload():
     assert m.Header.Dst == ""
     assert m.Header.MessageType == message_type
     assert m.Header.MessageId == ""
-    assert m.Header.AckRequired == False
+    assert m.Header.AckRequired is False
     assert m.Header.TypeName == "gridworks.header"
 
     # Explicit src, message_type fields, naive payload
@@ -64,7 +61,7 @@ def test_naive_payload():
     assert m.Header.Dst == ""
     assert m.Header.MessageType == message_type
     assert m.Header.MessageId == ""
-    assert m.Header.AckRequired == False
+    assert m.Header.AckRequired is False
     assert m.Header.TypeName == "gridworks.header"
 
     # Explicit Header, naive payload
@@ -76,18 +73,18 @@ def test_naive_payload():
         Payload=NaivePayload(x=1),
     )
     assert m == m2
-    assert m.dict() == m2.dict()
+    assert m.model_dump() == m2.model_dump()
 
     # Explicit header from dict, naive payload
     m2 = Message(
         Header=Header(
             Src=src,
             MessageType=message_type,
-        ).dict(),
+        ).model_dump(),
         Payload=NaivePayload(x=1),
     )
     assert m == m2
-    assert m.dict() == m2.dict()
+    assert m.model_dump() == m2.model_dump()
 
     # All header fields in kwargs
     dst = "bar"
@@ -125,7 +122,7 @@ class PayloadProvidesMore(PayloadProvides):
     TypeName: Literal["payload.provides.more"] = "payload.provides.more"
 
 
-def test_from_payload():
+def test_from_payload() -> None:
     x = 1
     src = "foo"
     message_type = "payload.provides"
@@ -140,13 +137,14 @@ def test_from_payload():
     assert m.Header.Dst == ""
     assert m.Header.MessageType == message_type
     assert m.Header.MessageId == ""
-    assert m.Header.AckRequired == False
+    assert m.Header.AckRequired is False
     assert m.Header.TypeName == "gridworks.header"
 
     # Payload dict provides fields
-    m2 = Message(Payload=PayloadProvides(Src=src, x=1).dict())
-    assert m == m2
-    assert m.dict() == m2.dict()
+    m2 = Message(Payload=PayloadProvides(Src=src, x=1).model_dump())
+    assert m.model_dump() == m2.model_dump()
+    m3 = Message[PayloadProvides](Payload=m2.Payload)
+    assert m == m3
 
     # *All* header fields from payload object
     dst = "bar"
@@ -173,19 +171,21 @@ def test_from_payload():
     assert m.Header.TypeName == "gridworks.header"
 
     # *All* header fields from payload dict
-    m2 = Message(Payload=p.dict())
-    assert m == m2
+    m2 = Message(Payload=p.model_dump())
+    assert m.model_dump() == m2.model_dump()
+    m3 = Message[PayloadProvidesMore](Payload=m2.Payload)
+    assert m == m3
 
     # other message type fields
     for message_type_field_name in PAYLOAD_TYPE_FIELDS:
-        payload_dict = p.dict()
+        payload_dict = p.model_dump()
         del payload_dict["TypeName"]
         payload_dict[message_type_field_name] = p.TypeName
         m3 = Message(Payload=payload_dict)
         assert m.Header == m3.Header
 
 
-def test_errors():
+def test_errors() -> None:
     # no Payload
     with pytest.raises(ValidationError):
         Message()

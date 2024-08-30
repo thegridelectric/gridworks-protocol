@@ -2,18 +2,12 @@
 
 import json
 import logging
-from typing import Any
-from typing import Dict
-from typing import Literal
-from typing import Optional
+from typing import Any, Dict, Literal, Optional
 
-from pydantic import BaseModel
-from pydantic import Field
-from pydantic import validator
+from pydantic import BaseModel, Field, field_validator
 
 from gwproto.data_classes.components.relay_component import RelayComponent
 from gwproto.errors import SchemaError
-
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -68,7 +62,7 @@ class RelayComponentGt(BaseModel):
     NormallyOpen: bool = Field(
         title="Normally Open",
         description=(
-            "Normally open relays default in the open position, meaning that when they're not "
+            "Normally open relays default in the open position, meaning that when they're not "
             "in use, there is no contact between the circuits. When power is introduced, an electromagnet "
             "pulls the first circuit into contact with the second, thereby closing the circuit "
             "and allowing power to flow through"
@@ -77,7 +71,8 @@ class RelayComponentGt(BaseModel):
     TypeName: Literal["relay.component.gt"] = "relay.component.gt"
     Version: Literal["000"] = "000"
 
-    @validator("ComponentId")
+    @field_validator("ComponentId")
+    @classmethod
     def _check_component_id(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
@@ -87,7 +82,8 @@ class RelayComponentGt(BaseModel):
             )
         return v
 
-    @validator("ComponentAttributeClassId")
+    @field_validator("ComponentAttributeClassId")
+    @classmethod
     def _check_component_attribute_class_id(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
@@ -113,14 +109,13 @@ class RelayComponentGt(BaseModel):
 
         It also applies these changes recursively to sub-types.
         """
-        d = {
+        return {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }
-        return d
 
     def as_type(self) -> bytes:
         """
@@ -146,7 +141,7 @@ class RelayComponentGt(BaseModel):
         json_string = json.dumps(self.as_dict())
         return json_string.encode("utf-8")
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
@@ -154,15 +149,15 @@ class RelayComponentGt_Maker:
     type_name = "relay.component.gt"
     version = "000"
 
-    def __init__(
+    def __init__(  # noqa: PLR0913, PLR0917, RUF100
         self,
         component_id: str,
         component_attribute_class_id: str,
         display_name: Optional[str],
         gpio: Optional[int],
         hw_uid: Optional[str],
-        normally_open: bool,
-    ):
+        normally_open: bool,  # noqa: FBT001
+    ) -> None:
         self.tuple = RelayComponentGt(
             ComponentId=component_id,
             ComponentAttributeClassId=component_attribute_class_id,
@@ -217,15 +212,15 @@ class RelayComponentGt_Maker:
             RelayComponentGt
         """
         d2 = dict(d)
-        if "ComponentId" not in d2.keys():
+        if "ComponentId" not in d2:
             raise SchemaError(f"dict missing ComponentId: <{d2}>")
-        if "ComponentAttributeClassId" not in d2.keys():
+        if "ComponentAttributeClassId" not in d2:
             raise SchemaError(f"dict missing ComponentAttributeClass: <{d2}>")
-        if "NormallyOpen" not in d2.keys():
+        if "NormallyOpen" not in d2:
             raise SchemaError(f"dict missing NormallyOpen: <{d2}>")
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "000":
             LOGGER.debug(
@@ -236,7 +231,7 @@ class RelayComponentGt_Maker:
 
     @classmethod
     def tuple_to_dc(cls, t: RelayComponentGt) -> RelayComponent:
-        if t.ComponentId in RelayComponent.by_id.keys():
+        if t.ComponentId in RelayComponent.by_id:
             dc = RelayComponent.by_id[t.ComponentId]
         else:
             dc = RelayComponent(
@@ -251,7 +246,7 @@ class RelayComponentGt_Maker:
 
     @classmethod
     def dc_to_tuple(cls, dc: RelayComponent) -> RelayComponentGt:
-        t = RelayComponentGt_Maker(
+        return RelayComponentGt_Maker(
             component_id=dc.component_id,
             component_attribute_class_id=dc.component_attribute_class_id,
             display_name=dc.display_name,
@@ -259,15 +254,14 @@ class RelayComponentGt_Maker:
             hw_uid=dc.hw_uid,
             normally_open=dc.normally_open,
         ).tuple
-        return t
 
     @classmethod
     def type_to_dc(cls, t: str) -> RelayComponent:
-        return cls.tuple_to_dc(cls.type_to_tuple(t))
+        return cls.tuple_to_dc(cls.type_to_tuple(t.encode("utf-8"))) or t
 
     @classmethod
     def dc_to_type(cls, dc: RelayComponent) -> str:
-        return cls.dc_to_tuple(dc).as_type()
+        return cls.dc_to_tuple(dc).as_type().decode("utf-8")
 
     @classmethod
     def dict_to_dc(cls, d: dict[Any, str]) -> RelayComponent:
@@ -295,7 +289,7 @@ def check_is_uuid_canonical_textual(v: str) -> None:
     for hex_word in x:
         try:
             int(hex_word, 16)
-        except ValueError:
+        except ValueError:  # noqa: PERF203
             raise ValueError(f"Words of <{v}> are not all hex")
     if len(x[0]) != 8:
         raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")

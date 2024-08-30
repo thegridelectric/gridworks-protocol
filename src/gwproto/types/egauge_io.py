@@ -2,19 +2,19 @@
 
 import json
 import logging
-from typing import Any
-from typing import Dict
-from typing import Literal
+from typing import Any, Dict, Literal
 
-from pydantic import BaseModel
-from pydantic import Field
+from pydantic import BaseModel, Field
 
 from gwproto.errors import SchemaError
-from gwproto.types.egauge_register_config import EgaugeRegisterConfig
-from gwproto.types.egauge_register_config import EgaugeRegisterConfig_Maker
-from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
-from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig_Maker
-
+from gwproto.types.egauge_register_config import (
+    EgaugeRegisterConfig,
+    EgaugeRegisterConfig_Maker,
+)
+from gwproto.types.telemetry_reporting_config import (
+    TelemetryReportingConfig,
+    TelemetryReportingConfig_Maker,
+)
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -70,8 +70,8 @@ class EgaugeIo(BaseModel):
         """
         d = {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }
@@ -103,7 +103,7 @@ class EgaugeIo(BaseModel):
         json_string = json.dumps(self.as_dict())
         return json_string.encode("utf-8")
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
@@ -115,7 +115,7 @@ class EgaugeIo_Maker:
         self,
         input_config: EgaugeRegisterConfig,
         output_config: TelemetryReportingConfig,
-    ):
+    ) -> None:
         self.tuple = EgaugeIo(
             InputConfig=input_config,
             OutputConfig=output_config,
@@ -166,7 +166,7 @@ class EgaugeIo_Maker:
             EgaugeIo
         """
         d2 = dict(d)
-        if "InputConfig" not in d2.keys():
+        if "InputConfig" not in d2:
             raise SchemaError(f"dict missing InputConfig: <{d2}>")
         if not isinstance(d2["InputConfig"], dict):
             raise SchemaError(
@@ -174,7 +174,7 @@ class EgaugeIo_Maker:
             )
         input_config = EgaugeRegisterConfig_Maker.dict_to_tuple(d2["InputConfig"])
         d2["InputConfig"] = input_config
-        if "OutputConfig" not in d2.keys():
+        if "OutputConfig" not in d2:
             raise SchemaError(f"dict missing OutputConfig: <{d2}>")
         if not isinstance(d2["OutputConfig"], dict):
             raise SchemaError(
@@ -182,9 +182,9 @@ class EgaugeIo_Maker:
             )
         output_config = TelemetryReportingConfig_Maker.dict_to_tuple(d2["OutputConfig"])
         d2["OutputConfig"] = output_config
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "000":
             LOGGER.debug(

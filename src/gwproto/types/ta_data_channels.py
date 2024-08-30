@@ -2,19 +2,13 @@
 
 import json
 import logging
-from typing import Any
-from typing import Dict
-from typing import List
-from typing import Literal
+from datetime import datetime, timezone
+from typing import Any, Dict, List, Literal
 
-from pydantic import BaseModel
-from pydantic import Field
-from pydantic import validator
+from pydantic import BaseModel, Field, field_validator
 
 from gwproto.errors import SchemaError
-from gwproto.types.data_channel import DataChannel
-from gwproto.types.data_channel import DataChannel_Maker
-
+from gwproto.types.data_channel import DataChannel, DataChannel_Maker
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -61,7 +55,8 @@ class TaDataChannels(BaseModel):
     TypeName: Literal["ta.data.channels"] = "ta.data.channels"
     Version: Literal["000"] = "000"
 
-    @validator("TerminalAssetGNodeAlias")
+    @field_validator("TerminalAssetGNodeAlias")
+    @classmethod
     def _check_terminal_asset_g_node_alias(cls, v: str) -> str:
         try:
             check_is_left_right_dot(v)
@@ -71,7 +66,8 @@ class TaDataChannels(BaseModel):
             )
         return v
 
-    @validator("TerminalAssetGNodeId")
+    @field_validator("TerminalAssetGNodeId")
+    @classmethod
     def _check_terminal_asset_g_node_id(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
@@ -81,7 +77,8 @@ class TaDataChannels(BaseModel):
             )
         return v
 
-    @validator("TimeUnixS")
+    @field_validator("TimeUnixS")
+    @classmethod
     def _check_time_unix_s(cls, v: int) -> int:
         try:
             check_is_reasonable_unix_time_s(v)
@@ -91,7 +88,8 @@ class TaDataChannels(BaseModel):
             )
         return v
 
-    @validator("Identifier")
+    @field_validator("Identifier")
+    @classmethod
     def _check_identifier(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
@@ -119,16 +117,13 @@ class TaDataChannels(BaseModel):
         """
         d = {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }
         # Recursively calling as_dict()
-        channels = []
-        for elt in self.Channels:
-            channels.append(elt.as_dict())
-        d["Channels"] = channels
+        d["Channels"] = [elt.as_dict() for elt in self.Channels]
         return d
 
     def as_type(self) -> bytes:
@@ -155,7 +150,7 @@ class TaDataChannels(BaseModel):
         json_string = json.dumps(self.as_dict())
         return json_string.encode("utf-8")
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
@@ -163,7 +158,7 @@ class TaDataChannels_Maker:
     type_name = "ta.data.channels"
     version = "000"
 
-    def __init__(
+    def __init__(  # noqa: PLR0913, PLR0917, RUF100
         self,
         terminal_asset_g_node_alias: str,
         terminal_asset_g_node_id: str,
@@ -171,7 +166,7 @@ class TaDataChannels_Maker:
         author: str,
         channels: List[DataChannel],
         identifier: str,
-    ):
+    ) -> None:
         self.tuple = TaDataChannels(
             TerminalAssetGNodeAlias=terminal_asset_g_node_alias,
             TerminalAssetGNodeId=terminal_asset_g_node_id,
@@ -202,7 +197,7 @@ class TaDataChannels_Maker:
         return cls.dict_to_tuple(d)
 
     @classmethod
-    def dict_to_tuple(cls, d: dict[str, Any]) -> TaDataChannels:
+    def dict_to_tuple(cls, d: dict[str, Any]) -> TaDataChannels:  # noqa: C901
         """
         Deserialize a dictionary representation of a ta.data.channels.000 message object
         into a TaDataChannels python object for internal use.
@@ -226,15 +221,15 @@ class TaDataChannels_Maker:
             TaDataChannels
         """
         d2 = dict(d)
-        if "TerminalAssetGNodeAlias" not in d2.keys():
+        if "TerminalAssetGNodeAlias" not in d2:
             raise SchemaError(f"dict missing TerminalAssetGNodeAlias: <{d2}>")
-        if "TerminalAssetGNodeId" not in d2.keys():
+        if "TerminalAssetGNodeId" not in d2:
             raise SchemaError(f"dict missing TerminalAssetGNodeId: <{d2}>")
-        if "TimeUnixS" not in d2.keys():
+        if "TimeUnixS" not in d2:
             raise SchemaError(f"dict missing TimeUnixS: <{d2}>")
-        if "Author" not in d2.keys():
+        if "Author" not in d2:
             raise SchemaError(f"dict missing Author: <{d2}>")
-        if "Channels" not in d2.keys():
+        if "Channels" not in d2:
             raise SchemaError(f"dict missing Channels: <{d2}>")
         if not isinstance(d2["Channels"], List):
             raise SchemaError(f"Channels <{d2['Channels']}> must be a List!")
@@ -247,11 +242,11 @@ class TaDataChannels_Maker:
             t = DataChannel_Maker.dict_to_tuple(elt)
             channels.append(t)
         d2["Channels"] = channels
-        if "Identifier" not in d2.keys():
+        if "Identifier" not in d2:
             raise SchemaError(f"dict missing Identifier: <{d2}>")
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "000":
             LOGGER.debug(
@@ -273,12 +268,10 @@ def check_is_left_right_dot(v: str) -> None:
     Raises:
         ValueError: if v is not LeftRightDot format
     """
-    from typing import List
-
     try:
         x: List[str] = v.split(".")
-    except:
-        raise ValueError(f"Failed to seperate <{v}> into words with split'.'")
+    except Exception as e:
+        raise ValueError(f"Failed to seperate <{v}> into words with split'.'") from e
     first_word = x[0]
     first_char = first_word[0]
     if not first_char.isalpha():
@@ -303,11 +296,9 @@ def check_is_reasonable_unix_time_s(v: int) -> None:
     Raises:
         ValueError: if v is not ReasonableUnixTimeS format
     """
-    import pendulum
-
-    if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp > v:  # type: ignore[attr-defined]
+    if int(datetime(2000, 1, 1, tzinfo=timezone.utc).timestamp()) > v:
         raise ValueError(f"<{v}> must be after Jan 1 2000")
-    if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp < v:  # type: ignore[attr-defined]
+    if int(datetime(3000, 1, 1, tzinfo=timezone.utc).timestamp()) < v:
         raise ValueError(f"<{v}> must be before Jan 1 3000")
 
 
@@ -332,7 +323,7 @@ def check_is_uuid_canonical_textual(v: str) -> None:
     for hex_word in x:
         try:
             int(hex_word, 16)
-        except ValueError:
+        except ValueError:  # noqa: PERF203
             raise ValueError(f"Words of <{v}> are not all hex")
     if len(x[0]) != 8:
         raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")

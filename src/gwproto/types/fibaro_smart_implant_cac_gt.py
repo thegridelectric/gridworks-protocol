@@ -1,9 +1,8 @@
 import json
 import typing
-from typing import Any
-from typing import Literal
+from typing import Any, Literal
 
-from pydantic import Extra
+from pydantic import ConfigDict
 
 from gwproto.data_classes.cacs.fibaro_smart_implant_cac import FibaroSmartImplantCac
 from gwproto.data_classes.component_attribute_class import ComponentAttributeClass
@@ -14,9 +13,7 @@ class FibaroSmartImplantCacGt(ComponentAttributeClassGt):
     Model: str = ""
     TypeName: Literal["fibaro.smart.implant.cac.gt"] = "fibaro.smart.implant.cac.gt"
     Version: Literal["000"] = "000"
-
-    class Config:
-        extra = Extra.allow
+    model_config = ConfigDict(extra="allow")
 
     @classmethod
     def from_data_class(cls, cac: FibaroSmartImplantCac) -> "FibaroSmartImplantCacGt":
@@ -34,16 +31,16 @@ class FibaroSmartImplantCacGt(ComponentAttributeClassGt):
             display_name=self.DisplayName,
         )
 
-    def __hash__(self):
-        return hash((type(self),) + tuple(self.__dict__.values()))
+    def __hash__(self) -> int:
+        return hash((type(self), *tuple(self.__dict__.values())))
 
 
 class FibaroSmartImplantCacGt_Maker:
-    type_name: str = FibaroSmartImplantCacGt.__fields__["TypeName"].default
+    type_name: str = FibaroSmartImplantCacGt.model_fields["TypeName"].default
     version = "000"
     tuple: FibaroSmartImplantCacGt
 
-    def __init__(self, cac: FibaroSmartImplantCac):
+    def __init__(self, cac: FibaroSmartImplantCac) -> None:
         self.tuple = FibaroSmartImplantCacGt.from_data_class(cac)
 
     @classmethod

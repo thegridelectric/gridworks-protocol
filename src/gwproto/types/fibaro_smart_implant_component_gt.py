@@ -1,7 +1,6 @@
 import json
 import typing
-from typing import Any
-from typing import Literal
+from typing import Any, Literal
 
 from gwproto.data_classes.component import Component
 from gwproto.data_classes.components.fibaro_smart_implant_component import (
@@ -17,8 +16,8 @@ class FibaroSmartImplantComponentGt(ComponentGt):
     )
     Version: Literal["000"] = "000"
 
-    def __hash__(self):
-        return hash((type(self),) + tuple(self.__dict__.values()))
+    def __hash__(self) -> int:
+        return hash((type(self), *tuple(self.__dict__.values())))
 
     @classmethod
     def from_data_class(
@@ -44,11 +43,11 @@ class FibaroSmartImplantComponentGt(ComponentGt):
 
 
 class FibaroSmartImplantComponentGt_Maker:
-    type_name: str = FibaroSmartImplantComponentGt.__fields__["TypeName"].default
+    type_name: str = FibaroSmartImplantComponentGt.model_fields["TypeName"].default
     version = "000"
     tuple: FibaroSmartImplantComponentGt
 
-    def __init__(self, component: FibaroSmartImplantComponent):
+    def __init__(self, component: FibaroSmartImplantComponent) -> None:
         self.tuple = FibaroSmartImplantComponentGt.from_data_class(component)
 
     @classmethod

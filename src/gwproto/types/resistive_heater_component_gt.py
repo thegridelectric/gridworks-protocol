@@ -2,20 +2,14 @@
 
 import json
 import logging
-from typing import Any
-from typing import Dict
-from typing import Literal
-from typing import Optional
+from typing import Any, Dict, Literal, Optional
 
-from pydantic import BaseModel
-from pydantic import Field
-from pydantic import validator
+from pydantic import BaseModel, Field, field_validator
 
 from gwproto.data_classes.components.resistive_heater_component import (
     ResistiveHeaterComponent,
 )
 from gwproto.errors import SchemaError
-
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -74,7 +68,8 @@ class ResistiveHeaterComponentGt(BaseModel):
     TypeName: Literal["resistive.heater.component.gt"] = "resistive.heater.component.gt"
     Version: Literal["000"] = "000"
 
-    @validator("ComponentId")
+    @field_validator("ComponentId")
+    @classmethod
     def _check_component_id(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
@@ -84,7 +79,8 @@ class ResistiveHeaterComponentGt(BaseModel):
             )
         return v
 
-    @validator("ComponentAttributeClassId")
+    @field_validator("ComponentAttributeClassId")
+    @classmethod
     def _check_component_attribute_class_id(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
@@ -110,14 +106,13 @@ class ResistiveHeaterComponentGt(BaseModel):
 
         It also applies these changes recursively to sub-types.
         """
-        d = {
+        return {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }
-        return d
 
     def as_type(self) -> bytes:
         """
@@ -143,7 +138,7 @@ class ResistiveHeaterComponentGt(BaseModel):
         json_string = json.dumps(self.as_dict())
         return json_string.encode("utf-8")
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
@@ -151,7 +146,7 @@ class ResistiveHeaterComponentGt_Maker:
     type_name = "resistive.heater.component.gt"
     version = "000"
 
-    def __init__(
+    def __init__(  # noqa: PLR0913, PLR0917, RUF100
         self,
         component_id: str,
         component_attribute_class_id: str,
@@ -159,7 +154,7 @@ class ResistiveHeaterComponentGt_Maker:
         hw_uid: Optional[str],
         tested_max_hot_milli_ohms: Optional[int],
         tested_max_cold_milli_ohms: Optional[int],
-    ):
+    ) -> None:
         self.tuple = ResistiveHeaterComponentGt(
             ComponentId=component_id,
             ComponentAttributeClassId=component_attribute_class_id,
@@ -214,13 +209,13 @@ class ResistiveHeaterComponentGt_Maker:
             ResistiveHeaterComponentGt
         """
         d2 = dict(d)
-        if "ComponentId" not in d2.keys():
+        if "ComponentId" not in d2:
             raise SchemaError(f"dict missing ComponentId: <{d2}>")
-        if "ComponentAttributeClassId" not in d2.keys():
+        if "ComponentAttributeClassId" not in d2:
             raise SchemaError(f"dict missing ComponentAttributeClass: <{d2}>")
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "000":
             LOGGER.debug(
@@ -231,7 +226,7 @@ class ResistiveHeaterComponentGt_Maker:
 
     @classmethod
     def tuple_to_dc(cls, t: ResistiveHeaterComponentGt) -> ResistiveHeaterComponent:
-        if t.ComponentId in ResistiveHeaterComponent.by_id.keys():
+        if t.ComponentId in ResistiveHeaterComponent.by_id:
             dc = ResistiveHeaterComponent.by_id[t.ComponentId]
         else:
             dc = ResistiveHeaterComponent(
@@ -246,7 +241,7 @@ class ResistiveHeaterComponentGt_Maker:
 
     @classmethod
     def dc_to_tuple(cls, dc: ResistiveHeaterComponent) -> ResistiveHeaterComponentGt:
-        t = ResistiveHeaterComponentGt_Maker(
+        return ResistiveHeaterComponentGt_Maker(
             component_id=dc.component_id,
             component_attribute_class_id=dc.component_attribute_class_id,
             display_name=dc.display_name,
@@ -254,7 +249,6 @@ class ResistiveHeaterComponentGt_Maker:
             tested_max_hot_milli_ohms=dc.tested_max_hot_milli_ohms,
             tested_max_cold_milli_ohms=dc.tested_max_cold_milli_ohms,
         ).tuple
-        return t
 
     @classmethod
     def type_to_dc(cls, t: str) -> ResistiveHeaterComponent:
@@ -290,7 +284,7 @@ def check_is_uuid_canonical_textual(v: str) -> None:
     for hex_word in x:
         try:
             int(hex_word, 16)
-        except ValueError:
+        except ValueError:  # noqa: PERF203
             raise ValueError(f"Words of <{v}> are not all hex")
     if len(x[0]) != 8:
         raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")

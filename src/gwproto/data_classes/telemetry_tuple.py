@@ -9,5 +9,5 @@ class TelemetryTuple(NamedTuple):
     SensorNode: ShNode
     TelemetryName: TelemetryName
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"TT({self.AboutNode.alias} {self.TelemetryName.value} read by {self.SensorNode.alias})"

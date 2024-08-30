@@ -1,9 +1,9 @@
-import uuid
-from typing import Any
-from typing import Literal
+# ruff: noqa: ANN401
 
-from pydantic import BaseModel
-from pydantic import Field
+import uuid
+from typing import Any, Literal
+
+from pydantic import BaseModel, Field
 
 from gwproto.message import Message
 
@@ -19,9 +19,7 @@ class Ping(BaseModel):
 
 
 class PingMessage(Message[Ping]):
-    def __init__(self, **data: Any):
-        if "AckRequired" not in data:
-            data["AckRequired"] = True
-        if "Payload" not in data:
-            data["Payload"] = Ping()
-        super().__init__(**data)
+    def __init__(self, *, AckRequired: bool = True, **kwargs: Any) -> None:  # noqa: N803
+        if "Payload" not in kwargs:
+            kwargs["Payload"] = Ping()
+        super().__init__(AckRequired=AckRequired, **kwargs)

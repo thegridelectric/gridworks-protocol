@@ -7,7 +7,7 @@ from gwproto.types.component_attribute_class_gt import ComponentAttributeClassGt
 
 
 class WebServerCacGt(ComponentAttributeClassGt):
-    TypeName: Literal["hubitat.cac.gt"] = "web.server.cac.gt"
+    TypeName: Literal["web.server.cac.gt"] = "web.server.cac.gt"
     Version: Literal["000"] = "000"
 
     @classmethod
@@ -26,5 +26,5 @@ class WebServerCacGt(ComponentAttributeClassGt):
             display_name=self.DisplayName,
         )
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa

@@ -2,17 +2,12 @@
 
 import json
 import logging
-from typing import Any
-from typing import Dict
-from typing import Literal
+from typing import Any, Dict, Literal
 
-from pydantic import BaseModel
-from pydantic import Field
-from pydantic import validator
+from pydantic import BaseModel, Field, field_validator
 
 from gwproto.enums import TelemetryName as EnumTelemetryName
 from gwproto.errors import SchemaError
-
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -55,7 +50,8 @@ class DataChannel(BaseModel):
     TypeName: Literal["data.channel"] = "data.channel"
     Version: Literal["000"] = "000"
 
-    @validator("AboutName")
+    @field_validator("AboutName")
+    @classmethod
     def _check_about_name(cls, v: str) -> str:
         try:
             check_is_spaceheat_name(v)
@@ -63,7 +59,8 @@ class DataChannel(BaseModel):
             raise ValueError(f"AboutName failed SpaceheatName format validation: {e}")
         return v
 
-    @validator("CapturedByName")
+    @field_validator("CapturedByName")
+    @classmethod
     def _check_captured_by_name(cls, v: str) -> str:
         try:
             check_is_spaceheat_name(v)
@@ -91,8 +88,8 @@ class DataChannel(BaseModel):
         """
         d = {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }
@@ -126,7 +123,7 @@ class DataChannel(BaseModel):
         json_string = json.dumps(self.as_dict())
         return json_string.encode("utf-8")
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
@@ -140,7 +137,7 @@ class DataChannel_Maker:
         about_name: str,
         captured_by_name: str,
         telemetry_name: EnumTelemetryName,
-    ):
+    ) -> None:
         self.tuple = DataChannel(
             DisplayName=display_name,
             AboutName=about_name,
@@ -193,19 +190,19 @@ class DataChannel_Maker:
             DataChannel
         """
         d2 = dict(d)
-        if "DisplayName" not in d2.keys():
+        if "DisplayName" not in d2:
             raise SchemaError(f"dict missing DisplayName: <{d2}>")
-        if "AboutName" not in d2.keys():
+        if "AboutName" not in d2:
             raise SchemaError(f"dict missing AboutName: <{d2}>")
-        if "CapturedByName" not in d2.keys():
+        if "CapturedByName" not in d2:
             raise SchemaError(f"dict missing CapturedByName: <{d2}>")
-        if "TelemetryNameGtEnumSymbol" not in d2.keys():
+        if "TelemetryNameGtEnumSymbol" not in d2:
             raise SchemaError(f"TelemetryNameGtEnumSymbol missing from dict <{d2}>")
         value = EnumTelemetryName.symbol_to_value(d2["TelemetryNameGtEnumSymbol"])
         d2["TelemetryName"] = EnumTelemetryName(value)
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "000":
             LOGGER.debug(
@@ -228,12 +225,10 @@ def check_is_spaceheat_name(v: str) -> None:
     Raises:
         ValueError: If the provided string is not in SpaceheatName format.
     """
-    from typing import List
-
     try:
-        x: List[str] = v.split(".")
-    except:
-        raise ValueError(f"Failed to seperate <{v}> into words with split'.'")
+        x: list[str] = v.split(".")
+    except Exception as e:
+        raise ValueError(f"Failed to seperate <{v}> into words with split'.'") from e
     first_word = x[0]
     first_char = first_word[0]
     if not first_char.isalpha():

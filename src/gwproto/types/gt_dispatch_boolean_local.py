@@ -2,16 +2,12 @@
 
 import json
 import logging
-from typing import Any
-from typing import Dict
-from typing import Literal
+from datetime import datetime, timezone
+from typing import Any, Dict, Literal
 
-from pydantic import BaseModel
-from pydantic import Field
-from pydantic import validator
+from pydantic import BaseModel, Field, field_validator
 
 from gwproto.errors import SchemaError
-
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -52,7 +48,8 @@ class GtDispatchBooleanLocal(BaseModel):
     TypeName: Literal["gt.dispatch.boolean.local"] = "gt.dispatch.boolean.local"
     Version: Literal["110"] = "110"
 
-    @validator("RelayState", pre=True)
+    @field_validator("RelayState", mode="before")
+    @classmethod
     def _check_relay_state(cls, v: int) -> int:
         try:
             check_is_bit(v)
@@ -60,7 +57,8 @@ class GtDispatchBooleanLocal(BaseModel):
             raise ValueError(f"RelayState failed Bit format validation: {e}")
         return v
 
-    @validator("AboutNodeName")
+    @field_validator("AboutNodeName")
+    @classmethod
     def _check_about_node_name(cls, v: str) -> str:
         try:
             check_is_left_right_dot(v)
@@ -70,7 +68,8 @@ class GtDispatchBooleanLocal(BaseModel):
             )
         return v
 
-    @validator("FromNodeName")
+    @field_validator("FromNodeName")
+    @classmethod
     def _check_from_node_name(cls, v: str) -> str:
         try:
             check_is_left_right_dot(v)
@@ -78,7 +77,8 @@ class GtDispatchBooleanLocal(BaseModel):
             raise ValueError(f"FromNodeName failed LeftRightDot format validation: {e}")
         return v
 
-    @validator("SendTimeUnixMs")
+    @field_validator("SendTimeUnixMs")
+    @classmethod
     def _check_send_time_unix_ms(cls, v: int) -> int:
         try:
             check_is_reasonable_unix_time_ms(v)
@@ -104,14 +104,13 @@ class GtDispatchBooleanLocal(BaseModel):
 
         It also applies these changes recursively to sub-types.
         """
-        d = {
+        return {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }
-        return d
 
     def as_type(self) -> bytes:
         """
@@ -137,7 +136,7 @@ class GtDispatchBooleanLocal(BaseModel):
         json_string = json.dumps(self.as_dict())
         return json_string.encode("utf-8")
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
@@ -151,7 +150,7 @@ class GtDispatchBooleanLocal_Maker:
         about_node_name: str,
         from_node_name: str,
         send_time_unix_ms: int,
-    ):
+    ) -> None:
         self.tuple = GtDispatchBooleanLocal(
             RelayState=relay_state,
             AboutNodeName=about_node_name,
@@ -204,17 +203,17 @@ class GtDispatchBooleanLocal_Maker:
             GtDispatchBooleanLocal
         """
         d2 = dict(d)
-        if "RelayState" not in d2.keys():
+        if "RelayState" not in d2:
             raise SchemaError(f"dict missing RelayState: <{d2}>")
-        if "AboutNodeName" not in d2.keys():
+        if "AboutNodeName" not in d2:
             raise SchemaError(f"dict missing AboutNodeName: <{d2}>")
-        if "FromNodeName" not in d2.keys():
+        if "FromNodeName" not in d2:
             raise SchemaError(f"dict missing FromNodeName: <{d2}>")
-        if "SendTimeUnixMs" not in d2.keys():
+        if "SendTimeUnixMs" not in d2:
             raise SchemaError(f"dict missing SendTimeUnixMs: <{d2}>")
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "110":
             LOGGER.debug(
@@ -239,7 +238,7 @@ def check_is_bit(v: int) -> None:
     Raises:
         ValueError: if v is not 0 or 1
     """
-    if not v in [0, 1]:
+    if v not in {0, 1}:
         raise ValueError(f"<{v}> must be 0 or 1")
 
 
@@ -255,12 +254,10 @@ def check_is_left_right_dot(v: str) -> None:
     Raises:
         ValueError: if v is not LeftRightDot format
     """
-    from typing import List
-
     try:
-        x: List[str] = v.split(".")
-    except:
-        raise ValueError(f"Failed to seperate <{v}> into words with split'.'")
+        x: list[str] = v.split(".")
+    except Exception as e:
+        raise ValueError(f"Failed to seperate <{v}> into words with split'.'") from e
     first_word = x[0]
     first_char = first_word[0]
     if not first_char.isalpha():
@@ -285,9 +282,7 @@ def check_is_reasonable_unix_time_ms(v: int) -> None:
     Raises:
         ValueError: if v is not ReasonableUnixTimeMs format
     """
-    import pendulum
-
-    if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp * 1000 > v:  # type: ignore[attr-defined]
+    if int(datetime(2000, 1, 1, tzinfo=timezone.utc).timestamp() * 1000) > v:
         raise ValueError(f"<{v}> must be after Jan 1 2000")
-    if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp * 1000 < v:  # type: ignore[attr-defined]
+    if int(datetime(3000, 1, 1, tzinfo=timezone.utc).timestamp() * 1000) < v:
         raise ValueError(f"<{v}> must be before Jan 1 3000")

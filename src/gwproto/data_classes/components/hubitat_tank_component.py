@@ -5,11 +5,15 @@ import yarl
 from gwproto.data_classes.component import Component
 from gwproto.data_classes.resolver import ComponentResolver
 from gwproto.data_classes.sh_node import ShNode
-from gwproto.types.hubitat_component_gt import HubitatComponentGt
-from gwproto.types.hubitat_component_gt import HubitatRESTResolutionSettings
-from gwproto.types.hubitat_tank_gt import FibaroTempSensorSettings
-from gwproto.types.hubitat_tank_gt import FibaroTempSensorSettingsGt
-from gwproto.types.hubitat_tank_gt import HubitatTankSettingsGt
+from gwproto.types.hubitat_component_gt import (
+    HubitatComponentGt,
+    HubitatRESTResolutionSettings,
+)
+from gwproto.types.hubitat_tank_gt import (
+    FibaroTempSensorSettings,
+    FibaroTempSensorSettingsGt,
+    HubitatTankSettingsGt,
+)
 from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
 
 
@@ -18,7 +22,7 @@ class HubitatTankComponent(Component, ComponentResolver):
     sensor_supply_voltage: float
     default_poll_period_seconds: Optional[float] = None
     devices_gt: list[FibaroTempSensorSettingsGt]
-    devices: list[FibaroTempSensorSettings] = []
+    devices: list[FibaroTempSensorSettings]
     web_listen_enabled: bool
 
     def __init__(
@@ -28,7 +32,7 @@ class HubitatTankComponent(Component, ComponentResolver):
         tank_gt: HubitatTankSettingsGt,
         display_name: Optional[str] = None,
         hw_uid: Optional[str] = None,
-    ):
+    ) -> None:
         # Create self.hubitat as a proxy containing only the id
         # of the hubitat; the actual component data will be resolved
         # when resolve() is called; Here in the constructor we cannot
@@ -38,6 +42,7 @@ class HubitatTankComponent(Component, ComponentResolver):
         self.default_poll_period_seconds = tank_gt.default_poll_period_seconds
         self.devices_gt = list(tank_gt.devices)
         self.web_listen_enabled = tank_gt.web_listen_enabled
+        self.devices = []
         super().__init__(
             display_name=display_name,
             component_id=component_id,
@@ -50,7 +55,7 @@ class HubitatTankComponent(Component, ComponentResolver):
         tank_node_name: str,
         nodes: dict[str, ShNode],
         components: dict[str, Component],
-    ):
+    ) -> None:
         hubitat_component = HubitatComponentGt.from_component_id(
             self.hubitat.ComponentId, components
         )

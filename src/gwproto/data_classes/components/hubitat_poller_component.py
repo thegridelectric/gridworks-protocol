@@ -7,8 +7,7 @@ from gwproto.data_classes.resolver import ComponentResolver
 from gwproto.data_classes.sh_node import ShNode
 from gwproto.types.hubitat_component_gt import HubitatComponentGt
 from gwproto.types.hubitat_poller_gt import HubitatPollerGt
-from gwproto.types.rest_poller_gt import RequestArgs
-from gwproto.types.rest_poller_gt import RESTPollerSettings
+from gwproto.types.rest_poller_gt import RequestArgs, RESTPollerSettings
 from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
 
 
@@ -24,7 +23,7 @@ class HubitatPollerComponent(Component, ComponentResolver):
         poller_gt: HubitatPollerGt,
         display_name: Optional[str] = None,
         hw_uid: Optional[str] = None,
-    ):
+    ) -> None:
         self.hubitat_gt = HubitatComponentGt.make_stub(poller_gt.hubitat_component_id)
         self.poller_gt = poller_gt
         super().__init__(
@@ -45,9 +44,9 @@ class HubitatPollerComponent(Component, ComponentResolver):
     def resolve(
         self,
         node_name: str,
-        nodes: dict[str, ShNode],
+        _nodes: dict[str, ShNode],
         components: dict[str, Component],
-    ):
+    ) -> None:
         if self._rest is not None:
             raise ValueError(
                 f"resolve() must be called exactly once. "

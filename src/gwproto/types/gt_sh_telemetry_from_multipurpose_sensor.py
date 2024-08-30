@@ -2,19 +2,13 @@
 
 import json
 import logging
-from typing import Any
-from typing import Dict
-from typing import List
-from typing import Literal
+from datetime import datetime, timezone
+from typing import Any, Dict, List, Literal, Self
 
-from pydantic import BaseModel
-from pydantic import Field
-from pydantic import root_validator
-from pydantic import validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 from gwproto.enums import TelemetryName
 from gwproto.errors import SchemaError
-
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -57,7 +51,8 @@ class GtShTelemetryFromMultipurposeSensor(BaseModel):
     )
     Version: Literal["100"] = "100"
 
-    @validator("ScadaReadTimeUnixMs")
+    @field_validator("ScadaReadTimeUnixMs")
+    @classmethod
     def _check_scada_read_time_unix_ms(cls, v: int) -> int:
         try:
             check_is_reasonable_unix_time_ms(v)
@@ -67,31 +62,33 @@ class GtShTelemetryFromMultipurposeSensor(BaseModel):
             )
         return v
 
-    @validator("AboutNodeAliasList")
+    @field_validator("AboutNodeAliasList")
+    @classmethod
     def _check_about_node_alias_list(cls, v: List[str]) -> List[str]:
         for elt in v:
             try:
                 check_is_left_right_dot(elt)
-            except ValueError as e:
+            except ValueError as e:  # noqa: PERF203
                 raise ValueError(
                     f"AboutNodeAliasList element {elt} failed LeftRightDot format validation: {e}"
                 )
         return v
 
-    @root_validator
-    def check_axiom_1(cls, v: dict) -> dict:
+    @model_validator(mode="after")
+    def check_axiom_1(self) -> Self:
         """
         Axiom 1: ListLengthConsistency.
         AboutNodeAliasList, ValueList and TelemetryNameList must all have the same length.
         """
-        alias_list: List[str] = v.get("AboutNodeAliasList", None)
-        value_list: List[int] = v.get("ValueList", None)
-        tn_list: List[TelemetryName] = v.get("TelemetryNameList", None)
-        if (len(value_list) != len(alias_list)) or (len(value_list) != len(tn_list)):
+        if not (
+            len(self.ValueList)
+            == len(self.AboutNodeAliasList)
+            == len(self.TelemetryNameList)
+        ):
             raise ValueError(
                 "Axiom 1: AboutNodeAliasList, ValueList and TelemetryNameList must all have the same length."
             )
-        return v
+        return self
 
     def as_dict(self) -> Dict[str, Any]:
         """
@@ -111,16 +108,15 @@ class GtShTelemetryFromMultipurposeSensor(BaseModel):
         """
         d = {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }
-        del d["TelemetryNameList"]
-        telemetry_name_list = []
-        for elt in self.TelemetryNameList:
-            telemetry_name_list.append(TelemetryName.value_to_symbol(elt.value))
-        d["TelemetryNameList"] = telemetry_name_list
+        d["TelemetryNameList"] = [
+            TelemetryName.value_to_symbol(str(elt.value))
+            for elt in self.TelemetryNameList
+        ]
         return d
 
     def as_type(self) -> bytes:
@@ -147,7 +143,7 @@ class GtShTelemetryFromMultipurposeSensor(BaseModel):
         json_string = json.dumps(self.as_dict())
         return json_string.encode("utf-8")
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
@@ -161,7 +157,7 @@ class GtShTelemetryFromMultipurposeSensor_Maker:
         about_node_alias_list: List[str],
         telemetry_name_list: List[TelemetryName],
         value_list: List[int],
-    ):
+    ) -> None:
         self.tuple = GtShTelemetryFromMultipurposeSensor(
             ScadaReadTimeUnixMs=scada_read_time_unix_ms,
             AboutNodeAliasList=about_node_alias_list,
@@ -214,11 +210,11 @@ class GtShTelemetryFromMultipurposeSensor_Maker:
             GtShTelemetryFromMultipurposeSensor
         """
         d2 = dict(d)
-        if "ScadaReadTimeUnixMs" not in d2.keys():
+        if "ScadaReadTimeUnixMs" not in d2:
             raise SchemaError(f"dict missing ScadaReadTimeUnixMs: <{d2}>")
-        if "AboutNodeAliasList" not in d2.keys():
+        if "AboutNodeAliasList" not in d2:
             raise SchemaError(f"dict missing AboutNodeAliasList: <{d2}>")
-        if "TelemetryNameList" not in d2.keys():
+        if "TelemetryNameList" not in d2:
             raise SchemaError(f"dict <{d2}> missing TelemetryNameList")
         if not isinstance(d2["TelemetryNameList"], List):
             raise SchemaError("TelemetryNameList must be a List!")
@@ -227,11 +223,11 @@ class GtShTelemetryFromMultipurposeSensor_Maker:
             value = TelemetryName.symbol_to_value(elt)
             telemetry_name_list.append(TelemetryName(value))
         d2["TelemetryNameList"] = telemetry_name_list
-        if "ValueList" not in d2.keys():
+        if "ValueList" not in d2:
             raise SchemaError(f"dict missing ValueList: <{d2}>")
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "100":
             LOGGER.debug(
@@ -253,12 +249,10 @@ def check_is_left_right_dot(v: str) -> None:
     Raises:
         ValueError: if v is not LeftRightDot format
     """
-    from typing import List
-
     try:
         x: List[str] = v.split(".")
-    except:
-        raise ValueError(f"Failed to seperate <{v}> into words with split'.'")
+    except Exception as e:
+        raise ValueError(f"Failed to seperate <{v}> into words with split'.'") from e
     first_word = x[0]
     first_char = first_word[0]
     if not first_char.isalpha():
@@ -283,9 +277,7 @@ def check_is_reasonable_unix_time_ms(v: int) -> None:
     Raises:
         ValueError: if v is not ReasonableUnixTimeMs format
     """
-    import pendulum
-
-    if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp * 1000 > v:  # type: ignore[attr-defined]
+    if int(datetime(2000, 1, 1, tzinfo=timezone.utc).timestamp() * 1000) > v:
         raise ValueError(f"<{v}> must be after Jan 1 2000")
-    if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp * 1000 < v:  # type: ignore[attr-defined]
+    if int(datetime(3000, 1, 1, tzinfo=timezone.utc).timestamp() * 1000) < v:
         raise ValueError(f"<{v}> must be before Jan 1 3000")

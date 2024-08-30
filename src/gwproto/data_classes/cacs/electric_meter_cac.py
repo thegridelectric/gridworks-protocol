@@ -1,19 +1,15 @@
 """ElectricMeterCac definition"""
 
-from typing import Dict
-from typing import List
-from typing import Optional
+from typing import Dict, List, Optional
 
 from gwproto.data_classes.component_attribute_class import ComponentAttributeClass
-from gwproto.enums import LocalCommInterface
-from gwproto.enums import MakeModel
-from gwproto.enums import TelemetryName
+from gwproto.enums import LocalCommInterface, MakeModel, TelemetryName
 
 
 class ElectricMeterCac(ComponentAttributeClass):
-    by_id: Dict[str, "ElectricMeterCac"] = {}
+    by_id: Dict[str, "ElectricMeterCac"] = {}  # noqa: RUF012
 
-    def __init__(
+    def __init__(  # noqa: PLR0913, PLR0917, RUF100
         self,
         component_attribute_class_id: str,
         make_model: MakeModel,
@@ -21,8 +17,10 @@ class ElectricMeterCac(ComponentAttributeClass):
         poll_period_ms: int,
         default_baud: int,
         display_name: Optional[str] = None,
-        telemetry_name_list: List[TelemetryName] = [],
-    ):
+        telemetry_name_list: Optional[List[TelemetryName]] = None,
+    ) -> None:
+        if telemetry_name_list is None:
+            telemetry_name_list = []
         super(self.__class__, self).__init__(
             component_attribute_class_id=component_attribute_class_id,
             display_name=display_name,
@@ -35,5 +33,5 @@ class ElectricMeterCac(ComponentAttributeClass):
         ElectricMeterCac.by_id[self.component_attribute_class_id] = self
         ComponentAttributeClass.by_id[self.component_attribute_class_id] = self
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"{self.make_model.value} {self.display_name}"

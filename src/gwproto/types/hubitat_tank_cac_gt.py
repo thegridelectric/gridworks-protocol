@@ -27,16 +27,16 @@ class HubitatTankCacGt(ComponentAttributeClassGt):
             display_name=self.DisplayName,
         )
 
-    def __hash__(self):
-        return hash((type(self),) + tuple(self.__dict__.values()))
+    def __hash__(self) -> int:
+        return hash((type(self), *tuple(self.__dict__.values())))
 
 
 class HubitatTankCacGt_Maker:
-    type_name: str = HubitatTankCacGt.__fields__["TypeName"].default
+    type_name: str = HubitatTankCacGt.model_fields["TypeName"].default
     version = "000"
     tuple: HubitatTankCacGt
 
-    def __init__(self, cac: HubitatTankModuleCac):
+    def __init__(self, cac: HubitatTankModuleCac) -> None:
         self.tuple = HubitatTankCacGt.from_data_class(cac)
 
     @classmethod

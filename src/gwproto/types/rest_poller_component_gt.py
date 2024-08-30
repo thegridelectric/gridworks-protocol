@@ -5,9 +5,7 @@ REST commands into a message posted to main processing thread.
 
 import json
 import typing
-from typing import Any
-from typing import Literal
-from typing import Optional
+from typing import Any, Literal, Optional
 
 from gwproto.data_classes.component import Component
 from gwproto.data_classes.components.rest_poller_component import RESTPollerComponent
@@ -48,16 +46,16 @@ class RESTPollerComponentGt(ComponentGt):
 
 
 class RESTPollerComponentGt_Maker:
-    type_name: str = RESTPollerComponentGt.__fields__["TypeName"].default
+    type_name: str = RESTPollerComponentGt.model_fields["TypeName"].default
     version = "000"
     tuple: RESTPollerComponentGt
 
-    def __init__(self, component: RESTPollerComponent):
+    def __init__(self, component: RESTPollerComponent) -> None:
         self.tuple = RESTPollerComponentGt.from_data_class(component)
 
     @classmethod
     def tuple_to_type(cls, tpl: RESTPollerComponentGt) -> str:
-        return tpl.as_type()  # noqa
+        return tpl.as_type().decode()
 
     @classmethod
     def type_to_tuple(cls, t: str) -> RESTPollerComponentGt:
@@ -81,7 +79,7 @@ class RESTPollerComponentGt_Maker:
 
     @classmethod
     def dc_to_type(cls, dc: RESTPollerComponent) -> str:
-        return cls.dc_to_tuple(dc).as_type()  # noqa
+        return cls.dc_to_tuple(dc).as_type().decode()
 
     @classmethod
     def dict_to_dc(cls, d: dict[Any, str]) -> RESTPollerComponent:

@@ -14,7 +14,7 @@ class WebServerComponent(Component):
         web_server_gt: WebServerGt,
         display_name: Optional[str] = None,
         hw_uid: Optional[str] = None,
-    ):
+    ) -> None:
         self.web_server_gt = web_server_gt
         super().__init__(
             component_id=component_id,

@@ -2,20 +2,13 @@
 
 import json
 import logging
-from typing import Any
-from typing import Dict
-from typing import Literal
-from typing import Optional
+from typing import Any, Dict, Literal, Optional, Self
 
-from pydantic import BaseModel
-from pydantic import Field
-from pydantic import root_validator
-from pydantic import validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 from gwproto.enums import TelemetryName as EnumTelemetryName
 from gwproto.enums import Unit as EnumUnit
 from gwproto.errors import SchemaError
-
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -62,7 +55,8 @@ class TelemetryReportingConfig(BaseModel):
     TypeName: Literal["telemetry.reporting.config"] = "telemetry.reporting.config"
     Version: Literal["000"] = "000"
 
-    @validator("AboutNodeName")
+    @field_validator("AboutNodeName")
+    @classmethod
     def _check_about_node_name(cls, v: str) -> str:
         try:
             check_is_left_right_dot(v)
@@ -72,7 +66,8 @@ class TelemetryReportingConfig(BaseModel):
             )
         return v
 
-    @validator("NameplateMaxValue")
+    @field_validator("NameplateMaxValue")
+    @classmethod
     def _check_nameplate_max_value(cls, v: Optional[int]) -> Optional[int]:
         if v is None:
             return v
@@ -84,20 +79,17 @@ class TelemetryReportingConfig(BaseModel):
             )
         return v
 
-    @root_validator
-    def check_axiom_1(cls, v: dict) -> dict:
+    @model_validator(mode="after")
+    def check_axiom_1(self) -> Self:
         """
         Axiom 1: Async reporting consistency.
         If AsyncReportThreshold exists, so does NameplateMaxValue
         """
-        AsyncReportThreshold = v.get("AsyncReportThreshold", None)
-        NameplateMaxValue = v.get("NameplateMaxValue", None)
-        if AsyncReportThreshold is not None:
-            if NameplateMaxValue is None:
-                raise ValueError(
-                    f"Violates Axiom 1: If AsyncReportThreshold exists, so does NameplateMaxValue"
-                )
-        return v
+        if self.AsyncReportThreshold is not None and self.NameplateMaxValue is None:
+            raise ValueError(
+                "Violates Axiom 1: If AsyncReportThreshold exists, so does NameplateMaxValue"
+            )
+        return self
 
     def as_dict(self) -> Dict[str, Any]:
         """
@@ -117,8 +109,8 @@ class TelemetryReportingConfig(BaseModel):
         """
         d = {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }
@@ -154,7 +146,7 @@ class TelemetryReportingConfig(BaseModel):
         json_string = json.dumps(self.as_dict())
         return json_string.encode("utf-8")
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
@@ -162,17 +154,17 @@ class TelemetryReportingConfig_Maker:
     type_name = "telemetry.reporting.config"
     version = "000"
 
-    def __init__(
+    def __init__(  # noqa: PLR0913, PLR0917, RUF100
         self,
         telemetry_name: EnumTelemetryName,
         about_node_name: str,
-        report_on_change: bool,
+        report_on_change: bool,  # noqa: FBT001
         sample_period_s: int,
         exponent: int,
         unit: EnumUnit,
         async_report_threshold: Optional[float],
         nameplate_max_value: Optional[int],
-    ):
+    ) -> None:
         self.tuple = TelemetryReportingConfig(
             TelemetryName=telemetry_name,
             AboutNodeName=about_node_name,
@@ -229,25 +221,25 @@ class TelemetryReportingConfig_Maker:
             TelemetryReportingConfig
         """
         d2 = dict(d)
-        if "TelemetryNameGtEnumSymbol" not in d2.keys():
+        if "TelemetryNameGtEnumSymbol" not in d2:
             raise SchemaError(f"TelemetryNameGtEnumSymbol missing from dict <{d2}>")
         value = EnumTelemetryName.symbol_to_value(d2["TelemetryNameGtEnumSymbol"])
         d2["TelemetryName"] = EnumTelemetryName(value)
-        if "AboutNodeName" not in d2.keys():
+        if "AboutNodeName" not in d2:
             raise SchemaError(f"dict missing AboutNodeName: <{d2}>")
-        if "ReportOnChange" not in d2.keys():
+        if "ReportOnChange" not in d2:
             raise SchemaError(f"dict missing ReportOnChange: <{d2}>")
-        if "SamplePeriodS" not in d2.keys():
+        if "SamplePeriodS" not in d2:
             raise SchemaError(f"dict missing SamplePeriodS: <{d2}>")
-        if "Exponent" not in d2.keys():
+        if "Exponent" not in d2:
             raise SchemaError(f"dict missing Exponent: <{d2}>")
-        if "UnitGtEnumSymbol" not in d2.keys():
+        if "UnitGtEnumSymbol" not in d2:
             raise SchemaError(f"UnitGtEnumSymbol missing from dict <{d2}>")
         value = EnumUnit.symbol_to_value(d2["UnitGtEnumSymbol"])
         d2["Unit"] = EnumUnit(value)
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "000":
             LOGGER.debug(
@@ -269,12 +261,10 @@ def check_is_left_right_dot(v: str) -> None:
     Raises:
         ValueError: if v is not LeftRightDot format
     """
-    from typing import List
-
     try:
-        x: List[str] = v.split(".")
-    except:
-        raise ValueError(f"Failed to seperate <{v}> into words with split'.'")
+        x: list[str] = v.split(".")
+    except Exception as e:
+        raise ValueError(f"Failed to seperate <{v}> into words with split'.'") from e
     first_word = x[0]
     first_char = first_word[0]
     if not first_char.isalpha():

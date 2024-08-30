@@ -1,24 +1,24 @@
+# ruff: noqa: ANN401, RUF100
+
 import re
 import typing
-from typing import Type
-from typing import TypeVar
+from typing import Any, Type, TypeVar
 
-import gwproto.types.fibaro_smart_implant_cac_gt  # noqa
-import gwproto.types.fibaro_smart_implant_component_gt  # noqa
-import gwproto.types.hubitat_cac_gt  # noqa
-import gwproto.types.hubitat_component_gt  # noqa
-import gwproto.types.hubitat_poller_cac_gt  # noqa
-import gwproto.types.hubitat_poller_component_gt  # noqa
-import gwproto.types.hubitat_tank_cac_gt  # noqa
-import gwproto.types.hubitat_tank_component_gt  # noqa
-import gwproto.types.rest_poller_cac_gt  # noqa
-import gwproto.types.rest_poller_component_gt  # noqa
-import gwproto.types.web_server_cac_gt  # noqa
-import gwproto.types.web_server_component_gt  # noqa
+import gwproto.types.fibaro_smart_implant_cac_gt  # noqa: F401
+import gwproto.types.fibaro_smart_implant_component_gt  # noqa: F401
+import gwproto.types.hubitat_cac_gt  # noqa: F401
+import gwproto.types.hubitat_component_gt  # noqa: F401
+import gwproto.types.hubitat_poller_cac_gt  # noqa: F401
+import gwproto.types.hubitat_poller_component_gt  # noqa: F401
+import gwproto.types.hubitat_tank_cac_gt  # noqa: F401
+import gwproto.types.hubitat_tank_component_gt  # noqa: F401
+import gwproto.types.rest_poller_cac_gt  # noqa: F401
+import gwproto.types.rest_poller_component_gt  # noqa: F401
+import gwproto.types.web_server_cac_gt  # noqa: F401
+import gwproto.types.web_server_component_gt  # noqa: F401
 from gwproto.data_classes.component import Component
 from gwproto.data_classes.component_attribute_class import ComponentAttributeClass
 from gwproto.decoders import PydanticTypeNameDecoder
-
 
 T = TypeVar("T")
 
@@ -26,8 +26,8 @@ T = TypeVar("T")
 def decode_to_data_class(
     decoded_gt: typing.Any,
     return_type: Type[T],
-    allow_missing_func: bool = True,
-    allow_non_instance: bool = False,
+    allow_missing_func: bool = True,  # noqa: FBT001, FBT002
+    allow_non_instance: bool = False,  # noqa: FBT001, FBT002
 ) -> T:
     if hasattr(decoded_gt, "to_data_class"):
         data_class = decoded_gt.to_data_class()
@@ -47,13 +47,15 @@ def decode_to_data_class(
 class CacDecoder(PydanticTypeNameDecoder):
     TYPE_NAME_REGEX = re.compile(r".*\.cac\.gt")
 
-    def __init__(self, model_name: str, **kwargs):
+    def __init__(self, model_name: str, **kwargs: Any) -> None:
         if "type_name_regex" not in kwargs:
             kwargs["type_name_regex"] = CacDecoder.TYPE_NAME_REGEX
         super().__init__(model_name, **kwargs)
 
     def decode_to_data_class(
-        self, data: dict, allow_missing_func: bool = True
+        self,
+        data: dict,
+        allow_missing_func: bool = True,  # noqa: FBT001, FBT002
     ) -> ComponentAttributeClass:
         return decode_to_data_class(
             decoded_gt=self.decode_obj(data),
@@ -65,13 +67,15 @@ class CacDecoder(PydanticTypeNameDecoder):
 class ComponentDecoder(PydanticTypeNameDecoder):
     TYPE_NAME_REGEX = re.compile(r".*\.component\.gt")
 
-    def __init__(self, model_name: str, **kwargs):
+    def __init__(self, model_name: str, **kwargs: Any) -> None:
         if "type_name_regex" not in kwargs:
             kwargs["type_name_regex"] = ComponentDecoder.TYPE_NAME_REGEX
         super().__init__(model_name, **kwargs)
 
     def decode_to_data_class(
-        self, data: dict, allow_missing_func: bool = True
+        self,
+        data: dict,
+        allow_missing_func: bool = True,  # noqa: FBT001, FBT002
     ) -> Component:
         return decode_to_data_class(
             decoded_gt=self.decode_obj(data),

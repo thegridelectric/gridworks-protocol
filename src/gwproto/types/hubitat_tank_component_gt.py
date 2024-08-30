@@ -1,8 +1,7 @@
 import copy
 import json
 import typing
-from typing import Any
-from typing import Literal
+from typing import Any, Literal
 
 from gwproto.data_classes.component import Component
 from gwproto.data_classes.components.hubitat_tank_component import HubitatTankComponent
@@ -15,8 +14,8 @@ class HubitatTankComponentGt(ComponentGt):
     TypeName: Literal["hubitat.tank.component.gt"] = "hubitat.tank.component.gt"
     Version: Literal["000"] = "000"
 
-    def __hash__(self):
-        return hash((type(self),) + tuple(self.__dict__.values()))
+    def __hash__(self) -> int:
+        return hash((type(self), *tuple(self.__dict__.values())))
 
     @classmethod
     def from_data_class(
@@ -47,11 +46,11 @@ class HubitatTankComponentGt(ComponentGt):
 
 
 class HubitatTankComponentGt_Maker:
-    type_name: str = HubitatTankComponentGt.__fields__["TypeName"].default
+    type_name: str = HubitatTankComponentGt.model_fields["TypeName"].default
     version = "000"
     tuple: HubitatTankComponentGt
 
-    def __init__(self, component: HubitatTankComponent):
+    def __init__(self, component: HubitatTankComponent) -> None:
         self.tuple = HubitatTankComponentGt.from_data_class(component)
 
     @classmethod

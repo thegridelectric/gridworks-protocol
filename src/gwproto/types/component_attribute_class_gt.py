@@ -2,18 +2,12 @@
 
 import json
 import logging
-from typing import Any
-from typing import Dict
-from typing import Literal
-from typing import Optional
+from typing import Any, Dict, Literal, Optional
 
-from pydantic import BaseModel
-from pydantic import Field
-from pydantic import validator
+from pydantic import BaseModel, Field, field_validator
 
 from gwproto.data_classes.component_attribute_class import ComponentAttributeClass
 from gwproto.errors import SchemaError
-
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -54,7 +48,8 @@ class ComponentAttributeClassGt(BaseModel):
     TypeName: Literal["component.attribute.class.gt"] = "component.attribute.class.gt"
     Version: Literal["000"] = "000"
 
-    @validator("ComponentAttributeClassId")
+    @field_validator("ComponentAttributeClassId")
+    @classmethod
     def _check_component_attribute_class_id(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
@@ -80,15 +75,14 @@ class ComponentAttributeClassGt(BaseModel):
 
         It also applies these changes recursively to sub-types.
         """
-        d = {
+        return {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"},
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"},
                 by_alias=True,
             ).items()
             if value is not None
         }
-        return d
 
     def as_type(self) -> bytes:
         """
@@ -114,7 +108,7 @@ class ComponentAttributeClassGt(BaseModel):
         json_string = json.dumps(self.as_dict())
         return json_string.encode("utf-8")
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
@@ -126,7 +120,7 @@ class ComponentAttributeClassGt_Maker:
         self,
         component_attribute_class_id: str,
         display_name: Optional[str],
-    ):
+    ) -> None:
         self.tuple = ComponentAttributeClassGt(
             ComponentAttributeClassId=component_attribute_class_id,
             DisplayName=display_name,
@@ -177,11 +171,11 @@ class ComponentAttributeClassGt_Maker:
             ComponentAttributeClassGt
         """
         d2 = dict(d)
-        if "ComponentAttributeClassId" not in d2.keys():
+        if "ComponentAttributeClassId" not in d2:
             raise SchemaError(f"dict missing ComponentAttributeClassId: <{d2}>")
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "000":
             LOGGER.debug(
@@ -192,7 +186,7 @@ class ComponentAttributeClassGt_Maker:
 
     @classmethod
     def tuple_to_dc(cls, t: ComponentAttributeClassGt) -> ComponentAttributeClass:
-        if t.ComponentAttributeClassId in ComponentAttributeClass.by_id.keys():
+        if t.ComponentAttributeClassId in ComponentAttributeClass.by_id:
             dc = ComponentAttributeClass.by_id[t.ComponentAttributeClassId]
         else:
             dc = ComponentAttributeClass(
@@ -203,19 +197,18 @@ class ComponentAttributeClassGt_Maker:
 
     @classmethod
     def dc_to_tuple(cls, dc: ComponentAttributeClass) -> ComponentAttributeClassGt:
-        t = ComponentAttributeClassGt_Maker(
+        return ComponentAttributeClassGt_Maker(
             component_attribute_class_id=dc.component_attribute_class_id,
             display_name=dc.display_name,
         ).tuple
-        return t
 
     @classmethod
     def type_to_dc(cls, t: str) -> ComponentAttributeClass:
-        return cls.tuple_to_dc(cls.type_to_tuple(t))  # noqa
+        return cls.tuple_to_dc(cls.type_to_tuple(t))
 
     @classmethod
     def dc_to_type(cls, dc: ComponentAttributeClass) -> str:
-        return cls.dc_to_tuple(dc).as_type()  # noqa
+        return cls.dc_to_tuple(dc).as_type()
 
     @classmethod
     def dict_to_dc(cls, d: dict[Any, str]) -> ComponentAttributeClass:
@@ -243,7 +236,7 @@ def check_is_uuid_canonical_textual(v: str) -> None:
     for hex_word in x:
         try:
             int(hex_word, 16)
-        except ValueError:
+        except ValueError:  # noqa: PERF203
             raise ValueError(f"Words of <{v}> are not all hex")
     if len(x[0]) != 8:
         raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")

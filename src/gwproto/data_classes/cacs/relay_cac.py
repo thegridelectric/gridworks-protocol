@@ -1,15 +1,13 @@
 """RelayCac definition"""
 
-from typing import Dict
-from typing import Optional
+from typing import Dict, Optional
 
 from gwproto.data_classes.component_attribute_class import ComponentAttributeClass
-from gwproto.enums import MakeModel
-from gwproto.enums import TelemetryName
+from gwproto.enums import MakeModel, TelemetryName
 
 
 class RelayCac(ComponentAttributeClass):
-    by_id: Dict[str, "RelayCac"] = {}
+    by_id: Dict[str, "RelayCac"] = {}  # noqa: RUF012
 
     def __init__(
         self,
@@ -17,7 +15,7 @@ class RelayCac(ComponentAttributeClass):
         make_model: MakeModel,
         typical_response_time_ms: Optional[int],
         display_name: Optional[str] = None,
-    ):
+    ) -> None:
         super(self.__class__, self).__init__(
             component_attribute_class_id=component_attribute_class_id,
             display_name=display_name,
@@ -28,9 +26,9 @@ class RelayCac(ComponentAttributeClass):
         RelayCac.by_id[self.component_attribute_class_id] = self
         ComponentAttributeClass.by_id[self.component_attribute_class_id] = self
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"{self.make_model.value} {self.display_name}"
 
     @property
-    def telemetry_name(self):
+    def telemetry_name(self) -> TelemetryName:
         return TelemetryName.RelayState

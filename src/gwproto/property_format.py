@@ -1,16 +1,19 @@
+# ruff: noqa: ANN401
+
 import string
 import struct
-from typing import Any
-from typing import Callable
-from typing import List
+from datetime import datetime, timezone
+from typing import Any, Callable, List
 
-import pendulum
 import pydantic
 
 
 def predicate_validator(
-    field_name: str, predicate: Callable[[Any], bool], error_format: str = "", **kwargs
-) -> classmethod:  # type: ignore
+    field_name: str,
+    predicate: Callable[[Any], bool],
+    error_format: str = "",
+    **kwargs: dict[str, Any],
+) -> classmethod:
     """
     Produce a pydantic validator from a function returning a bool.
 
@@ -54,7 +57,7 @@ def predicate_validator(
             raise ValueError(err_str)
         return v
 
-    return pydantic.validator(field_name, allow_reuse=True, **kwargs)(_validator)
+    return pydantic.field_validator(field_name, **kwargs)(_validator)
 
 
 def is_hex_char(v: str) -> bool:
@@ -67,9 +70,7 @@ def is_hex_char(v: str) -> bool:
         return False
     if len(v) > 1:
         return False
-    if v not in "0123456789abcdefABCDEF":
-        return False
-    return True
+    return not v not in "0123456789abcdefABCDEF"
 
 
 def is_valid_asa_name(candidate: str) -> bool:
@@ -82,20 +83,18 @@ def is_valid_asa_name(candidate: str) -> bool:
         bool: True if a string no more than 32 cars
     """
     try:
-        l = len(candidate)
+        candidate_len = len(candidate)
     except:  # noqa
         return False
-    if l > 32:
-        return False
-    return True
+    return not candidate_len > 32
 
 
 def check_is_valid_asa_name(candidate: str) -> None:
     try:
-        l = len(candidate)
+        candidate_len = len(candidate)
     except Exception as e:
-        raise ValueError(f"Not ValidAsaName: {e} /n {candidate} ")
-    if l > 32:
+        raise ValueError(f"Not ValidAsaName: {e} /n {candidate} ") from e
+    if candidate_len > 32:
         raise ValueError(
             f"Not ValidAsaName: AsaNames must be <= 32 /n {candidate} is {len(candidate)}"
         )
@@ -104,9 +103,7 @@ def check_is_valid_asa_name(candidate: str) -> None:
 def is_64_bit_hex(candidate: str) -> bool:
     if len(candidate) != 8:
         return False
-    if not all(c in string.hexdigits for c in candidate):
-        return False
-    return True
+    return all(c in string.hexdigits for c in candidate)
 
 
 def check_is_64_bit_hex(candidate: str) -> None:
@@ -117,9 +114,7 @@ def check_is_64_bit_hex(candidate: str) -> None:
 
 
 def is_bit(candidate: int) -> bool:
-    if candidate not in {0, 1}:
-        return False
-    return True
+    return not candidate not in {0, 1}
 
 
 def check_is_bit(candidate: int) -> None:
@@ -151,9 +146,7 @@ def is_left_right_dot(candidate: str) -> bool:
     for word in x:
         if not word.isalnum():
             return False
-    if not candidate.islower():
-        return False
-    return True
+    return candidate.islower()
 
 
 def check_is_left_right_dot(candidate: str) -> None:
@@ -169,8 +162,8 @@ def check_is_left_right_dot(candidate: str) -> None:
     """
     try:
         x: List[str] = candidate.split(".")
-    except:
-        raise ValueError("Failed to seperate into words with split'.'")
+    except Exception as e:
+        raise ValueError("Failed to seperate into words with split'.'") from e
     first_word = x[0]
     first_char = first_word[0]
     if not first_char.isalpha():
@@ -203,9 +196,7 @@ def is_lru_alias_format(candidate: str) -> bool:
     for word in x:
         if not word.isalnum():
             return False
-    if not candidate.islower():
-        return False
-    return True
+    return candidate.islower()
 
 
 def is_lrh_alias_format(candidate: str) -> bool:
@@ -225,53 +216,47 @@ def is_lrh_alias_format(candidate: str) -> bool:
     for word in x:
         if not word.isalnum():
             return False
-    if not candidate.islower():
-        return False
-    return True
+    return candidate.islower()
 
 
 def is_positive_integer(candidate: int) -> bool:
     if not isinstance(candidate, int):
         return False  # type: ignore[unreachable]
-    if candidate <= 0:
-        return False
-    return True
+    return not candidate <= 0
 
 
 def check_is_positive_integer(candidate: int) -> None:
     if not isinstance(candidate, int):
-        raise ValueError("Must be an integer")
+        raise ValueError("Must be an integer")  # noqa: TRY004
     if candidate <= 0:
         raise ValueError("Must be positive integer")
 
 
 def is_reasonable_unix_time_ms(candidate: int) -> bool:
-    if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp * 1000 > candidate:  # type: ignore[attr-defined]
+    if int(datetime(2000, 1, 1, tzinfo=timezone.utc).timestamp() * 1000) > candidate:  # type: ignore[attr-defined]
         return False
-    if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp * 1000 < candidate:  # type: ignore[attr-defined]
-        return False
-    return True
+    return (
+        int(datetime(3000, 1, 1, tzinfo=timezone.utc).timestamp() * 1000) >= candidate
+    )
 
 
 def check_is_reasonable_unix_time_ms(candidate: int) -> None:
-    if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp * 1000 > candidate:  # type: ignore[attr-defined]
+    if int(datetime(2000, 1, 1, tzinfo=timezone.utc).timestamp() * 1000) > candidate:
         raise ValueError("ReasonableUnixTimeMs must be after 2000 AD")
-    if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp * 1000 < candidate:  # type: ignore[attr-defined]
+    if int(datetime(3000, 1, 1, tzinfo=timezone.utc).timestamp() * 1000) < candidate:
         raise ValueError("ReasonableUnixTimeMs must be before 3000 AD")
 
 
 def is_reasonable_unix_time_s(candidate: int) -> bool:
-    if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp > candidate:  # type: ignore[attr-defined]
+    if int(datetime(2000, 1, 1, tzinfo=timezone.utc).timestamp()) > candidate:
         return False
-    if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp < candidate:  # type: ignore[attr-defined]
-        return False
-    return True
+    return int(datetime(3000, 1, 1, tzinfo=timezone.utc).timestamp()) >= candidate
 
 
 def check_is_reasonable_unix_time_s(candidate: int) -> None:
-    if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp > candidate:  # type: ignore[attr-defined]
+    if int(datetime(2000, 1, 1, tzinfo=timezone.utc).timestamp()) > candidate:
         raise ValueError("ReasonableUnixTimeS must be after 2000 AD")
-    if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp < candidate:  # type: ignore[attr-defined]
+    if int(datetime(3000, 1, 1, tzinfo=timezone.utc).timestamp()):
         raise ValueError("ReasonableUnixTimeS must be before 3000 AD")
 
 
@@ -286,7 +271,7 @@ def is_unsigned_short(candidate: int) -> bool:
 def check_is_unsigned_short(candidate: int) -> None:
     try:
         struct.pack("H", candidate)
-    except:
+    except:  # noqa: E722
         raise ValueError("requires 0 <= number <= 65535")
 
 
@@ -301,11 +286,11 @@ def is_short_integer(candidate: int) -> bool:
 def check_is_short_integer(candidate: int) -> None:
     try:
         struct.pack("h", candidate)
-    except:
+    except:  # noqa: E722
         raise ValueError("short format requires (-32767 -1) <= number <= 32767")
 
 
-def is_uuid_canonical_textual(candidate: str) -> bool:
+def is_uuid_canonical_textual(candidate: str) -> bool:  # noqa: PLR0911
     try:
         x = candidate.split("-")
     except AttributeError:
@@ -315,7 +300,7 @@ def is_uuid_canonical_textual(candidate: str) -> bool:
     for hex_word in x:
         try:
             int(hex_word, 16)
-        except ValueError:
+        except ValueError:  # noqa: PERF203
             return False
     if len(x[0]) != 8:
         return False
@@ -325,9 +310,7 @@ def is_uuid_canonical_textual(candidate: str) -> bool:
         return False
     if len(x[3]) != 4:
         return False
-    if len(x[4]) != 12:
-        return False
-    return True
+    return len(x[4]) == 12
 
 
 def check_is_uuid_canonical_textual(candidate: str) -> None:
@@ -336,11 +319,11 @@ def check_is_uuid_canonical_textual(candidate: str) -> None:
     except AttributeError as e:
         raise ValueError(f"Failed to split on -: {e}")
     if len(x) != 5:
-        raise ValueError(f"Did not have 5 words")
+        raise ValueError("Did not have 5 words")
     for hex_word in x:
         try:
             int(hex_word, 16)
-        except ValueError:
+        except ValueError:  # noqa: PERF203
             raise ValueError("Words are not all hex")
     if len(x[0]) != 8:
         raise ValueError("Word 0  not of length 8")
@@ -361,11 +344,10 @@ def check_world_alias_matches_universe(g_node_alias: str, universe: str) -> None
     """
     check_is_left_right_dot(g_node_alias)
     world_alias = g_node_alias.split(".")[0]
-    if universe == "dev":
-        if world_alias[0] != "d":
-            raise ValueError(
-                f"World alias for dev universe must start with d. Got {world_alias}"
-            )
+    if universe == "dev" and world_alias[0] != "d":
+        raise ValueError(
+            f"World alias for dev universe must start with d. Got {world_alias}"
+        )
 
 
 def is_world_instance_name_format(candidate: str) -> bool:
@@ -383,6 +365,4 @@ def is_world_instance_name_format(candidate: str) -> bool:
         root_g_node_alias_words = words[0].split(".")
     except:  # noqa
         return False
-    if len(root_g_node_alias_words) > 1:
-        return False
-    return True
+    return not len(root_g_node_alias_words) > 1

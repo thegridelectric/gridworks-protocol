@@ -1,7 +1,6 @@
 """ResistiveHeaterComponent definition"""
 
-from typing import Dict
-from typing import Optional
+from typing import Dict, Optional
 
 from gwproto.data_classes.cacs.resistive_heater_cac import ResistiveHeaterCac
 from gwproto.data_classes.component import Component
@@ -9,9 +8,9 @@ from gwproto.enums import MakeModel
 
 
 class ResistiveHeaterComponent(Component):
-    by_id: Dict[str, "ResistiveHeaterComponent"] = {}
+    by_id: Dict[str, "ResistiveHeaterComponent"] = {}  # noqa: RUF012
 
-    def __init__(
+    def __init__(  # noqa: PLR0913, PLR0917, RUF100
         self,
         component_id: str,
         component_attribute_class_id: str,
@@ -19,7 +18,7 @@ class ResistiveHeaterComponent(Component):
         tested_max_cold_milli_ohms: Optional[int] = None,
         hw_uid: Optional[str] = None,
         display_name: Optional[str] = None,
-    ):
+    ) -> None:
         super(self.__class__, self).__init__(
             display_name=display_name,
             component_id=component_id,
@@ -39,5 +38,5 @@ class ResistiveHeaterComponent(Component):
     def make_model(self) -> MakeModel:
         return self.cac.make_model
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"{self.display_name}  ({self.cac.make_model.value})"

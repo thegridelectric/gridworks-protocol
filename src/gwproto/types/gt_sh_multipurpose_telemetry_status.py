@@ -2,19 +2,13 @@
 
 import json
 import logging
-from typing import Any
-from typing import Dict
-from typing import List
-from typing import Literal
+from datetime import datetime, timezone
+from typing import Any, Dict, List, Literal, Self
 
-from pydantic import BaseModel
-from pydantic import Field
-from pydantic import root_validator
-from pydantic import validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 from gwproto.enums import TelemetryName as EnumTelemetryName
 from gwproto.errors import SchemaError
-
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -71,7 +65,8 @@ class GtShMultipurposeTelemetryStatus(BaseModel):
     )
     Version: Literal["100"] = "100"
 
-    @validator("AboutNodeAlias")
+    @field_validator("AboutNodeAlias")
+    @classmethod
     def _check_about_node_alias(cls, v: str) -> str:
         try:
             check_is_left_right_dot(v)
@@ -81,30 +76,29 @@ class GtShMultipurposeTelemetryStatus(BaseModel):
             )
         return v
 
-    @validator("ReadTimeUnixMsList")
+    @field_validator("ReadTimeUnixMsList")
+    @classmethod
     def _check_read_time_unix_ms_list(cls, v: List[int]) -> List[int]:
         for elt in v:
             try:
                 check_is_reasonable_unix_time_ms(elt)
-            except ValueError as e:
+            except ValueError as e:  # noqa: PERF203
                 raise ValueError(
                     f"ReadTimeUnixMsList element {elt} failed ReasonableUnixTimeMs format validation: {e}"
                 )
         return v
 
-    @root_validator
-    def check_axiom_1(cls, v: dict) -> dict:
+    @model_validator(mode="after")
+    def check_axiom_1(self) -> Self:
         """
         Axiom 1: ListLengthConsistency.
         ValueList and ReadTimeUnixMsList must have the same length.
         """
-        value_list: List[int] = v.get("ValueList", None)
-        time_list: List[int] = v.get("ReadTimeUnixMsList", None)
-        if len(value_list) != len(time_list):
+        if len(self.ValueList) != len(self.ReadTimeUnixMsList):
             raise ValueError(
                 "Axiom 1: ValueList and ReadTimeUnixMsList must have the same length."
             )
-        return v
+        return self
 
     def as_dict(self) -> Dict[str, Any]:
         """
@@ -124,8 +118,8 @@ class GtShMultipurposeTelemetryStatus(BaseModel):
         """
         d = {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }
@@ -159,7 +153,7 @@ class GtShMultipurposeTelemetryStatus(BaseModel):
         json_string = json.dumps(self.as_dict())
         return json_string.encode("utf-8")
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
@@ -174,7 +168,7 @@ class GtShMultipurposeTelemetryStatus_Maker:
         telemetry_name: EnumTelemetryName,
         value_list: List[int],
         read_time_unix_ms_list: List[int],
-    ):
+    ) -> None:
         self.tuple = GtShMultipurposeTelemetryStatus(
             AboutNodeAlias=about_node_alias,
             SensorNodeAlias=sensor_node_alias,
@@ -228,21 +222,21 @@ class GtShMultipurposeTelemetryStatus_Maker:
             GtShMultipurposeTelemetryStatus
         """
         d2 = dict(d)
-        if "AboutNodeAlias" not in d2.keys():
+        if "AboutNodeAlias" not in d2:
             raise SchemaError(f"dict missing AboutNodeAlias: <{d2}>")
-        if "SensorNodeAlias" not in d2.keys():
+        if "SensorNodeAlias" not in d2:
             raise SchemaError(f"dict missing SensorNodeAlias: <{d2}>")
-        if "TelemetryNameGtEnumSymbol" not in d2.keys():
+        if "TelemetryNameGtEnumSymbol" not in d2:
             raise SchemaError(f"TelemetryNameGtEnumSymbol missing from dict <{d2}>")
         value = EnumTelemetryName.symbol_to_value(d2["TelemetryNameGtEnumSymbol"])
         d2["TelemetryName"] = EnumTelemetryName(value)
-        if "ValueList" not in d2.keys():
+        if "ValueList" not in d2:
             raise SchemaError(f"dict missing ValueList: <{d2}>")
-        if "ReadTimeUnixMsList" not in d2.keys():
+        if "ReadTimeUnixMsList" not in d2:
             raise SchemaError(f"dict missing ReadTimeUnixMsList: <{d2}>")
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "100":
             LOGGER.debug(
@@ -264,12 +258,10 @@ def check_is_left_right_dot(v: str) -> None:
     Raises:
         ValueError: if v is not LeftRightDot format
     """
-    from typing import List
-
     try:
         x: List[str] = v.split(".")
-    except:
-        raise ValueError(f"Failed to seperate <{v}> into words with split'.'")
+    except Exception as e:
+        raise ValueError(f"Failed to seperate <{v}> into words with split'.'") from e
     first_word = x[0]
     first_char = first_word[0]
     if not first_char.isalpha():
@@ -294,9 +286,7 @@ def check_is_reasonable_unix_time_ms(v: int) -> None:
     Raises:
         ValueError: if v is not ReasonableUnixTimeMs format
     """
-    import pendulum
-
-    if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp * 1000 > v:  # type: ignore[attr-defined]
+    if int(datetime(2000, 1, 1, tzinfo=timezone.utc).timestamp() * 1000) > v:
         raise ValueError(f"<{v}> must be after Jan 1 2000")
-    if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp * 1000 < v:  # type: ignore[attr-defined]
+    if int(datetime(3000, 1, 1, tzinfo=timezone.utc).timestamp() * 1000) < v:
         raise ValueError(f"<{v}> must be before Jan 1 3000")

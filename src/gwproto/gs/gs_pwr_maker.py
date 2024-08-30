@@ -1,4 +1,5 @@
 """Makes GridWorksSerial protocol gs.pwr.100 with MpAlias p"""
+
 import struct
 
 from gwproto.gs.gs_pwr import GsPwr
@@ -7,8 +8,8 @@ from gwproto.gs.gs_pwr import GsPwr
 class GsPwr_Maker:
     type_name = "p"
 
-    def __init__(self, power):
-        tpl = GsPwr(Power=power)
+    def __init__(self, power: int) -> None:
+        tpl = GsPwr(Power=power)  # noqa: ALL
         tpl.check_for_errors()
         self.tuple = tpl
 
@@ -20,6 +21,6 @@ class GsPwr_Maker:
     @classmethod
     def type_to_tuple(cls, b: bytes) -> GsPwr:
         (power,) = struct.unpack("<h", b)
-        tpl = GsPwr(Power=power)
+        tpl = GsPwr(Power=power)  # noqa: ALL
         tpl.check_for_errors()
         return tpl

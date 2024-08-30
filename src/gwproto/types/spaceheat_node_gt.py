@@ -2,20 +2,14 @@
 
 import json
 import logging
-from typing import Any
-from typing import Dict
-from typing import Literal
-from typing import Optional
+from typing import Any, Dict, Literal, Optional
 
-from pydantic import BaseModel
-from pydantic import Field
-from pydantic import validator
+from pydantic import BaseModel, Field, field_validator
 
 from gwproto.data_classes.sh_node import ShNode
 from gwproto.enums import ActorClass as EnumActorClass
 from gwproto.enums import Role as EnumRole
 from gwproto.errors import SchemaError
-
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -77,7 +71,8 @@ class SpaceheatNodeGt(BaseModel):
     TypeName: Literal["spaceheat.node.gt"] = "spaceheat.node.gt"
     Version: Literal["100"] = "100"
 
-    @validator("ShNodeId")
+    @field_validator("ShNodeId")
+    @classmethod
     def _check_sh_node_id(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
@@ -87,7 +82,8 @@ class SpaceheatNodeGt(BaseModel):
             )
         return v
 
-    @validator("Alias")
+    @field_validator("Alias")
+    @classmethod
     def _check_alias(cls, v: str) -> str:
         try:
             check_is_left_right_dot(v)
@@ -95,7 +91,8 @@ class SpaceheatNodeGt(BaseModel):
             raise ValueError(f"Alias failed LeftRightDot format validation: {e}")
         return v
 
-    @validator("ComponentId")
+    @field_validator("ComponentId")
+    @classmethod
     def _check_component_id(cls, v: Optional[str]) -> Optional[str]:
         if v is None:
             return v
@@ -107,7 +104,8 @@ class SpaceheatNodeGt(BaseModel):
             )
         return v
 
-    @validator("RatedVoltageV")
+    @field_validator("RatedVoltageV")
+    @classmethod
     def _check_rated_voltage_v(cls, v: Optional[int]) -> Optional[int]:
         if v is None:
             return v
@@ -119,7 +117,8 @@ class SpaceheatNodeGt(BaseModel):
             )
         return v
 
-    @validator("TypicalVoltageV")
+    @field_validator("TypicalVoltageV")
+    @classmethod
     def _check_typical_voltage_v(cls, v: Optional[int]) -> Optional[int]:
         if v is None:
             return v
@@ -149,8 +148,8 @@ class SpaceheatNodeGt(BaseModel):
         """
         d = {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }
@@ -184,7 +183,7 @@ class SpaceheatNodeGt(BaseModel):
         json_string = json.dumps(self.as_dict())
         return json_string.encode("utf-8")
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
@@ -192,7 +191,7 @@ class SpaceheatNodeGt_Maker:
     type_name = "spaceheat.node.gt"
     version = "100"
 
-    def __init__(
+    def __init__(  # noqa: PLR0913, PLR0917, RUF100
         self,
         sh_node_id: str,
         alias: str,
@@ -204,7 +203,7 @@ class SpaceheatNodeGt_Maker:
         rated_voltage_v: Optional[int],
         typical_voltage_v: Optional[int],
         in_power_metering: Optional[bool],
-    ):
+    ) -> None:
         self.tuple = SpaceheatNodeGt(
             ShNodeId=sh_node_id,
             Alias=alias,
@@ -263,21 +262,21 @@ class SpaceheatNodeGt_Maker:
             SpaceheatNodeGt
         """
         d2 = dict(d)
-        if "ShNodeId" not in d2.keys():
+        if "ShNodeId" not in d2:
             raise SchemaError(f"dict missing ShNodeId: <{d2}>")
-        if "Alias" not in d2.keys():
+        if "Alias" not in d2:
             raise SchemaError(f"dict missing Alias: <{d2}>")
-        if "ActorClassGtEnumSymbol" not in d2.keys():
+        if "ActorClassGtEnumSymbol" not in d2:
             raise SchemaError(f"ActorClassGtEnumSymbol missing from dict <{d2}>")
         value = EnumActorClass.symbol_to_value(d2["ActorClassGtEnumSymbol"])
         d2["ActorClass"] = EnumActorClass(value)
-        if "RoleGtEnumSymbol" not in d2.keys():
+        if "RoleGtEnumSymbol" not in d2:
             raise SchemaError(f"RoleGtEnumSymbol missing from dict <{d2}>")
         value = EnumRole.symbol_to_value(d2["RoleGtEnumSymbol"])
         d2["Role"] = EnumRole(value)
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "100":
             LOGGER.debug(
@@ -288,7 +287,7 @@ class SpaceheatNodeGt_Maker:
 
     @classmethod
     def tuple_to_dc(cls, t: SpaceheatNodeGt) -> ShNode:
-        if t.ShNodeId in ShNode.by_id.keys():
+        if t.ShNodeId in ShNode.by_id:
             dc = ShNode.by_id[t.ShNodeId]
         else:
             dc = ShNode(
@@ -307,7 +306,7 @@ class SpaceheatNodeGt_Maker:
 
     @classmethod
     def dc_to_tuple(cls, dc: ShNode) -> SpaceheatNodeGt:
-        t = SpaceheatNodeGt_Maker(
+        return SpaceheatNodeGt_Maker(
             sh_node_id=dc.sh_node_id,
             alias=dc.alias,
             actor_class=dc.actor_class,
@@ -319,15 +318,14 @@ class SpaceheatNodeGt_Maker:
             typical_voltage_v=dc.typical_voltage_v,
             in_power_metering=dc.in_power_metering,
         ).tuple
-        return t
 
     @classmethod
     def type_to_dc(cls, t: str) -> ShNode:
-        return cls.tuple_to_dc(cls.type_to_tuple(t))
+        return cls.tuple_to_dc(cls.type_to_tuple(t.encode("utf-8")))
 
     @classmethod
     def dc_to_type(cls, dc: ShNode) -> str:
-        return cls.dc_to_tuple(dc).as_type()
+        return cls.dc_to_tuple(dc).as_type().decode("utf-8")
 
     @classmethod
     def dict_to_dc(cls, d: dict[Any, str]) -> ShNode:
@@ -346,12 +344,10 @@ def check_is_left_right_dot(v: str) -> None:
     Raises:
         ValueError: if v is not LeftRightDot format
     """
-    from typing import List
-
     try:
-        x: List[str] = v.split(".")
-    except:
-        raise ValueError(f"Failed to seperate <{v}> into words with split'.'")
+        x: list[str] = v.split(".")
+    except Exception as e:
+        raise ValueError(f"Failed to seperate <{v}> into words with split'.'") from e
     first_word = x[0]
     first_char = first_word[0]
     if not first_char.isalpha():
@@ -404,7 +400,7 @@ def check_is_uuid_canonical_textual(v: str) -> None:
     for hex_word in x:
         try:
             int(hex_word, 16)
-        except ValueError:
+        except ValueError:  # noqa: PERF203
             raise ValueError(f"Words of <{v}> are not all hex")
     if len(x[0]) != 8:
         raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")

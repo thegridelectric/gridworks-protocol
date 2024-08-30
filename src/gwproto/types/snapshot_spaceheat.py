@@ -2,18 +2,15 @@
 
 import json
 import logging
-from typing import Any
-from typing import Dict
-from typing import Literal
+from typing import Any, Dict, Literal
 
-from pydantic import BaseModel
-from pydantic import Field
-from pydantic import validator
+from pydantic import BaseModel, Field, field_validator
 
 from gwproto.errors import SchemaError
-from gwproto.types.telemetry_snapshot_spaceheat import TelemetrySnapshotSpaceheat
-from gwproto.types.telemetry_snapshot_spaceheat import TelemetrySnapshotSpaceheat_Maker
-
+from gwproto.types.telemetry_snapshot_spaceheat import (
+    TelemetrySnapshotSpaceheat,
+    TelemetrySnapshotSpaceheat_Maker,
+)
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -37,7 +34,8 @@ class SnapshotSpaceheat(BaseModel):
     TypeName: Literal["snapshot.spaceheat"] = "snapshot.spaceheat"
     Version: Literal["000"] = "000"
 
-    @validator("FromGNodeAlias")
+    @field_validator("FromGNodeAlias")
+    @classmethod
     def _check_from_g_node_alias(cls, v: str) -> str:
         try:
             check_is_left_right_dot(v)
@@ -47,7 +45,8 @@ class SnapshotSpaceheat(BaseModel):
             )
         return v
 
-    @validator("FromGNodeInstanceId")
+    @field_validator("FromGNodeInstanceId")
+    @classmethod
     def _check_from_g_node_instance_id(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
@@ -75,8 +74,8 @@ class SnapshotSpaceheat(BaseModel):
         """
         d = {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }
@@ -107,7 +106,7 @@ class SnapshotSpaceheat(BaseModel):
         json_string = json.dumps(self.as_dict())
         return json_string.encode("utf-8")
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
@@ -120,7 +119,7 @@ class SnapshotSpaceheat_Maker:
         from_g_node_alias: str,
         from_g_node_instance_id: str,
         snapshot: TelemetrySnapshotSpaceheat,
-    ):
+    ) -> None:
         self.tuple = SnapshotSpaceheat(
             FromGNodeAlias=from_g_node_alias,
             FromGNodeInstanceId=from_g_node_instance_id,
@@ -172,11 +171,11 @@ class SnapshotSpaceheat_Maker:
             SnapshotSpaceheat
         """
         d2 = dict(d)
-        if "FromGNodeAlias" not in d2.keys():
+        if "FromGNodeAlias" not in d2:
             raise SchemaError(f"dict missing FromGNodeAlias: <{d2}>")
-        if "FromGNodeInstanceId" not in d2.keys():
+        if "FromGNodeInstanceId" not in d2:
             raise SchemaError(f"dict missing FromGNodeInstanceId: <{d2}>")
-        if "Snapshot" not in d2.keys():
+        if "Snapshot" not in d2:
             raise SchemaError(f"dict missing Snapshot: <{d2}>")
         if not isinstance(d2["Snapshot"], dict):
             raise SchemaError(
@@ -184,9 +183,9 @@ class SnapshotSpaceheat_Maker:
             )
         snapshot = TelemetrySnapshotSpaceheat_Maker.dict_to_tuple(d2["Snapshot"])
         d2["Snapshot"] = snapshot
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "000":
             LOGGER.debug(
@@ -208,12 +207,10 @@ def check_is_left_right_dot(v: str) -> None:
     Raises:
         ValueError: if v is not LeftRightDot format
     """
-    from typing import List
-
     try:
-        x: List[str] = v.split(".")
-    except:
-        raise ValueError(f"Failed to seperate <{v}> into words with split'.'")
+        x: list[str] = v.split(".")
+    except Exception as e:
+        raise ValueError(f"Failed to seperate <{v}> into words with split'.'") from e
     first_word = x[0]
     first_char = first_word[0]
     if not first_char.isalpha():
@@ -248,7 +245,7 @@ def check_is_uuid_canonical_textual(v: str) -> None:
     for hex_word in x:
         try:
             int(hex_word, 16)
-        except ValueError:
+        except ValueError:  # noqa: PERF203
             raise ValueError(f"Words of <{v}> are not all hex")
     if len(x[0]) != 8:
         raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")

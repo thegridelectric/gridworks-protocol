@@ -2,16 +2,12 @@
 
 import json
 import logging
-from typing import Any
-from typing import Dict
-from typing import Literal
+from datetime import datetime, timezone
+from typing import Any, Dict, Literal
 
-from pydantic import BaseModel
-from pydantic import Field
-from pydantic import validator
+from pydantic import BaseModel, Field, field_validator
 
 from gwproto.errors import SchemaError
-
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -60,7 +56,8 @@ class HeartbeatB(BaseModel):
     TypeName: Literal["heartbeat.b"] = "heartbeat.b"
     Version: Literal["001"] = "001"
 
-    @validator("FromGNodeAlias")
+    @field_validator("FromGNodeAlias")
+    @classmethod
     def _check_from_g_node_alias(cls, v: str) -> str:
         try:
             check_is_left_right_dot(v)
@@ -70,7 +67,8 @@ class HeartbeatB(BaseModel):
             )
         return v
 
-    @validator("FromGNodeInstanceId")
+    @field_validator("FromGNodeInstanceId")
+    @classmethod
     def _check_from_g_node_instance_id(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
@@ -80,7 +78,8 @@ class HeartbeatB(BaseModel):
             )
         return v
 
-    @validator("MyHex")
+    @field_validator("MyHex")
+    @classmethod
     def _check_my_hex(cls, v: str) -> str:
         try:
             check_is_hex_char(v)
@@ -88,15 +87,19 @@ class HeartbeatB(BaseModel):
             raise ValueError(f"MyHex failed HexChar format validation: {e}")
         return v
 
-    @validator("YourLastHex")
+    @field_validator("YourLastHex")
+    @classmethod
     def _check_your_last_hex(cls, v: str) -> str:
         try:
             check_is_hex_char(v)
         except ValueError as e:
-            raise ValueError(f"YourLastHex failed HexChar format validation: {e}")
+            raise ValueError(
+                f"YourLastHex failed HexChar format validation: {e}"
+            ) from e
         return v
 
-    @validator("LastReceivedTimeUnixMs")
+    @field_validator("LastReceivedTimeUnixMs")
+    @classmethod
     def _check_last_received_time_unix_ms(cls, v: int) -> int:
         try:
             check_is_reasonable_unix_time_ms(v)
@@ -106,7 +109,8 @@ class HeartbeatB(BaseModel):
             )
         return v
 
-    @validator("SendTimeUnixMs")
+    @field_validator("SendTimeUnixMs")
+    @classmethod
     def _check_send_time_unix_ms(cls, v: int) -> int:
         try:
             check_is_reasonable_unix_time_ms(v)
@@ -132,14 +136,13 @@ class HeartbeatB(BaseModel):
 
         It also applies these changes recursively to sub-types.
         """
-        d = {
+        return {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }
-        return d
 
     def as_type(self) -> bytes:
         """
@@ -165,7 +168,7 @@ class HeartbeatB(BaseModel):
         json_string = json.dumps(self.as_dict())
         return json_string.encode("utf-8")
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
@@ -173,7 +176,7 @@ class HeartbeatB_Maker:
     type_name = "heartbeat.b"
     version = "001"
 
-    def __init__(
+    def __init__(  # noqa: PLR0913, PLR0917, RUF100
         self,
         from_g_node_alias: str,
         from_g_node_instance_id: str,
@@ -181,8 +184,8 @@ class HeartbeatB_Maker:
         your_last_hex: str,
         last_received_time_unix_ms: int,
         send_time_unix_ms: int,
-        starting_over: bool,
-    ):
+        starting_over: bool,  # noqa: FBT001
+    ) -> None:
         self.tuple = HeartbeatB(
             FromGNodeAlias=from_g_node_alias,
             FromGNodeInstanceId=from_g_node_instance_id,
@@ -214,7 +217,7 @@ class HeartbeatB_Maker:
         return cls.dict_to_tuple(d)
 
     @classmethod
-    def dict_to_tuple(cls, d: dict[str, Any]) -> HeartbeatB:
+    def dict_to_tuple(cls, d: dict[str, Any]) -> HeartbeatB:  # noqa: C901
         """
         Deserialize a dictionary representation of a heartbeat.b.001 message object
         into a HeartbeatB python object for internal use.
@@ -238,23 +241,23 @@ class HeartbeatB_Maker:
             HeartbeatB
         """
         d2 = dict(d)
-        if "FromGNodeAlias" not in d2.keys():
+        if "FromGNodeAlias" not in d2:
             raise SchemaError(f"dict missing FromGNodeAlias: <{d2}>")
-        if "FromGNodeInstanceId" not in d2.keys():
+        if "FromGNodeInstanceId" not in d2:
             raise SchemaError(f"dict missing FromGNodeInstanceId: <{d2}>")
-        if "MyHex" not in d2.keys():
+        if "MyHex" not in d2:
             raise SchemaError(f"dict missing MyHex: <{d2}>")
-        if "YourLastHex" not in d2.keys():
+        if "YourLastHex" not in d2:
             raise SchemaError(f"dict missing YourLastHex: <{d2}>")
-        if "LastReceivedTimeUnixMs" not in d2.keys():
+        if "LastReceivedTimeUnixMs" not in d2:
             raise SchemaError(f"dict missing LastReceivedTimeUnixMs: <{d2}>")
-        if "SendTimeUnixMs" not in d2.keys():
+        if "SendTimeUnixMs" not in d2:
             raise SchemaError(f"dict missing SendTimeUnixMs: <{d2}>")
-        if "StartingOver" not in d2.keys():
+        if "StartingOver" not in d2:
             raise SchemaError(f"dict missing StartingOver: <{d2}>")
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "001":
             LOGGER.debug(
@@ -276,7 +279,7 @@ def check_is_hex_char(v: str) -> None:
         ValueError: if v is not HexChar format
     """
     if not isinstance(v, str):
-        raise ValueError(f"<{v}> must be a hex char, but not even a string")
+        raise ValueError(f"<{v}> must be a hex char, but not even a string")  # noqa: TRY004
     if len(v) > 1:
         raise ValueError(f"<{v}> must be a hex char, but not of len 1")
     if v not in "0123456789abcdefABCDEF":
@@ -295,12 +298,10 @@ def check_is_left_right_dot(v: str) -> None:
     Raises:
         ValueError: if v is not LeftRightDot format
     """
-    from typing import List
-
     try:
-        x: List[str] = v.split(".")
-    except:
-        raise ValueError(f"Failed to seperate <{v}> into words with split'.'")
+        x: list[str] = v.split(".")
+    except Exception as e:
+        raise ValueError(f"Failed to seperate <{v}> into words with split'.'") from e
     first_word = x[0]
     first_char = first_word[0]
     if not first_char.isalpha():
@@ -325,11 +326,9 @@ def check_is_reasonable_unix_time_ms(v: int) -> None:
     Raises:
         ValueError: if v is not ReasonableUnixTimeMs format
     """
-    import pendulum
-
-    if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp * 1000 > v:  # type: ignore[attr-defined]
+    if int(datetime(2000, 1, 1, tzinfo=timezone.utc).timestamp() * 1000) > v:
         raise ValueError(f"<{v}> must be after Jan 1 2000")
-    if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp * 1000 < v:  # type: ignore[attr-defined]
+    if int(datetime(3000, 1, 1, tzinfo=timezone.utc).timestamp() * 1000) < v:
         raise ValueError(f"<{v}> must be before Jan 1 3000")
 
 
@@ -354,7 +353,7 @@ def check_is_uuid_canonical_textual(v: str) -> None:
     for hex_word in x:
         try:
             int(hex_word, 16)
-        except ValueError:
+        except ValueError:  # noqa: PERF203
             raise ValueError(f"Words of <{v}> are not all hex")
     if len(x[0]) != 8:
         raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")

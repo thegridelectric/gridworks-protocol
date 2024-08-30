@@ -1,7 +1,7 @@
 from enum import auto
 from typing import List
 
-from fastapi_utils.enums import StrEnum
+from gwproto.enums.better_str_enum import BetterStrEnum as StrEnum
 
 
 class LocalCommInterface(StrEnum):
@@ -49,7 +49,7 @@ class LocalCommInterface(StrEnum):
         """
         Returns enum choices
         """
-        return [elt.value for elt in cls]
+        return [elt.value for elt in cls]  # noqa: ALL
 
     @classmethod
     def version(cls, value: str) -> str:
@@ -69,8 +69,8 @@ class LocalCommInterface(StrEnum):
             str: The earliest version of the enum containing value.
         """
         if not isinstance(value, str):
-            raise ValueError(f"This method applies to strings, not enums")
-        if value not in value_to_version.keys():
+            raise ValueError("This method applies to strings, not enums")  # noqa: TRY004
+        if value not in value_to_version:
             raise ValueError(f"Unknown enum value: {value}")
         return value_to_version[value]
 
@@ -101,8 +101,8 @@ class LocalCommInterface(StrEnum):
             recognized - which could happen if the actor making the symbol is using
             a later version of this enum, returns the default value of "Unknown".
         """
-        if symbol not in symbol_to_value.keys():
-            return cls.default().value
+        if symbol not in symbol_to_value:
+            return str(cls.default().value)
         return symbol_to_value[symbol]
 
     @classmethod
@@ -119,8 +119,8 @@ class LocalCommInterface(StrEnum):
             of this enum than the actor decoding the message, returns the default
             symbol of "00000000".
         """
-        if value not in value_to_symbol.keys():
-            return value_to_symbol[cls.default().value]
+        if value not in value_to_symbol:
+            return value_to_symbol[str(cls.default().value)]
         return value_to_symbol[value]
 
     @classmethod

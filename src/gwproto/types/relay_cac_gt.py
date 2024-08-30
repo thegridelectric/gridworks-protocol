@@ -2,19 +2,13 @@
 
 import json
 import logging
-from typing import Any
-from typing import Dict
-from typing import Literal
-from typing import Optional
+from typing import Any, Dict, Literal, Optional
 
-from pydantic import BaseModel
-from pydantic import Field
-from pydantic import validator
+from pydantic import BaseModel, Field, field_validator
 
 from gwproto.data_classes.cacs.relay_cac import RelayCac
 from gwproto.enums import MakeModel as EnumMakeModel
 from gwproto.errors import SchemaError
-
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "
@@ -53,7 +47,8 @@ class RelayCacGt(BaseModel):
     TypeName: Literal["relay.cac.gt"] = "relay.cac.gt"
     Version: Literal["000"] = "000"
 
-    @validator("ComponentAttributeClassId")
+    @field_validator("ComponentAttributeClassId")
+    @classmethod
     def _check_component_attribute_class_id(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
@@ -81,8 +76,8 @@ class RelayCacGt(BaseModel):
         """
         d = {
             key: value
-            for key, value in self.dict(
-                include=self.__fields_set__ | {"TypeName", "Version"}
+            for key, value in self.model_dump(
+                include=self.model_fields_set | {"TypeName", "Version"}
             ).items()
             if value is not None
         }
@@ -114,7 +109,7 @@ class RelayCacGt(BaseModel):
         json_string = json.dumps(self.as_dict())
         return json_string.encode("utf-8")
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
@@ -128,7 +123,7 @@ class RelayCacGt_Maker:
         make_model: EnumMakeModel,
         display_name: Optional[str],
         typical_response_time_ms: int,
-    ):
+    ) -> None:
         self.tuple = RelayCacGt(
             ComponentAttributeClassId=component_attribute_class_id,
             MakeModel=make_model,
@@ -181,17 +176,17 @@ class RelayCacGt_Maker:
             RelayCacGt
         """
         d2 = dict(d)
-        if "ComponentAttributeClassId" not in d2.keys():
+        if "ComponentAttributeClassId" not in d2:
             raise SchemaError(f"dict missing ComponentAttributeClassId: <{d2}>")
-        if "MakeModelGtEnumSymbol" not in d2.keys():
+        if "MakeModelGtEnumSymbol" not in d2:
             raise SchemaError(f"MakeModelGtEnumSymbol missing from dict <{d2}>")
         value = EnumMakeModel.symbol_to_value(d2["MakeModelGtEnumSymbol"])
         d2["MakeModel"] = EnumMakeModel(value)
-        if "TypicalResponseTimeMs" not in d2.keys():
+        if "TypicalResponseTimeMs" not in d2:
             raise SchemaError(f"dict missing TypicalResponseTimeMs: <{d2}>")
-        if "TypeName" not in d2.keys():
+        if "TypeName" not in d2:
             raise SchemaError(f"TypeName missing from dict <{d2}>")
-        if "Version" not in d2.keys():
+        if "Version" not in d2:
             raise SchemaError(f"Version missing from dict <{d2}>")
         if d2["Version"] != "000":
             LOGGER.debug(
@@ -202,7 +197,7 @@ class RelayCacGt_Maker:
 
     @classmethod
     def tuple_to_dc(cls, t: RelayCacGt) -> RelayCac:
-        if t.ComponentAttributeClassId in RelayCac.by_id.keys():
+        if t.ComponentAttributeClassId in RelayCac.by_id:
             dc = RelayCac.by_id[t.ComponentAttributeClassId]
         else:
             dc = RelayCac(
@@ -215,13 +210,12 @@ class RelayCacGt_Maker:
 
     @classmethod
     def dc_to_tuple(cls, dc: RelayCac) -> RelayCacGt:
-        t = RelayCacGt_Maker(
+        return RelayCacGt_Maker(
             component_attribute_class_id=dc.component_attribute_class_id,
             make_model=dc.make_model,
             display_name=dc.display_name,
             typical_response_time_ms=dc.typical_response_time_ms,
         ).tuple
-        return t
 
     @classmethod
     def type_to_dc(cls, t: str) -> RelayCac:
@@ -257,7 +251,7 @@ def check_is_uuid_canonical_textual(v: str) -> None:
     for hex_word in x:
         try:
             int(hex_word, 16)
-        except ValueError:
+        except ValueError:  # noqa: PERF203
             raise ValueError(f"Words of <{v}> are not all hex")
     if len(x[0]) != 8:
         raise ValueError(f"<{v}> word lengths not 8-4-4-4-12")

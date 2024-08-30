@@ -1,37 +1,30 @@
 from gwproto.data_classes.component import Component
 from gwproto.data_classes.component_attribute_class import ComponentAttributeClass
-from gwproto.data_classes.components.electric_meter_component import ElectricMeterCac
 from gwproto.data_classes.components.electric_meter_component import (
+    ElectricMeterCac,
     ElectricMeterComponent,
 )
 from gwproto.data_classes.components.multipurpose_sensor_component import (
     MultipurposeSensorCac,
-)
-from gwproto.data_classes.components.multipurpose_sensor_component import (
     MultipurposeSensorComponent,
 )
-from gwproto.data_classes.components.pipe_flow_sensor_component import PipeFlowSensorCac
 from gwproto.data_classes.components.pipe_flow_sensor_component import (
+    PipeFlowSensorCac,
     PipeFlowSensorComponent,
 )
-from gwproto.data_classes.components.relay_component import RelayCac
-from gwproto.data_classes.components.relay_component import RelayComponent
+from gwproto.data_classes.components.relay_component import RelayCac, RelayComponent
 from gwproto.data_classes.components.resistive_heater_component import (
     ResistiveHeaterCac,
-)
-from gwproto.data_classes.components.resistive_heater_component import (
     ResistiveHeaterComponent,
 )
 from gwproto.data_classes.components.simple_temp_sensor_component import (
     SimpleTempSensorCac,
-)
-from gwproto.data_classes.components.simple_temp_sensor_component import (
     SimpleTempSensorComponent,
 )
 from gwproto.data_classes.sh_node import ShNode
 
 
-def flush_components():
+def flush_components() -> None:
     RelayComponent.by_id = {}
     ElectricMeterComponent.by_id = {}
     PipeFlowSensorComponent.by_id = {}
@@ -41,7 +34,7 @@ def flush_components():
     Component.by_id = {}
 
 
-def flush_cacs():
+def flush_cacs() -> None:
     RelayCac.by_id = {}
     ElectricMeterCac.by_id = {}
     MultipurposeSensorCac.by_id = {}
@@ -51,11 +44,11 @@ def flush_cacs():
     ComponentAttributeClass.by_id = {}
 
 
-def flush_spaceheat_nodes():
+def flush_spaceheat_nodes() -> None:
     ShNode.by_id = {}
 
 
-def flush_all():
+def flush_all() -> None:
     flush_components()
     flush_cacs()
     flush_spaceheat_nodes()

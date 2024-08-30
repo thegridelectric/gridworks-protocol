@@ -1,5 +1,5 @@
-from abc import ABC
-from abc import abstractmethod
+from abc import ABC, abstractmethod
+from typing import NoReturn
 
 from gwproto.data_classes.component import Component
 from gwproto.data_classes.sh_node import ShNode
@@ -12,5 +12,5 @@ class ComponentResolver(ABC):
         node_name: str,
         nodes: dict[str, ShNode],
         components: dict[str, Component],
-    ):
+    ) -> NoReturn:
         raise NotImplementedError

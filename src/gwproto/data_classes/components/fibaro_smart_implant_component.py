@@ -10,7 +10,7 @@ class FibaroSmartImplantComponent(Component):
         component_attribute_class_id: str,
         display_name: Optional[str] = None,
         hw_uid: Optional[str] = None,
-    ):
+    ) -> None:
         super().__init__(
             component_id=component_id,
             component_attribute_class_id=component_attribute_class_id,

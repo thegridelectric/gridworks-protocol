@@ -1,15 +1,13 @@
 """Test load_house module"""
 
-# from actors.config import ScadaSettings
 from gwproto.data_classes.hardware_layout import HardwareLayout
 from gwproto.data_classes.sh_node import ShNode
-from gwproto.types import ElectricMeterCacGt_Maker
-from gwproto.types import SpaceheatNodeGt_Maker
+from gwproto.types import ElectricMeterCacGt_Maker, SpaceheatNodeGt_Maker
 from gwproto.types.electric_meter_component_gt import ElectricMeterComponentGt_Maker
 from tests.utils import flush_all
 
 
-def test_flush_and_load_house():
+def test_flush_and_load_house() -> None:
     """Verify that flush_house() successfully removes all dictionary data from relevant dataclasses, and
     load_house() successfully loads test objects"""
     flush_all()
@@ -53,47 +51,8 @@ def test_flush_and_load_house():
     assert ShNode.by_id["c9456f5b-5a39-4a48-bb91-742a9fdc461d"].alias == "a.m"
     flush_all()
 
-    # layout = HardwareLayout.load(ScadaSettings().paths.hardware_layout)
-    # assert layout.node("a.m").sh_node_id == "0dd8a803-4724-4f49-b845-14ff57bdb3e6"
-    # for node in layout.nodes.values():
-    #     layout.parent_node(node.alias)
-    # all_nodes = list(layout.nodes.values())
-    # assert len(all_nodes) == 26
-    # aliases = list(layout.nodes.keys())
-    # for i in range(len(aliases)):
-    #     alias = aliases[i]
-    #     assert layout.node(alias) is not None
-    # nodes_w_components = list(
-    #     filter(lambda x: x.component_id is not None, layout.nodes.values())
-    # )
-    # assert len(nodes_w_components) == 20
-    # actor_nodes_w_components = list(filter(lambda x: x.has_actor, nodes_w_components))
-    # assert len(actor_nodes_w_components) == 13
-    # tank_water_temp_sensor_nodes = list(
-    #     filter(lambda x: x.role == Role.TankWaterTempSensor, all_nodes)
-    # )
-    # assert len(tank_water_temp_sensor_nodes) == 5
-    # for node in tank_water_temp_sensor_nodes:
-    #     assert node.reporting_sample_period_s is not None
-    #
-    # flush_all()
-    # assert RelayComponent.by_id == {}
-    # assert ElectricMeterComponent.by_id == {}
-    # assert PipeFlowSensorComponent.by_id == {}
-    # assert ResistiveHeaterComponent.by_id == {}
-    # assert SimpleTempSensorComponent.by_id == {}
-    # assert Component.by_id == {}
-    #
-    # assert RelayCac.by_id == {}
-    # assert ElectricMeterCac.by_id == {}
-    # assert PipeFlowSensorCac.by_id == {}
-    # assert ResistiveHeaterCac.by_id == {}
-    # assert SimpleTempSensorCac.by_id == {}
-    # assert ComponentAttributeClass.by_id == {}
-    # assert ShNode.by_id == {}
 
-
-def test_load_real_house():
+def test_load_real_house() -> None:
     layout = HardwareLayout(
         {
             "MyAtomicTNodeGNode": {

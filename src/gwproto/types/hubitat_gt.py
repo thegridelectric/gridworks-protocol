@@ -1,12 +1,10 @@
 from typing import Optional
 
 import yarl
-from pydantic import BaseModel
-from pydantic import Extra
+from pydantic import BaseModel, ConfigDict
 
 from gwproto.property_format import predicate_validator
-from gwproto.types.rest_poller_gt import URLArgs
-from gwproto.types.rest_poller_gt import URLConfig
+from gwproto.types.rest_poller_gt import URLArgs, URLConfig
 from gwproto.utils import has_mac_address_format
 
 
@@ -16,10 +14,7 @@ class HubitatGt(BaseModel):
     AccessToken: str
     MacAddress: str
     WebListenEnabled: bool = True
-
-    class Config:
-        extra = Extra.allow
-        allow_population_by_field_name = True
+    model_config = ConfigDict(extra="allow", populate_by_name=True)
 
     _is_mac_address = predicate_validator("MacAddress", has_mac_address_format)
 
@@ -57,11 +52,11 @@ class HubitatGt(BaseModel):
         return config
 
     def url_configs(self) -> dict[str, URLConfig]:
-        return dict(
-            base=self.url_config(),
-            maker_api=self.maker_api_url_config(),
-            devices=self.devices_url_config(),
-        )
+        return {
+            "base": self.url_config(),
+            "maker_api": self.maker_api_url_config(),
+            "devices": self.devices_url_config(),
+        }
 
     def urls(self) -> dict[str, Optional[yarl.URL]]:
         return {

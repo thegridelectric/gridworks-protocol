@@ -2,9 +2,9 @@
 
 import string
 import struct
+from datetime import datetime, timezone
 from typing import Any, Callable, List
 
-import pendulum
 import pydantic
 
 
@@ -233,28 +233,30 @@ def check_is_positive_integer(candidate: int) -> None:
 
 
 def is_reasonable_unix_time_ms(candidate: int) -> bool:
-    if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp * 1000 > candidate:  # type: ignore[attr-defined]
+    if int(datetime(2000, 1, 1, tzinfo=timezone.utc).timestamp() * 1000) > candidate:  # type: ignore[attr-defined]
         return False
-    return pendulum.parse("3000-01-01T00:00:00Z").int_timestamp * 1000 >= candidate
+    return (
+        int(datetime(3000, 1, 1, tzinfo=timezone.utc).timestamp() * 1000) >= candidate
+    )
 
 
 def check_is_reasonable_unix_time_ms(candidate: int) -> None:
-    if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp * 1000 > candidate:  # type: ignore[attr-defined]
+    if int(datetime(2000, 1, 1, tzinfo=timezone.utc).timestamp() * 1000) > candidate:
         raise ValueError("ReasonableUnixTimeMs must be after 2000 AD")
-    if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp * 1000 < candidate:  # type: ignore[attr-defined]
+    if int(datetime(3000, 1, 1, tzinfo=timezone.utc).timestamp() * 1000) < candidate:
         raise ValueError("ReasonableUnixTimeMs must be before 3000 AD")
 
 
 def is_reasonable_unix_time_s(candidate: int) -> bool:
-    if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp > candidate:  # type: ignore[attr-defined]
+    if int(datetime(2000, 1, 1, tzinfo=timezone.utc).timestamp()) > candidate:
         return False
-    return pendulum.parse("3000-01-01T00:00:00Z").int_timestamp >= candidate  # type: ignore[attr-defined]
+    return int(datetime(3000, 1, 1, tzinfo=timezone.utc).timestamp()) >= candidate
 
 
 def check_is_reasonable_unix_time_s(candidate: int) -> None:
-    if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp > candidate:  # type: ignore[attr-defined]
+    if int(datetime(2000, 1, 1, tzinfo=timezone.utc).timestamp()) > candidate:
         raise ValueError("ReasonableUnixTimeS must be after 2000 AD")
-    if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp < candidate:  # type: ignore[attr-defined]
+    if int(datetime(3000, 1, 1, tzinfo=timezone.utc).timestamp()):
         raise ValueError("ReasonableUnixTimeS must be before 3000 AD")
 
 

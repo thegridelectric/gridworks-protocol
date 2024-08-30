@@ -2,9 +2,9 @@
 
 import json
 import logging
+from datetime import datetime, timezone
 from typing import Any, Dict, Literal
 
-import pendulum
 from pydantic import BaseModel, Field, field_validator
 
 from gwproto.errors import SchemaError
@@ -317,9 +317,9 @@ def check_is_reasonable_unix_time_ms(v: int) -> None:
     Raises:
         ValueError: if v is not ReasonableUnixTimeMs format
     """
-    if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp * 1000 > v:  # type: ignore[attr-defined]
+    if int(datetime(2000, 1, 1, tzinfo=timezone.utc).timestamp() * 1000) > v:
         raise ValueError(f"<{v}> must be after Jan 1 2000")
-    if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp * 1000 < v:  # type: ignore[attr-defined]
+    if int(datetime(3000, 1, 1, tzinfo=timezone.utc).timestamp() * 1000) < v:
         raise ValueError(f"<{v}> must be before Jan 1 3000")
 
 

@@ -11,7 +11,7 @@ from gwproto.types.electric_meter_component_gt import (
 )
 
 
-def test_electric_meter_component_gt_generated() -> None:  # noqa: PLR0915
+def test_electric_meter_component_gt_generated() -> None:
     d = {
         "ComponentId": "2dfb0cb6-6015-4273-b02b-bd446cc785d7",
         "ComponentAttributeClassId": "204832ef-0c88-408b-9640-264d2ee74914",

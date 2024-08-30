@@ -11,7 +11,7 @@ from gwproto.types.multipurpose_sensor_component_gt import (
 )
 
 
-def test_multipurpose_sensor_component_gt_generated() -> None:  # noqa: PLR0915
+def test_multipurpose_sensor_component_gt_generated() -> None:
     d = {
         "ComponentId": "2ca9e65a-5e85-4eaa-811b-901e940f8d09",
         "ComponentAttributeClassId": "432073b8-4d2b-4e36-9229-73893f33f846",

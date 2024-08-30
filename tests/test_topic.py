@@ -11,7 +11,7 @@ def test_mqtt_topic_encode() -> None:
 
 
 def test_mqtt_topic_decode() -> None:
-    with pytest.raises(ValueError):  # noqa: PT011
+    with pytest.raises(ValueError):
         MQTTTopic.decode("")
 
     decoded = MQTTTopic.decode("foo/bar/baz")

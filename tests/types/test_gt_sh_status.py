@@ -9,7 +9,7 @@ from gwproto.errors import SchemaError
 from gwproto.types import GtShStatus_Maker as Maker
 
 
-def test_gt_sh_status_generated() -> None:  # noqa: PLR0915
+def test_gt_sh_status_generated() -> None:
     d = {
         "FromGNodeAlias": "dwtest.isone.ct.newhaven.orange1.ta.scada",
         "FromGNodeId": "0384ef21-648b-4455-b917-58a1172d7fc1",

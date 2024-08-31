@@ -1,8 +1,5 @@
-from enum import auto
 from enum import StrEnum
-from typing import Any
-from typing import Optional
-from typing import Self
+from typing import Any, Optional, Self
 
 
 class BetterStrEnum(StrEnum):
@@ -22,7 +19,6 @@ class BetterStrEnum(StrEnum):
     @classmethod
     def default(cls) -> Optional[Self]:
         return None
-
 
     @classmethod
     def _missing_(cls, value: str) -> Self:

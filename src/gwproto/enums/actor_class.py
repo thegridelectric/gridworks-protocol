@@ -83,13 +83,6 @@ class ActorClass(StrEnum):
         return cls.NoActor
 
     @classmethod
-    def values(cls) -> List[str]:
-        """
-        Returns enum choices
-        """
-        return [elt.value for elt in cls]  # noqa
-
-    @classmethod
     def version(cls, value: str) -> str:
         """
         Returns the version of an enum value.

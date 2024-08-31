@@ -67,13 +67,6 @@ class TelemetryName(StrEnum):
         return cls.Unknown
 
     @classmethod
-    def values(cls) -> List[str]:
-        """
-        Returns enum choices
-        """
-        return [elt.value for elt in cls]  # noqa: ALL
-
-    @classmethod
     def version(cls, value: str) -> str:
         """
         Returns the version of an enum value.

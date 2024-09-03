@@ -1,10 +1,10 @@
 from enum import auto
 from typing import List
 
-from gwproto.enums.better_str_enum import BetterStrEnum as StrEnum
+from gwproto.enums.symbolized import SymbolizedEnum
 
 
-class Unit(StrEnum):
+class Unit(SymbolizedEnum):
     """
     Specifies the physical unit of sensed data reported by SCADA
 

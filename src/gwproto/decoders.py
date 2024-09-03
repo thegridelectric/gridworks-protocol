@@ -296,7 +296,7 @@ def pydantic_named_types(  # noqa: C901
     if excluded_type_names is None:
         excluded_type_names = DEFAULT_EXCLUDED_TYPE_NAMES
     if isinstance(module_names, str):
-        module_names = [module_names]
+        module_names = [module_names] if module_names else []
     if unimported := [
         module_name for module_name in module_names if module_name not in sys.modules
     ]:

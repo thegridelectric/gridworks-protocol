@@ -1,10 +1,10 @@
 from enum import auto
 from typing import List
 
-from gwproto.enums.better_str_enum import BetterStrEnum as StrEnum
+from gwproto.enums.symbolized import SymbolizedEnum
 
 
-class Role(StrEnum):
+class Role(SymbolizedEnum):
     """
     Categorizes SpaceheatNodes by their function within the heating system
 

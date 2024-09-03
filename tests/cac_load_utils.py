@@ -1,3 +1,4 @@
+import json
 from dataclasses import dataclass, field
 from typing import Optional, Type
 
@@ -12,7 +13,7 @@ from gwproto.types import ComponentAttributeClassGt
 class CacCase:
     tag: str
     src_cac: ComponentAttributeClassGt | dict
-    exp_cac_type: Optional[Type] = ComponentAttributeClassGt
+    exp_cac_type: Optional[Type[ComponentAttributeClassGt]] = ComponentAttributeClassGt
     exp_cac: Optional[ComponentAttributeClassGt | dict] = None
     exp_exceptions: list[Type[Exception]] = field(default_factory=list)
 
@@ -62,10 +63,11 @@ def _decode_cac(case: CacCase, decoder: Optional[CacDecoder]) -> CacLoadResult:
     if decoder is None:
         decoder = default_cac_decoder
     cac_dict = (
-        case.src_cac.model_dump()
+        json.loads(case.src_cac.model_dump_json())
         if isinstance(case.src_cac, ComponentAttributeClassGt)
         else case.src_cac
     )
+    case.exp_cac_type.model_validate(cac_dict)
     cac_id = cac_dict["ComponentAttributeClassId"]
     try:
         loaded_cac = load_cacs(

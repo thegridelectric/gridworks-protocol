@@ -37,7 +37,7 @@ class ComponentAttributeClassGt(BaseModel):
 
     @model_serializer(when_used="json", mode="wrap")
     def symbolize(self, handler, info) -> Dict[str, Any]:  # noqa: ANN001
-        d = handler(self, info).__dict__
+        d = handler(self, info)
         if symbolizing():
             symbolize(d, enum_class=MakeModel)
         return d

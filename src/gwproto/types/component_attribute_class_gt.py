@@ -35,10 +35,9 @@ class ComponentAttributeClassGt(BaseModel):
             )
         return data
 
-    @model_serializer(when_used="json")
-    def symbolize(self) -> Dict[str, Any]:
-        # DRAWBACK: we lose parameters passed to model_dump_json
-        d = self.model_dump()
+    @model_serializer(when_used="json", mode="wrap")
+    def symbolize(self, handler, info) -> Dict[str, Any]:  # noqa: ANN001
+        d = handler(self, info).__dict__
         if symbolizing():
             symbolize(d, enum_class=MakeModel)
         return d

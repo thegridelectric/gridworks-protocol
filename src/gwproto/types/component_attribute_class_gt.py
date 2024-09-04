@@ -1,8 +1,14 @@
 """Type component.attribute.class.gt, version 000"""
 
-from typing import Any, Dict, Literal, Optional
+from typing import Any, Callable, Dict, Literal, Optional
 
-from pydantic import BaseModel, ConfigDict, model_serializer, model_validator
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    SerializationInfo,
+    model_serializer,
+    model_validator,
+)
 
 from gwproto.enums import MakeModel
 from gwproto.enums.symbolized import desymbolize, symbolize, symbolizing
@@ -26,7 +32,7 @@ class ComponentAttributeClassGt(BaseModel):
 
     @model_validator(mode="before")
     @classmethod
-    def desymbolize(cls, data: Any) -> Any:  # noqa: ANN401
+    def desymbolize(cls, data: Any) -> Any:
         if symbolizing():
             desymbolize(
                 data,
@@ -36,7 +42,7 @@ class ComponentAttributeClassGt(BaseModel):
         return data
 
     @model_serializer(when_used="json", mode="wrap")
-    def symbolize(self, handler, info) -> Dict[str, Any]:  # noqa: ANN001
+    def symbolize(self, handler: Callable, info: SerializationInfo) -> Dict[str, Any]:  # noqa: ANN001
         d = handler(self, info)
         if symbolizing():
             symbolize(d, enum_class=MakeModel)

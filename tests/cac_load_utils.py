@@ -1,11 +1,14 @@
 import json
 from dataclasses import dataclass, field
-from typing import Optional, Type
+from typing import Any, Optional, Type
+
+from pydantic import BaseModel
 
 from gwproto import CacDecoder, default_cac_decoder
 from gwproto.data_classes.hardware_layout import (
     load_cacs,
 )
+from gwproto.enums.symbolized import SYMBOLIZE_ENV_VAR
 from gwproto.types import ComponentAttributeClassGt
 
 
@@ -13,7 +16,7 @@ from gwproto.types import ComponentAttributeClassGt
 class CacCase:
     tag: str
     src_cac: ComponentAttributeClassGt | dict
-    exp_cac_type: Optional[Type[ComponentAttributeClassGt]] = ComponentAttributeClassGt
+    exp_cac_type: Type[ComponentAttributeClassGt] = ComponentAttributeClassGt
     exp_cac: Optional[ComponentAttributeClassGt | dict] = None
     exp_exceptions: list[Type[Exception]] = field(default_factory=list)
 
@@ -59,15 +62,16 @@ class CacLoadResult:
     exception: Exception | None
 
 
-def _decode_cac(case: CacCase, decoder: Optional[CacDecoder]) -> CacLoadResult:
+def _encode_decode_cac(case: CacCase, decoder: Optional[CacDecoder]) -> CacLoadResult:
     if decoder is None:
         decoder = default_cac_decoder
-    cac_dict = (
-        json.loads(case.src_cac.model_dump_json())
-        if isinstance(case.src_cac, ComponentAttributeClassGt)
-        else case.src_cac
-    )
-    case.exp_cac_type.model_validate(cac_dict)
+    # Force call to model_dump_json() by encoding dict as model to ensure
+    # serialization is tested.
+    if isinstance(case.src_cac, ComponentAttributeClassGt):
+        cac = case.src_cac
+    else:
+        cac = case.exp_cac_type.model_validate(case.src_cac)
+    cac_dict = json.loads(cac.model_dump_json())
     cac_id = cac_dict["ComponentAttributeClassId"]
     try:
         loaded_cac = load_cacs(
@@ -89,7 +93,7 @@ def _decode_cac(case: CacCase, decoder: Optional[CacDecoder]) -> CacLoadResult:
 def assert_cac_load(cases: list[CacCase], decoder: Optional[CacDecoder] = None) -> None:
     errors: list[CacCaseError] = []
     for case_idx, case in enumerate(cases):
-        load_result = _decode_cac(case, decoder)
+        load_result = _encode_decode_cac(case, decoder)
         if not load_result.ok:
             errors.append(CacLoadError(case_idx, case, load_result.exception))
         elif not case.exp_exceptions:
@@ -115,3 +119,21 @@ def assert_cac_load(cases: list[CacCase], decoder: Optional[CacDecoder] = None) 
         if first_exception is not None:
             raise ValueError(err_str) from first_exception
         raise ValueError(err_str)
+
+
+def assert_symbolized_and_unsymbolized_encode(
+    monkeypatch: Any,
+    m: BaseModel,
+    exp_unsymbolized: dict,
+    exp_symbolized: dict,
+) -> None:
+    for symbolization, exp_dict in [
+        ("0", exp_unsymbolized),
+        ("1", exp_symbolized),
+    ]:
+        with monkeypatch.context() as monkey:
+            monkey.setenv(SYMBOLIZE_ENV_VAR, symbolization)
+            d = json.loads(m.model_dump_json())
+            assert d == exp_dict
+            m2 = m.__class__.model_validate(d)
+            assert m == m2

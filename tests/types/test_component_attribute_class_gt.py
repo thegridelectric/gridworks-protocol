@@ -2,12 +2,17 @@
 
 from typing import Any
 
+from gwproto.enums import MakeModel
 from gwproto.enums.symbolized import SYMBOLIZE_ENV_VAR
 from gwproto.types import ComponentAttributeClassGt
-from tests.cac_load_utils import CacCase, assert_cac_load
+from tests.cac_load_utils import (
+    CacCase,
+    assert_cac_load,
+    assert_symbolized_and_unsymbolized_encode,
+)
 
 
-def test_component_attribute_class_gt_load(monkeypatch: Any) -> None:  # noqa: ANN401
+def test_component_attribute_class_gt_load(monkeypatch: Any) -> None:
     monkeypatch.setenv(SYMBOLIZE_ENV_VAR, "1")
     d = {
         "ComponentAttributeClassId": "29c5257b-8a86-4dbe-a9d4-9c7330c3c4d0",
@@ -18,4 +23,29 @@ def test_component_attribute_class_gt_load(monkeypatch: Any) -> None:  # noqa: A
     }
     assert_cac_load(
         [CacCase("ComponentAttributeClassGt", d, ComponentAttributeClassGt)]
+    )
+
+
+def test_encode_decode(monkeypatch: Any) -> None:
+    assert_symbolized_and_unsymbolized_encode(
+        monkeypatch=monkeypatch,
+        m=ComponentAttributeClassGt(
+            ComponentAttributeClassId="29c5257b-8a86-4dbe-a9d4-9c7330c3c4d0",
+            DisplayName="Sample CAC",
+            MakeModel=MakeModel.UNKNOWNMAKE__UNKNOWNMODEL,
+        ),
+        exp_unsymbolized={
+            "ComponentAttributeClassId": "29c5257b-8a86-4dbe-a9d4-9c7330c3c4d0",
+            "DisplayName": "Sample CAC",
+            "MakeModel": "UNKNOWNMAKE__UNKNOWNMODEL",
+            "TypeName": "component.attribute.class.gt",
+            "Version": "000",
+        },
+        exp_symbolized={
+            "ComponentAttributeClassId": "29c5257b-8a86-4dbe-a9d4-9c7330c3c4d0",
+            "DisplayName": "Sample CAC",
+            "MakeModelGtEnumSymbol": "00000000",
+            "TypeName": "component.attribute.class.gt",
+            "Version": "000",
+        },
     )

@@ -109,9 +109,6 @@ jobs:
           name: coverage-data
           path: ".coverage.*"
           if-no-files-found: error
-        run: |
-          pwd
-          ls -1a
 
       - name: Upload documentation
         if: matrix.session == 'docs-build'

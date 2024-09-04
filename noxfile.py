@@ -150,7 +150,9 @@ def tests(session: Session) -> None:
     """Run the test suite."""
     session.install(".")
     session.install("pytest", "pygments")
-    if session.posargs and session.posargs[0] != "--no-coverage":
+    if not session.posargs or (
+        session.posargs and session.posargs[0] != "--no-coverage"
+    ):
         session.install("coverage[toml]")
         try:
             session.run(

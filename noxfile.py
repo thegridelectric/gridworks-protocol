@@ -149,8 +149,9 @@ def mypy(session: Session) -> None:
 def tests(session: Session) -> None:
     """Run the test suite."""
     session.install(".")
+    session.install("pytest", "pygments")
     if session.posargs and session.posargs[0] != "--no-coverage":
-        session.install("coverage[toml]", "pytest", "pygments")
+        session.install("coverage[toml]")
         try:
             session.run(
                 "coverage", "run", "--parallel", "-m", "pytest", *session.posargs

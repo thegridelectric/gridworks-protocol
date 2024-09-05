@@ -4,18 +4,21 @@ import re
 import typing
 from typing import Any, Type, TypeVar
 
-from pydantic import ValidationError
-
-import gwproto.types.cacs
+import gwproto.types.fibaro_smart_implant_cac_gt  # noqa: F401
 import gwproto.types.fibaro_smart_implant_component_gt  # noqa: F401
+import gwproto.types.hubitat_cac_gt  # noqa: F401
 import gwproto.types.hubitat_component_gt  # noqa: F401
+import gwproto.types.hubitat_poller_cac_gt  # noqa: F401
 import gwproto.types.hubitat_poller_component_gt  # noqa: F401
+import gwproto.types.hubitat_tank_cac_gt  # noqa: F401
 import gwproto.types.hubitat_tank_component_gt  # noqa: F401
+import gwproto.types.rest_poller_cac_gt  # noqa: F401
 import gwproto.types.rest_poller_component_gt  # noqa: F401
+import gwproto.types.web_server_cac_gt  # noqa: F401
 import gwproto.types.web_server_component_gt  # noqa: F401
 from gwproto.data_classes.component import Component
+from gwproto.data_classes.component_attribute_class import ComponentAttributeClass
 from gwproto.decoders import PydanticTypeNameDecoder
-from gwproto.types import ComponentAttributeClassGt
 
 T = TypeVar("T")
 
@@ -23,9 +26,8 @@ T = TypeVar("T")
 def decode_to_data_class(
     decoded_gt: typing.Any,
     return_type: Type[T],
-    *,
-    allow_missing_func: bool = True,
-    allow_non_instance: bool = False,
+    allow_missing_func: bool = True,  # noqa: FBT001, FBT002
+    allow_non_instance: bool = False,  # noqa: FBT001, FBT002
 ) -> T:
     if hasattr(decoded_gt, "to_data_class"):
         data_class = decoded_gt.to_data_class()
@@ -50,24 +52,16 @@ class CacDecoder(PydanticTypeNameDecoder):
             kwargs["type_name_regex"] = CacDecoder.TYPE_NAME_REGEX
         super().__init__(model_name, **kwargs)
 
-    def decode(
-        self, d: dict, *, allow_missing: bool = True
-    ) -> ComponentAttributeClassGt:
-        try:
-            decoded = self.loader.model_validate({self.payload_field_name: d}).Payload
-            if not isinstance(decoded, ComponentAttributeClassGt):
-                raise TypeError(
-                    f"ERROR. CacDecoder decoded type {type(decoded)}, "
-                    "not ComponentAttributeClassGt"
-                )
-        except ValidationError as e:
-            if allow_missing and any(
-                error.get("type") == "union_tag_invalid" for error in e.errors()
-            ):
-                decoded = ComponentAttributeClassGt(**d)
-            else:
-                raise
-        return decoded
+    def decode_to_data_class(
+        self,
+        data: dict,
+        allow_missing_func: bool = True,  # noqa: FBT001, FBT002
+    ) -> ComponentAttributeClass:
+        return decode_to_data_class(
+            decoded_gt=self.decode_obj(data),
+            return_type=ComponentAttributeClass,
+            allow_missing_func=allow_missing_func,
+        )
 
 
 class ComponentDecoder(PydanticTypeNameDecoder):
@@ -81,8 +75,7 @@ class ComponentDecoder(PydanticTypeNameDecoder):
     def decode_to_data_class(
         self,
         data: dict,
-        *,
-        allow_missing_func: bool = True,
+        allow_missing_func: bool = True,  # noqa: FBT001, FBT002
     ) -> Component:
         return decode_to_data_class(
             decoded_gt=self.decode_obj(data),
@@ -93,7 +86,14 @@ class ComponentDecoder(PydanticTypeNameDecoder):
 
 default_cac_decoder = CacDecoder(
     model_name="DefaultCacDecoder",
-    modules=[gwproto.types.cacs],
+    module_names=[
+        "gwproto.types.fibaro_smart_implant_cac_gt",
+        "gwproto.types.hubitat_cac_gt",
+        "gwproto.types.hubitat_poller_cac_gt",
+        "gwproto.types.hubitat_tank_cac_gt",
+        "gwproto.types.rest_poller_cac_gt",
+        "gwproto.types.web_server_cac_gt",
+    ],
 )
 
 default_component_decoder = ComponentDecoder(

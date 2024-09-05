@@ -9,10 +9,7 @@ from gwproto.types.electric_meter_component_gt import ElectricMeterComponentGt_M
 
 
 def test_electric_meter_component() -> None:
-    errors = []
-    HardwareLayout.load(
-        "tests/config/hardware-layout.json", errors=errors, raise_errors=False
-    )
+    HardwareLayout.load("tests/config/hardware-layout.json")
     d = {
         "ComponentId": "2bfd0036-0b0e-4732-8790-bc7d0536a85e",
         "ComponentAttributeClassId": "28897ac1-ea42-4633-96d3-196f63f5a951",

@@ -2,10 +2,10 @@
 from enum import auto
 from typing import List
 
-from gwproto.enums.symbolized import SymbolizedEnum
+from gwproto.enums.better_str_enum import BetterStrEnum as StrEnum
 
 
-class ActorClass(SymbolizedEnum):
+class ActorClass(StrEnum):
     """
     Determines the code running Spaceheat Nodes supervised by Spaceheat SCADA software
 
@@ -81,6 +81,13 @@ class ActorClass(SymbolizedEnum):
         Returns default value (in this case NoActor)
         """
         return cls.NoActor
+
+    @classmethod
+    def values(cls) -> List[str]:
+        """
+        Returns enum choices
+        """
+        return [elt.value for elt in cls]  # noqa
 
     @classmethod
     def version(cls, value: str) -> str:

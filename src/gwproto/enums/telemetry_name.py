@@ -1,10 +1,10 @@
 from enum import auto
 from typing import List
 
-from gwproto.enums.symbolized import SymbolizedEnum
+from gwproto.enums.better_str_enum import BetterStrEnum as StrEnum
 
 
-class TelemetryName(SymbolizedEnum):
+class TelemetryName(StrEnum):
     """
     Specifies the name of sensed data reported by a Spaceheat SCADA
 
@@ -65,6 +65,13 @@ class TelemetryName(SymbolizedEnum):
         Returns default value (in this case Unknown)
         """
         return cls.Unknown
+
+    @classmethod
+    def values(cls) -> List[str]:
+        """
+        Returns enum choices
+        """
+        return [elt.value for elt in cls]  # noqa: ALL
 
     @classmethod
     def version(cls, value: str) -> str:

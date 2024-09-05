@@ -17,6 +17,7 @@ from typing import Any, List, Optional, Type, TypeVar
 
 from gwproto.data_classes.cacs.electric_meter_cac import ElectricMeterCac
 from gwproto.data_classes.component import Component
+from gwproto.data_classes.component_attribute_class import ComponentAttributeClass
 from gwproto.data_classes.components.electric_meter_component import (
     ElectricMeterComponent,
 )
@@ -32,10 +33,15 @@ from gwproto.default_decoders import (
 )
 from gwproto.enums import ActorClass, Role, TelemetryName
 from gwproto.types import (
-    ComponentAttributeClassGt,
+    ElectricMeterCacGt_Maker,
+    MultipurposeSensorCacGt_Maker,
+    PipeFlowSensorCacGt_Maker,
     PipeFlowSensorComponentGt_Maker,
+    RelayCacGt_Maker,
     RelayComponentGt_Maker,
+    ResistiveHeaterCacGt_Maker,
     ResistiveHeaterComponentGt_Maker,
+    SimpleTempSensorCacGt_Maker,
     SimpleTempSensorComponentGt_Maker,
     SpaceheatNodeGt_Maker,
 )
@@ -60,42 +66,54 @@ class LoadError:
     exception: Exception
 
 
-def load_cacs(
+def load_cacs(  # noqa: C901
     layout: dict[str, Any],
-    *,
-    raise_errors: bool = True,
+    raise_errors: bool = True,  # noqa: FBT001, FBT002
     errors: Optional[list[LoadError]] = None,
     cac_decoder: Optional[CacDecoder] = None,
-) -> dict[str, ComponentAttributeClassGt]:
+) -> dict[str, Any]:
     if errors is None:
         errors = []
-    if cac_decoder is None:
-        cac_decoder = default_cac_decoder
     cacs = {}
-    for type_name in [
-        "RelayCacs",
-        "ResistiveHeaterCacs",
-        "ElectricMeterCacs",
-        "PipeFlowSensorCacs",
-        "MultipurposeSensorCacs",
-        "SimpleTempSensorCacs",
-        "OtherCacs",
+    for type_name, maker_class in [
+        ("RelayCacs", RelayCacGt_Maker),
+        ("ResistiveHeaterCacs", ResistiveHeaterCacGt_Maker),
+        ("ElectricMeterCacs", ElectricMeterCacGt_Maker),
+        ("PipeFlowSensorCacs", PipeFlowSensorCacGt_Maker),
+        ("MultipurposeSensorCacs", MultipurposeSensorCacGt_Maker),
+        ("SimpleTempSensorCacs", SimpleTempSensorCacGt_Maker),
     ]:
-        for cac_dict in layout.get(type_name, ()):
+        for d in layout.get(type_name, []):
             try:
-                cac = cac_decoder.decode(cac_dict)
-                cacs[cac.ComponentAttributeClassId] = cac
+                cacs[d["ComponentAttributeClassId"]] = maker_class.dict_to_dc(  # type:ignore[attr-defined]
+                    d
+                )
             except Exception as e:  # noqa: PERF203
                 if raise_errors:
                     raise
-                errors.append(LoadError(type_name, cac_dict, e))
+                errors.append(LoadError(type_name, d, e))
+    if cac_decoder is None:
+        cac_decoder = default_cac_decoder
+    for d in layout.get("OtherCacs", []):
+        cac_type = d.get("TypeName", "")
+        try:
+            if cac_type and cac_type in cac_decoder:
+                cac = cac_decoder.decode_to_data_class(d)
+            else:
+                cac = ComponentAttributeClass(
+                    component_attribute_class_id=d["ComponentAttributeClassId"]
+                )
+            cacs[d["ComponentAttributeClassId"]] = cac
+        except Exception as e:
+            if raise_errors:
+                raise
+            errors.append(LoadError("OtherCacs", d, e))
     return cacs
 
 
 def load_components(  # noqa: C901
     layout: dict[Any, Any],
-    *,
-    raise_errors: bool = True,
+    raise_errors: bool = True,  # noqa: FBT001, FBT002
     errors: Optional[list[LoadError]] = None,
     component_decoder: Optional[ComponentDecoder] = None,
 ) -> dict[Any, Any]:
@@ -138,8 +156,7 @@ def load_components(  # noqa: C901
 
 def load_nodes(
     layout: dict[Any, Any],
-    *,
-    raise_errors: bool = True,
+    raise_errors: bool = True,  # noqa: FBT001, FBT002
     errors: Optional[list[LoadError]] = None,
     included_node_names: Optional[set[str]] = None,
 ) -> dict[Any, Any]:
@@ -161,8 +178,7 @@ def load_nodes(
 def resolve_links(
     nodes: dict[str, ShNode],
     components: dict[str, Component],
-    *,
-    raise_errors: bool = True,
+    raise_errors: bool = True,  # noqa: FBT001, FBT002
     errors: Optional[list[LoadError]] = None,
 ) -> None:
     if errors is None:
@@ -190,7 +206,7 @@ def resolve_links(
 
 class HardwareLayout:
     layout: dict[Any, Any]
-    cacs: dict[str, ComponentAttributeClassGt]
+    cacs: dict[str, ComponentAttributeClass]
     components: dict[str, Component]
     components_by_type: dict[Type, list[Component]]
     nodes: dict[str, ShNode]
@@ -199,22 +215,19 @@ class HardwareLayout:
     def __init__(
         self,
         layout: dict[Any, Any],
-        *,
-        cacs: Optional[dict[str, ComponentAttributeClassGt]] = None,
+        cacs: Optional[dict[str, ComponentAttributeClass]] = None,
         components: Optional[dict[str, Component]] = None,
         nodes: Optional[dict[str, ShNode]] = None,
     ) -> None:
         self.layout = copy.deepcopy(layout)
         if cacs is None:
-            self.cacs = {}
-        else:
-            self.cacs = dict(cacs)
+            cacs = ComponentAttributeClass.by_id
+        self.cacs = dict(cacs)
         if components is None:
-            self.components = {}
-        else:
-            self.components = dict(components)
+            components = Component.by_id
+        self.components = dict(components)
         self.components_by_type = defaultdict(list)
-        for component in self.components.values():
+        for component in components.values():
             self.components_by_type[type(component)].append(component)
         if nodes is None:
             nodes = ShNode.by_id
@@ -235,7 +248,6 @@ class HardwareLayout:
     def load(  # noqa: PLR0913, PLR0917, RUF100
         cls,
         layout_path: Path | str,
-        *,
         included_node_names: Optional[set[str]] = None,
         raise_errors: bool = True,  # noqa: FBT001, FBT002
         errors: Optional[list[LoadError]] = None,
@@ -257,9 +269,8 @@ class HardwareLayout:
     def load_dict(  # noqa: PLR0913, PLR0917, RUF100
         cls,
         layout: dict[Any, Any],
-        *,
         included_node_names: Optional[set[str]] = None,
-        raise_errors: bool = True,
+        raise_errors: bool = True,  # noqa: FBT001, FBT002
         errors: Optional[list[LoadError]] = None,
         cac_decoder: Optional[CacDecoder] = None,
         component_decoder: Optional[ComponentDecoder] = None,
@@ -300,7 +311,7 @@ class HardwareLayout:
     def component(self, node_alias: str) -> Optional[Component]:
         return self.component_from_node(self.node(node_alias, None))
 
-    def cac(self, node_alias: str) -> Optional[ComponentAttributeClassGt]:
+    def cac(self, node_alias: str) -> Optional[ComponentAttributeClass]:
         return self.cac_from_component(self.component(node_alias))
 
     def get_component_as_type(self, component_id: str, type_: Type[T]) -> Optional[T]:
@@ -336,7 +347,7 @@ class HardwareLayout:
 
     def cac_from_component(
         self, component: Optional[Component]
-    ) -> Optional[ComponentAttributeClassGt]:
+    ) -> Optional[ComponentAttributeClass]:
         return (
             self.cacs.get(
                 component.component_attribute_class_id if component is not None else "",

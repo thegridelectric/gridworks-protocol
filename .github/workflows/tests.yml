@@ -109,8 +109,6 @@ jobs:
         if: matrix.session != 'tests'
         run: |
           nox --python=${{ matrix.python }}
-          pwd
-          ls -a1
 
       - name: Upload coverage data
         if: always() && matrix.session == 'tests' && matrix.coverage == true

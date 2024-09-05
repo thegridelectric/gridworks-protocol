@@ -2,7 +2,7 @@
 
 from gwproto.data_classes.hardware_layout import HardwareLayout
 from gwproto.data_classes.sh_node import ShNode
-from gwproto.types import ElectricMeterCacGt_Maker, SpaceheatNodeGt_Maker
+from gwproto.types import SpaceheatNodeGt_Maker
 from gwproto.types.electric_meter_component_gt import ElectricMeterComponentGt_Maker
 from tests.utils import flush_all
 
@@ -11,17 +11,6 @@ def test_flush_and_load_house() -> None:
     """Verify that flush_house() successfully removes all dictionary data from relevant dataclasses, and
     load_house() successfully loads test objects"""
     flush_all()
-
-    unknown_electric_meter_cac_dict = {
-        "ComponentAttributeClassId": "c1f17330-6269-4bc5-aa4b-82e939e9b70c",
-        "MakeModelGtEnumSymbol": "00000000",
-        "DisplayName": "Unknown Power Meter",
-        "PollPeriodMs": 1000,
-        "InterfaceGtEnumSymbol": "00000000",
-        "TelemetryNameList": ["af39eec9"],
-        "TypeName": "electric.meter.cac.gt",
-        "Version": "000",
-    }
 
     electric_meter_component_dict = {
         "ComponentId": "c7d352db-9a86-40f0-9601-d99243719cc5",
@@ -45,7 +34,6 @@ def test_flush_and_load_house() -> None:
         "Version": "100",
     }
 
-    ElectricMeterCacGt_Maker.dict_to_dc(unknown_electric_meter_cac_dict)
     ElectricMeterComponentGt_Maker.dict_to_dc(electric_meter_component_dict)
     SpaceheatNodeGt_Maker.dict_to_dc(meter_node_dict)
     assert ShNode.by_id["c9456f5b-5a39-4a48-bb91-742a9fdc461d"].alias == "a.m"

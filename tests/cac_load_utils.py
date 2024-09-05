@@ -1,0 +1,139 @@
+import json
+from dataclasses import dataclass, field
+from typing import Any, Optional, Type
+
+from pydantic import BaseModel
+
+from gwproto import CacDecoder, default_cac_decoder
+from gwproto.data_classes.hardware_layout import (
+    load_cacs,
+)
+from gwproto.enums.symbolized import SYMBOLIZE_ENV_VAR
+from gwproto.types import ComponentAttributeClassGt
+
+
+@dataclass
+class CacCase:
+    tag: str
+    src_cac: ComponentAttributeClassGt | dict
+    exp_cac_type: Type[ComponentAttributeClassGt] = ComponentAttributeClassGt
+    exp_cac: Optional[ComponentAttributeClassGt | dict] = None
+    exp_exceptions: list[Type[Exception]] = field(default_factory=list)
+
+
+@dataclass
+class CacCaseError:
+    case_idx: int
+    case: CacCase
+
+    def __str__(self) -> str:
+        return f"{self.case.tag:30s}  {self.case_idx:2d}  {type(self)}"
+
+
+@dataclass
+class CacLoadError(CacCaseError):
+    exception: Exception
+
+    def __str__(self) -> str:
+        return (
+            f"{super().__str__()}"
+            f"\n\t\t{type(self.exception)}"
+            f"\n\t\t{self.exception}"
+        )
+
+
+@dataclass
+class CacMatchError(CacCaseError):
+    exp_cac: ComponentAttributeClassGt | dict
+    loaded_cac: ComponentAttributeClassGt
+
+    def __str__(self) -> str:
+        return (
+            f"{super().__str__()}"
+            f"\n\t\texp: {type(self.exp_cac)}"
+            f"\n\t\tgot: {type(self.loaded_cac)}"
+        )
+
+
+@dataclass
+class CacLoadResult:
+    ok: bool
+    loaded: ComponentAttributeClassGt | None
+    exception: Exception | None
+
+
+def _encode_decode_cac(case: CacCase, decoder: Optional[CacDecoder]) -> CacLoadResult:
+    if decoder is None:
+        decoder = default_cac_decoder
+    # Force call to model_dump_json() by encoding dict as model to ensure
+    # serialization is tested.
+    if isinstance(case.src_cac, ComponentAttributeClassGt):
+        cac = case.src_cac
+    else:
+        cac = case.exp_cac_type.model_validate(case.src_cac)
+    cac_dict = json.loads(cac.model_dump_json())
+    cac_id = cac_dict["ComponentAttributeClassId"]
+    try:
+        loaded_cac = load_cacs(
+            layout={"OtherCacs": [cac_dict]},
+            raise_errors=True,
+            cac_decoder=decoder,
+        )[cac_id]
+        exception = None
+    except Exception as e:  # noqa: BLE001
+        loaded_cac = None
+        exception = e
+    if loaded_cac is None:
+        ok = type(exception) in case.exp_exceptions
+    else:
+        ok = not case.exp_exceptions
+    return CacLoadResult(ok, loaded_cac, exception)
+
+
+def assert_cac_load(cases: list[CacCase], decoder: Optional[CacDecoder] = None) -> None:
+    errors: list[CacCaseError] = []
+    for case_idx, case in enumerate(cases):
+        load_result = _encode_decode_cac(case, decoder)
+        if not load_result.ok:
+            errors.append(CacLoadError(case_idx, case, load_result.exception))
+        elif not case.exp_exceptions:
+            exp_cac = case.src_cac if case.exp_cac is None else case.exp_cac
+            if isinstance(exp_cac, dict):
+                exp_cac = case.exp_cac_type(**exp_cac)
+            if load_result.loaded != exp_cac:
+                errors.append(
+                    CacMatchError(
+                        case_idx=case_idx,
+                        case=case,
+                        exp_cac=exp_cac,
+                        loaded_cac=load_result.loaded,
+                    )
+                )
+    if errors:
+        err_str = "ERROR. Got cac load/matching errors:"
+        first_exception = None
+        for error in errors:
+            err_str += f"\n\t{error}"
+            if first_exception is None and hasattr(error, "exception"):
+                first_exception = error.exception
+        if first_exception is not None:
+            raise ValueError(err_str) from first_exception
+        raise ValueError(err_str)
+
+
+def assert_symbolized_and_unsymbolized_encode(
+    monkeypatch: Any,
+    m: BaseModel,
+    exp_unsymbolized: dict,
+    exp_symbolized: dict,
+) -> None:
+    for symbolization, exp_dict in [
+        ("0", exp_unsymbolized),
+        ("1", exp_symbolized),
+    ]:
+        with monkeypatch.context() as monkey:
+            monkey.setenv(SYMBOLIZE_ENV_VAR, symbolization)
+            d = json.loads(m.model_dump_json())
+            assert d == exp_dict
+            m2 = m.__class__.model_validate(d)
+            assert m == m2

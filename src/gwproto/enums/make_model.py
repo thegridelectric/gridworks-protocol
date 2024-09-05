@@ -1,10 +1,10 @@
 from enum import auto
 from typing import List
 
-from gwproto.enums.better_str_enum import BetterStrEnum as StrEnum
+from gwproto.enums.symbolized import SymbolizedEnum
 
 
-class MakeModel(StrEnum):
+class MakeModel(SymbolizedEnum):
     """
     Determines Make/Model of device associated to a Spaceheat Node supervised by SCADA
 
@@ -88,13 +88,6 @@ class MakeModel(StrEnum):
         Returns default value (in this case UNKNOWNMAKE__UNKNOWNMODEL)
         """
         return cls.UNKNOWNMAKE__UNKNOWNMODEL
-
-    @classmethod
-    def values(cls) -> List[str]:
-        """
-        Returns enum choices
-        """
-        return [elt.value for elt in cls]  # noqa: ALL
 
     @classmethod
     def version(cls, value: str) -> str:

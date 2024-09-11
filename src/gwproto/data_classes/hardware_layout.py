@@ -161,12 +161,20 @@ def load_nodes(
 def resolve_links(
     nodes: dict[str, ShNode],
     components: dict[str, Component],
+    cacs: dict[str, ComponentAttributeClassGt],
     *,
     raise_errors: bool = True,
     errors: Optional[list[LoadError]] = None,
 ) -> None:
     if errors is None:
         errors = []
+    for component in components.values():
+        component.cac = cacs.get(component.component_attribute_class_id, None)
+        if component.cac is None:
+            raise DataClassLoadingError(  # noqa: TRY301
+                f"cac {component.component_attribute_class_id} not loaded for component "
+                f"<{component.component_id}/<{component.display_name}>\n"
+            )
     for node_name, node in nodes.items():
         d = {"node": {"name": node_name, "node": node}}
         try:
@@ -289,6 +297,7 @@ class HardwareLayout:
         resolve_links(
             load_args["nodes"],
             load_args["components"],
+            load_args["cacs"],
             raise_errors=raise_errors,
             errors=errors,
         )

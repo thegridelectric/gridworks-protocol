@@ -2,9 +2,7 @@
 
 from typing import Dict, Optional
 
-from gwproto.data_classes.cacs.resistive_heater_cac import ResistiveHeaterCac
 from gwproto.data_classes.component import Component
-from gwproto.enums import MakeModel
 
 
 class ResistiveHeaterComponent(Component):
@@ -29,14 +27,6 @@ class ResistiveHeaterComponent(Component):
         self.tested_max_cold_milli_ohms = tested_max_cold_milli_ohms
         ResistiveHeaterComponent.by_id[self.component_id] = self
         Component.by_id[self.component_id] = self
-
-    @property
-    def cac(self) -> ResistiveHeaterCac:
-        return ResistiveHeaterCac.by_id[self.component_attribute_class_id]
-
-    @property
-    def make_model(self) -> MakeModel:
-        return self.cac.make_model
 
     def __repr__(self) -> str:
         return f"{self.display_name}  ({self.cac.make_model.value})"

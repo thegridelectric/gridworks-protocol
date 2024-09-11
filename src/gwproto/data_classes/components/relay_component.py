@@ -2,9 +2,7 @@
 
 from typing import Dict, Optional
 
-from gwproto.data_classes.cacs.relay_cac import RelayCac
 from gwproto.data_classes.component import Component
-from gwproto.enums import MakeModel
 
 
 class RelayComponent(Component):
@@ -31,13 +29,5 @@ class RelayComponent(Component):
         RelayComponent.by_id[self.component_id] = self
         Component.by_id[self.component_id] = self
 
-    @property
-    def cac(self) -> RelayCac:
-        return RelayCac.by_id[self.component_attribute_class_id]
-
-    @property
-    def make_model(self) -> MakeModel:
-        return self.cac.make_model
-
     def __repr__(self) -> str:
-        return f"{self.display_name}  ({self.cac.make_model.value})"
+        return f"{self.display_name}  ({self.cac.MakeModel.value})"

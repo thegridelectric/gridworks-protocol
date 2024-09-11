@@ -27,4 +27,4 @@ class SimpleTempSensorComponent(Component):
         Component.by_id[self.component_id] = self
 
     def __repr__(self) -> str:
-        return f"{self.display_name}  ({self.cac.make_model.value})"
+        return f"{self.display_name}  ({self.make_model.value})"

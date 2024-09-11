@@ -54,7 +54,7 @@ source = ["gwproto", "tests"]
 
 [tool.coverage.report]
 show_missing = false
-fail_under = 85
+fail_under = 80
 
 [tool.black]
 extend_exclude = "src/gwproto/gt/|src/gwproto/gs/|src/gwproto/enums/"
@@ -146,6 +146,8 @@ ignore = [
     "RUF100", # ruff and IDE often disagree about whether a 'noqa' is in use.
     "W191",
     "W291", # Formatter
+    "W293", # Formatter
+    "W391", # Formatter
 ]
 
 

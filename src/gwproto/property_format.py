@@ -2,10 +2,12 @@
 
 import string
 import struct
+import uuid
 from datetime import datetime, timezone
-from typing import Any, Callable, List
+from typing import Annotated, Any, Callable, List
 
 import pydantic
+from pydantic import BeforeValidator
 
 
 def predicate_validator(
@@ -149,7 +151,7 @@ def is_left_right_dot(candidate: str) -> bool:
     return candidate.islower()
 
 
-def check_is_left_right_dot(candidate: str) -> None:
+def check_is_left_right_dot(candidate: str) -> str:
     """Lowercase AlphanumericStrings separated by dots (i.e. periods), with most
     significant word to the left.  I.e. `d1.ne` is the child of `d1`.
     Checking the format cannot verify the significance of words. All
@@ -177,6 +179,24 @@ def check_is_left_right_dot(candidate: str) -> None:
             )
     if not candidate.islower():
         raise ValueError(f"alias must be lowercase. Got '{candidate}'")
+    return candidate
+
+
+LeftRightDotStr = Annotated[str, BeforeValidator(check_is_left_right_dot)]
+
+
+def str_is_valid_uuid4(v: str) -> str:
+    v = str(v)
+    try:
+        u = uuid.UUID(v)
+    except Exception as e:
+        raise ValueError(f"Invalid UUID4: {v}  <{e}>") from e
+    if u.version != 4:
+        raise ValueError(f"{v} is valid uid, but of version {u.version}, not 4")
+    return str(u)
+
+
+UUID4Str = Annotated[str, BeforeValidator(str_is_valid_uuid4)]
 
 
 def is_lru_alias_format(candidate: str) -> bool:

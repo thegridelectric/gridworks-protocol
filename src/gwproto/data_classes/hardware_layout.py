@@ -7,7 +7,6 @@ away with).
 
 import copy
 import json
-import re
 import typing
 from collections import defaultdict
 from dataclasses import dataclass
@@ -15,8 +14,10 @@ from functools import cached_property
 from pathlib import Path
 from typing import Any, List, Optional, Type, TypeVar
 
+import gwproto.data_classes.components
 from gwproto.data_classes.cacs.electric_meter_cac import ElectricMeterCac
-from gwproto.data_classes.component import Component
+from gwproto.data_classes.components import Component
+from gwproto.data_classes.components.component import ComponentOnly
 from gwproto.data_classes.components.electric_meter_component import (
     ElectricMeterComponent,
 )
@@ -33,24 +34,10 @@ from gwproto.default_decoders import (
 from gwproto.enums import ActorClass, Role, TelemetryName
 from gwproto.types import (
     ComponentAttributeClassGt,
-    PipeFlowSensorComponentGt_Maker,
-    RelayComponentGt_Maker,
-    ResistiveHeaterComponentGt_Maker,
-    SimpleTempSensorComponentGt_Maker,
-    SpaceheatNodeGt_Maker,
-)
-from gwproto.types.electric_meter_component_gt import ElectricMeterComponentGt_Maker
-from gwproto.types.multipurpose_sensor_component_gt import (
-    MultipurposeSensorComponentGt_Maker,
+    ComponentGt,
 )
 
 T = TypeVar("T")
-
-snake_add_underscore_to_camel_pattern = re.compile(r"(?<!^)(?=[A-Z])")
-
-
-def camel_to_snake(name: str) -> str:
-    return snake_add_underscore_to_camel_pattern.sub("_", name).lower()
 
 
 @dataclass
@@ -58,142 +45,6 @@ class LoadError:
     type_name: str
     src_dict: dict[Any, Any]
     exception: Exception
-
-
-def load_cacs(
-    layout: dict[str, Any],
-    *,
-    raise_errors: bool = True,
-    errors: Optional[list[LoadError]] = None,
-    cac_decoder: Optional[CacDecoder] = None,
-) -> dict[str, ComponentAttributeClassGt]:
-    if errors is None:
-        errors = []
-    if cac_decoder is None:
-        cac_decoder = default_cac_decoder
-    cacs = {}
-    for type_name in [
-        "RelayCacs",
-        "ResistiveHeaterCacs",
-        "ElectricMeterCacs",
-        "PipeFlowSensorCacs",
-        "MultipurposeSensorCacs",
-        "SimpleTempSensorCacs",
-        "OtherCacs",
-    ]:
-        for cac_dict in layout.get(type_name, ()):
-            try:
-                cac = cac_decoder.decode(cac_dict)
-                cacs[cac.ComponentAttributeClassId] = cac
-            except Exception as e:  # noqa: PERF203
-                if raise_errors:
-                    raise
-                errors.append(LoadError(type_name, cac_dict, e))
-    return cacs
-
-
-def load_components(  # noqa: C901
-    layout: dict[Any, Any],
-    *,
-    raise_errors: bool = True,
-    errors: Optional[list[LoadError]] = None,
-    component_decoder: Optional[ComponentDecoder] = None,
-) -> dict[Any, Any]:
-    if errors is None:
-        errors = []
-    components = {}
-    for type_name, maker_class in [
-        ("RelayComponents", RelayComponentGt_Maker),
-        ("ResistiveHeaterComponents", ResistiveHeaterComponentGt_Maker),
-        ("ElectricMeterComponents", ElectricMeterComponentGt_Maker),
-        ("PipeFlowSensorComponents", PipeFlowSensorComponentGt_Maker),
-        ("MultipurposeSensorComponents", MultipurposeSensorComponentGt_Maker),
-        ("SimpleTempSensorComponents", SimpleTempSensorComponentGt_Maker),
-    ]:
-        for d in layout.get(type_name, []):
-            try:
-                components[d["ComponentId"]] = maker_class.dict_to_dc(  # type:ignore[attr-defined]
-                    d
-                )
-            except Exception as e:  # noqa: PERF203
-                if raise_errors:
-                    raise
-                errors.append(LoadError(type_name, d, e))
-    if component_decoder is None:
-        component_decoder = default_component_decoder
-    for d in layout["OtherComponents"]:
-        component_type = d.get("TypeName", "")
-        try:
-            if component_type and component_type in component_decoder:
-                component = component_decoder.decode_to_data_class(d)
-            else:
-                component = Component(**{camel_to_snake(k): v for k, v in d.items()})
-            components[d["ComponentId"]] = component
-        except Exception as e:
-            if raise_errors:
-                raise
-            errors.append(LoadError("OtherComponents", d, e))
-    return components
-
-
-def load_nodes(
-    layout: dict[Any, Any],
-    *,
-    raise_errors: bool = True,
-    errors: Optional[list[LoadError]] = None,
-    included_node_names: Optional[set[str]] = None,
-) -> dict[Any, Any]:
-    nodes = {}
-    if errors is None:
-        errors = []
-    for d in layout.get("ShNodes", []):
-        try:
-            node_name = d["Alias"]
-            if included_node_names is None or node_name in included_node_names:
-                nodes[node_name] = SpaceheatNodeGt_Maker.dict_to_dc(d)
-        except Exception as e:  # noqa: PERF203
-            if raise_errors:
-                raise
-            errors.append(LoadError("ShNode", d, e))
-    return nodes
-
-
-def resolve_links(
-    nodes: dict[str, ShNode],
-    components: dict[str, Component],
-    cacs: dict[str, ComponentAttributeClassGt],
-    *,
-    raise_errors: bool = True,
-    errors: Optional[list[LoadError]] = None,
-) -> None:
-    if errors is None:
-        errors = []
-    for component in components.values():
-        component.cac = cacs.get(component.component_attribute_class_id, None)
-        if component.cac is None:
-            raise DataClassLoadingError(  # noqa: TRY301
-                f"cac {component.component_attribute_class_id} not loaded for component "
-                f"<{component.component_id}/<{component.display_name}>\n"
-            )
-    for node_name, node in nodes.items():
-        d = {"node": {"name": node_name, "node": node}}
-        try:
-            if node.component_id is not None:
-                component = components.get(node.component_id, None)
-                if component is None:
-                    raise DataClassLoadingError(  # noqa: TRY301
-                        f"{node.alias} component {node.component_id} not loaded!"
-                    )
-                if isinstance(component, ComponentResolver):
-                    component.resolve(
-                        node.alias,
-                        nodes,
-                        components,
-                    )
-        except Exception as e:
-            if raise_errors:
-                raise
-            errors.append(LoadError("ShNode", d, e))
 
 
 class HardwareLayout:
@@ -204,28 +55,178 @@ class HardwareLayout:
     nodes: dict[str, ShNode]
     nodes_by_component: dict[str, str]
 
+    GT_SUFFIX = "Gt"
+
+    @classmethod
+    def load_cacs(
+        cls,
+        layout: dict[str, Any],
+        *,
+        raise_errors: bool = True,
+        errors: Optional[list[LoadError]] = None,
+        cac_decoder: Optional[CacDecoder] = None,
+    ) -> dict[str, ComponentAttributeClassGt]:
+        if errors is None:
+            errors = []
+        if cac_decoder is None:
+            cac_decoder = default_cac_decoder
+        cacs: dict[str, ComponentAttributeClassGt] = {}
+        for type_name in [
+            "RelayCacs",
+            "ResistiveHeaterCacs",
+            "ElectricMeterCacs",
+            "PipeFlowSensorCacs",
+            "MultipurposeSensorCacs",
+            "SimpleTempSensorCacs",
+            "OtherCacs",
+        ]:
+            for cac_dict in layout.get(type_name, ()):
+                try:
+                    cac = cac_decoder.decode(cac_dict)
+                    cacs[cac.ComponentAttributeClassId] = cac
+                except Exception as e:  # noqa: PERF203
+                    if raise_errors:
+                        raise
+                    errors.append(LoadError(type_name, cac_dict, e))
+        return cacs
+
+    @classmethod
+    def get_data_class_name(cls, component_gt: ComponentGt) -> str:
+        gt_class_name = component_gt.__class__.__name__
+        if not gt_class_name.endswith(cls.GT_SUFFIX) or len(gt_class_name) <= len(
+            cls.GT_SUFFIX
+        ):
+            raise DataClassLoadingError(  # noqa: TRY301
+                f"Name of decoded component class ({gt_class_name}) "
+                f"must end with <{cls.GT_SUFFIX}> "
+                f"and be longer than {len(cls.GT_SUFFIX)} chars"
+            )
+        return gt_class_name[: -len(cls.GT_SUFFIX)]
+
+    @classmethod
+    def get_data_class_class(cls, component_gt: ComponentGt) -> Type[Component]:
+        return getattr(
+            gwproto.data_classes.components,
+            cls.get_data_class_name(component_gt),
+            ComponentOnly,
+        )
+
+    @classmethod
+    def make_component(
+        cls, component_gt: ComponentGt, cac: ComponentAttributeClassGt
+    ) -> Component:
+        if cac is None:
+            raise DataClassLoadingError(  # noqa: TRY301
+                f"cac {component_gt.ComponentAttributeClassId} not loaded for component "
+                f"<{component_gt.ComponentId}/<{component_gt.DisplayName}>\n"
+            )
+        return cls.get_data_class_class(component_gt)(gt=component_gt, cac=cac)
+
+    @classmethod
+    def load_components(
+        cls,
+        layout: dict[Any, Any],
+        cacs: dict[str, ComponentAttributeClassGt],
+        *,
+        raise_errors: bool = True,
+        errors: Optional[list[LoadError]] = None,
+        component_decoder: Optional[ComponentDecoder] = None,
+    ) -> dict[str, Component]:
+        if errors is None:
+            errors = []
+        if component_decoder is None:
+            component_decoder = default_component_decoder
+        components = {}
+        for type_name in [
+            "RelayComponents",
+            "ResistiveHeaterComponents",
+            "ElectricMeterComponents",
+            "PipeFlowSensorComponents",
+            "MultipurposeSensorComponents",
+            "SimpleTempSensorComponents",
+            "OtherComponents",
+        ]:
+            for component_dict in layout.get(type_name, ()):
+                try:
+                    component_gt = component_decoder.decode(component_dict)
+                    components[component_gt.ComponentId] = cls.make_component(
+                        component_gt,
+                        cacs.get(component_gt.ComponentAttributeClassId, None),
+                    )
+                except Exception as e:  # noqa: PERF203
+                    if raise_errors:
+                        raise
+                    errors.append(LoadError(type_name, component_dict, e))
+        return components
+
+    @classmethod
+    def load_nodes(
+        cls,
+        layout: dict[Any, Any],
+        *,
+        raise_errors: bool = True,
+        errors: Optional[list[LoadError]] = None,
+        included_node_names: Optional[set[str]] = None,
+    ) -> dict[str, ShNode]:
+        nodes = {}
+        if errors is None:
+            errors = []
+        for node_dict in layout.get("ShNodes", []):
+            try:
+                node_name = node_dict["Alias"]
+                if included_node_names is None or node_name in included_node_names:
+                    nodes[node_name] = ShNode.model_validate(node_dict)
+            except Exception as e:  # noqa: PERF203
+                if raise_errors:
+                    raise
+                errors.append(LoadError("ShNode", node_dict, e))
+        return nodes
+
+    @classmethod
+    def resolve_links(
+        cls,
+        nodes: dict[str, ShNode],
+        components: dict[str, Component],
+        *,
+        raise_errors: bool = True,
+        errors: Optional[list[LoadError]] = None,
+    ) -> None:
+        if errors is None:
+            errors = []
+        for node_name, node in nodes.items():
+            d = {"node": {"name": node_name, "node": node}}
+            try:
+                if node.component_id is not None:
+                    component = components.get(node.component_id, None)
+                    if component is None:
+                        raise DataClassLoadingError(  # noqa: TRY301
+                            f"{node.alias} component {node.component_id} not loaded!"
+                        )
+                    if isinstance(component, ComponentResolver):
+                        component.resolve(
+                            node.alias,
+                            nodes,
+                            components,
+                        )
+            except Exception as e:
+                if raise_errors:
+                    raise
+                errors.append(LoadError("ShNode", d, e))
+
     def __init__(
         self,
         layout: dict[Any, Any],
         *,
-        cacs: Optional[dict[str, ComponentAttributeClassGt]] = None,
-        components: Optional[dict[str, Component]] = None,
-        nodes: Optional[dict[str, ShNode]] = None,
+        cacs: dict[str, ComponentAttributeClassGt],
+        components: dict[str, Component],
+        nodes: dict[str, ShNode],
     ) -> None:
         self.layout = copy.deepcopy(layout)
-        if cacs is None:
-            self.cacs = {}
-        else:
-            self.cacs = dict(cacs)
-        if components is None:
-            self.components = {}
-        else:
-            self.components = dict(components)
+        self.cacs = dict(cacs)
+        self.components = dict(components)
         self.components_by_type = defaultdict(list)
         for component in self.components.values():
             self.components_by_type[type(component)].append(component)
-        if nodes is None:
-            nodes = ShNode.by_id
         self.nodes = dict(nodes)
         self.nodes_by_component = {
             node.component_id: node.alias for node in self.nodes.values()
@@ -240,12 +241,12 @@ class HardwareLayout:
             self.__dict__.pop(cached_prop_name, None)
 
     @classmethod
-    def load(  # noqa: PLR0913, PLR0917, RUF100
+    def load(  # noqa: PLR0913
         cls,
         layout_path: Path | str,
         *,
         included_node_names: Optional[set[str]] = None,
-        raise_errors: bool = True,  # noqa: FBT001, FBT002
+        raise_errors: bool = True,
         errors: Optional[list[LoadError]] = None,
         cac_decoder: Optional[CacDecoder] = None,
         component_decoder: Optional[ComponentDecoder] = None,
@@ -262,7 +263,7 @@ class HardwareLayout:
         )
 
     @classmethod
-    def load_dict(  # noqa: PLR0913, PLR0917, RUF100
+    def load_dict(  # noqa: PLR0913
         cls,
         layout: dict[Any, Any],
         *,
@@ -274,30 +275,31 @@ class HardwareLayout:
     ) -> "HardwareLayout":
         if errors is None:
             errors = []
+        cacs = cls.load_cacs(
+            layout=layout,
+            raise_errors=raise_errors,
+            errors=errors,
+            cac_decoder=cac_decoder,
+        )
         load_args = {
-            "cacs": load_cacs(
+            "cacs": cacs,
+            "components": cls.load_components(
                 layout=layout,
-                raise_errors=raise_errors,
-                errors=errors,
-                cac_decoder=cac_decoder,
-            ),
-            "components": load_components(
-                layout=layout,
+                cacs=cacs,
                 raise_errors=raise_errors,
                 errors=errors,
                 component_decoder=component_decoder,
             ),
-            "nodes": load_nodes(
+            "nodes": cls.load_nodes(
                 layout=layout,
                 raise_errors=raise_errors,
                 errors=errors,
                 included_node_names=included_node_names,
             ),
         }
-        resolve_links(
+        cls.resolve_links(
             load_args["nodes"],
             load_args["components"],
-            load_args["cacs"],
             raise_errors=raise_errors,
             errors=errors,
         )
@@ -310,7 +312,7 @@ class HardwareLayout:
         return self.component_from_node(self.node(node_alias, None))
 
     def cac(self, node_alias: str) -> Optional[ComponentAttributeClassGt]:
-        return self.cac_from_component(self.component(node_alias))
+        return self.component(node_alias).cac
 
     def get_component_as_type(self, component_id: str, type_: Type[T]) -> Optional[T]:
         component = self.components.get(component_id, None)
@@ -340,18 +342,6 @@ class HardwareLayout:
                 node.component_id if node.component_id is not None else "", None
             )
             if node is not None
-            else None
-        )
-
-    def cac_from_component(
-        self, component: Optional[Component]
-    ) -> Optional[ComponentAttributeClassGt]:
-        return (
-            self.cacs.get(
-                component.component_attribute_class_id if component is not None else "",
-                None,
-            )
-            if component is not None
             else None
         )
 
@@ -432,7 +422,7 @@ class HardwareLayout:
                 SensorNode=self.power_meter_node,
                 TelemetryName=config.TelemetryName,
             )
-            for config in self.power_meter_component.config_list
+            for config in self.power_meter_component.gt.ConfigList
         ]
 
     @cached_property
@@ -450,12 +440,10 @@ class HardwareLayout:
 
     @cached_property
     def power_meter_cac(self) -> ElectricMeterCac:
-        if not isinstance(
-            self.power_meter_component.component_attribute_class, ElectricMeterCac
-        ):
+        if not isinstance(self.power_meter_component.cac, ElectricMeterCac):
             raise TypeError(
-                f"ERROR. power_meter_component cac {self.power_meter_component.component_attribute_class}"
-                f" / {type(self.power_meter_component.component_attribute_class)} is not an ElectricMeterCac"
+                f"ERROR. power_meter_component cac {self.power_meter_component.cac}"
+                f" / {type(self.power_meter_component.cac)} is not an ElectricMeterCac"
             )
         return self.power_meter_node.component.component_attribute_class  # type: ignore[union-attr, return-value]
 

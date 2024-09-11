@@ -2,9 +2,11 @@ from typing import Optional
 
 import yarl
 
-from gwproto.data_classes.component import Component
+from gwproto.data_classes.components import HubitatComponent
+from gwproto.data_classes.components.component import Component
 from gwproto.data_classes.resolver import ComponentResolver
 from gwproto.data_classes.sh_node import ShNode
+from gwproto.types import HubitatTankCacGt, HubitatTankComponentGt
 from gwproto.types.hubitat_component_gt import (
     HubitatComponentGt,
     HubitatRESTResolutionSettings,
@@ -12,43 +14,38 @@ from gwproto.types.hubitat_component_gt import (
 from gwproto.types.hubitat_tank_gt import (
     FibaroTempSensorSettings,
     FibaroTempSensorSettingsGt,
-    HubitatTankSettingsGt,
 )
 from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
 
 
-class HubitatTankComponent(Component, ComponentResolver):
+class HubitatTankComponent(
+    Component[HubitatTankComponentGt, HubitatTankCacGt], ComponentResolver
+):
     hubitat: HubitatComponentGt
-    sensor_supply_voltage: float
-    default_poll_period_seconds: Optional[float] = None
     devices_gt: list[FibaroTempSensorSettingsGt]
     devices: list[FibaroTempSensorSettings]
-    web_listen_enabled: bool
 
-    def __init__(
-        self,
-        component_id: str,
-        component_attribute_class_id: str,
-        tank_gt: HubitatTankSettingsGt,
-        display_name: Optional[str] = None,
-        hw_uid: Optional[str] = None,
-    ) -> None:
+    def __init__(self, gt: HubitatTankComponentGt, cac: HubitatTankCacGt) -> None:
+        super().__init__(gt, cac)
         # Create self.hubitat as a proxy containing only the id
         # of the hubitat; the actual component data will be resolved
         # when resolve() is called; Here in the constructor we cannot
         # rely on the actual HubitatComponentGt existing yet.
-        self.hubitat = HubitatComponentGt.make_stub(tank_gt.hubitat_component_id)
-        self.sensor_supply_voltage = tank_gt.sensor_supply_voltage
-        self.default_poll_period_seconds = tank_gt.default_poll_period_seconds
-        self.devices_gt = list(tank_gt.devices)
-        self.web_listen_enabled = tank_gt.web_listen_enabled
+        self.hubitat = HubitatComponentGt.make_stub(self.gt.Tank.hubitat_component_id)
+        self.devices_gt = list(self.gt.Tank.devices)
         self.devices = []
-        super().__init__(
-            display_name=display_name,
-            component_id=component_id,
-            hw_uid=hw_uid,
-            component_attribute_class_id=component_attribute_class_id,
-        )
+
+    @property
+    def sensor_supply_voltage(self) -> float:
+        return self.gt.Tank.sensor_supply_voltage
+
+    @property
+    def default_poll_period_seconds(self) -> Optional[float]:
+        return self.gt.Tank.default_poll_period_seconds
+
+    @property
+    def web_listen_enabled(self) -> bool:
+        return self.gt.Tank.web_listen_enabled
 
     def resolve(
         self,
@@ -56,11 +53,15 @@ class HubitatTankComponent(Component, ComponentResolver):
         nodes: dict[str, ShNode],
         components: dict[str, Component],
     ) -> None:
-        hubitat_component = HubitatComponentGt.from_component_id(
-            self.hubitat.ComponentId, components
-        )
-        hubitat_component_gt = HubitatComponentGt.from_data_class(hubitat_component)
-        hubitat_settings = HubitatRESTResolutionSettings(hubitat_component_gt)
+        hubitat_component = components.get(self.hubitat.ComponentId, None)
+        if hubitat_component is None or not isinstance(
+            hubitat_component, HubitatComponent
+        ):
+            raise ValueError(
+                f"ERROR. Component for {self.hubitat.ComponentId} "
+                f"has type <{type(hubitat_component)}>. Expected <HubitatComponent>"
+            )
+        hubitat_settings = HubitatRESTResolutionSettings(hubitat_component.gt)
         devices = [
             FibaroTempSensorSettings.create(
                 tank_name=tank_node_name,
@@ -78,11 +79,11 @@ class HubitatTankComponent(Component, ComponentResolver):
                 )
         # replace proxy hubitat component, which only had component id.
         # with the actual hubitat component containing data.
-        self.hubitat = hubitat_component_gt
+        self.hubitat = hubitat_component.gt
         self.devices = devices
 
         # register voltage attribute for fibaros which accept web posts
-        if self.web_listen_enabled and hubitat_component.hubitat_gt.WebListenEnabled:
+        if self.web_listen_enabled and hubitat_component.gt.Hubitat.WebListenEnabled:
             for device in self.devices:
                 if device.web_listen_enabled:
                     hubitat_component.add_web_listener(tank_node_name)

@@ -1,14 +1,11 @@
 """List of all the types"""
 
-from gwproto.types.component_attribute_class_gt import (
-    ComponentAttributeClassGt,
-)
-from gwproto.types.component_gt import ComponentGt, ComponentGt_Maker
+from gwproto.types.component_attribute_class_gt import ComponentAttributeClassGt
+from gwproto.types.component_gt import ComponentGt
 from gwproto.types.data_channel import DataChannel, DataChannel_Maker
-from gwproto.types.egauge_io import EgaugeIo, EgaugeIo_Maker
+from gwproto.types.egauge_io import EgaugeIo
 from gwproto.types.egauge_register_config import (
     EgaugeRegisterConfig,
-    EgaugeRegisterConfig_Maker,
 )
 from gwproto.types.electric_meter_cac_gt import (
     ElectricMeterCacGt,
@@ -18,7 +15,6 @@ from gwproto.types.fibaro_smart_implant_cac_gt import (
 )
 from gwproto.types.fibaro_smart_implant_component_gt import (
     FibaroSmartImplantComponentGt,
-    FibaroSmartImplantComponentGt_Maker,
 )
 from gwproto.types.gt_dispatch_boolean import GtDispatchBoolean, GtDispatchBoolean_Maker
 from gwproto.types.gt_dispatch_boolean_local import (
@@ -58,12 +54,10 @@ from gwproto.types.hubitat_poller_cac_gt import (
 )
 from gwproto.types.hubitat_poller_component_gt import (
     HubitatPollerComponentGt,
-    HubitatPollerComponentGt_Maker,
 )
 from gwproto.types.hubitat_tank_cac_gt import HubitatTankCacGt
 from gwproto.types.hubitat_tank_component_gt import (
     HubitatTankComponentGt,
-    HubitatTankComponentGt_Maker,
 )
 from gwproto.types.multipurpose_sensor_cac_gt import (
     MultipurposeSensorCacGt,
@@ -73,36 +67,31 @@ from gwproto.types.pipe_flow_sensor_cac_gt import (
 )
 from gwproto.types.pipe_flow_sensor_component_gt import (
     PipeFlowSensorComponentGt,
-    PipeFlowSensorComponentGt_Maker,
 )
 from gwproto.types.power_watts import PowerWatts, PowerWatts_Maker
 from gwproto.types.relay_cac_gt import RelayCacGt
-from gwproto.types.relay_component_gt import RelayComponentGt, RelayComponentGt_Maker
+from gwproto.types.relay_component_gt import RelayComponentGt
 from gwproto.types.resistive_heater_cac_gt import (
     ResistiveHeaterCacGt,
 )
 from gwproto.types.resistive_heater_component_gt import (
     ResistiveHeaterComponentGt,
-    ResistiveHeaterComponentGt_Maker,
 )
 from gwproto.types.rest_poller_cac_gt import RESTPollerCacGt
 from gwproto.types.rest_poller_component_gt import (
     RESTPollerComponentGt,
-    RESTPollerComponentGt_Maker,
 )
 from gwproto.types.simple_temp_sensor_cac_gt import (
     SimpleTempSensorCacGt,
 )
 from gwproto.types.simple_temp_sensor_component_gt import (
     SimpleTempSensorComponentGt,
-    SimpleTempSensorComponentGt_Maker,
 )
 from gwproto.types.snapshot_spaceheat import SnapshotSpaceheat, SnapshotSpaceheat_Maker
-from gwproto.types.spaceheat_node_gt import SpaceheatNodeGt, SpaceheatNodeGt_Maker
+from gwproto.types.spaceheat_node_gt import SpaceheatNodeGt
 from gwproto.types.ta_data_channels import TaDataChannels, TaDataChannels_Maker
 from gwproto.types.telemetry_reporting_config import (
     TelemetryReportingConfig,
-    TelemetryReportingConfig_Maker,
 )
 from gwproto.types.telemetry_snapshot_spaceheat import (
     TelemetrySnapshotSpaceheat,
@@ -113,19 +102,14 @@ from gwproto.types.web_server_gt import WebServerGt
 __all__ = [
     "ComponentAttributeClassGt",
     "ComponentGt",
-    "ComponentGt_Maker",
     "DataChannel",
     "DataChannel_Maker",
     "EgaugeIo",
-    "EgaugeIo_Maker",
     "EgaugeRegisterConfig",
-    "EgaugeRegisterConfig_Maker",
     "ElectricMeterCacGt",
     # "ElectricMeterComponentGt",
-    # "ElectricMeterComponentGt_Maker",
     "FibaroSmartImplantCacGt",
     "FibaroSmartImplantComponentGt",
-    "FibaroSmartImplantComponentGt_Maker",
     "GtDispatchBoolean",
     "GtDispatchBooleanLocal",
     "GtDispatchBooleanLocal_Maker",
@@ -152,39 +136,31 @@ __all__ = [
     "HubitatComponentGt",
     "HubitatPollerCacGt",
     "HubitatPollerComponentGt",
-    "HubitatPollerComponentGt_Maker",
     "HubitatTankCacGt",
     "HubitatTankComponentGt",
-    "HubitatTankComponentGt_Maker",
     "MultipurposeSensorCacGt",
     # "MultipurposeSensorComponentGt",
-    # "MultipurposeSensorComponentGt_Maker",
     "PipeFlowSensorCacGt",
     "PipeFlowSensorComponentGt",
-    "PipeFlowSensorComponentGt_Maker",
     "PowerWatts",
     "PowerWatts_Maker",
     "RESTPollerCacGt",
     "RESTPollerComponentGt",
-    "RESTPollerComponentGt_Maker",
     "RelayCacGt",
     "RelayComponentGt",
-    "RelayComponentGt_Maker",
     "ResistiveHeaterCacGt",
     "ResistiveHeaterComponentGt",
-    "ResistiveHeaterComponentGt_Maker",
     "SimpleTempSensorCacGt",
     "SimpleTempSensorComponentGt",
-    "SimpleTempSensorComponentGt_Maker",
     "SnapshotSpaceheat",
     "SnapshotSpaceheat_Maker",
     "SpaceheatNodeGt",
-    "SpaceheatNodeGt_Maker",
     "TaDataChannels",
     "TaDataChannels_Maker",
     "TelemetryReportingConfig",
-    "TelemetryReportingConfig_Maker",
     "TelemetrySnapshotSpaceheat",
     "TelemetrySnapshotSpaceheat_Maker",
     "WebServerGt",
+    "cacs",  # noqa: F822
+    "components",  # noqa: F822
 ]

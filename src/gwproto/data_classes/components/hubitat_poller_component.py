@@ -2,36 +2,25 @@ from typing import Optional
 
 import yarl
 
-from gwproto.data_classes.component import Component
+from gwproto.data_classes.components import HubitatComponent
+from gwproto.data_classes.components.component import Component
 from gwproto.data_classes.resolver import ComponentResolver
 from gwproto.data_classes.sh_node import ShNode
+from gwproto.types import HubitatPollerCacGt, HubitatPollerComponentGt
 from gwproto.types.hubitat_component_gt import HubitatComponentGt
-from gwproto.types.hubitat_poller_gt import HubitatPollerGt
 from gwproto.types.rest_poller_gt import RequestArgs, RESTPollerSettings
 from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
 
 
-class HubitatPollerComponent(Component, ComponentResolver):
+class HubitatPollerComponent(
+    Component[HubitatPollerComponentGt, HubitatPollerCacGt], ComponentResolver
+):
     hubitat_gt: HubitatComponentGt
-    poller_gt: HubitatPollerGt
     _rest: Optional[RESTPollerSettings] = None
 
-    def __init__(
-        self,
-        component_id: str,
-        component_attribute_class_id: str,
-        poller_gt: HubitatPollerGt,
-        display_name: Optional[str] = None,
-        hw_uid: Optional[str] = None,
-    ) -> None:
-        self.hubitat_gt = HubitatComponentGt.make_stub(poller_gt.hubitat_component_id)
-        self.poller_gt = poller_gt
-        super().__init__(
-            component_id=component_id,
-            component_attribute_class_id=component_attribute_class_id,
-            display_name=display_name,
-            hw_uid=hw_uid,
-        )
+    def __init__(self, gt: HubitatPollerComponentGt, cac: HubitatPollerCacGt) -> None:
+        super().__init__(gt, cac)
+        self.hubitat_gt = HubitatComponentGt.make_stub(gt.Poller.hubitat_component_id)
 
     @property
     def rest(self) -> RESTPollerSettings:
@@ -55,32 +44,36 @@ class HubitatPollerComponent(Component, ComponentResolver):
 
         # replace proxy hubitat component, which only had component id.
         # with the actual hubitat component containing data.
-        hubitat_component = HubitatComponentGt.from_component_id(
-            self.hubitat_gt.ComponentId,
-            components,
-        )
-        self.hubitat_gt = HubitatComponentGt.from_data_class(hubitat_component)
+        hubitat_component = components.get(self.hubitat_gt.ComponentId, None)
+        if hubitat_component is None or not isinstance(
+            hubitat_component, HubitatComponent
+        ):
+            raise ValueError(
+                f"ERROR. Component for {self.hubitat_gt.ComponentId} "
+                f"has type <{type(hubitat_component)}>. Expected <HubitatComponent>"
+            )
+        self.hubitat_gt = hubitat_component.gt
 
         # Constuct url config on top of maker api url url config
         self._rest = RESTPollerSettings(
             request=RequestArgs(
-                url=self.hubitat_gt.refresh_url_config(self.poller_gt.device_id)
+                url=self.hubitat_gt.refresh_url_config(self.gt.Poller.device_id)
             ),
-            poll_period_seconds=self.poller_gt.poll_period_seconds,
+            poll_period_seconds=self.gt.Poller.poll_period_seconds,
         )
 
         # register attributes which accept web posts
         if (
-            self.poller_gt.web_listen_enabled
-            and hubitat_component.hubitat_gt.WebListenEnabled
+            self.gt.Poller.web_listen_enabled
+            and hubitat_component.gt.Hubitat.WebListenEnabled
         ):
-            for attribute in self.poller_gt.attributes:
+            for attribute in self.gt.Poller.attributes:
                 if attribute.web_listen_enabled:
                     hubitat_component.add_web_listener(node_name)
 
     def urls(self) -> dict[str, Optional[yarl.URL]]:
         urls = self.hubitat_gt.urls()
-        for attribute in self.poller_gt.attributes:
+        for attribute in self.gt.Poller.attributes:
             urls[attribute.node_name] = self.rest.url
         return urls
 
@@ -95,5 +88,5 @@ class HubitatPollerComponent(Component, ComponentResolver):
                 Exponent=attribute.exponent,
                 Unit=attribute.unit,
             )
-            for attribute in self.poller_gt.attributes
+            for attribute in self.gt.Poller.attributes
         ]

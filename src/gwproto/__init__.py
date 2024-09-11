@@ -20,7 +20,6 @@ from gwproto.decoders import (
 from gwproto.default_decoders import (
     CacDecoder,
     ComponentDecoder,
-    decode_to_data_class,
     default_cac_decoder,
     default_component_decoder,
 )
@@ -52,7 +51,6 @@ __all__ = [
     "as_enum",
     "create_discriminator",
     "create_message_payload_discriminator",
-    "decode_to_data_class",
     "default_cac_decoder",
     "default_component_decoder",
     "get_pydantic_literal_type_name",

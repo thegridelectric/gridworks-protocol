@@ -2,8 +2,9 @@
 
 from typing import Optional
 
+from pydantic import ConfigDict
+
 from gwproto.data_classes.components.component import Component
-from gwproto.data_classes.errors import DataClassLoadingError
 from gwproto.enums import ActorClass, Role
 from gwproto.types import SpaceheatNodeGt
 
@@ -16,6 +17,12 @@ class ShNode(SpaceheatNodeGt):
     (an actor measuring multiple temperatures, or an actor responsible for filtering/smoothing
     temperature data for the purposes of thermostatic control).
     """
+
+    component: Optional[Component] = None
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+
+    def __hash__(self) -> int:
+        return hash((type(self), *self.__dict__.values()))
 
     @property
     def sh_node_id(self) -> str:
@@ -60,13 +67,3 @@ class ShNode(SpaceheatNodeGt):
     @property
     def has_actor(self) -> bool:
         return self.actor_class != ActorClass.NoActor
-
-    @property
-    def component(self) -> Optional[Component]:
-        if self.component_id is None:
-            return None
-        if self.component_id not in Component.by_id:
-            raise DataClassLoadingError(
-                f"{self.alias} component {self.component_id} not loaded!"
-            )
-        return Component.by_id[self.component_id]

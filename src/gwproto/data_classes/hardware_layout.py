@@ -160,9 +160,24 @@ class HardwareLayout:
         return components
 
     @classmethod
+    def make_node(cls, node_dict: dict, components: dict[str, Component]) -> ShNode:
+        component_id = node_dict.get("ComponentId")
+        if component_id:
+            component = components.get(component_id)
+            if component is None:
+                raise ValueError(
+                    f"ERROR. Component <{component_id}> not loaded "
+                    f"for node <{node_dict.get('Alias')}>"
+                )
+        else:
+            component = None
+        return ShNode(component=component, **node_dict)
+
+    @classmethod
     def load_nodes(
         cls,
         layout: dict[Any, Any],
+        components: dict[str, Component],
         *,
         raise_errors: bool = True,
         errors: Optional[list[LoadError]] = None,
@@ -175,7 +190,7 @@ class HardwareLayout:
             try:
                 node_name = node_dict["Alias"]
                 if included_node_names is None or node_name in included_node_names:
-                    nodes[node_name] = ShNode.model_validate(node_dict)
+                    nodes[node_name] = cls.make_node(node_dict, components)
             except Exception as e:  # noqa: PERF203
                 if raise_errors:
                     raise
@@ -281,17 +296,19 @@ class HardwareLayout:
             errors=errors,
             cac_decoder=cac_decoder,
         )
+        components = cls.load_components(
+            layout=layout,
+            cacs=cacs,
+            raise_errors=raise_errors,
+            errors=errors,
+            component_decoder=component_decoder,
+        )
         load_args = {
             "cacs": cacs,
-            "components": cls.load_components(
-                layout=layout,
-                cacs=cacs,
-                raise_errors=raise_errors,
-                errors=errors,
-                component_decoder=component_decoder,
-            ),
+            "components": components,
             "nodes": cls.load_nodes(
                 layout=layout,
+                components=components,
                 raise_errors=raise_errors,
                 errors=errors,
                 included_node_names=included_node_names,

@@ -22,7 +22,7 @@ class ShNode(SpaceheatNodeGt):
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
     def __hash__(self) -> int:
-        return hash((type(self), *self.__dict__.values()))
+        return hash(self.ShNodeId)
 
     @property
     def sh_node_id(self) -> str:

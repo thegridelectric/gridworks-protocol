@@ -114,10 +114,10 @@ def assert_component_load(
                 exp_component_gt = case.exp_component_gt_type(**exp_component_gt)
             if case.exp_component is None:
                 cac = cacs[exp_component_gt.ComponentAttributeClassId]
-                exp_component = case.exp_component_type(gt=exp_component_gt, cac=cac)
+                exp_component = case.exp_component_type(exp_component_gt, cac)
             else:
                 exp_component = case.exp_component
-            if load_result.loaded != exp_component:
+            if load_result.loaded.__dict__ != exp_component.__dict__:
                 errors.append(
                     ComponentMatchError(
                         case_idx=case_idx,

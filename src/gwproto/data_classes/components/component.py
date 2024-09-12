@@ -2,20 +2,22 @@
 
 from typing import Generic, TypeVar
 
-from pydantic import BaseModel
-
 from gwproto.types import ComponentAttributeClassGt, ComponentGt
 
 ComponentT = TypeVar("ComponentT", bound=ComponentGt)
 CacT = TypeVar("CacT", bound=ComponentAttributeClassGt)
 
 
-class Component(BaseModel, Generic[ComponentT, CacT]):
+class Component(Generic[ComponentT, CacT]):
     gt: ComponentT
     cac: CacT
+
+    def __init__(self, gt: ComponentT, cac: CacT) -> None:
+        self.gt = gt
+        self.cac = cac
 
     def __repr__(self) -> str:
         return f"<{self.gt.DisplayName}>  ({self.cac.MakeModel.value})"
 
 
-class ComponentOnly(Component[ComponentGt, Component]): ...
+class ComponentOnly(Component[ComponentGt, ComponentAttributeClassGt]): ...

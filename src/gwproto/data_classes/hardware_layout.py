@@ -15,7 +15,6 @@ from pathlib import Path
 from typing import Any, List, Optional, Type, TypeVar
 
 import gwproto.data_classes.components
-from gwproto.data_classes.cacs.electric_meter_cac import ElectricMeterCac
 from gwproto.data_classes.components import Component
 from gwproto.data_classes.components.component import ComponentOnly
 from gwproto.data_classes.components.electric_meter_component import (
@@ -35,6 +34,7 @@ from gwproto.enums import ActorClass, Role, TelemetryName
 from gwproto.types import (
     ComponentAttributeClassGt,
     ComponentGt,
+    ElectricMeterCacGt,
 )
 
 T = TypeVar("T")
@@ -456,8 +456,8 @@ class HardwareLayout:
         return typing.cast(ElectricMeterComponent, self.power_meter_node.component)
 
     @cached_property
-    def power_meter_cac(self) -> ElectricMeterCac:
-        if not isinstance(self.power_meter_component.cac, ElectricMeterCac):
+    def power_meter_cac(self) -> ElectricMeterCacGt:
+        if not isinstance(self.power_meter_component.cac, ElectricMeterCacGt):
             raise TypeError(
                 f"ERROR. power_meter_component cac {self.power_meter_component.cac}"
                 f" / {type(self.power_meter_component.cac)} is not an ElectricMeterCac"

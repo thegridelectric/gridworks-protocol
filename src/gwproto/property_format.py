@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 from typing import Annotated, Any, Callable, List
 
 import pydantic
-from pydantic import BeforeValidator
+from pydantic import BeforeValidator, Field
 
 
 def predicate_validator(
@@ -73,6 +73,29 @@ def is_hex_char(v: str) -> bool:
     if len(v) > 1:
         return False
     return not v not in "0123456789abcdefABCDEF"
+
+
+def check_is_hex_char(v: str) -> None:
+    """Checks HexChar format
+
+    HexChar format: single-char string in '0123456789abcdefABCDEF'
+
+    Args:
+        v (str): the candidate
+
+    Raises:
+        ValueError: if v is not HexChar format
+    """
+    if not isinstance(v, str):
+        raise ValueError(f"<{v}> must be string. Got type <{type(v)}")  # noqa: TRY004
+    if len(v) > 1:
+        raise ValueError(f"<{v}> must be a hex char, but not of len 1")
+    if v not in "0123456789abcdefABCDEF":
+        raise ValueError(f"<{v}> must be one of '0123456789abcdefABCDEF'")
+    return v
+
+
+HexChar = Annotated[str, BeforeValidator(check_is_hex_char)]
 
 
 def is_valid_asa_name(candidate: str) -> bool:
@@ -258,6 +281,17 @@ def is_reasonable_unix_time_ms(candidate: int) -> bool:
     return (
         int(datetime(3000, 1, 1, tzinfo=timezone.utc).timestamp() * 1000) >= candidate
     )
+
+
+UTC_2000_01_01_TIMESTAMP = datetime(2000, 1, 1, tzinfo=timezone.utc).timestamp()
+UTC_3000_01_01_TIMESTAMP = datetime(3000, 1, 1, tzinfo=timezone.utc).timestamp()
+
+UTCSeconds = Annotated[
+    int, Field(ge=UTC_2000_01_01_TIMESTAMP, le=UTC_3000_01_01_TIMESTAMP)
+]
+UTCMilliseconds = Annotated[
+    int, Field(ge=UTC_2000_01_01_TIMESTAMP * 1000, le=UTC_3000_01_01_TIMESTAMP * 1000)
+]
 
 
 def check_is_reasonable_unix_time_ms(candidate: int) -> None:

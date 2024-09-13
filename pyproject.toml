@@ -130,6 +130,8 @@ ignore = [
     "E272", # Formatter
     "E241", # Formatter
     "E302",
+    "E303", # Formatter
+    "E305", # Formatter
     "E501",
     "EM",
     "FA", # We only support Python >= 3.10, so we shouldn't need this

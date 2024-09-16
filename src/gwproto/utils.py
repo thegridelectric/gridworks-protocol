@@ -13,10 +13,3 @@ def snake_to_camel(word: str) -> str:
 
 def rld_alias(alias: str) -> str:
     return ".".join(reversed(alias.split(".")))
-
-
-MAC_REGEX = re.compile("[0-9a-f]{2}([-:]?)[0-9a-f]{2}(\\1[0-9a-f]{2}){4}$")
-
-
-def has_mac_address_format(mac_str: str) -> bool:
-    return bool(MAC_REGEX.match(mac_str.lower()))

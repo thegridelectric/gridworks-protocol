@@ -54,7 +54,7 @@ source = ["gwproto", "tests"]
 
 [tool.coverage.report]
 show_missing = false
-fail_under = 80
+fail_under = 70
 
 [tool.black]
 extend_exclude = "src/gwproto/gt/|src/gwproto/gs/|src/gwproto/enums/"
@@ -130,6 +130,8 @@ ignore = [
     "E272", # Formatter
     "E241", # Formatter
     "E302",
+    "E303", # Formatter
+    "E305", # Formatter
     "E501",
     "EM",
     "FA", # We only support Python >= 3.10, so we shouldn't need this

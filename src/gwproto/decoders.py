@@ -54,7 +54,9 @@ class MQTTCodec(abc.ABC):
         cls, e: ValidationError
     ) -> Optional[ErrorDetails]:
         for error in e.errors():
-            if error.get("type", "") == "union_tag_invalid" and error.get("loc"):
+            if error.get("type", "") == "union_tag_invalid" and error.get("loc") == (
+                "Payload",
+            ):
                 ctx = error.get("ctx", {})
                 if ctx.get("discriminator") == "'TypeName'":
                     return error

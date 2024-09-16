@@ -79,10 +79,6 @@ def is_short_integer(candidate: int) -> bool:
     return True
 
 
-def is_bit(candidate: int) -> bool:
-    return not candidate not in {0, 1}
-
-
 def check_is_hex_char(v: str) -> str:
     """Checks HexChar format
 
@@ -145,6 +141,16 @@ def str_is_valid_uuid4(v: str) -> str:
     return str(u)
 
 
+def is_bit(candidate: int) -> bool:
+    return not candidate not in (0, 1)
+
+
+def check_is_bit(candidate: int) -> int:
+    if candidate not in (0, 1):
+        raise ValueError(f"Candidate must be 0 or 1, Got {candidate}")
+    return candidate
+
+
 HexChar = Annotated[str, BeforeValidator(check_is_hex_char)]
 
 LeftRightDotStr = Annotated[str, BeforeValidator(check_is_left_right_dot)]
@@ -158,3 +164,5 @@ UTCSeconds = Annotated[
 UTCMilliseconds = Annotated[
     int, Field(ge=UTC_2000_01_01_TIMESTAMP * 1000, le=UTC_3000_01_01_TIMESTAMP * 1000)
 ]
+
+Bit = Annotated[int, BeforeValidator(check_is_bit)]

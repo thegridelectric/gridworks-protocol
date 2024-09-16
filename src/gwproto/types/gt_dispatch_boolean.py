@@ -4,7 +4,7 @@ from typing import Literal
 
 from pydantic import BaseModel, Field
 
-from gwproto.property_format import LeftRightDotStr, UTCMilliseconds, UUID4Str
+from gwproto.property_format import Bit, LeftRightDotStr, UTCMilliseconds, UUID4Str
 
 
 class GtDispatchBoolean(BaseModel):
@@ -18,7 +18,7 @@ class GtDispatchBoolean(BaseModel):
     ToGNodeAlias: LeftRightDotStr
     FromGNodeAlias: LeftRightDotStr
     FromGNodeInstanceId: UUID4Str
-    RelayState: bool = Field(
+    RelayState: Bit = Field(
         title="Relay State (False or True)",
         description=(
             "A Relay State of `False` indicates the relay is OPEN (off). A Relay State of `True` indicates "

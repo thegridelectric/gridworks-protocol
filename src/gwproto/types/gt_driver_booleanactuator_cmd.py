@@ -4,7 +4,7 @@ from typing import Literal
 
 from pydantic import BaseModel
 
-from gwproto.property_format import LeftRightDotStr, UTCMilliseconds
+from gwproto.property_format import Bit, LeftRightDotStr, UTCMilliseconds
 
 
 class GtDriverBooleanactuatorCmd(BaseModel):
@@ -17,7 +17,7 @@ class GtDriverBooleanactuatorCmd(BaseModel):
     [More info](https://gridworks.readthedocs.io/en/latest/relay-state.html)
     """
 
-    RelayState: bool
+    RelayState: Bit
     ShNodeAlias: LeftRightDotStr
     CommandTimeUnixMs: UTCMilliseconds
     TypeName: Literal["gt.driver.booleanactuator.cmd"] = "gt.driver.booleanactuator.cmd"

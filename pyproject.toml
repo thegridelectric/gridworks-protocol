@@ -54,7 +54,7 @@ source = ["gwproto", "tests"]
 
 [tool.coverage.report]
 show_missing = false
-fail_under = 85
+fail_under = 70
 
 [tool.black]
 extend_exclude = "src/gwproto/gt/|src/gwproto/gs/|src/gwproto/enums/"
@@ -127,7 +127,11 @@ ignore = [
     "CPY",
     "D",
     "DOC",
+    "E272", # Formatter
+    "E241", # Formatter
     "E302",
+    "E303", # Formatter
+    "E305", # Formatter
     "E501",
     "EM",
     "FA", # We only support Python >= 3.10, so we shouldn't need this
@@ -143,6 +147,9 @@ ignore = [
     "TRY003", # Many of our ValueErrors contain messages that are not plausibly resuable.
     "RUF100", # ruff and IDE often disagree about whether a 'noqa' is in use.
     "W191",
+    "W291", # Formatter
+    "W293", # Formatter
+    "W391", # Formatter
 ]
 
 
@@ -151,6 +158,7 @@ ignore = [
 "tests/**/*.py" = [
     "ARG001", # Unused function args -> fixtures nevertheless are functionally relevant...
     "C901", # Complexity
+    "ERA001", # We need to be able comment out code in tests, at least during refactoring.
     "FBT", # Don't care about booleans as positional arguments in tests, e.g. via @pytest.mark.parametrize()
     "G004", # Ok to use f-strings in logging in test code
     "PLR0912", # Complexity

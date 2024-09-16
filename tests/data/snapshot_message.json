@@ -31,7 +31,7 @@
       ],
       "ReportTimeUnixMs": 1676592300011,
       "TypeName": "telemetry.snapshot.spaceheat",
-      "Version": "100",
+      "Version": "000",
       "TelemetryNameList": [
         "5a71d4b3",
         "5a71d4b3",
@@ -49,7 +49,7 @@
       ]
     },
     "TypeName": "snapshot.spaceheat",
-    "Version": "100"
+    "Version": "000"
   },
   "TypeName": "gw"
 }

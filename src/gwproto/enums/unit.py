@@ -1,10 +1,10 @@
 from enum import auto
 from typing import List
 
-from gwproto.enums.better_str_enum import BetterStrEnum as StrEnum
+from gwproto.enums.symbolized import SymbolizedEnum
 
 
-class Unit(StrEnum):
+class Unit(SymbolizedEnum):
     """
     Specifies the physical unit of sensed data reported by SCADA
 
@@ -47,13 +47,6 @@ class Unit(StrEnum):
         Returns default value (in this case Unknown)
         """
         return cls.Unknown
-
-    @classmethod
-    def values(cls) -> List[str]:
-        """
-        Returns enum choices
-        """
-        return [elt.value for elt in cls]  # noqa: ALL
 
     @classmethod
     def version(cls, value: str) -> str:

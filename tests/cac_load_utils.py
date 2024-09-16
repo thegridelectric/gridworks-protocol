@@ -1,10 +1,7 @@
 from dataclasses import dataclass, field
 from typing import Optional, Type
 
-from gwproto import CacDecoder, default_cac_decoder
-from gwproto.data_classes.hardware_layout import (
-    load_cacs,
-)
+from gwproto import CacDecoder, HardwareLayout, default_cac_decoder
 from gwproto.types import ComponentAttributeClassGt
 
 
@@ -68,7 +65,7 @@ def _decode_cac(case: CacCase, decoder: Optional[CacDecoder]) -> CacLoadResult:
     )
     cac_id = cac_dict["ComponentAttributeClassId"]
     try:
-        loaded_cac = load_cacs(
+        loaded_cac = HardwareLayout.load_cacs(
             layout={"OtherCacs": [cac_dict]},
             raise_errors=True,
             cac_decoder=decoder,

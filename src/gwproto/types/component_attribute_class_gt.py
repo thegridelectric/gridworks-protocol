@@ -5,7 +5,7 @@ from typing import Literal, Optional
 from pydantic import BaseModel
 
 from gwproto.enums import MakeModel
-from gwproto.utils import UUID4Str
+from gwproto.property_format import UUID4Str
 
 
 class ComponentAttributeClassGt(BaseModel):

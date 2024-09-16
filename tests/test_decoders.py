@@ -9,9 +9,6 @@ from gwproto import Message
 from gwproto.messages import (
     Ack,
     AnyEvent,
-    GtDispatchBoolean_Maker,
-    GtShCliAtnCmd_Maker,
-    GtShStatus_Maker,
     GtShStatusEvent,
     MQTTConnectEvent,
     MQTTConnectFailedEvent,
@@ -19,14 +16,19 @@ from gwproto.messages import (
     MQTTFullySubscribedEvent,
     PeerActiveEvent,
     PingMessage,
-    PowerWatts_Maker,
     ProblemEvent,
     Problems,
     ResponseTimeoutEvent,
     ShutdownEvent,
-    SnapshotSpaceheat_Maker,
     SnapshotSpaceheatEvent,
     StartupEvent,
+)
+from gwproto.types import (
+    GtDispatchBoolean,
+    GtShCliAtnCmd,
+    GtShStatus,
+    PowerWatts,
+    SnapshotSpaceheat,
 )
 from tests.dummy_decoders import CHILD, PARENT
 from tests.dummy_decoders.child.codec import ChildMQTTCodec
@@ -53,7 +55,7 @@ def child_to_parent_payload_dicts() -> dict:
 def child_to_parent_messages() -> list[MessageCase]:
     stored_message_dicts = child_to_parent_payload_dicts()
     status_message_dict = stored_message_dicts["status"]
-    gt_sh_status = GtShStatus_Maker.dict_to_tuple(status_message_dict["Payload"])
+    gt_sh_status = GtShStatus.model_validate(status_message_dict["Payload"])
     gt_sh_status_event = GtShStatusEvent(Src=CHILD, status=gt_sh_status)
     unrecognized_status_event = AnyEvent(**gt_sh_status_event.model_dump())
     unrecognized_status_event.TypeName += ".foo"
@@ -68,18 +70,14 @@ def child_to_parent_messages() -> list[MessageCase]:
     )
     unrecognizeable_bad_event_content = {"TypeName": "gridworks.event.baz"}
     snap_message_dict = stored_message_dicts["snapshot"]
-    snapshot_spaceheat = SnapshotSpaceheat_Maker.dict_to_tuple(
-        snap_message_dict["Payload"]
-    )
+    snapshot_spaceheat = SnapshotSpaceheat.model_validate(snap_message_dict["Payload"])
     snapshot_event = SnapshotSpaceheatEvent(Src=CHILD, snap=snapshot_spaceheat)
 
     return [
         # Gs Pwr
         MessageCase(
             "GsPwr",
-            Message(
-                Src=CHILD, MessageType="power.watts", Payload=PowerWatts_Maker(1).tuple
-            ),
+            Message(Src=CHILD, MessageType="power.watts", Payload=PowerWatts(Watts=1)),
         ),
         # status
         # QUESTION: why does this fail when replacing "gt.sh.status.110" with "gt.sh.status"?
@@ -97,7 +95,7 @@ def child_to_parent_messages() -> list[MessageCase]:
         ),
         MessageCase(
             "status-payload-as_dict",
-            Message(Src=CHILD, Payload=gt_sh_status.as_dict()),
+            Message(Src=CHILD, Payload=gt_sh_status),
             None,
             gt_sh_status,
         ),
@@ -111,7 +109,7 @@ def child_to_parent_messages() -> list[MessageCase]:
         ),
         MessageCase(
             "snap-payload-as_dict",
-            Message(Src=CHILD, Payload=snapshot_spaceheat.as_dict()),
+            Message(Src=CHILD, Payload=snapshot_spaceheat),
             None,
             snapshot_spaceheat,
         ),
@@ -183,32 +181,32 @@ def child_to_parent_messages() -> list[MessageCase]:
 
 
 def parent_to_child_messages() -> list[MessageCase]:
-    snapshot_request = GtShCliAtnCmd_Maker(
-        from_g_node_alias="a.b.c",
-        from_g_node_id=str(uuid.uuid4()),
-        send_snapshot=True,
-    ).tuple
-    set_relay = GtDispatchBoolean_Maker(
-        about_node_name="a.b.c",
-        to_g_node_alias="a.b.c",
-        from_g_node_alias="a.b.c",
-        from_g_node_instance_id=str(uuid.uuid4()),
-        relay_state=1,
-        send_time_unix_ms=int(time.time() * 1000),
-    ).tuple
+    snapshot_request = GtShCliAtnCmd(
+        FromGNodeAlias="a.b.c",
+        FromGNodeId=str(uuid.uuid4()),
+        SendSnapshot=True,
+    )
+    set_relay = GtDispatchBoolean(
+        AboutNodeName="a.b.c",
+        ToGNodeAlias="a.b.c",
+        FromGNodeAlias="a.b.c",
+        FromGNodeInstanceId=str(uuid.uuid4()),
+        RelayState=True,
+        SendTimeUnixMs=int(time.time() * 1000),
+    )
     return [
         # misc messages
         MessageCase("ping", PingMessage(Src=PARENT)),
         MessageCase("ack", Message(Src=PARENT, Payload=Ack(AckMessageID="1"))),
         MessageCase(
             "snap",
-            Message(Src=PARENT, Payload=snapshot_request.as_dict()),
+            Message(Src=PARENT, Payload=snapshot_request),
             None,
             snapshot_request,
         ),
         MessageCase(
             "set-relay",
-            Message(Src=PARENT, Payload=set_relay.as_dict()),
+            Message(Src=PARENT, Payload=set_relay),
             None,
             set_relay,
         ),

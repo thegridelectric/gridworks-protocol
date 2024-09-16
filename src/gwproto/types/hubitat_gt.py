@@ -3,9 +3,8 @@ from typing import Optional
 import yarl
 from pydantic import BaseModel, ConfigDict
 
-from gwproto.property_format import predicate_validator
+from gwproto.property_format import has_mac_address_format, predicate_validator
 from gwproto.types.rest_poller_gt import URLArgs, URLConfig
-from gwproto.utils import has_mac_address_format
 
 
 class HubitatGt(BaseModel):
@@ -66,7 +65,7 @@ class HubitatGt(BaseModel):
 
     def refresh_url_config(self, device_id: int) -> URLConfig:
         config = self.maker_api_url_config()
-        config.url_path_format += "/devices/{device_id}/refresh"
+        config.url_path_format += "/devices/{device_id}/refresh"  # noqa: RUF027
         config.url_path_args["device_id"] = device_id
         return config
 

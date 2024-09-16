@@ -1,30 +1,16 @@
 from gwproto import (
-    CallableDecoder,
-    Decoders,
     MQTTCodec,
-    create_message_payload_discriminator,
+    create_message_model,
 )
-from gwproto.gs import GsPwr_Maker
-from gwproto.messages import GtShStatus_Maker, SnapshotSpaceheat_Maker
 from tests.dummy_decoders import CHILD
-
-ParentMessageDecoder = create_message_payload_discriminator(
-    model_name="ParentMessageDecoder",
-    module_names=["gwproto.messages"],
-)
 
 
 class ParentMQTTCodec(MQTTCodec):
     def __init__(self) -> None:
         super().__init__(
-            Decoders.from_objects(
-                [
-                    GtShStatus_Maker,
-                    SnapshotSpaceheat_Maker,
-                ],
-                message_payload_discriminator=ParentMessageDecoder,
-            ).add_decoder(
-                "p", CallableDecoder(lambda decoded: GsPwr_Maker(decoded[0]).tuple)
+            create_message_model(
+                model_name="ParentMessageDecoder",
+                module_names=["gwproto.messages"],
             )
         )
 

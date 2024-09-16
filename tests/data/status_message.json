@@ -17,7 +17,7 @@
         "AboutNodeAlias": "a.elt1",
         "ReadTimeUnixMsList": [1676592055586],
         "SensorNodeAlias": "a.m",
-        "TelemetryNameGtEnumSymbol": "af39eec9",
+        "TelemetryName": "PowerW",
         "TypeName": "gt.sh.multipurpose.telemetry.status",
         "Version": "100",
         "ValueList": [0]
@@ -29,7 +29,7 @@
           1676592240089
         ],
         "SensorNodeAlias": "a.s.analog.temp",
-        "TelemetryNameGtEnumSymbol": "c89d0ba1",
+        "TelemetryName": "WaterTempCTimes1000",
         "TypeName": "gt.sh.multipurpose.telemetry.status",
         "Version": "100",
         "ValueList": [77, 361, -115, -9, -44]
@@ -41,7 +41,7 @@
           1676592240089
         ],
         "SensorNodeAlias": "a.s.analog.temp",
-        "TelemetryNameGtEnumSymbol": "c89d0ba1",
+        "TelemetryName": "WaterTempCTimes1000",
         "TypeName": "gt.sh.multipurpose.telemetry.status",
         "Version": "100",
         "ValueList": [-3587, -3574, -3771, -3656, -3626]
@@ -53,7 +53,7 @@
           1676592240089
         ],
         "SensorNodeAlias": "a.s.analog.temp",
-        "TelemetryNameGtEnumSymbol": "c89d0ba1",
+        "TelemetryName": "WaterTempCTimes1000",
         "TypeName": "gt.sh.multipurpose.telemetry.status",
         "Version": "100",
         "ValueList": [-3222, -3036, -3264, -3087, -3015]
@@ -65,7 +65,7 @@
           1676592240089
         ],
         "SensorNodeAlias": "a.s.analog.temp",
-        "TelemetryNameGtEnumSymbol": "c89d0ba1",
+        "TelemetryName": "WaterTempCTimes1000",
         "TypeName": "gt.sh.multipurpose.telemetry.status",
         "Version": "100",
         "ValueList": [3011, 3037, 2893, 3037, 3041]
@@ -76,7 +76,7 @@
       {
         "ReadTimeUnixMsList": [1676592052038],
         "ShNodeAlias": "a.elt1.relay",
-        "TelemetryNameGtEnumSymbol": "5a71d4b3",
+        "TelemetryName": "RelayState",
         "TypeName": "gt.sh.simple.telemetry.status",
         "Version": "100",
         "ValueList": [0]
@@ -84,7 +84,7 @@
       {
         "ReadTimeUnixMsList": [1676592232171],
         "ShNodeAlias": "a.tank.out.pump.relay",
-        "TelemetryNameGtEnumSymbol": "5a71d4b3",
+        "TelemetryName": "RelayState",
         "TypeName": "gt.sh.simple.telemetry.status",
         "Version": "100",
         "ValueList": [0]
@@ -92,7 +92,7 @@
       {
         "ReadTimeUnixMsList": [1676592079160],
         "ShNodeAlias": "a.tank.out.pump.baseboard1.fan.relay",
-        "TelemetryNameGtEnumSymbol": "5a71d4b3",
+        "TelemetryName": "RelayState",
         "TypeName": "gt.sh.simple.telemetry.status",
         "Version": "100",
         "ValueList": [0]
@@ -103,7 +103,7 @@
           1676592275685
         ],
         "ShNodeAlias": "a.tank.out.temp1",
-        "TelemetryNameGtEnumSymbol": "c89d0ba1",
+        "TelemetryName": "WaterTempCTimes1000",
         "TypeName": "gt.sh.simple.telemetry.status",
         "Version": "100",
         "ValueList": [18000, 17937, 17937, 17875, 17812]
@@ -114,7 +114,7 @@
           1676592284085
         ],
         "ShNodeAlias": "a.tank.out.far.temp1",
-        "TelemetryNameGtEnumSymbol": "c89d0ba1",
+        "TelemetryName": "WaterTempCTimes1000",
         "TypeName": "gt.sh.simple.telemetry.status",
         "Version": "100",
         "ValueList": [15375, 15312, 15312, 15312, 15250]
@@ -125,7 +125,7 @@
           1676592275192
         ],
         "ShNodeAlias": "a.tank.in.temp1",
-        "TelemetryNameGtEnumSymbol": "c89d0ba1",
+        "TelemetryName": "WaterTempCTimes1000",
         "TypeName": "gt.sh.simple.telemetry.status",
         "Version": "100",
         "ValueList": [14437, 14375, 14312, 14312, 14312]
@@ -136,7 +136,7 @@
           1676592275380
         ],
         "ShNodeAlias": "a.tank.temp0",
-        "TelemetryNameGtEnumSymbol": "c89d0ba1",
+        "TelemetryName": "WaterTempCTimes1000",
         "TypeName": "gt.sh.simple.telemetry.status",
         "Version": "100",
         "ValueList": [21812, 21812, 21812, 21812, 21812]
@@ -147,7 +147,7 @@
           1676592264435
         ],
         "ShNodeAlias": "a.garage.temp1",
-        "TelemetryNameGtEnumSymbol": "c89d0ba1",
+        "TelemetryName": "WaterTempCTimes1000",
         "TypeName": "gt.sh.simple.telemetry.status",
         "Version": "100",
         "ValueList": [15125, 15062, 15062, 15062, 15062]

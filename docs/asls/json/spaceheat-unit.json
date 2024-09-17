@@ -1,22 +1,11 @@
 {
   "gtr_asl": "001",
   "enum_name": "spaceheat.unit",
-  "enum_version": "000",
+  "enum_version": "001",
   "description": "Specifies the physical unit of sensed data reported by SCADA",
   "ssot": "https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatunit",
-  "values": [
-    "Unknown",
-    "Unitless",
-    "W",
-    "Celcius",
-    "Fahrenheit",
-    "Gpm",
-    "WattHours",
-    "AmpsRms",
-    "VoltsRms",
-    "Gallons"
-  ],
-  "value_to_gt_symbol": {
+  "values": ["Unknown", "Unitless", "W", "Celcius", "Fahrenheit", "Gpm", "WattHours", "AmpsRms", "VoltsRms", "Gallons", "ThermostatStateEnum"],
+  "value_to_symbol": {
     "Unknown": "00000000",
     "Unitless": "ec972387",
     "W": "f459a9c3",
@@ -26,7 +15,8 @@
     "WattHours": "d66f1622",
     "AmpsRms": "a969ac7c",
     "VoltsRms": "e5d7555c",
-    "Gallons": "8e123a26"
+    "Gallons": "8e123a26",
+    "ThermostatStateEnum": "00003000"
   },
   "value_to_version": {
     "Unknown": "000",
@@ -38,7 +28,8 @@
     "WattHours": "000",
     "AmpsRms": "000",
     "VoltsRms": "000",
-    "Gallons": "000"
+    "Gallons": "000",
+    "ThermostatStateEnum": "001"
   },
   "value_descriptions": {
     "Unknown": "",
@@ -50,7 +41,8 @@
     "WattHours": "",
     "AmpsRms": "",
     "VoltsRms": "",
-    "Gallons": ""
+    "Gallons": "",
+    "ThermostatStateEnum": ""
   },
   "default_value": "Unknown"
 }

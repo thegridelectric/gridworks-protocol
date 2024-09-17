@@ -1,0 +1,63 @@
+{
+  "gtr_asl": "001",
+  "type_name": "synced.readings",
+  "version": "000",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": ". A set of readings made at the same time by a multipurpose sensor, sent by SpaceheatNode actor capturing the data (which will be associated to some sort of multipurpose sensing component). The nth element of each of its three readings are coupled: AboutNodeName, what the value is, what the TelemetryName is.",
+  "properties": {
+    "ScadaReadTimeUnixMs": {
+      "type": "integer",
+      "format": "UTCMilliseconds",
+      "title": "ScadaReadTime in Unix MilliSeconds",
+      "description": "The single time, in unix milliseconds, assigned to this list of readings.",
+      "required": true
+    },
+    "ChannelNameList": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "format": "SpaceheatName",
+      "title": "Channel Name List",
+      "description": "List of the names of the Data Channels getting measured. These names are immutable and locally unique for the Scada.",
+      "required": true
+    },
+    "ValueList": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "List of the values read.",
+      "required": true
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "synced.readings",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "000",
+      "required": true
+    }
+  },
+  "axioms": {
+    "Axiom1": {
+      "title": "List Length Consistency",
+      "description": "len(ChannelNameList) = len(ValueList)"
+    }
+  },
+  "formats": {
+    "SpaceheatName": {
+      "type": "string",
+      "description": "Lowercase alphanumeric words separated by hypens, where first word starts with an alphabet character.",
+      "example": "store-hot-pipe"
+    },
+    "UTCMilliseconds": {
+      "type": "string",
+      "description": "An integer reflecting unix time in MILLISECONDS between midnight Jan 1 2000 and midnight Jan 1 3000 UTC",
+      "example": "1702327940710"
+    }
+  }
+}

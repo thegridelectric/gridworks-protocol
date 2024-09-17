@@ -56,8 +56,7 @@
 <xsl:text>"""Type </xsl:text><xsl:value-of select="$type-name"/><xsl:text>, version </xsl:text>
 <xsl:value-of select="Version"/><xsl:text>"""
 
-import json
-from typing import Any, Dict, Literal</xsl:text>
+from typing import Literal</xsl:text>
 	<xsl:if test="count($airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id) and (IsList = 'true')])>0">
 <xsl:text>, List</xsl:text>
 </xsl:if>
@@ -83,9 +82,7 @@ from typing import Any, Dict, Literal</xsl:text>
                             ]) > 0" />
 
 <xsl:text>
-from gw.errors import GwTypeError
-from gw.utils import recursively_pascal, snake_to_pascal
-from pydantic import BaseModel, ConfigDict, ValidationError</xsl:text>
+from pydantic import BaseModel</xsl:text>
 
     
 <xsl:if test="$use-field-validator='true'">
@@ -96,6 +93,8 @@ from pydantic import BaseModel, ConfigDict, ValidationError</xsl:text>
 </xsl:if>
 <xsl:if test="count($airtable//PropertyFormats/PropertyFormat[(normalize-space(Name) ='PositiveInteger')  and (count(TypesThatUse[text()=$versioned-type-id])>0)]) > 0">
 <xsl:text>, PositiveInt</xsl:text>
+</xsl:if>
+<xsl:if test="ExtraAllowed='true'"><xsl:text>, ConfigDict</xsl:text>
 </xsl:if>
 
 
@@ -253,12 +252,10 @@ class </xsl:text>
 <xsl:sort select="Idx" data-type="number"/>
 
 <xsl:variable name = "attribute-name">
-    <xsl:call-template name="python-case">
-        <xsl:with-param name="camel-case-text" select="Value"/>
-        </xsl:call-template>
+        <xsl:value-of select="Value"/>
     <!-- If attribute is associated to a data class, add Id to the Attribute name-->
     <xsl:if test="not(normalize-space(SubTypeDataClass) = '') and not(IsList='true')">
-    <xsl:text>_id</xsl:text>
+    <xsl:text>Id</xsl:text>
     </xsl:if>
 </xsl:variable>
 
@@ -359,22 +356,17 @@ class </xsl:text>
 </xsl:for-each>
 
 
-<xsl:text>    type_name: Literal["</xsl:text><xsl:value-of select="TypeName"/><xsl:text>"] = "</xsl:text><xsl:value-of select="TypeName"/><xsl:text>"
-    version: Literal["</xsl:text>
+<xsl:text>    TypeName: Literal["</xsl:text><xsl:value-of select="TypeName"/><xsl:text>"] = "</xsl:text><xsl:value-of select="TypeName"/><xsl:text>"
+    Version: Literal["</xsl:text>
 <xsl:value-of select="Version"/><xsl:text>"] = "</xsl:text><xsl:value-of select="Version"/><xsl:text>"</xsl:text>
 
 <xsl:if test="ExtraAllowed='true'"><xsl:text>
 
     model_config = ConfigDict(
-        alias_generator=snake_to_pascal, extra="allow", populate_by_name=True,
+        extra="allow"
     )</xsl:text>
 </xsl:if>
-<xsl:if test="not(ExtraAllowed='true')"><xsl:text>
 
-    model_config = ConfigDict(
-        alias_generator=snake_to_pascal, populate_by_name=True,
-    )</xsl:text>
-</xsl:if>
 
 
 <!-- CONSTRUCTING VALIDATORS CONSTRUCTING VALIDATORS  CONSTRUCTING VALIDATORS  CONSTRUCTING VALIDATORS  CONSTRUCTING VALIDATORS -->
@@ -707,190 +699,6 @@ class </xsl:text>
     </xsl:if>
 
     <xsl:text>
-
-    @classmethod
-    def from_dict(cls, d: dict) -> "</xsl:text>
-    <xsl:value-of select="$python-class-name"/><xsl:text>":
-        if not recursively_pascal(d):
-                raise GwTypeError(f"dict is not recursively pascal case! {d}")
-        try:
-            t = cls(**d)
-        except ValidationError as e:
-            raise GwTypeError(f"Pydantic validation error: {e}") from e
-        return t
-
-    @classmethod
-    def from_type(cls, b: bytes) -> "</xsl:text>
-    <xsl:value-of select="$python-class-name"/><xsl:text>":
-        try:
-            d = json.loads(b)
-        except TypeError as e:
-            raise GwTypeError("Type must be string or bytes!") from e
-        if not isinstance(d, dict):
-            raise GwTypeError(f"Deserializing must result in dict!\n &lt;{b}>")
-        return cls.from_dict(d)
-
-    def to_dict(self) -> Dict[str, Any]:
-        """
-        Handles lists of enums differently than model_dump
-        """
-        d = self.model_dump(exclude_none=True, by_alias=True)</xsl:text>
-
-        <xsl:for-each select="$airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id)]">
-        <xsl:sort select="Idx" data-type="number"/>
-    <xsl:choose>
-
-    <!-- (Required) CASES FOR to_dict -->
-    <xsl:when test="IsRequired = 'true'">
-    <xsl:choose>
-
-        <!-- (required) to_dict: Single Enums -->
-        <xsl:when test="(IsEnum = 'true') and not (IsList = 'true')">
-    <xsl:text>
-        d["</xsl:text><xsl:value-of select="Value"/><xsl:text>"] = self.</xsl:text>
-         <xsl:call-template name="python-case">
-                <xsl:with-param name="camel-case-text" select="Value"  />
-        </xsl:call-template>
-        <xsl:text>.value</xsl:text>
-        </xsl:when>
-
-         <!-- (required) to_dict: List of Enums -->
-        <xsl:when test="(IsEnum = 'true')  and (IsList = 'true')">
-        <xsl:text>
-        d["</xsl:text><xsl:value-of select="Value"/>
-        <xsl:text>"] = [elt.value for elt in self.</xsl:text>
-        <xsl:call-template name="python-case">
-                <xsl:with-param name="camel-case-text" select="Value"  />
-        </xsl:call-template>
-        <xsl:text>]</xsl:text>
-        </xsl:when>
-
-        <!--(required) to_dict: Single Type, no associated data class (since those just show up as id pointers) -->
-        <xsl:when test="(IsType = 'true') and (normalize-space(SubTypeDataClass) = '') and not (IsList = 'true')">
-        <xsl:text>
-        d["</xsl:text>
-            <xsl:value-of select="Value"/>
-            <xsl:text>"] = self.</xsl:text>
-            <xsl:call-template name="python-case">
-                <xsl:with-param name="camel-case-text" select="Value"  />
-            </xsl:call-template>
-            <xsl:text>.to_dict()</xsl:text>
-        </xsl:when>
-
-
-        <!-- (required) to_dict: List of Types -->
-        <xsl:when test="(IsType = 'true') and (normalize-space(SubTypeDataClass) = '' or IsList='true') and (IsList = 'true')">
-        <xsl:text>
-        d["</xsl:text>
-            <xsl:value-of select="Value"/>
-            <xsl:text>"] = [elt.to_dict() for elt in self.</xsl:text>
-        <xsl:call-template name="python-case">
-            <xsl:with-param name="camel-case-text" select="Value"  />
-        </xsl:call-template>
-        <xsl:text>]</xsl:text>
-        </xsl:when>
-        <xsl:otherwise></xsl:otherwise>
-    </xsl:choose>
-    </xsl:when>
-
-    <!-- Optional to_dict -->
-    <xsl:otherwise>
-        <xsl:choose>
-
-        <!-- (optional) to_dict: Single Enums -->
-        <xsl:when test="(IsEnum = 'true') and not (IsList = 'true')">
-    <xsl:text>
-        if "</xsl:text><xsl:value-of select="Value"/>
-        <xsl:text>" in d:
-            d["</xsl:text><xsl:value-of select="Value"/><xsl:text>"] = d["</xsl:text>
-            <xsl:value-of select="Value"/><xsl:text>"].value</xsl:text>
-        </xsl:when>
-
-         <!-- (optional) to_dict: List of Enums -->
-        <xsl:when test="(IsEnum = 'true')  and (IsList = 'true')">
-        <xsl:text>
-        if "</xsl:text><xsl:value-of select="Value"/>
-        <xsl:text>" in d:
-            del d["</xsl:text><xsl:value-of select="Value"/><xsl:text>"]
-            </xsl:text>
-        <xsl:call-template name="python-case">
-            <xsl:with-param name="camel-case-text" select="Value"  />
-        </xsl:call-template> <xsl:text> = []
-            for elt in self.</xsl:text>
-        <xsl:call-template name="python-case">
-            <xsl:with-param name="camel-case-text" select="Value"  />
-        </xsl:call-template><xsl:text>:
-                </xsl:text>
-            <xsl:call-template name="python-case">
-            <xsl:with-param name="camel-case-text" select="Value"  />
-        </xsl:call-template><xsl:text>.append(elt.value)
-            d["</xsl:text><xsl:value-of select="Value"/>
-        <xsl:text>"] = </xsl:text>
-            <xsl:call-template name="python-case">
-            <xsl:with-param name="camel-case-text" select="Value"  />
-        </xsl:call-template>
-        </xsl:when>
-
-        <!--(optional) to_dict: Single Type, no associated data class (since those just show up as id pointers) -->
-        <xsl:when test="(IsType = 'true') and (normalize-space(SubTypeDataClass) = '') and not (IsList = 'true')">
-        <xsl:text>
-        if "</xsl:text><xsl:value-of select="Value"/>
-        <xsl:text>" in d:
-            del d["</xsl:text><xsl:value-of select="Value"/><xsl:text>"]
-            d["</xsl:text>
-            <xsl:value-of select="Value"/>
-            <xsl:text>"] = self.</xsl:text>
-            <xsl:value-of select="Value"/>
-            <xsl:text>.to_dict()</xsl:text>
-        </xsl:when>
-
-        <!-- (optional) to_dict: List of Types -->
-        <xsl:when test="(IsType = 'true') and (normalize-space(SubTypeDataClass) = '') and (IsList = 'true')">
-        <xsl:text>
-        if "</xsl:text><xsl:value-of select="Value"/>
-        <xsl:text>" in ds:
-            </xsl:text>
-        <xsl:call-template name="python-case">
-            <xsl:with-param name="camel-case-text" select="Value"  />
-        </xsl:call-template>
-        <xsl:text> = []
-            for elt in self.</xsl:text>
-       <xsl:call-template name="python-case">
-            <xsl:with-param name="camel-case-text" select="Value"  />
-        </xsl:call-template>
-        <xsl:text>:
-                </xsl:text>
-        <xsl:call-template name="python-case">
-            <xsl:with-param name="camel-case-text" select="Value"  />
-        </xsl:call-template>
-        <xsl:text>.append(elt.to_dict())
-            d["</xsl:text>
-        <xsl:value-of select="Value"/>
-        <xsl:text>"] = </xsl:text>
-        <xsl:call-template name="python-case">
-            <xsl:with-param name="camel-case-text" select="Value"  />
-        </xsl:call-template>
-        </xsl:when>
-         <!-- End of loop inside optional -->
-        <xsl:otherwise></xsl:otherwise>
-        </xsl:choose>
-
-
-    </xsl:otherwise>
-    </xsl:choose>
-
-    </xsl:for-each>
-    <xsl:text>
-        return d
-
-    def to_type(self) -> bytes:
-        """
-        Serialize to the </xsl:text>
-        <xsl:value-of select="VersionedTypeName"/>
-        <xsl:text> representation designed to send in a message.
-        """
-        json_string = json.dumps(self.to_dict())
-        return json_string.encode("utf-8")
 
     @classmethod
     def type_name_value(cls) -> str:

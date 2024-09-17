@@ -6,11 +6,11 @@ Python pydantic class corresponding to json type `fibaro.smart.implant.component
     :members:
 
 **ComponentId**:
-    - Description: Component Id. Primary GridWorks identifier for a specific physical instance of an  Fibaro, and also as a more generic Component.
-    - Format: UuidCanonicalTextual
+    - Description: Component Id. Primary GridWorks identifier for a specific physical instance of an  Fibaro, and also as a more generic Component. 
+    - Format: UUID4Str
 
 **ComponentAttributeClassId**:
-    - Description: ComponentAttributeClassId. Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry.
+    - Description: ComponentAttributeClassId. Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry. 
     - Format: UuidCanonicalTextual
 
 **ZWaveDSK**:
@@ -30,9 +30,10 @@ Python pydantic class corresponding to json type `fibaro.smart.implant.component
 
 
 
-.. autoclass:: gwproto.types.fibaro_smart_implant_component_gt.check_is_uuid_canonical_textual
+.. autoclass:: gwproto.types.fibaro_smart_implant_component_gt.check_is_u_u_i_d4_str
     :members:
 
 
 .. autoclass:: gwproto.types.FibaroSmartImplantComponentGt_Maker
     :members:
+

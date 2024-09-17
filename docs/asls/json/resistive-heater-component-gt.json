@@ -8,7 +8,7 @@
   "properties": {
     "ComponentId": {
       "type": "string",
-      "format": "UuidCanonicalTextual",
+      "format": "UUID4Str",
       "title": "Component Id",
       "description": "Primary GridWorks identifier for a specific physical instance of a ResistiveHeater, and also as a more generic Component.",
       "required": true
@@ -36,6 +36,13 @@
       "type": "integer",
       "required": false
     },
+    "ConfigList": {
+      "type": "array",
+      "items": {
+        "type": "channel.config.000"
+      },
+      "required": true
+    },
     "TypeName": {
       "type": "string",
       "value": "resistive.heater.component.gt",
@@ -49,7 +56,7 @@
     }
   },
   "formats": {
-    "UuidCanonicalTextual": {
+    "UUID4Str": {
       "type": "string",
       "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
       "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"

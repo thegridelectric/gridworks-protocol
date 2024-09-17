@@ -1,10 +1,11 @@
-"""Tests egauge.io type, version 000"""
+"""Tests egauge.io type, version 001"""
 
 from gwproto.types import EgaugeIo
 
 
 def test_egauge_io_generated() -> None:
     d = {
+        "ChannelName": "hp-idu-pwr",
         "InputConfig": {
             "Address": 9004,
             "Name": "Garage power",
@@ -15,19 +16,10 @@ def test_egauge_io_generated() -> None:
             "TypeName": "egauge.register.config",
             "Version": "000",
         },
-        "OutputConfig": {
-            "AboutNodeName": "a.tank1.elts",
-            "ReportOnChange": True,
-            "SamplePeriodS": 60,
-            "Exponent": 0,
-            "AsyncReportThreshold": 0.05,
-            "NameplateMaxValue": 4500,
-            "TypeName": "telemetry.reporting.config",
-            "Version": "000",
-            "TelemetryName": "PowerW",
-            "Unit": "W",
-        },
         "TypeName": "egauge.io",
-        "Version": "000",
+        "Version": "001",
     }
-    assert EgaugeIo.model_validate(d).model_dump() == d
+
+    t = EgaugeIo(**d)
+
+    assert t.model_dump(exclude_none=True, by_alias=True) == d

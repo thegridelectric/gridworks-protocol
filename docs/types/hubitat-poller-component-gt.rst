@@ -6,10 +6,10 @@ Python pydantic class corresponding to json type `hubitat.poller.component.gt`, 
     :members:
 
 **ComponentId**:
-    - Description: ComponentId.
+    - Description: ComponentId. 
 
 **ComponentAttributeClassId**:
-    - Description: ComponentAttributeClassId.
+    - Description: ComponentAttributeClassId. 
     - Format: UuidCanonicalTextual
 
 **DisplayName**:
@@ -19,7 +19,7 @@ Python pydantic class corresponding to json type `hubitat.poller.component.gt`, 
     - Description: HwUid. Unique Hardware Identifier
 
 **Poller**:
-    - Description: Poller. Includes hubitat_component_id (str), device_id (int), enabled (bool), poll_period_s (int) and attributes.
+    - Description: Poller. Includes hubitat_component_id (str), device_id (int), enabled (bool), poll_period_s (int) and attributes. 
 
 **TypeName**:
     - Description: All GridWorks Versioned Types have a fixed TypeName, which is a string of lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character, and final word NOT all Hindu-Arabic numerals.
@@ -29,9 +29,10 @@ Python pydantic class corresponding to json type `hubitat.poller.component.gt`, 
 
 
 
-.. autoclass:: gwproto.types.hubitat_poller_component_gt.check_is_uuid_canonical_textual
+.. autoclass:: gwproto.types.hubitat_poller_component_gt.check_is_u_u_i_d4_str
     :members:
 
 
 .. autoclass:: gwproto.types.HubitatPollerComponentGt_Maker
     :members:
+

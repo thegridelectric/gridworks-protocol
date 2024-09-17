@@ -72,12 +72,8 @@ class HardwareLayout:
             cac_decoder = default_cac_decoder
         cacs: dict[str, ComponentAttributeClassGt] = {}
         for type_name in [
-            "RelayCacs",
             "ResistiveHeaterCacs",
             "ElectricMeterCacs",
-            "PipeFlowSensorCacs",
-            "MultipurposeSensorCacs",
-            "SimpleTempSensorCacs",
             "OtherCacs",
         ]:
             for cac_dict in layout.get(type_name, ()):

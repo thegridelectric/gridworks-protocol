@@ -13,8 +13,8 @@ Python pydantic class corresponding to json type `gt.sh.cli.atn.cmd`, version `1
     - Description: Send Snapshot. Asks SCADA to send back a snapshot. For this version of the type, nothing would happen if SendSnapshot were set to False. However, we include this in case additional variations are added later.
 
 **FromGNodeId**:
-    - Description: GNodeId.
-    - Format: UuidCanonicalTextual
+    - Description: GNodeId. 
+    - Format: UUID4Str
 
 **TypeName**:
     - Description: All GridWorks Versioned Types have a fixed TypeName, which is a string of lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character, and final word NOT all Hindu-Arabic numerals.
@@ -24,7 +24,7 @@ Python pydantic class corresponding to json type `gt.sh.cli.atn.cmd`, version `1
 
 
 
-.. autoclass:: gwproto.types.gt_sh_cli_atn_cmd.check_is_uuid_canonical_textual
+.. autoclass:: gwproto.types.gt_sh_cli_atn_cmd.check_is_u_u_i_d4_str
     :members:
 
 
@@ -34,3 +34,4 @@ Python pydantic class corresponding to json type `gt.sh.cli.atn.cmd`, version `1
 
 .. autoclass:: gwproto.types.GtShCliAtnCmd_Maker
     :members:
+

@@ -1,15 +1,13 @@
-"""Type egauge.io, version 000"""
+"""Type egauge.io, version 001"""
 
 from typing import Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
-from gwproto.types.egauge_register_config import (
-    EgaugeRegisterConfig,
+from gwproto.property_format import (
+    SpaceheatName,
 )
-from gwproto.types.telemetry_reporting_config import (
-    TelemetryReportingConfig,
-)
+from gwproto.types.egauge_register_config import EgaugeRegisterConfig
 
 
 class EgaugeIo(BaseModel):
@@ -23,20 +21,11 @@ class EgaugeIo(BaseModel):
     [More info](https://gridworks-protocol.readthedocs.io/en/latest/egauge-io.html)
     """
 
-    InputConfig: EgaugeRegisterConfig = Field(
-        title="Input config for one channel of data for a specific eGauge meter",
-        description=(
-            "This is the data available from the modbus csv map provided by eGauge for this component, "
-            "for example http://egauge14875.egaug.es/6001C/settings.html for a eGauge device "
-            "with ID 14875"
-        ),
-    )
-    OutputConfig: TelemetryReportingConfig = Field(
-        title="Output config for the same channel ",
-        description=(
-            "This is the data as the Scada proactor expects to consume it from the power meter "
-            "driver proactor."
-        ),
-    )
+    ChannelName: SpaceheatName
+    InputConfig: EgaugeRegisterConfig
     TypeName: Literal["egauge.io"] = "egauge.io"
-    Version: Literal["000"] = "000"
+    Version: Literal["001"] = "001"
+
+    @classmethod
+    def type_name_value(cls) -> str:
+        return "egauge.io"

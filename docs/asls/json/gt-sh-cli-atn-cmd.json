@@ -19,7 +19,7 @@
     },
     "FromGNodeId": {
       "type": "string",
-      "format": "UuidCanonicalTextual",
+      "format": "UUID4Str",
       "title": "GNodeId",
       "required": true
     },
@@ -36,7 +36,7 @@
     }
   },
   "formats": {
-    "UuidCanonicalTextual": {
+    "UUID4Str": {
       "type": "string",
       "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
       "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"

@@ -12,7 +12,7 @@
     "ComponentAttributeClassId": {
       "type": "string",
       "format": "UuidCanonicalTextual",
-      "title": "Unique identifier for HubitatPollerCac object articulated by the hubitat.poller.cac.gt.000 type.",
+      "title": "Unique identifier for ComponentAttributeClass object articulated by the component.attribute.class.gt.001 type.",
       "required": true
     },
     "DisplayName": {
@@ -43,7 +43,7 @@
     }
   },
   "formats": {
-    "UuidCanonicalTextual": {
+    "UUID4Str": {
       "type": "string",
       "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
       "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"

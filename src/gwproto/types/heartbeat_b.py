@@ -2,37 +2,36 @@
 
 from typing import Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
-from gwproto.property_format import HexChar, LeftRightDotStr, UTCMilliseconds, UUID4Str
+from gwproto.property_format import (
+    HexChar,
+    LeftRightDotStr,
+    UTCMilliseconds,
+    UUID4Str,
+)
 
 
 class HeartbeatB(BaseModel):
+    """
+    Heartbeat B.
+
+    This is the Heartbeat intended to be sent between the Scada and the AtomicTNode to allow
+    for block-chain validation of the status of their communication.
+
+    [More info](https://gridworks.readthedocs.io/en/latest/dispatch-contract.html)
+    """
+
     FromGNodeAlias: LeftRightDotStr
     FromGNodeInstanceId: UUID4Str
-    MyHex: HexChar = Field(
-        title="Hex character getting sent",
-        default="0",
-    )
-    YourLastHex: HexChar = Field(
-        title="Last hex character received from heartbeat partner.",
-    )
-    LastReceivedTimeUnixMs: UTCMilliseconds = Field(
-        title="Time YourLastHex was received on my clock",
-    )
-    SendTimeUnixMs: UTCMilliseconds = Field(
-        title="Time this message is made and sent on my clock",
-    )
-    StartingOver: bool = Field(
-        title="True if the heartbeat initiator wants to start the volley over",
-        description=(
-            "(typically the AtomicTNode in an AtomicTNode / SCADA pair) wants to start the heartbeating "
-            "volley over. The result is that its partner will not expect the initiator to know "
-            "its last Hex."
-        ),
-    )
+    MyHex: HexChar
+    YourLastHex: HexChar
+    LastReceivedTimeUnixMs: UTCMilliseconds
+    SendTimeUnixMs: UTCMilliseconds
+    StartingOver: bool
     TypeName: Literal["heartbeat.b"] = "heartbeat.b"
     Version: Literal["001"] = "001"
 
-    def __hash__(self) -> int:
-        return hash((type(self), *self.__dict__.values()))
+    @classmethod
+    def type_name_value(cls) -> str:
+        return "heartbeat.b"

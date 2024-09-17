@@ -1,20 +1,24 @@
 SnapshotSpaceheat
 ==========================
-Python pydantic class corresponding to json type `snapshot.spaceheat`, version `000`.
+Python pydantic class corresponding to json type `snapshot.spaceheat`, version `001`.
 
 .. autoclass:: gwproto.types.SnapshotSpaceheat
     :members:
 
 **FromGNodeAlias**:
-    - Description:
+    - Description: 
     - Format: LeftRightDot
 
 **FromGNodeInstanceId**:
-    - Description:
-    - Format: UuidCanonicalTextual
+    - Description: 
+    - Format: UUID4Str
 
-**Snapshot**:
-    - Description:
+**SnapshotTimeUnixMs**:
+    - Description: The time at which the snapshot was put together.
+    - Format: UTCMilliseconds
+
+**LatestReadingList**:
+    - Description: The most up-to-date values the SCADA has for all channels, with timestamps of when they were last updated.
 
 **TypeName**:
     - Description: All GridWorks Versioned Types have a fixed TypeName, which is a string of lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character, and final word NOT all Hindu-Arabic numerals.
@@ -24,7 +28,7 @@ Python pydantic class corresponding to json type `snapshot.spaceheat`, version `
 
 
 
-.. autoclass:: gwproto.types.snapshot_spaceheat.check_is_uuid_canonical_textual
+.. autoclass:: gwproto.types.snapshot_spaceheat.check_is_u_u_i_d4_str
     :members:
 
 
@@ -32,5 +36,10 @@ Python pydantic class corresponding to json type `snapshot.spaceheat`, version `
     :members:
 
 
+.. autoclass:: gwproto.types.snapshot_spaceheat.check_is_u_t_c_milliseconds
+    :members:
+
+
 .. autoclass:: gwproto.types.SnapshotSpaceheat_Maker
     :members:
+

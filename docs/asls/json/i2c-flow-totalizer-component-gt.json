@@ -1,0 +1,90 @@
+{
+  "gtr_asl": "001",
+  "type_name": "i2c.flow.totalizer.component.gt",
+  "version": "000",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": "I2C Flow Totalizer Component. A specific instance of a component with multiple chips that integrate pulse count flow meters and reports the result as I2C, with a single totalizer component per i2c address.",
+  "properties": {
+    "ComponentId": {
+      "type": "string",
+      "format": "UUID4Str",
+      "title": "Component Id",
+      "description": "Primary GridWorks identifier for a specific physical instance of a PipeFlowSensor, and also as a more generic Component.",
+      "required": true
+    },
+    "ComponentAttributeClassId": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "Unique identifier for ComponentAttributeClass object articulated by the component.attribute.class.gt.001 type.",
+      "description": "Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry.",
+      "required": true
+    },
+    "I2cAddressList": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "The list of I2cAddresses on the I2cBus. The assumption is each i2c address is reading from one Pulse Flow Meter.",
+      "required": true
+    },
+    "ConfigList": {
+      "type": "array",
+      "items": {
+        "type": "channel.config.000"
+      },
+      "description": "A list of the ChannelConfigs for the data channels reported by this actor.",
+      "required": true
+    },
+    "PulseFlowMeterMakeModelList": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "format": "spaceheat.make.model",
+      "title": "Pulse Flow Meter MakeModel",
+      "description": "The list of MakeModels of the pulse flow meters getting read.",
+      "required": true
+    },
+    "ConversionFactorList": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      },
+      "description": "The factor that the cumulative output must be multiplied by in order to read gallons.",
+      "required": true
+    },
+    "DisplayName": {
+      "type": "string",
+      "description": "Sample: Pipe Flow Meter Component <dist-flow>",
+      "required": false
+    },
+    "HwUid": {
+      "type": "string",
+      "required": false
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "i2c.flow.totalizer.component.gt",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "000",
+      "required": true
+    }
+  },
+  "axioms": {
+    "Axiom1": {
+      "title": "I2cAddressList, PulseFlowMeterMakeModel, ConversionFactorList Consistency",
+      "description": "All three lists must have the same length. For the nth PulseFlowMeterMakeModel and ConversionFactor: If the PulseFlowMeterMakeModel m is a key in the dict CONVERSION_FACTOR_BY_MODEL, then the ConversionFactor must be CONVERSION_FACTOR_BY_MODEL[m] CONVERSION_FACTOR_BY_MODEL: Dict[MakeModel, float] = { MakeModel.ISTEC_4440: 0.268132, MakeModel.OMEGA__FTB8007HWPT: 0.134066, MakeModel.OMEGA__FTB8010HWPT: 1.34066, MakeModel.PRMFILTRATION__WM075: 1.34066, MakeModel.EKM__HOTSPWM075HD: 0.10, }"
+    }
+  },
+  "formats": {
+    "UUID4Str": {
+      "type": "string",
+      "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
+      "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"
+    }
+  }
+}

@@ -1,17 +1,19 @@
-"""Tests component.gt type, version 000"""
+"""Tests component.gt type, version 001"""
 
-from gwproto.data_classes.components import Component
 from gwproto.types import ComponentGt
-from tests.component_load_utils import ComponentCase, assert_component_load
 
 
 def test_component_gt_generated() -> None:
     d = {
-        "ComponentId": "987e0a5f-9036-411e-ba30-bac1075114ba",
-        "ComponentAttributeClassId": "cec0cb71-77bf-48a6-b644-2dcf124ac9fa",
-        "DisplayName": "Sample Component",
+        "ComponentId": "c6ec1ddb-5f51-4902-9807-a5ebc74d1102",
+        "ComponentAttributeClassId": "739a6e32-bb9c-43bc-a28d-fb61be665522",
+        "ConfigList": [],
+        "DisplayName": "Demo eGauge Power Meter",
         "HwUid": "000aaa",
         "TypeName": "component.gt",
-        "Version": "000",
+        "Version": "001",
     }
-    assert_component_load([ComponentCase("ComponentGt", d, ComponentGt, Component)])
+
+    t = ComponentGt(**d)
+
+    assert t.model_dump(exclude_none=True, by_alias=True) == d

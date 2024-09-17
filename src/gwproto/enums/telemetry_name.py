@@ -1,47 +1,43 @@
 from enum import auto
-from typing import List
+from typing import Optional
 
-from gwproto.enums.symbolized import SymbolizedEnum
+from gw.enums import GwStrEnum
 
 
-class TelemetryName(SymbolizedEnum):
+class TelemetryName(GwStrEnum):
     """
     Specifies the name of sensed data reported by a Spaceheat SCADA
 
     Enum spaceheat.telemetry.name version 001 in the GridWorks Type registry.
 
-    Used by used by multiple Application Shared Languages (ASLs), including but not limited to
-    gwproto. For more information:
+    Used by multiple Application Shared Languages (ASLs). For more information:
       - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
       - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheattelemetryname)
       - [More Info](https://gridworks-protocol.readthedocs.io/en/latest/telemetry-name.html)
 
-    Values (with symbols in parens):
-      - Unknown (00000000): Default Value - unknown telemetry name.
-      - PowerW (af39eec9): Power in Watts.
-      - RelayState (5a71d4b3): An associated read must be either 0 or 1, with 0 meaning that the
-        relay is open and current CANNOT flow and 1 meaning that the relay is closed and current
-        CAN flow. Note in particular that this TelemetryName is NOT meant to be used to reflect
-        whether a relay is energized or de-energized and in particular '1' means the same thing
-        for both Normally Open and Normally Closed relays. Also, it is not meant to be used
-        for a double-throw relay.
-      - WaterTempCTimes1000 (c89d0ba1): Water temperature, in Degrees Celcius multiplied by 1000.
+    Values:
+      - Unknown: Default Value - unknown telemetry name.
+      - PowerW: Power in Watts.
+      - RelayState: The Telemetry reading belongs to ['Energized', 'DeEnergized'] (relay.energization.state
+        enum).
+      - WaterTempCTimes1000: Water temperature, in Degrees Celcius multiplied by 1000.
         Example: 43200 means 43.2 deg Celcius.
-      - WaterTempFTimes1000 (793505aa): Water temperature, in Degrees F multiplied by 1000. Example:
+      - WaterTempFTimes1000: Water temperature, in Degrees F multiplied by 1000. Example:
         142100 means 142.1 deg Fahrenheit.
-      - GpmTimes100 (d70cce28): Gallons Per Minute multiplied by 100. Example: 433 means 4.33 gallons
+      - GpmTimes100: Gallons Per Minute multiplied by 100. Example: 433 means 4.33 gallons
         per minute.
-      - CurrentRmsMicroAmps (ad19e79c): Current measurement in Root Mean Square MicroAmps.
-      - GallonsTimes100 (329a68c0): Gallons multipled by 100. This is useful for flow meters that
+      - CurrentRmsMicroAmps: Current measurement in Root Mean Square MicroAmps.
+      - GallonsTimes100: Gallons multipled by 100. This is useful for flow meters that
         report cumulative gallons as their raw output. Example: 55300 means 55.3 gallons.
-      - VoltageRmsMilliVolts (bb6fdd59): Voltage in Root Mean Square MilliVolts.
-      - MilliWattHours (e0bb014b): Energy in MilliWattHours.
-      - FrequencyMicroHz (337b8659): Frequency in MicroHz. Example: 59,965,332 means 59.965332 Hz.
-      - AirTempCTimes1000 (0f627faa): Air temperature, in Degrees Celsius multiplied by 1000. Example:
+      - VoltageRmsMilliVolts: Voltage in Root Mean Square MilliVolts.
+      - MilliWattHours: Energy in MilliWattHours.
+      - FrequencyMicroHz: Frequency in MicroHz. Example: 59,965,332 means 59.965332 Hz.
+      - AirTempCTimes1000: Air temperature, in Degrees Celsius multiplied by 1000. Example:
         6234 means 6.234 deg Celcius.
-      - AirTempFTimes1000 (4c3f8c78): Air temperature, in Degrees F multiplied by 1000. Example:
+      - AirTempFTimes1000: Air temperature, in Degrees F multiplied by 1000. Example:
         69329 means 69.329 deg Fahrenheit.
-      - ThermostatState (00002000): An enum representing the state of the thermostat heat call.
+      - ThermostatState: Thermostat State: 0 means idle, 1 means heating, 2 means pending
+        heat
     """
 
     Unknown = auto()
@@ -67,24 +63,11 @@ class TelemetryName(SymbolizedEnum):
         return cls.Unknown
 
     @classmethod
-    def version(cls, value: str) -> str:
-        """
-        Returns the version of an enum value.
-
-        Once a value belongs to one version of the enum, it belongs
-        to all future versions.
-
-        Args:
-            value (str): The candidate enum value.
-
-        Raises:
-            ValueError: If value is not one of the enum values.
-
-        Returns:
-            str: The earliest version of the enum containing value.
-        """
+    def version(cls, value: Optional[str] = None) -> str:
+        if value is None:
+            return "001"
         if not isinstance(value, str):
-            raise ValueError("This method applies to strings, not enums")  # noqa: TRY004
+            raise TypeError("This method applies to strings, not enums")
         if value not in value_to_version:
             raise ValueError(f"Unknown enum value: {value}")
         return value_to_version[value]
@@ -103,82 +86,6 @@ class TelemetryName(SymbolizedEnum):
         """
         return "001"
 
-    @classmethod
-    def symbol_to_value(cls, symbol: str) -> str:
-        """
-        Given the symbol sent in a serialized message, returns the encoded enum.
-
-        Args:
-            symbol (str): The candidate symbol.
-
-        Returns:
-            str: The encoded value associated to that symbol. If the symbol is not
-            recognized - which could happen if the actor making the symbol is using
-            a later version of this enum, returns the default value of "Unknown".
-        """
-        if symbol not in symbol_to_value:
-            return cls.default().value  # noqa: ALL
-        return symbol_to_value[symbol]
-
-    @classmethod
-    def value_to_symbol(cls, value: str) -> str:
-        """
-        Provides the encoding symbol for a TelemetryName enum to send in seriliazed messages.
-
-        Args:
-            value (str): The candidate value.
-
-        Returns:
-            str: The symbol encoding that value. If the value is not recognized -
-            which could happen if the actor making the message used a later version
-            of this enum than the actor decoding the message, returns the default
-            symbol of "00000000".
-        """
-        if value not in value_to_symbol:
-            return value_to_symbol[cls.default().value]
-        return value_to_symbol[value]
-
-    @classmethod
-    def symbols(cls) -> List[str]:
-        """
-        Returns a list of the enum symbols
-        """
-        return [
-            "00000000",
-            "af39eec9",
-            "5a71d4b3",
-            "c89d0ba1",
-            "793505aa",
-            "d70cce28",
-            "ad19e79c",
-            "329a68c0",
-            "bb6fdd59",
-            "e0bb014b",
-            "337b8659",
-            "0f627faa",
-            "4c3f8c78",
-            "00002000",
-        ]
-
-
-symbol_to_value = {
-    "00000000": "Unknown",
-    "af39eec9": "PowerW",
-    "5a71d4b3": "RelayState",
-    "c89d0ba1": "WaterTempCTimes1000",
-    "793505aa": "WaterTempFTimes1000",
-    "d70cce28": "GpmTimes100",
-    "ad19e79c": "CurrentRmsMicroAmps",
-    "329a68c0": "GallonsTimes100",
-    "bb6fdd59": "VoltageRmsMilliVolts",
-    "e0bb014b": "MilliWattHours",
-    "337b8659": "FrequencyMicroHz",
-    "0f627faa": "AirTempCTimes1000",
-    "4c3f8c78": "AirTempFTimes1000",
-    "00002000": "ThermostatState",
-}
-
-value_to_symbol = {value: key for key, value in symbol_to_value.items()}
 
 value_to_version = {
     "Unknown": "000",

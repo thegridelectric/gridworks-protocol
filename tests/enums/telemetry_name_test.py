@@ -40,6 +40,7 @@ def test_telemetry_name() -> None:
     assert TelemetryName.version("FrequencyMicroHz") == "001"
     assert TelemetryName.version("AirTempCTimes1000") == "001"
     assert TelemetryName.version("AirTempFTimes1000") == "001"
+    assert TelemetryName.version("ThermostatState") == "001"
 
     for value in TelemetryName.values():
         symbol = TelemetryName.value_to_symbol(value)

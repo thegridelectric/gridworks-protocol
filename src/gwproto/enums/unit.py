@@ -1,32 +1,31 @@
 from enum import auto
-from typing import List
+from typing import Optional
 
-from gwproto.enums.symbolized import SymbolizedEnum
+from gw.enums import GwStrEnum
 
 
-class Unit(SymbolizedEnum):
+class Unit(GwStrEnum):
     """
     Specifies the physical unit of sensed data reported by SCADA
 
-    Enum spaceheat.unit version 000 in the GridWorks Type registry.
+    Enum spaceheat.unit version 001 in the GridWorks Type registry.
 
-    Used by used by multiple Application Shared Languages (ASLs), including but not limited to
-    gwproto. For more information:
+    Used by multiple Application Shared Languages (ASLs). For more information:
       - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
       - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatunit)
 
-    Values (with symbols in parens):
-      - Unknown (00000000)
-      - Unitless (ec972387)
-      - W (f459a9c3)
-      - Celcius (ec14bd47)
-      - Fahrenheit (7d8832f8)
-      - Gpm (b4580361)
-      - WattHours (d66f1622)
-      - AmpsRms (a969ac7c)
-      - VoltsRms (e5d7555c)
-      - Gallons (8e123a26)
-      - ThermostatStateEnum (00003000)
+    Values:
+      - Unknown
+      - Unitless
+      - W
+      - Celcius
+      - Fahrenheit
+      - Gpm
+      - WattHours
+      - AmpsRms
+      - VoltsRms
+      - Gallons
+      - ThermostatStateEnum
     """
 
     Unknown = auto()
@@ -49,24 +48,11 @@ class Unit(SymbolizedEnum):
         return cls.Unknown
 
     @classmethod
-    def version(cls, value: str) -> str:
-        """
-        Returns the version of an enum value.
-
-        Once a value belongs to one version of the enum, it belongs
-        to all future versions.
-
-        Args:
-            value (str): The candidate enum value.
-
-        Raises:
-            ValueError: If value is not one of the enum values.
-
-        Returns:
-            str: The earliest version of the enum containing value.
-        """
+    def version(cls, value: Optional[str] = None) -> str:
+        if value is None:
+            return "001"
         if not isinstance(value, str):
-            raise ValueError("This method applies to strings, not enums")  # noqa: TRY004
+            raise TypeError("This method applies to strings, not enums")
         if value not in value_to_version:
             raise ValueError(f"Unknown enum value: {value}")
         return value_to_version[value]
@@ -81,80 +67,10 @@ class Unit(SymbolizedEnum):
     @classmethod
     def enum_version(cls) -> str:
         """
-        The version in the GridWorks Type Registry (000)
+        The version in the GridWorks Type Registry (001)
         """
-        return "000"
+        return "001"
 
-    @classmethod
-    def symbol_to_value(cls, symbol: str) -> str:
-        """
-        Given the symbol sent in a serialized message, returns the encoded enum.
-
-        Args:
-            symbol (str): The candidate symbol.
-
-        Returns:
-            str: The encoded value associated to that symbol. If the symbol is not
-            recognized - which could happen if the actor making the symbol is using
-            a later version of this enum, returns the default value of "Unknown".
-        """
-        if symbol not in symbol_to_value:
-            return cls.default().value  # noqa: ALL
-        return symbol_to_value[symbol]
-
-    @classmethod
-    def value_to_symbol(cls, value: str) -> str:
-        """
-        Provides the encoding symbol for a Unit enum to send in seriliazed messages.
-
-        Args:
-            value (str): The candidate value.
-
-        Returns:
-            str: The symbol encoding that value. If the value is not recognized -
-            which could happen if the actor making the message used a later version
-            of this enum than the actor decoding the message, returns the default
-            symbol of "00000000".
-        """
-        if value not in value_to_symbol:
-            return value_to_symbol[cls.default().value]
-        return value_to_symbol[value]
-
-    @classmethod
-    def symbols(cls) -> List[str]:
-        """
-        Returns a list of the enum symbols
-        """
-        return [
-            "00000000",
-            "ec972387",
-            "f459a9c3",
-            "ec14bd47",
-            "7d8832f8",
-            "b4580361",
-            "d66f1622",
-            "a969ac7c",
-            "e5d7555c",
-            "8e123a26",
-            "00003000",
-        ]
-
-
-symbol_to_value = {
-    "00000000": "Unknown",
-    "ec972387": "Unitless",
-    "f459a9c3": "W",
-    "ec14bd47": "Celcius",
-    "7d8832f8": "Fahrenheit",
-    "b4580361": "Gpm",
-    "d66f1622": "WattHours",
-    "a969ac7c": "AmpsRms",
-    "e5d7555c": "VoltsRms",
-    "8e123a26": "Gallons",
-    "00003000": "ThermostatStateEnum",
-}
-
-value_to_symbol = {value: key for key, value in symbol_to_value.items()}
 
 value_to_version = {
     "Unknown": "000",
@@ -167,5 +83,5 @@ value_to_version = {
     "AmpsRms": "000",
     "VoltsRms": "000",
     "Gallons": "000",
-    "ThermostatStateEnum": "000",
+    "ThermostatStateEnum": "001",
 }

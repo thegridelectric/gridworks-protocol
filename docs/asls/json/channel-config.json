@@ -1,0 +1,87 @@
+{
+  "gtr_asl": "001",
+  "type_name": "channel.config",
+  "version": "000",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": "Channel Configuration. Configuration data used to articulate how time series data is polled and captured for a particular channel.",
+  "properties": {
+    "ChannelName": {
+      "type": "string",
+      "format": "SpaceheatName",
+      "title": "Data Channel Name",
+      "description": "The (locally unique, immutable) name of the Data Channel to which the configuration applies (What node is getting read, what telemetry name is getting read, and what node is doing the reading).",
+      "required": true
+    },
+    "PollPeriodMs": {
+      "type": "integer",
+      "format": "PositiveInteger",
+      "title": "Poll Period in Milliseconds",
+      "description": "Poll Period refers to the period of time between two readings by the local actor. This is in contrast to Capture Period, which refers to the period between readings that are sent up to the cloud (or otherwise saved for the long-term).",
+      "required": true
+    },
+    "CapturePeriodS": {
+      "type": "integer",
+      "format": "PositiveInteger",
+      "title": "Capture Period Seconds",
+      "description": "This telemetry data channel will capture data periodically, at this rate. It will be shared (although not necessarily immediately) with the AtomicTNode. The capture period must be longer than the poll period. If the channel is also capturing on change, those asynchronous reports do not reset this period.",
+      "required": true
+    },
+    "AsyncCapture": {
+      "type": "boolean",
+      "description": "Set CaptureOnChange to true for asynchronous reporting of captured data, in addition to the synchronous periodic capture reflected by the CapturePeriodS.",
+      "required": true
+    },
+    "AsyncCaptureDelta": {
+      "type": "integer",
+      "format": "PositiveInteger",
+      "title": "Asynchronous Capture Delta",
+      "description": "Represents the threshold or minimum change in value required for asynchronous reporting of telemetry data, assuming CaptureOnChange. For example, if TelemetryName is WaterTempCTimes1000 and one wants 0.25 deg C to trigger a new capture, then this would be set to 250.",
+      "required": false
+    },
+    "Exponent": {
+      "type": "integer",
+      "description": "Say the TelemetryName is WaterTempCTimes1000; this corresponds to units of Celsius. To match the implication in the name, the Exponent should be 3, and a Value of 65300 would indicate 65.3 deg C",
+      "required": true
+    },
+    "Unit": {
+      "type": "string",
+      "format": "spaceheat.unit",
+      "title": "Unit",
+      "description": "Say TelemetryName is WaterTempCTimes1000. The unit would be Celcius.",
+      "required": true
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "channel.config",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "000",
+      "required": true
+    }
+  },
+  "axioms": {
+    "Axiom1": {
+      "title": "Async Capture Consistency",
+      "description": "If AsyncCapture is True, then AsyncCaptureDelta exists"
+    },
+    "Axiom2": {
+      "title": "Capture and Polling Consistency",
+      "description": "CapturePeriodMs (CapturePeriodS * 1000) must be larger than PollPeriodMs. If CapturePeriodMs < 10 * PollPeriodMs then CapturePeriodMs must be a multiple of PollPeriodMs."
+    }
+  },
+  "formats": {
+    "SpaceheatName": {
+      "type": "string",
+      "description": "Lowercase alphanumeric words separated by hypens, where first word starts with an alphabet character.",
+      "example": "store-hot-pipe"
+    },
+    "PositiveInteger": {
+      "type": "string",
+      "description": "Must be positive when interpreted as an integer. Interpretation as an integer follows the pydantic rules for this - which will round down rational numbers. So 1.7 will be interpreted as 1 and is also fine, while 0.5 is interpreted as 0 and will raise an exception.",
+      "example": ""
+    }
+  }
+}

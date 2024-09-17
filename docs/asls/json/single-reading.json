@@ -1,0 +1,51 @@
+{
+  "gtr_asl": "001",
+  "type_name": "single.reading",
+  "version": "000",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": "Simple Sensor Telemetry. A single data channel reading sent from a spaceheat node actor. The value is an integer.",
+  "url": "https://gridworks-protocol.readthedocs.io/en/latest/spaceheat-actor.html",
+  "properties": {
+    "ScadaReadTimeUnixMs": {
+      "type": "integer",
+      "format": "UTCMilliseconds",
+      "title": "Scada Read Time in Unix Milliseconds",
+      "required": true
+    },
+    "ChannelName": {
+      "type": "string",
+      "format": "SpaceheatName",
+      "title": "Data Channel Name",
+      "description": "The name of the Channel getting reported",
+      "required": true
+    },
+    "Value": {
+      "type": "integer",
+      "description": "The value of the reading.",
+      "required": true
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "single.reading",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "000",
+      "required": true
+    }
+  },
+  "formats": {
+    "SpaceheatName": {
+      "type": "string",
+      "description": "Lowercase alphanumeric words separated by hypens, where first word starts with an alphabet character.",
+      "example": "store-hot-pipe"
+    },
+    "UTCMilliseconds": {
+      "type": "string",
+      "description": "An integer reflecting unix time in MILLISECONDS between midnight Jan 1 2000 and midnight Jan 1 3000 UTC",
+      "example": "1702327940710"
+    }
+  }
+}

@@ -9,4 +9,7 @@ def test_power_watts_generated() -> None:
         "TypeName": "power.watts",
         "Version": "000",
     }
-    assert PowerWatts.model_validate(d).model_dump() == d
+
+    t = PowerWatts(**d)
+
+    assert t.model_dump(exclude_none=True, by_alias=True) == d

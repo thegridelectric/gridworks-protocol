@@ -7,11 +7,14 @@ def test_egauge_register_config_generated() -> None:
     d = {
         "Address": 9004,
         "Name": "Garage power",
-        "Description": "",
+        "Description": "some description",
         "Type": "f32",
         "Denominator": 1,
         "Unit": "W",
         "TypeName": "egauge.register.config",
         "Version": "000",
     }
-    assert EgaugeRegisterConfig.model_validate(d).model_dump() == d
+
+    t = EgaugeRegisterConfig(**d)
+
+    assert t.model_dump(exclude_none=True, by_alias=True) == d

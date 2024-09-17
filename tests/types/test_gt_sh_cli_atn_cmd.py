@@ -11,4 +11,7 @@ def test_gt_sh_cli_atn_cmd_generated() -> None:
         "TypeName": "gt.sh.cli.atn.cmd",
         "Version": "110",
     }
-    assert GtShCliAtnCmd.model_validate(d).model_dump() == d
+
+    t = GtShCliAtnCmd(**d)
+
+    assert t.model_dump(exclude_none=True, by_alias=True) == d

@@ -5,7 +5,7 @@ from typing import Optional
 from pydantic import ConfigDict
 
 from gwproto.data_classes.components.component import Component
-from gwproto.enums import ActorClass, Role
+from gwproto.enums import ActorClass
 from gwproto.types import SpaceheatNodeGt
 
 
@@ -30,15 +30,11 @@ class ShNode(SpaceheatNodeGt):
 
     @property
     def alias(self) -> str:
-        return self.Alias
+        return self.Name
 
     @property
     def actor_class(self) -> ActorClass:
         return self.ActorClass
-
-    @property
-    def role(self) -> Role:
-        return self.Role
 
     @property
     def display_name(self) -> Optional[str]:
@@ -49,15 +45,11 @@ class ShNode(SpaceheatNodeGt):
         return self.ComponentId
 
     @property
-    def reporting_sample_period_s(self) -> Optional[int]:
-        return self.ReportingSamplePeriodS
-
-    @property
     def in_power_metering(self) -> Optional[bool]:
         return self.InPowerMetering
 
     def __repr__(self) -> str:
-        rs = f"ShNode {self.display_name} => {self.role.value} {self.alias}, "
+        rs = f"ShNode {self.display_name} => {self.Name}, "
         if self.has_actor:
             rs += " (has actor)"
         else:

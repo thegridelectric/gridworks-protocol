@@ -11,6 +11,13 @@ from gwproto.property_format import (
 
 
 class GtShCliAtnCmd(BaseModel):
+    """
+    AtomicTNode CLI Command.
+
+    This is a generic type mechanism for a crude command line interface on a SCADA, brokered
+    by the AtomicTNode.
+    """
+
     FromGNodeAlias: LeftRightDotStr
     SendSnapshot: bool
     FromGNodeId: UUID4Str

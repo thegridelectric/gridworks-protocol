@@ -33,8 +33,8 @@ class FibaroTempSensorSettingsGt(BaseModel):
     analog_input_id: Annotated[int, Field(ge=1, le=2)]
     tank_label: str = ""
     exponent: int = 1
-    telemetry_name_gt_enum_symbol: str = "c89d0ba1"
-    temp_unit_gt_enum_symbol: str = "ec14bd47"
+    telemetry_name: TelemetryName = TelemetryName.WaterTempCTimes1000
+    unit: Unit = Unit.Celcius
     enabled: bool = True
     web_listen_enabled: bool = True
     poll_period_seconds: Optional[float] = None
@@ -49,26 +49,13 @@ class FibaroTempSensorSettingsGt(BaseModel):
         extra="allow", alias_generator=snake_to_camel, populate_by_name=True
     )
 
-    @field_validator("telemetry_name_gt_enum_symbol")
-    @classmethod
-    def _check_telemetry_name_symbol(cls, v: str) -> str:
-        if v not in TelemetryName.symbols():
-            v = TelemetryName.value_to_symbol(TelemetryName.default())
-        return v
-
-    @field_validator("temp_unit_gt_enum_symbol")
-    @classmethod
-    def _checktemp_unit_gt_enum_symbol(cls, v: str) -> str:
-        if v not in Unit.symbols():
-            v = Unit.value_to_symbol(Unit.default())
-        return v
-
 
 DEFAULT_SENSOR_NODE_NAME_FORMAT = "{tank_name}.temp.depth{stack_depth}"
 
 
 class FibaroTempSensorSettings(FibaroTempSensorSettingsGt):
     node_name: str
+    channel_name: str
     model_config = ConfigDict(ignored_types=(cached_property, TelemetryName))
 
     @field_validator("rest")
@@ -83,16 +70,6 @@ class FibaroTempSensorSettings(FibaroTempSensorSettingsGt):
             v.session.base_url = URLConfig()
             v.request.url.url_args = URLArgs.from_url(collapsed_url)
         return v
-
-    @property
-    def telemetry_name(self) -> TelemetryName:
-        value = TelemetryName.symbol_to_value(self.telemetry_name_gt_enum_symbol)
-        return TelemetryName(value)
-
-    @property
-    def unit(self) -> Unit:
-        value = Unit.symbol_to_value(self.temp_unit_gt_enum_symbol)
-        return Unit(value)
 
     @cached_property
     def url(self) -> yarl.URL:

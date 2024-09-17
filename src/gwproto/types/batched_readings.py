@@ -49,7 +49,7 @@ class BatchedReadings(BaseModel):
 
     model_config = ConfigDict(extra="allow")
 
-    @field_validator("fsm_action_list")
+    @field_validator("FsmActionList")
     @classmethod
     def check_fsm_action_list(cls, v: List[FsmAtomicReport]) -> List[FsmAtomicReport]:
         """

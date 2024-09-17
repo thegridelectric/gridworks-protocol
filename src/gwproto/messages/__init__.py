@@ -13,21 +13,20 @@ __all__ = [
     "EventBase",
     "EventMessage",
     "EventT",
-    "GsDispatch",
-    "GsDispatch_Maker",
-    "GsPwr",
-    "GsPwr_Maker",
-    "GtDispatchBoolean",
-    "GtDispatchBooleanLocal",
-    "GtDriverBooleanactuatorCmd",
-    "GtShBooleanactuatorCmdStatus",
+    # "GsDispatch",
+    # "GsDispatch_Maker",
+    # "GsPwr",
+    # "GsPwr_Maker",
+    # "GtDispatchBoolean" => FsmTriggerFromAtn
+    # "GtDispatchBooleanLocal" => FsmEvent
+    # "GtDriverBooleanactuatorCmd" => FsmAtomicReport
+    # " GtShBooleanactuatorCmdStatus"  => FsmAtomicReport
     "GtShCliAtnCmd",
-    "GtShMultipurposeTelemetryStatus",
-    "GtShSimpleTelemetryStatus",
-    "GtShStatus",
-    "GtShStatusEvent",
-    "GtShTelemetryFromMultipurposeSensor",
-    "GtTelemetry",
+    # "GtShSimpleTelemetryStatus" => ChannelReadings
+    # "GtShStatus" => BatchedReadings
+    # "GtShStatusEvent" => BatchedReadingsEvent
+    # "GtShTelemetryFromMultipurposeSensor" => SyncedReadings
+    # "GtTelemetry" => SingleReading
     "MQTTConnectEvent",
     "MQTTConnectFailedEvent",
     "MQTTDisconnectEvent",
@@ -43,5 +42,5 @@ __all__ = [
     "SnapshotSpaceheat",
     "SnapshotSpaceheatEvent",
     "StartupEvent",
-    "TelemetrySnapshotSpaceheat",
+    # "TelemetrySnapshotSpaceheat", Deprecated
 ]

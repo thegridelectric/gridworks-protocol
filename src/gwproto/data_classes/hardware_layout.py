@@ -30,7 +30,7 @@ from gwproto.default_decoders import (
     default_cac_decoder,
     default_component_decoder,
 )
-from gwproto.enums import ActorClass, Role, TelemetryName
+from gwproto.enums import ActorClass, TelemetryName
 from gwproto.types import (
     ComponentAttributeClassGt,
     ComponentGt,
@@ -441,7 +441,11 @@ class HardwareLayout:
     @cached_property
     def power_meter_node(self) -> ShNode:
         """Schema for input data enforces exactly one Spaceheat Node with role PowerMeter"""
-        return next(filter(lambda x: x.role == Role.PowerMeter, self.nodes.values()))
+        return next(
+            filter(
+                lambda x: x.actor_class == ActorClass.PowerMeter, self.nodes.values()
+            )
+        )
 
     @cached_property
     def power_meter_component(self) -> ElectricMeterComponent:
@@ -458,29 +462,30 @@ class HardwareLayout:
                 f"ERROR. power_meter_component cac {self.power_meter_component.cac}"
                 f" / {type(self.power_meter_component.cac)} is not an ElectricMeterCac"
             )
-        return self.power_meter_node.component.component_attribute_class  # type: ignore[union-attr, return-value]
-
-    @cached_property
-    def all_resistive_heaters(self) -> List[ShNode]:
-        all_nodes = list(self.nodes.values())
-        return list(filter(lambda x: (x.role == Role.BoostElement), all_nodes))
+        return self.power_meter_node.component.cac  # type: ignore[union-attr, return-value]
 
     @cached_property
     def scada_node(self) -> ShNode:
         """Schema for input data enforces exactly one Spaceheat Node with role Scada"""
-        nodes = list(filter(lambda x: x.role == Role.Scada, self.nodes.values()))
+        nodes = list(
+            filter(lambda x: x.actor_class == ActorClass.Scada, self.nodes.values())
+        )
         return nodes[0]
 
     @cached_property
     def home_alone_node(self) -> ShNode:
         """Schema for input data enforces exactly one Spaceheat Node with role HomeAlone"""
-        nodes = list(filter(lambda x: x.role == Role.HomeAlone, self.nodes.values()))
+        nodes = list(
+            filter(lambda x: x.actor_class == ActorClass.HomeAlone, self.nodes.values())
+        )
         return nodes[0]
 
     @cached_property
     def my_home_alone(self) -> ShNode:
         all_nodes = list(self.nodes.values())
-        home_alone_nodes = list(filter(lambda x: (x.role == Role.HomeAlone), all_nodes))
+        home_alone_nodes = list(
+            filter(lambda x: (x.actor_class == ActorClass.HomeAlone), all_nodes)
+        )
         if len(home_alone_nodes) != 1:
             raise ValueError(
                 "there should be a single SpaceheatNode with role HomeAlone"
@@ -490,63 +495,7 @@ class HardwareLayout:
     @cached_property
     def my_boolean_actuators(self) -> List[ShNode]:
         all_nodes = list(self.nodes.values())
-        return list(filter(lambda x: (x.role == Role.BooleanActuator), all_nodes))
-
-    @cached_property
-    def my_simple_sensors(self) -> List[ShNode]:
-        all_nodes = list(self.nodes.values())
-        return list(
-            filter(
-                lambda x: (
-                    x.actor_class
-                    in {ActorClass.SimpleSensor, ActorClass.BooleanActuator}
-                ),
-                all_nodes,
-            )
-        )
-
-    @cached_property
-    def all_multipurpose_telemetry_tuples(self) -> List[TelemetryTuple]:
-        multi_nodes = list(
-            filter(
-                lambda x: (
-                    (
-                        x.actor_class
-                        in {
-                            ActorClass.MultipurposeSensor,
-                            ActorClass.HubitatTankModule,
-                            ActorClass.HubitatPoller,
-                            ActorClass.HoneywellThermostat,
-                        }
-                    )
-                    and hasattr(x.component, "config_list")
-                ),
-                self.nodes.values(),
-            )
-        )
-        telemetry_tuples = []
-        for node in multi_nodes:
-            telemetry_tuples.extend(
-                [
-                    TelemetryTuple(
-                        AboutNode=self.node(config.AboutNodeName),
-                        SensorNode=node,
-                        TelemetryName=config.TelemetryName,
-                    )
-                    for config in node.component.config_list
-                ]
-            )
-        return telemetry_tuples
-
-    @cached_property
-    def my_multipurpose_sensors(self) -> List[ShNode]:
-        """This will be a list of all sensing devices that either measure more
-        than one ShNode or measure more than one physical quantity type (or both).
-        This includes the (unique) power meter, but may also include other roles like thermostats
-        and heat pumps."""
-        all_nodes = list(self.nodes.values())
-        multi_purpose_roles = [Role.PowerMeter, Role.MultiChannelAnalogTempSensor]
-        return list(filter(lambda x: (x.role in multi_purpose_roles), all_nodes))
+        return list(filter(lambda x: (x.actor_class == ActorClass.Relay), all_nodes))
 
     @cached_property
     def my_telemetry_tuples(self) -> List[TelemetryTuple]:
@@ -554,5 +503,6 @@ class HardwareLayout:
         important of which is the power meter."""
         return (
             self.all_power_meter_telemetry_tuples
-            + self.all_multipurpose_telemetry_tuples
+            # + self.all_multipurpose_telemetry_tuples
         )
+        # TODO: replace with data channel concept

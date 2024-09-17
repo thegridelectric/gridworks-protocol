@@ -27,7 +27,7 @@ class I2cMultichannelDtRelayComponentGt(ComponentGt):
     )
     Version: Literal["000"] = "000"
 
-    @field_validator("relay_config_list")
+    @field_validator("RelayConfigList")
     @classmethod
     def check_relay_config_list(
         cls, v: List[RelayActorConfig]

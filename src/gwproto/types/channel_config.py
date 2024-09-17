@@ -13,14 +13,6 @@ from gwproto.property_format import (
 
 
 class ChannelConfig(BaseModel):
-    """
-    Channel Configuration.
-
-    Configuration data used to articulate how time series data is polled and captured for a
-    particular channel. ExtraAllowed. Replace the ambigious "SamplePeriodS" with "CapturePeriodS"
-    and "PollPeriodMs" added.
-    """
-
     ChannelName: SpaceheatName
     PollPeriodMs: PositiveInt
     CapturePeriodS: PositiveInt

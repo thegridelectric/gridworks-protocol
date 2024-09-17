@@ -35,7 +35,7 @@ class KeyparamChangeLog(BaseModel):
 
     model_config = ConfigDict(extra="allow")
 
-    @field_validator("change_time_utc")
+    @field_validator("ChangeTimeUtc")
     @classmethod
     def _check_change_time_utc(cls, v: str) -> str:
         try:

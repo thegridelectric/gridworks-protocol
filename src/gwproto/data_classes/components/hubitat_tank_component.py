@@ -6,7 +6,11 @@ from gwproto.data_classes.components import HubitatComponent
 from gwproto.data_classes.components.component import Component
 from gwproto.data_classes.resolver import ComponentResolver
 from gwproto.data_classes.sh_node import ShNode
-from gwproto.types import ComponentAttributeClassGt, HubitatTankComponentGt
+from gwproto.types import (
+    ChannelConfig,
+    ComponentAttributeClassGt,
+    HubitatTankComponentGt,
+)
 from gwproto.types.hubitat_component_gt import (
     HubitatComponentGt,
     HubitatRESTResolutionSettings,
@@ -15,7 +19,6 @@ from gwproto.types.hubitat_tank_gt import (
     FibaroTempSensorSettings,
     FibaroTempSensorSettingsGt,
 )
-from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
 
 
 class HubitatTankComponent(
@@ -97,13 +100,13 @@ class HubitatTankComponent(
         return urls
 
     @property
-    def config_list(self) -> list[TelemetryReportingConfig]:
+    def config_list(self) -> list[ChannelConfig]:
         return [
-            TelemetryReportingConfig(
-                TelemetryName=device.telemetry_name,
-                AboutNodeName=device.node_name,
-                ReportOnChange=False,
-                SamplePeriodS=int(device.rest.poll_period_seconds),
+            ChannelConfig(
+                ChannelName=device.channel_name,
+                PollPeriodMs=1000,
+                CapturePeriodS=int(device.rest.poll_period_seconds),
+                AsyncCapture=False,
                 Exponent=device.exponent,
                 Unit=device.unit,
             )

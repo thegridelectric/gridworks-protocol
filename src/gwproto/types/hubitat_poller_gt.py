@@ -1,4 +1,4 @@
-from pydantic import BaseModel, ConfigDict, field_validator
+from pydantic import BaseModel, ConfigDict
 
 from gwproto.enums import TelemetryName, Unit
 from gwproto.utils import snake_to_camel
@@ -6,9 +6,10 @@ from gwproto.utils import snake_to_camel
 
 class MakerAPIAttributeGt(BaseModel):
     attribute_name: str
+    channel_name: str
     node_name: str
-    telemetry_name_gt_enum_symbol: str = "c89d0ba1"
-    unit_gt_enum_symbol: str = "ec14bd47"
+    telemetry_name: TelemetryName = TelemetryName.WaterTempCTimes1000
+    unit: Unit = Unit.Celcius
     exponent: int = 3
     interpret_as_number: bool = True
     enabled: bool = True
@@ -17,30 +18,9 @@ class MakerAPIAttributeGt(BaseModel):
     report_missing: bool = True
     report_parse_error: bool = True
 
-    @property
-    def telemetry_name(self) -> TelemetryName:
-        value = TelemetryName.symbol_to_value(
-            self.telemetry_name_gt_enum_symbol,
-        )
-        return TelemetryName(value)
-
-    @property
-    def unit(self) -> Unit:
-        value = Unit.symbol_to_value(
-            self.unit_gt_enum_symbol,
-        )
-        return Unit(value)
-
     model_config = ConfigDict(
         extra="allow", alias_generator=snake_to_camel, populate_by_name=True
     )
-
-    @field_validator("telemetry_name_gt_enum_symbol")
-    @classmethod
-    def _check_telemetry_name_symbol(cls, v: str) -> str:
-        if v not in TelemetryName.symbols():
-            v = TelemetryName.value_to_symbol(TelemetryName.default())
-        return v
 
 
 class HubitatPollerGt(BaseModel):

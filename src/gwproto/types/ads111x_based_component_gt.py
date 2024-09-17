@@ -20,7 +20,7 @@ class Ads111xBasedComponentGt(ComponentGt):
     TypeName: Literal["ads111x.based.component.gt"] = "ads111x.based.component.gt"
     Version: Literal["000"] = "000"
 
-    @field_validator("open_voltage_by_ads")
+    @field_validator("OpenVoltageByAds")
     @classmethod
     def _check_open_voltage_by_ads(cls, v: List[float]) -> List[float]:
         try:
@@ -32,7 +32,7 @@ class Ads111xBasedComponentGt(ComponentGt):
             ) from e
         return v
 
-    @field_validator("thermistor_config_list")
+    @field_validator("ThermistorConfigList")
     @classmethod
     def check_thermistor_config_list(
         cls, v: List[ThermistorDataProcessingConfig]

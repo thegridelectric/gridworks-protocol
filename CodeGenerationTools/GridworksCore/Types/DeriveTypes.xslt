@@ -433,12 +433,10 @@ class </xsl:text>
     </xsl:variable>
 
     <xsl:variable name = "attribute-name">
-        <xsl:call-template name="python-case">
-            <xsl:with-param name="camel-case-text" select="Value"/>
-            </xsl:call-template>
+            <xsl:value-of select="Value"/>
         <!-- If attribute is associated to a data class, add Id to the Attribute name-->
         <xsl:if test="not(normalize-space(SubTypeDataClass) = '') and not(IsList='true')">
-        <xsl:text>_id</xsl:text>
+        <xsl:text>Id</xsl:text>
         </xsl:if>
     </xsl:variable>
 

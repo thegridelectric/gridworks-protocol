@@ -26,7 +26,7 @@ class Ads111xBasedCacGt(ComponentAttributeClassGt):
 
     model_config = ConfigDict(extra="allow")
 
-    @field_validator("ads_i2c_address_list")
+    @field_validator("AdsI2cAddressList")
     @classmethod
     def _check_ads_i2c_address_list(cls, v: List[str]) -> List[str]:
         try:

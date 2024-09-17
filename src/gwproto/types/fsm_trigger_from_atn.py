@@ -29,7 +29,7 @@ class FsmTriggerFromAtn(BaseModel):
 
     model_config = ConfigDict(extra="allow")
 
-    @field_validator("trigger")
+    @field_validator("Trigger")
     @classmethod
     def check_trigger(cls, v: FsmEvent) -> FsmEvent:
         """

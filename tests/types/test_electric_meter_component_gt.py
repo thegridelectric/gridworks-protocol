@@ -175,6 +175,7 @@ def test_electric_meter_component_gt_generated() -> None:
         "Version": "001",
     }
 
-    d2 = ElectricMeterComponentGt.model_validate(d).model_dump(exclude_none=True)
+    t = ElectricMeterComponentGt.model_validate(d)
+    d2 = t.model_dump(exclude_none=True)
 
     assert d2 == d

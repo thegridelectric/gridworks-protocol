@@ -53,8 +53,112 @@
       "ComponentId": "2bfd0036-0b0e-4732-8790-bc7d0536a85e",
       "TypeName": "spaceheat.node.gt",
       "Version": "200"
+    },
+    {
+      "Name": "store-pump",
+      "ActorClass": "NoActor",
+      "DisplayName": "Store Pump",
+      "ShNodeId": "37eada4c-27fb-42ec-809a-0c295aba7370",
+      "TypeName": "spaceheat.node.gt",
+      "Version": "200"
+    },
+    {
+      "Name": "primary-pump",
+      "ActorClass": "NoActor",
+      "DisplayName": "Primary Pump",
+      "ShNodeId": "e6b643bd-4124-49fb-b044-6fa13b978a3a",
+      "TypeName": "spaceheat.node.gt",
+      "Version": "200"
+    },
+    {
+      "Name": "dist-pump",
+      "ActorClass": "NoActor",
+      "DisplayName": "Distribution Pump",
+      "ShNodeId": "cd31eb2a-cd8a-4df3-b79e-55ca5cb887a9",
+      "TypeName": "spaceheat.node.gt",
+      "Version": "200"
+    },
+    {
+      "Name": "hp-idu",
+      "ActorClass": "NoActor",
+      "DisplayName": "HP Indoor Unit",
+      "ShNodeId": "7d6e36c9-04a0-4826-b285-83b2447e08ea",
+      "TypeName": "spaceheat.node.gt",
+      "Version": "200"
+    },
+    {
+      "Name": "hp-odu",
+      "ActorClass": "NoActor",
+      "DisplayName": "HP Outdoor Unit",
+      "ShNodeId": "2a9f479a-09c0-4520-85a1-b8ff32d055e8",
+      "TypeName": "spaceheat.node.gt",
+      "Version": "200"
     }
   ],
+  "DataChannels": [
+      {
+         "Name": "store-pump-pwr",
+         "DisplayName": "Store pump power",
+         "AboutNodeName": "store-pump",
+         "CapturedByNodeName": "power-meter",
+         "TelemetryName": "PowerW",
+         "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta",
+         "StartS": 1701293980,
+         "Id": "ac35c2a9-e317-45e8-a036-52fa5cbd8380",
+         "TypeName": "data.channel.gt",
+         "Version": "001"
+      },
+      {
+         "Name": "primary-pump-pwr",
+         "DisplayName": "Primary pump power",
+         "AboutNodeName": "primary-pump",
+         "CapturedByNodeName": "power-meter",
+         "TelemetryName": "PowerW",
+         "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta",
+         "StartS": 1701293980,
+         "Id": "1e3c34e3-1e83-4dae-bfe3-a698c4618b5a",
+         "TypeName": "data.channel.gt",
+         "Version": "001"
+      },
+      {
+         "Name": "dist-pump-pwr",
+         "DisplayName": "Distribution pump power",
+         "AboutNodeName": "dist-pump",
+         "CapturedByNodeName": "power-meter",
+         "TelemetryName": "PowerW",
+         "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta",
+         "StartS": 1701293980,
+         "Id": "a2ebe9fa-05ba-4665-a6ba-dbc85aee530c",
+         "TypeName": "data.channel.gt",
+         "Version": "001"
+      },
+      {
+         "Name": "hp-odu-pwr",
+         "DisplayName": "HP ODU Power",
+         "AboutNodeName": "hp-odu",
+         "CapturedByNodeName": "power-meter",
+         "TelemetryName": "PowerW",
+         "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta",
+         "InPowerMetering": true,
+         "StartS": 1704862800,
+         "Id": "498da855-bac5-47e9-b83a-a11e56a50e67",
+         "TypeName": "data.channel.gt",
+         "Version": "001"
+      },
+      {
+         "Name": "hp-idu-pwr",
+         "DisplayName": "HP IDU Power",
+         "AboutNodeName": "hp-idu",
+         "CapturedByNodeName": "power-meter",
+         "TelemetryName": "PowerW",
+         "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta",
+         "InPowerMetering": true,
+         "StartS": 1704862800,
+         "Id": "beabac86-7caa-4ab4-a50b-af1ad54ed165",
+         "TypeName": "data.channel.gt",
+         "Version": "001"
+      }
+   ],
   "ElectricMeterComponents": [
     {
         "ComponentId":"2bfd0036-0b0e-4732-8790-bc7d0536a85e",

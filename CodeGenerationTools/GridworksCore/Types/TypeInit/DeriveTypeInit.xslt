@@ -86,6 +86,8 @@ __all__ = [</xsl:text>
 
 </xsl:for-each>
 <xsl:text>
+    "cacs",  # noqa: F822
+    "components",  # noqa: F822
 ]</xsl:text>
 
 <!-- Add newline at EOF for git and pre-commit-->

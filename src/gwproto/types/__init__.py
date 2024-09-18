@@ -78,4 +78,6 @@ __all__ = [
     "SyncedReadings",
     "ThermistorDataProcessingConfig",
     "WebServerComponentGt",
+    "cacs",  # noqa: F822
+    "components",  # noqa: F822
 ]

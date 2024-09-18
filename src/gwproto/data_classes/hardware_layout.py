@@ -134,12 +134,10 @@ class HardwareLayout:
             component_decoder = default_component_decoder
         components = {}
         for type_name in [
-            "RelayComponents",
-            "ResistiveHeaterComponents",
+            "Ads111xBasedComponents",
             "ElectricMeterComponents",
-            "PipeFlowSensorComponents",
-            "MultipurposeSensorComponents",
-            "SimpleTempSensorComponents",
+            "I2cMultichannelDtRelayComponents",
+            "ResistiveHeaterComponents",
             "OtherComponents",
         ]:
             for component_dict in layout.get(type_name, ()):
@@ -163,7 +161,7 @@ class HardwareLayout:
             if component is None:
                 raise ValueError(
                     f"ERROR. Component <{component_id}> not loaded "
-                    f"for node <{node_dict.get('Alias')}>"
+                    f"for node <{node_dict.get('Name')}>"
                 )
         else:
             component = None
@@ -184,7 +182,7 @@ class HardwareLayout:
             errors = []
         for node_dict in layout.get("ShNodes", []):
             try:
-                node_name = node_dict["Alias"]
+                node_name = node_dict["Name"]
                 if included_node_names is None or node_name in included_node_names:
                     nodes[node_name] = cls.make_node(node_dict, components)
             except Exception as e:  # noqa: PERF203
@@ -211,11 +209,11 @@ class HardwareLayout:
                     component = components.get(node.component_id, None)
                     if component is None:
                         raise DataClassLoadingError(  # noqa: TRY301
-                            f"{node.alias} component {node.component_id} not loaded!"
+                            f"{node.name} component {node.component_id} not loaded!"
                         )
                     if isinstance(component, ComponentResolver):
                         component.resolve(
-                            node.alias,
+                            node.name,
                             nodes,
                             components,
                         )
@@ -240,7 +238,7 @@ class HardwareLayout:
             self.components_by_type[type(component)].append(component)
         self.nodes = dict(nodes)
         self.nodes_by_component = {
-            node.component_id: node.alias for node in self.nodes.values()
+            node.component_id: node.Name for node in self.nodes.values()
         }
 
     def clear_property_cache(self) -> None:
@@ -318,14 +316,14 @@ class HardwareLayout:
         )
         return HardwareLayout(layout, **load_args)
 
-    def node(self, alias: str, default: Any = None) -> ShNode:  # noqa: ANN401
-        return self.nodes.get(alias, default)
+    def node(self, name: str, default: Any = None) -> ShNode:  # noqa: ANN401
+        return self.nodes.get(name, default)
 
-    def component(self, node_alias: str) -> Optional[Component]:
-        return self.component_from_node(self.node(node_alias, None))
+    def component(self, node_name: str) -> Optional[Component]:
+        return self.component_from_node(self.node(node_name, None))
 
-    def cac(self, node_alias: str) -> Optional[ComponentAttributeClassGt]:
-        return self.component(node_alias).cac
+    def cac(self, node_name: str) -> Optional[ComponentAttributeClassGt]:
+        return self.component(node_name).cac
 
     def get_component_as_type(self, component_id: str, type_: Type[T]) -> Optional[T]:
         component = self.components.get(component_id, None)
@@ -358,23 +356,23 @@ class HardwareLayout:
             else None
         )
 
-    @classmethod
-    def parent_alias(cls, alias: str) -> str:
-        last_delimiter = alias.rfind(".")
-        if last_delimiter == -1:
-            return ""
-        return alias[:last_delimiter]
+    # @classmethod
+    # def parent_alias(cls, alias: str) -> str:
+    #     last_delimiter = alias.rfind(".")
+    #     if last_delimiter == -1:
+    #         return ""
+    #     return alias[:last_delimiter]
 
-    def parent_node(self, alias: str) -> Optional[ShNode]:
-        parent_alias = self.parent_alias(alias)
-        if not parent_alias:
-            return None
-        if parent_alias not in self.nodes:
-            raise DataClassLoadingError(f"{alias} is missing parent {parent_alias}!")
-        return self.node(parent_alias)
+    # def parent_node(self, alias: str) -> Optional[ShNode]:
+    #     parent_alias = self.parent_alias(alias)
+    #     if not parent_alias:
+    #         return None
+    #     if parent_alias not in self.nodes:
+    #         raise DataClassLoadingError(f"{alias} is missing parent {parent_alias}!")
+    #     return self.node(parent_alias)
 
-    def descendants(self, alias: str) -> List[ShNode]:
-        return list(filter(lambda x: x.alias.startswith(alias), self.nodes.values()))
+    # def descendants(self, alias: str) -> List[ShNode]:
+    #     return list(filter(lambda x: x.alias.startswith(alias), self.nodes.values()))
 
     @cached_property
     def atn_g_node_alias(self) -> str:
@@ -426,17 +424,6 @@ class HardwareLayout:
         """All nodes whose power level is metered and included in power reporting by the Scada"""
         all_nodes = list(self.nodes.values())
         return list(filter(lambda x: x.in_power_metering, all_nodes))
-
-    @cached_property
-    def all_power_meter_telemetry_tuples(self) -> List[TelemetryTuple]:
-        return [
-            TelemetryTuple(
-                AboutNode=self.node(config.AboutNodeName),
-                SensorNode=self.power_meter_node,
-                TelemetryName=config.TelemetryName,
-            )
-            for config in self.power_meter_component.gt.ConfigList
-        ]
 
     @cached_property
     def power_meter_node(self) -> ShNode:
@@ -501,8 +488,9 @@ class HardwareLayout:
     def my_telemetry_tuples(self) -> List[TelemetryTuple]:
         """This will include telemetry tuples from all the multipurpose sensors, the most
         important of which is the power meter."""
-        return (
-            self.all_power_meter_telemetry_tuples
-            # + self.all_multipurpose_telemetry_tuples
-        )
-        # TODO: replace with data channel concept
+        return []
+        # return (
+        #     self.all_power_meter_telemetry_tuples
+        #      + self.all_multipurpose_telemetry_tuples
+        # )
+        # TODO: replace with data channels

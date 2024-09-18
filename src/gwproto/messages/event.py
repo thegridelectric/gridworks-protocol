@@ -113,7 +113,7 @@ class BatchedReadingsEvent(EventBase):
 
 
 class SnapshotSpaceheatEvent(EventBase):
-    snap: SnapshotSpaceheat
+    Snap: SnapshotSpaceheat
     TypeName: Literal["gridworks.event.snapshot.spaceheat"] = (
         "gridworks.event.snapshot.spaceheat"
     )

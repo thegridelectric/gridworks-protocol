@@ -13,13 +13,6 @@ from gwproto.types.single_reading import SingleReading
 
 
 class SnapshotSpaceheat(BaseModel):
-    """
-    Snapshot.
-
-    Collection of all the latest measurements (timestamped) captured by the SCADA for all of
-    its data channels.
-    """
-
     FromGNodeAlias: LeftRightDotStr
     FromGNodeInstanceId: UUID4Str
     SnapshotTimeUnixMs: UTCMilliseconds

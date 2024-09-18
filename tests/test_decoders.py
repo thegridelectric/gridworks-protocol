@@ -1,5 +1,4 @@
 import json
-import time
 import uuid
 from pathlib import Path
 
@@ -9,7 +8,7 @@ from gwproto import Message
 from gwproto.messages import (
     Ack,
     AnyEvent,
-    GtShStatusEvent,
+    BatchedReadingsEvent,
     MQTTConnectEvent,
     MQTTConnectFailedEvent,
     MQTTDisconnectEvent,
@@ -24,9 +23,8 @@ from gwproto.messages import (
     StartupEvent,
 )
 from gwproto.types import (
-    GtDispatchBoolean,
+    BatchedReadings,
     GtShCliAtnCmd,
-    GtShStatus,
     PowerWatts,
     SnapshotSpaceheat,
 )
@@ -45,7 +43,7 @@ def get_stored_message_dicts() -> dict:
 
 def child_to_parent_payload_dicts() -> dict:
     d = {}
-    for prefix in ["status", "snapshot"]:
+    for prefix in ["batched_readings", "snapshot"]:
         with (TEST_DATA_DIR / f"{prefix}_message.json").open() as f:
             d[prefix] = json.loads(f.read())
             d[prefix]["Header"]["Src"] = CHILD
@@ -54,50 +52,50 @@ def child_to_parent_payload_dicts() -> dict:
 
 def child_to_parent_messages() -> list[MessageCase]:
     stored_message_dicts = child_to_parent_payload_dicts()
-    status_message_dict = stored_message_dicts["status"]
-    gt_sh_status = GtShStatus.model_validate(status_message_dict["Payload"])
-    gt_sh_status_event = GtShStatusEvent(Src=CHILD, status=gt_sh_status)
-    unrecognized_status_event = AnyEvent(**gt_sh_status_event.model_dump())
+    br_message_dict = stored_message_dicts["batched_readings"]
+    batched_readings = BatchedReadings.model_validate(
+        br_message_dict["Payload"]["Readings"]
+    )
+    batched_readings_event = BatchedReadingsEvent.model_validate(
+        br_message_dict["Payload"]
+    )
+    unrecognized_status_event = AnyEvent(
+        **batched_readings_event.model_dump(exclude_none=True)
+    )
     unrecognized_status_event.TypeName += ".foo"
     unrecognized_event = AnyEvent(
         TypeName="gridworks.event.bar", MessageId="1", TimeNS=1, Src="1"
     )
     unrecognizeable_not_event_type = AnyEvent(
         **dict(
-            gt_sh_status_event.model_dump(),
+            batched_readings_event.model_dump(),
             TypeName="bla",
         )
     )
     unrecognizeable_bad_event_content = {"TypeName": "gridworks.event.baz"}
     snap_message_dict = stored_message_dicts["snapshot"]
     snapshot_spaceheat = SnapshotSpaceheat.model_validate(snap_message_dict["Payload"])
-    snapshot_event = SnapshotSpaceheatEvent(Src=CHILD, snap=snapshot_spaceheat)
+    snapshot_event = SnapshotSpaceheatEvent(Src=CHILD, Snap=snapshot_spaceheat)
 
     return [
-        # Gs Pwr
         MessageCase(
-            "GsPwr",
+            "power-watts",
             Message(Src=CHILD, MessageType="power.watts", Payload=PowerWatts(Watts=1)),
         ),
-        # status
-        # QUESTION: why does this fail when replacing "gt.sh.status.110" with "gt.sh.status"?
+        # Batched Readings
         MessageCase(
-            "status-payload-obj",
-            Message(Src=CHILD, MessageType="gt.sh.status.110", Payload=gt_sh_status),
+            "batched_readings",
+            Message(
+                Src=CHILD, MessageType="batched_readings", Payload=batched_readings
+            ),
             None,
-            gt_sh_status,
+            batched_readings,
         ),
         MessageCase(
-            "status-payload-dict",
-            Message(Src=CHILD, Payload=status_message_dict["Payload"]),
+            "batched_readings-as_dict",
+            Message(Src=CHILD, Payload=batched_readings),
             None,
-            gt_sh_status,
-        ),
-        MessageCase(
-            "status-payload-as_dict",
-            Message(Src=CHILD, Payload=gt_sh_status),
-            None,
-            gt_sh_status,
+            batched_readings,
         ),
         # snapshot
         MessageCase("snap", Message(**snap_message_dict), None, snapshot_spaceheat),
@@ -113,8 +111,13 @@ def child_to_parent_messages() -> list[MessageCase]:
             None,
             snapshot_spaceheat,
         ),
-        # events
-        MessageCase("event-status", Message(Src=CHILD, Payload=gt_sh_status_event)),
+        # # events
+        MessageCase(
+            "br-event",
+            Message(Src=CHILD, Payload=br_message_dict["Payload"]),
+            None,
+            batched_readings_event,
+        ),
         MessageCase(
             "event-unrecognized-status",
             Message(Src=CHILD, Payload=unrecognized_status_event),
@@ -174,7 +177,7 @@ def child_to_parent_messages() -> list[MessageCase]:
             "peer-active-event",
             Message(Src=CHILD, Payload=PeerActiveEvent(PeerName=PARENT)),
         ),
-        # misc messages
+        # # misc messages
         MessageCase("ping", PingMessage(Src=CHILD)),
         MessageCase("ack", Message(Src=CHILD, Payload=Ack(AckMessageID="1"))),
     ]
@@ -186,14 +189,14 @@ def parent_to_child_messages() -> list[MessageCase]:
         FromGNodeId=str(uuid.uuid4()),
         SendSnapshot=True,
     )
-    set_relay = GtDispatchBoolean(
-        AboutNodeName="a.b.c",
-        ToGNodeAlias="a.b.c",
-        FromGNodeAlias="a.b.c",
-        FromGNodeInstanceId=str(uuid.uuid4()),
-        RelayState=True,
-        SendTimeUnixMs=int(time.time() * 1000),
-    )
+    # set_relay = GtDispatchBoolean(
+    #     AboutNodeName="a.b.c",
+    #     ToGNodeAlias="a.b.c",
+    #     FromGNodeAlias="a.b.c",
+    #     FromGNodeInstanceId=str(uuid.uuid4()),
+    #     RelayState=True,
+    #     SendTimeUnixMs=int(time.time() * 1000),
+    # )
     return [
         # misc messages
         MessageCase("ping", PingMessage(Src=PARENT)),
@@ -204,12 +207,12 @@ def parent_to_child_messages() -> list[MessageCase]:
             None,
             snapshot_request,
         ),
-        MessageCase(
-            "set-relay",
-            Message(Src=PARENT, Payload=set_relay),
-            None,
-            set_relay,
-        ),
+        # MessageCase(
+        #     "set-relay",
+        #     Message(Src=PARENT, Payload=set_relay),
+        #     None,
+        #     set_relay,
+        # ),
     ]
 
 

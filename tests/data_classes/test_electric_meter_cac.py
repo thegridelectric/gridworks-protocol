@@ -4,13 +4,19 @@ from tests.cac_load_utils import CacCase, assert_cac_load
 
 def test_electric_meter_cac() -> None:
     d = {
-        "ComponentAttributeClassId": "28897ac1-ea42-4633-96d3-196f63f5a951",
-        "MakeModel": "GRIDWORKS__SIMPM1",
-        "DisplayName": "Gridworks Pm1 Simulated Power Meter",
-        "Interface": "SIMRABBIT",
-        "PollPeriodMs": 1000,
-        "TelemetryNameList": ["PowerW"],
+        "ComponentAttributeClassId": "739a6e32-bb9c-43bc-a28d-fb61be665522",
+        "DefaultBaud": 9600,
+        "DisplayName": "EGauge 4030",
+        "MakeModel": "EGAUGE__4030",
+        "MinPollPeriodMs": 1000,
+        "TelemetryNameList": [
+            "PowerW",
+            "MilliWattHours",
+            "VoltageRmsMilliVolts",
+            "CurrentRmsMicroAmps",
+            "FrequencyMicroHz",
+        ],
         "TypeName": "electric.meter.cac.gt",
-        "Version": "000",
+        "Version": "001",
     }
     assert_cac_load([CacCase("ElectricMeterCac", d, ElectricMeterCacGt)])

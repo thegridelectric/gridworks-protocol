@@ -15,7 +15,6 @@ def test_electric_meter_cac_gt_generated() -> None:
         "DisplayName": "EGauge 4030",
         "MakeModel": "EGAUGE__4030",
         "MinPollPeriodMs": 1000,
-        "PollPeriodMs": 1000,
         "TelemetryNameList": [
             "PowerW",
             "MilliWattHours",

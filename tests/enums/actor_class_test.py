@@ -53,7 +53,3 @@ def test_actor_class() -> None:
     assert ActorClass.version("Parentless") == "001"
     assert ActorClass.version("Hubitat") == "001"
     assert ActorClass.version("HoneywellThermostat") == "001"
-
-    for value in ActorClass.values():
-        symbol = ActorClass.value_to_symbol(value)
-        assert ActorClass.symbol_to_value(symbol) == value

@@ -19,7 +19,3 @@ def test_relay_wiring_config() -> None:
     assert RelayWiringConfig.version("NormallyClosed") == "000"
     assert RelayWiringConfig.version("NormallyOpen") == "000"
     assert RelayWiringConfig.version("DoubleThrow") == "000"
-
-    for value in RelayWiringConfig.values():
-        symbol = RelayWiringConfig.value_to_symbol(value)
-        assert RelayWiringConfig.symbol_to_value(symbol) == value

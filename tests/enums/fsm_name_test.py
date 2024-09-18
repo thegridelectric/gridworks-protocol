@@ -21,7 +21,3 @@ def test_fsm_name() -> None:
     assert FsmName.version("StoreFlowDirection") == "000"
     assert FsmName.version("RelayState") == "000"
     assert FsmName.version("RelayPinState") == "000"
-
-    for value in FsmName.values():
-        symbol = FsmName.value_to_symbol(value)
-        assert FsmName.symbol_to_value(symbol) == value

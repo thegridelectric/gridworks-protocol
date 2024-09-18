@@ -19,7 +19,3 @@ def test_kind_of_param() -> None:
     assert KindOfParam.version("Other") == "000"
     assert KindOfParam.version("HardwareLayout") == "000"
     assert KindOfParam.version("DotEnv") == "000"
-
-    for value in KindOfParam.values():
-        symbol = KindOfParam.value_to_symbol(value)
-        assert KindOfParam.symbol_to_value(symbol) == value

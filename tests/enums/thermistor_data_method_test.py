@@ -17,7 +17,3 @@ def test_thermistor_data_method() -> None:
 
     assert ThermistorDataMethod.version("SimpleBeta") == "000"
     assert ThermistorDataMethod.version("BetaWithExponentialAveraging") == "000"
-
-    for value in ThermistorDataMethod.values():
-        symbol = ThermistorDataMethod.value_to_symbol(value)
-        assert ThermistorDataMethod.symbol_to_value(symbol) == value

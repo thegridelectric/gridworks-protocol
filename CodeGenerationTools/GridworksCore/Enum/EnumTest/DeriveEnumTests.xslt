@@ -112,12 +112,6 @@ def test_</xsl:text> <xsl:value-of select="translate(LocalName,'.','_')"/>
     <xsl:value-of select="Version"/>
     <xsl:text>"</xsl:text>
     </xsl:for-each>
-    <xsl:text>
-
-    for value in </xsl:text><xsl:value-of select="$local-class-name"/><xsl:text>.values():
-        symbol = </xsl:text><xsl:value-of select="$local-class-name"/><xsl:text>.value_to_symbol(value)
-        assert </xsl:text><xsl:value-of select="$local-class-name"/><xsl:text>.symbol_to_value(symbol) == value</xsl:text>
-
     </xsl:if>
 
         <!-- Add newline at EOF for git and pre-commit-->

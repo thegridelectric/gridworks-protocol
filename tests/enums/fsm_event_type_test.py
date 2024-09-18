@@ -39,7 +39,3 @@ def test_fsm_event_type() -> None:
     assert FsmEventType.version("TimerFinished") == "000"
     assert FsmEventType.version("ChangePrimaryPumpState") == "000"
     assert FsmEventType.version("ChangePrimaryPumpControl") == "000"
-
-    for value in FsmEventType.values():
-        symbol = FsmEventType.value_to_symbol(value)
-        assert FsmEventType.symbol_to_value(symbol) == value

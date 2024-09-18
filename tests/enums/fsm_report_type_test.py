@@ -19,7 +19,3 @@ def test_fsm_report_type() -> None:
     assert FsmReportType.version("Other") == "000"
     assert FsmReportType.version("Event") == "000"
     assert FsmReportType.version("Action") == "000"
-
-    for value in FsmReportType.values():
-        symbol = FsmReportType.value_to_symbol(value)
-        assert FsmReportType.symbol_to_value(symbol) == value

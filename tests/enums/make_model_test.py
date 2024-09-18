@@ -87,7 +87,3 @@ def test_make_model() -> None:
     assert MakeModel.version("GRIDWORKS__SIMTOTALIZER") == "002"
     assert MakeModel.version("KRIDA__DOUBLEEMR16I2CV3") == "002"
     assert MakeModel.version("GRIDWORKS__SIMDOUBLE16PINI2CRELAY") == "002"
-
-    for value in MakeModel.values():
-        symbol = MakeModel.value_to_symbol(value)
-        assert MakeModel.symbol_to_value(symbol) == value

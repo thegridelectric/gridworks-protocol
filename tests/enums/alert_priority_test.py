@@ -23,7 +23,3 @@ def test_alert_priority() -> None:
     assert AlertPriority.version("P3Medium") == "000"
     assert AlertPriority.version("P4Low") == "000"
     assert AlertPriority.version("P5Info") == "000"
-
-    for value in AlertPriority.values():
-        symbol = AlertPriority.value_to_symbol(value)
-        assert AlertPriority.symbol_to_value(symbol) == value

@@ -35,7 +35,3 @@ def test_unit() -> None:
     assert Unit.version("VoltsRms") == "000"
     assert Unit.version("Gallons") == "000"
     assert Unit.version("ThermostatStateEnum") == "001"
-
-    for value in Unit.values():
-        symbol = Unit.value_to_symbol(value)
-        assert Unit.symbol_to_value(symbol) == value

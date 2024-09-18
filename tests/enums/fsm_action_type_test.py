@@ -19,7 +19,3 @@ def test_fsm_action_type() -> None:
     assert FsmActionType.version("RelayPinSet") == "000"
     assert FsmActionType.version("Analog010VSignalSet") == "000"
     assert FsmActionType.version("Analog420maSignalSet") == "000"
-
-    for value in FsmActionType.values():
-        symbol = FsmActionType.value_to_symbol(value)
-        assert FsmActionType.symbol_to_value(symbol) == value

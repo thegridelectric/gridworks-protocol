@@ -1,6 +1,6 @@
 """Type egauge.io, version 001"""
 
-from typing import Literal
+from typing import Any, Literal
 
 from pydantic import BaseModel
 
@@ -25,6 +25,11 @@ class EgaugeIo(BaseModel):
     InputConfig: EgaugeRegisterConfig
     TypeName: Literal["egauge.io"] = "egauge.io"
     Version: Literal["001"] = "001"
+
+    def model_dump(self, **kwargs: dict[str, Any]) -> dict:
+        d = super().model_dump(**kwargs)
+        d["InputConfig"] = self.InputConfig.model_dump(**kwargs)
+        return d
 
     @classmethod
     def type_name_value(cls) -> str:

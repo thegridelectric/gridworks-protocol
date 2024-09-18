@@ -20,6 +20,6 @@ def test_egauge_io_generated() -> None:
         "Version": "001",
     }
 
-    t = EgaugeIo(**d)
+    d2 = EgaugeIo.model_validate(d).model_dump(exclude_none=True)
 
-    assert t.model_dump(exclude_none=True, by_alias=True) == d
+    assert d2 == d

@@ -1,6 +1,6 @@
 """Type component.gt, version 001"""
 
-from typing import List, Literal, Optional
+from typing import Any, List, Literal, Optional
 
 from pydantic import BaseModel, ConfigDict
 
@@ -18,6 +18,11 @@ class ComponentGt(BaseModel):
     Version: Literal["001"] = "001"
 
     model_config = ConfigDict(extra="allow")
+
+    def model_dump(self, **kwargs: dict[str, Any]) -> dict:
+        d = super().model_dump(**kwargs)
+        d["ConfigList"] = [elt.model_dump(**kwargs) for elt in self.ConfigList]
+        return d
 
     @classmethod
     def type_name_value(cls) -> str:

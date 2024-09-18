@@ -17,13 +17,14 @@ def test_channel_config_generated() -> None:
         "Version": "000",
     }
 
-    t = ChannelConfig(**d)
+    d2 = ChannelConfig.model_validate(d).model_dump(exclude_none=True)
 
-    assert t.model_dump(exclude_none=True, by_alias=True) == d
+    assert type(d2["Unit"]) is str
+    assert d2 == d
 
     ######################################
     # Behavior on unknown enum values: sends to default
     ######################################
 
     d2 = dict(d, Unit="unknown_enum_thing")
-    assert ChannelConfig(**d2).unit == Unit.default()
+    assert ChannelConfig(**d2).Unit == Unit.default()

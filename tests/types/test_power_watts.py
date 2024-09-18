@@ -10,6 +10,6 @@ def test_power_watts_generated() -> None:
         "Version": "000",
     }
 
-    t = PowerWatts(**d)
+    d2 = PowerWatts.model_validate(d).model_dump(exclude_none=True)
 
-    assert t.model_dump(exclude_none=True, by_alias=True) == d
+    assert d2 == d

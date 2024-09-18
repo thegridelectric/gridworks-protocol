@@ -1,6 +1,6 @@
 """Type channel.config, version 000"""
 
-from typing import Literal, Optional
+from typing import Any, Literal, Optional
 
 from pydantic import BaseModel, ConfigDict, PositiveInt, model_validator
 from typing_extensions import Self
@@ -42,6 +42,11 @@ class ChannelConfig(BaseModel):
         """
         # Implement check for axiom 2"
         return self
+
+    def model_dump(self, **kwargs: dict[str, Any]) -> dict:
+        d = super().model_dump(**kwargs)
+        d["Unit"] = self.Unit.value
+        return d
 
     @classmethod
     def type_name_value(cls) -> str:

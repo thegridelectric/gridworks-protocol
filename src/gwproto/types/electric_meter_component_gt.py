@@ -1,6 +1,6 @@
 """Type electric.meter.component.gt, version 001"""
 
-from typing import List, Literal, Optional
+from typing import Any, List, Literal, Optional
 
 from pydantic import PositiveInt, model_validator
 from typing_extensions import Self
@@ -45,6 +45,12 @@ class ElectricMeterComponentGt(ComponentGt):
         """
         # Implement check for axiom 3"
         return self
+
+    def model_dump(self, **kwargs: dict[str, Any]) -> dict:
+        d = super().model_dump(**kwargs)
+        d["ConfigList"] = [elt.model_dump(**kwargs) for elt in self.ConfigList]
+        d["EgaugeIoList"] = [elt.model_dump(**kwargs) for elt in self.EgaugeIoList]
+        return d
 
     @classmethod
     def type_name_value(cls) -> str:

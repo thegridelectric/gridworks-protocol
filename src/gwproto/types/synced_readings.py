@@ -13,13 +13,6 @@ from gwproto.property_format import (
 
 
 class SyncedReadings(BaseModel):
-    """
-    A set of readings made at the same time by a multipurpose sensor, sent by SpaceheatNode
-    actor capturing the data (which will be associated to some sort of multipurpose sensing
-    component). The nth element of each of its three readings are coupled: AboutNodeName, what
-    the value is, what the TelemetryName is.
-    """
-
     ScadaReadTimeUnixMs: UTCMilliseconds
     ChannelNameList: List[SpaceheatName]
     ValueList: List[ReallyAnInt]

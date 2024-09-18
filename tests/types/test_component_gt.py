@@ -14,6 +14,6 @@ def test_component_gt_generated() -> None:
         "Version": "001",
     }
 
-    t = ComponentGt(**d)
+    d2 = ComponentGt.model_validate(d).model_dump(exclude_none=True)
 
-    assert t.model_dump(exclude_none=True, by_alias=True) == d
+    assert d2 == d

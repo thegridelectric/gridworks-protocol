@@ -15,6 +15,6 @@ def test_egauge_register_config_generated() -> None:
         "Version": "000",
     }
 
-    t = EgaugeRegisterConfig(**d)
+    d2 = EgaugeRegisterConfig.model_validate(d).model_dump(exclude_none=True)
 
-    assert t.model_dump(exclude_none=True, by_alias=True) == d
+    assert d2 == d

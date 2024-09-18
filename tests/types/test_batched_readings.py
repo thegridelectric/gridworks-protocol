@@ -4,7 +4,7 @@ from gwproto.types import BatchedReadings
 
 
 def test_batched_readings_generated() -> None:
-    d =  {
+    d = {
         "FromGNodeAlias": "hw1.isone.me.versant.keene.beech.scada",
         "FromGNodeInstanceId": "98542a17-3180-4f2a-a929-6023f0e7a106",
         "AboutGNodeAlias": "hw1.isone.me.versant.keene.beech.ta",
@@ -66,7 +66,6 @@ def test_batched_readings_generated() -> None:
         "Version": "000",
     }
 
-
-    t = BatchedReadings(**d)
-
-    assert t.model_dump(exclude_none=True, by_alias=True) == d
+    d2 = BatchedReadings.model_validate(d).model_dump(exclude_none=True)
+    assert type(d2["DataChannelList"][0]["TelemetryName"]) is str
+    assert d2 == d

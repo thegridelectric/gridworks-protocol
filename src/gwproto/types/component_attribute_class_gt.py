@@ -1,6 +1,6 @@
 """Type component.attribute.class.gt, version 001"""
 
-from typing import Literal, Optional
+from typing import Any, Literal, Optional
 
 from pydantic import BaseModel, ConfigDict, PositiveInt, model_validator
 from typing_extensions import Self
@@ -10,6 +10,7 @@ from gwproto.property_format import (
     UUID4Str,
 )
 from gwproto.type_helpers import CACS_BY_MAKE_MODEL
+
 
 class ComponentAttributeClassGt(BaseModel):
     ComponentAttributeClassId: UUID4Str
@@ -78,13 +79,20 @@ class ComponentAttributeClassGt(BaseModel):
             )
         if self.MakeModel is MakeModel.default():
             if self.ComponentAttributeClassId in CACS_BY_MAKE_MODEL.values():
-                raise ValueError(f"Id {self.ComponentAttributeClassId} already used by known MakeModel!")
+                raise ValueError(
+                    f"Id {self.ComponentAttributeClassId} already used by known MakeModel!"
+                )
         elif self.ComponentAttributeClassId != CACS_BY_MAKE_MODEL[self.MakeModel]:
             raise ValueError(
                 f"Axiom 1 violated! MakeModel {self.MakeModel} must have "
                 f"id {CACS_BY_MAKE_MODEL[self.MakeModel]}!"
             )
         return self
+
+    def model_dump(self, **kwargs: dict[str, Any]) -> dict:
+        d = super().model_dump(**kwargs)
+        d["MakeModel"] = self.MakeModel.value
+        return d
 
     @classmethod
     def type_name_value(cls) -> str:

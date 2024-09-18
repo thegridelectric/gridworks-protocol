@@ -12,6 +12,6 @@ def test_synced_readings_generated() -> None:
         "Version": "000",
     }
 
-    t = SyncedReadings(**d)
+    d2 = SyncedReadings.model_validate(d).model_dump(exclude_none=True)
 
-    assert t.model_dump(exclude_none=True, by_alias=True) == d
+    assert d2 == d

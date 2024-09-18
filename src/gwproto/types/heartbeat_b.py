@@ -1,6 +1,6 @@
 """Type heartbeat.b, version 001"""
 
-from typing import Literal
+from typing import Any, Literal
 
 from pydantic import BaseModel
 
@@ -31,6 +31,10 @@ class HeartbeatB(BaseModel):
     StartingOver: bool
     TypeName: Literal["heartbeat.b"] = "heartbeat.b"
     Version: Literal["001"] = "001"
+
+    def model_dump(self, **kwargs: dict[str, Any]) -> dict:
+        d = super().model_dump(**kwargs)
+        return d
 
     @classmethod
     def type_name_value(cls) -> str:

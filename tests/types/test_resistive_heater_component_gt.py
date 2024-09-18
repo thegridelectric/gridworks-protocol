@@ -16,6 +16,6 @@ def test_resistive_heater_component_gt_generated() -> None:
         "Version": "000",
     }
 
-    t = ResistiveHeaterComponentGt(**d)
+    d2 = ResistiveHeaterComponentGt.model_validate(d).model_dump(exclude_none=True)
 
-    assert t.model_dump(exclude_none=True, by_alias=True) == d
+    assert d2 == d

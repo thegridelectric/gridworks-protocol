@@ -56,7 +56,7 @@
 <xsl:text>"""Type </xsl:text><xsl:value-of select="$type-name"/><xsl:text>, version </xsl:text>
 <xsl:value-of select="Version"/><xsl:text>"""
 
-from typing import Literal</xsl:text>
+from typing import Any, Literal</xsl:text>
 	<xsl:if test="count($airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id) and (IsList = 'true')])>0">
 <xsl:text>, List</xsl:text>
 </xsl:if>
@@ -697,6 +697,144 @@ class </xsl:text>
     </xsl:if>
 
     <xsl:text>
+
+    def model_dump(self, **kwargs: dict[str, Any]) -> dict:
+        d = super().model_dump(**kwargs)</xsl:text>
+
+        <xsl:for-each select="$airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id)]">
+        <xsl:sort select="Idx" data-type="number"/>
+    <xsl:choose>
+
+    <!-- (Required) CASES FOR model_dump -->
+    <xsl:when test="IsRequired = 'true'">
+    <xsl:choose>
+
+        <!-- (required) model_dump: Single Enums -->
+        <xsl:when test="(IsEnum = 'true') and not (IsList = 'true')">
+    <xsl:text>
+        d["</xsl:text><xsl:value-of select="Value"/><xsl:text>"] = self.</xsl:text>
+                <xsl:value-of select="Value"  />
+        <xsl:text>.value</xsl:text>
+        </xsl:when>
+
+         <!-- (required) model_dump: List of Enums -->
+        <xsl:when test="(IsEnum = 'true')  and (IsList = 'true')">
+        <xsl:text>
+        d["</xsl:text><xsl:value-of select="Value"/>
+        <xsl:text>"] = [elt.value for elt in self.</xsl:text>
+                <xsl:value-of select="Value"  />
+        <xsl:text>]</xsl:text>
+        </xsl:when>
+
+        <!--(required) model_dump: Single Type, no associated data class (since those just show up as id pointers) -->
+        <xsl:when test="(IsType = 'true') and (normalize-space(SubTypeDataClass) = '') and not (IsList = 'true')">
+        <xsl:text>
+        d["</xsl:text>
+            <xsl:value-of select="Value"/>
+            <xsl:text>"] = self.</xsl:text>
+                <xsl:value-of select="Value"  />
+            <xsl:text>.model_dump(**kwargs)</xsl:text>
+        </xsl:when>
+
+
+        <!-- (required) model_dump: List of Types -->
+        <xsl:when test="(IsType = 'true') and (normalize-space(SubTypeDataClass) = '' or IsList='true') and (IsList = 'true')">
+        <xsl:text>
+        d["</xsl:text>
+            <xsl:value-of select="Value"/>
+            <xsl:text>"] = [elt.model_dump(**kwargs) for elt in self.</xsl:text>
+            <xsl:value-of select="Value"  />
+        <xsl:text>]</xsl:text>
+        </xsl:when>
+        <xsl:otherwise></xsl:otherwise>
+    </xsl:choose>
+    </xsl:when>
+
+    <!-- Optional model_dump -->
+    <xsl:otherwise>
+        <xsl:choose>
+
+        <!-- (optional) model_dump: Single Enums -->
+        <xsl:when test="(IsEnum = 'true') and not (IsList = 'true')">
+    <xsl:text>
+        if "</xsl:text><xsl:value-of select="Value"/>
+        <xsl:text>" in d:
+            d["</xsl:text><xsl:value-of select="Value"/><xsl:text>"] = d["</xsl:text>
+            <xsl:value-of select="Value"/><xsl:text>"].value</xsl:text>
+        </xsl:when>
+
+         <!-- (optional) model_dump: List of Enums -->
+        <xsl:when test="(IsEnum = 'true')  and (IsList = 'true')">
+        <xsl:text>
+        if "</xsl:text><xsl:value-of select="Value"/>
+        <xsl:text>" in d:
+            del d["</xsl:text><xsl:value-of select="Value"/><xsl:text>"]
+            </xsl:text>
+        <xsl:call-template name="python-case">
+            <xsl:with-param name="camel-case-text" select="Value"  />
+        </xsl:call-template> <xsl:text> = []
+            for elt in self.</xsl:text>
+        <xsl:value-of select="Value"  /><xsl:text>:
+                </xsl:text>
+            <xsl:call-template name="python-case">
+            <xsl:with-param name="camel-case-text" select="Value"  />
+        </xsl:call-template><xsl:text>.append(elt.value)
+            d["</xsl:text><xsl:value-of select="Value"/>
+        <xsl:text>"] = </xsl:text>
+            <xsl:call-template name="python-case">
+            <xsl:with-param name="camel-case-text" select="Value"  />
+        </xsl:call-template>
+        </xsl:when>
+
+        <!--(optional) model_dump: Single Type, no associated data class (since those just show up as id pointers) -->
+        <xsl:when test="(IsType = 'true') and (normalize-space(SubTypeDataClass) = '') and not (IsList = 'true')">
+        <xsl:text>
+        if "</xsl:text><xsl:value-of select="Value"/>
+        <xsl:text>" in d:
+            del d["</xsl:text><xsl:value-of select="Value"/><xsl:text>"]
+            d["</xsl:text>
+            <xsl:value-of select="Value"/>
+            <xsl:text>"] = self.</xsl:text>
+            <xsl:value-of select="Value"/>
+            <xsl:text>.model_dump(**kwargs)</xsl:text>
+        </xsl:when>
+
+        <!-- (optional) model_dump: List of Types -->
+        <xsl:when test="(IsType = 'true') and (normalize-space(SubTypeDataClass) = '') and (IsList = 'true')">
+        <xsl:text>
+        if "</xsl:text><xsl:value-of select="Value"/>
+        <xsl:text>" in d:
+            </xsl:text>
+        <xsl:call-template name="python-case">
+            <xsl:with-param name="camel-case-text" select="Value"  />
+        </xsl:call-template>
+        <xsl:text> = []
+            for elt in self.</xsl:text>
+       <xsl:value-of select="Value"  />
+        <xsl:text>:
+                </xsl:text>
+        <xsl:call-template name="python-case">
+            <xsl:with-param name="camel-case-text" select="Value"  />
+        </xsl:call-template>
+        <xsl:text>.append(elt.model_dump(**kwargs))
+            d["</xsl:text>
+        <xsl:value-of select="Value"/>
+        <xsl:text>"] = </xsl:text>
+        <xsl:call-template name="python-case">
+            <xsl:with-param name="camel-case-text" select="Value"  />
+        </xsl:call-template>
+        </xsl:when>
+         <!-- End of loop inside optional -->
+        <xsl:otherwise></xsl:otherwise>
+        </xsl:choose>
+
+
+    </xsl:otherwise>
+    </xsl:choose>
+
+    </xsl:for-each>
+    <xsl:text>
+        return d
 
     @classmethod
     def type_name_value(cls) -> str:

@@ -1,6 +1,6 @@
 """Type fsm.trigger.from.atn, version 000"""
 
-from typing import Literal
+from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, field_validator
 
@@ -12,14 +12,6 @@ from gwproto.types.fsm_event import FsmEvent
 
 
 class FsmTriggerFromAtn(BaseModel):
-    """
-    This is an FSM Event sent from the AtomicTNode to its Scada. We use the word "trigger" to
-    refer to an event that BEGINS a cause-and-effect chain of events in the hierarchical finite
-    state machine.
-
-    [More info](https://gridworks-protocol.readthedocs.io/en/latest/finite-state-machines.html)
-    """
-
     ToGNodeAlias: LeftRightDotStr
     FromGNodeAlias: LeftRightDotStr
     FromGNodeInstanceId: UUID4Str
@@ -39,6 +31,11 @@ class FsmTriggerFromAtn(BaseModel):
         """
         # Implement Axiom(s)
         return v
+
+    def model_dump(self, **kwargs: dict[str, Any]) -> dict:
+        d = super().model_dump(**kwargs)
+        d["Trigger"] = self.Trigger.model_dump(**kwargs)
+        return d
 
     @classmethod
     def type_name_value(cls) -> str:

@@ -16,13 +16,15 @@ def test_fsm_event_generated() -> None:
         "Version": "000",
     }
 
-    t = FsmEvent(**d)
+    d2 = FsmEvent.model_validate(d).model_dump(exclude_none=True)
 
-    assert t.model_dump(exclude_none=True, by_alias=True) == d
+    assert d2 == d
 
     ######################################
-    # Behavior on unknown enum values: sends to default
+    # Enum related
     ######################################
+
+    assert type(d2["EventType"]) is str
 
     d2 = dict(d, EventType="unknown_enum_thing")
-    assert FsmEvent(**d2).event_type == FsmEventType.default()
+    assert FsmEvent(**d2).EventType == FsmEventType.default()

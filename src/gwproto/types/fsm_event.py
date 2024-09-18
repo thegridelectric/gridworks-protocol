@@ -1,6 +1,6 @@
 """Type fsm.event, version 000"""
 
-from typing import Literal
+from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, model_validator
 from typing_extensions import Self
@@ -14,16 +14,6 @@ from gwproto.property_format import (
 
 
 class FsmEvent(BaseModel):
-    """
-    Finite State Machine Event Command.
-
-    A message sent to a SpaceheatNode wher ethe Node implements a finite state machine. The
-    message is intended to be an FSM Events (aka Trigger) that allow a state machine to react
-    (by starting a Transition and any side-effect Actions).
-
-    [More info](https://gridworks-protocol.readthedocs.io/en/latest/finite-state-machines.html)
-    """
-
     FromHandle: HandleName
     ToHandle: HandleName
     EventType: FsmEventType
@@ -43,6 +33,11 @@ class FsmEvent(BaseModel):
         """
         # Implement check for axiom 1"
         return self
+
+    def model_dump(self, **kwargs: dict[str, Any]) -> dict:
+        d = super().model_dump(**kwargs)
+        d["EventType"] = self.EventType.value
+        return d
 
     @classmethod
     def type_name_value(cls) -> str:

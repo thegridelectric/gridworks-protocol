@@ -1,6 +1,6 @@
 """Type keyparam.change.log, version 000"""
 
-from typing import Literal
+from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, field_validator
 
@@ -45,6 +45,11 @@ class KeyparamChangeLog(BaseModel):
                 f"ChangeTimeUtc failed LogStyleDateWithMillis format validation: {e}",
             ) from e
         return v
+
+    def model_dump(self, **kwargs: dict[str, Any]) -> dict:
+        d = super().model_dump(**kwargs)
+        d["Kind"] = self.Kind.value
+        return d
 
     @classmethod
     def type_name_value(cls) -> str:

@@ -1,6 +1,6 @@
 """Type snapshot.spaceheat, version 001"""
 
-from typing import List, Literal
+from typing import Any, List, Literal
 
 from pydantic import BaseModel
 
@@ -26,6 +26,13 @@ class SnapshotSpaceheat(BaseModel):
     LatestReadingList: List[SingleReading]
     TypeName: Literal["snapshot.spaceheat"] = "snapshot.spaceheat"
     Version: Literal["001"] = "001"
+
+    def model_dump(self, **kwargs: dict[str, Any]) -> dict:
+        d = super().model_dump(**kwargs)
+        d["LatestReadingList"] = [
+            elt.model_dump(**kwargs) for elt in self.LatestReadingList
+        ]
+        return d
 
     @classmethod
     def type_name_value(cls) -> str:

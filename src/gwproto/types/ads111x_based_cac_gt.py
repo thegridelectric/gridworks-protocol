@@ -1,6 +1,6 @@
 """Type ads111x.based.cac.gt, version 000"""
 
-from typing import List, Literal
+from typing import Any, List, Literal
 
 from pydantic import (
     ConfigDict,
@@ -46,6 +46,12 @@ class Ads111xBasedCacGt(ComponentAttributeClassGt):
         """
         # Implement check for axiom 1"
         return self
+
+    def model_dump(self, **kwargs: dict[str, Any]) -> dict:
+        d = super().model_dump(**kwargs)
+        d["MakeModel"] = self.MakeModel.value
+        d["TelemetryNameList"] = [elt.value for elt in self.TelemetryNameList]
+        return d
 
     @classmethod
     def type_name_value(cls) -> str:

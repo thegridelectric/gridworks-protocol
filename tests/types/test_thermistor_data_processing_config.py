@@ -15,22 +15,25 @@ def test_thermistor_data_processing_config_generated() -> None:
         "Version": "000",
     }
 
-    t = ThermistorDataProcessingConfig(**d)
+    d2 = ThermistorDataProcessingConfig.model_validate(d).model_dump(exclude_none=True)
 
-    assert t.model_dump(exclude_none=True, by_alias=True) == d
+    assert d2 == d
 
     ######################################
-    # Behavior on unknown enum values: sends to default
+    # Enum related
     ######################################
+
+    assert type(d2["ThermistorMakeModel"]) is str
 
     d2 = dict(d, ThermistorMakeModel="unknown_enum_thing")
     assert (
-        ThermistorDataProcessingConfig(**d2).thermistor_make_model
-        == MakeModel.default()
+        ThermistorDataProcessingConfig(**d2).ThermistorMakeModel == MakeModel.default()
     )
+
+    assert type(d2["DataProcessingMethod"]) is str
 
     d2 = dict(d, DataProcessingMethod="unknown_enum_thing")
     assert (
-        ThermistorDataProcessingConfig(**d2).data_processing_method
+        ThermistorDataProcessingConfig(**d2).DataProcessingMethod
         == ThermistorDataMethod.default()
     )

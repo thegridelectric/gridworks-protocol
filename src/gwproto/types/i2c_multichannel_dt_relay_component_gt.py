@@ -1,6 +1,6 @@
 """Type i2c.multichannel.dt.relay.component.gt, version 000"""
 
-from typing import List, Literal
+from typing import Any, List, Literal
 
 from pydantic import field_validator
 
@@ -12,14 +12,6 @@ from gwproto.types.relay_actor_config import RelayActorConfig
 
 
 class I2cMultichannelDtRelayComponentGt(ComponentGt):
-    """
-    I2c Multichannel Double Throw Relay Component.
-
-    A specific instance of a board with multiple double-throw electromechanical relays. The
-    board is expected to be addressable over i2c, with that address being configurable to a
-    finite number of choices via dipswitches.
-    """
-
     I2cAddressList: List[ReallyAnInt]
     RelayConfigList: List[RelayActorConfig]
     TypeName: Literal["i2c.multichannel.dt.relay.component.gt"] = (
@@ -38,6 +30,14 @@ class I2cMultichannelDtRelayComponentGt(ComponentGt):
         """
         # Implement Axiom(s)
         return v
+
+    def model_dump(self, **kwargs: dict[str, Any]) -> dict:
+        d = super().model_dump(**kwargs)
+        d["ConfigList"] = [elt.model_dump(**kwargs) for elt in self.ConfigList]
+        d["RelayConfigList"] = [
+            elt.model_dump(**kwargs) for elt in self.RelayConfigList
+        ]
+        return d
 
     @classmethod
     def type_name_value(cls) -> str:

@@ -13,14 +13,6 @@ from gwproto.property_format import (
 
 
 class ChannelReadings(BaseModel):
-    """
-    A list of timestamped readings (values) for a data channel. This is meant to be reported
-    for non-local consumption (AtomicTNode, other) by a SCADA. Therefore, the data channel is
-    referenced by its globally unique identifier. The receiver needs to reference this idea
-    against a list of the data channels used by the SCADA for accurate parsing. Replaces both
-    GtShSimpleTelemetryStatus and GtShMultipurposeTelemetryStatus
-    """
-
     ChannelId: UUID4Str
     ValueList: List[ReallyAnInt]
     ScadaReadTimeUnixMsList: List[UTCMilliseconds]

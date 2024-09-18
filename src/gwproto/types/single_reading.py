@@ -12,14 +12,6 @@ from gwproto.property_format import (
 
 
 class SingleReading(BaseModel):
-    """
-    Simple Sensor Telemetry.
-
-    A single data channel reading sent from a spaceheat node actor. The value is an integer.
-
-    [More info](https://gridworks-protocol.readthedocs.io/en/latest/spaceheat-actor.html)
-    """
-
     ScadaReadTimeUnixMs: UTCMilliseconds
     ChannelName: SpaceheatName
     Value: ReallyAnInt

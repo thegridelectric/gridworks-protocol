@@ -16,13 +16,15 @@ def test_keyparam_change_log_generated() -> None:
         "Version": "000",
     }
 
-    t = KeyparamChangeLog(**d)
+    d2 = KeyparamChangeLog.model_validate(d).model_dump(exclude_none=True)
 
-    assert t.model_dump(exclude_none=True, by_alias=True) == d
+    assert d2 == d
 
     ######################################
-    # Behavior on unknown enum values: sends to default
+    # Enum related
     ######################################
+
+    assert type(d2["Kind"]) is str
 
     d2 = dict(d, Kind="unknown_enum_thing")
-    assert KeyparamChangeLog(**d2).kind == KindOfParam.default()
+    assert KeyparamChangeLog(**d2).Kind == KindOfParam.default()

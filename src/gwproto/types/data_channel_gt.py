@@ -1,8 +1,8 @@
 """Type data.channel.gt, version 001"""
 
-from typing import Literal, Optional
+from typing import Any, Literal, Optional
 
-from pydantic import BaseModel, ConfigDict, model_validator
+from pydantic import BaseModel, model_validator
 from typing_extensions import Self
 
 from gwproto.enums import TelemetryName
@@ -15,13 +15,6 @@ from gwproto.property_format import (
 
 
 class DataChannelGt(BaseModel):
-    """
-    Data Channel.
-
-    Core mechanism for identifying a stream of telemetry data. Everything but the DisplayName
-    and StartS are meant to be immutable. The Name is meant to be unique per TerminalAssetAlias.
-    """
-
     Name: SpaceheatName
     DisplayName: str
     AboutNodeName: SpaceheatName
@@ -33,12 +26,6 @@ class DataChannelGt(BaseModel):
     Id: UUID4Str
     TypeName: Literal["data.channel.gt"] = "data.channel.gt"
     Version: Literal["001"] = "001"
-    
-    def model_dump(self, **kwargs) -> dict:
-        data = super().model_dump(**kwargs)
-        # Override serialization of TelemetryName to its string value
-        data["TelemetryName"] = data["TelemetryName"].value
-        return data
 
     @model_validator(mode="after")
     def check_axiom_1(self) -> Self:
@@ -48,6 +35,11 @@ class DataChannelGt(BaseModel):
         """
         # Implement check for axiom 1"
         return self
+
+    def model_dump(self, **kwargs: dict[str, Any]) -> dict:
+        d = super().model_dump(**kwargs)
+        d["TelemetryName"] = self.TelemetryName.value
+        return d
 
     @classmethod
     def type_name_value(cls) -> str:

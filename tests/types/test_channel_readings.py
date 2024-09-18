@@ -12,6 +12,6 @@ def test_channel_readings_generated() -> None:
         "Version": "000",
     }
 
-    t = ChannelReadings(**d)
+    d2 = ChannelReadings.model_validate(d).model_dump(exclude_none=True)
 
-    assert t.model_dump(exclude_none=True, by_alias=True) == d
+    assert d2 == d

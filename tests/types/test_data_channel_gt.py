@@ -19,13 +19,15 @@ def test_data_channel_gt_generated() -> None:
         "Version": "001",
     }
 
-    t = DataChannelGt(**d)
+    d2 = DataChannelGt.model_validate(d).model_dump(exclude_none=True)
 
-    assert t.model_dump(exclude_none=True, by_alias=True) == d
+    assert d2 == d
 
     ######################################
-    # Behavior on unknown enum values: sends to default
+    # Enum related
     ######################################
+
+    assert type(d2["TelemetryName"]) is str
 
     d2 = dict(d, TelemetryName="unknown_enum_thing")
-    assert DataChannelGt(**d2).telemetry_name == TelemetryName.default()
+    assert DataChannelGt(**d2).TelemetryName == TelemetryName.default()

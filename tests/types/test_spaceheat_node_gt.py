@@ -6,26 +6,25 @@ from gwproto.types import SpaceheatNodeGt
 
 def test_spaceheat_node_gt_generated() -> None:
     d = {
-        "Name": "aquastat-ctrl-relay",
-        "ActorHierarchyName": "pi2.aquastat-ctrl-relay",
-        "Handle": "admin.aquastat-ctrl-relay",
+        "Name": "relay8",
+        "Handle": "admin.aquastat-ctrl.relay8",
         "ActorClass": "Relay",
         "DisplayName": "Aquastat Control Relay",
         "ComponentId": "80f95280-e999-49e0-a0e4-a7faf3b5b3bd",
-        "NameplatePowerW": None,
-        "InPowerMetering": None,
         "ShNodeId": "92091523-4fa7-4a3e-820b-fddee089222f",
         "TypeName": "spaceheat.node.gt",
         "Version": "200",
     }
 
-    t = SpaceheatNodeGt(**d)
+    d2 = SpaceheatNodeGt.model_validate(d).model_dump(exclude_none=True)
 
-    assert t.model_dump(exclude_none=True, by_alias=True) == d
+    assert d2 == d
 
     ######################################
-    # Behavior on unknown enum values: sends to default
+    # Enum related
     ######################################
+
+    assert type(d2["ActorClass"]) is str
 
     d2 = dict(d, ActorClass="unknown_enum_thing")
-    assert SpaceheatNodeGt(**d2).actor_class == ActorClass.default()
+    assert SpaceheatNodeGt(**d2).ActorClass == ActorClass.default()

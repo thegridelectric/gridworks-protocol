@@ -12,6 +12,6 @@ def test_single_reading_generated() -> None:
         "Version": "000",
     }
 
-    t = SingleReading(**d)
+    d2 = SingleReading.model_validate(d).model_dump(exclude_none=True)
 
-    assert t.model_dump(exclude_none=True, by_alias=True) == d
+    assert d2 == d

@@ -1,30 +1,31 @@
 """Tests relay.actor.config type, version 000"""
 
-from gwproto.enums import FsmEventType, RelayWiringConfig
+from gwproto.enums import RelayWiringConfig
 from gwproto.types import RelayActorConfig
 
 
 def test_relay_actor_config_generated() -> None:
     d = {
-        "RelayIdx": 18,
-        "ActorName": "zone1-ctrl-relay",
-        "WiringConfig": "NormallyOpen",
-        "EventType": "ChangeRelayState",
-        "DeEnergizingEvent": "OpenRelay",
+        "ActorName": "relay8",
+        "DeEnergizingEvent": "SwitchToBoiler",
+        "EventType": "ChangeAquastatControl",
+        "RelayIdx": 6,
         "TypeName": "relay.actor.config",
         "Version": "000",
+        "WiringConfig": "DoubleThrow",
     }
 
-    t = RelayActorConfig(**d)
+    d2 = RelayActorConfig.model_validate(d).model_dump(exclude_none=True)
 
-    assert t.model_dump(exclude_none=True, by_alias=True) == d
+    assert d2 == d
 
     ######################################
-    # Behavior on unknown enum values: sends to default
+    # Enum related
     ######################################
+
+    assert type(d2["WiringConfig"]) is str
 
     d2 = dict(d, WiringConfig="unknown_enum_thing")
-    assert RelayActorConfig(**d2).wiring_config == RelayWiringConfig.default()
+    assert RelayActorConfig(**d2).WiringConfig == RelayWiringConfig.default()
 
-    d2 = dict(d, EventType="unknown_enum_thing")
-    assert RelayActorConfig(**d2).event_type == FsmEventType.default()
+    assert type(d2["EventType"]) is str

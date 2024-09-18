@@ -1,4 +1,5 @@
 """Tests ads111x.based.cac.gt type, version 000"""
+
 from gwproto.types import Ads111xBasedCacGt
 
 
@@ -15,5 +16,6 @@ def test_ads111x_based_cac_gt_generated() -> None:
         "Version": "000",
     }
 
-    t = Ads111xBasedCacGt(**d)
-    assert t.model_dump(exclude_none=True) == d
+    d2 = Ads111xBasedCacGt.model_validate(d).model_dump(exclude_none=True)
+    assert type(d2["MakeModel"]) is str
+    assert d2 == d

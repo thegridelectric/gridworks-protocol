@@ -16,6 +16,6 @@ def test_heartbeat_b_generated() -> None:
         "Version": "001",
     }
 
-    t = HeartbeatB(**d)
+    d2 = HeartbeatB.model_validate(d).model_dump(exclude_none=True)
 
-    assert t.model_dump(exclude_none=True, by_alias=True) == d
+    assert d2 == d

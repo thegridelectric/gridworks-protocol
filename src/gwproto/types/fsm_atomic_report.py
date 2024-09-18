@@ -1,6 +1,6 @@
 """Type fsm.atomic.report, version 000"""
 
-from typing import Literal, Optional
+from typing import Any, Literal, Optional
 
 from pydantic import BaseModel, ConfigDict, model_validator
 from typing_extensions import Self
@@ -15,15 +15,6 @@ from gwproto.property_format import (
 
 
 class FsmAtomicReport(BaseModel):
-    """
-    Reports of single Fsm Actions and Transitions. The actions is any side-effect, which is
-    the way the StateMachine is supposed to cause things happen to the outside world (This could
-    include, for example, actuating a relay.) Transitions are intended to be captured by changing
-    the handle of the Spaceheat Node whose actor maintains that finite state machine.
-
-    [More info](https://gridworks-protocol.readthedocs.io/en/latest/finite-state-machines.html)
-    """
-
     FromHandle: HandleName
     AboutFsm: FsmName
     ReportType: FsmReportType
@@ -66,6 +57,16 @@ class FsmAtomicReport(BaseModel):
         """
         # Implement check for axiom 3"
         return self
+
+    def model_dump(self, **kwargs: dict[str, Any]) -> dict:
+        d = super().model_dump(**kwargs)
+        d["AboutFsm"] = self.AboutFsm.value
+        d["ReportType"] = self.ReportType.value
+        if "ActionType" in d:
+            d["ActionType"] = d["ActionType"].value
+        if "EventType" in d:
+            d["EventType"] = d["EventType"].value
+        return d
 
     @classmethod
     def type_name_value(cls) -> str:

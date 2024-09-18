@@ -129,20 +129,23 @@ def test_</xsl:text><xsl:value-of select="translate($type-name,'.','_')"/>
         "Version": "</xsl:text><xsl:value-of select="Version"/><xsl:text>",
     }
 
-    t = </xsl:text><xsl:value-of select="$class-name"/><xsl:text>(**d)
+    d2 = </xsl:text><xsl:value-of select="$class-name"/><xsl:text>.model_validate(d).model_dump(exclude_none=True)
 
-    assert t.model_dump(exclude_none=True, by_alias=True) == d</xsl:text>
+    assert d2 == d</xsl:text>
 
     <xsl:if test="count($airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id) and (IsEnum = 'true') and not (IsList = 'true')]) >0">
     <xsl:text>
 
     ######################################
-    # Behavior on unknown enum values: sends to default
+    # Enum related
     ######################################</xsl:text>
     <xsl:for-each select="$airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id) and (IsEnum = 'true') and not (IsList = 'true')]">
     <xsl:sort select="Idx" data-type="number"/>
     <xsl:variable name="attribute"><xsl:value-of select="Value"/></xsl:variable>
     <xsl:text>
+
+    assert type(d2["</xsl:text> <xsl:value-of select="Value"/>
+    <xsl:text>"]) is str
 
     d2 = dict(d, </xsl:text>
     <xsl:value-of select="Value"/>
@@ -150,9 +153,7 @@ def test_</xsl:text><xsl:value-of select="translate($type-name,'.','_')"/>
     assert </xsl:text>
    <xsl:value-of select="$class-name"/>
     <xsl:text>(**d2).</xsl:text>
-    <xsl:call-template name="python-case">
-        <xsl:with-param name="camel-case-text" select="Value"/>
-    </xsl:call-template>
+        <xsl:value-of select="Value"/>
     <xsl:text> == </xsl:text>
     <xsl:call-template name="nt-case">
         <xsl:with-param name="type-name-text" select="EnumLocalName" />

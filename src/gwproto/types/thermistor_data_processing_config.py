@@ -1,6 +1,6 @@
 """Type thermistor.data.processing.config, version 000"""
 
-from typing import Literal, Optional
+from typing import Any, Literal, Optional
 
 from pydantic import BaseModel, ConfigDict, PositiveInt
 
@@ -11,11 +11,6 @@ from gwproto.property_format import (
 
 
 class ThermistorDataProcessingConfig(BaseModel):
-    """
-    How does polled raw data get turned into a captured temperature reading? This config type
-    provides that information.
-    """
-
     ChannelName: SpaceheatName
     TerminalBlockIdx: PositiveInt
     ThermistorMakeModel: MakeModel
@@ -27,6 +22,13 @@ class ThermistorDataProcessingConfig(BaseModel):
     Version: Literal["000"] = "000"
 
     model_config = ConfigDict(extra="allow")
+
+    def model_dump(self, **kwargs: dict[str, Any]) -> dict:
+        d = super().model_dump(**kwargs)
+        d["ThermistorMakeModel"] = self.ThermistorMakeModel.value
+        if "DataProcessingMethod" in d:
+            d["DataProcessingMethod"] = d["DataProcessingMethod"].value
+        return d
 
     @classmethod
     def type_name_value(cls) -> str:

@@ -1,6 +1,6 @@
 """Type ads111x.based.component.gt, version 000"""
 
-from typing import Any, Dict, List, Literal
+from typing import Any, List, Literal
 
 from pydantic import field_validator, model_validator
 from typing_extensions import Self
@@ -54,17 +54,14 @@ class Ads111xBasedComponentGt(ComponentGt):
         """
         # Implement check for axiom 2"
         return self
-    
-    def to_dict(self) -> Dict[str, Any]:
-        """
-        Handles lists of enums differently than model_dump
-        """
-        d = self.model_dump()
-        thermistor_config_list = []
+
+    def model_dump(self, **kwargs: dict[str, Any]) -> dict:
+        d = super().model_dump(**kwargs)
+        d["ConfigList"] = [elt.model_dump(**kwargs) for elt in self.ConfigList]
+        d["ThermistorConfigList"] = [
+            elt.model_dump(**kwargs) for elt in self.ThermistorConfigList
+        ]
         return d
-        
-
-
 
     @classmethod
     def type_name_value(cls) -> str:

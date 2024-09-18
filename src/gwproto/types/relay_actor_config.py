@@ -1,6 +1,6 @@
 """Type relay.actor.config, version 000"""
 
-from typing import Literal
+from typing import Any, Literal
 
 from pydantic import BaseModel, PositiveInt, model_validator
 from typing_extensions import Self
@@ -12,18 +12,6 @@ from gwproto.property_format import (
 
 
 class RelayActorConfig(BaseModel):
-    """
-    Relay Actor Config.
-
-    Used to associate individual relays on a multi-channel relay board to specific SpaceheatNode
-    actors. Each actor managed by the Spaceheat SCADA has an associated SpaceheatNode. That
-    Node will be associated to a relay board component with multiple relays. Th relay board
-    will have a list of relay actor configs so that the actor can identify which relay it has
-    purview over.
-
-    [More info](https://gridworks-protocol.readthedocs.io/en/latest/spaceheat-actor.html)
-    """
-
     RelayIdx: PositiveInt
     ActorName: SpaceheatName
     WiringConfig: RelayWiringConfig
@@ -50,6 +38,12 @@ class RelayActorConfig(BaseModel):
         """
         # Implement check for axiom 1"
         return self
+
+    def model_dump(self, **kwargs: dict[str, Any]) -> dict:
+        d = super().model_dump(**kwargs)
+        d["WiringConfig"] = self.WiringConfig.value
+        d["EventType"] = self.EventType.value
+        return d
 
     @classmethod
     def type_name_value(cls) -> str:

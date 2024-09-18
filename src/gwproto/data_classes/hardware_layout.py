@@ -20,6 +20,7 @@ from gwproto.data_classes.components.component import ComponentOnly
 from gwproto.data_classes.components.electric_meter_component import (
     ElectricMeterComponent,
 )
+from gwproto.data_classes.data_channel import DataChannel
 from gwproto.data_classes.errors import DataClassLoadingError
 from gwproto.data_classes.resolver import ComponentResolver
 from gwproto.data_classes.sh_node import ShNode
@@ -198,8 +199,64 @@ class HardwareLayout:
         return nodes
 
     @classmethod
+    def make_channel(cls, dc_dict: dict, nodes: dict[str, ShNode]) -> DataChannel:
+        about_node_name = dc_dict.get("AboutNodeName")
+        captured_by_node_name = dc_dict.get("CapturedByNodeName")
+        about_node = nodes.get(about_node_name)
+        captured_by_node = nodes.get(captured_by_node_name)
+        return DataChannel(
+            about_node=about_node, captured_by_node=captured_by_node, **dc_dict
+        )
+
+    @classmethod
+    def load_data_channels(
+        cls,
+        layout: dict[Any, Any],
+        nodes: dict[str, ShNode],
+        *,
+        raise_errors: bool = True,
+        errors: Optional[list[LoadError]] = None,
+        included_channel_names: Optional[set[str]] = None,
+    ) -> dict[str, DataChannel]:
+        dcs = {}
+        if errors is None:
+            errors = []
+        for dc_dict in layout.get("DataChannels", []):
+            try:
+                dc_name = dc_dict["Name"]
+                if included_channel_names is None or dc_name in included_channel_names:
+                    dcs[dc_name] = cls.make_channel(dc_dict, nodes)
+            except Exception as e:  # noqa: PERF203
+                if raise_errors:
+                    raise
+                errors.append(LoadError("DataChannel", dc_dict, e))
+        return dcs
+
+    @classmethod
+    def resolve_dcs(
+        cls,
+        data_channels: dict[str, DataChannel],
+        nodes: dict[str, ShNode],
+        *,
+        raise_errors: bool = True,
+        errors: Optional[list[LoadError]] = None,
+    ) -> None:
+        if errors is None:
+            errors = []
+        for dc_name, dc in data_channels.items():
+            d = {"data_channel": {"name": dc_name, "data_channel": dc}}
+            try:
+                nodes.get(dc.AboutNodeName)
+                nodes.get(dc.CapturedByNodeName)
+            except Exception as e:
+                if raise_errors:
+                    raise
+                errors.append(LoadError("DataClass", d, e))
+
+    @classmethod
     def resolve_links(
         cls,
+        data_channels: dict[str, DataChannel],
         nodes: dict[str, ShNode],
         components: dict[str, Component],
         *,
@@ -208,6 +265,12 @@ class HardwareLayout:
     ) -> None:
         if errors is None:
             errors = []
+        cls.resolve_dcs(
+            data_channels,
+            nodes,
+            raise_errors=raise_errors,
+            errors=errors,
+        )
         for node_name, node in nodes.items():
             d = {"node": {"name": node_name, "node": node}}
             try:
@@ -235,6 +298,7 @@ class HardwareLayout:
         cacs: dict[str, ComponentAttributeClassGt],
         components: dict[str, Component],
         nodes: dict[str, ShNode],
+        data_channels: dict[str, DataChannel],
     ) -> None:
         self.layout = copy.deepcopy(layout)
         self.cacs = dict(cacs)
@@ -246,6 +310,7 @@ class HardwareLayout:
         self.nodes_by_component = {
             node.component_id: node.alias for node in self.nodes.values()
         }
+        self.data_channels = dict(data_channels)
 
     def clear_property_cache(self) -> None:
         for cached_prop_name in [
@@ -287,6 +352,7 @@ class HardwareLayout:
         errors: Optional[list[LoadError]] = None,
         cac_decoder: Optional[CacDecoder] = None,
         component_decoder: Optional[ComponentDecoder] = None,
+        included_channel_names: Optional[set[str]] = None,
     ) -> "HardwareLayout":
         if errors is None:
             errors = []
@@ -303,18 +369,27 @@ class HardwareLayout:
             errors=errors,
             component_decoder=component_decoder,
         )
+        nodes = cls.load_nodes(
+            layout=layout,
+            components=components,
+            raise_errors=raise_errors,
+            errors=errors,
+            included_node_names=included_node_names,
+        )
         load_args = {
             "cacs": cacs,
             "components": components,
-            "nodes": cls.load_nodes(
+            "nodes": nodes,
+            "data_channels": cls.load_data_channels(
                 layout=layout,
-                components=components,
+                nodes=nodes,
                 raise_errors=raise_errors,
                 errors=errors,
-                included_node_names=included_node_names,
+                included_channel_names=included_channel_names,
             ),
         }
         cls.resolve_links(
+            load_args["data_channels"],
             load_args["nodes"],
             load_args["components"],
             raise_errors=raise_errors,

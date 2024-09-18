@@ -8,7 +8,7 @@ from tests.component_load_utils import ComponentCase, assert_component_load
 def test_electric_meter_component_gt_generated() -> None:
     d = {
         "ComponentId": "2dfb0cb6-6015-4273-b02b-bd446cc785d7",
-        "ComponentAttributeClassId": "204832ef-0c88-408b-9640-264d2ee74914",
+        "ComponentAttributeClassId": "739a6e32-bb9c-43bc-a28d-fb61be665522",
         "DisplayName": "EGauge Power Meter",
         "ConfigList": [
             {

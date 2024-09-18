@@ -74,7 +74,6 @@ show_error_context = false
 [[tool.mypy.overrides]]
 module = [
     "gwproto.gt.*",
-    "gwproto.gs.*",
     "gwproto.enums.*",
 ]
 ignore_errors = true

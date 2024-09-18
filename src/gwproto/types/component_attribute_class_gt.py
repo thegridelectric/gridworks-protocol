@@ -9,7 +9,7 @@ from gwproto.enums import MakeModel
 from gwproto.property_format import (
     UUID4Str,
 )
-
+from gwproto.type_helpers import CACS_BY_MAKE_MODEL
 
 class ComponentAttributeClassGt(BaseModel):
     ComponentAttributeClassId: UUID4Str
@@ -68,7 +68,19 @@ class ComponentAttributeClassGt(BaseModel):
             MakeModel.KRIDA__DOUBLEEMR16I2CV3: '29eab8b1-100f-4230-bb44-3a2fcba33cc3'.
         }
         """
-        # Implement check for axiom 1"
+        if (
+            self.MakeModel not in CACS_BY_MAKE_MODEL
+            and self.MakeModel is not MakeModel.default()
+        ):
+            raise ValueError(
+                "Axiom 1 violated! If MakeModel not in this list, "
+                f"must be UNKNOWN: {CACS_BY_MAKE_MODEL}"
+            )
+        if self.component_attribute_class_id != CACS_BY_MAKE_MODEL[self.MakeModel]:
+            raise ValueError(
+                f"Axiom 1 violated! MakeModel {self.MakeModel} must have "
+                f"id {CACS_BY_MAKE_MODEL[self.MakeModel]}!"
+            )
         return self
 
     @classmethod

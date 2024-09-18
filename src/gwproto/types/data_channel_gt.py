@@ -2,7 +2,7 @@
 
 from typing import Literal, Optional
 
-from pydantic import BaseModel, model_validator
+from pydantic import BaseModel, ConfigDict, model_validator
 from typing_extensions import Self
 
 from gwproto.enums import TelemetryName
@@ -33,6 +33,12 @@ class DataChannelGt(BaseModel):
     Id: UUID4Str
     TypeName: Literal["data.channel.gt"] = "data.channel.gt"
     Version: Literal["001"] = "001"
+    
+    def model_dump(self, **kwargs) -> dict:
+        data = super().model_dump(**kwargs)
+        # Override serialization of TelemetryName to its string value
+        data["TelemetryName"] = data["TelemetryName"].value
+        return data
 
     @model_validator(mode="after")
     def check_axiom_1(self) -> Self:

@@ -76,7 +76,10 @@ class ComponentAttributeClassGt(BaseModel):
                 "Axiom 1 violated! If MakeModel not in this list, "
                 f"must be UNKNOWN: {CACS_BY_MAKE_MODEL}"
             )
-        if self.component_attribute_class_id != CACS_BY_MAKE_MODEL[self.MakeModel]:
+        if self.MakeModel is MakeModel.default():
+            if self.ComponentAttributeClassId in CACS_BY_MAKE_MODEL.values():
+                raise ValueError(f"Id {self.ComponentAttributeClassId} already used by known MakeModel!")
+        elif self.ComponentAttributeClassId != CACS_BY_MAKE_MODEL[self.MakeModel]:
             raise ValueError(
                 f"Axiom 1 violated! MakeModel {self.MakeModel} must have "
                 f"id {CACS_BY_MAKE_MODEL[self.MakeModel]}!"

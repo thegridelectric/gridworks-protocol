@@ -1,6 +1,6 @@
 """Type batched.readings, version 000"""
 
-from typing import List, Literal
+from typing import Any, Dict, List, Literal
 
 from pydantic import (
     BaseModel,
@@ -48,6 +48,13 @@ class BatchedReadings(BaseModel):
     Version: Literal["000"] = "000"
 
     model_config = ConfigDict(extra="allow")
+
+    def model_dump(self, **kwargs) -> dict:
+        data = super().model_dump(**kwargs)
+        # Override serialization of TelemetryName to its string value
+        data["DataChannelList"] = [elt.model_dump() for elt in self.DataChannelList]
+        return data
+
 
     @field_validator("FsmActionList")
     @classmethod

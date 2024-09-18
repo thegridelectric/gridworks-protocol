@@ -1,3 +1,4 @@
+from gwproto.type_helpers.cacs_by_make_model import CACS_BY_MAKE_MODEL
 from gwproto.types.hubitat_component_gt import HubitatRESTResolutionSettings
 from gwproto.types.hubitat_poller_gt import HubitatPollerGt, MakerAPIAttributeGt
 from gwproto.types.hubitat_tank_gt import (
@@ -15,6 +16,7 @@ from gwproto.types.rest_poller_gt import (
 )
 
 __all__ = [
+    "CACS_BY_MAKE_MODEL",
     "AioHttpClientTimeout",
     "FibaroTempSensorSettings",
     "FibaroTempSensorSettingsGt",

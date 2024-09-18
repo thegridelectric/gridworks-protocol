@@ -107,11 +107,6 @@ class BatchedReadingsEvent(EventBase):
     )
 
 
-# class GtShStatusEvent(EventBase):
-#     status: GtShStatus
-#     TypeName: Literal["gridworks.event.gt.sh.status"] = "gridworks.event.gt.sh.status"
-
-
 class SnapshotSpaceheatEvent(EventBase):
     Snap: SnapshotSpaceheat
     TypeName: Literal["gridworks.event.snapshot.spaceheat"] = (

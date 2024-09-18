@@ -227,11 +227,10 @@ class HardwareLayout:
         return dcs
 
     @classmethod
-    def resolve_links(
+    def resolve_dcs(
         cls,
         data_channels: dict[str, DataChannel],
         nodes: dict[str, ShNode],
-        components: dict[str, Component],
         *,
         raise_errors: bool = True,
         errors: Optional[list[LoadError]] = None,
@@ -247,6 +246,25 @@ class HardwareLayout:
                 if raise_errors:
                     raise
                 errors.append(LoadError("DataClass", d, e))
+
+    @classmethod
+    def resolve_links(
+        cls,
+        data_channels: dict[str, DataChannel],
+        nodes: dict[str, ShNode],
+        components: dict[str, Component],
+        *,
+        raise_errors: bool = True,
+        errors: Optional[list[LoadError]] = None,
+    ) -> None:
+        if errors is None:
+            errors = []
+        cls.resolve_dcs(
+            data_channels,
+            nodes,
+            raise_errors=raise_errors,
+            errors=errors,
+        )
         for node_name, node in nodes.items():
             d = {"node": {"name": node_name, "node": node}}
             try:
@@ -413,23 +431,26 @@ class HardwareLayout:
             else None
         )
 
-    # @classmethod
-    # def parent_alias(cls, alias: str) -> str:
-    #     last_delimiter = alias.rfind(".")
-    #     if last_delimiter == -1:
-    #         return ""
-    #     return alias[:last_delimiter]
+    @classmethod
+    def boss_handle(cls, handle: str) -> Optional[str]:
+        last_delimiter = handle.rfind(".")
+        if last_delimiter == -1:
+            return None
+        return handle[:last_delimiter]
 
-    # def parent_node(self, alias: str) -> Optional[ShNode]:
-    #     parent_alias = self.parent_alias(alias)
-    #     if not parent_alias:
-    #         return None
-    #     if parent_alias not in self.nodes:
-    #         raise DataClassLoadingError(f"{alias} is missing parent {parent_alias}!")
-    #     return self.node(parent_alias)
-
-    # def descendants(self, alias: str) -> List[ShNode]:
-    #     return list(filter(lambda x: x.alias.startswith(alias), self.nodes.values()))
+    def boss_node(self, handle: str) -> Optional[ShNode]:
+        boss_handle = self.boss_handle(handle)
+        if not boss_handle:
+            return None
+        boss_name = boss_handle.split(".")[-1]
+        if boss_name not in self.nodes:
+            raise DataClassLoadingError(f"{handle} does not have {boss_handle[-1]}!")
+        boss = self.nodes[boss_name]
+        if boss.Handle is None:
+            raise DataClassLoadingError(f"{handle}'s boss needs a handle! {boss}")
+        if boss.Handle != boss_handle:
+            raise DataClassLoadingError(f"{handle}'s boss has hanlde {boss}")
+        return self.node(boss_name)
 
     @cached_property
     def atn_g_node_alias(self) -> str:

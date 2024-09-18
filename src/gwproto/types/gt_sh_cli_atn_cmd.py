@@ -1,6 +1,6 @@
 """Type gt.sh.cli.atn.cmd, version 110"""
 
-from typing import Any, Literal
+from typing import Literal
 
 from pydantic import BaseModel
 
@@ -23,10 +23,6 @@ class GtShCliAtnCmd(BaseModel):
     FromGNodeId: UUID4Str
     TypeName: Literal["gt.sh.cli.atn.cmd"] = "gt.sh.cli.atn.cmd"
     Version: Literal["110"] = "110"
-
-    def model_dump(self, **kwargs: dict[str, Any]) -> dict:
-        d = super().model_dump(**kwargs)
-        return d
 
     @classmethod
     def type_name_value(cls) -> str:

@@ -36,8 +36,6 @@ forth between type instances and Python objects.
     GtShStatus  <types/gt-sh-status>
     GtShTelemetryFromMultipurposeSensor  <types/gt-sh-telemetry-from-multipurpose-sensor>
     GtTelemetry  <types/gt-telemetry>
-    HeartbeatB  <types/heartbeat-b>
-    HubitatCacGt  <types/hubitat-cac-gt>
     HubitatComponentGt  <types/hubitat-component-gt>
     HubitatPollerCacGt  <types/hubitat-poller-cac-gt>
     HubitatPollerComponentGt  <types/hubitat-poller-component-gt>

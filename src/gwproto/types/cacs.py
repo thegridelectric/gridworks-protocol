@@ -1,5 +1,4 @@
 from gwproto.types.electric_meter_cac_gt import ElectricMeterCacGt
-from gwproto.types.hubitat_cac_gt import HubitatCacGt
 from gwproto.types.hubitat_poller_cac_gt import HubitatPollerCacGt
 from gwproto.types.hubitat_tank_cac_gt import HubitatTankCacGt
 from gwproto.types.multipurpose_sensor_cac_gt import MultipurposeSensorCacGt
@@ -12,7 +11,6 @@ from gwproto.types.web_server_cac_gt import WebServerCacGt
 
 __all__ = [
     "ElectricMeterCacGt",
-    "HubitatCacGt",
     "HubitatPollerCacGt",
     "HubitatTankCacGt",
     "MultipurposeSensorCacGt",

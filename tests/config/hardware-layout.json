@@ -138,26 +138,7 @@
     "GNodeStatusValue": "Active",
     "PrimaryGNodeRoleAlias": "Scada"
   },
-  "ResistiveHeaterComponents": [
-    {
-      "ComponentId": "80f95280-e999-49e0-a0e4-a7faf3b5b3bd",
-      "DisplayName": "First 4.5 kW boost in tank",
-      "ComponentAttributeClassId": "cf1f2587-7462-4701-b962-d2b264744c1d",
-      "TypeName": "resistive.heater.component.gt",
-      "Version": "000",
-      "HwUid": "aaaa2222",
-      "TestedMaxColdMilliOhms": 14500,
-      "TestedMaxHotMilliOhms": 13714
-    },
-    {
-      "ComponentId": "d5fbf9f4-18a5-48f8-abdf-919309424321",
-      "DisplayName": "Second 4.5 kW boost in tank",
-      "ComponentAttributeClassId": "cf1f2587-7462-4701-b962-d2b264744c1d",
-      "TypeName": "resistive.heater.component.gt",
-      "Version": "000",
-      "HwUid": "bbbb2222"
-    }
-  ],
+  "ResistiveHeaterComponents": [],
   "OtherComponents": [],
   "ResistiveHeaterCacs": [
     {
@@ -216,7 +197,7 @@
       "DisplayName": "AtomicTNode",
       "ShNodeId": "b354edeb-0c82-4e55-80cb-7ab669ac2ad9",
       "TypeName": "spaceheat.node.gt",
-      "Version": "100"
+      "Version": "110"
     },
     {
       "Alias": "home",
@@ -225,7 +206,7 @@
       "DisplayName": "Little Orange House HomeAlone",
       "ShNodeId": "34470c9d-fa25-4077-909b-2f981a691d7e",
       "TypeName": "spaceheat.node.gt",
-      "Version": "100"
+      "Version": "110"
     },
     {
       "Alias": "s",
@@ -234,48 +215,80 @@
       "DisplayName": "Little Orange House Main Scada",
       "ShNodeId": "259f9431-c6a1-4170-8766-04cbf65cff4a",
       "TypeName": "spaceheat.node.gt",
-      "Version": "100"
+      "Version": "110"
     },
     {
-      "Alias": "elt1",
-      "Role": "BoostElement",
+      "Alias": "store-pump",
+      "Role": "Unknown",
       "ActorClass": "NoActor",
-      "DisplayName": "First boost element",
+      "DisplayName": "Store Pump",
       "ShNodeId": "41f2ae73-8782-406d-bda7-a95b5abe317e",
-      "ComponentId": "80f95280-e999-49e0-a0e4-a7faf3b5b3bd",
-      "RatedVoltageV": 240,
-      "TypicalVoltageV": 225,
-      "InPowerMetering": true,
       "TypeName": "spaceheat.node.gt",
-      "Version": "100"
+      "Version": "110"
     },
     {
-      "Alias": "power.meter",
+      "Alias": "power-meter",
       "Role": "PowerMeter",
       "ActorClass": "PowerMeter",
       "DisplayName": "Main Power Meter Little Orange House Test System",
       "ShNodeId": "0dd8a803-4724-4f49-b845-14ff57bdb3e6",
       "ComponentId": "2bfd0036-0b0e-4732-8790-bc7d0536a85e",
       "TypeName": "spaceheat.node.gt",
-      "Version": "100"
+      "Version": "110"
     },
     {
-      "Alias": "hp.ewt",
+      "Alias": "analog-temp",
+      "Role": "Unknown",
+      "ActorClass": "MultipurposeSensor",
+      "ComponentId": "fe18bffa-4b46-4b03-89d4-26b3d6f3e9d1",
+      "DisplayName": "GridWorks Multitemp",
+      "ShNodeId": "4196cf44-4bc3-458e-8542-06b49a8a8ba1",
+      "TypeName": "spaceheat.node.gt",
+      "Version": "110"
+    },
+    {
+      "Alias": "hp-ewt",
       "Role": "Unknown",
       "ActorClass": "NoActor",
       "DisplayName": "Heat Pump Entering Water Temp",
       "ShNodeId": "e76073f4-67ae-4324-b07f-0c9add733de7",
       "TypeName": "spaceheat.node.gt",
-      "Version": "100"
+      "Version": "110"
     },
     {
-      "Alias": "hp.lwt",
+      "Alias": "hp-lwt",
       "Role": "Unknown",
       "ActorClass": "NoActor",
       "DisplayName": "Heat Pump Leaving Water Temp",
       "ShNodeId": "1fe2a01f-d60a-4362-bc5e-949ddfcd5003",
       "TypeName": "spaceheat.node.gt",
-      "Version": "100"
+      "Version": "110"
     }
+  ],
+  "DataChannels": [
+      {
+         "Name": "store-pump-pwr",
+         "DisplayName": "Store pump power",
+         "AboutNodeName": "store-pump",
+         "CapturedByNodeName": "power-meter",
+         "TelemetryName": "PowerW",
+         "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta",
+         "StartS": 1701293980,
+         "Id": "ac35c2a9-e317-45e8-a036-52fa5cbd8380",
+         "TypeName": "data.channel.gt",
+         "Version": "001"
+      },
+      {
+        "Name": "hp-lwt",
+        "DisplayName": "Heat Pump Leaving Water Temp",
+        "AboutNodeName": "hp-lwt",
+        "CapturedByNodeName": "analog-temp",
+        "TelemetryName": "WaterTempCTimes1000",
+        "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta",
+        "StartS": 1701293980,
+        "Id": "ac35c2a9-e317-45e8-a036-52fa5cbd8380",
+        "TypeName": "data.channel.gt",
+        "Version": "001"
+     }
   ]
 }

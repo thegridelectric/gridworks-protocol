@@ -2,6 +2,7 @@
 
 from gwproto.types.component_attribute_class_gt import ComponentAttributeClassGt
 from gwproto.types.component_gt import ComponentGt
+from gwproto.types.data_channel_gt import DataChannelGt
 from gwproto.types.egauge_io import EgaugeIo
 from gwproto.types.egauge_register_config import (
     EgaugeRegisterConfig,
@@ -76,6 +77,7 @@ from gwproto.types.web_server_gt import WebServerGt
 __all__ = [
     "ComponentAttributeClassGt",
     "ComponentGt",
+    "DataChannelGt",
     "EgaugeIo",
     "EgaugeRegisterConfig",
     "ElectricMeterCacGt",

@@ -71,6 +71,34 @@ def has_mac_address_format(mac_str: str) -> bool:
     return bool(MAC_REGEX.match(mac_str.lower()))
 
 
+def is_spaceheat_name(v: str) -> str:
+    """
+    SpaceheatName format: Lowercase alphanumeric words separated by hypens
+    """
+    try:
+        x = v.split("-")
+    except Exception as e:
+        raise ValueError(
+            f"<{v}>: Fails SpaceheatName format! Failed to seperate into words with split'-'"
+        ) from e
+    first_word = x[0]
+    first_char = first_word[0]
+    if not first_char.isalpha():
+        raise ValueError(
+            f"<{v}>: Fails SpaceheatName format! Most significant word  must start with alphabet char."
+        )
+    for word in x:
+        if not word.isalnum():
+            raise ValueError(
+                f"<{v}>: Fails SpaceheatName format! words of split by by '-' must be alphanumeric."
+            )
+    if not v.islower():
+        raise ValueError(
+            f"<{v}>: Fails SpaceheatName format! All characters of  must be lowercase."
+        )
+    return v
+
+
 def is_short_integer(candidate: int) -> bool:
     try:
         struct.pack("h", candidate)
@@ -154,7 +182,7 @@ def check_is_bit(candidate: int) -> int:
 HexChar = Annotated[str, BeforeValidator(check_is_hex_char)]
 
 LeftRightDotStr = Annotated[str, BeforeValidator(check_is_left_right_dot)]
-
+SpaceheatName = Annotated[str, BeforeValidator(is_spaceheat_name)]
 UUID4Str = Annotated[str, BeforeValidator(str_is_valid_uuid4)]
 
 UTCSeconds = Annotated[

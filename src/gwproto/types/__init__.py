@@ -53,12 +53,6 @@ from gwproto.types.multipurpose_sensor_cac_gt import (
 from gwproto.types.multipurpose_sensor_component_gt import (
     MultipurposeSensorComponentGt,
 )
-from gwproto.types.pipe_flow_sensor_cac_gt import (
-    PipeFlowSensorCacGt,
-)
-from gwproto.types.pipe_flow_sensor_component_gt import (
-    PipeFlowSensorComponentGt,
-)
 from gwproto.types.power_watts import PowerWatts
 from gwproto.types.relay_cac_gt import RelayCacGt
 from gwproto.types.relay_component_gt import RelayComponentGt
@@ -112,8 +106,6 @@ __all__ = [
     "HubitatTankComponentGt",
     "MultipurposeSensorCacGt",
     "MultipurposeSensorComponentGt",
-    "PipeFlowSensorCacGt",
-    "PipeFlowSensorComponentGt",
     "PowerWatts",
     "RESTPollerCacGt",
     "RESTPollerComponentGt",

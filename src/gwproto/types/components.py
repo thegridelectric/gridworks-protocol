@@ -7,7 +7,6 @@ from gwproto.types.hubitat_component_gt import HubitatComponentGt
 from gwproto.types.hubitat_poller_component_gt import HubitatPollerComponentGt
 from gwproto.types.hubitat_tank_component_gt import HubitatTankComponentGt
 from gwproto.types.multipurpose_sensor_component_gt import MultipurposeSensorComponentGt
-from gwproto.types.pipe_flow_sensor_component_gt import PipeFlowSensorComponentGt
 from gwproto.types.relay_component_gt import RelayComponentGt
 from gwproto.types.resistive_heater_component_gt import ResistiveHeaterComponentGt
 from gwproto.types.rest_poller_component_gt import RESTPollerComponentGt
@@ -22,7 +21,6 @@ __all__ = [
     "HubitatPollerComponentGt",
     "HubitatTankComponentGt",
     "MultipurposeSensorComponentGt",
-    "PipeFlowSensorComponentGt",
     "RESTPollerComponentGt",
     "RelayComponentGt",
     "ResistiveHeaterComponentGt",

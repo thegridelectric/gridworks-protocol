@@ -40,9 +40,7 @@ forth between type instances and Python objects.
     HubitatPollerComponentGt  <types/hubitat-poller-component-gt>
     HubitatTankComponentGt  <types/hubitat-tank-component-gt>
     MultipurposeSensorCacGt  <types/multipurpose-sensor-cac-gt>
-    MultipurposeSensorComponentGt  <types/multipurpose-sensor-component-gt>
-    PipeFlowSensorCacGt  <types/pipe-flow-sensor-cac-gt>
-    PipeFlowSensorComponentGt  <types/pipe-flow-sensor-component-gt>
+    MultipurposeSensorComponentGt  <types/multipurpose-sensor-component-gt>å
     PowerWatts  <types/power-watts>
     RelayCacGt  <types/relay-cac-gt>
     RelayComponentGt  <types/relay-component-gt>

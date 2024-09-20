@@ -183,17 +183,6 @@
       "Version": "100"
     },
     {
-      "Alias": "a.tank.out.flowmeter1",
-      "Role": "PipeFlowMeter",
-      "ActorClass": "SimpleSensor",
-      "DisplayName": "Flow Meter on distribution pipe out of tank",
-      "ShNodeId": "fcc8cc94-75eb-42e1-8ef1-024961b053b7",
-      "ComponentId": "dd5ac673-91a8-40e2-a233-b67479cec709",
-      "ReportingSamplePeriodS": 60,
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
       "Alias": "a.tank.out.temp1",
       "Role": "PipeTempSensor",
       "ActorClass": "SimpleSensor",
@@ -473,18 +462,6 @@
       "Version": "000"
     }
   ],
-  "PipeFlowSensorComponents": [
-    {
-      "ComponentId": "dd5ac673-91a8-40e2-a233-b67479cec709",
-      "DisplayName": "Flow meter on pipe out of tank",
-      "ComponentAttributeClassId": "14e7105a-e797-485a-a304-328ecc85cd98",
-      "TypeName": "pipe.flow.sensor.component.gt",
-      "Version": "000",
-      "I2cAddress": 100,
-      "ConversionFactor": 1.0,
-      "HwUid": "1234"
-    }
-  ],
   "OtherComponents": [
     {
       "ComponentId": "d4a27899-98a3-409f-8c6a-771d86d7937b",
@@ -535,16 +512,6 @@
       "TypicalResponseTimeMs": 400,
       "DisplayName": "Gridworks Simulated Relay",
       "TypeName": "relay.cac.gt",
-      "Version": "000"
-    }
-  ],
-  "PipeFlowSensorCacs": [
-    {
-      "ComponentAttributeClassId": "14e7105a-e797-485a-a304-328ecc85cd98",
-      "MakeModel": "UNKNOWNMAKE__UNKNOWNMODEL",
-      "CommsMethod": "Remove this Comms Method",
-      "DisplayName": "Some pipe flow sensor",
-      "TypeName": "pipe.flow.sensor.cac.gt",
       "Version": "000"
     }
   ],

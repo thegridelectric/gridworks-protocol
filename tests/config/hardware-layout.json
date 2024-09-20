@@ -1,297 +1,4 @@
 {
-  "MyAtomicTNodeGNode": {
-    "GNodeId": "c4c9a280-453f-4c36-a081-970a3774b3ed",
-    "Alias": "d1.isone.ct.newhaven.orange1",
-    "DisplayName": "Little Orange House Garage Heating System AtomicTNode",
-    "GNodeStatusValue": "Active",
-    "PrimaryGNodeRoleAlias": "AtomicTNode"
-  },
-  "MyTerminalAssetGNode": {
-    "GNodeId": "e250a99c-7b7f-469a-8f54-96ea83e95112",
-    "Alias": "d1.isone.ct.newhaven.orange1.ta",
-    "DisplayName": "Little Orange House Garage Heating System TerminalAsset",
-    "GNodeStatusValue": "Active",
-    "PrimaryGNodeRoleAlias": "TerminalAsset"
-  },
-  "MyScadaGNode": {
-    "GNodeId": "c9794c6d-e013-4d74-9570-f9ba4b0f0b0d",
-    "Alias": "d1.isone.ct.newhaven.orange1.scada",
-    "DisplayName": "Little Orange House Garage Heating System SCADA",
-    "GNodeStatusValue": "Active",
-    "PrimaryGNodeRoleAlias": "Scada"
-  },
-  "ShNodes": [
-    {
-      "Alias": "a",
-      "Role": "Atn",
-      "ActorClass": "Atn",
-      "DisplayName": "AtomicTNode",
-      "ShNodeId": "b354edeb-0c82-4e55-80cb-7ab669ac2ad9",
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.home",
-      "Role": "HomeAlone",
-      "ActorClass": "HomeAlone",
-      "DisplayName": "Little Orange House HomeAlone",
-      "ShNodeId": "34470c9d-fa25-4077-909b-2f981a691d7e",
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.s",
-      "Role": "Scada",
-      "ActorClass": "Scada",
-      "DisplayName": "Little Orange House Main Scada",
-      "ShNodeId": "259f9431-c6a1-4170-8766-04cbf65cff4a",
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.elt1",
-      "Role": "BoostElement",
-      "ActorClass": "NoActor",
-      "DisplayName": "First boost element",
-      "ShNodeId": "41f2ae73-8782-406d-bda7-a95b5abe317e",
-      "ComponentId": "80f95280-e999-49e0-a0e4-a7faf3b5b3bd",
-      "RatedVoltageV": 240,
-      "TypicalVoltageV": 225,
-      "InPowerMetering": true,
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.elt2",
-      "Role": "BoostElement",
-      "ActorClass": "NoActor",
-      "DisplayName": "Second boost element",
-      "ShNodeId": "ad51bb8f-f1bb-4a16-8652-76ed699c6a19",
-      "ComponentId": "d5fbf9f4-18a5-48f8-abdf-919309424321",
-      "RatedVoltageV": 240,
-      "TypicalVoltageV": 225,
-      "InPowerMetering": true,
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.tank",
-      "Role": "DedicatedThermalStore",
-      "ActorClass": "NoActor",
-      "DisplayName": "Little Orange House Test Axeman Tank",
-      "ShNodeId": "e9cbe9bf-7129-4508-b4d9-90d3af51b013",
-      "ComponentId": "d4a27899-98a3-409f-8c6a-771d86d7937b",
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.m",
-      "Role": "PowerMeter",
-      "ActorClass": "PowerMeter",
-      "DisplayName": "Main Power Meter Little Orange House Test System",
-      "ShNodeId": "0dd8a803-4724-4f49-b845-14ff57bdb3e6",
-      "ComponentId": "2bfd0036-0b0e-4732-8790-bc7d0536a85e",
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.tank.out",
-      "Role": "HydronicPipe",
-      "ActorClass": "NoActor",
-      "DisplayName": "Main Heat Distribution Pipe Out of Tank",
-      "ShNodeId": "192a38da-fb2e-4233-a513-dc837f26e7f9",
-      "ComponentId": "1d62c7ce-b484-4610-a8b8-3979c8402588",
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.tank.in",
-      "Role": "HydronicPipe",
-      "ActorClass": "NoActor",
-      "DisplayName": "Main Heat Distribution Pipe into Tank",
-      "ShNodeId": "c9a80dca-8f60-4772-96f3-53793e64ef8a",
-      "ComponentId": "f4341350-973a-403a-98fe-dfd2a4acf038",
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.tank.out.pump",
-      "Role": "CirculatorPump",
-      "ActorClass": "NoActor",
-      "DisplayName": "Circulator Pump",
-      "ShNodeId": "f3db8728-1751-4f30-a739-d56bbff9971e",
-      "ComponentId": "1c207b38-d7bf-41cd-a9ad-6204bbab9922",
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.tank.out.pump.allradiators",
-      "Role": "BaseboardRadiator",
-      "ActorClass": "NoActor",
-      "DisplayName": "All the garage passive radiators",
-      "ShNodeId": "7d555c14-dcfe-43ba-9f50-92bd174c1d17",
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.tank.out.pump.allradiators.garage",
-      "Role": "HeatedSpace",
-      "ActorClass": "NoActor",
-      "DisplayName": "Little Orange House Garage",
-      "ShNodeId": "9db24e3b-10bf-4d8a-bb30-221230a90870",
-      "ComponentId": "f3a8c03b-ae00-4124-9c46-d98961636ddc",
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.outdoors",
-      "Role": "Outdoors",
-      "ActorClass": "NoActor",
-      "DisplayName": "43 Avon St Microclimate",
-      "ShNodeId": "4dec0102-41b6-4255-ade6-c5b55dc16f01",
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.tank.out.pump.allradiators.garage",
-      "Role": "HeatedSpace",
-      "ActorClass": "NoActor",
-      "DisplayName": "Little Orange House Garage",
-      "ShNodeId": "26ed27a5-f362-4044-8bd7-19ce8acf4d63",
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "hp.ewt",
-      "Role": "Unknown",
-      "ActorClass": "NoActor",
-      "DisplayName": "Heat Pump Entering Water Temp",
-      "ShNodeId": "e76073f4-67ae-4324-b07f-0c9add733de7",
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "hp.lwt",
-      "Role": "Unknown",
-      "ActorClass": "NoActor",
-      "DisplayName": "Heat Pump Leaving Water Temp",
-      "ShNodeId": "1fe2a01f-d60a-4362-bc5e-949ddfcd5003",
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    }
-  ],
-  "ResistiveHeaterComponents": [
-    {
-      "ComponentId": "80f95280-e999-49e0-a0e4-a7faf3b5b3bd",
-      "DisplayName": "First 4.5 kW boost in tank",
-      "ComponentAttributeClassId": "cf1f2587-7462-4701-b962-d2b264744c1d",
-      "TypeName": "resistive.heater.component.gt",
-      "Version": "000",
-      "HwUid": "aaaa2222",
-      "TestedMaxColdMilliOhms": 14500,
-      "TestedMaxHotMilliOhms": 13714
-    },
-    {
-      "ComponentId": "d5fbf9f4-18a5-48f8-abdf-919309424321",
-      "DisplayName": "Second 4.5 kW boost in tank",
-      "ComponentAttributeClassId": "cf1f2587-7462-4701-b962-d2b264744c1d",
-      "TypeName": "resistive.heater.component.gt",
-      "Version": "000",
-      "HwUid": "bbbb2222"
-    }
-  ],
-  "ElectricMeterComponents": [
-    {
-      "ComponentId": "2bfd0036-0b0e-4732-8790-bc7d0536a85e",
-      "ComponentAttributeClassId": "28897ac1-ea42-4633-96d3-196f63f5a951",
-      "DisplayName": "Power Meter for Simulated Test system",
-      "ConfigList": [
-        {
-          "AboutNodeName": "a.elt1",
-          "ReportOnChange": true,
-          "SamplePeriodS": 300,
-          "Exponent": 0,
-          "AsyncReportThreshold": 0.02,
-          "NameplateMaxValue": 4500,
-          "TypeName": "telemetry.reporting.config",
-          "Version": "000",
-          "TelemetryName": "Power",
-          "Unit": "W"
-        },
-        {
-          "AboutNodeName": "a.elt1",
-          "ReportOnChange": true,
-          "SamplePeriodS": 300,
-          "Exponent": 6,
-          "AsyncReportThreshold": 0.02,
-          "NameplateMaxValue": 18750000,
-          "TypeName": "telemetry.reporting.config",
-          "Version": "000",
-          "TelemetryName": "CurrentRmsMicroAmps",
-          "Unit": "AmpsRms"
-        },
-        {
-          "AboutNodeName": "a.elt2",
-          "ReportOnChange": true,
-          "SamplePeriodS": 300,
-          "Exponent": 0,
-          "AsyncReportThreshold": 0.02,
-          "NameplateMaxValue": 4500,
-          "TypeName": "telemetry.reporting.config",
-          "Version": "000",
-          "TelemetryName": "Power",
-          "Unit": "W"
-        }
-      ],
-      "HwUid": "1001ab",
-      "EgaugeIoList": [],
-      "TypeName": "electric.meter.component.gt",
-      "Version": "000"
-    }
-  ],
-  "OtherComponents": [
-    {
-      "ComponentId": "d4a27899-98a3-409f-8c6a-771d86d7937b",
-      "DisplayName": "Little Orange house Axeman Tank",
-      "ComponentAttributeClassId": "683c193a-bf83-4491-a294-c0e32865a407",
-      "TypeName": "component.gt"
-    },
-    {
-      "ComponentId": "1d62c7ce-b484-4610-a8b8-3979c8402588",
-      "DisplayName": "Hydronic pipe out of tank",
-      "ComponentAttributeClassId": "cec0cb71-77bf-48a6-b644-2dcf124ac9fa",
-      "TypeName": "component.gt"
-    },
-    {
-      "ComponentId": "f4341350-973a-403a-98fe-dfd2a4acf038",
-      "DisplayName": "Hydronic pipe into tank",
-      "ComponentAttributeClassId": "cec0cb71-77bf-48a6-b644-2dcf124ac9fa",
-      "TypeName": "component.gt"
-    },
-    {
-      "ComponentId": "1c207b38-d7bf-41cd-a9ad-6204bbab9922",
-      "DisplayName": "Circulator Pump",
-      "ComponentAttributeClassId": "f9a35cca-2b6d-418d-a81f-81f1c3d64776",
-      "TypeName": "component.gt"
-    },
-    {
-      "ComponentId": "f3a8c03b-ae00-4124-9c46-d98961636ddc",
-      "DisplayName": "Little Orange House garage",
-      "ComponentAttributeClassId": "c884aafe-99e0-4468-8bff-ffa74f672f9d",
-      "TypeName": "component.gt"
-    }
-  ],
-  "ResistiveHeaterCacs": [
-    {
-      "ComponentAttributeClassId": "cf1f2587-7462-4701-b962-d2b264744c1d",
-      "MakeModel": "UNKNOWNMAKE__UNKNOWNMODEL",
-      "DisplayName": "Fake Boost Element",
-      "NameplateMaxPowerW": 4500,
-      "RatedVoltageV": 240,
-      "TypeName": "resistive.heater.cac.gt",
-      "Version": "000"
-    }
-  ],
   "ElectricMeterCacs": [
     {
       "ComponentAttributeClassId": "28897ac1-ea42-4633-96d3-196f63f5a951",
@@ -311,6 +18,47 @@
       "PollPeriodMs": 1000,
       "TelemetryNameList": ["PowerW"],
       "TypeName": "electric.meter.cac.gt",
+      "Version": "000"
+    },
+    {
+      "ComponentAttributeClassId": "739a6e32-bb9c-43bc-a28d-fb61be665522",
+      "DisplayName": "EGauge 4030",
+      "MakeModel": "EGAUGE__4030",
+      "Interface": "ETHERNET",
+      "PollPeriodMs": 1000,
+      "TelemetryNameList": [
+          "PowerW",
+          "MilliWattHours",
+          "VoltageRmsMilliVolts",
+          "CurrentRmsMicroAmps",
+          "FrequencyMicroHz"
+      ],
+      "TypeName": "electric.meter.cac.gt",
+      "Version": "000"
+  }
+  ],
+  "ElectricMeterComponents": [
+    {
+      "ComponentId": "2bfd0036-0b0e-4732-8790-bc7d0536a85e",
+      "ComponentAttributeClassId": "28897ac1-ea42-4633-96d3-196f63f5a951",
+      "DisplayName": "Power Meter for Simulated Test system",
+      "ConfigList": [
+        {
+          "AboutNodeName": "a.elt1",
+          "ReportOnChange": true,
+          "SamplePeriodS": 300,
+          "Exponent": 0,
+          "AsyncReportThreshold": 0.02,
+          "NameplateMaxValue": 4500,
+          "TypeName": "telemetry.reporting.config",
+          "Version": "000",
+          "TelemetryName": "Power",
+          "Unit": "W"
+        }
+      ],
+      "HwUid": "1001ab",
+      "EgaugeIoList": [],
+      "TypeName": "electric.meter.component.gt",
       "Version": "000"
     }
   ],
@@ -369,26 +117,165 @@
       "Version": "000"
     }
   ],
-  "OtherCacs": [
+  "MyAtomicTNodeGNode": {
+    "GNodeId": "c4c9a280-453f-4c36-a081-970a3774b3ed",
+    "Alias": "d1.isone.ct.newhaven.orange1",
+    "DisplayName": "Little Orange House Garage Heating System AtomicTNode",
+    "GNodeStatusValue": "Active",
+    "PrimaryGNodeRoleAlias": "AtomicTNode"
+  },
+  "MyTerminalAssetGNode": {
+    "GNodeId": "e250a99c-7b7f-469a-8f54-96ea83e95112",
+    "Alias": "d1.isone.ct.newhaven.orange1.ta",
+    "DisplayName": "Little Orange House Garage Heating System TerminalAsset",
+    "GNodeStatusValue": "Active",
+    "PrimaryGNodeRoleAlias": "TerminalAsset"
+  },
+  "MyScadaGNode": {
+    "GNodeId": "c9794c6d-e013-4d74-9570-f9ba4b0f0b0d",
+    "Alias": "d1.isone.ct.newhaven.orange1.scada",
+    "DisplayName": "Little Orange House Garage Heating System SCADA",
+    "GNodeStatusValue": "Active",
+    "PrimaryGNodeRoleAlias": "Scada"
+  },
+  "ResistiveHeaterComponents": [
     {
-      "ComponentAttributeClassId": "683c193a-bf83-4491-a294-c0e32865a407",
-      "MakeModel": "UNKNOWNMAKE__UNKNOWNMODEL",
-      "TypeName": "component.attribute.class.gt"
+      "ComponentId": "80f95280-e999-49e0-a0e4-a7faf3b5b3bd",
+      "DisplayName": "First 4.5 kW boost in tank",
+      "ComponentAttributeClassId": "cf1f2587-7462-4701-b962-d2b264744c1d",
+      "TypeName": "resistive.heater.component.gt",
+      "Version": "000",
+      "HwUid": "aaaa2222",
+      "TestedMaxColdMilliOhms": 14500,
+      "TestedMaxHotMilliOhms": 13714
     },
     {
-      "ComponentAttributeClassId": "cec0cb71-77bf-48a6-b644-2dcf124ac9fa",
+      "ComponentId": "d5fbf9f4-18a5-48f8-abdf-919309424321",
+      "DisplayName": "Second 4.5 kW boost in tank",
+      "ComponentAttributeClassId": "cf1f2587-7462-4701-b962-d2b264744c1d",
+      "TypeName": "resistive.heater.component.gt",
+      "Version": "000",
+      "HwUid": "bbbb2222"
+    }
+  ],
+  "OtherComponents": [],
+  "ResistiveHeaterCacs": [
+    {
+      "ComponentAttributeClassId": "cf1f2587-7462-4701-b962-d2b264744c1d",
       "MakeModel": "UNKNOWNMAKE__UNKNOWNMODEL",
-      "TypeName": "component.attribute.class.gt"
+      "DisplayName": "Fake Boost Element",
+      "NameplateMaxPowerW": 4500,
+      "RatedVoltageV": 240,
+      "TypeName": "resistive.heater.cac.gt",
+      "Version": "000"
+    }
+  ],
+  "OtherCacs": [    
+    {
+      "ComponentAttributeClassId": "56498ea1-64b8-4102-b76f-4e29555d4d60",
+      "DisplayName": "Web Server CAC",
+      "MakeModel": "UNKNOWNMAKE__UNKNOWNMODEL",
+      "TypeName": "component.attribute.class.gt",
+      "Version": "000"
     },
     {
-      "ComponentAttributeClassId": "f9a35cca-2b6d-418d-a81f-81f1c3d64776",
-      "MakeModel": "UNKNOWNMAKE__UNKNOWNMODEL",
-      "TypeName": "component.attribute.class.gt"
+      "ComponentAttributeClassId": "7ce0ce69-14c6-4cb7-a33f-2aeca91e0680",
+      "DisplayName": "Fibaro SmartImplant FGBS-222",
+      "MakeModel": "FIBARO__ANALOG_TEMP_SENSOR",
+      "Model": "FGBS-222 v5.2",
+      "TypeName": "component.attribute.class.gt",
+      "Version": "000"
     },
     {
-      "ComponentAttributeClassId": "c884aafe-99e0-4468-8bff-ffa74f672f9d",
+      "ComponentAttributeClassId": "62528da5-b510-4ac2-82c1-3782842eae07",
+      "DisplayName": "Hubitat Elevation C-7",
+      "MakeModel": "HUBITAT__C7__LAN1",
+      "TypeName": "component.attribute.class.gt",
+      "Version": "000"
+    },
+    {
+      "ComponentAttributeClassId": "60ac199d-679a-49f7-9142-8ca3e6428a5f",
+      "DisplayName": "Hubitat Tank Module",
+      "MakeModel": "GRIDWORKS__TANK_MODULE_1",
+      "TypeName": "component.attribute.class.gt",
+      "Version": "000"
+    },
+    {
+      "ComponentAttributeClassId": "03533a1f-3cb9-4a1f-8d57-690c0ad0475b",
+      "DisplayName": "Hubitat Poller Cac",
       "MakeModel": "UNKNOWNMAKE__UNKNOWNMODEL",
-      "TypeName": "component.attribute.class.gt"
+      "TypeName": "component.attribute.class.gt",
+      "Version": "000"
+    }
+  ],
+  "ShNodes": [
+    {
+      "Alias": "a",
+      "Role": "Atn",
+      "ActorClass": "Atn",
+      "DisplayName": "AtomicTNode",
+      "ShNodeId": "b354edeb-0c82-4e55-80cb-7ab669ac2ad9",
+      "TypeName": "spaceheat.node.gt",
+      "Version": "100"
+    },
+    {
+      "Alias": "home",
+      "Role": "HomeAlone",
+      "ActorClass": "HomeAlone",
+      "DisplayName": "Little Orange House HomeAlone",
+      "ShNodeId": "34470c9d-fa25-4077-909b-2f981a691d7e",
+      "TypeName": "spaceheat.node.gt",
+      "Version": "100"
+    },
+    {
+      "Alias": "s",
+      "Role": "Scada",
+      "ActorClass": "Scada",
+      "DisplayName": "Little Orange House Main Scada",
+      "ShNodeId": "259f9431-c6a1-4170-8766-04cbf65cff4a",
+      "TypeName": "spaceheat.node.gt",
+      "Version": "100"
+    },
+    {
+      "Alias": "elt1",
+      "Role": "BoostElement",
+      "ActorClass": "NoActor",
+      "DisplayName": "First boost element",
+      "ShNodeId": "41f2ae73-8782-406d-bda7-a95b5abe317e",
+      "ComponentId": "80f95280-e999-49e0-a0e4-a7faf3b5b3bd",
+      "RatedVoltageV": 240,
+      "TypicalVoltageV": 225,
+      "InPowerMetering": true,
+      "TypeName": "spaceheat.node.gt",
+      "Version": "100"
+    },
+    {
+      "Alias": "power.meter",
+      "Role": "PowerMeter",
+      "ActorClass": "PowerMeter",
+      "DisplayName": "Main Power Meter Little Orange House Test System",
+      "ShNodeId": "0dd8a803-4724-4f49-b845-14ff57bdb3e6",
+      "ComponentId": "2bfd0036-0b0e-4732-8790-bc7d0536a85e",
+      "TypeName": "spaceheat.node.gt",
+      "Version": "100"
+    },
+    {
+      "Alias": "hp.ewt",
+      "Role": "Unknown",
+      "ActorClass": "NoActor",
+      "DisplayName": "Heat Pump Entering Water Temp",
+      "ShNodeId": "e76073f4-67ae-4324-b07f-0c9add733de7",
+      "TypeName": "spaceheat.node.gt",
+      "Version": "100"
+    },
+    {
+      "Alias": "hp.lwt",
+      "Role": "Unknown",
+      "ActorClass": "NoActor",
+      "DisplayName": "Heat Pump Leaving Water Temp",
+      "ShNodeId": "1fe2a01f-d60a-4362-bc5e-949ddfcd5003",
+      "TypeName": "spaceheat.node.gt",
+      "Version": "100"
     }
   ]
 }

@@ -42,13 +42,9 @@ forth between type instances and Python objects.
     MultipurposeSensorCacGt  <types/multipurpose-sensor-cac-gt>
     MultipurposeSensorComponentGt  <types/multipurpose-sensor-component-gt>å
     PowerWatts  <types/power-watts>
-    RelayCacGt  <types/relay-cac-gt>
-    RelayComponentGt  <types/relay-component-gt>
     ResistiveHeaterCacGt  <types/resistive-heater-cac-gt>
     ResistiveHeaterComponentGt  <types/resistive-heater-component-gt>
     RestPollerComponentGt  <types/rest-poller-component-gt>
-    SimpleTempSensorCacGt  <types/simple-temp-sensor-cac-gt>
-    SimpleTempSensorComponentGt  <types/simple-temp-sensor-component-gt>
     SnapshotSpaceheat  <types/snapshot-spaceheat>
     SpaceheatNodeGt  <types/spaceheat-node-gt>
     TaDataChannels  <types/ta-data-channels>

@@ -54,8 +54,6 @@ from gwproto.types.multipurpose_sensor_component_gt import (
     MultipurposeSensorComponentGt,
 )
 from gwproto.types.power_watts import PowerWatts
-from gwproto.types.relay_cac_gt import RelayCacGt
-from gwproto.types.relay_component_gt import RelayComponentGt
 from gwproto.types.resistive_heater_cac_gt import (
     ResistiveHeaterCacGt,
 )
@@ -64,12 +62,6 @@ from gwproto.types.resistive_heater_component_gt import (
 )
 from gwproto.types.rest_poller_component_gt import (
     RESTPollerComponentGt,
-)
-from gwproto.types.simple_temp_sensor_cac_gt import (
-    SimpleTempSensorCacGt,
-)
-from gwproto.types.simple_temp_sensor_component_gt import (
-    SimpleTempSensorComponentGt,
 )
 from gwproto.types.snapshot_spaceheat import SnapshotSpaceheat
 from gwproto.types.spaceheat_node_gt import SpaceheatNodeGt
@@ -107,12 +99,8 @@ __all__ = [
     "MultipurposeSensorComponentGt",
     "PowerWatts",
     "RESTPollerComponentGt",
-    "RelayCacGt",
-    "RelayComponentGt",
     "ResistiveHeaterCacGt",
     "ResistiveHeaterComponentGt",
-    "SimpleTempSensorCacGt",
-    "SimpleTempSensorComponentGt",
     "SnapshotSpaceheat",
     "SpaceheatNodeGt",
     "TelemetryReportingConfig",

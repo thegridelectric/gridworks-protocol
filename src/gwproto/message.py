@@ -1,6 +1,16 @@
 # ruff: noqa: ANN401
-
-from typing import Any, Callable, Generic, Literal, Mapping, Optional, TypeVar, Union
+import typing
+from typing import (
+    Any,
+    Callable,
+    Generic,
+    Literal,
+    Mapping,
+    Optional,
+    TypeAlias,
+    TypeVar,
+    Union,
+)
 
 from pydantic import BaseModel
 
@@ -31,22 +41,25 @@ PayloadT = TypeVar("PayloadT")
 
 PAYLOAD_TYPE_FIELDS = ["TypeName", "type_alias", "TypeName", "type_name"]
 
-GRIDWORKS_ENVELOPE_TYPE = "gw"
+GRIDWORKS_ENVELOPE_TYPE: str = "gw"
 
 
-def ensure_arg(arg_name: str, default_value: Any, kwargs_dict: dict) -> None:
+def ensure_arg(arg_name: str, default_value: Any, kwargs_dict: dict[str, Any]) -> None:
     if arg_name not in kwargs_dict:
         payload = kwargs_dict.get("Payload")
         if payload is None or not hasattr(payload, arg_name):
             kwargs_dict[arg_name] = default_value
 
 
+HeaderAlias: TypeAlias = Header
+
+
 class Message(BaseModel, Generic[PayloadT]):
     Header: Header
     Payload: PayloadT
-    TypeName: Literal["gw"] = GRIDWORKS_ENVELOPE_TYPE
+    TypeName: Literal["gw"] = GRIDWORKS_ENVELOPE_TYPE  # type: ignore[assignment]
 
-    def __init__(self, header: Optional[Header] = None, **kwargs: Any) -> None:
+    def __init__(self, header: Optional[HeaderAlias] = None, **kwargs: Any) -> None:
         if header is None:
             header = self._header_from_kwargs(kwargs)
         super().__init__(Header=header, **kwargs)
@@ -59,13 +72,13 @@ class Message(BaseModel, Generic[PayloadT]):
 
     @classmethod
     def type_name(cls) -> str:
-        return Message.model_fields["TypeName"].default
+        return typing.cast(str, Message.model_fields["TypeName"].default)
 
     def mqtt_topic(self) -> str:
         return MQTTTopic.encode(self.type_name(), self.src(), self.message_type())
 
     @classmethod
-    def _header_from_kwargs(cls, kwargs: dict[str, Any]) -> Header:
+    def _header_from_kwargs(cls, kwargs: dict[str, Any]) -> HeaderAlias:
         header_kwargs = {}
         if "Payload" in kwargs:
             payload = kwargs["Payload"]

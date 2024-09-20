@@ -6,7 +6,9 @@ import re
 import sys
 import typing
 from abc import abstractmethod
-from types import ModuleType
+
+# Static analysis (mypy, pycharm) thinks 'types' here is gwproto.types.
+from types import ModuleType  # noqa
 from typing import (
     Any,
     Generic,
@@ -40,13 +42,11 @@ class MQTTCodec(abc.ABC):
     def __init__(self, message_model: Type[Message[Any]]) -> None:
         self.message_model = message_model
 
-    def encode(self, content: bytes | BaseModel) -> bytes:
+    def encode(self, content: bytes | BaseModel) -> bytes:  # noqa
         if isinstance(content, bytes):
             encoded = content
         else:
-            encoded = content.model_dump_json()
-            if not isinstance(encoded, bytes):
-                encoded = encoded.encode(self.ENCODING)
+            encoded = content.model_dump_json().encode()
         return encoded
 
     @classmethod
@@ -72,7 +72,7 @@ class MQTTCodec(abc.ABC):
                 raise e2 from e
         raise e
 
-    def decode(self, topic: str, payload: bytes) -> Message:
+    def decode(self, topic: str, payload: bytes) -> Message[Any]:
         self.validate_topic(topic)
         try:
             message = self.message_model.model_validate_json(payload)
@@ -102,7 +102,7 @@ class MQTTCodec(abc.ABC):
     @classmethod
     def _try_message_as_event(
         cls, payload: bytes, original_exception: ValidationError
-    ) -> Message:
+    ) -> Message[Any]:
         for error in original_exception.errors():
             if error.get("type", "") == "union_tag_invalid":
                 ctx = error.get("ctx", {})
@@ -176,8 +176,8 @@ def get_candidate_payload_classes(
 def include_candidate_class(
     type_name: str,
     candidate_class: Type[BaseModel],
-    accumulated_types: dict[str, BaseModel],
-    type_name_regex: Optional[re.Pattern],
+    accumulated_types: dict[str, Type[BaseModel]],
+    type_name_regex: Optional[re.Pattern[str]],
 ) -> bool:
     if (
         type_name not in EXCLUDED_TYPE_NAMES
@@ -195,7 +195,7 @@ def include_candidate_class(
 def pydantic_named_types(
     module_names: str | Sequence[str],
     modules: Optional[Sequence[Any]] = None,
-    type_name_regex: Optional[re.Pattern] = None,
+    type_name_regex: Optional[re.Pattern[str]] = None,
 ) -> list[Any]:
     """Find Pyantic BaseModels with Literal 'TypeName' fields."""
     named_types = []
@@ -222,8 +222,8 @@ def create_message_model(
     module_names: str | Sequence[str] = "",
     modules: Optional[Sequence[Any]] = None,
     explicit_types: Optional[Sequence[Any]] = None,
-    type_name_regex: Optional[re.Pattern] = None,
-) -> Type[MessageDiscriminator]:
+    type_name_regex: Optional[re.Pattern[str]] = None,
+) -> Type[Message[Any]]:
     used_types = pydantic_named_types(
         module_names=module_names,
         modules=modules,
@@ -260,8 +260,8 @@ class UnionWrapper(BaseModel, Generic[WrappedT]):
         module_names: str | Sequence[str] = "",
         modules: Optional[Sequence[Any]] = None,
         explicit_types: Optional[Sequence[Any]] = None,
-        type_name_regex: Optional[re.Pattern] = None,
-    ) -> "UnionWrapper":
+        type_name_regex: Optional[re.Pattern[str]] = None,
+    ) -> Type["UnionWrapper[WrappedT]"]:
         """Create pydantic model that is a union of all appropriate types found via
         module_names, modules and explicit_types"""
         used_types = pydantic_named_types(
@@ -291,7 +291,7 @@ class UnionWrapper(BaseModel, Generic[WrappedT]):
 class UnionDecoder:
     """A Utility base class for decoding from a union of types."""
 
-    loader: UnionWrapper
+    loader: Type[UnionWrapper[Any]]
 
     def __init__(
         self,
@@ -300,7 +300,7 @@ class UnionDecoder:
         module_names: str | Sequence[str] = "",
         modules: Optional[Sequence[Any]] = None,
         explicit_types: Optional[Sequence[Any]] = None,
-        type_name_regex: Optional[re.Pattern] = None,
+        type_name_regex: Optional[re.Pattern[str]] = None,
     ) -> None:
         self.loader = UnionWrapper.create(
             model_name=model_name,
@@ -313,19 +313,20 @@ class UnionDecoder:
 
 class CacDecoder(UnionDecoder):
     TYPE_NAME_REGEX = re.compile(r".*\.cac\.gt")
-    loader: UnionWrapper
+    loader: Type[UnionWrapper[Any]]
 
     def __init__(
         self,
         model_name: str,
-        type_name_regex: Optional[re.Pattern] = TYPE_NAME_REGEX,
+        type_name_regex: Optional[re.Pattern[str]] = TYPE_NAME_REGEX,
         **kwargs: Any,
     ) -> None:
         super().__init__(model_name, type_name_regex=type_name_regex, **kwargs)
 
     def decode(
-        self, cac_dict: dict, *, allow_missing: bool = True
+        self, cac_dict: dict[str, Any], *, allow_missing: bool = True
     ) -> ComponentAttributeClassGt:
+        decoded: ComponentAttributeClassGt
         try:
             decoded = self.loader.model_validate({"Wrapped": cac_dict}).Wrapped
             if not isinstance(decoded, ComponentAttributeClassGt):
@@ -349,14 +350,15 @@ class ComponentDecoder(UnionDecoder):
     def __init__(
         self,
         model_name: str,
-        type_name_regex: Optional[re.Pattern] = TYPE_NAME_REGEX,
+        type_name_regex: Optional[re.Pattern[str]] = TYPE_NAME_REGEX,
         **kwargs: Any,
     ) -> None:
         super().__init__(model_name, type_name_regex=type_name_regex, **kwargs)
 
     def decode(
-        self, component_dict: dict, *, allow_missing: bool = True
+        self, component_dict: dict[str, Any], *, allow_missing: bool = True
     ) -> ComponentGt:
+        decoded: ComponentGt
         try:
             # Pydantic requires that our union of types (components here) be in
             # a named field, which by convention we call "Wrapped".

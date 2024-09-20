@@ -25,7 +25,9 @@ class HubitatTankComponent(
     devices_gt: list[FibaroTempSensorSettingsGt]
     devices: list[FibaroTempSensorSettings]
 
-    def __init__(self, gt: HubitatTankComponentGt, cac: ComponentAttributeClassGt) -> None:
+    def __init__(
+        self, gt: HubitatTankComponentGt, cac: ComponentAttributeClassGt
+    ) -> None:
         super().__init__(gt, cac)
         # Create self.hubitat as a proxy containing only the id
         # of the hubitat; the actual component data will be resolved

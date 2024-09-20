@@ -18,7 +18,9 @@ class HubitatPollerComponent(
     hubitat_gt: HubitatComponentGt
     _rest: Optional[RESTPollerSettings] = None
 
-    def __init__(self, gt: HubitatPollerComponentGt, cac: ComponentAttributeClassGt) -> None:
+    def __init__(
+        self, gt: HubitatPollerComponentGt, cac: ComponentAttributeClassGt
+    ) -> None:
         super().__init__(gt, cac)
         self.hubitat_gt = HubitatComponentGt.make_stub(gt.Poller.hubitat_component_id)
 

@@ -50,6 +50,9 @@ from gwproto.types.hubitat_tank_component_gt import (
 from gwproto.types.multipurpose_sensor_cac_gt import (
     MultipurposeSensorCacGt,
 )
+from gwproto.types.multipurpose_sensor_component_gt import (
+    MultipurposeSensorComponentGt,
+)
 from gwproto.types.pipe_flow_sensor_cac_gt import (
     PipeFlowSensorCacGt,
 )
@@ -108,7 +111,7 @@ __all__ = [
     "HubitatPollerComponentGt",
     "HubitatTankComponentGt",
     "MultipurposeSensorCacGt",
-    # "MultipurposeSensorComponentGt",
+    "MultipurposeSensorComponentGt",
     "PipeFlowSensorCacGt",
     "PipeFlowSensorComponentGt",
     "PowerWatts",

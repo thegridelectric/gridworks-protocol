@@ -1,7 +1,7 @@
 """Tests multipurpose.sensor.component.gt type, version 000"""
 
 from gwproto.data_classes.components import MultipurposeSensorComponent
-from gwproto.types.multipurpose_sensor_component_gt import MultipurposeSensorComponentGt
+from gwproto.types import MultipurposeSensorComponentGt
 from tests.component_load_utils import ComponentCase, assert_component_load
 
 

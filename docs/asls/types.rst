@@ -10,10 +10,6 @@ component.gt.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/component-gt.json
 
-data.channel.000
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/data-channel.json
-
 egauge.io.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/egauge-io.json
@@ -165,10 +161,6 @@ snapshot.spaceheat.000
 spaceheat.node.gt.100
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/spaceheat-node-gt.json
-
-ta.data.channels.000
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/ta-data-channels.json
 
 telemetry.reporting.config.000
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^

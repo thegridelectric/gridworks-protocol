@@ -46,7 +46,6 @@ forth between type instances and Python objects.
     RelayComponentGt  <types/relay-component-gt>
     ResistiveHeaterCacGt  <types/resistive-heater-cac-gt>
     ResistiveHeaterComponentGt  <types/resistive-heater-component-gt>
-    RestPollerCacGt  <types/rest-poller-cac-gt>
     RestPollerComponentGt  <types/rest-poller-component-gt>
     SimpleTempSensorCacGt  <types/simple-temp-sensor-cac-gt>
     SimpleTempSensorComponentGt  <types/simple-temp-sensor-component-gt>

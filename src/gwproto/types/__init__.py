@@ -62,7 +62,6 @@ from gwproto.types.resistive_heater_cac_gt import (
 from gwproto.types.resistive_heater_component_gt import (
     ResistiveHeaterComponentGt,
 )
-from gwproto.types.rest_poller_cac_gt import RESTPollerCacGt
 from gwproto.types.rest_poller_component_gt import (
     RESTPollerComponentGt,
 )
@@ -107,7 +106,6 @@ __all__ = [
     "MultipurposeSensorCacGt",
     "MultipurposeSensorComponentGt",
     "PowerWatts",
-    "RESTPollerCacGt",
     "RESTPollerComponentGt",
     "RelayCacGt",
     "RelayComponentGt",

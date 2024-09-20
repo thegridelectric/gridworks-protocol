@@ -2,7 +2,7 @@
 
 from typing import Literal, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from gwproto.enums import MakeModel
 from gwproto.property_format import UUID4Str
@@ -14,3 +14,5 @@ class ComponentAttributeClassGt(BaseModel):
     MakeModel: MakeModel
     TypeName: Literal["component.attribute.class.gt"] = "component.attribute.class.gt"
     Version: Literal["000"] = "000"
+
+    model_config = ConfigDict(extra="allow")

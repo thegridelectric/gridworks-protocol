@@ -1,5 +1,7 @@
 """List of all the types"""
 
+from gwproto.types.batched_readings import BatchedReadings
+from gwproto.types.channel_readings import ChannelReadings
 from gwproto.types.component_attribute_class_gt import ComponentAttributeClassGt
 from gwproto.types.component_gt import ComponentGt
 from gwproto.types.data_channel_gt import DataChannelGt
@@ -75,6 +77,8 @@ from gwproto.types.telemetry_snapshot_spaceheat import (
 from gwproto.types.web_server_gt import WebServerGt
 
 __all__ = [
+    "BatchedReadings",
+    "ChannelReadings",
     "ComponentAttributeClassGt",
     "ComponentGt",
     "DataChannelGt",

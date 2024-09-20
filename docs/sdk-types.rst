@@ -38,7 +38,6 @@ forth between type instances and Python objects.
     GtTelemetry  <types/gt-telemetry>
     HubitatComponentGt  <types/hubitat-component-gt>
     HubitatPollerComponentGt  <types/hubitat-poller-component-gt>
-    HubitatTankCacGt  <types/hubitat-tank-cac-gt>
     HubitatTankComponentGt  <types/hubitat-tank-component-gt>
     MultipurposeSensorCacGt  <types/multipurpose-sensor-cac-gt>
     MultipurposeSensorComponentGt  <types/multipurpose-sensor-component-gt>

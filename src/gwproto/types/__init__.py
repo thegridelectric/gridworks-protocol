@@ -44,7 +44,6 @@ from gwproto.types.hubitat_component_gt import (
 from gwproto.types.hubitat_poller_component_gt import (
     HubitatPollerComponentGt,
 )
-from gwproto.types.hubitat_tank_cac_gt import HubitatTankCacGt
 from gwproto.types.hubitat_tank_component_gt import (
     HubitatTankComponentGt,
 )
@@ -107,7 +106,6 @@ __all__ = [
     "HeartbeatB",
     "HubitatComponentGt",
     "HubitatPollerComponentGt",
-    "HubitatTankCacGt",
     "HubitatTankComponentGt",
     "MultipurposeSensorCacGt",
     # "MultipurposeSensorComponentGt",

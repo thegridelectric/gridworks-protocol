@@ -33,7 +33,6 @@ class BatchedReadings(BaseModel):
 
     model_config = ConfigDict(extra="allow")
 
-
     @model_validator(mode="after")
     def check_axiom_1(self) -> Self:
         """
@@ -42,4 +41,3 @@ class BatchedReadings(BaseModel):
         """
         # Implement check for axiom 3"
         return self
-

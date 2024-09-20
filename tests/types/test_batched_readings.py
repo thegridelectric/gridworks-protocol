@@ -12,7 +12,8 @@ def test_batched_readings_generated() -> None:
         "BatchedTransmissionPeriodS": 30,
         "MessageCreatedMs": 1708518810017,
         "ChannelReadingList": [
-            {   "Name": "hp-odu-pwr",
+            {
+                "Name": "hp-odu-pwr",
                 "DisplayName": "HP ODU Power",
                 "AboutNodeName": "hp-odu",
                 "CapturedByNodeName": "primary-pwr-meter",

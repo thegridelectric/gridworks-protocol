@@ -6,9 +6,7 @@ from pydantic import Field, PositiveInt, model_validator
 
 from gwproto.types import ComponentGt
 from gwproto.types.egauge_io import EgaugeIo
-from gwproto.types.telemetry_reporting_config import (
-    TelemetryReportingConfig,
-)
+from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
 
 
 class ElectricMeterComponentGt(ComponentGt):

@@ -1,7 +1,7 @@
 """Tests electric.meter.component.gt type, version 000"""
 
 from gwproto.data_classes.components import ElectricMeterComponent
-from gwproto.types.electric_meter_component_gt import ElectricMeterComponentGt
+from gwproto.types import ElectricMeterComponentGt
 from tests.component_load_utils import ComponentCase, assert_component_load
 
 

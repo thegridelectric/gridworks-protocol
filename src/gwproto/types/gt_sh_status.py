@@ -5,15 +5,11 @@ from typing import List, Literal
 from pydantic import BaseModel
 
 from gwproto.property_format import LeftRightDotStr, UTCSeconds, UUID4Str
-from gwproto.types.gt_sh_booleanactuator_cmd_status import (
-    GtShBooleanactuatorCmdStatus,
-)
+from gwproto.types.gt_sh_booleanactuator_cmd_status import GtShBooleanactuatorCmdStatus
 from gwproto.types.gt_sh_multipurpose_telemetry_status import (
     GtShMultipurposeTelemetryStatus,
 )
-from gwproto.types.gt_sh_simple_telemetry_status import (
-    GtShSimpleTelemetryStatus,
-)
+from gwproto.types.gt_sh_simple_telemetry_status import GtShSimpleTelemetryStatus
 
 
 class GtShStatus(BaseModel):

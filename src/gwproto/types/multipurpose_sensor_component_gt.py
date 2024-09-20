@@ -3,9 +3,7 @@
 from typing import List, Literal
 
 from gwproto.types import ComponentGt
-from gwproto.types.telemetry_reporting_config import (
-    TelemetryReportingConfig,
-)
+from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
 
 
 class MultipurposeSensorComponentGt(ComponentGt):

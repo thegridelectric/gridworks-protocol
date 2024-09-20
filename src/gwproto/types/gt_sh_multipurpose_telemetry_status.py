@@ -5,10 +5,7 @@ from typing import Literal, Self
 from pydantic import BaseModel, Field, model_validator
 
 from gwproto.enums.telemetry_name import TelemetryName
-from gwproto.property_format import (
-    LeftRightDotStr,
-    UTCMilliseconds,
-)
+from gwproto.property_format import LeftRightDotStr, UTCMilliseconds
 
 
 class GtShMultipurposeTelemetryStatus(BaseModel):

@@ -5,9 +5,7 @@ from typing import Literal
 from pydantic import BaseModel
 
 from gwproto.property_format import LeftRightDotStr, UUID4Str
-from gwproto.types.telemetry_snapshot_spaceheat import (
-    TelemetrySnapshotSpaceheat,
-)
+from gwproto.types.telemetry_snapshot_spaceheat import TelemetrySnapshotSpaceheat
 
 
 class SnapshotSpaceheat(BaseModel):

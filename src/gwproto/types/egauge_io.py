@@ -4,12 +4,8 @@ from typing import Literal
 
 from pydantic import BaseModel, Field
 
-from gwproto.types.egauge_register_config import (
-    EgaugeRegisterConfig,
-)
-from gwproto.types.telemetry_reporting_config import (
-    TelemetryReportingConfig,
-)
+from gwproto.types.egauge_register_config import EgaugeRegisterConfig
+from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
 
 
 class EgaugeIo(BaseModel):

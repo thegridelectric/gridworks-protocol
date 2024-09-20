@@ -25,7 +25,6 @@ forth between type instances and Python objects.
     EgaugeRegisterConfig  <types/egauge-register-config>
     ElectricMeterCacGt  <types/electric-meter-cac-gt>
     ElectricMeterComponentGt  <types/electric-meter-component-gt>
-    FibaroSmartImplantCacGt  <types/fibaro-smart-implant-cac-gt>
     FibaroSmartImplantComponentGt  <types/fibaro-smart-implant-component-gt>
     GtDispatchBoolean  <types/gt-dispatch-boolean>
     GtDispatchBooleanLocal  <types/gt-dispatch-boolean-local>

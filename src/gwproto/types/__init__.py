@@ -9,9 +9,6 @@ from gwproto.types.egauge_register_config import (
 from gwproto.types.electric_meter_cac_gt import (
     ElectricMeterCacGt,
 )
-from gwproto.types.fibaro_smart_implant_cac_gt import (
-    FibaroSmartImplantCacGt,
-)
 from gwproto.types.fibaro_smart_implant_component_gt import (
     FibaroSmartImplantComponentGt,
 )
@@ -97,7 +94,6 @@ __all__ = [
     "EgaugeRegisterConfig",
     "ElectricMeterCacGt",
     # "ElectricMeterComponentGt",
-    "FibaroSmartImplantCacGt",
     "FibaroSmartImplantComponentGt",
     "GtDispatchBoolean",
     "GtDispatchBooleanLocal",

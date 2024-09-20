@@ -16,7 +16,7 @@
     "ComponentAttributeClassId": {
       "type": "string",
       "format": "UuidCanonicalTextual",
-      "title": "Unique identifier for FibaroSmartImplantCac object articulated by the fibaro.smart.implant.cac.gt.000 type.",
+      "title": "Unique identifier for Cac object articulated by the fibaro.smart.implant.cac.gt.000 type.",
       "description": "Unique identifier for the device class. Authority for these, as well as the relationship between Components and ComponentAttributeClasses (Cacs) is maintained by the World Registry.",
       "required": true
     },

@@ -4,7 +4,7 @@ REST commands into a message posted to main processing thread.
 """
 
 from functools import cached_property
-from typing import Literal, Optional, Self, Tuple
+from typing import Any, Literal, Optional, Self, Tuple
 
 import yarl
 from pydantic import BaseModel, ConfigDict, HttpUrl, model_validator
@@ -27,7 +27,7 @@ class URLArgs(BaseModel):
     model_config = ConfigDict(alias_generator=snake_to_camel, populate_by_name=True)
 
     @classmethod
-    def dict_from_url(cls, url: str | yarl.URL) -> dict:
+    def dict_from_url(cls, url: str | yarl.URL) -> dict[str, Any]:
         if isinstance(url, str):
             url = yarl.URL(url)
         return {
@@ -81,10 +81,15 @@ class URLConfig(BaseModel):
     model_config = ConfigDict(alias_generator=snake_to_camel, populate_by_name=True)
 
     def to_url(self) -> yarl.URL:
-        return self.make_url(self)
+        url = self.make_url(self)
+        if url is None:
+            raise ValueError("URL cannot be None")
+        return url
 
     @classmethod
-    def make_url_args(cls, url_config: "URLConfig") -> Optional[dict]:
+    def make_url_args(
+        cls, url_config: Optional["URLConfig"]
+    ) -> Optional[dict[str, Any]]:
         if url_config is None:
             return None
 
@@ -92,7 +97,7 @@ class URLConfig(BaseModel):
         if url_config.url is None:
             url_args = {}
         else:
-            url_args = dict(URLArgs.from_url(yarl.URL(url_config.url)))
+            url_args = dict(URLArgs.from_url(yarl.URL(str(url_config.url))))
 
         # args from self.url_args
         if url_config.url_args is not None:
@@ -108,7 +113,7 @@ class URLConfig(BaseModel):
         return url_args
 
     @classmethod
-    def make_url(cls, url_config: "URLConfig") -> Optional[yarl.URL]:
+    def make_url(cls, url_config: Optional["URLConfig"]) -> Optional[yarl.URL]:
         args = URLConfig.make_url_args(url_config)
         if args:
             return yarl.URL.build(**args)
@@ -134,10 +139,10 @@ class SessionArgs(BaseModel):
 class RequestArgs(BaseModel):
     url: Optional[URLConfig] = None
     method: Literal["GET", "POST", "PUT", "DELETE"] = "GET"
-    params: Optional[dict] = None
-    data: Optional[dict | list | tuple] = None
-    headers: Optional[dict] = None
-    timeout: AioHttpClientTimeout = None
+    params: Optional[dict[str, Any]] = None
+    data: Optional[dict[str, Any] | list[Any] | tuple[Any]] = None
+    headers: Optional[dict[str, Any]] = None
+    timeout: Optional[AioHttpClientTimeout] = None
     ssl: Optional[bool] = None
     model_config = ConfigDict(
         extra="allow", alias_generator=snake_to_camel, populate_by_name=True
@@ -176,28 +181,23 @@ class RESTPollerSettings(BaseModel):
         ignored_types=(cached_property,),
     )
 
-    def url_args(self) -> dict:
+    def url_args(self) -> dict[str, Any]:
         session_args = URLConfig.make_url_args(self.session.base_url)
         request_args = URLConfig.make_url_args(self.request.url)
-        if (
-            session_args is None
-            and request_args is None
-            and session_args is None
-            and request_args is None
-        ):
-            raise ValueError("Neither session.base_url nor request.url produces a URL")
         if session_args is not None:
             url_args = session_args
             if request_args is not None:
                 url_args.update(request_args)
         else:
+            if request_args is None:
+                raise ValueError(
+                    "Neither session.base_url nor request.url produces a URL"
+                )
             url_args = request_args
         return url_args
 
     @cached_property
     def url(self) -> yarl.URL:
-        if self.session.base_url is None and self.request.url is None:
-            raise ValueError("Neither session.base_url nor request.url produces a URL")
         session_args = URLConfig.make_url_args(self.session.base_url)
         request_args = URLConfig.make_url_args(self.request.url)
         if session_args is not None:
@@ -205,6 +205,10 @@ class RESTPollerSettings(BaseModel):
             if request_args is not None:
                 url_args.update(request_args)
         else:
+            if request_args is None:
+                raise ValueError(
+                    "Neither session.base_url nor request.url produces a URL"
+                )
             url_args = request_args
         return yarl.URL.build(**url_args)
 
@@ -219,7 +223,7 @@ class RESTPollerSettings(BaseModel):
             raise ValueError(
                 "ERROR. At least one of session.base_url and request.url must be specified"
             )
-        if base_url is None and not url.is_absolute():
+        if base_url is None and (url is None or not url.is_absolute()):
             raise ValueError(
                 "ERROR. if session.base_url is None, request.url must be absolute\n"
                 f"  request.url:      <{url}>\n"

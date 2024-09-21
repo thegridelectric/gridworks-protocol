@@ -1,6 +1,7 @@
 from typing import Literal, Optional
 
 import yarl
+from pydantic_extra_types.mac_address import MacAddress
 
 from gwproto.types.component_gt import ComponentGt
 from gwproto.types.hubitat_gt import HubitatGt
@@ -35,7 +36,7 @@ class HubitatComponentGt(ComponentGt):
                 Host="",
                 MakerApiId=-1,
                 AccessToken="",
-                MacAddress="000000000000",
+                MacAddress=MacAddress("00:00:00:00:00:00"),
             ),
         )
 

@@ -1,3 +1,5 @@
+# type: ignore  # noqa: PGH003
+
 """Nox sessions."""
 
 import os

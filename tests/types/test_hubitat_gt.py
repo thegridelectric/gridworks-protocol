@@ -1,6 +1,7 @@
 """Test HubitatGt"""
 
 import yarl
+from pydantic_extra_types.mac_address import MacAddress
 
 from gwproto.types.hubitat_gt import HubitatGt
 
@@ -8,13 +9,13 @@ from gwproto.types.hubitat_gt import HubitatGt
 def test_hubitat_gt() -> None:
     """Test HubitatGt"""
 
-    mac = "00:01:02:03:0A:0B"
+    mac = "00:01:02:03:0A:0B".lower()
     listen_path_exp = mac.replace(":", "-")
     h = HubitatGt(
         Host="192.168.1.10",
         MakerApiId=1,
         AccessToken="foo",
-        MacAddress=mac,
+        MacAddress=MacAddress(mac),
     )
     assert h.WebListenEnabled is True
     assert h.listen_path == listen_path_exp

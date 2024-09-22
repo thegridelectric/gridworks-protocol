@@ -1,4 +1,112 @@
 {
+  "ElectricMeterCacs": [
+    {
+      "ComponentAttributeClassId": "28897ac1-ea42-4633-96d3-196f63f5a951",
+      "MakeModel": "GRIDWORKS__SIMPM1",
+      "DisplayName": "Gridworks Pm1 Simulated Power Meter",
+      "Interface": "SIMRABBIT",
+      "PollPeriodMs": 1000,
+      "TelemetryNameList": ["PowerW"],
+      "TypeName": "electric.meter.cac.gt",
+      "Version": "000"
+    },
+    {
+      "ComponentAttributeClassId": "739a6e32-bb9c-43bc-a28d-fb61be665522",
+      "DisplayName": "EGauge 4030",
+      "MakeModel": "EGAUGE__4030",
+      "Interface": "ETHERNET",
+      "PollPeriodMs": 1000,
+      "TelemetryNameList": [
+          "PowerW",
+          "MilliWattHours",
+          "VoltageRmsMilliVolts",
+          "CurrentRmsMicroAmps",
+          "FrequencyMicroHz"
+      ],
+      "TypeName": "electric.meter.cac.gt",
+      "Version": "000"
+  }
+  ],
+  "ElectricMeterComponents": [
+    {
+      "ComponentId": "2bfd0036-0b0e-4732-8790-bc7d0536a85e",
+      "ComponentAttributeClassId": "28897ac1-ea42-4633-96d3-196f63f5a951",
+      "DisplayName": "Power Meter for Simulated Test system",
+      "ConfigList": [
+        {
+          "AboutNodeName": "a.elt1",
+          "ReportOnChange": true,
+          "SamplePeriodS": 300,
+          "Exponent": 0,
+          "AsyncReportThreshold": 0.02,
+          "NameplateMaxValue": 4500,
+          "TypeName": "telemetry.reporting.config",
+          "Version": "000",
+          "TelemetryName": "Power",
+          "Unit": "W"
+        }
+      ],
+      "HwUid": "1001ab",
+      "EgaugeIoList": [],
+      "TypeName": "electric.meter.component.gt",
+      "Version": "000"
+    }
+  ],
+  "MultipurposeSensorCacs": [
+    {
+      "ComponentAttributeClassId": "432073b8-4d2b-4e36-9229-73893f33f846",
+        "MakeModel": "GRIDWORKS__MULTITEMP1",
+        "PollPeriodMs": 200,
+        "Exponent": -3,
+        "TempUnit": "Celcius",
+        "TelemetryNameList": ["WaterTempCTimes1000"],
+        "MaxThermistors": 12,
+        "DisplayName": "Simulated GridWorks high precision water temp sensor",
+        "CommsMethod": "I2C",
+        "TypeName": "multipurpose.sensor.cac.gt",
+        "Version": "000"
+      }
+  ],
+  "MultipurposeSensorComponents": [
+    {
+      "ChannelList": [
+        3,
+        4
+      ],
+      "ComponentAttributeClassId": "432073b8-4d2b-4e36-9229-73893f33f846",
+      "ComponentId": "fe18bffa-4b46-4b03-89d4-26b3d6f3e9d1",
+      "ConfigList": [
+        {
+          "AboutNodeName": "hp.lwt",
+          "AsyncReportThreshold": 0.0025,
+          "Exponent": 3,
+          "NameplateMaxValue": 100000,
+          "ReportOnChange": true,
+          "SamplePeriodS": 60,
+          "TelemetryName": "WaterTempCTimes1000",
+          "TypeName": "telemetry.reporting.config",
+          "Unit": "Celsius",
+          "Version": "000"
+        },
+        {
+          "AboutNodeName": "hp.ewt",
+          "AsyncReportThreshold": 0.0025,
+          "Exponent": 3,
+          "NameplateMaxValue": 100000,
+          "ReportOnChange": true,
+          "SamplePeriodS": 60,
+          "TelemetryName": "WaterTempCTimes1000",
+          "TypeName": "telemetry.reporting.config",
+          "Unit": "Celsius",
+          "Version": "000"
+        }
+      ],
+      "DisplayName": "Multipurpose Temp Sensor Component <100>",
+      "HwUid": "100",
+      "TypeName": "multipurpose.sensor.component.gt",
+      "Version": "000"
+    }
+  ],
   "MyAtomicTNodeGNode": {
     "GNodeId": "c4c9a280-453f-4c36-a081-970a3774b3ed",
     "Alias": "d1.isone.ct.newhaven.orange1",
@@ -20,288 +128,6 @@
     "GNodeStatusValue": "Active",
     "PrimaryGNodeRoleAlias": "Scada"
   },
-  "ShNodes": [
-    {
-      "Alias": "a",
-      "Role": "Atn",
-      "ActorClass": "Atn",
-      "DisplayName": "AtomicTNode",
-      "ShNodeId": "b354edeb-0c82-4e55-80cb-7ab669ac2ad9",
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.home",
-      "Role": "HomeAlone",
-      "ActorClass": "HomeAlone",
-      "DisplayName": "Little Orange House HomeAlone",
-      "ShNodeId": "34470c9d-fa25-4077-909b-2f981a691d7e",
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.s",
-      "Role": "Scada",
-      "ActorClass": "Scada",
-      "DisplayName": "Little Orange House Main Scada",
-      "ShNodeId": "259f9431-c6a1-4170-8766-04cbf65cff4a",
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.elt1",
-      "Role": "BoostElement",
-      "ActorClass": "NoActor",
-      "DisplayName": "First boost element",
-      "ShNodeId": "41f2ae73-8782-406d-bda7-a95b5abe317e",
-      "ComponentId": "80f95280-e999-49e0-a0e4-a7faf3b5b3bd",
-      "RatedVoltageV": 240,
-      "TypicalVoltageV": 225,
-      "InPowerMetering": true,
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.elt1.relay",
-      "Role": "BooleanActuator",
-      "ActorClass": "NoActor",
-      "DisplayName": "30A Relay for first boost element",
-      "ShNodeId": "e077df5d-7aea-4b9c-bfd7-773c1e65bd65",
-      "ComponentId": "798fe14a-4073-41eb-bce2-075906aee6bb",
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.elt2",
-      "Role": "BoostElement",
-      "ActorClass": "NoActor",
-      "DisplayName": "Second boost element",
-      "ShNodeId": "ad51bb8f-f1bb-4a16-8652-76ed699c6a19",
-      "ComponentId": "d5fbf9f4-18a5-48f8-abdf-919309424321",
-      "RatedVoltageV": 240,
-      "TypicalVoltageV": 225,
-      "InPowerMetering": true,
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.elt2.relay",
-      "Role": "BooleanActuator",
-      "ActorClass": "NoActor",
-      "DisplayName": "30A Relay for second boost element",
-      "ShNodeId": "d2eb5c93-ba1c-4f2c-a7ad-4dee995eb811",
-      "ComponentId": "58c4ad4f-6b1a-4fbf-80dd-d269f31e5ba5",
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.tank",
-      "Role": "DedicatedThermalStore",
-      "ActorClass": "NoActor",
-      "DisplayName": "Little Orange House Test Axeman Tank",
-      "ShNodeId": "e9cbe9bf-7129-4508-b4d9-90d3af51b013",
-      "ComponentId": "d4a27899-98a3-409f-8c6a-771d86d7937b",
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.m",
-      "Role": "PowerMeter",
-      "ActorClass": "PowerMeter",
-      "DisplayName": "Main Power Meter Little Orange House Test System",
-      "ShNodeId": "0dd8a803-4724-4f49-b845-14ff57bdb3e6",
-      "ComponentId": "2bfd0036-0b0e-4732-8790-bc7d0536a85e",
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.tank.out",
-      "Role": "HydronicPipe",
-      "ActorClass": "NoActor",
-      "DisplayName": "Main Heat Distribution Pipe Out of Tank",
-      "ShNodeId": "192a38da-fb2e-4233-a513-dc837f26e7f9",
-      "ComponentId": "1d62c7ce-b484-4610-a8b8-3979c8402588",
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.tank.in",
-      "Role": "HydronicPipe",
-      "ActorClass": "NoActor",
-      "DisplayName": "Main Heat Distribution Pipe into Tank",
-      "ShNodeId": "c9a80dca-8f60-4772-96f3-53793e64ef8a",
-      "ComponentId": "f4341350-973a-403a-98fe-dfd2a4acf038",
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.tank.out.pump",
-      "Role": "CirculatorPump",
-      "ActorClass": "NoActor",
-      "DisplayName": "Circulator Pump",
-      "ShNodeId": "f3db8728-1751-4f30-a739-d56bbff9971e",
-      "ComponentId": "1c207b38-d7bf-41cd-a9ad-6204bbab9922",
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.tank.out.pump.relay",
-      "Role": "BooleanActuator",
-      "ActorClass": "NoActor",
-      "DisplayName": "Circulator Pump relay",
-      "ShNodeId": "357a45f0-1a57-4f3d-9be4-4ff77cf19ba2",
-      "ComponentId": "e758eecd-6439-4e1d-9f66-534f6fc14859",
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.tank.out.pump.allradiators",
-      "Role": "BaseboardRadiator",
-      "ActorClass": "NoActor",
-      "DisplayName": "All the garage passive radiators",
-      "ShNodeId": "7d555c14-dcfe-43ba-9f50-92bd174c1d17",
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.tank.out.pump.allradiators.garage",
-      "Role": "HeatedSpace",
-      "ActorClass": "NoActor",
-      "DisplayName": "Little Orange House Garage",
-      "ShNodeId": "9db24e3b-10bf-4d8a-bb30-221230a90870",
-      "ComponentId": "f3a8c03b-ae00-4124-9c46-d98961636ddc",
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.outdoors",
-      "Role": "Outdoors",
-      "ActorClass": "NoActor",
-      "DisplayName": "43 Avon St Microclimate",
-      "ShNodeId": "4dec0102-41b6-4255-ade6-c5b55dc16f01",
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.tank.out.flowmeter1",
-      "Role": "PipeFlowMeter",
-      "ActorClass": "SimpleSensor",
-      "DisplayName": "Flow Meter on distribution pipe out of tank",
-      "ShNodeId": "fcc8cc94-75eb-42e1-8ef1-024961b053b7",
-      "ComponentId": "dd5ac673-91a8-40e2-a233-b67479cec709",
-      "ReportingSamplePeriodS": 60,
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.tank.out.temp1",
-      "Role": "PipeTempSensor",
-      "ActorClass": "SimpleSensor",
-      "DisplayName": "Temp Sensor on distribution pipe out of tank",
-      "ShNodeId": "66a4a5e7-f160-424a-8ad5-f6554bf9a99a",
-      "ComponentId": "a16d7bb6-2606-4ad1-b6b4-be80b5d84a6e",
-      "ReportingSamplePeriodS": 60,
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.tank.in.temp1",
-      "Role": "PipeTempSensor",
-      "ActorClass": "SimpleSensor",
-      "DisplayName": "Temp Sensor on distribution pipe into tank",
-      "ShNodeId": "d9c461f6-ed11-4dc1-9fe2-992d5d2413d0",
-      "ComponentId": "efabaa6a-e331-491f-9dbb-a3dee0029531",
-      "ReportingSamplePeriodS": 60,
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.tank.temp0",
-      "Role": "TankWaterTempSensor",
-      "ActorClass": "SimpleSensor",
-      "DisplayName": "Tank temp sensor temp0 (on top)",
-      "ShNodeId": "3593a10a-4335-447a-b62e-e123788a134a",
-      "ComponentId": "f516467e-7691-42c8-8525-f7d49bb135ce",
-      "ReportingSamplePeriodS": 5,
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.tank.temp1",
-      "Role": "TankWaterTempSensor",
-      "ActorClass": "SimpleSensor",
-      "DisplayName": "Tank temp sensor temp1 (second from top)",
-      "ShNodeId": "0df93059-f155-4c4f-a43c-0265a28f21fb",
-      "ComponentId": "d8d9f2b6-db8b-4a23-a037-20c7308ec56e",
-      "ReportingSamplePeriodS": 5,
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.tank.temp2",
-      "Role": "TankWaterTempSensor",
-      "ActorClass": "SimpleSensor",
-      "DisplayName": "Tank temp sensor temp2 (third from top)",
-      "ShNodeId": "17f84be9-6237-4331-91f8-17452eba0345",
-      "ComponentId": "5453b43b-7940-463c-ae6e-5cfe86ecbd3d",
-      "ReportingSamplePeriodS": 5,
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.tank.temp3",
-      "Role": "TankWaterTempSensor",
-      "ActorClass": "SimpleSensor",
-      "DisplayName": "Tank temp sensor temp3 (fourth from top)",
-      "ShNodeId": "296c9002-5771-4e11-969c-48a6db905b83",
-      "ComponentId": "17110718-b102-4c3b-ae62-5331aec9eed3",
-      "ReportingSamplePeriodS": 5,
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.tank.temp4",
-      "Role": "TankWaterTempSensor",
-      "ActorClass": "SimpleSensor",
-      "DisplayName": "Tank temp sensor temp4 (fifth from top)",
-      "ShNodeId": "0680a809-d56f-42d8-8d98-e7c23e94d311",
-      "ComponentId": "bc2b731d-2b68-4cb8-9c27-8dd84dd2ea82",
-      "ReportingSamplePeriodS": 5,
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.tank.out.pump.allradiators.garage",
-      "Role": "HeatedSpace",
-      "ActorClass": "NoActor",
-      "DisplayName": "Little Orange House Garage",
-      "ShNodeId": "26ed27a5-f362-4044-8bd7-19ce8acf4d63",
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.tank.out.pump.allradiators.garage.temp1",
-      "Role": "RoomTempSensor",
-      "ActorClass": "SimpleSensor",
-      "DisplayName": "First Garage Temp sensor",
-      "ShNodeId": "2793ae37-e680-404e-a4ad-1efb0b8987cf",
-      "ComponentId": "23a09f17-741a-49b2-afbc-04f17f476594",
-      "ReportingSamplePeriodS": 60,
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    },
-    {
-      "Alias": "a.outdoors.temp1",
-      "Role": "5938bf1f",
-      "ActorClass": "NoActor",
-      "DisplayName": "First Outdoor Temp sensor",
-      "ShNodeId": "4c94cf37-dd87-49de-b782-aac97b69c154",
-      "ComponentId": "863359e1-f30a-4090-90a6-fc93154494a1",
-      "ReportingSamplePeriodS": 60,
-      "TypeName": "spaceheat.node.gt",
-      "Version": "100"
-    }
-  ],
   "ResistiveHeaterComponents": [
     {
       "ComponentId": "80f95280-e999-49e0-a0e4-a7faf3b5b3bd",
@@ -322,201 +148,7 @@
       "HwUid": "bbbb2222"
     }
   ],
-  "RelayComponents": [
-    {
-      "ComponentId": "798fe14a-4073-41eb-bce2-075906aee6bb",
-      "DisplayName": "relay for simulated first elt in tank",
-      "ComponentAttributeClassId": "69f101fc-22e4-4caa-8103-50b8aeb66028",
-      "Gpio": 0,
-      "NormallyOpen": true,
-      "TypeName": "relay.component.gt",
-      "Version": "000"
-    },
-    {
-      "ComponentId": "e758eecd-6439-4e1d-9f66-534f6fc14859",
-      "DisplayName": "relay for simulated main circulator pump",
-      "ComponentAttributeClassId": "69f101fc-22e4-4caa-8103-50b8aeb66028",
-      "Gpio": 1,
-      "NormallyOpen": false,
-      "TypeName": "relay.component.gt",
-      "Version": "000"
-    },
-    {
-      "ComponentId": "58c4ad4f-6b1a-4fbf-80dd-d269f31e5ba5",
-      "DisplayName": "relay for second elt in tank",
-      "ComponentAttributeClassId": "69f101fc-22e4-4caa-8103-50b8aeb66028",
-      "Gpio": 2,
-      "NormallyOpen": true,
-      "TypeName": "relay.component.gt",
-      "Version": "000",
-      "HwUid": "ddd321"
-    }
-  ],
-  "MultipurposeSensorComponents": [],
-  "SimpleTempSensorComponents": [
-    {
-      "ComponentId": "863359e1-f30a-4090-90a6-fc93154494a1",
-      "DisplayName": "Outdoor Temperature Sensor",
-      "ComponentAttributeClassId": "cac0f096-b460-4dce-aabf-a81ccce23566",
-      "TypeName": "simple.temp.sensor.component.gt",
-      "Version": "000"
-    },
-    {
-      "ComponentId": "a16d7bb6-2606-4ad1-b6b4-be80b5d84a6e",
-      "DisplayName": "Temp sensor on pipe out of tank",
-      "ComponentAttributeClassId": "8a1a1538-ed2d-4829-9c03-f9be1c9f9c83",
-      "TypeName": "simple.temp.sensor.component.gt",
-      "Version": "000"
-    },
-    {
-      "ComponentId": "efabaa6a-e331-491f-9dbb-a3dee0029531",
-      "DisplayName": "Temp sensor on pipe into tank",
-      "ComponentAttributeClassId": "8a1a1538-ed2d-4829-9c03-f9be1c9f9c83",
-      "TypeName": "simple.temp.sensor.component.gt",
-      "Version": "000"
-    },
-    {
-      "ComponentId": "f516467e-7691-42c8-8525-f7d49bb135ce",
-      "DisplayName": "Component for a.tank.temp0 (on top)",
-      "ComponentAttributeClassId": "8a1a1538-ed2d-4829-9c03-f9be1c9f9c83",
-      "HwUid": "1023abcd",
-      "TypeName": "simple.temp.sensor.component.gt",
-      "Version": "000"
-    },
-    {
-      "ComponentId": "d8d9f2b6-db8b-4a23-a037-20c7308ec56e",
-      "DisplayName": "Component for a.tank.temp1 (second from top)",
-      "ComponentAttributeClassId": "8a1a1538-ed2d-4829-9c03-f9be1c9f9c83",
-      "HwUid": "10032fff",
-      "TypeName": "simple.temp.sensor.component.gt",
-      "Version": "000"
-    },
-    {
-      "ComponentId": "5453b43b-7940-463c-ae6e-5cfe86ecbd3d",
-      "DisplayName": "Component for a.tank.temp2 (third from top)",
-      "ComponentAttributeClassId": "8a1a1538-ed2d-4829-9c03-f9be1c9f9c83",
-      "HwUid": "1004aaaa",
-      "TypeName": "simple.temp.sensor.component.gt",
-      "Version": "000"
-    },
-    {
-      "ComponentId": "17110718-b102-4c3b-ae62-5331aec9eed3",
-      "DisplayName": "Component for a.tank.temp3 (fourth from top)",
-      "ComponentAttributeClassId": "8a1a1538-ed2d-4829-9c03-f9be1c9f9c83",
-      "HwUid": "100f2128",
-      "TypeName": "simple.temp.sensor.component.gt",
-      "Version": "000"
-    },
-    {
-      "ComponentId": "bc2b731d-2b68-4cb8-9c27-8dd84dd2ea82",
-      "DisplayName": "Component for a.tank.temp4 (fifth from top)",
-      "ComponentAttributeClassId": "8a1a1538-ed2d-4829-9c03-f9be1c9f9c83",
-      "HwUid": "1004bbbb",
-      "TypeName": "simple.temp.sensor.component.gt",
-      "Version": "000"
-    },
-    {
-      "ComponentId": "23a09f17-741a-49b2-afbc-04f17f476594",
-      "DisplayName": "First garage temp sensor",
-      "ComponentAttributeClassId": "5450e92e-8c11-4383-b9b1-c8f412d83608",
-      "HwUid": "1004aaaa",
-      "TypeName": "simple.temp.sensor.component.gt",
-      "Version": "000"
-    }
-  ],
-  "ElectricMeterComponents": [
-    {
-      "ComponentId": "2bfd0036-0b0e-4732-8790-bc7d0536a85e",
-      "ComponentAttributeClassId": "28897ac1-ea42-4633-96d3-196f63f5a951",
-      "DisplayName": "Power Meter for Simulated Test system",
-      "ConfigList": [
-        {
-          "AboutNodeName": "a.elt1",
-          "ReportOnChange": true,
-          "SamplePeriodS": 300,
-          "Exponent": 0,
-          "AsyncReportThreshold": 0.02,
-          "NameplateMaxValue": 4500,
-          "TypeName": "telemetry.reporting.config",
-          "Version": "000",
-          "TelemetryName": "Power",
-          "Unit": "W"
-        },
-        {
-          "AboutNodeName": "a.elt1",
-          "ReportOnChange": true,
-          "SamplePeriodS": 300,
-          "Exponent": 6,
-          "AsyncReportThreshold": 0.02,
-          "NameplateMaxValue": 18750000,
-          "TypeName": "telemetry.reporting.config",
-          "Version": "000",
-          "TelemetryName": "CurrentRmsMicroAmps",
-          "Unit": "AmpsRms"
-        },
-        {
-          "AboutNodeName": "a.elt2",
-          "ReportOnChange": true,
-          "SamplePeriodS": 300,
-          "Exponent": 0,
-          "AsyncReportThreshold": 0.02,
-          "NameplateMaxValue": 4500,
-          "TypeName": "telemetry.reporting.config",
-          "Version": "000",
-          "TelemetryName": "Power",
-          "Unit": "W"
-        }
-      ],
-      "HwUid": "1001ab",
-      "EgaugeIoList": [],
-      "TypeName": "electric.meter.component.gt",
-      "Version": "000"
-    }
-  ],
-  "PipeFlowSensorComponents": [
-    {
-      "ComponentId": "dd5ac673-91a8-40e2-a233-b67479cec709",
-      "DisplayName": "Flow meter on pipe out of tank",
-      "ComponentAttributeClassId": "14e7105a-e797-485a-a304-328ecc85cd98",
-      "TypeName": "pipe.flow.sensor.component.gt",
-      "Version": "000",
-      "I2cAddress": 100,
-      "ConversionFactor": 1.0,
-      "HwUid": "1234"
-    }
-  ],
-  "OtherComponents": [
-    {
-      "ComponentId": "d4a27899-98a3-409f-8c6a-771d86d7937b",
-      "DisplayName": "Little Orange house Axeman Tank",
-      "ComponentAttributeClassId": "683c193a-bf83-4491-a294-c0e32865a407",
-      "TypeName": "component.gt"
-    },
-    {
-      "ComponentId": "1d62c7ce-b484-4610-a8b8-3979c8402588",
-      "DisplayName": "Hydronic pipe out of tank",
-      "ComponentAttributeClassId": "cec0cb71-77bf-48a6-b644-2dcf124ac9fa",
-      "TypeName": "component.gt"
-    },
-    {
-      "ComponentId": "f4341350-973a-403a-98fe-dfd2a4acf038",
-      "DisplayName": "Hydronic pipe into tank",
-      "ComponentAttributeClassId": "cec0cb71-77bf-48a6-b644-2dcf124ac9fa",
-      "TypeName": "component.gt"
-    },
-    {
-      "ComponentId": "1c207b38-d7bf-41cd-a9ad-6204bbab9922",
-      "DisplayName": "Circulator Pump",
-      "ComponentAttributeClassId": "f9a35cca-2b6d-418d-a81f-81f1c3d64776",
-      "TypeName": "component.gt"
-    },
-    {
-      "ComponentId": "f3a8c03b-ae00-4124-9c46-d98961636ddc",
-      "DisplayName": "Little Orange House garage",
-      "ComponentAttributeClassId": "c884aafe-99e0-4468-8bff-ffa74f672f9d",
-      "TypeName": "component.gt"
-    }
-  ],
+  "OtherComponents": [],
   "ResistiveHeaterCacs": [
     {
       "ComponentAttributeClassId": "cf1f2587-7462-4701-b962-d2b264744c1d",
@@ -528,117 +160,112 @@
       "Version": "000"
     }
   ],
-  "RelayCacs": [
+  "OtherCacs": [    
     {
-      "ComponentAttributeClassId": "69f101fc-22e4-4caa-8103-50b8aeb66028",
-      "MakeModel": "GRIDWORKS__SIMBOOL30AMPRELAY",
-      "TypicalResponseTimeMs": 400,
-      "DisplayName": "Gridworks Simulated Relay",
-      "TypeName": "relay.cac.gt",
+      "ComponentAttributeClassId": "56498ea1-64b8-4102-b76f-4e29555d4d60",
+      "DisplayName": "Web Server CAC",
+      "MakeModel": "UNKNOWNMAKE__UNKNOWNMODEL",
+      "TypeName": "component.attribute.class.gt",
+      "Version": "000"
+    },
+    {
+      "ComponentAttributeClassId": "7ce0ce69-14c6-4cb7-a33f-2aeca91e0680",
+      "DisplayName": "Fibaro SmartImplant FGBS-222",
+      "MakeModel": "FIBARO__ANALOG_TEMP_SENSOR",
+      "Model": "FGBS-222 v5.2",
+      "TypeName": "component.attribute.class.gt",
+      "Version": "000"
+    },
+    {
+      "ComponentAttributeClassId": "62528da5-b510-4ac2-82c1-3782842eae07",
+      "DisplayName": "Hubitat Elevation C-7",
+      "MakeModel": "HUBITAT__C7__LAN1",
+      "TypeName": "component.attribute.class.gt",
+      "Version": "000"
+    },
+    {
+      "ComponentAttributeClassId": "60ac199d-679a-49f7-9142-8ca3e6428a5f",
+      "DisplayName": "Hubitat Tank Module",
+      "MakeModel": "GRIDWORKS__TANK_MODULE_1",
+      "TypeName": "component.attribute.class.gt",
+      "Version": "000"
+    },
+    {
+      "ComponentAttributeClassId": "03533a1f-3cb9-4a1f-8d57-690c0ad0475b",
+      "DisplayName": "Honeywell Z-Wave T6 Thermostat",
+      "MakeModel": "HONEYWELL__T6ZWAVETHERMOSTAT",
+      "TypeName": "component.attribute.class.gt",
       "Version": "000"
     }
   ],
-  "PipeFlowSensorCacs": [
+  "ShNodes": [
     {
-      "ComponentAttributeClassId": "14e7105a-e797-485a-a304-328ecc85cd98",
-      "MakeModel": "UNKNOWNMAKE__UNKNOWNMODEL",
-      "CommsMethod": "Remove this Comms Method",
-      "DisplayName": "Some pipe flow sensor",
-      "TypeName": "pipe.flow.sensor.cac.gt",
-      "Version": "000"
-    }
-  ],
-  "ElectricMeterCacs": [
-    {
-      "ComponentAttributeClassId": "28897ac1-ea42-4633-96d3-196f63f5a951",
-      "MakeModel": "GRIDWORKS__SIMPM1",
-      "DisplayName": "Gridworks Pm1 Simulated Power Meter",
-      "Interface": "SIMRABBIT",
-      "PollPeriodMs": 1000,
-      "TelemetryNameList": ["PowerW"],
-      "TypeName": "electric.meter.cac.gt",
-      "Version": "000"
+      "Alias": "a",
+      "Role": "Atn",
+      "ActorClass": "Atn",
+      "DisplayName": "AtomicTNode",
+      "ShNodeId": "b354edeb-0c82-4e55-80cb-7ab669ac2ad9",
+      "TypeName": "spaceheat.node.gt",
+      "Version": "100"
     },
     {
-      "ComponentAttributeClassId": "204832ef-0c88-408b-9640-264d2ee74914",
-      "MakeModel": "GRIDWORKS__SIMPM1",
-      "DisplayName": "Gridworks Pm1 Simulated Power Meter # 2",
-      "Interface": "SIMRABBIT",
-      "PollPeriodMs": 1000,
-      "TelemetryNameList": ["PowerW"],
-      "TypeName": "electric.meter.cac.gt",
-      "Version": "000"
-    }
-  ],
-  "MultipurposeSensorCacs": [
-    {
-      "ComponentAttributeClassId": "432073b8-4d2b-4e36-9229-73893f33f846",
-        "MakeModel": "GRIDWORKS__MULTITEMP1",
-        "PollPeriodMs": 880,
-        "Exponent": -3,
-        "TempUnit": "Celcius",
-        "TelemetryNameList": ["WaterTempCTimes1000"],
-        "MaxThermistors": 12,
-        "DisplayName": "Simulated GridWorks high precision water temp sensor",
-        "CommsMethod": "I2C",
-        "TypeName": "multipurpose.sensor.cac.gt",
-        "Version": "000"
-      }
-  ],
-  "SimpleTempSensorCacs": [
-    {
-      "ComponentAttributeClassId": "8a1a1538-ed2d-4829-9c03-f9be1c9f9c83",
-      "MakeModel": "GRIDWORKS__WATERTEMPHIGHPRECISION",
-      "DisplayName": "Simulated GridWorks high precision water temp sensor",
-      "CommsMethod": "SassyMQ",
-      "Exponent": -3,
-      "TempUnit": "Fahrenheit",
-      "TelemetryName": "WaterTempFTimes1000",
-      "TypicalResponseTimeMs": 880,
-      "TypeName": "simple.temp.sensor.cac.gt",
-      "Version": "000"
+      "Alias": "home",
+      "Role": "HomeAlone",
+      "ActorClass": "HomeAlone",
+      "DisplayName": "Little Orange House HomeAlone",
+      "ShNodeId": "34470c9d-fa25-4077-909b-2f981a691d7e",
+      "TypeName": "spaceheat.node.gt",
+      "Version": "100"
     },
     {
-      "ComponentAttributeClassId": "5450e92e-8c11-4383-b9b1-c8f412d83608",
-      "MakeModel": "UNKNOWNMAKE__UNKNOWNMODEL",
-      "TempUnit": "Celcius",
-      "TelemetryName": "WaterTempFTimes1000",
-      "TypicalResponseTimeMs": 0,
-      "Exponent": -3,
-      "TypeName": "simple.temp.sensor.cac.gt",
-      "Version": "000"
+      "Alias": "s",
+      "Role": "Scada",
+      "ActorClass": "Scada",
+      "DisplayName": "Little Orange House Main Scada",
+      "ShNodeId": "259f9431-c6a1-4170-8766-04cbf65cff4a",
+      "TypeName": "spaceheat.node.gt",
+      "Version": "100"
     },
     {
-      "ComponentAttributeClassId": "cac0f096-b460-4dce-aabf-a81ccce23566",
-      "MakeModel": "UNKNOWNMAKE__UNKNOWNMODEL",
-      "TempUnit": "Celcius",
-      "TelemetryName": "WaterTempFTimes1000",
-      "TypicalResponseTimeMs": 0,
-      "Exponent": -3,
-      "TypeName": "simple.temp.sensor.cac.gt",
-      "Version": "000"
-    }
-  ],
-  "OtherCacs": [
-    {
-      "ComponentAttributeClassId": "683c193a-bf83-4491-a294-c0e32865a407",
-      "MakeModel": "UNKNOWNMAKE__UNKNOWNMODEL",
-      "TypeName": "component.attribute.class.gt"
+      "Alias": "elt1",
+      "Role": "BoostElement",
+      "ActorClass": "NoActor",
+      "DisplayName": "First boost element",
+      "ShNodeId": "41f2ae73-8782-406d-bda7-a95b5abe317e",
+      "ComponentId": "80f95280-e999-49e0-a0e4-a7faf3b5b3bd",
+      "RatedVoltageV": 240,
+      "TypicalVoltageV": 225,
+      "InPowerMetering": true,
+      "TypeName": "spaceheat.node.gt",
+      "Version": "100"
     },
     {
-      "ComponentAttributeClassId": "cec0cb71-77bf-48a6-b644-2dcf124ac9fa",
-      "MakeModel": "UNKNOWNMAKE__UNKNOWNMODEL",
-      "TypeName": "component.attribute.class.gt"
+      "Alias": "power.meter",
+      "Role": "PowerMeter",
+      "ActorClass": "PowerMeter",
+      "DisplayName": "Main Power Meter Little Orange House Test System",
+      "ShNodeId": "0dd8a803-4724-4f49-b845-14ff57bdb3e6",
+      "ComponentId": "2bfd0036-0b0e-4732-8790-bc7d0536a85e",
+      "TypeName": "spaceheat.node.gt",
+      "Version": "100"
     },
     {
-      "ComponentAttributeClassId": "f9a35cca-2b6d-418d-a81f-81f1c3d64776",
-      "MakeModel": "UNKNOWNMAKE__UNKNOWNMODEL",
-      "TypeName": "component.attribute.class.gt"
+      "Alias": "hp.ewt",
+      "Role": "Unknown",
+      "ActorClass": "NoActor",
+      "DisplayName": "Heat Pump Entering Water Temp",
+      "ShNodeId": "e76073f4-67ae-4324-b07f-0c9add733de7",
+      "TypeName": "spaceheat.node.gt",
+      "Version": "100"
     },
     {
-      "ComponentAttributeClassId": "c884aafe-99e0-4468-8bff-ffa74f672f9d",
-      "MakeModel": "UNKNOWNMAKE__UNKNOWNMODEL",
-      "TypeName": "component.attribute.class.gt"
+      "Alias": "hp.lwt",
+      "Role": "Unknown",
+      "ActorClass": "NoActor",
+      "DisplayName": "Heat Pump Leaving Water Temp",
+      "ShNodeId": "1fe2a01f-d60a-4362-bc5e-949ddfcd5003",
+      "TypeName": "spaceheat.node.gt",
+      "Version": "100"
     }
   ]
 }

@@ -11,9 +11,6 @@ from gwproto.types.electric_meter_cac_gt import (
     ElectricMeterCacGt,
 )
 from gwproto.types.electric_meter_component_gt import ElectricMeterComponentGt
-from gwproto.types.fibaro_smart_implant_cac_gt import (
-    FibaroSmartImplantCacGt,
-)
 from gwproto.types.fibaro_smart_implant_component_gt import (
     FibaroSmartImplantComponentGt,
 )
@@ -30,17 +27,12 @@ from gwproto.types.gt_sh_telemetry_from_multipurpose_sensor import (
     GtShTelemetryFromMultipurposeSensor,
 )
 from gwproto.types.heartbeat_b import HeartbeatB
-from gwproto.types.hubitat_cac_gt import HubitatCacGt
 from gwproto.types.hubitat_component_gt import (
     HubitatComponentGt,
-)
-from gwproto.types.hubitat_poller_cac_gt import (
-    HubitatPollerCacGt,
 )
 from gwproto.types.hubitat_poller_component_gt import (
     HubitatPollerComponentGt,
 )
-from gwproto.types.hubitat_tank_cac_gt import HubitatTankCacGt
 from gwproto.types.hubitat_tank_component_gt import (
     HubitatTankComponentGt,
 )
@@ -48,30 +40,15 @@ from gwproto.types.multipurpose_sensor_cac_gt import (
     MultipurposeSensorCacGt,
 )
 from gwproto.types.multipurpose_sensor_component_gt import MultipurposeSensorComponentGt
-from gwproto.types.pipe_flow_sensor_cac_gt import (
-    PipeFlowSensorCacGt,
-)
-from gwproto.types.pipe_flow_sensor_component_gt import (
-    PipeFlowSensorComponentGt,
-)
 from gwproto.types.power_watts import PowerWatts
-from gwproto.types.relay_cac_gt import RelayCacGt
-from gwproto.types.relay_component_gt import RelayComponentGt
 from gwproto.types.resistive_heater_cac_gt import (
     ResistiveHeaterCacGt,
 )
 from gwproto.types.resistive_heater_component_gt import (
     ResistiveHeaterComponentGt,
 )
-from gwproto.types.rest_poller_cac_gt import RESTPollerCacGt
 from gwproto.types.rest_poller_component_gt import (
     RESTPollerComponentGt,
-)
-from gwproto.types.simple_temp_sensor_cac_gt import (
-    SimpleTempSensorCacGt,
-)
-from gwproto.types.simple_temp_sensor_component_gt import (
-    SimpleTempSensorComponentGt,
 )
 from gwproto.types.snapshot_spaceheat import SnapshotSpaceheat
 from gwproto.types.spaceheat_node_gt import SpaceheatNodeGt
@@ -90,7 +67,6 @@ __all__ = [
     "EgaugeRegisterConfig",
     "ElectricMeterCacGt",
     "ElectricMeterComponentGt",
-    "FibaroSmartImplantCacGt",
     "FibaroSmartImplantComponentGt",
     "GtShBooleanactuatorCmdStatus",
     "GtShCliAtnCmd",
@@ -99,25 +75,15 @@ __all__ = [
     "GtShStatus",
     "GtShTelemetryFromMultipurposeSensor",
     "HeartbeatB",
-    "HubitatCacGt",
     "HubitatComponentGt",
-    "HubitatPollerCacGt",
     "HubitatPollerComponentGt",
-    "HubitatTankCacGt",
     "HubitatTankComponentGt",
     "MultipurposeSensorCacGt",
     "MultipurposeSensorComponentGt",
-    "PipeFlowSensorCacGt",
-    "PipeFlowSensorComponentGt",
     "PowerWatts",
-    "RESTPollerCacGt",
     "RESTPollerComponentGt",
-    "RelayCacGt",
-    "RelayComponentGt",
     "ResistiveHeaterCacGt",
     "ResistiveHeaterComponentGt",
-    "SimpleTempSensorCacGt",
-    "SimpleTempSensorComponentGt",
     "SnapshotSpaceheat",
     "SpaceheatNodeGt",
     "TelemetryReportingConfig",

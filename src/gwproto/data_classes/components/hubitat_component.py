@@ -3,13 +3,14 @@ from typing import Optional
 import yarl
 
 from gwproto.data_classes.components.component import Component
-from gwproto.types import HubitatCacGt, HubitatComponentGt
+from gwproto.types.component_attribute_class_gt import ComponentAttributeClassGt
+from gwproto.types.hubitat_component_gt import HubitatComponentGt
 
 
-class HubitatComponent(Component[HubitatComponentGt, HubitatCacGt]):
+class HubitatComponent(Component[HubitatComponentGt, ComponentAttributeClassGt]):
     web_listener_nodes: set[str]
 
-    def __init__(self, gt: HubitatComponentGt, cac: HubitatCacGt) -> None:
+    def __init__(self, gt: HubitatComponentGt, cac: ComponentAttributeClassGt) -> None:
         super().__init__(gt, cac)
         self.web_listener_nodes = set()
 

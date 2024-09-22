@@ -6,19 +6,22 @@ from gwproto.data_classes.components import HubitatComponent
 from gwproto.data_classes.components.component import Component
 from gwproto.data_classes.resolver import ComponentResolver
 from gwproto.data_classes.sh_node import ShNode
-from gwproto.types import HubitatPollerCacGt, HubitatPollerComponentGt
+from gwproto.types.component_attribute_class_gt import ComponentAttributeClassGt
 from gwproto.types.hubitat_component_gt import HubitatComponentGt
+from gwproto.types.hubitat_poller_component_gt import HubitatPollerComponentGt
 from gwproto.types.rest_poller_gt import RequestArgs, RESTPollerSettings
 from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
 
 
 class HubitatPollerComponent(
-    Component[HubitatPollerComponentGt, HubitatPollerCacGt], ComponentResolver
+    Component[HubitatPollerComponentGt, ComponentAttributeClassGt], ComponentResolver
 ):
     hubitat_gt: HubitatComponentGt
     _rest: Optional[RESTPollerSettings] = None
 
-    def __init__(self, gt: HubitatPollerComponentGt, cac: HubitatPollerCacGt) -> None:
+    def __init__(
+        self, gt: HubitatPollerComponentGt, cac: ComponentAttributeClassGt
+    ) -> None:
         super().__init__(gt, cac)
         self.hubitat_gt = HubitatComponentGt.make_stub(gt.Poller.hubitat_component_id)
 

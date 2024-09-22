@@ -11,16 +11,6 @@
       "Version": "000"
     },
     {
-      "ComponentAttributeClassId": "204832ef-0c88-408b-9640-264d2ee74914",
-      "MakeModel": "GRIDWORKS__SIMPM1",
-      "DisplayName": "Gridworks Pm1 Simulated Power Meter # 2",
-      "Interface": "SIMRABBIT",
-      "PollPeriodMs": 1000,
-      "TelemetryNameList": ["PowerW"],
-      "TypeName": "electric.meter.cac.gt",
-      "Version": "000"
-    },
-    {
       "ComponentAttributeClassId": "739a6e32-bb9c-43bc-a28d-fb61be665522",
       "DisplayName": "EGauge 4030",
       "MakeModel": "EGAUGE__4030",
@@ -183,8 +173,8 @@
     },
     {
       "ComponentAttributeClassId": "03533a1f-3cb9-4a1f-8d57-690c0ad0475b",
-      "DisplayName": "Hubitat Poller Cac",
-      "MakeModel": "UNKNOWNMAKE__UNKNOWNMODEL",
+      "DisplayName": "Honeywell Z-Wave T6 Thermostat",
+      "MakeModel": "HONEYWELL__T6ZWAVETHERMOSTAT",
       "TypeName": "component.attribute.class.gt",
       "Version": "000"
     }

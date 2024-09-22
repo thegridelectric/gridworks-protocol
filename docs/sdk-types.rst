@@ -59,6 +59,5 @@ forth between type instances and Python objects.
     SimpleTempSensorComponentGt  <types/simple-temp-sensor-component-gt>
     SnapshotSpaceheat  <types/snapshot-spaceheat>
     SpaceheatNodeGt  <types/spaceheat-node-gt>
-    TaDataChannels  <types/ta-data-channels>
     TelemetryReportingConfig  <types/telemetry-reporting-config>
     TelemetrySnapshotSpaceheat  <types/telemetry-snapshot-spaceheat>

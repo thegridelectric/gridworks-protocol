@@ -74,9 +74,9 @@ def child_to_parent_messages() -> list[MessageCase]:
     snapshot_event = SnapshotSpaceheatEvent(Src=CHILD, snap=snapshot_spaceheat)
 
     return [
-        # Gs Pwr
+        # PowerWatts
         MessageCase(
-            "GsPwr",
+            "PowerWatts",
             Message(Src=CHILD, MessageType="power.watts", Payload=PowerWatts(Watts=1)),
         ),
         # status

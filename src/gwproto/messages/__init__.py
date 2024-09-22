@@ -1,6 +1,5 @@
 # ruff: noqa: F405, F403
 
-from gwproto.gs import *
 from gwproto.types import *
 
 from .event import *
@@ -13,10 +12,6 @@ __all__ = [
     "EventBase",
     "EventMessage",
     "EventT",
-    "GsDispatch",
-    "GsDispatch_Maker",
-    "GsPwr",
-    "GsPwr_Maker",
     "GtDispatchBoolean",
     "GtDispatchBooleanLocal",
     "GtDriverBooleanactuatorCmd",

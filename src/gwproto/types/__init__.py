@@ -2,7 +2,7 @@
 
 from gwproto.types.component_attribute_class_gt import ComponentAttributeClassGt
 from gwproto.types.component_gt import ComponentGt
-from gwproto.types.data_channel import DataChannel
+from gwproto.types.data_channel_gt import DataChannelGt
 from gwproto.types.egauge_io import EgaugeIo
 from gwproto.types.egauge_register_config import (
     EgaugeRegisterConfig,
@@ -85,7 +85,6 @@ from gwproto.types.simple_temp_sensor_component_gt import (
 )
 from gwproto.types.snapshot_spaceheat import SnapshotSpaceheat
 from gwproto.types.spaceheat_node_gt import SpaceheatNodeGt
-from gwproto.types.ta_data_channels import TaDataChannels
 from gwproto.types.telemetry_reporting_config import (
     TelemetryReportingConfig,
 )
@@ -96,7 +95,7 @@ from gwproto.types.telemetry_snapshot_spaceheat import (
 __all__ = [
     "ComponentAttributeClassGt",
     "ComponentGt",
-    "DataChannel",
+    "DataChannelGt",
     "EgaugeIo",
     "EgaugeRegisterConfig",
     "ElectricMeterCacGt",
@@ -135,7 +134,6 @@ __all__ = [
     "SimpleTempSensorComponentGt",
     "SnapshotSpaceheat",
     "SpaceheatNodeGt",
-    "TaDataChannels",
     "TelemetryReportingConfig",
     "TelemetrySnapshotSpaceheat",
     "cacs",  # noqa: F822

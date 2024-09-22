@@ -71,7 +71,6 @@ from gwproto.types.telemetry_reporting_config import (
 from gwproto.types.telemetry_snapshot_spaceheat import (
     TelemetrySnapshotSpaceheat,
 )
-from gwproto.types.web_server_gt import WebServerGt
 
 __all__ = [
     "ComponentAttributeClassGt",
@@ -105,7 +104,6 @@ __all__ = [
     "SpaceheatNodeGt",
     "TelemetryReportingConfig",
     "TelemetrySnapshotSpaceheat",
-    "WebServerGt",
     "cacs",  # noqa: F822
     "components",  # noqa: F822
 ]

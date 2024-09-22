@@ -17,16 +17,7 @@ from gwproto.types.fibaro_smart_implant_cac_gt import (
 from gwproto.types.fibaro_smart_implant_component_gt import (
     FibaroSmartImplantComponentGt,
 )
-from gwproto.types.gt_dispatch_boolean import GtDispatchBoolean
-from gwproto.types.gt_dispatch_boolean_local import (
-    GtDispatchBooleanLocal,
-)
-from gwproto.types.gt_driver_booleanactuator_cmd import (
-    GtDriverBooleanactuatorCmd,
-)
-from gwproto.types.gt_sh_booleanactuator_cmd_status import (
-    GtShBooleanactuatorCmdStatus,
-)
+from gwproto.types.gt_sh_booleanactuator_cmd_status import GtShBooleanactuatorCmdStatus
 from gwproto.types.gt_sh_cli_atn_cmd import GtShCliAtnCmd
 from gwproto.types.gt_sh_multipurpose_telemetry_status import (
     GtShMultipurposeTelemetryStatus,
@@ -38,7 +29,6 @@ from gwproto.types.gt_sh_status import GtShStatus
 from gwproto.types.gt_sh_telemetry_from_multipurpose_sensor import (
     GtShTelemetryFromMultipurposeSensor,
 )
-from gwproto.types.gt_telemetry import GtTelemetry
 from gwproto.types.heartbeat_b import HeartbeatB
 from gwproto.types.hubitat_cac_gt import HubitatCacGt
 from gwproto.types.hubitat_component_gt import (
@@ -102,16 +92,12 @@ __all__ = [
     "ElectricMeterComponentGt",
     "FibaroSmartImplantCacGt",
     "FibaroSmartImplantComponentGt",
-    "GtDispatchBoolean",
-    "GtDispatchBooleanLocal",
-    "GtDriverBooleanactuatorCmd",
     "GtShBooleanactuatorCmdStatus",
     "GtShCliAtnCmd",
     "GtShMultipurposeTelemetryStatus",
     "GtShSimpleTelemetryStatus",
     "GtShStatus",
     "GtShTelemetryFromMultipurposeSensor",
-    "GtTelemetry",
     "HeartbeatB",
     "HubitatCacGt",
     "HubitatComponentGt",

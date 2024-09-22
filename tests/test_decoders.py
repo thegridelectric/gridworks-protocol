@@ -1,5 +1,4 @@
 import json
-import time
 import uuid
 from pathlib import Path
 
@@ -24,7 +23,6 @@ from gwproto.messages import (
     StartupEvent,
 )
 from gwproto.types import (
-    GtDispatchBoolean,
     GtShCliAtnCmd,
     GtShStatus,
     PowerWatts,
@@ -186,14 +184,6 @@ def parent_to_child_messages() -> list[MessageCase]:
         FromGNodeId=str(uuid.uuid4()),
         SendSnapshot=True,
     )
-    set_relay = GtDispatchBoolean(
-        AboutNodeName="a.b.c",
-        ToGNodeAlias="a.b.c",
-        FromGNodeAlias="a.b.c",
-        FromGNodeInstanceId=str(uuid.uuid4()),
-        RelayState=True,
-        SendTimeUnixMs=int(time.time() * 1000),
-    )
     return [
         # misc messages
         MessageCase("ping", PingMessage(Src=PARENT)),
@@ -203,12 +193,6 @@ def parent_to_child_messages() -> list[MessageCase]:
             Message(Src=PARENT, Payload=snapshot_request),
             None,
             snapshot_request,
-        ),
-        MessageCase(
-            "set-relay",
-            Message(Src=PARENT, Payload=set_relay),
-            None,
-            set_relay,
         ),
     ]
 

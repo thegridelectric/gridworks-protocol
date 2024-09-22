@@ -35,5 +35,5 @@ class DataChannelGt(BaseModel):
         """
         # Implement check for axiom 1"
         return self
-    
+
     model_config = ConfigDict(use_enum_values=True)

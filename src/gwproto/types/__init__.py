@@ -10,6 +10,7 @@ from gwproto.types.egauge_register_config import (
 from gwproto.types.electric_meter_cac_gt import (
     ElectricMeterCacGt,
 )
+from gwproto.types.electric_meter_component_gt import ElectricMeterComponentGt
 from gwproto.types.fibaro_smart_implant_cac_gt import (
     FibaroSmartImplantCacGt,
 )
@@ -56,6 +57,7 @@ from gwproto.types.hubitat_tank_component_gt import (
 from gwproto.types.multipurpose_sensor_cac_gt import (
     MultipurposeSensorCacGt,
 )
+from gwproto.types.multipurpose_sensor_component_gt import MultipurposeSensorComponentGt
 from gwproto.types.pipe_flow_sensor_cac_gt import (
     PipeFlowSensorCacGt,
 )
@@ -90,7 +92,6 @@ from gwproto.types.telemetry_reporting_config import (
 from gwproto.types.telemetry_snapshot_spaceheat import (
     TelemetrySnapshotSpaceheat,
 )
-from gwproto.types.web_server_gt import WebServerGt
 
 __all__ = [
     "ComponentAttributeClassGt",
@@ -99,7 +100,7 @@ __all__ = [
     "EgaugeIo",
     "EgaugeRegisterConfig",
     "ElectricMeterCacGt",
-    # "ElectricMeterComponentGt",
+    "ElectricMeterComponentGt",
     "FibaroSmartImplantCacGt",
     "FibaroSmartImplantComponentGt",
     "GtDispatchBoolean",
@@ -120,7 +121,7 @@ __all__ = [
     "HubitatTankCacGt",
     "HubitatTankComponentGt",
     "MultipurposeSensorCacGt",
-    # "MultipurposeSensorComponentGt",
+    "MultipurposeSensorComponentGt",
     "PipeFlowSensorCacGt",
     "PipeFlowSensorComponentGt",
     "PowerWatts",
@@ -137,7 +138,6 @@ __all__ = [
     "TaDataChannels",
     "TelemetryReportingConfig",
     "TelemetrySnapshotSpaceheat",
-    "WebServerGt",
     "cacs",  # noqa: F822
     "components",  # noqa: F822
 ]

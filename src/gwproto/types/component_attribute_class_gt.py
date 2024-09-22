@@ -68,13 +68,13 @@ class ComponentAttributeClassGt(BaseModel):
         """
         if (
             self.MakeModel not in CACS_BY_MAKE_MODEL
-            and self.MakeModel is not MakeModel.default()
+            and self.MakeModel is not MakeModel.default().value
         ):
             raise ValueError(
                 "Axiom 1 violated! If MakeModel not in this list, "
                 f"must be UNKNOWN: {CACS_BY_MAKE_MODEL}"
             )
-        if self.MakeModel is MakeModel.default():
+        if self.MakeModel is MakeModel.default().value:
             if self.ComponentAttributeClassId in CACS_BY_MAKE_MODEL.values():
                 raise ValueError(
                     f"Id {self.ComponentAttributeClassId} already used by known MakeModel!"

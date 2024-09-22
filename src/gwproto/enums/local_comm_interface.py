@@ -1,10 +1,9 @@
 from enum import auto
-from typing import List
 
-from gwproto.enums.symbolized import SymbolizedEnum
+from gw.enums import GwStrEnum
 
 
-class LocalCommInterface(SymbolizedEnum):
+class LocalCommInterface(GwStrEnum):
     """
     Categorization of in-house comm mechanisms for SCADA
 
@@ -81,72 +80,6 @@ class LocalCommInterface(SymbolizedEnum):
         """
         return "000"
 
-    @classmethod
-    def symbol_to_value(cls, symbol: str) -> str:
-        """
-        Given the symbol sent in a serialized message, returns the encoded enum.
-
-        Args:
-            symbol (str): The candidate symbol.
-
-        Returns:
-            str: The encoded value associated to that symbol. If the symbol is not
-            recognized - which could happen if the actor making the symbol is using
-            a later version of this enum, returns the default value of "Unknown".
-        """
-        if symbol not in symbol_to_value:
-            return str(cls.default().value)
-        return symbol_to_value[symbol]
-
-    @classmethod
-    def value_to_symbol(cls, value: str) -> str:
-        """
-        Provides the encoding symbol for a LocalCommInterface enum to send in seriliazed messages.
-
-        Args:
-            value (str): The candidate value.
-
-        Returns:
-            str: The symbol encoding that value. If the value is not recognized -
-            which could happen if the actor making the message used a later version
-            of this enum than the actor decoding the message, returns the default
-            symbol of "00000000".
-        """
-        if value not in value_to_symbol:
-            return value_to_symbol[str(cls.default().value)]
-        return value_to_symbol[value]
-
-    @classmethod
-    def symbols(cls) -> List[str]:
-        """
-        Returns a list of the enum symbols
-        """
-        return [
-            "00000000",
-            "9ec8bc49",
-            "c1e7a955",
-            "ae2d4cd8",
-            "a6a4ac9f",
-            "efc144cd",
-            "46ac6589",
-            "653c73b8",
-            "0843a726",
-        ]
-
-
-symbol_to_value = {
-    "00000000": "UNKNOWN",
-    "9ec8bc49": "I2C",
-    "c1e7a955": "ETHERNET",
-    "ae2d4cd8": "ONEWIRE",
-    "a6a4ac9f": "RS485",
-    "efc144cd": "SIMRABBIT",
-    "46ac6589": "WIFI",
-    "653c73b8": "ANALOG_4_20_MA",
-    "0843a726": "RS232",
-}
-
-value_to_symbol = {value: key for key, value in symbol_to_value.items()}
 
 value_to_version = {
     "UNKNOWN": "000",

@@ -6,7 +6,7 @@ from tests.cac_load_utils import CacCase, assert_cac_load
 
 def test_multipurpose_sensor_cac_gt_load() -> None:
     d = {
-        "ComponentAttributeClassId": "8a1a1538-ed2d-4829-9c03-f9be1c9f9c83",
+        "ComponentAttributeClassId": "432073b8-4d2b-4e36-9229-73893f33f846",
         "MakeModel": "GRIDWORKS__MULTITEMP1",
         "PollPeriodMs": 880,
         "Exponent": -3,

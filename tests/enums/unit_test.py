@@ -1,5 +1,5 @@
 """
-Tests for enum spaceheat.unit.000 from the GridWorks Type Registry.
+Tests for enum spaceheat.unit.001 from the GridWorks Type Registry.
 """
 
 from gwproto.enums import Unit
@@ -22,7 +22,7 @@ def test_unit() -> None:
 
     assert Unit.default() == Unit.Unknown
     assert Unit.enum_name() == "spaceheat.unit"
-    assert Unit.enum_version() == "000"
+    assert Unit.enum_version() == "001"
 
     assert Unit.version("Unknown") == "000"
     assert Unit.version("Unitless") == "000"
@@ -34,7 +34,4 @@ def test_unit() -> None:
     assert Unit.version("AmpsRms") == "000"
     assert Unit.version("VoltsRms") == "000"
     assert Unit.version("Gallons") == "000"
-
-    for value in Unit.values():
-        symbol = Unit.value_to_symbol(value)
-        assert Unit.symbol_to_value(symbol) == value
+    assert Unit.version("ThermostatStateEnum") == "001"

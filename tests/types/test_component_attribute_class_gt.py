@@ -21,6 +21,8 @@ def test_component_attribute_class_gt_load() -> None:
         [CacCase("ComponentAttributeClassGt", d, ComponentAttributeClassGt)]
     )
 
+    assert type(ComponentAttributeClassGt.model_validate(d).MakeModel) is str
+
     # Test axiom 1 (Cac By Make Model)
     random_uuid = "91567108-98ea-45af-aca5-f0026df3e131"
     d2 = {

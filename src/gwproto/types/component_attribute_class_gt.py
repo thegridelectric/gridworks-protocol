@@ -17,7 +17,7 @@ class ComponentAttributeClassGt(BaseModel):
     TypeName: Literal["component.attribute.class.gt"] = "component.attribute.class.gt"
     Version: Literal["000"] = "000"
 
-    model_config = ConfigDict(extra="allow")
+    model_config = ConfigDict(use_enum_values=True, extra="allow")
 
     @model_validator(mode="after")
     def check_axiom_1(self) -> Self:

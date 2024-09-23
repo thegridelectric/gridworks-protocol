@@ -396,7 +396,48 @@
       "HwUid": "bbbb2222"
     }
   ],
-  "OtherComponents": [],
+  "OtherComponents": [
+    {
+      "ComponentId": "2c302eed-2f86-4ed6-8019-df31c22e1704",
+      "DisplayName": "Downstairs T6 Thermostat",
+      "ComponentAttributeClassId": "03533a1f-3cb9-4a1f-8d57-690c0ad0475b",
+      "ConfigList": [
+        {
+          "AsyncCapture": false,
+          "CapturePeriodS": 60,
+          "ChannelName": "zone1-down-temp",
+          "Exponent": 3,
+          "PollPeriodMs": 1000,
+          "TypeName": "channel.config",
+          "Unit": "Fahrenheit",
+          "Version": "000"
+      },
+      {
+        "AsyncCapture": false,
+        "CapturePeriodS": 60,
+        "ChannelName": "zone1-down-set",
+        "Exponent": 3,
+        "PollPeriodMs": 1000,
+        "TypeName": "channel.config",
+        "Unit": "Fahrenheit",
+        "Version": "000"
+      },
+      {
+        "AsyncCapture": true,
+        "AsyncCaptureDelta": 1,
+        "CapturePeriodS": 60,
+        "ChannelName": "zone1-down-state",
+        "Exponent": 3,
+        "PollPeriodMs": 1000,
+        "TypeName": "channel.config",
+        "Unit": "Fahrenheit",
+        "Version": "000"
+      }
+      ],
+      "TypeName": "component.gt",
+      "Version": "001"
+    }
+  ],
   "ResistiveHeaterCacs": [
     {
       "ComponentAttributeClassId": "cf1f2587-7462-4701-b962-d2b264744c1d",
@@ -614,11 +655,30 @@
       "Version": "120"
     },
     {
+      "Alias": "zone1-down",
+      "Role": "Unknown",
+      "ActorClass": "NoActor",
+      "DisplayName": "Down Zone",
+      "ShNodeId": "be8df9e8-1a72-4574-9575-dca70dbec214",
+      "TypeName": "spaceheat.node.gt",
+      "Version": "120"
+    },
+    {
       "Alias": "analog-temp",
       "Role": "Unknown",
       "ActorClass": "MultipurposeSensor",
       "DisplayName": "GridWorks MultiTemp",
       "ShNodeId": "8bfc40f1-7c84-4e88-9214-78c304730ae3",
+      "TypeName": "spaceheat.node.gt",
+      "Version": "120"
+    },
+    {
+      "Alias": "zone1-down-stat",
+      "Role": "Unknown",
+      "ActorClass": "HoneywellThermostat",
+      "DisplayName": "Zone 1 (Down) Thermostat",
+      "ComponentId": "2c302eed-2f86-4ed6-8019-df31c22e1704",
+      "ShNodeId": "8c9c155c-5b9a-448c-8df3-2edd9f4ebdb7",
       "TypeName": "spaceheat.node.gt",
       "Version": "120"
     }
@@ -774,6 +834,40 @@
       "Id": "7876ebb2-03d2-4c7f-9046-011b7c5d4deb",
       "TypeName": "data.channel.gt",
       "Version": "001"
+    },
+    {
+      "Name": "zone1-down-temp",
+      "DisplayName": "Zone 1 Down Temp",
+      "AboutNodeName": "zone1-down",
+      "CapturedByNodeName": "zone1-down-stat",
+      "TelemetryName": "AirTempFTimes1000",
+      "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta",
+      "Id": "b90caf01-0441-40d9-9e1b-7162ebda5aa7",
+      "TypeName": "data.channel.gt",
+      "Version": "001"
+    },
+    {
+      "Name": "zone1-down-set",
+      "DisplayName": "Zone 1 Down Setpoint",
+      "AboutNodeName": "zone1-down-stat",
+      "CapturedByNodeName": "zone1-down-stat",
+      "TelemetryName": "AirTempFTimes1000",
+      "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta",
+      "Id": "5b412e33-fbba-4237-9da9-993ce7880518",
+      "TypeName": "data.channel.gt",
+      "Version": "001"
+    },
+    {
+      "Name": "zone1-down-state",
+      "DisplayName": "Zone 1 Down Setpoint",
+      "AboutNodeName": "zone1-down-stat",
+      "CapturedByNodeName": "zone1-down-stat",
+      "TelemetryName": "ThermostatState",
+      "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta",
+      "Id": "ba246554-6c17-424a-bfef-8bb80d4c4a6d",
+      "TypeName": "data.channel.gt",
+      "Version": "001"
     }
+    
   ]
 }

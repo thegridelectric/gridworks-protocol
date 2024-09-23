@@ -7,7 +7,7 @@ def test_egauge_io_generated() -> None:
     d = {
         "InputConfig": {
             "Address": 9004,
-            "Name": "Garage power",
+            "Name": "HP IDU Power",
             "Description": "",
             "Type": "f32",
             "Denominator": 1,
@@ -16,14 +16,14 @@ def test_egauge_io_generated() -> None:
             "Version": "000",
         },
         "OutputConfig": {
-            "AboutNodeName": "a.tank1.elts",
+            "AboutNodeName": "hp-idu",
             "ReportOnChange": True,
             "SamplePeriodS": 60,
             "Exponent": 0,
             "AsyncReportThreshold": 0.05,
             "NameplateMaxValue": 4500,
             "TypeName": "telemetry.reporting.config",
-            "Version": "000",
+            "Version": "001",
             "TelemetryName": "PowerW",
             "Unit": "W",
         },

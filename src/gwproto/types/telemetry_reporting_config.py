@@ -5,12 +5,12 @@ from typing import Literal, Optional, Self
 from pydantic import BaseModel, PositiveInt, model_validator
 
 from gwproto.enums import TelemetryName, Unit
-from gwproto.property_format import LeftRightDotStr
+from gwproto.property_format import SpaceheatName
 
 
 class TelemetryReportingConfig(BaseModel):
     TelemetryName: TelemetryName
-    AboutNodeName: LeftRightDotStr
+    AboutNodeName: SpaceheatName
     ReportOnChange: bool
     SamplePeriodS: int
     Exponent: int
@@ -18,7 +18,7 @@ class TelemetryReportingConfig(BaseModel):
     AsyncReportThreshold: Optional[float] = None
     NameplateMaxValue: Optional[PositiveInt] = None
     TypeName: Literal["telemetry.reporting.config"] = "telemetry.reporting.config"
-    Version: Literal["000"] = "000"
+    Version: Literal["001"] = "001"
 
     def __hash__(self) -> int:
         return hash((type(self), *self.__dict__.values()))

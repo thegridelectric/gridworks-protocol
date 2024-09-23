@@ -14,10 +14,10 @@ def test_multipurpose_sensor_component_gt_generated() -> None:
             {
                 "ReportOnChange": False,
                 "Exponent": 3,
-                "AboutNodeName": "a.distsourcewater.temp",
+                "AboutNodeName": "hp-ewt",
                 "SamplePeriodS": 60,
                 "TypeName": "telemetry.reporting.config",
-                "Version": "000",
+                "Version": "001",
                 "Unit": "Celcius",
                 "TelemetryName": "WaterTempCTimes1000",
             }

@@ -12,14 +12,14 @@ def test_electric_meter_component_gt_generated() -> None:
         "DisplayName": "EGauge Power Meter",
         "ConfigList": [
             {
-                "AboutNodeName": "a.m.hp.outdoor.power",
+                "AboutNodeName": "hp-odu",
                 "ReportOnChange": True,
                 "SamplePeriodS": 300,
                 "Exponent": 0,
                 "AsyncReportThreshold": 0.02,
                 "NameplateMaxValue": 3500,
                 "TypeName": "telemetry.reporting.config",
-                "Version": "000",
+                "Version": "001",
                 "TelemetryName": "PowerW",
                 "Unit": "W",
             }
@@ -40,14 +40,14 @@ def test_electric_meter_component_gt_generated() -> None:
                     "Version": "000",
                 },
                 "OutputConfig": {
-                    "AboutNodeName": "a.m.hp.outdoor.power",
+                    "AboutNodeName": "hp-odu",
                     "ReportOnChange": True,
                     "SamplePeriodS": 300,
                     "Exponent": 0,
                     "AsyncReportThreshold": 0.02,
                     "NameplateMaxValue": 3500,
                     "TypeName": "telemetry.reporting.config",
-                    "Version": "000",
+                    "Version": "001",
                     "TelemetryName": "PowerW",
                     "Unit": "W",
                 },

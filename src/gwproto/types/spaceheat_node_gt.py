@@ -1,16 +1,16 @@
-"""Type spaceheat.node.gt, version 100"""
+"""Type spaceheat.node.gt, version 110"""
 
 from typing import Literal, Optional
 
 from pydantic import BaseModel, Field
 
 from gwproto.enums import ActorClass, Role
-from gwproto.property_format import LeftRightDotStr, UUID4Str
+from gwproto.property_format import SpaceheatName, UUID4Str
 
 
 class SpaceheatNodeGt(BaseModel):
     ShNodeId: UUID4Str
-    Alias: LeftRightDotStr
+    Alias: SpaceheatName
     ActorClass: ActorClass
     Role: Role
     DisplayName: Optional[str] = None
@@ -21,4 +21,4 @@ class SpaceheatNodeGt(BaseModel):
         default=None,
     )
     TypeName: Literal["spaceheat.node.gt"] = "spaceheat.node.gt"
-    Version: Literal["100"] = "100"
+    Version: Literal["110"] = "110"

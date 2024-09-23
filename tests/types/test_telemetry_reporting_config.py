@@ -6,7 +6,7 @@ from gwproto.types import TelemetryReportingConfig
 def test_telemetry_reporting_config_generated() -> None:
     d = {
         "TelemetryName": "PowerW",
-        "AboutNodeName": "a.elt1",
+        "AboutNodeName": "hp-idu",
         "ReportOnChange": True,
         "SamplePeriodS": 300,
         "Exponent": 6,
@@ -14,6 +14,6 @@ def test_telemetry_reporting_config_generated() -> None:
         "AsyncReportThreshold": 0.2,
         "NameplateMaxValue": 4000,
         "TypeName": "telemetry.reporting.config",
-        "Version": "000",
+        "Version": "001",
     }
     assert TelemetryReportingConfig.model_validate(d).model_dump() == d

@@ -1,5 +1,8 @@
 """List of all the types"""
 
+from gwproto.types.ads111x_based_cac_gt import Ads111xBasedCacGt
+from gwproto.types.ads111x_based_component_gt import Ads111xBasedComponentGt
+from gwproto.types.channel_config import ChannelConfig
 from gwproto.types.component_attribute_class_gt import ComponentAttributeClassGt
 from gwproto.types.component_gt import ComponentGt
 from gwproto.types.data_channel_gt import DataChannelGt
@@ -36,10 +39,6 @@ from gwproto.types.hubitat_poller_component_gt import (
 from gwproto.types.hubitat_tank_component_gt import (
     HubitatTankComponentGt,
 )
-from gwproto.types.multipurpose_sensor_cac_gt import (
-    MultipurposeSensorCacGt,
-)
-from gwproto.types.multipurpose_sensor_component_gt import MultipurposeSensorComponentGt
 from gwproto.types.power_watts import PowerWatts
 from gwproto.types.resistive_heater_cac_gt import (
     ResistiveHeaterCacGt,
@@ -52,14 +51,17 @@ from gwproto.types.rest_poller_component_gt import (
 )
 from gwproto.types.snapshot_spaceheat import SnapshotSpaceheat
 from gwproto.types.spaceheat_node_gt import SpaceheatNodeGt
-from gwproto.types.telemetry_reporting_config import (
-    TelemetryReportingConfig,
-)
 from gwproto.types.telemetry_snapshot_spaceheat import (
     TelemetrySnapshotSpaceheat,
 )
+from gwproto.types.thermistor_data_processing_config import (
+    ThermistorDataProcessingConfig,
+)
 
 __all__ = [
+    "Ads111xBasedCacGt",
+    "Ads111xBasedComponentGt",
+    "ChannelConfig",
     "ComponentAttributeClassGt",
     "ComponentGt",
     "DataChannelGt",
@@ -78,16 +80,14 @@ __all__ = [
     "HubitatComponentGt",
     "HubitatPollerComponentGt",
     "HubitatTankComponentGt",
-    "MultipurposeSensorCacGt",
-    "MultipurposeSensorComponentGt",
     "PowerWatts",
     "RESTPollerComponentGt",
     "ResistiveHeaterCacGt",
     "ResistiveHeaterComponentGt",
     "SnapshotSpaceheat",
     "SpaceheatNodeGt",
-    "TelemetryReportingConfig",
     "TelemetrySnapshotSpaceheat",
+    "ThermistorDataProcessingConfig",
     "cacs",  # noqa: F822
     "components",  # noqa: F822
 ]

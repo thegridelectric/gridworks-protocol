@@ -29,5 +29,5 @@ def test_data_channel_gt_generated() -> None:
 
     assert type(d2["TelemetryName"]) is str
 
-    d2 = dict(d, TelemetryName="unknown_enum_thing")
+    d2 = dict(d, TelemetryName="unknown_enum_thing", InPowerMetering=False)
     assert DataChannelGt(**d2).TelemetryName == TelemetryName.default()

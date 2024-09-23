@@ -2,7 +2,7 @@
 
 from typing import Literal, Optional
 
-from pydantic import BaseModel, ConfigDict, model_validator
+from pydantic import BaseModel, ConfigDict, PositiveInt, model_validator
 from typing_extensions import Self
 
 from gwproto.enums import MakeModel
@@ -14,8 +14,9 @@ class ComponentAttributeClassGt(BaseModel):
     ComponentAttributeClassId: UUID4Str
     DisplayName: Optional[str] = None
     MakeModel: MakeModel
+    MinPollPeriodMs: Optional[PositiveInt] = None
     TypeName: Literal["component.attribute.class.gt"] = "component.attribute.class.gt"
-    Version: Literal["000"] = "000"
+    Version: Literal["001"] = "001"
 
     model_config = ConfigDict(use_enum_values=True, extra="allow")
 

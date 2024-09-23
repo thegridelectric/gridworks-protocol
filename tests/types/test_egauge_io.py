@@ -5,9 +5,10 @@ from gwproto.types import EgaugeIo
 
 def test_egauge_io_generated() -> None:
     d = {
+        "ChannelName": "hp-idu-pwr",
         "InputConfig": {
             "Address": 9004,
-            "Name": "HP IDU Power",
+            "Name": "Garage power",
             "Description": "",
             "Type": "f32",
             "Denominator": 1,
@@ -15,19 +16,7 @@ def test_egauge_io_generated() -> None:
             "TypeName": "egauge.register.config",
             "Version": "000",
         },
-        "OutputConfig": {
-            "AboutNodeName": "hp-idu",
-            "ReportOnChange": True,
-            "SamplePeriodS": 60,
-            "Exponent": 0,
-            "AsyncReportThreshold": 0.05,
-            "NameplateMaxValue": 4500,
-            "TypeName": "telemetry.reporting.config",
-            "Version": "001",
-            "TelemetryName": "PowerW",
-            "Unit": "W",
-        },
         "TypeName": "egauge.io",
-        "Version": "000",
+        "Version": "001",
     }
     assert EgaugeIo.model_validate(d).model_dump() == d

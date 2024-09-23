@@ -1,7 +1,9 @@
 """Tests resistive.heater.component.gt type, version 000"""
-from gwproto.types import ResistiveHeaterCacGt, ResistiveHeaterComponentGt
+
 from gwproto.data_classes.components import ResistiveHeaterComponent
+from gwproto.types import ResistiveHeaterComponentGt
 from tests.component_load_utils import ComponentCase, assert_component_load
+
 
 def test_resistive_heater_component_gt_generated() -> None:
     d = {

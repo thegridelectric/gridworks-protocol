@@ -1,4 +1,5 @@
 """Tests electric.meter.cac.gt type, version 000"""
+
 import pytest
 from pydantic import ValidationError
 

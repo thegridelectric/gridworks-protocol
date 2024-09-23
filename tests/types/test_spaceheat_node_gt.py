@@ -1,5 +1,8 @@
 """Tests spaceheat.node.gt type, version 100"""
 
+import pytest
+from pydantic import ValidationError
+
 from gwproto.types import SpaceheatNodeGt
 
 
@@ -14,6 +17,14 @@ def test_spaceheat_node_gt_generated() -> None:
         "ReportingSamplePeriodS": 300,
         "InPowerMetering": False,
         "TypeName": "spaceheat.node.gt",
-        "Version": "110",
+        "Version": "120",
     }
-    assert SpaceheatNodeGt.model_validate(d).model_dump() == d
+    assert SpaceheatNodeGt.model_validate(d).model_dump(exclude_none=True) == d
+
+    d2 = dict(
+        d,
+        InPowerMetering="True",
+    )
+    # testing axiom 1: If InPowerMetering exists and is true, then NameplatePowerW must exist
+    with pytest.raises(ValidationError):
+        SpaceheatNodeGt.model_validate(d2)

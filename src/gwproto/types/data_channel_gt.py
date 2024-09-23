@@ -33,7 +33,11 @@ class DataChannelGt(BaseModel):
         Axiom 1: Power Metering.
         If InPowerMetering is true then the TelemetryName must be PowerW
         """
-        # Implement check for axiom 1"
+        if self.InPowerMetering and self.TelemetryName != TelemetryName.PowerW:
+            raise ValueError(
+                "Axiom 1 violated! If InPowerMetering is true then"
+                f"the TelemetryName must be PowerW. Got  {self.TelemetryName}"
+            )
         return self
 
     model_config = ConfigDict(use_enum_values=True)

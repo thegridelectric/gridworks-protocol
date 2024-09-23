@@ -37,6 +37,7 @@ from gwproto.enums.local_comm_interface import LocalCommInterface
 from gwproto.enums.make_model import MakeModel
 from gwproto.enums.role import Role
 from gwproto.enums.telemetry_name import TelemetryName
+from gwproto.enums.thermistor_data_method import ThermistorDataMethod
 from gwproto.enums.unit import Unit
 
 __all__ = [
@@ -45,5 +46,6 @@ __all__ = [
     "MakeModel",  # [spaceheat.make.model.001](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatmakemodel)
     "Role",  # [sh.node.role.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shnoderole)
     "TelemetryName",  # [spaceheat.telemetry.name.001](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheattelemetryname)
+    "ThermistorDataMethod",
     "Unit",  # [spaceheat.unit.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatunit)
 ]

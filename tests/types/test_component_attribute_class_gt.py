@@ -14,8 +14,9 @@ def test_component_attribute_class_gt_load() -> None:
         "ComponentAttributeClassId": "e52cb571-913a-4614-90f4-5cc81f8e7fe5",
         "MakeModel": "EKM__HOTSPWM075HD",
         "DisplayName": "EKM Hot-Spwm-075-HD Flow Meter",
+        "MinPollPeriodMs": 1000,
         "TypeName": "component.attribute.class.gt",
-        "Version": "000",
+        "Version": "001",
     }
     assert_cac_load(
         [CacCase("ComponentAttributeClassGt", d, ComponentAttributeClassGt)]

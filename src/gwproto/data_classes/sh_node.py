@@ -57,7 +57,7 @@ class ShNode(SpaceheatNodeGt):
         return self.InPowerMetering
 
     def __repr__(self) -> str:
-        rs = f"ShNode {self.display_name} => {self.role.value} {self.alias}, "
+        rs = f"ShNode {self.display_name} => {self.role} {self.alias}, "
         if self.has_actor:
             rs += " (has actor)"
         else:

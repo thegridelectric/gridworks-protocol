@@ -16,7 +16,6 @@ from gwproto.types.hubitat_tank_gt import (
     FibaroTempSensorSettings,
     FibaroTempSensorSettingsGt,
 )
-from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
 
 
 class HubitatTankComponent(
@@ -96,17 +95,3 @@ class HubitatTankComponent(
         for device in self.devices:
             urls[device.node_name] = device.url
         return urls
-
-    @property
-    def config_list(self) -> list[TelemetryReportingConfig]:
-        return [
-            TelemetryReportingConfig(
-                TelemetryName=device.telemetry_name,
-                AboutNodeName=device.node_name,
-                ReportOnChange=False,
-                SamplePeriodS=int(device.rest.poll_period_seconds),
-                Exponent=device.exponent,
-                Unit=device.unit,
-            )
-            for device in self.devices
-        ]

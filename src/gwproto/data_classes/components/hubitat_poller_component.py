@@ -10,7 +10,6 @@ from gwproto.types.component_attribute_class_gt import ComponentAttributeClassGt
 from gwproto.types.hubitat_component_gt import HubitatComponentGt
 from gwproto.types.hubitat_poller_component_gt import HubitatPollerComponentGt
 from gwproto.types.rest_poller_gt import RequestArgs, RESTPollerSettings
-from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
 
 
 class HubitatPollerComponent(
@@ -79,17 +78,3 @@ class HubitatPollerComponent(
         for attribute in self.gt.Poller.attributes:
             urls[attribute.node_name] = self.rest.url
         return urls
-
-    @property
-    def config_list(self) -> list[TelemetryReportingConfig]:
-        return [
-            TelemetryReportingConfig(
-                TelemetryName=attribute.telemetry_name,
-                AboutNodeName=attribute.node_name,
-                ReportOnChange=False,
-                SamplePeriodS=int(self.rest.poll_period_seconds),
-                Exponent=attribute.exponent,
-                Unit=attribute.unit,
-            )
-            for attribute in self.gt.Poller.attributes
-        ]

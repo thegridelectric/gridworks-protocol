@@ -8,11 +8,13 @@ away with).
 import copy
 import json
 import typing
-from collections import defaultdict
+from collections import Counter, defaultdict
 from dataclasses import dataclass
 from functools import cached_property
 from pathlib import Path
 from typing import Any, List, Optional, Type, TypeVar
+
+from gw.errors import DcError
 
 import gwproto.data_classes.components
 from gwproto.data_classes.components import Component
@@ -21,7 +23,6 @@ from gwproto.data_classes.components.electric_meter_component import (
     ElectricMeterComponent,
 )
 from gwproto.data_classes.data_channel import DataChannel
-from gwproto.data_classes.errors import DataClassLoadingError
 from gwproto.data_classes.resolver import ComponentResolver
 from gwproto.data_classes.sh_node import ShNode
 from gwproto.data_classes.telemetry_tuple import TelemetryTuple
@@ -74,9 +75,9 @@ class HardwareLayout:
             cac_decoder = default_cac_decoder
         cacs: dict[str, ComponentAttributeClassGt] = {}
         for type_name in [
+            "Ads111xBasedCacs",
             "ResistiveHeaterCacs",
             "ElectricMeterCacs",
-            "MultipurposeSensorCacs",
             "OtherCacs",
         ]:
             for cac_dict in layout.get(type_name, ()):
@@ -95,7 +96,7 @@ class HardwareLayout:
         if not gt_class_name.endswith(cls.GT_SUFFIX) or len(gt_class_name) <= len(
             cls.GT_SUFFIX
         ):
-            raise DataClassLoadingError(  # noqa: TRY301
+            raise DcError(  # noqa: TRY301
                 f"Name of decoded component class ({gt_class_name}) "
                 f"must end with <{cls.GT_SUFFIX}> "
                 f"and be longer than {len(cls.GT_SUFFIX)} chars"
@@ -115,7 +116,7 @@ class HardwareLayout:
         cls, component_gt: ComponentGt, cac: ComponentAttributeClassGt
     ) -> Component:
         if cac is None:
-            raise DataClassLoadingError(  # noqa: TRY301
+            raise DcError(  # noqa: TRY301
                 f"cac {component_gt.ComponentAttributeClassId} not loaded for component "
                 f"<{component_gt.ComponentId}/<{component_gt.DisplayName}>\n"
             )
@@ -137,9 +138,9 @@ class HardwareLayout:
             component_decoder = default_component_decoder
         components = {}
         for type_name in [
+            "Ads111xBasedComponents",
             "ResistiveHeaterComponents",
             "ElectricMeterComponents",
-            "MultipurposeSensorComponents",
             "OtherComponents",
         ]:
             for component_dict in layout.get(type_name, ()):
@@ -199,7 +200,7 @@ class HardwareLayout:
         captured_by_node = nodes.get(dc_dict.get("CapturedByNodeName"))
         if about_node is None or captured_by_node is None:
             raise ValueError(
-                f"ERROR. DataChannel related nodes must exist!\n"
+                f"ERROR. DataChannel related nodes must exist for {dc_dict.get('Name')}!\n"
                 f"  For AboutNodeName <{dc_dict.get('AboutNodeName')}> "
                 f"got {about_node}\n"
                 f"  for CapturedByNodeName <{dc_dict.get('CapturedByNodeName')}>"
@@ -208,6 +209,71 @@ class HardwareLayout:
         return DataChannel(
             about_node=about_node, captured_by_node=captured_by_node, **dc_dict
         )
+
+    @classmethod
+    def check_dc_id_uniqueness(
+        cls,
+        data_channels: dict[str, DataChannel],
+    ) -> None:
+        id_counter = Counter(dc.Id for dc in data_channels.values())
+        dupes = [node_id for node_id, count in id_counter.items() if count > 1]
+        if dupes:
+            raise DcError(f"Duplicate dc.Id(s) found: {dupes}")
+
+    @classmethod
+    def check_data_channel_consistency(
+        cls,
+        components: dict[str, Component],
+        data_channels: dict[str, DataChannel],
+    ) -> None:
+        cls.check_dc_id_uniqueness(data_channels)
+        dc_names_by_component = set()
+        for c in components.values():
+            channel_names = {config.ChannelName for config in c.gt.ConfigList}
+            if dc_names_by_component & channel_names:
+                raise DcError(
+                    f"Channel name overlap!: {dc_names_by_component & channel_names}"
+                )
+            dc_names_by_component.update(channel_names)
+        actual_dc_names = {dc.Name for dc in data_channels.values()}
+        if dc_names_by_component != actual_dc_names:
+            by_comp = list(dc_names_by_component)
+            by_comp.sort()
+            actual = list(actual_dc_names)
+            actual.sort()
+            raise DcError(
+                "Channel inconsistency! \n"
+                f"From Components:{by_comp}\n"
+                f"From DataChannel list:{actual}\n"
+            )
+
+    @classmethod
+    def check_node_consistency(cls, nodes: dict[str, ShNode]) -> None:
+        id_counter = Counter(node.ShNodeId for node in nodes.values())
+        dupes = [node_id for node_id, count in id_counter.items() if count > 1]
+        if dupes:
+            raise DcError(f"Duplicate ShNodeId(s) found: {dupes}")
+
+    @classmethod
+    def check_transactive_metering_consistency(
+        cls, nodes: dict[str, ShNode], data_channels: dict[str, DataChannel]
+    ) -> None:
+        transactive_nodes = {node for node in nodes.values() if node.InPowerMetering}
+        transactive_channels = {
+            dc for dc in data_channels.values() if dc.InPowerMetering
+        }
+        # Part 1: If a data channel is in transactive_channels, its about_node must be in transactive_nodes
+        for tc in transactive_channels:
+            if tc.about_node not in transactive_nodes:
+                raise DcError(
+                    f"Data channel {tc} has about_node {tc.about_node}, which does not have InPowerMetering!"
+                )
+        # Check condition 2: If a node is in transactive_nodes, there must be a data channel with that node as about_node
+        for node in transactive_nodes:
+            if not any(tc for tc in transactive_channels if tc.about_node == node):
+                raise DcError(
+                    f"Node {node} is in transactive_nodes but no data channel with InPowerMetering has this node as about_node"
+                )
 
     @classmethod
     def load_data_channels(
@@ -248,7 +314,7 @@ class HardwareLayout:
                 if node.component_id is not None:
                     component = components.get(node.component_id, None)
                     if component is None:
-                        raise DataClassLoadingError(  # noqa: TRY301
+                        raise DcError(  # noqa: TRY301
                             f"{node.alias} component {node.component_id} not loaded!"
                         )
                     if isinstance(component, ComponentResolver):
@@ -346,16 +412,17 @@ class HardwareLayout:
             errors=errors,
             included_node_names=included_node_names,
         )
+        data_channels = cls.load_data_channels(
+            layout=layout,
+            nodes=nodes,
+            raise_errors=raise_errors,
+            errors=errors,
+        )
         load_args = {
             "cacs": cacs,
             "components": components,
             "nodes": nodes,
-            "data_channels": cls.load_data_channels(
-                layout=layout,
-                nodes=nodes,
-                raise_errors=raise_errors,
-                errors=errors,
-            ),
+            "data_channels": data_channels,
         }
         cls.resolve_links(
             load_args["nodes"],
@@ -363,6 +430,25 @@ class HardwareLayout:
             raise_errors=raise_errors,
             errors=errors,
         )
+        try:
+            cls.check_node_consistency(nodes)
+        except Exception as e:  # noqa: PERF203
+            if raise_errors:
+                raise
+            errors.append(LoadError("hardware.layout", nodes, e))
+        try:
+            cls.check_data_channel_consistency(
+                components,
+                data_channels,
+            )
+            cls.check_transactive_metering_consistency(
+                nodes,
+                data_channels,
+            )
+        except Exception as e:  # noqa: PERF203
+            if raise_errors:
+                raise
+            errors.append(LoadError("data.channel.gt", layout, e))
         return HardwareLayout(layout, **load_args)
 
     def channel(self, name: str, default: Any = None) -> DataChannel:  # noqa: ANN401
@@ -420,7 +506,7 @@ class HardwareLayout:
         if not parent_alias:
             return None
         if parent_alias not in self.nodes:
-            raise DataClassLoadingError(f"{alias} is missing parent {parent_alias}!")
+            raise DcError(f"{alias} is missing parent {parent_alias}!")
         return self.node(parent_alias)
 
     def descendants(self, alias: str) -> List[ShNode]:

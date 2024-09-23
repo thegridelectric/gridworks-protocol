@@ -46,5 +46,3 @@ class Ads111xBasedCacGt(ComponentAttributeClassGt):
         """
         # Implement check for axiom 1"
         return self
-
-

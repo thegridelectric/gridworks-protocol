@@ -6,7 +6,7 @@ from tests.component_load_utils import ComponentCase, assert_component_load
 
 
 def test_electric_meter_component_gt_generated() -> None:
-    d = d = {
+    d = {
         "ComponentAttributeClassId": "739a6e32-bb9c-43bc-a28d-fb61be665522",
         "ComponentId": "dce5c63d-8a38-439e-88ac-dd5ad845e9ca",
         "ConfigList": [

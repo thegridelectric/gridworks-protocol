@@ -6,7 +6,7 @@ from pydantic import BaseModel, Field, model_validator
 
 from gwproto.enums.telemetry_name import TelemetryName
 from gwproto.property_format import (
-    LeftRightDotStr,
+    SpaceheatName,
     UTCMilliseconds,
 )
 
@@ -23,7 +23,7 @@ class GtShMultipurposeTelemetryStatus(BaseModel):
     [More info](https://gridworks-protocol.readthedocs.io/en/latest/multipurpose-sensor.html)
     """
 
-    AboutNodeAlias: LeftRightDotStr = Field(
+    AboutNodeAlias: SpaceheatName = Field(
         description=(
             "The SpaceheatNode representing the physical object that the sensor reading is collecting "
             "data about. For example, a multipurpose temp sensor that reads 12 temperatures would "
@@ -32,14 +32,14 @@ class GtShMultipurposeTelemetryStatus(BaseModel):
             "[More info](https://gridworks-protocol.readthedocs.io/en/latest/spaceheat-node.html)"
         ),
     )
-    SensorNodeAlias: LeftRightDotStr
+    SensorNodeAlias: SpaceheatName
     TelemetryName: TelemetryName
     ValueList: list[int]
     ReadTimeUnixMsList: list[UTCMilliseconds]
     TypeName: Literal["gt.sh.multipurpose.telemetry.status"] = (
         "gt.sh.multipurpose.telemetry.status"
     )
-    Version: Literal["100"] = "100"
+    Version: Literal["101"] = "101"
 
     @model_validator(mode="after")
     def check_axiom_1(self) -> Self:

@@ -53,7 +53,7 @@ class FibaroTempSensorSettingsGt(BaseModel):
     )
 
 
-DEFAULT_SENSOR_NODE_NAME_FORMAT = "{tank_name}.temp.depth{stack_depth}"
+DEFAULT_SENSOR_NODE_NAME_FORMAT = "{tank_name}-depth{stack_depth}"
 
 
 class FibaroTempSensorSettings(FibaroTempSensorSettingsGt):

@@ -1,47 +1,45 @@
 """Type electric.meter.component.gt, version 000"""
 
-from typing import Literal, Optional, Self
+from typing import List, Literal, Optional, Self
 
-from pydantic import Field, PositiveInt, model_validator
+from pydantic import PositiveInt, model_validator
 
 from gwproto.types import ComponentGt
 from gwproto.types.egauge_io import EgaugeIo
-from gwproto.types.telemetry_reporting_config import (
-    TelemetryReportingConfig,
-)
 
 
 class ElectricMeterComponentGt(ComponentGt):
-    ConfigList: list[TelemetryReportingConfig]
     ModbusHost: Optional[str] = None
     ModbusPort: Optional[PositiveInt] = None
-    EgaugeIoList: list[EgaugeIo] = Field(
-        default=[],
-        title="Bijecton from EGauge4030 input to ConfigList output",
-        description=(
-            "This should be empty unless the MakeModel of the corresponding component attribute "
-            "class is EGauge 4030. The channels that can be read from an EGauge 4030 are configurable "
-            "by the person who installs the device. The information is encapsulated in a modbus "
-            "map provided by eGauge as a csv from a device-specific API. The EGaugeIoList maps "
-            "the data from this map to the data that the SCADA expects to see."
-        ),
-    )
+    EgaugeIoList: List[EgaugeIo]
     TypeName: Literal["electric.meter.component.gt"] = "electric.meter.component.gt"
-    Version: Literal["000"] = "000"
 
     @model_validator(mode="after")
-    def check_axioms(self) -> Self:
-        if self.ModbusHost is not None and self.ModbusPort is None:
-            raise ValueError("Axiom 1: ModbusHost None iff ModbusPort None! ")
-        if len(self.EgaugeIoList) == 0:
-            return self
-        if self.ModbusHost is None:
-            raise ValueError(
-                "Axiom 2: If EgaugeIoList has non-zero length then ModbusHost must exist!"
-            )
-        if {x.OutputConfig for x in self.EgaugeIoList} != set(self.ConfigList):
-            raise ValueError(
-                "Axiom 2: If EgaugeIoList has non-zero length then the set of"
-                "output configs must equal ConfigList as a set"
-            )
+    def check_axiom_1(self) -> Self:
+        """
+        Axiom 1: Modbus consistency.
+        ModbusHost is None if and only if ModbusPort is None
+        """
+        # Implement check for axiom 1"
+        return self
+
+    @model_validator(mode="after")
+    def check_axiom_2(self) -> Self:
+        """
+        Axiom 2: Egauge4030 Means Modbus.
+        If the EgaugeIoList has non-zero length, then the ModbusHost is not None
+        """
+        # Implement check for axiom 2"
+        return self
+
+    @model_validator(mode="after")
+    def check_axiom_3(self) -> Self:
+        """
+        Axiom 3: Channel Name Consistency.
+        If the EgaugeIoList has non-zero length:
+          1) Len(EgaugeIoList) == Len(ConfigList)
+          2) There are no duplicates of ChannelName in the ConfigList or EgaugeIoList
+          3) The set of ChannelNames in IoConfig is equal to the set of ChannelNames in ConfigList
+        """
+        # Implement check for axiom 3"
         return self

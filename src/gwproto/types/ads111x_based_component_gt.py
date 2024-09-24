@@ -8,15 +8,15 @@ from typing_extensions import Self
 from gwproto.property_format import (
     check_is_near5,
 )
-from gwproto.types.component_gt import ComponentGt
-from gwproto.types.thermistor_data_processing_config import (
-    ThermistorDataProcessingConfig,
+from gwproto.types.ads_channel_config import (
+    AdsChannelConfig,
 )
+from gwproto.types.component_gt import ComponentGt
 
 
 class Ads111xBasedComponentGt(ComponentGt):
     OpenVoltageByAds: List[float]
-    ThermistorConfigList: List[ThermistorDataProcessingConfig]
+    ConfigList: List[AdsChannelConfig]
     TypeName: Literal["ads111x.based.component.gt"] = "ads111x.based.component.gt"
     Version: Literal["000"] = "000"
 
@@ -34,25 +34,15 @@ class Ads111xBasedComponentGt(ComponentGt):
             ) from e
         return v
 
-    @field_validator("ThermistorConfigList")
+    @field_validator("ConfigList")
     @classmethod
-    def check_thermistor_config_list(
-        cls, v: List[ThermistorDataProcessingConfig]
-    ) -> List[ThermistorDataProcessingConfig]:
+    def check_config_list(
+        cls, v: List[AdsChannelConfig]
+    ) -> List[AdsChannelConfig]:
         """
-            Axiom 1: Terminal Block consistency and Channel Name uniqueness..
+            Axiom 1: Terminal Block consistency and Channel Name uniqueness.
             Terminal Block consistency and Channel Name uniqueness. - Each TerminalBlockIdx occurs at
-        most once in the ThermistorConfigList - Each data channel occurs at most once in the ThermistorConfigList
+        most once in the ConfigList .Each data channel occurs at most once in the ConfigList
         """
         # Implement Axiom(s)
         return v
-
-    @model_validator(mode="after")
-    def check_axiom_2(self) -> Self:
-        """
-        Axiom 2: ThermistorConfig, ChannelConfig consistency.
-        set(map(lambda x: x.ChannelName, ThermistorConfigList)) is equal to
-        set(map(lambda x: x.ChannelName, ConfigList))
-        """
-        # Implement check for axiom 2"
-        return self

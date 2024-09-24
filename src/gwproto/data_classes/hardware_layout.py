@@ -280,7 +280,7 @@ class HardwareLayout:
         possible_indices = set(
             range(1, c.cac.TotalTerminalBlocks + 1)
         )  # e,g {1, .., 12}
-        actual_indices = {tc.TerminalBlockIdx for tc in c.gt.ThermistorConfigList}
+        actual_indices = {tc.TerminalBlockIdx for tc in c.gt.ConfigList}
         if not actual_indices.issubset(possible_indices):
             raise DcError(
                 f"Terminal Block indices {actual_indices}"

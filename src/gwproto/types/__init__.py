@@ -2,6 +2,9 @@
 
 from gwproto.types.ads111x_based_cac_gt import Ads111xBasedCacGt
 from gwproto.types.ads111x_based_component_gt import Ads111xBasedComponentGt
+from gwproto.types.ads_channel_config import (
+    AdsChannelConfig,
+)
 from gwproto.types.channel_config import ChannelConfig
 from gwproto.types.component_attribute_class_gt import ComponentAttributeClassGt
 from gwproto.types.component_gt import ComponentGt
@@ -54,9 +57,6 @@ from gwproto.types.spaceheat_node_gt import SpaceheatNodeGt
 from gwproto.types.telemetry_snapshot_spaceheat import (
     TelemetrySnapshotSpaceheat,
 )
-from gwproto.types.thermistor_data_processing_config import (
-    ThermistorDataProcessingConfig,
-)
 
 __all__ = [
     "Ads111xBasedCacGt",
@@ -87,7 +87,7 @@ __all__ = [
     "SnapshotSpaceheat",
     "SpaceheatNodeGt",
     "TelemetrySnapshotSpaceheat",
-    "ThermistorDataProcessingConfig",
+    "AdsChannelConfig",
     "cacs",  # noqa: F822
     "components",  # noqa: F822
 ]

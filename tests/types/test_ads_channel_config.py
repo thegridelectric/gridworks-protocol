@@ -1,10 +1,10 @@
-"""Tests thermistor.data.processing.config type, version 000"""
+"""Tests ads.channel.config type, version 000"""
 
 from gwproto.enums import MakeModel, ThermistorDataMethod
-from gwproto.types import ThermistorDataProcessingConfig
+from gwproto.types import AdsChannelConfig
 
 
-def test_thermistor_data_processing_config_generated() -> None:
+def test_ads_channel_config_generated() -> None:
     d = {
         "ChannelName": "hp-ewt",
         "TerminalBlockIdx": 4,
@@ -17,11 +17,11 @@ def test_thermistor_data_processing_config_generated() -> None:
         "Exponent": 3,
         "PollPeriodMs": 200,
         "Unit": "Celcius",
-        "TypeName": "thermistor.data.processing.config",
+        "TypeName": "ads.channel.config",
         "Version": "000",
     }
 
-    d2 = ThermistorDataProcessingConfig.model_validate(d).model_dump(exclude_none=True)
+    d2 = AdsChannelConfig.model_validate(d).model_dump(exclude_none=True)
 
     assert d2 == d
 
@@ -33,13 +33,13 @@ def test_thermistor_data_processing_config_generated() -> None:
 
     d2 = dict(d, ThermistorMakeModel="unknown_enum_thing")
     assert (
-        ThermistorDataProcessingConfig(**d2).ThermistorMakeModel == MakeModel.default()
+        AdsChannelConfig(**d2).ThermistorMakeModel == MakeModel.default()
     )
 
     assert type(d2["DataProcessingMethod"]) is str
 
     d2 = dict(d, DataProcessingMethod="unknown_enum_thing")
     assert (
-        ThermistorDataProcessingConfig(**d2).DataProcessingMethod
+        AdsChannelConfig(**d2).DataProcessingMethod
         == ThermistorDataMethod.default()
     )

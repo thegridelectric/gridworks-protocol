@@ -15,7 +15,7 @@ def test_hardware_layout() -> None:
         layout_dict = json.loads(f.read())
 
         # Ads111xBasedCacs have at most 12 terminal blocks. Make an impossible one
-        layout_dict["Ads111xBasedComponents"][0]["ThermistorConfigList"][0][
+        layout_dict["Ads111xBasedComponents"][0]["ConfigList"][0][
             "TerminalBlockIdx"
         ] = 13
 

@@ -1,4 +1,4 @@
-"""Type thermistor.data.processing.config, version 000"""
+"""Type ads.channel.config, version 000"""
 
 from typing import Literal, Optional
 
@@ -11,14 +11,14 @@ from gwproto.property_format import (
 from gwproto.types.channel_config import ChannelConfig
 
 
-class ThermistorDataProcessingConfig(ChannelConfig):
+class AdsChannelConfig(ChannelConfig):
     ChannelName: SpaceheatName
     TerminalBlockIdx: PositiveInt
     ThermistorMakeModel: MakeModel
     DataProcessingMethod: Optional[ThermistorDataMethod] = None
     DataProcessingDescription: Optional[str] = None
-    TypeName: Literal["thermistor.data.processing.config"] = (
-        "thermistor.data.processing.config"
+    TypeName: Literal["ads.channel.config"] = (
+        "ads.channel.config"
     )
     Version: Literal["000"] = "000"
 

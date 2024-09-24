@@ -17,7 +17,7 @@ from typing import Any, List, Optional, Type, TypeVar
 from gw.errors import DcError
 
 import gwproto.data_classes.components
-from gwproto.data_classes.components import Component
+from gwproto.data_classes.components import Ads111xBasedComponent, Component
 from gwproto.data_classes.components.component import ComponentOnly
 from gwproto.data_classes.components.electric_meter_component import (
     ElectricMeterComponent,
@@ -38,8 +38,6 @@ from gwproto.types import (
     ComponentGt,
     ElectricMeterCacGt,
 )
-
-from gwproto.data_classes.components import Ads111xBasedComponent
 
 T = TypeVar("T")
 
@@ -276,10 +274,12 @@ class HardwareLayout:
                 raise DcError(
                     f"Node {node} is in transactive_nodes but no data channel with InPowerMetering has this node as about_node"
                 )
-    
+
     @classmethod
     def check_ads_terminal_block_consistency(cls, c: Ads111xBasedComponent) -> None:
-        possible_indices = set(range(1, c.cac.TotalTerminalBlocks+1)) # e,g {1, .., 12}
+        possible_indices = set(
+            range(1, c.cac.TotalTerminalBlocks + 1)
+        )  # e,g {1, .., 12}
         actual_indices = {tc.TerminalBlockIdx for tc in c.gt.ThermistorConfigList}
         if not actual_indices.issubset(possible_indices):
             raise DcError(
@@ -461,15 +461,20 @@ class HardwareLayout:
             if raise_errors:
                 raise
             errors.append(LoadError("data.channel.gt", layout, e))
-        ads111x_components = [comp for comp in components.values() if isinstance(comp, Ads111xBasedComponent)]
+        ads111x_components = [
+            comp
+            for comp in components.values()
+            if isinstance(comp, Ads111xBasedComponent)
+        ]
         for c in ads111x_components:
-
             try:
                 cls.check_ads_terminal_block_consistency(c)
             except Exception as e:  # noqa: PERF203
                 if raise_errors:
                     raise
-                errors.append(LoadError("ads111x.based.component.gt", c.gt.model_dump(), e))
+                errors.append(
+                    LoadError("ads111x.based.component.gt", c.gt.model_dump(), e)
+                )
         return HardwareLayout(layout, **load_args)
 
     def channel(self, name: str, default: Any = None) -> DataChannel:  # noqa: ANN401

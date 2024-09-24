@@ -11,6 +11,12 @@ def test_thermistor_data_processing_config_generated() -> None:
         "ThermistorMakeModel": "TEWA__TT0P10KC3T1051500",
         "DataProcessingMethod": "SimpleBeta",
         "DataProcessingDescription": "using a beta of 3977.",
+        "AsyncCapture": True,
+        "AsyncCaptureDelta": 250,
+        "CapturePeriodS": 60,
+        "Exponent": 3,
+        "PollPeriodMs": 200,
+        "Unit": "Celcius",
         "TypeName": "thermistor.data.processing.config",
         "Version": "000",
     }

@@ -2,15 +2,16 @@
 
 from typing import Literal, Optional
 
-from pydantic import BaseModel, ConfigDict, PositiveInt
+from pydantic import ConfigDict, PositiveInt
 
 from gwproto.enums import MakeModel, ThermistorDataMethod
 from gwproto.property_format import (
     SpaceheatName,
 )
+from gwproto.types.channel_config import ChannelConfig
 
 
-class ThermistorDataProcessingConfig(BaseModel):
+class ThermistorDataProcessingConfig(ChannelConfig):
     ChannelName: SpaceheatName
     TerminalBlockIdx: PositiveInt
     ThermistorMakeModel: MakeModel

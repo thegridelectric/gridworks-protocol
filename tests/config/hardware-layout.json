@@ -150,7 +150,7 @@
     {
       "ComponentAttributeClassId": "432073b8-4d2b-4e36-9229-73893f33f846",
       "MinPollPeriodMs": 200,
-      "MakeModel": "GRIDWORKS__MULTITEMP1",
+      "MakeModel": "GRIDWORKS__TSNAP1",
       "AdsI2cAddressList": ["0x4b", "0x48", "0x49"],
       "TotalTerminalBlocks": 12,
       "TelemetryNameList": ["WaterTempCTimes1000", "AirTempCTimes1000"],
@@ -669,6 +669,7 @@
       "ActorClass": "MultipurposeSensor",
       "DisplayName": "GridWorks MultiTemp",
       "ShNodeId": "8bfc40f1-7c84-4e88-9214-78c304730ae3",
+      "ComponentId": "dfbb257e-a851-437b-b9af-55f948f7d4af",
       "TypeName": "spaceheat.node.gt",
       "Version": "120"
     },

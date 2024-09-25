@@ -5,12 +5,12 @@ from typing import List, Literal, Self
 from pydantic import BaseModel, model_validator
 
 from gwproto.enums import TelemetryName
-from gwproto.property_format import LeftRightDotStr, UTCMilliseconds
+from gwproto.property_format import SpaceheatName, UTCMilliseconds
 
 
 class GtShTelemetryFromMultipurposeSensor(BaseModel):
     ScadaReadTimeUnixMs: UTCMilliseconds
-    AboutNodeAliasList: list[LeftRightDotStr]
+    AboutNodeAliasList: list[SpaceheatName]
     TelemetryNameList: List[TelemetryName]
     ValueList: List[int]
     TypeName: Literal["gt.sh.telemetry.from.multipurpose.sensor"] = (

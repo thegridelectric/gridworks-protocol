@@ -24,6 +24,9 @@ class ChannelConfig(BaseModel):
 
     model_config = ConfigDict(use_enum_values=True)
 
+    def __hash__(self) -> int:
+        return hash(self.ChannelName)
+
     @model_validator(mode="after")
     def check_axiom_1(self) -> Self:
         """

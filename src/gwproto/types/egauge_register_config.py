@@ -6,13 +6,6 @@ from pydantic import BaseModel, Field
 
 
 class EgaugeRegisterConfig(BaseModel):
-    """
-    Used to translate eGauge's Modbus Map.
-
-    This type captures the information provided by eGauge in its modbus csv map, when reading
-    current, power, energy, voltage, frequency etc from an eGauge 4030.
-    """
-
     Address: int = Field(
         title="Address",
         description=(

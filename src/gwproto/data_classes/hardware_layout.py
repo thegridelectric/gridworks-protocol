@@ -22,6 +22,7 @@ from gwproto.data_classes.components.component import ComponentOnly
 from gwproto.data_classes.components.electric_meter_component import (
     ElectricMeterComponent,
 )
+from gwproto.types import ElectricMeterComponentGt
 from gwproto.data_classes.data_channel import DataChannel
 from gwproto.data_classes.resolver import ComponentResolver
 from gwproto.data_classes.sh_node import ShNode
@@ -221,8 +222,29 @@ class HardwareLayout:
             raise DcError(f"Duplicate dc.Id(s) found: {dupes}")
 
     @classmethod
+    def check_node_channel_consistency(
+        cls,
+        nodes: dict[str, ShNode],
+        data_channels: dict[str, DataChannel]
+    ) -> None:
+        capturing_classes = [
+            ActorClass.PowerMeter,
+            ActorClass.MultipurposeSensor,
+        ]
+        active_nodes = [node for node in nodes.values() if node.ActorClass in capturing_classes]
+        for node in active_nodes:
+            c: ComponentGt = node.component.gt
+            my_channel_names = [config.ChannelName for config in c.ConfigList]
+            my_channels = [dc for dc in data_channels.values() if dc.Name in my_channel_names]
+            for channel in my_channels:
+                if channel.CapturedByNodeName != node.Alias:
+                    raise DcError(f"Channel {channel} should have CapturedByNodeName {node.Alias}")
+        
+
+    @classmethod
     def check_data_channel_consistency(
         cls,
+        nodes: dict[str, ShNode],
         components: dict[str, Component],
         data_channels: dict[str, DataChannel],
     ) -> None:
@@ -246,9 +268,25 @@ class HardwareLayout:
                 f"From Components:{by_comp}\n"
                 f"From DataChannel list:{actual}\n"
             )
+        cls.check_node_channel_consistency(nodes, data_channels)
+    
+    @classmethod
+    def check_actor_component_consistency(cls, nodes: dict[str,ShNode]) -> None:
+        pm_nodes = [node for node in nodes.values() if node.ActorClass == ActorClass.PowerMeter]
+        for node in pm_nodes:
+            if node.component.gt.TypeName != "electric.meter.component.gt":
+                raise DcError(f"Power Meter node {node} needs ElectricMeterComponent."
+                              f"Got {node.component.gt}")
+        em_nodes = [node for node in nodes.values() if node.ActorClass == ActorClass.MultipurposeSensor]
+        for node in em_nodes:
+            multi_comp_type_names = ["ads111x.based.component.gt"]
+            if node.component.gt.TypeName not in multi_comp_type_names:
+                raise DcError(f"Power Meter node {node} needs Compeont "
+                              f"in {multi_comp_type_names}. Got "
+                              f"{node.component.gt}")
 
     @classmethod
-    def check_node_consistency(cls, nodes: dict[str, ShNode]) -> None:
+    def check_node_unique_ids(cls, nodes: dict[str, ShNode]) -> None:
         id_counter = Counter(node.ShNodeId for node in nodes.values())
         dupes = [node_id for node_id, count in id_counter.items() if count > 1]
         if dupes:
@@ -443,13 +481,20 @@ class HardwareLayout:
             errors=errors,
         )
         try:
-            cls.check_node_consistency(nodes)
+            cls.check_node_unique_ids(nodes)
+        except Exception as e:  # noqa: PERF203
+            if raise_errors:
+                raise
+            errors.append(LoadError("hardware.layout", nodes, e))
+        try: 
+            cls.check_actor_component_consistency(nodes)
         except Exception as e:  # noqa: PERF203
             if raise_errors:
                 raise
             errors.append(LoadError("hardware.layout", nodes, e))
         try:
             cls.check_data_channel_consistency(
+                nodes,
                 components,
                 data_channels,
             )

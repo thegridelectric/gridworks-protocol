@@ -329,7 +329,10 @@ class HardwareLayout:
         return self.component_from_node(self.node(node_alias, None))
 
     def cac(self, node_alias: str) -> Optional[ComponentAttributeClassGt]:
-        return self.component(node_alias).cac
+        component = self.component(node_alias)
+        if component is None:
+            return None
+        return component.cac
 
     def get_component_as_type(self, component_id: str, type_: Type[T]) -> Optional[T]:
         component = self.components.get(component_id, None)

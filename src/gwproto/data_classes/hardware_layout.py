@@ -638,9 +638,9 @@ class HardwareLayout:
     def all_power_meter_telemetry_tuples(self) -> List[TelemetryTuple]:
         return [
             TelemetryTuple(
-                AboutNode=self.node(config.AboutNodeName),
+                AboutNode=self.nodes[self.data_channels[config.ChannelName].AboutNodeName],
                 SensorNode=self.power_meter_node,
-                TelemetryName=config.TelemetryName,
+                TelemetryName=self.data_channels[config.ChannelName].TelemetryName,
             )
             for config in self.power_meter_component.gt.ConfigList
         ]

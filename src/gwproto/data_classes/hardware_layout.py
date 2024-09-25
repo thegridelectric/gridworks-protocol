@@ -22,7 +22,6 @@ from gwproto.data_classes.components.component import ComponentOnly
 from gwproto.data_classes.components.electric_meter_component import (
     ElectricMeterComponent,
 )
-from gwproto.types import ElectricMeterComponentGt
 from gwproto.data_classes.data_channel import DataChannel
 from gwproto.data_classes.resolver import ComponentResolver
 from gwproto.data_classes.sh_node import ShNode
@@ -48,6 +47,13 @@ class LoadError:
     type_name: str
     src_dict: dict[Any, Any]
     exception: Exception
+
+
+class LoadArgs(typing.TypedDict):
+    cacs: dict[str, ComponentAttributeClassGt]
+    components: dict[str, Component]
+    nodes: dict[str, ShNode]
+    data_channels: dict[str, DataChannel]
 
 
 class HardwareLayout:
@@ -223,23 +229,26 @@ class HardwareLayout:
 
     @classmethod
     def check_node_channel_consistency(
-        cls,
-        nodes: dict[str, ShNode],
-        data_channels: dict[str, DataChannel]
+        cls, nodes: dict[str, ShNode], data_channels: dict[str, DataChannel]
     ) -> None:
         capturing_classes = [
             ActorClass.PowerMeter,
             ActorClass.MultipurposeSensor,
         ]
-        active_nodes = [node for node in nodes.values() if node.ActorClass in capturing_classes]
+        active_nodes = [
+            node for node in nodes.values() if node.ActorClass in capturing_classes
+        ]
         for node in active_nodes:
             c: ComponentGt = node.component.gt
             my_channel_names = [config.ChannelName for config in c.ConfigList]
-            my_channels = [dc for dc in data_channels.values() if dc.Name in my_channel_names]
+            my_channels = [
+                dc for dc in data_channels.values() if dc.Name in my_channel_names
+            ]
             for channel in my_channels:
                 if channel.CapturedByNodeName != node.Alias:
-                    raise DcError(f"Channel {channel} should have CapturedByNodeName {node.Alias}")
-        
+                    raise DcError(
+                        f"Channel {channel} should have CapturedByNodeName {node.Alias}"
+                    )
 
     @classmethod
     def check_data_channel_consistency(
@@ -269,21 +278,31 @@ class HardwareLayout:
                 f"From DataChannel list:{actual}\n"
             )
         cls.check_node_channel_consistency(nodes, data_channels)
-    
+
     @classmethod
-    def check_actor_component_consistency(cls, nodes: dict[str,ShNode]) -> None:
-        pm_nodes = [node for node in nodes.values() if node.ActorClass == ActorClass.PowerMeter]
+    def check_actor_component_consistency(cls, nodes: dict[str, ShNode]) -> None:
+        pm_nodes = [
+            node for node in nodes.values() if node.ActorClass == ActorClass.PowerMeter
+        ]
         for node in pm_nodes:
             if node.component.gt.TypeName != "electric.meter.component.gt":
-                raise DcError(f"Power Meter node {node} needs ElectricMeterComponent."
-                              f"Got {node.component.gt}")
-        em_nodes = [node for node in nodes.values() if node.ActorClass == ActorClass.MultipurposeSensor]
+                raise DcError(
+                    f"Power Meter node {node} needs ElectricMeterComponent."
+                    f"Got {node.component.gt}"
+                )
+        em_nodes = [
+            node
+            for node in nodes.values()
+            if node.ActorClass == ActorClass.MultipurposeSensor
+        ]
         for node in em_nodes:
             multi_comp_type_names = ["ads111x.based.component.gt"]
             if node.component.gt.TypeName not in multi_comp_type_names:
-                raise DcError(f"Power Meter node {node} needs Compeont "
-                              f"in {multi_comp_type_names}. Got "
-                              f"{node.component.gt}")
+                raise DcError(
+                    f"Power Meter node {node} needs Compeont "
+                    f"in {multi_comp_type_names}. Got "
+                    f"{node.component.gt}"
+                )
 
     @classmethod
     def check_node_unique_ids(cls, nodes: dict[str, ShNode]) -> None:
@@ -430,6 +449,58 @@ class HardwareLayout:
         )
 
     @classmethod
+    def validate_layout(
+        cls,
+        load_args: LoadArgs,
+        *,
+        raise_errors: bool,
+        errors: Optional[list[LoadError]],
+    ) -> None:
+        nodes = load_args["nodes"]
+        components = load_args["components"]
+        data_channels = load_args["data_channels"]
+        try:
+            cls.check_node_unique_ids(nodes)
+        except Exception as e:
+            if raise_errors:
+                raise
+            errors.append(LoadError("hardware.layout", nodes, e))
+        try:
+            cls.check_actor_component_consistency(nodes)
+        except Exception as e:
+            if raise_errors:
+                raise
+            errors.append(LoadError("hardware.layout", nodes, e))
+        try:
+            cls.check_data_channel_consistency(
+                nodes,
+                components,
+                data_channels,
+            )
+            cls.check_transactive_metering_consistency(
+                nodes,
+                data_channels,
+            )
+        except Exception as e:
+            if raise_errors:
+                raise
+            errors.append(LoadError("data.channel.gt", data_channels, e))
+        ads111x_components = [
+            comp
+            for comp in components.values()
+            if isinstance(comp, Ads111xBasedComponent)
+        ]
+        for c in ads111x_components:
+            try:
+                cls.check_ads_terminal_block_consistency(c)
+            except Exception as e:  # noqa: PERF203
+                if raise_errors:
+                    raise
+                errors.append(
+                    LoadError("ads111x.based.component.gt", c.gt.model_dump(), e)
+                )
+
+    @classmethod
     def load_dict(  # noqa: PLR0913
         cls,
         layout: dict[Any, Any],
@@ -468,7 +539,7 @@ class HardwareLayout:
             raise_errors=raise_errors,
             errors=errors,
         )
-        load_args = {
+        load_args: LoadArgs = {
             "cacs": cacs,
             "components": components,
             "nodes": nodes,
@@ -480,46 +551,7 @@ class HardwareLayout:
             raise_errors=raise_errors,
             errors=errors,
         )
-        try:
-            cls.check_node_unique_ids(nodes)
-        except Exception as e:  # noqa: PERF203
-            if raise_errors:
-                raise
-            errors.append(LoadError("hardware.layout", nodes, e))
-        try: 
-            cls.check_actor_component_consistency(nodes)
-        except Exception as e:  # noqa: PERF203
-            if raise_errors:
-                raise
-            errors.append(LoadError("hardware.layout", nodes, e))
-        try:
-            cls.check_data_channel_consistency(
-                nodes,
-                components,
-                data_channels,
-            )
-            cls.check_transactive_metering_consistency(
-                nodes,
-                data_channels,
-            )
-        except Exception as e:  # noqa: PERF203
-            if raise_errors:
-                raise
-            errors.append(LoadError("data.channel.gt", layout, e))
-        ads111x_components = [
-            comp
-            for comp in components.values()
-            if isinstance(comp, Ads111xBasedComponent)
-        ]
-        for c in ads111x_components:
-            try:
-                cls.check_ads_terminal_block_consistency(c)
-            except Exception as e:  # noqa: PERF203
-                if raise_errors:
-                    raise
-                errors.append(
-                    LoadError("ads111x.based.component.gt", c.gt.model_dump(), e)
-                )
+        cls.validate_layout(load_args, raise_errors=raise_errors, errors=errors)
         return HardwareLayout(layout, **load_args)
 
     def channel(self, name: str, default: Any = None) -> DataChannel:  # noqa: ANN401
@@ -641,7 +673,9 @@ class HardwareLayout:
     def all_power_meter_telemetry_tuples(self) -> List[TelemetryTuple]:
         return [
             TelemetryTuple(
-                AboutNode=self.nodes[self.data_channels[config.ChannelName].AboutNodeName],
+                AboutNode=self.nodes[
+                    self.data_channels[config.ChannelName].AboutNodeName
+                ],
                 SensorNode=self.power_meter_node,
                 TelemetryName=self.data_channels[config.ChannelName].TelemetryName,
             )

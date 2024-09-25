@@ -6,6 +6,7 @@ from gwproto.utils import snake_to_camel
 
 class MakerAPIAttributeGt(BaseModel):
     attribute_name: str
+    channel_name: str
     node_name: str
     telemetry_name: TelemetryName = TelemetryName.WaterTempCTimes1000
     unit: Unit = Unit.Celcius

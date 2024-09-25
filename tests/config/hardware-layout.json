@@ -39,7 +39,17 @@
           "ChannelName": "hp-odu-pwr",
           "Exponent": 0,
           "PollPeriodMs": 1000,
-          "TypeName": "channel.config",
+          "EgaugeRegisterConfig": {
+              "Address": 9000,
+              "Denominator": 1,
+              "Description": "change in value",
+              "Name": "",
+              "Type": "f32",
+              "TypeName": "egauge.register.config",
+              "Unit": "W",
+              "Version": "000"
+          },
+          "TypeName": "electric.meter.channel.config",
           "Unit": "W",
           "Version": "000"
       },
@@ -50,7 +60,17 @@
         "ChannelName": "hp-idu-pwr",
         "Exponent": 0,
         "PollPeriodMs": 1000,
-        "TypeName": "channel.config",
+        "EgaugeRegisterConfig": {
+              "Address": 9002,
+              "Denominator": 1,
+              "Description": "change in value",
+              "Name": "",
+              "Type": "f32",
+              "TypeName": "egauge.register.config",
+              "Unit": "W",
+              "Version": "000"
+          },
+        "TypeName": "electric.meter.channel.config",
         "Unit": "W",
         "Version": "000"
       },
@@ -61,7 +81,17 @@
         "ChannelName": "store-pump-pwr",
         "Exponent": 0,
         "PollPeriodMs": 1000,
-        "TypeName": "channel.config",
+        "EgaugeRegisterConfig": {
+              "Address": 9014,
+              "Denominator": 1,
+              "Description": "change in value",
+              "Name": "",
+              "Type": "f32",
+              "TypeName": "egauge.register.config",
+              "Unit": "W",
+              "Version": "000"
+          },
+        "TypeName": "electric.meter.channel.config",
         "Unit": "W",
         "Version": "000"
       },
@@ -72,61 +102,7 @@
         "ChannelName": "elt1-pwr",
         "Exponent": 0,
         "PollPeriodMs": 1000,
-        "TypeName": "channel.config",
-        "Unit": "W",
-        "Version": "000"
-      }
-      ],
-      "HwUid": "1001ab",
-      "EgaugeIoList": [
-        {
-          "ChannelName": "hp-odu-pwr",
-          "InputConfig": {
-              "Address": 9000,
-              "Denominator": 1,
-              "Description": "change in value",
-              "Name": "",
-              "Type": "f32",
-              "TypeName": "egauge.register.config",
-              "Unit": "W",
-              "Version": "000"
-          },
-          "TypeName": "egauge.io",
-          "Version": "001"
-        },
-        {
-          "ChannelName": "hp-odu-pwr",
-          "InputConfig": {
-              "Address": 9002,
-              "Denominator": 1,
-              "Description": "change in value",
-              "Name": "",
-              "Type": "f32",
-              "TypeName": "egauge.register.config",
-              "Unit": "W",
-              "Version": "000"
-          },
-          "TypeName": "egauge.io",
-          "Version": "001"
-        },
-        {
-          "ChannelName": "store-pump-pwr",
-          "InputConfig": {
-              "Address": 9014,
-              "Denominator": 1,
-              "Description": "change in value",
-              "Name": "",
-              "Type": "f32",
-              "TypeName": "egauge.register.config",
-              "Unit": "W",
-              "Version": "000"
-          },
-          "TypeName": "egauge.io",
-          "Version": "001"
-        },
-        {
-          "ChannelName": "elt1-pwr",
-          "InputConfig": {
+        "EgaugeRegisterConfig": {
               "Address": 9006,
               "Denominator": 1,
               "Description": "change in value",
@@ -136,10 +112,12 @@
               "Unit": "W",
               "Version": "000"
           },
-          "TypeName": "egauge.io",
-          "Version": "001"
-        }
+        "TypeName": "electric.meter.channel.config",
+        "Unit": "W",
+        "Version": "000"
+      }
       ],
+      "HwUid": "1001ab",
       "ModbusHost": "eGauge6069.local",
       "ModbusPort": 502,
       "TypeName": "electric.meter.component.gt",

@@ -17,15 +17,12 @@ class ComponentGt(BaseModel):
     TypeName: Literal["component.gt"] = "component.gt"
     Version: Literal["001"] = "001"
 
-
     @field_validator("ConfigList")
     @classmethod
-    def check_config_list(
-        cls, v: List[ChannelConfig]
-    ) -> List[ChannelConfig]:
+    def check_config_list(cls, v: List[ChannelConfig]) -> List[ChannelConfig]:
         """
-            Axiom 1: Channel Name uniqueness. Data Channel names are 
-            unique in the config list
+        Axiom 1: Channel Name uniqueness. Data Channel names are
+        unique in the config list
         """
         # Implement Axiom(s)
         return v

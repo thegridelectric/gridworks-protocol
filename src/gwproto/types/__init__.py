@@ -9,13 +9,13 @@ from gwproto.types.channel_config import ChannelConfig
 from gwproto.types.component_attribute_class_gt import ComponentAttributeClassGt
 from gwproto.types.component_gt import ComponentGt
 from gwproto.types.data_channel_gt import DataChannelGt
-from gwproto.types.egauge_io import EgaugeIo
 from gwproto.types.egauge_register_config import (
     EgaugeRegisterConfig,
 )
 from gwproto.types.electric_meter_cac_gt import (
     ElectricMeterCacGt,
 )
+from gwproto.types.electric_meter_channel_config import ElectricMeterChannelConfig
 from gwproto.types.electric_meter_component_gt import ElectricMeterComponentGt
 from gwproto.types.fibaro_smart_implant_component_gt import (
     FibaroSmartImplantComponentGt,
@@ -65,10 +65,10 @@ __all__ = [
     "ComponentAttributeClassGt",
     "ComponentGt",
     "DataChannelGt",
-    "EgaugeIo",
     "EgaugeRegisterConfig",
     "ElectricMeterCacGt",
     "ElectricMeterComponentGt",
+    "ElectricMeterChannelConfig",
     "FibaroSmartImplantComponentGt",
     "GtShBooleanactuatorCmdStatus",
     "GtShCliAtnCmd",

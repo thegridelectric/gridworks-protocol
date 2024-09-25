@@ -7,7 +7,6 @@ def test_ads111x_based_component_gt_generated() -> None:
     d = {
         "ComponentAttributeClassId": "432073b8-4d2b-4e36-9229-73893f33f846",
         "ComponentId": "dfbb257e-a851-437b-b9af-55f948f7d4af",
-
         "DisplayName": "GridWorks 12-Channel Ads-1115 based I2c Temp Sensor",
         "OpenVoltageByAds": [4.95, 4.95, 4.95],
         "ConfigList": [

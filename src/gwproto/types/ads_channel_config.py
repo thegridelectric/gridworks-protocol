@@ -17,9 +17,7 @@ class AdsChannelConfig(ChannelConfig):
     ThermistorMakeModel: MakeModel
     DataProcessingMethod: Optional[ThermistorDataMethod] = None
     DataProcessingDescription: Optional[str] = None
-    TypeName: Literal["ads.channel.config"] = (
-        "ads.channel.config"
-    )
+    TypeName: Literal["ads.channel.config"] = "ads.channel.config"
     Version: Literal["000"] = "000"
 
     model_config = ConfigDict(extra="allow", use_enum_values=True)

@@ -2,8 +2,7 @@
 
 from typing import List, Literal
 
-from pydantic import ConfigDict, field_validator, model_validator
-from typing_extensions import Self
+from pydantic import ConfigDict, field_validator
 
 from gwproto.property_format import (
     check_is_near5,
@@ -36,9 +35,7 @@ class Ads111xBasedComponentGt(ComponentGt):
 
     @field_validator("ConfigList")
     @classmethod
-    def check_config_list(
-        cls, v: List[AdsChannelConfig]
-    ) -> List[AdsChannelConfig]:
+    def check_config_list(cls, v: List[AdsChannelConfig]) -> List[AdsChannelConfig]:
         """
             Axiom 1: Terminal Block consistency and Channel Name uniqueness.
             Terminal Block consistency and Channel Name uniqueness. - Each TerminalBlockIdx occurs at

@@ -21,6 +21,7 @@ class ChannelStub(BaseModel):
     AboutNodeName: SpaceheatName
     CapturedByNodeName: SpaceheatName
     TelemetryName: TelemetryName
+    InPowerMetering: bool = False
 
     def __hash__(self) -> int:
         return hash(self.Name)

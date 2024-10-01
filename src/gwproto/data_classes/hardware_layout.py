@@ -702,7 +702,7 @@ class HardwareLayout:
                 f"ERROR. power_meter_component cac {self.power_meter_component.cac}"
                 f" / {type(self.power_meter_component.cac)} is not an ElectricMeterCac"
             )
-        return self.power_meter_node.component.component_attribute_class  # type: ignore[union-attr, return-value]
+        return self.power_meter_node.component.cac  # type: ignore[union-attr, return-value]
 
     @cached_property
     def all_resistive_heaters(self) -> List[ShNode]:

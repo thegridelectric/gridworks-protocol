@@ -6,6 +6,7 @@ CACS_BY_MAKE_MODEL: Dict[str, str] = {
     MakeModel.EGAUGE__4030.value: "739a6e32-bb9c-43bc-a28d-fb61be665522",
     MakeModel.NCD__PR814SPST.value: "c6e736d8-8078-44f5-98bb-d72ca91dc773",
     MakeModel.ADAFRUIT__642.value: "43564cd2-0e78-41a2-8b67-ad80c02161e8",
+    MakeModel.GRIDWORKS__TSNAP1.value: "432073b8-4d2b-4e36-9229-73893f33f846",
     MakeModel.GRIDWORKS__WATERTEMPHIGHPRECISION.value: "7937eb7e-24d5-4d52-990f-cca063484df9",
     MakeModel.GRIDWORKS__SIMPM1.value: "28897ac1-ea42-4633-96d3-196f63f5a951",
     MakeModel.SCHNEIDERELECTRIC__IEM3455.value: "6bcdc388-de10-40e6-979a-8d66bfcfe9ba",
@@ -19,7 +20,7 @@ CACS_BY_MAKE_MODEL: Dict[str, str] = {
     MakeModel.AMPHENOL__NTC_10K_THERMISTOR_MA100GG103BN.value: "2821c81d-054d-4003-9b07-2c295aef40f5",
     MakeModel.YHDC__SCT013100.value: "812761ba-6544-4796-9aad-e1c979f58734",
     MakeModel.MAGNELAB__SCT0300050.value: "cf312bd6-7ca5-403b-a61b-b2e817ea1e22",
-    MakeModel.GRIDWORKS__MULTITEMP1.value: "432073b8-4d2b-4e36-9229-73893f33f846",
+    MakeModel.GRIDWORKS__MULTITEMP1.value: "b4db046e-500c-4ecd-86ed-a9dbaae039f9",
     MakeModel.KRIDA__EMR16I2CV3.value: "018d9ffb-89d1-4cc4-95c0-f170711b5ffa",
     MakeModel.OMEGA__FTB8007HWPT.value: "8cf6c726-e38a-4900-9cfe-ae6f053aafdf",
     MakeModel.ISTEC_4440.value: "62ed724c-ba62-4302-ae30-d52b20d42ad9",
@@ -37,4 +38,5 @@ CACS_BY_MAKE_MODEL: Dict[str, str] = {
     MakeModel.GRIDWORKS__SIMMULTITEMP.value: "627ac482-24fe-46b2-ba8c-3d6f1e1ee069",
     MakeModel.GRIDWORKS__SIMTOTALIZER.value: "a88f8f4c-fe1e-4645-a7f4-249912131dc8",
     MakeModel.KRIDA__DOUBLEEMR16I2CV3.value: "29eab8b1-100f-4230-bb44-3a2fcba33cc3",
+    MakeModel.GRIDWORKS__SIMDOUBLE16PINI2CRELAY.value: "44ff9d75-edb9-4249-afea-96822bfc55f3",
 }

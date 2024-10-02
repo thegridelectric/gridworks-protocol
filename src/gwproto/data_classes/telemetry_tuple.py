@@ -19,7 +19,6 @@ class TelemetryTuple(NamedTuple):
 class ChannelStub(BaseModel):
     Name: SpaceheatName
     AboutNodeName: SpaceheatName
-    CapturedByNodeName: SpaceheatName
     TelemetryName: TelemetryName
     InPowerMetering: bool = False
 

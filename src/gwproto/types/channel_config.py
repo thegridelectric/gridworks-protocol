@@ -33,7 +33,11 @@ class ChannelConfig(BaseModel):
         Axiom 1: Async Capture Consistency.
         If AsyncCapture is True, then AsyncCaptureDelta exists
         """
-        # Implement check for axiom 1"
+        if self.AsyncCapture and not self.AsyncCaptureDelta:
+            raise ValueError(
+                "Axiom 1 violated! If AsyncCapture is true, "
+                "then AsyncCaptureDelta must exist"
+            )
         return self
 
     @model_validator(mode="after")

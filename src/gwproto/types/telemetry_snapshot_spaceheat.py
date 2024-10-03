@@ -5,12 +5,12 @@ from typing import List, Literal
 from pydantic import BaseModel
 
 from gwproto.enums import TelemetryName
-from gwproto.property_format import LeftRightDotStr, UTCMilliseconds
+from gwproto.property_format import SpaceheatName, UTCMilliseconds
 
 
 class TelemetrySnapshotSpaceheat(BaseModel):
     ReportTimeUnixMs: UTCMilliseconds
-    AboutNodeAliasList: list[LeftRightDotStr]
+    AboutNodeAliasList: list[SpaceheatName]
     ValueList: List[int]
     TelemetryNameList: list[TelemetryName]
     TypeName: Literal["telemetry.snapshot.spaceheat"] = "telemetry.snapshot.spaceheat"

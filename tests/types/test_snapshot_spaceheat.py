@@ -9,7 +9,7 @@ def test_snapshot_spaceheat_generated() -> None:
         "FromGNodeInstanceId": "0384ef21-648b-4455-b917-58a1172d7fc1",
         "Snapshot": {
             "TelemetryNameList": ["RelayState"],
-            "AboutNodeAliasList": ["a.elt1.relay"],
+            "AboutNodeAliasList": ["a-elt1-relay"],
             "ReportTimeUnixMs": 1656363448000,
             "ValueList": [1],
             "TypeName": "telemetry.snapshot.spaceheat",

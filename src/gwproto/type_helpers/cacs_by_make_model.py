@@ -39,4 +39,5 @@ CACS_BY_MAKE_MODEL: Dict[str, str] = {
     MakeModel.GRIDWORKS__SIMTOTALIZER.value: "a88f8f4c-fe1e-4645-a7f4-249912131dc8",
     MakeModel.KRIDA__DOUBLEEMR16I2CV3.value: "29eab8b1-100f-4230-bb44-3a2fcba33cc3",
     MakeModel.GRIDWORKS__SIMDOUBLE16PINI2CRELAY.value: "44ff9d75-edb9-4249-afea-96822bfc55f3",
+    MakeModel.WEB_SERVER.value: "5f556cda-7f33-46b9-ba20-b1f2f0b72625",
 }

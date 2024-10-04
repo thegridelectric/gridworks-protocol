@@ -127,6 +127,7 @@ class MakeModel(GwStrEnum):
     GRIDWORKS__SIMTOTALIZER = auto()
     KRIDA__DOUBLEEMR16I2CV3 = auto()
     GRIDWORKS__SIMDOUBLE16PINI2CRELAY = auto()
+    WEB_SERVER = auto()
 
     @classmethod
     def default(cls) -> "MakeModel":
@@ -198,4 +199,5 @@ value_to_version = {
     "GRIDWORKS__SIMTOTALIZER": "002",
     "KRIDA__DOUBLEEMR16I2CV3": "002",
     "GRIDWORKS__SIMDOUBLE16PINI2CRELAY": "002",
+    "WEB_SERVER": "002",
 }

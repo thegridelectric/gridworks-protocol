@@ -44,6 +44,7 @@ def test_make_model() -> None:
         "GRIDWORKS__SIMTOTALIZER",
         "KRIDA__DOUBLEEMR16I2CV3",
         "GRIDWORKS__SIMDOUBLE16PINI2CRELAY",
+        "WEB_SERVER",
     }
 
     assert MakeModel.default() == MakeModel.UNKNOWNMAKE__UNKNOWNMODEL

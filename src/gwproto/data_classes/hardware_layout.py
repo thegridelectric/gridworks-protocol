@@ -560,31 +560,30 @@ class HardwareLayout:
         multi_nodes = list(
             filter(
                 lambda x: (
-                    (
-                        x.actor_class
-                        in {
-                            ActorClass.MultipurposeSensor,
-                            ActorClass.HubitatTankModule,
-                            ActorClass.HubitatPoller,
-                            ActorClass.HoneywellThermostat,
-                        }
-                    )
-                    and hasattr(x.component, "config_list")
+                    x.actor_class
+                    in {
+                        ActorClass.MultipurposeSensor,
+                        ActorClass.HubitatTankModule,
+                        ActorClass.HubitatPoller,
+                        ActorClass.HoneywellThermostat,
+                    }
                 ),
                 self.nodes.values(),
             )
         )
         telemetry_tuples = []
         for node in multi_nodes:
+            channels = [
+                self.data_channels[cfg.ChannelName]
+                for cfg in node.component.gt.ConfigList
+            ]
             telemetry_tuples.extend(
-                [
-                    TelemetryTuple(
-                        AboutNode=self.node(config.AboutNodeName),
-                        SensorNode=node,
-                        TelemetryName=config.TelemetryName,
-                    )
-                    for config in node.component.config_list
-                ]
+                TelemetryTuple(
+                    AboutNode=ch.about_node,
+                    SensorNode=ch.captured_by_node,
+                    TelemetryName=ch.TelemetryName,
+                )
+                for ch in channels
             )
         return telemetry_tuples
 

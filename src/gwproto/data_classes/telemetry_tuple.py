@@ -13,7 +13,7 @@ class TelemetryTuple(NamedTuple):
     TelemetryName: TelemetryName
 
     def __repr__(self) -> str:
-        return f"TT({self.AboutNode.alias} {self.TelemetryName} read by {self.SensorNode.alias})"
+        return f"TT({self.AboutNode.name} {self.TelemetryName} read by {self.SensorNode.name})"
 
 
 class ChannelStub(BaseModel):

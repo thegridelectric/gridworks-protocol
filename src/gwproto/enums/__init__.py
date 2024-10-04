@@ -35,7 +35,6 @@ on these ideas:
 from gwproto.enums.actor_class import ActorClass
 from gwproto.enums.local_comm_interface import LocalCommInterface
 from gwproto.enums.make_model import MakeModel
-from gwproto.enums.role import Role
 from gwproto.enums.telemetry_name import TelemetryName
 from gwproto.enums.thermistor_data_method import ThermistorDataMethod
 from gwproto.enums.unit import Unit
@@ -44,7 +43,6 @@ __all__ = [
     "ActorClass",  # [sh.actor.class.001](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shactorclass)
     "LocalCommInterface",  # [local.comm.interface.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#localcomminterface)
     "MakeModel",  # [spaceheat.make.model.001](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatmakemodel)
-    "Role",  # [sh.node.role.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shnoderole)
     "TelemetryName",  # [spaceheat.telemetry.name.001](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheattelemetryname)
     "ThermistorDataMethod",
     "Unit",  # [spaceheat.unit.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatunit)

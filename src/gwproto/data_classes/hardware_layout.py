@@ -32,7 +32,7 @@ from gwproto.default_decoders import (
     default_cac_decoder,
     default_component_decoder,
 )
-from gwproto.enums import ActorClass, Role, TelemetryName
+from gwproto.enums import ActorClass, TelemetryName
 from gwproto.types import (
     ComponentAttributeClassGt,
     ComponentGt,
@@ -192,7 +192,7 @@ class HardwareLayout:
             errors = []
         for node_dict in layout.get("ShNodes", []):
             try:
-                node_name = node_dict["Alias"]
+                node_name = node_dict["Name"]
                 if included_node_names is None or node_name in included_node_names:
                     nodes[node_name] = cls.make_node(node_dict, components)
             except Exception as e:  # noqa: PERF203
@@ -245,9 +245,9 @@ class HardwareLayout:
                 dc for dc in data_channels.values() if dc.Name in my_channel_names
             ]
             for channel in my_channels:
-                if channel.CapturedByNodeName != node.Alias:
+                if channel.CapturedByNodeName != node.Name:
                     raise DcError(
-                        f"Channel {channel} should have CapturedByNodeName {node.Alias}"
+                        f"Channel {channel} should have CapturedByNodeName {node.Name}"
                     )
 
     @classmethod
@@ -384,11 +384,11 @@ class HardwareLayout:
                     component = components.get(node.component_id, None)
                     if component is None:
                         raise DcError(  # noqa: TRY301
-                            f"{node.alias} component {node.component_id} not loaded!"
+                            f"{node.name} component {node.component_id} not loaded!"
                         )
                     if isinstance(component, ComponentResolver):
                         component.resolve(
-                            node.alias,
+                            node.name,
                             nodes,
                             components,
                         )
@@ -414,7 +414,7 @@ class HardwareLayout:
             self.components_by_type[type(component)].append(component)
         self.nodes = dict(nodes)
         self.nodes_by_component = {
-            node.component_id: node.alias for node in self.nodes.values()
+            node.component_id: node.name for node in self.nodes.values()
         }
         self.data_channels = dict(data_channels)
 
@@ -557,14 +557,14 @@ class HardwareLayout:
     def channel(self, name: str, default: Any = None) -> DataChannel:  # noqa: ANN401
         return self.data_channels.get(name, default)
 
-    def node(self, alias: str, default: Any = None) -> ShNode:  # noqa: ANN401
-        return self.nodes.get(alias, default)
+    def node(self, name: str, default: Any = None) -> ShNode:  # noqa: ANN401
+        return self.nodes.get(name, default)
 
-    def component(self, node_alias: str) -> Optional[Component]:
-        return self.component_from_node(self.node(node_alias, None))
+    def component(self, node_name: str) -> Optional[Component]:
+        return self.component_from_node(self.node(node_name, None))
 
-    def cac(self, node_alias: str) -> Optional[ComponentAttributeClassGt]:
-        component = self.component(node_alias)
+    def cac(self, node_name: str) -> Optional[ComponentAttributeClassGt]:
+        component = self.component(node_name)
         if component is None:
             return None
         return component.cac
@@ -601,22 +601,22 @@ class HardwareLayout:
         )
 
     @classmethod
-    def parent_alias(cls, alias: str) -> str:
-        last_delimiter = alias.rfind(".")
+    def parent_hierarchy_name(cls, hierarchy_name: str) -> str:
+        last_delimiter = hierarchy_name.rfind(".")
         if last_delimiter == -1:
             return ""
-        return alias[:last_delimiter]
+        return hierarchy_name[:last_delimiter]
 
-    def parent_node(self, alias: str) -> Optional[ShNode]:
-        parent_alias = self.parent_alias(alias)
-        if not parent_alias:
+    def parent_node(self, hierarchy_name: str) -> Optional[ShNode]:
+        h_name = self.parent_hierarchy_name(hierarchy_name)
+        if not h_name:
             return None
-        if parent_alias not in self.nodes:
-            raise DcError(f"{alias} is missing parent {parent_alias}!")
-        return self.node(parent_alias)
-
-    def descendants(self, alias: str) -> List[ShNode]:
-        return list(filter(lambda x: x.alias.startswith(alias), self.nodes.values()))
+        parent = next(
+            (n for n in self.nodes.values() if n.ActorHierarchyName == h_name), None
+        )
+        if parent is None:
+            raise DcError(f"{hierarchy_name} is missing parent {h_name}!")
+        return self.node(h_name)
 
     @cached_property
     def atn_g_node_alias(self) -> str:
@@ -684,8 +684,9 @@ class HardwareLayout:
 
     @cached_property
     def power_meter_node(self) -> ShNode:
-        """Schema for input data enforces exactly one Spaceheat Node with role PowerMeter"""
-        return next(filter(lambda x: x.role == Role.PowerMeter, self.nodes.values()))
+        return next(
+            filter(lambda x: x.ActorClass == ActorClass.PowerMeter, self.nodes.values())
+        )
 
     @cached_property
     def power_meter_component(self) -> ElectricMeterComponent:
@@ -703,51 +704,6 @@ class HardwareLayout:
                 f" / {type(self.power_meter_component.cac)} is not an ElectricMeterCac"
             )
         return self.power_meter_node.component.cac  # type: ignore[union-attr, return-value]
-
-    @cached_property
-    def all_resistive_heaters(self) -> List[ShNode]:
-        all_nodes = list(self.nodes.values())
-        return list(filter(lambda x: (x.role == Role.BoostElement), all_nodes))
-
-    @cached_property
-    def scada_node(self) -> ShNode:
-        """Schema for input data enforces exactly one Spaceheat Node with role Scada"""
-        nodes = list(filter(lambda x: x.role == Role.Scada, self.nodes.values()))
-        return nodes[0]
-
-    @cached_property
-    def home_alone_node(self) -> ShNode:
-        """Schema for input data enforces exactly one Spaceheat Node with role HomeAlone"""
-        nodes = list(filter(lambda x: x.role == Role.HomeAlone, self.nodes.values()))
-        return nodes[0]
-
-    @cached_property
-    def my_home_alone(self) -> ShNode:
-        all_nodes = list(self.nodes.values())
-        home_alone_nodes = list(filter(lambda x: (x.role == Role.HomeAlone), all_nodes))
-        if len(home_alone_nodes) != 1:
-            raise ValueError(
-                "there should be a single SpaceheatNode with role HomeAlone"
-            )
-        return home_alone_nodes[0]
-
-    @cached_property
-    def my_boolean_actuators(self) -> List[ShNode]:
-        all_nodes = list(self.nodes.values())
-        return list(filter(lambda x: (x.role == Role.BooleanActuator), all_nodes))
-
-    @cached_property
-    def my_simple_sensors(self) -> List[ShNode]:
-        all_nodes = list(self.nodes.values())
-        return list(
-            filter(
-                lambda x: (
-                    x.actor_class
-                    in {ActorClass.SimpleSensor, ActorClass.BooleanActuator}
-                ),
-                all_nodes,
-            )
-        )
 
     @cached_property
     def all_multipurpose_telemetry_tuples(self) -> List[TelemetryTuple]:
@@ -780,16 +736,6 @@ class HardwareLayout:
                 for ch in channels
             )
         return telemetry_tuples
-
-    @cached_property
-    def my_multipurpose_sensors(self) -> List[ShNode]:
-        """This will be a list of all sensing devices that either measure more
-        than one ShNode or measure more than one physical quantity type (or both).
-        This includes the (unique) power meter, but may also include other roles like thermostats
-        and heat pumps."""
-        all_nodes = list(self.nodes.values())
-        multi_purpose_roles = [Role.PowerMeter, Role.MultiChannelAnalogTempSensor]
-        return list(filter(lambda x: (x.role in multi_purpose_roles), all_nodes))
 
     @cached_property
     def my_telemetry_tuples(self) -> List[TelemetryTuple]:

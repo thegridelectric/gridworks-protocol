@@ -467,34 +467,34 @@
   ],
   "ShNodes": [
     {
-      "Alias": "a",
+      "Name": "a",
       "Role": "Atn",
       "ActorClass": "Atn",
       "DisplayName": "AtomicTNode",
       "ShNodeId": "b354edeb-0c82-4e55-80cb-7ab669ac2ad9",
       "TypeName": "spaceheat.node.gt",
-      "Version": "120"
+      "Version": "200"
     },
     {
-      "Alias": "home",
+      "Name": "home",
       "Role": "HomeAlone",
       "ActorClass": "HomeAlone",
       "DisplayName": "Little Orange House HomeAlone",
       "ShNodeId": "34470c9d-fa25-4077-909b-2f981a691d7e",
       "TypeName": "spaceheat.node.gt",
-      "Version": "120"
+      "Version": "200"
     },
     {
-      "Alias": "s",
+      "Name": "s",
       "Role": "Scada",
       "ActorClass": "Scada",
       "DisplayName": "Little Orange House Main Scada",
       "ShNodeId": "259f9431-c6a1-4170-8766-04cbf65cff4a",
       "TypeName": "spaceheat.node.gt",
-      "Version": "120"
+      "Version": "200"
     },
     {
-      "Alias": "elt1",
+      "Name": "elt1",
       "Role": "BoostElement",
       "ActorClass": "NoActor",
       "DisplayName": "First boost element",
@@ -503,168 +503,152 @@
       "InPowerMetering": true,
       "NameplatePowerW": 4500,
       "TypeName": "spaceheat.node.gt",
-      "Version": "120"
+      "Version": "200"
     },
     {
-      "Alias": "power-meter",
+      "Name": "power-meter",
       "Role": "PowerMeter",
       "ActorClass": "PowerMeter",
       "DisplayName": "Main Power Meter Little Orange House Test System",
       "ShNodeId": "0dd8a803-4724-4f49-b845-14ff57bdb3e6",
       "ComponentId": "2bfd0036-0b0e-4732-8790-bc7d0536a85e",
       "TypeName": "spaceheat.node.gt",
-      "Version": "120"
+      "Version": "200"
     },
     {
-      "Alias": "buffer-cold-pipe",
-      "Role": "Unknown",
+      "Name": "buffer-cold-pipe",
       "ActorClass": "NoActor",
       "DisplayName": "Buffer Cold Pipe",
       "ShNodeId": "d2aa5af6-2cc7-4067-bd70-251c65b86a34",
       "TypeName": "spaceheat.node.gt",
-      "Version": "120"
+      "Version": "200"
     },
     {
-      "Alias": "buffer-hot-pipe",
-      "Role": "Unknown",
+      "Name": "buffer-hot-pipe",
       "ActorClass": "NoActor",
       "DisplayName": "Buffer Hot Pipe",
       "ShNodeId": "d64e2fa3-5ca2-4665-b60a-253323455f5a",
       "TypeName": "spaceheat.node.gt",
-      "Version": "120"
+      "Version": "200"
     },
     {
-      "Alias": "dist-rwt",
-      "Role": "Unknown",
+      "Name": "dist-rwt",
       "ActorClass": "NoActor",
       "DisplayName": "Dist Return Water Temp",
       "ShNodeId": "dc8a3e92-e09b-4976-bc32-c7f2dae22dc5",
       "TypeName": "spaceheat.node.gt",
-      "Version": "120"
+      "Version": "200"
     },
     {
-      "Alias": "dist-swt",
-      "Role": "Unknown",
+      "Name": "dist-swt",
       "ActorClass": "NoActor",
       "DisplayName": "Dist Source Water Temp",
       "ShNodeId": "dfb1c311-f2db-4752-be11-ac0d4d91d71b",
       "TypeName": "spaceheat.node.gt",
-      "Version": "120"
+      "Version": "200"
     },
     {
-      "Alias": "hp-ewt",
-      "Role": "Unknown",
+      "Name": "hp-ewt",
       "ActorClass": "NoActor",
       "DisplayName": "Heat Pump Entering Water Temp",
       "ShNodeId": "e76073f4-67ae-4324-b07f-0c9add733de7",
       "TypeName": "spaceheat.node.gt",
-      "Version": "120"
+      "Version": "200"
     },
     {
-      "Alias": "hp-lwt",
-      "Role": "Unknown",
+      "Name": "hp-lwt",
       "ActorClass": "NoActor",
       "DisplayName": "Heat Pump Leaving Water Temp",
       "ShNodeId": "1fe2a01f-d60a-4362-bc5e-949ddfcd5003",
       "TypeName": "spaceheat.node.gt",
-      "Version": "120"
+      "Version": "200"
     },
     {
-      "Alias": "oat",
-      "Role": "Unknown",
+      "Name": "oat",
       "ActorClass": "NoActor",
       "DisplayName": "Store Cold Pipe",
       "ShNodeId": "7ef9d1af-5f6c-430e-9d03-c00e480fcd9a",
       "TypeName": "spaceheat.node.gt",
-      "Version": "120"
+      "Version": "200"
     },
     {
-      "Alias": "store-cold-pipe",
-      "Role": "Unknown",
+      "Name": "store-cold-pipe",
       "ActorClass": "NoActor",
       "DisplayName": "Store Cold Pipe",
       "ShNodeId": "e0e9b848-a593-465d-b9df-9d42c16cfffa",
       "TypeName": "spaceheat.node.gt",
-      "Version": "120"
+      "Version": "200"
     },
     {
-      "Alias": "store-hot-pipe",
-      "Role": "Unknown",
+      "Name": "store-hot-pipe",
       "ActorClass": "NoActor",
       "DisplayName": "Store Hot Pipe",
       "ShNodeId": "26b31718-feec-446e-ba1e-c921d760f1dd",
       "TypeName": "spaceheat.node.gt",
-      "Version": "120"
+      "Version": "200"
     },
     {
-      "Alias": "store-pump",
-      "Role": "Unknown",
+      "Name": "store-pump",
       "ActorClass": "NoActor",
       "DisplayName": "Store Pump",
       "ShNodeId": "c35d9c77-1ebb-4822-b01e-00ff189092f7",
       "TypeName": "spaceheat.node.gt",
-      "Version": "120"
+      "Version": "200"
     },
     {
-      "Alias": "hp-idu",
-      "Role": "Unknown",
+      "Name": "hp-idu",
       "ActorClass": "NoActor",
       "DisplayName": "HP IDU",
       "InPowerMetering": true,
       "NameplatePowerW": 3500,
       "ShNodeId": "7da56e55-3cf0-4a2f-9c06-0c6c176b795c",
       "TypeName": "spaceheat.node.gt",
-      "Version": "120"
+      "Version": "200"
     },
     {
-      "Alias": "hp-odu",
-      "Role": "Unknown",
+      "Name": "hp-odu",
       "ActorClass": "NoActor",
       "DisplayName": "HP ODU",
       "InPowerMetering": true,
       "NameplatePowerW": 6500,
       "ShNodeId": "f1692ea8-9866-423c-b260-93d2affc9881",
       "TypeName": "spaceheat.node.gt",
-      "Version": "120"
+      "Version": "200"
     },
     {
-      "Alias": "zone1-down",
-      "Role": "Unknown",
+      "Name": "zone1-down",
       "ActorClass": "NoActor",
       "DisplayName": "Down Zone",
       "ShNodeId": "be8df9e8-1a72-4574-9575-dca70dbec214",
       "TypeName": "spaceheat.node.gt",
-      "Version": "120"
+      "Version": "200"
     },
     {
-      "Alias": "analog-temp",
-      "Role": "Unknown",
+      "Name": "analog-temp",
       "ActorClass": "MultipurposeSensor",
       "DisplayName": "GridWorks MultiTemp",
       "ShNodeId": "8bfc40f1-7c84-4e88-9214-78c304730ae3",
       "ComponentId": "dfbb257e-a851-437b-b9af-55f948f7d4af",
       "TypeName": "spaceheat.node.gt",
-      "Version": "120"
+      "Version": "200"
     },
     {
-      "Alias": "zone1-down-stat",
-      "Role": "Unknown",
+      "Name": "zone1-down-stat",
       "ActorClass": "HoneywellThermostat",
       "DisplayName": "Zone 1 (Down) Thermostat",
       "ComponentId": "2c302eed-2f86-4ed6-8019-df31c22e1704",
       "ShNodeId": "8c9c155c-5b9a-448c-8df3-2edd9f4ebdb7",
       "TypeName": "spaceheat.node.gt",
-      "Version": "120"
+      "Version": "200"
     },
     {
       "ActorClass": "Hubitat",
-      "Alias": "hubitat",
+      "Name": "hubitat",
       "ComponentId": "ab7bc99c-08ed-489e-b760-e36b57653e7e",
       "DisplayName": "Hubitat 81:15:21",
-      "Role": "Unknown",
       "ShNodeId": "13d9b3cb-2b13-444c-9e03-f31203772b64",
       "TypeName": "spaceheat.node.gt",
-      "Version": "120"
+      "Version": "200"
     }
   ],
   "DataChannels": [

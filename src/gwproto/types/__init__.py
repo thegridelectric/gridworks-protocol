@@ -6,6 +6,7 @@ from gwproto.types.ads_channel_config import (
     AdsChannelConfig,
 )
 from gwproto.types.channel_config import ChannelConfig
+from gwproto.types.channel_readings import ChannelReadings
 from gwproto.types.component_attribute_class_gt import ComponentAttributeClassGt
 from gwproto.types.component_gt import ComponentGt
 from gwproto.types.data_channel_gt import DataChannelGt
@@ -43,6 +44,7 @@ from gwproto.types.hubitat_tank_component_gt import (
     HubitatTankComponentGt,
 )
 from gwproto.types.power_watts import PowerWatts
+from gwproto.types.report import Report
 from gwproto.types.resistive_heater_cac_gt import (
     ResistiveHeaterCacGt,
 )
@@ -52,8 +54,10 @@ from gwproto.types.resistive_heater_component_gt import (
 from gwproto.types.rest_poller_component_gt import (
     RESTPollerComponentGt,
 )
+from gwproto.types.single_reading import SingleReading
 from gwproto.types.snapshot_spaceheat import SnapshotSpaceheat
 from gwproto.types.spaceheat_node_gt import SpaceheatNodeGt
+from gwproto.types.synced_readings import SyncedReadings
 from gwproto.types.telemetry_snapshot_spaceheat import (
     TelemetrySnapshotSpaceheat,
 )
@@ -62,6 +66,7 @@ __all__ = [
     "Ads111xBasedCacGt",
     "Ads111xBasedComponentGt",
     "ChannelConfig",
+    "ChannelReadings",
     "ComponentAttributeClassGt",
     "ComponentGt",
     "DataChannelGt",
@@ -81,9 +86,12 @@ __all__ = [
     "HubitatPollerComponentGt",
     "HubitatTankComponentGt",
     "PowerWatts",
+    "Report",
     "RESTPollerComponentGt",
     "ResistiveHeaterCacGt",
     "ResistiveHeaterComponentGt",
+    "SingleReading",
+    "SyncedReadings",
     "SnapshotSpaceheat",
     "SpaceheatNodeGt",
     "TelemetrySnapshotSpaceheat",

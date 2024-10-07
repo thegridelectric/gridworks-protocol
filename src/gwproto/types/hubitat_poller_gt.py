@@ -1,17 +1,15 @@
-from pydantic import BaseModel
-from pydantic import Extra
-from pydantic import validator
+from pydantic import BaseModel, ConfigDict
 
-from gwproto.enums import TelemetryName
-from gwproto.enums import Unit
+from gwproto.enums import TelemetryName, Unit
 from gwproto.utils import snake_to_camel
 
 
 class MakerAPIAttributeGt(BaseModel):
     attribute_name: str
+    channel_name: str
     node_name: str
-    telemetry_name_gt_enum_symbol: str = "c89d0ba1"
-    unit_gt_enum_symbol: str = "ec14bd47"
+    telemetry_name: TelemetryName = TelemetryName.WaterTempCTimes1000
+    unit: Unit = Unit.Celcius
     exponent: int = 3
     interpret_as_number: bool = True
     enabled: bool = True
@@ -20,30 +18,12 @@ class MakerAPIAttributeGt(BaseModel):
     report_missing: bool = True
     report_parse_error: bool = True
 
-    @property
-    def telemetry_name(self) -> TelemetryName:
-        value = TelemetryName.symbol_to_value(
-            self.telemetry_name_gt_enum_symbol,
-        )
-        return TelemetryName(value)
-
-    @property
-    def unit(self) -> Unit:
-        value = Unit.symbol_to_value(
-            self.unit_gt_enum_symbol,
-        )
-        return Unit(value)
-
-    class Config:
-        extra = Extra.allow
-        alias_generator = snake_to_camel
-        allow_population_by_field_name = True
-
-    @validator("telemetry_name_gt_enum_symbol")
-    def _check_telemetry_name_symbol(cls, v: str) -> str:
-        if v not in TelemetryName.symbols():
-            v = TelemetryName.value_to_symbol(TelemetryName.default())
-        return v
+    model_config = ConfigDict(
+        extra="allow",
+        use_enum_values=True,
+        alias_generator=snake_to_camel,
+        populate_by_name=True,
+    )
 
 
 class HubitatPollerGt(BaseModel):
@@ -53,8 +33,6 @@ class HubitatPollerGt(BaseModel):
     enabled: bool = True
     web_listen_enabled: bool = True
     poll_period_seconds: float = 60
-
-    class Config:
-        extra = Extra.allow
-        alias_generator = snake_to_camel
-        allow_population_by_field_name = True
+    model_config = ConfigDict(
+        extra="allow", alias_generator=snake_to_camel, populate_by_name=True
+    )

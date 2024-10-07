@@ -19,6 +19,12 @@ def test_actor_class() -> None:
         "HubitatTelemetryReader",
         "HubitatTankModule",
         "HubitatPoller",
+        "I2cRelayMultiplexer",
+        "FlowTotalizer",
+        "Relay",
+        "Admin",
+        "Fsm",
+        "Parentless",
         "Hubitat",
         "HoneywellThermostat",
     }
@@ -39,7 +45,11 @@ def test_actor_class() -> None:
     assert ActorClass.version("HubitatTelemetryReader") == "001"
     assert ActorClass.version("HubitatTankModule") == "001"
     assert ActorClass.version("HubitatPoller") == "001"
-
-    for value in ActorClass.values():
-        symbol = ActorClass.value_to_symbol(value)
-        assert ActorClass.symbol_to_value(symbol) == value
+    assert ActorClass.version("I2cRelayMultiplexer") == "001"
+    assert ActorClass.version("FlowTotalizer") == "001"
+    assert ActorClass.version("Relay") == "001"
+    assert ActorClass.version("Admin") == "001"
+    assert ActorClass.version("Fsm") == "001"
+    assert ActorClass.version("Parentless") == "001"
+    assert ActorClass.version("Hubitat") == "001"
+    assert ActorClass.version("HoneywellThermostat") == "001"

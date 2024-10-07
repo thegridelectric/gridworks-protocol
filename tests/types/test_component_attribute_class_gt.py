@@ -1,91 +1,51 @@
 """Tests component.attribute.class.gt type, version 000"""
 
-import json
-
 import pytest
 from pydantic import ValidationError
 
-from gwproto.errors import SchemaError
-from gwproto.types import ComponentAttributeClassGt_Maker as Maker
+from gwproto.enums import MakeModel
+from gwproto.type_helpers import CACS_BY_MAKE_MODEL
+from gwproto.types import ComponentAttributeClassGt
+from tests.cac_load_utils import CacCase, assert_cac_load
 
 
-def test_component_attribute_class_gt_generated() -> None:
+def test_component_attribute_class_gt_load() -> None:
     d = {
-        "ComponentAttributeClassId": "29c5257b-8a86-4dbe-a9d4-9c7330c3c4d0",
-        "DisplayName": "Sample CAC",
+        "ComponentAttributeClassId": "e52cb571-913a-4614-90f4-5cc81f8e7fe5",
+        "MakeModel": "EKM__HOTSPWM075HD",
+        "DisplayName": "EKM Hot-Spwm-075-HD Flow Meter",
+        "MinPollPeriodMs": 1000,
         "TypeName": "component.attribute.class.gt",
-        "Version": "000",
+        "Version": "001",
+    }
+    assert_cac_load(
+        [CacCase("ComponentAttributeClassGt", d, ComponentAttributeClassGt)]
+    )
+
+    assert type(ComponentAttributeClassGt.model_validate(d).MakeModel) is str
+
+    # Test axiom 1 (Cac By Make Model)
+    random_uuid = "91567108-98ea-45af-aca5-f0026df3e131"
+    d2 = {
+        "ComponentAttributeClassId": random_uuid,
+        "MakeModel": "EKM__HOTSPWM075HD",
+        "DisplayName": "EKM Hot-Spwm-075-HD Flow Meter",
+        "MinPollPeriodMs": 1000,
+        "TypeName": "component.attribute.class.gt",
+        "Version": "001",
     }
 
-    with pytest.raises(SchemaError):
-        Maker.type_to_tuple(d)
-
-    with pytest.raises(SchemaError):
-        Maker.type_to_tuple('"not a dict"')
-
-    # Test type_to_tuple
-    gtype = json.dumps(d)
-    gtuple = Maker.type_to_tuple(gtype)
-
-    # test type_to_tuple and tuple_to_type maps
-    assert Maker.type_to_tuple(Maker.tuple_to_type(gtuple)) == gtuple
-
-    # test Maker init
-    t = Maker(
-        component_attribute_class_id=gtuple.ComponentAttributeClassId,
-        display_name=gtuple.DisplayName,
-    ).tuple
-    assert t == gtuple
-
-    ######################################
-    # Dataclass related tests
-    ######################################
-
-    dc = Maker.tuple_to_dc(gtuple)
-    assert gtuple == Maker.dc_to_tuple(dc)
-    assert Maker.type_to_dc(Maker.dc_to_type(dc)) == dc
-
-    ######################################
-    # SchemaError raised if missing a required attribute
-    ######################################
-
-    d2 = dict(d)
-    del d2["TypeName"]
-    with pytest.raises(SchemaError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d)
-    del d2["ComponentAttributeClassId"]
-    with pytest.raises(SchemaError):
-        Maker.dict_to_tuple(d2)
-
-    ######################################
-    # Optional attributes can be removed from type
-    ######################################
-
-    d2 = dict(d)
-    if "DisplayName" in d2.keys():
-        del d2["DisplayName"]
-    Maker.dict_to_tuple(d2)
-
-    ######################################
-    # Behavior on incorrect types
-    ######################################
-
-    ######################################
-    # SchemaError raised if TypeName is incorrect
-    ######################################
-
-    d2 = dict(d, TypeName="not the type name")
     with pytest.raises(ValidationError):
-        Maker.dict_to_tuple(d2)
+        ComponentAttributeClassGt.model_validate(d2)
 
-    ######################################
-    # SchemaError raised if primitive attributes do not have appropriate property_format
-    ######################################
+    d2 = {
+        "ComponentAttributeClassId": CACS_BY_MAKE_MODEL[MakeModel.ADAFRUIT__642],
+        "MakeModel": "EKM__HOTSPWM075HD",
+        "DisplayName": "EKM Hot-Spwm-075-HD Flow Meter",
+        "MinPollPeriodMs": 1000,
+        "TypeName": "component.attribute.class.gt",
+        "Version": "001",
+    }
 
-    d2 = dict(d, ComponentAttributeClassId="d4be12d5-33ba-4f1f-b9e5")
     with pytest.raises(ValidationError):
-        Maker.dict_to_tuple(d2)
-
-    # End of Test
+        ComponentAttributeClassGt.model_validate(d2)

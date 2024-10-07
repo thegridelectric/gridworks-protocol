@@ -1,63 +1,38 @@
-from gwproto.gs import *
+# ruff: noqa: F405, F403
+
 from gwproto.types import *
 
 from .event import *
 from .misc import *
 
-
 __all__ = [
-    # gs
-    "GsDispatch",
-    "GsDispatch_Maker",
-    "GsPwr",
-    "GsPwr_Maker",
-    # gt
-    "GtDispatchBoolean",
-    "GtDispatchBoolean_Maker",
-    "GtDispatchBooleanLocal",
-    "GtDispatchBooleanLocal_Maker",
-    "GtDriverBooleanactuatorCmd",
-    "GtDriverBooleanactuatorCmd_Maker",
-    "GtShBooleanactuatorCmdStatus",
-    "GtShBooleanactuatorCmdStatus_Maker",
-    "GtShCliAtnCmd",
-    "GtShCliAtnCmd_Maker",
-    "GtShMultipurposeTelemetryStatus",
-    "GtShMultipurposeTelemetryStatus_Maker",
-    "GtShSimpleTelemetryStatus",
-    "GtShSimpleTelemetryStatus_Maker",
-    "GtShStatus",
-    "GtShStatus_Maker",
-    "GtShTelemetryFromMultipurposeSensor",
-    "GtShTelemetryFromMultipurposeSensor_Maker",
-    "GtTelemetry",
-    "GtTelemetry_Maker",
-    "PowerWatts",
-    "PowerWatts_Maker",
-    "SnapshotSpaceheat",
-    "SnapshotSpaceheat_Maker",
-    "TelemetrySnapshotSpaceheat",
-    "TelemetrySnapshotSpaceheat_Maker",
-    # event
+    "Ack",
     "AnyEvent",
+    "Report",
+    "ChannelReadings",
     "CommEvent",
-    "EventT",
     "EventBase",
     "EventMessage",
-    "GtShStatusEvent",
+    "EventT",
+    "GtShCliAtnCmd",
+    "GtShMultipurposeTelemetryStatus",
+    "GtShSimpleTelemetryStatus",
+    "GtShTelemetryFromMultipurposeSensor",
     "MQTTConnectEvent",
     "MQTTConnectFailedEvent",
     "MQTTDisconnectEvent",
     "MQTTFullySubscribedEvent",
     "PeerActiveEvent",
-    "Problems",
-    "ProblemEvent",
-    "ResponseTimeoutEvent",
-    "ShutdownEvent",
-    "StartupEvent",
-    "SnapshotSpaceheatEvent",
-    # misc
-    "Ack",
     "Ping",
     "PingMessage",
+    "PowerWatts",
+    "ProblemEvent",
+    "Problems",
+    "ResponseTimeoutEvent",
+    "SingleReading",
+    "ShutdownEvent",
+    "SnapshotSpaceheat",
+    "SnapshotSpaceheatEvent",
+    "SyncedReadings" "StartupEvent",
+    "TelemetrySnapshotSpaceheat",
 ]

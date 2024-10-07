@@ -4,21 +4,19 @@ from functools import cached_property
 from typing import Optional
 
 import yarl
-from pydantic import BaseModel
-from pydantic import Extra
-from pydantic import conint
-from pydantic import validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator
+from typing_extensions import Annotated
 
-from gwproto.enums import TelemetryName
-from gwproto.enums import Unit
+from gwproto.enums import TelemetryName, Unit
 from gwproto.types.hubitat_component_gt import HubitatRESTResolutionSettings
-from gwproto.types.rest_poller_gt import DEFAULT_REST_POLL_PERIOD_SECONDS
-from gwproto.types.rest_poller_gt import RequestArgs
-from gwproto.types.rest_poller_gt import RESTPollerSettings
-from gwproto.types.rest_poller_gt import URLArgs
-from gwproto.types.rest_poller_gt import URLConfig
+from gwproto.types.rest_poller_gt import (
+    DEFAULT_REST_POLL_PERIOD_SECONDS,
+    RequestArgs,
+    RESTPollerSettings,
+    URLArgs,
+    URLConfig,
+)
 from gwproto.utils import snake_to_camel
-
 
 HUBITAT_ID_REGEX = re.compile(
     r".*/apps/api/(?P<api_id>-?\d+)/devices/(?P<device_id>-?\d+).*?"
@@ -29,14 +27,14 @@ HUBITAT_ACCESS_TOKEN_REGEX = re.compile(
 
 
 class FibaroTempSensorSettingsGt(BaseModel):
-    stack_depth: conint(ge=1)
+    stack_depth: Annotated[int, Field(ge=1)]
     device_id: int
     fibaro_component_id: str
-    analog_input_id: conint(ge=1, le=2)
+    analog_input_id: Annotated[int, Field(ge=1, le=2)]
     tank_label: str = ""
     exponent: int = 1
-    telemetry_name_gt_enum_symbol: str = "c89d0ba1"
-    temp_unit_gt_enum_symbol: str = "ec14bd47"
+    telemetry_name: TelemetryName = TelemetryName.WaterTempCTimes1000
+    temp_unit: Unit = Unit.Celcius
     enabled: bool = True
     web_listen_enabled: bool = True
     poll_period_seconds: Optional[float] = None
@@ -47,36 +45,26 @@ class FibaroTempSensorSettingsGt(BaseModel):
     4. The default value.
     """
     rest: Optional[RESTPollerSettings] = None
-
-    class Config:
-        extra = Extra.allow
-        alias_generator = snake_to_camel
-        allow_population_by_field_name = True
-
-    @validator("telemetry_name_gt_enum_symbol")
-    def _check_telemetry_name_symbol(cls, v: str) -> str:
-        if v not in TelemetryName.symbols():
-            v = TelemetryName.value_to_symbol(TelemetryName.default())
-        return v
-
-    @validator("temp_unit_gt_enum_symbol")
-    def _checktemp_unit_gt_enum_symbol(cls, v: str) -> str:
-        if v not in Unit.symbols():
-            v = Unit.value_to_symbol(Unit.default())
-        return v
+    model_config = ConfigDict(
+        extra="allow",
+        use_enum_values=True,
+        alias_generator=snake_to_camel,
+        populate_by_name=True,
+    )
 
 
-DEFAULT_SENSOR_NODE_NAME_FORMAT = "{tank_name}.temp.depth{stack_depth}"
+DEFAULT_SENSOR_NODE_NAME_FORMAT = "{tank_name}-depth{stack_depth}"
 
 
 class FibaroTempSensorSettings(FibaroTempSensorSettingsGt):
     node_name: str
+    model_config = ConfigDict(ignored_types=(cached_property, TelemetryName))
 
-    class Config:
-        keep_untouched = (cached_property, TelemetryName)
-
-    @validator("rest")
-    def _collapse_rest_url(cls, v: Optional[RESTPollerSettings]):
+    @field_validator("rest")
+    @classmethod
+    def _collapse_rest_url(
+        cls, v: Optional[RESTPollerSettings]
+    ) -> Optional[RESTPollerSettings]:
         if v is not None:
             # Collapse session.base_url and request.url into
             # request.url.
@@ -84,16 +72,6 @@ class FibaroTempSensorSettings(FibaroTempSensorSettingsGt):
             v.session.base_url = URLConfig()
             v.request.url.url_args = URLArgs.from_url(collapsed_url)
         return v
-
-    @property
-    def telemetry_name(self) -> TelemetryName:
-        value = TelemetryName.symbol_to_value(self.telemetry_name_gt_enum_symbol)
-        return TelemetryName(value)
-
-    @property
-    def unit(self) -> Unit:
-        value = Unit.symbol_to_value(self.temp_unit_gt_enum_symbol)
-        return Unit(value)
 
     @cached_property
     def url(self) -> yarl.URL:
@@ -114,7 +92,7 @@ class FibaroTempSensorSettings(FibaroTempSensorSettingsGt):
             return match.group("access_token")
         return None
 
-    def clear_property_cache(self):
+    def clear_property_cache(self) -> None:
         if self.rest is not None:
             self.rest.clear_property_cache()
         for prop in [
@@ -124,7 +102,7 @@ class FibaroTempSensorSettings(FibaroTempSensorSettingsGt):
         ]:
             self.__dict__.pop(prop, None)
 
-    def resolve_rest(
+    def resolve_rest(  # noqa: C901, PLR0912
         self,
         hubitat: HubitatRESTResolutionSettings,
     ) -> None:
@@ -143,25 +121,23 @@ class FibaroTempSensorSettings(FibaroTempSensorSettingsGt):
                 poll_period_seconds=poll_period_seconds,
                 request=RequestArgs(url=constructed_config),
             )
+        elif self.rest.request.url is None:
+            self.rest.request.url = constructed_config
         else:
-            # Again, no inline url config is found; use constructed url config
-            if self.rest.request.url is None:
-                self.rest.request.url = constructed_config
+            # An inline config exists; take items *not* in inline config from
+            # constructed config (inline config 'wins' on disagreement)
+            existing_config = self.rest.request.url
+            if not existing_config.url_args.host:
+                existing_config.url_args.host = constructed_config.url_args.host
+            if existing_config.url_path_format is None:
+                existing_config.url_path_format = constructed_config.url_path_format
+            if existing_config.url_path_args is None:
+                existing_config.url_path_args = constructed_config.url_path_args
             else:
-                # An inline config exists; take items *not* in inline config from
-                # constructed config (inline config 'wins' on disagreement)
-                existing_config = self.rest.request.url
-                if not existing_config.url_args.host:
-                    existing_config.url_args.host = constructed_config.url_args.host
-                if existing_config.url_path_format is None:
-                    existing_config.url_path_format = constructed_config.url_path_format
-                if existing_config.url_path_args is None:
-                    existing_config.url_path_args = constructed_config.url_path_args
-                else:
-                    existing_config.url_path_args = dict(
-                        constructed_config.url_path_args,
-                        **existing_config.url_path_args,
-                    )
+                existing_config.url_path_args = dict(
+                    constructed_config.url_path_args,
+                    **existing_config.url_path_args,
+                )
         self.rest.clear_property_cache()
 
         # Verify new URL produced by combining any inline REST configuration
@@ -221,7 +197,7 @@ class FibaroTempSensorSettings(FibaroTempSensorSettingsGt):
                 tank_name=tank_name,
                 stack_depth=settings_gt.stack_depth,
             ),
-            **settings_gt.dict(),
+            **settings_gt.model_dump(),
         )
         if settings.poll_period_seconds is None:
             settings.poll_period_seconds = default_poll_period_seconds
@@ -238,8 +214,6 @@ class HubitatTankSettingsGt(BaseModel):
     default_poll_period_seconds: Optional[float] = None
     devices: list[FibaroTempSensorSettingsGt] = []
     web_listen_enabled: bool = True
-
-    class Config:
-        extra = Extra.allow
-        alias_generator = snake_to_camel
-        allow_population_by_field_name = True
+    model_config = ConfigDict(
+        extra="allow", alias_generator=snake_to_camel, populate_by_name=True
+    )

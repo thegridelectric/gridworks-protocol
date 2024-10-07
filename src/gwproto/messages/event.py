@@ -1,31 +1,22 @@
 import time
 import uuid
 from enum import Enum
-from typing import Any
-from typing import Generic
-from typing import Literal
-from typing import Optional
-from typing import TypeVar
+from typing import Any, Generic, Literal, Optional, TypeVar
 
-from pydantic import BaseModel
-from pydantic import Extra
-from pydantic import Field
-from pydantic import validator
+from pydantic import BaseModel, Field, field_validator
 
-from gwproto.message import Message
-from gwproto.message import as_enum
-from gwproto.types import GtShStatus
-from gwproto.types import SnapshotSpaceheat
+from gwproto.message import Message, as_enum
+from gwproto.types import Report, SnapshotSpaceheat
 
 
 class EventBase(BaseModel):
     MessageId: str = Field(default_factory=lambda: str(uuid.uuid4()))
     TimeNS: int = Field(default_factory=time.time_ns)
     Src: str = ""
-    TypeName: str = Field(const=True)
+    TypeName: str
 
 
-class AnyEvent(EventBase, extra=Extra.allow):
+class AnyEvent(EventBase, extra="allow"):
     MessageId: str
     TimeNS: int
     Src: str
@@ -36,10 +27,8 @@ EventT = TypeVar("EventT", bound=EventBase)
 
 
 class EventMessage(Message[EventT], Generic[EventT]):
-    def __init__(self, **data: Any):
-        if "AckRequired" not in data:
-            data["AckRequired"] = True
-        super().__init__(**data)
+    def __init__(self, AckRequired: bool = True, **kwargs: Any) -> None:  # noqa: ANN401, FBT001, FBT002, N803
+        super().__init__(AckRequired=AckRequired, **kwargs)
 
 
 class StartupEvent(EventBase):
@@ -62,8 +51,9 @@ class ProblemEvent(EventBase):
     Details: str = ""
     TypeName: Literal["gridworks.event.problem"] = "gridworks.event.problem"
 
-    @validator("ProblemType", pre=True)
-    def problem_type_value(cls, v: Any) -> Optional[Problems]:
+    @field_validator("ProblemType", mode="before")
+    @classmethod
+    def problem_type_value(cls, v: Any) -> Optional[Problems]:  # noqa: ANN401
         return as_enum(v, Problems, Problems.error)
 
 
@@ -110,13 +100,13 @@ class PeerActiveEvent(CommEvent):
     )
 
 
-class GtShStatusEvent(EventBase):
-    status: GtShStatus | dict
-    TypeName: Literal["gridworks.event.gt.sh.status"] = "gridworks.event.gt.sh.status"
+class ReportEvent(EventBase):
+    Report: Report
+    TypeName: Literal["gridworks.event.report"] = "gridworks.event.report"
 
 
 class SnapshotSpaceheatEvent(EventBase):
-    snap: SnapshotSpaceheat | dict
+    Snap: SnapshotSpaceheat
     TypeName: Literal["gridworks.event.snapshot.spaceheat"] = (
         "gridworks.event.snapshot.spaceheat"
     )

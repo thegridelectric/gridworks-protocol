@@ -1,17 +1,10 @@
-from typing import Any
-from typing import Callable
-from typing import Generic
-from typing import Mapping
-from typing import Optional
-from typing import TypeVar
-from typing import Union
+# ruff: noqa: ANN401
+
+from typing import Any, Callable, Generic, Literal, Mapping, Optional, TypeVar, Union
 
 from pydantic import BaseModel
-from pydantic import Field
-from pydantic.generics import GenericModel
 
 from gwproto.topic import MQTTTopic
-
 
 EnumType = TypeVar("EnumType")
 
@@ -31,7 +24,7 @@ class Header(BaseModel):
     MessageType: str
     MessageId: str = ""
     AckRequired: bool = False
-    TypeName: str = Field("gridworks.header", const=True)
+    TypeName: Literal["gridworks.header"] = "gridworks.header"
 
 
 PayloadT = TypeVar("PayloadT")
@@ -43,17 +36,17 @@ GRIDWORKS_ENVELOPE_TYPE = "gw"
 
 def ensure_arg(arg_name: str, default_value: Any, kwargs_dict: dict) -> None:
     if arg_name not in kwargs_dict:
-        payload = kwargs_dict.get("Payload", None)
+        payload = kwargs_dict.get("Payload")
         if payload is None or not hasattr(payload, arg_name):
             kwargs_dict[arg_name] = default_value
 
 
-class Message(GenericModel, Generic[PayloadT]):
+class Message(BaseModel, Generic[PayloadT]):
     Header: Header
     Payload: PayloadT
-    TypeName: str = Field(GRIDWORKS_ENVELOPE_TYPE, const=True)
+    TypeName: Literal["gw"] = GRIDWORKS_ENVELOPE_TYPE
 
-    def __init__(self, header: Optional[Header] = None, **kwargs: Any):
+    def __init__(self, header: Optional[Header] = None, **kwargs: Any) -> None:
         if header is None:
             header = self._header_from_kwargs(kwargs)
         super().__init__(Header=header, **kwargs)
@@ -66,14 +59,14 @@ class Message(GenericModel, Generic[PayloadT]):
 
     @classmethod
     def type_name(cls) -> str:
-        return Message.__fields__["TypeName"].default
+        return Message.model_fields["TypeName"].default
 
     def mqtt_topic(self) -> str:
         return MQTTTopic.encode(self.type_name(), self.src(), self.message_type())
 
     @classmethod
     def _header_from_kwargs(cls, kwargs: dict[str, Any]) -> Header:
-        header_kwargs = dict()
+        header_kwargs = {}
         if "Payload" in kwargs:
             payload = kwargs["Payload"]
             for header_field, payload_fields in [
@@ -83,7 +76,7 @@ class Message(GenericModel, Generic[PayloadT]):
                 ("MessageType", PAYLOAD_TYPE_FIELDS),
                 ("AckRequired", ["AckRequired"]),
             ]:
-                val = kwargs.get(header_field, None)
+                val = kwargs.get(header_field)
                 if val is None:
                     for payload_field in payload_fields:
                         if hasattr(payload, payload_field):
@@ -94,7 +87,7 @@ class Message(GenericModel, Generic[PayloadT]):
                     header_kwargs[header_field] = val
         header: Optional[Union[Header, dict[str, Any]]] = kwargs.pop("Header", None)
         if isinstance(header, Header):
-            header = header.copy(update=header_kwargs, deep=True)
+            header = header.model_copy(update=header_kwargs, deep=True)
         else:
             if header is not None:
                 header_kwargs = dict(header, **header_kwargs)

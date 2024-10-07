@@ -1,14 +1,7 @@
-black ../../src/gwproto/enums/
-isort ../../src/gwproto/enums/
-
-black ../../src/gwproto/types/
-isort ../../src/gwproto/types/
-
-black ../../tests/enums/
-isort ../../tests/enums/
-
-black ../../tests/types/
-isort ../../tests/types/
-
-black ../../src/gwproto/types/__init__.py
-black ../../src/gwproto/enums/__init__.py
+git checkout -- ODXML SSoT aicapture.json
+pushd ../..
+# TODO: There are times where we do want to generate docs
+git checkout -- docs
+poetry run ruff check
+poetry run pre-commit run -a
+popd

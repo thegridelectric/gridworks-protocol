@@ -19,13 +19,13 @@
     <xsl:template match="/">
         <FileSet>
             <FileSetFiles>
-                <xsl:for-each select="$airtable//ProtocolEnums/ProtocolEnum[(normalize-space(ProtocolName) ='gwproto')]">
+                <xsl:for-each select="$airtable//ProtocolEnums/ProtocolEnum[(normalize-space(ProtocolName) ='gwproto') and not (NoVersions = 'true')]">
                 <xsl:variable name="enum-id" select="GtEnumId"/>
                 <xsl:variable name="enum-version" select="EnumVersion"/>
                 <xsl:variable name="enum-name" select="EnumName"/>
                 <xsl:variable name="local-name" select="LocalName"/>
                 <xsl:for-each select="$airtable//GtEnums/GtEnum[GtEnumId=$enum-id]">
-                    <xsl:variable name="enum-name-style" select="PythonEnumNameStyle" />
+                    <xsl:variable name="enum-type" select="EnumType" />
                     <xsl:variable name="enum-class-name">
                         <xsl:call-template name="nt-case">
                             <xsl:with-param name="type-name-text" select="LocalName" />
@@ -41,12 +41,13 @@
 
 <xsl:text>from enum import auto
 from typing import List
+from typing import Optional
 
-from fastapi_utils.enums import StrEnum
+from gw.enums import GwStrEnum
 
 
 class </xsl:text><xsl:value-of select="$enum-class-name"/>
-<xsl:text>(StrEnum):
+<xsl:text>(GwStrEnum):
     """
     </xsl:text>
     <!-- Enum description, wrapped, if it exists -->
@@ -62,8 +63,7 @@ class </xsl:text><xsl:value-of select="$enum-class-name"/>
     Enum </xsl:text><xsl:value-of select="Name"/><xsl:text> version </xsl:text><xsl:value-of select="$enum-version"/>
     <xsl:text> in the GridWorks Type registry.
 
-    Used by used by multiple Application Shared Languages (ASLs), including but not limited to
-    gwproto. For more information:
+    Used by multiple Application Shared Languages (ASLs). For more information:
       - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
       - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#</xsl:text>
     <xsl:value-of select="translate($enum-name,'.','')"/>
@@ -77,13 +77,12 @@ class </xsl:text><xsl:value-of select="$enum-class-name"/>
     </xsl:if>
     <xsl:text>
 
-    Values (with symbols in parens):</xsl:text>
+    Values:</xsl:text>
     <xsl:for-each select="$airtable//EnumSymbols/EnumSymbol[(Enum = $enum-id)  and (Version &lt;= $enum-version)]">
     <xsl:sort select="Idx" data-type="number"/>
     <xsl:text>
       - </xsl:text>
-      <xsl:value-of select="LocalValue"/><xsl:text> (</xsl:text>
-     <xsl:value-of select="Symbol"/><xsl:text>)</xsl:text>
+      <xsl:value-of select="LocalValue"/>
 
     <xsl:if test="(normalize-space(Description)!='') or (normalize-space(Url)!='')">
     <xsl:text>: </xsl:text>
@@ -116,10 +115,10 @@ class </xsl:text><xsl:value-of select="$enum-class-name"/>
  <xsl:call-template name="insert-spaces">
     <xsl:with-param name="count" select="4"/>
 </xsl:call-template>
-<xsl:if test="$enum-name-style = 'Upper'">
+<xsl:if test="$enum-type = 'Upper'">
     <xsl:value-of select="translate(translate(LocalValue,'-',''),$lcletters, $ucletters)"/>
 </xsl:if>
-<xsl:if test="$enum-name-style ='UpperPython'">
+<xsl:if test="$enum-type ='UpperPython'">
     <xsl:value-of select="LocalValue"/>
 </xsl:if>
 
@@ -133,51 +132,31 @@ class </xsl:text><xsl:value-of select="$enum-class-name"/>
     <xsl:text>":
         """
         Returns default value (in this case </xsl:text>
-        <xsl:if test="$enum-name-style = 'Upper'">
+        <xsl:if test="$enum-type = 'Upper'">
             <xsl:value-of select="translate(translate(DefaultEnumValue,'-',''),$lcletters, $ucletters)"/>
         </xsl:if>
-        <xsl:if test="$enum-name-style ='UpperPython'">
+        <xsl:if test="$enum-type ='UpperPython'">
             <xsl:value-of select="DefaultEnumValue"/>
         </xsl:if>
         <xsl:text>)
         """
         return cls.</xsl:text>
-        <xsl:if test="$enum-name-style = 'Upper'">
+        <xsl:if test="$enum-type = 'Upper'">
             <xsl:value-of select="translate(translate(DefaultEnumValue,'-',''),$lcletters, $ucletters)"/>
         </xsl:if>
-        <xsl:if test="$enum-name-style ='UpperPython'">
+        <xsl:if test="$enum-type ='UpperPython'">
             <xsl:value-of select="DefaultEnumValue"/>
         </xsl:if>
 
     <xsl:text>
 
     @classmethod
-    def values(cls) -> List[str]:
-        """
-        Returns enum choices
-        """
-        return [elt.value for elt in cls]
-
-    @classmethod
-    def version(cls, value: str) -> str:
-        """
-        Returns the version of an enum value.
-
-        Once a value belongs to one version of the enum, it belongs
-        to all future versions.
-
-        Args:
-            value (str): The candidate enum value.
-
-        Raises:
-            ValueError: If value is not one of the enum values.
-
-        Returns:
-            str: The earliest version of the enum containing value.
-        """
+    def version(cls, value: Optional[str] = None) -> str:
+        if value is None:
+            return "</xsl:text><xsl:value-of select="$enum-version"/><xsl:text>"
         if not isinstance(value, str):
-            raise ValueError(f"This method applies to strings, not enums")
-        if value not in value_to_version.keys():
+            raise TypeError("This method applies to strings, not enums")
+        if value not in value_to_version:
             raise ValueError(f"Unknown enum value: {value}")
         return value_to_version[value]
 
@@ -199,87 +178,16 @@ class </xsl:text><xsl:value-of select="$enum-class-name"/>
     <xsl:value-of select="$enum-version"/>
     <xsl:text>"
 
-    @classmethod
-    def symbol_to_value(cls, symbol: str) -> str:
-        """
-        Given the symbol sent in a serialized message, returns the encoded enum.
-
-        Args:
-            symbol (str): The candidate symbol.
-
-        Returns:
-            str: The encoded value associated to that symbol. If the symbol is not
-            recognized - which could happen if the actor making the symbol is using
-            a later version of this enum, returns the default value of "</xsl:text>
-            <xsl:value-of select="DefaultEnumValue"/><xsl:text>".
-        """
-        if symbol not in symbol_to_value.keys():
-            return cls.default().value
-        return symbol_to_value[symbol]
-
-    @classmethod
-    def value_to_symbol(cls, value: str) -> str:
-        """
-        Provides the encoding symbol for a </xsl:text><xsl:value-of select="$enum-class-name"/>
-        <xsl:text> enum to send in seriliazed messages.
-
-        Args:
-            symbol (str): The candidate value.
-
-        Returns:
-            str: The symbol encoding that value. If the value is not recognized -
-            which could happen if the actor making the message used a later version
-            of this enum than the actor decoding the message, returns the default
-            symbol of "</xsl:text>
-            <xsl:value-of select="DefaultSymbol"/><xsl:text>".
-        """
-        if value not in value_to_symbol.keys():
-            return value_to_symbol[cls.default().value]
-        return value_to_symbol[value]
-
-    @classmethod
-    def symbols(cls) -> List[str]:
-        """
-        Returns a list of the enum symbols
-        """
-        return [</xsl:text>
-<xsl:for-each select="$airtable//EnumSymbols/EnumSymbol[(Enum = $enum-id) and (Version &lt;= $enum-version)]">
-<xsl:sort select="Idx" data-type="number"/>
-        <xsl:text>
-            "</xsl:text><xsl:value-of select="Symbol"/><xsl:text>",</xsl:text>
-
-</xsl:for-each>
-        <xsl:text>
-        ]
-
-
-symbol_to_value = {</xsl:text>
-<xsl:for-each select="$airtable//EnumSymbols/EnumSymbol[(Enum = $enum-id) and (Version &lt;= $enum-version)]">
-<xsl:sort select="Idx" data-type="number"/>
-    <xsl:text>
-    "</xsl:text><xsl:value-of select="Symbol"/><xsl:text>": "</xsl:text>
-    <xsl:if test="$enum-name-style = 'Upper'">
-        <xsl:value-of select="translate(translate(LocalValue,'-',''),$lcletters, $ucletters)"/>
-    </xsl:if>
-    <xsl:if test="$enum-name-style ='UpperPython'">
-        <xsl:value-of select="LocalValue"/>
-    </xsl:if>
-<xsl:text>",</xsl:text>
-</xsl:for-each>
-<xsl:text>
-}
-
-value_to_symbol = {value: key for key, value in symbol_to_value.items()}
 
 value_to_version = {</xsl:text>
 <xsl:for-each select="$airtable//EnumSymbols/EnumSymbol[(Enum = $enum-id) and (Version &lt;= $enum-version)]">
 <xsl:sort select="Idx" data-type="number"/>
     <xsl:text>
     "</xsl:text>
-    <xsl:if test="$enum-name-style = 'Upper'">
+    <xsl:if test="$enum-type = 'Upper'">
         <xsl:value-of select="translate(translate(LocalValue,'-',''),$lcletters, $ucletters)"/>
     </xsl:if>
-    <xsl:if test="$enum-name-style ='UpperPython'">
+    <xsl:if test="$enum-type ='UpperPython'">
         <xsl:value-of select="LocalValue"/>
     </xsl:if>
 <xsl:text>": "</xsl:text> <xsl:value-of select="Version"/><xsl:text>",</xsl:text>

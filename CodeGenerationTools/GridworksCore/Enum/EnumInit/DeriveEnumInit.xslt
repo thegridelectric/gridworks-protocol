@@ -54,10 +54,9 @@ on these ideas:
   - [GridWorks Enums](https://gridwork-type-registry.readthedocs.io/en/latest/types.html)
   - [GridWorks Types](https://gridwork-type-registry.readthedocs.io/en/latest/types.html)
   - [ASLs](https://gridwork-type-registry.readthedocs.io/en/latest/asls.html)
-
-
- """</xsl:text>
-<xsl:for-each select="$airtable//ProtocolEnums/ProtocolEnum[(normalize-space(ProtocolName) ='gwproto')]">
+ """
+</xsl:text>
+<xsl:for-each select="$airtable//ProtocolEnums/ProtocolEnum[(normalize-space(ProtocolName) ='gwproto') and not(normalize-space(EnumName)='')]">
 <xsl:sort select="LocalEnumName" data-type="text"/>
 <xsl:text>
 from gwproto.enums.</xsl:text>
@@ -84,7 +83,7 @@ __all__ = [</xsl:text>
     <xsl:call-template name="nt-case">
         <xsl:with-param name="type-name-text" select="LocalEnumName" />
     </xsl:call-template>
-    <xsl:text>",   # [</xsl:text>
+    <xsl:text>",  # [</xsl:text>
     <xsl:value-of select="EnumName"/><xsl:text>.</xsl:text>
     <xsl:value-of select="EnumVersion"/>
     <xsl:text>](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#</xsl:text>

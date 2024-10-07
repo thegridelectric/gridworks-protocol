@@ -1,31 +1,16 @@
-from gwproto import Decoders
-from gwproto import MQTTCodec
-from gwproto import create_message_payload_discriminator
-from gwproto.messages import GtDispatchBoolean_Maker
-from gwproto.messages import GtShCliAtnCmd_Maker
+from gwproto import MQTTCodec, create_message_model
 from tests.dummy_decoders import PARENT
 
 
-ChildMessageDecoder = create_message_payload_discriminator(
-    "ChildMessageDecoder",
-    [
-        "gwproto.messages",
-    ],
-)
-
-
 class ChildMQTTCodec(MQTTCodec):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(
-            Decoders.from_objects(
-                [
-                    GtDispatchBoolean_Maker,
-                    GtShCliAtnCmd_Maker,
-                ],
-                message_payload_discriminator=ChildMessageDecoder,
+            create_message_model(
+                "ChildMessageDecoder",
+                ["gwproto.messages"],
             )
         )
 
-    def validate_source_alias(self, source_alias: str):
+    def validate_source_alias(self, source_alias: str) -> None:  # noqa: PLR6301, RUF100
         if source_alias != PARENT:
-            raise Exception(f"alias {source_alias} not my parent!")
+            raise ValueError(f"alias {source_alias} not my parent!")

@@ -5,6 +5,7 @@ from typing import List, Literal
 from pydantic import (
     ConfigDict,
     PositiveInt,
+    StrictInt,
     field_validator,
     model_validator,
 )
@@ -18,7 +19,7 @@ from gwproto.types.component_attribute_class_gt import ComponentAttributeClassGt
 
 
 class Ads111xBasedCacGt(ComponentAttributeClassGt):
-    AdsI2cAddressList: List[str]
+    AdsI2cAddressList: List[StrictInt]
     TotalTerminalBlocks: PositiveInt
     TelemetryNameList: List[TelemetryName]
     TypeName: Literal["ads111x.based.cac.gt"] = "ads111x.based.cac.gt"
@@ -28,7 +29,7 @@ class Ads111xBasedCacGt(ComponentAttributeClassGt):
 
     @field_validator("AdsI2cAddressList")
     @classmethod
-    def _check_ads_i2c_address_list(cls, v: List[str]) -> List[str]:
+    def _check_ads_i2c_address_list(cls, v: List[int]) -> List[str]:
         try:
             for elt in v:
                 check_is_ads1115_i2c_address(elt)

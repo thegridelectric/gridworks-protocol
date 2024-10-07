@@ -61,10 +61,12 @@ from gwproto.types.synced_readings import SyncedReadings
 from gwproto.types.telemetry_snapshot_spaceheat import (
     TelemetrySnapshotSpaceheat,
 )
+from gwproto.types.web_server_component_gt import WebServerComponentGt
 
 __all__ = [
     "Ads111xBasedCacGt",
     "Ads111xBasedComponentGt",
+    "AdsChannelConfig",
     "ChannelConfig",
     "ChannelReadings",
     "ComponentAttributeClassGt",
@@ -95,7 +97,7 @@ __all__ = [
     "SnapshotSpaceheat",
     "SpaceheatNodeGt",
     "TelemetrySnapshotSpaceheat",
-    "AdsChannelConfig",
+    "WebServerComponentGt",
     "cacs",  # noqa: F822
     "components",  # noqa: F822
 ]

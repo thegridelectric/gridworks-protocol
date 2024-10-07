@@ -8,7 +8,7 @@ def test_ads111x_based_cac_gt_generated() -> None:
         "ComponentAttributeClassId": "432073b8-4d2b-4e36-9229-73893f33f846",
         "MinPollPeriodMs": 200,
         "MakeModel": "GRIDWORKS__MULTITEMP1",
-        "AdsI2cAddressList": ["0x4b", "0x48", "0x49"],
+        "AdsI2cAddressList": [0x4B, 0x49, 0x48],
         "TotalTerminalBlocks": 12,
         "TelemetryNameList": ["WaterTempCTimes1000", "AirTempCTimes1000"],
         "DisplayName": "Gridworks 12-channel MultiTemp Ads Sensor",

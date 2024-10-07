@@ -193,8 +193,8 @@ def check_is_ads1115_i2c_address(v: str) -> None:
     Raises:
         ValueError: if not Ads1115I2cAddress format
     """
-    if v.lower() not in ["0x48", "0x49", "0x4a", "0x4b"]:
-        raise ValueError(f"Not Ads1115I2cAddress: <{v}>")
+    if v not in [0x48, 0x49, 0x4A, 0x4B]:
+        raise ValueError(f"Not Ads1115I2cAddress: <{hex(v)}>")
 
 
 def check_is_near5(v: str) -> None:

@@ -11,10 +11,11 @@ def test_resistive_heater_component_gt_generated() -> None:
         "ComponentAttributeClassId": "cf1f2587-7462-4701-b962-d2b264744c1d",
         "DisplayName": "First 4.5 kW boost in tank",
         "HwUid": "aaaa2222",
+        "ConfigList": [],
         "TestedMaxHotMilliOhms": 13714,
         "TestedMaxColdMilliOhms": 14500,
         "TypeName": "resistive.heater.component.gt",
-        "Version": "000",
+        "Version": "001",
     }
     assert_component_load(
         [

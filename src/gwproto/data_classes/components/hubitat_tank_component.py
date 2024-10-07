@@ -6,26 +6,28 @@ from gwproto.data_classes.components import HubitatComponent
 from gwproto.data_classes.components.component import Component
 from gwproto.data_classes.resolver import ComponentResolver
 from gwproto.data_classes.sh_node import ShNode
-from gwproto.types import HubitatTankCacGt, HubitatTankComponentGt
+from gwproto.types.component_attribute_class_gt import ComponentAttributeClassGt
 from gwproto.types.hubitat_component_gt import (
     HubitatComponentGt,
     HubitatRESTResolutionSettings,
 )
+from gwproto.types.hubitat_tank_component_gt import HubitatTankComponentGt
 from gwproto.types.hubitat_tank_gt import (
     FibaroTempSensorSettings,
     FibaroTempSensorSettingsGt,
 )
-from gwproto.types.telemetry_reporting_config import TelemetryReportingConfig
 
 
 class HubitatTankComponent(
-    Component[HubitatTankComponentGt, HubitatTankCacGt], ComponentResolver
+    Component[HubitatTankComponentGt, ComponentAttributeClassGt], ComponentResolver
 ):
     hubitat: HubitatComponentGt
     devices_gt: list[FibaroTempSensorSettingsGt]
     devices: list[FibaroTempSensorSettings]
 
-    def __init__(self, gt: HubitatTankComponentGt, cac: HubitatTankCacGt) -> None:
+    def __init__(
+        self, gt: HubitatTankComponentGt, cac: ComponentAttributeClassGt
+    ) -> None:
         super().__init__(gt, cac)
         # Create self.hubitat as a proxy containing only the id
         # of the hubitat; the actual component data will be resolved
@@ -93,17 +95,3 @@ class HubitatTankComponent(
         for device in self.devices:
             urls[device.node_name] = device.url
         return urls
-
-    @property
-    def config_list(self) -> list[TelemetryReportingConfig]:
-        return [
-            TelemetryReportingConfig(
-                TelemetryName=device.telemetry_name,
-                AboutNodeName=device.node_name,
-                ReportOnChange=False,
-                SamplePeriodS=int(device.rest.poll_period_seconds),
-                Exponent=device.exponent,
-                Unit=device.unit,
-            )
-            for device in self.devices
-        ]

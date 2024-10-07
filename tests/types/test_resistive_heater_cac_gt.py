@@ -10,9 +10,10 @@ def test_resistive_heater_cac_gt_load() -> None:
         # "MakeModelGtEnumSymbol": "00000000",
         "MakeModel": "UNKNOWNMAKE__UNKNOWNMODEL",
         "DisplayName": "Fake Boost Element",
+        "MinPollPeriodMs": 1000,
         "NameplateMaxPowerW": 4500,
         "RatedVoltageV": 240,
         "TypeName": "resistive.heater.cac.gt",
-        "Version": "000",
+        "Version": "001",
     }
     assert_cac_load([CacCase("ResistiveHeaterCacGt", d, ResistiveHeaterCacGt)])

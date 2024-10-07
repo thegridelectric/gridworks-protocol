@@ -38,6 +38,7 @@ class HubitatComponentGt(ComponentGt):
                 AccessToken="",
                 MacAddress=MacAddress("00:00:00:00:00:00"),
             ),
+            ConfigList=[],
         )
 
 

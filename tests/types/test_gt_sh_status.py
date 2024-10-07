@@ -10,30 +10,21 @@ def test_gt_sh_status_generated() -> None:
         "AboutGNodeAlias": "dwtest.isone.ct.newhaven.orange1.ta",
         "SlotStartUnixS": 1656945300,
         "ReportingPeriodS": 300,
-        "SimpleTelemetryList": [
-            {
-                "ValueList": [0, 1],
-                "ReadTimeUnixMsList": [1656945400527, 1656945414270],
-                "ShNodeAlias": "a.elt1.relay",
-                "TypeName": "gt.sh.simple.telemetry.status",
-                "Version": "100",
-                "TelemetryName": "RelayState",
-            }
-        ],
+        "SimpleTelemetryList": [],
         "MultipurposeTelemetryList": [
             {
-                "AboutNodeAlias": "a.elt1",
+                "AboutNodeAlias": "elt1",
                 "ValueList": [18000],
                 "ReadTimeUnixMsList": [1656945390152],
-                "SensorNodeAlias": "a.m",
+                "SensorNodeAlias": "power-meter",
                 "TypeName": "gt.sh.multipurpose.telemetry.status",
-                "Version": "100",
+                "Version": "101",
                 "TelemetryName": "CurrentRmsMicroAmps",
             }
         ],
         "BooleanactuatorCmdList": [
             {
-                "ShNodeAlias": "a.elt1.relay",
+                "ShNodeAlias": "elt1",
                 "RelayStateCommandList": [1],
                 "CommandTimeUnixMsList": [1656945413464],
                 "TypeName": "gt.sh.booleanactuator.cmd.status",

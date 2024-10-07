@@ -6,7 +6,7 @@ from typing import Any, Generic, Literal, Optional, TypeVar
 from pydantic import BaseModel, Field, field_validator
 
 from gwproto.message import Message, as_enum
-from gwproto.types import GtShStatus, SnapshotSpaceheat
+from gwproto.types import Report, SnapshotSpaceheat
 
 
 class EventBase(BaseModel):
@@ -100,13 +100,13 @@ class PeerActiveEvent(CommEvent):
     )
 
 
-class GtShStatusEvent(EventBase):
-    status: GtShStatus
-    TypeName: Literal["gridworks.event.gt.sh.status"] = "gridworks.event.gt.sh.status"
+class ReportEvent(EventBase):
+    Report: Report
+    TypeName: Literal["gridworks.event.report"] = "gridworks.event.report"
 
 
 class SnapshotSpaceheatEvent(EventBase):
-    snap: SnapshotSpaceheat
+    Snap: SnapshotSpaceheat
     TypeName: Literal["gridworks.event.snapshot.spaceheat"] = (
         "gridworks.event.snapshot.spaceheat"
     )

@@ -1,24 +1,38 @@
-"""Type spaceheat.node.gt, version 100"""
+"""Type spaceheat.node.gt, version 110"""
 
 from typing import Literal, Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, StrictInt, model_validator
+from typing_extensions import Self
 
-from gwproto.enums import ActorClass, Role
-from gwproto.property_format import LeftRightDotStr, UUID4Str
+from gwproto.enums import ActorClass
+from gwproto.property_format import HandleName, SpaceheatName, UUID4Str
 
 
 class SpaceheatNodeGt(BaseModel):
-    ShNodeId: UUID4Str
-    Alias: LeftRightDotStr
+    Name: SpaceheatName
+    ActorHierarchyName: Optional[HandleName] = None
+    Handle: Optional[HandleName] = None
     ActorClass: ActorClass
-    Role: Role
     DisplayName: Optional[str] = None
-    ComponentId: Optional[UUID4Str] = None
-    ReportingSamplePeriodS: Optional[int] = None
-    InPowerMetering: Optional[bool] = Field(
-        title="InPowerMetering",
-        default=None,
-    )
+    ComponentId: Optional[str] = None
+    NameplatePowerW: Optional[StrictInt] = None
+    InPowerMetering: Optional[bool] = None
+    ShNodeId: UUID4Str
     TypeName: Literal["spaceheat.node.gt"] = "spaceheat.node.gt"
-    Version: Literal["100"] = "100"
+    Version: Literal["200"] = "200"
+
+    @model_validator(mode="after")
+    def check_axiom_1(self) -> Self:
+        """
+        Axiom 1: InPowerMetering requirements.
+        If InPowerMetering exists and is true, then NameplatePowerW must exist
+        """
+        if self.InPowerMetering and self.NameplatePowerW is None:
+            raise ValueError(
+                "Axiom 1 failed! "
+                "If InPowerMetering exists and is true, then NameplatePowerW must exist"
+            )
+        return self
+
+    model_config = ConfigDict(extra="allow", use_enum_values=True)

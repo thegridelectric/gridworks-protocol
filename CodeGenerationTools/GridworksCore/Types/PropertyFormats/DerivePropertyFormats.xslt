@@ -265,16 +265,16 @@ def is_world_instance_name_format(candidate: str) -> bool:
     return not len(root_g_node_alias_words) > 1
 
 
-def check_is_ads1115_i2c_address(v: str) -> None:
+def check_is_ads1115_i2c_address(v: int) -> None:
     """
-    Ads1115I2cAddress: ToLower(v) in  ['0x48', '0x49', '0x4a', '0x4b'].
+    Ads1115I2cAddress: ToLower(v) in  [0x48, 0x49, 0x4a, 0x4b].
 
     One of the 4 allowable I2C addresses for Texas Instrument Ads1115 chips.
 
     Raises:
         ValueError: if not Ads1115I2cAddress format
     """
-    if v.lower() not in ["0x48", "0x49", "0x4a", "0x4b"]:
+    if v not in [0x48, 0x49, 0x4a, 0x4b]:
         raise ValueError(f"Not Ads1115I2cAddress: &lt;{v}>")
 
 

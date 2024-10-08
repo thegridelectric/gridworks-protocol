@@ -25,6 +25,7 @@ class Header(BaseModel):
     MessageId: str = ""
     AckRequired: bool = False
     TypeName: Literal["gridworks.header"] = "gridworks.header"
+    Version: Literal["001"] = "001"
 
 
 PayloadT = TypeVar("PayloadT")

@@ -33,6 +33,8 @@ def test_report_generated() -> None:
                 "Version": "001",
             },
         ],
+        "FsmActionList": [],
+        "FsmReportList": [],
         "Id": "4dab57dd-8b4e-4ea4-90a3-d63df9eeb061",
         "TypeName": "report",
         "Version": "000",

@@ -9,9 +9,10 @@
     },
     "Payload": {
         "MessageId":"4dab57dd-8b4e-4ea4-90a3-d63df9eeb061",
-        "TimeNS":1708518810017356000,
+        "TimeCreatedMs":1708518810017,
         "Src":"hw1.isone.me.versant.keene.beech.scada",
         "TypeName":"gridworks.event.report",
+        "Version": "000",
         "Report": {
             "FromGNodeAlias":"hw1.isone.me.versant.keene.beech.scada",
             "FromGNodeInstanceId":"98542a17-3180-4f2a-a929-6023f0e7a106",

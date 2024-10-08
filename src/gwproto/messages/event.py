@@ -6,19 +6,22 @@ from typing import Any, Generic, Literal, Optional, TypeVar
 from pydantic import BaseModel, Field, field_validator
 
 from gwproto.message import Message, as_enum
+from gwproto.property_format import UTCMilliseconds
 from gwproto.types import Report, SnapshotSpaceheat
 
 
 class EventBase(BaseModel):
     MessageId: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    TimeNS: int = Field(default_factory=time.time_ns)
+    TimeCreatedMs: UTCMilliseconds = Field(
+        default_factory=lambda: int(time.time() * 1000)
+    )
     Src: str = ""
     TypeName: str
 
 
 class AnyEvent(EventBase, extra="allow"):
     MessageId: str
-    TimeNS: int
+    TimeCreatedMs: int = Field(default_factory=lambda: int(time.time() * 1000))
     Src: str
     TypeName: str
 
@@ -38,6 +41,7 @@ class StartupEvent(EventBase):
 class ShutdownEvent(EventBase):
     Reason: str
     TypeName: Literal["gridworks.event.shutdown"] = "gridworks.event.shutdown"
+    Version: Literal["001"] = "001"
 
 
 class Problems(Enum):
@@ -50,6 +54,7 @@ class ProblemEvent(EventBase):
     Summary: str
     Details: str = ""
     TypeName: Literal["gridworks.event.problem"] = "gridworks.event.problem"
+    Version: Literal["001"] = "001"
 
     @field_validator("ProblemType", mode="before")
     @classmethod
@@ -68,41 +73,52 @@ class MQTTConnectEvent(MQTTCommEvent):
     TypeName: Literal["gridworks.event.comm.mqtt.connect"] = (
         "gridworks.event.comm.mqtt.connect"
     )
+    Version: Literal["001"] = "001"
 
 
 class MQTTConnectFailedEvent(MQTTCommEvent):
     TypeName: Literal["gridworks.event.comm.mqtt.connect.failed"] = (
         "gridworks.event.comm.mqtt.connect.failed"
     )
+    Version: Literal["001"] = "001"
 
 
 class MQTTDisconnectEvent(MQTTCommEvent):
     TypeName: Literal["gridworks.event.comm.mqtt.disconnect"] = (
         "gridworks.event.comm.mqtt.disconnect"
     )
+    Version: Literal["001"] = "001"
 
 
 class MQTTFullySubscribedEvent(CommEvent):
     TypeName: Literal["gridworks.event.comm.mqtt.fully.subscribed"] = (
         "gridworks.event.comm.mqtt.fully.subscribed"
     )
+    Version: Literal["001"] = "001"
 
 
 class ResponseTimeoutEvent(CommEvent):
     TypeName: Literal["gridworks.event.comm.response.timeout"] = (
         "gridworks.event.comm.response.timeout"
     )
+    Version: Literal["001"] = "001"
 
 
 class PeerActiveEvent(CommEvent):
     TypeName: Literal["gridworks.event.comm.peer.active"] = (
         "gridworks.event.comm.peer.active"
     )
+    Version: Literal["001"] = "001"
 
 
 class ReportEvent(EventBase):
     Report: Report
     TypeName: Literal["gridworks.event.report"] = "gridworks.event.report"
+    Version: Literal["000"] = "000"
+
+    def __init__(self, **data: dict[str, Any]) -> None:
+        super().__init__(**data)
+        self.MessageId = self.Report.Id
 
 
 class SnapshotSpaceheatEvent(EventBase):
@@ -110,3 +126,4 @@ class SnapshotSpaceheatEvent(EventBase):
     TypeName: Literal["gridworks.event.snapshot.spaceheat"] = (
         "gridworks.event.snapshot.spaceheat"
     )
+    Version: Literal["001"] = "001"

@@ -21,6 +21,10 @@ from gwproto.types.electric_meter_component_gt import ElectricMeterComponentGt
 from gwproto.types.fibaro_smart_implant_component_gt import (
     FibaroSmartImplantComponentGt,
 )
+from gwproto.types.fsm_atomic_report import FsmAtomicReport
+from gwproto.types.fsm_event import FsmEvent
+from gwproto.types.fsm_full_report import FsmFullReport
+from gwproto.types.fsm_trigger_from_atn import FsmTriggerFromAtn
 from gwproto.types.gt_sh_cli_atn_cmd import GtShCliAtnCmd
 from gwproto.types.heartbeat_b import HeartbeatB
 from gwproto.types.hubitat_component_gt import (
@@ -32,7 +36,12 @@ from gwproto.types.hubitat_poller_component_gt import (
 from gwproto.types.hubitat_tank_component_gt import (
     HubitatTankComponentGt,
 )
+from gwproto.types.i2c_multichannel_dt_relay_component_gt import (
+    I2cMultichannelDtRelayComponentGt,
+)
+from gwproto.types.keyparam_change_log import KeyparamChangeLog
 from gwproto.types.power_watts import PowerWatts
+from gwproto.types.relay_actor_config import RelayActorConfig
 from gwproto.types.report import Report
 from gwproto.types.resistive_heater_cac_gt import (
     ResistiveHeaterCacGt,
@@ -63,12 +72,19 @@ __all__ = [
     "ElectricMeterComponentGt",
     "ElectricMeterChannelConfig",
     "FibaroSmartImplantComponentGt",
+    "FsmAtomicReport",
+    "FsmEvent",
+    "FsmFullReport",
+    "FsmTriggerFromAtn",
     "GtShCliAtnCmd",
     "HeartbeatB",
     "HubitatComponentGt",
     "HubitatPollerComponentGt",
     "HubitatTankComponentGt",
+    "I2cMultichannelDtRelayComponentGt",
+    "KeyparamChangeLog",
     "PowerWatts",
+    "RelayActorConfig",
     "Report",
     "RESTPollerComponentGt",
     "ResistiveHeaterCacGt",

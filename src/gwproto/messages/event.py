@@ -7,7 +7,7 @@ from pydantic import BaseModel, Field, field_validator
 
 from gwproto.message import Message, as_enum
 from gwproto.property_format import UTCMilliseconds
-from gwproto.types import Report, SnapshotSpaceheat
+from gwproto.types import Report
 
 
 class EventBase(BaseModel):
@@ -119,11 +119,3 @@ class ReportEvent(EventBase):
     def __init__(self, **data: dict[str, Any]) -> None:
         super().__init__(**data)
         self.MessageId = self.Report.Id
-
-
-class SnapshotSpaceheatEvent(EventBase):
-    Snap: SnapshotSpaceheat
-    TypeName: Literal["gridworks.event.snapshot.spaceheat"] = (
-        "gridworks.event.snapshot.spaceheat"
-    )
-    Version: Literal["001"] = "001"

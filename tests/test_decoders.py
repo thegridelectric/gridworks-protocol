@@ -19,7 +19,6 @@ from gwproto.messages import (
     ReportEvent,
     ResponseTimeoutEvent,
     ShutdownEvent,
-    SnapshotSpaceheatEvent,
     StartupEvent,
 )
 from gwproto.types import (
@@ -69,7 +68,6 @@ def child_to_parent_messages() -> list[MessageCase]:
     unrecognizeable_bad_event_content = {"TypeName": "gridworks.event.baz"}
     snap_message_dict = stored_message_dicts["snapshot"]
     snapshot_spaceheat = SnapshotSpaceheat.model_validate(snap_message_dict["Payload"])
-    snapshot_event = SnapshotSpaceheatEvent(Src=CHILD, Snap=snapshot_spaceheat)
 
     return [
         MessageCase(
@@ -133,7 +131,6 @@ def child_to_parent_messages() -> list[MessageCase]:
             ),
             exp_exceptions=[ValidationError],
         ),
-        MessageCase("snap-payload-obj", Message(Src=CHILD, Payload=snapshot_event)),
         MessageCase("startup-event", Message(Src=CHILD, Payload=StartupEvent())),
         MessageCase(
             "shutdown-event", Message(Src=CHILD, Payload=ShutdownEvent(Reason="foo"))

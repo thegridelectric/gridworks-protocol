@@ -21,18 +21,7 @@ from gwproto.types.electric_meter_component_gt import ElectricMeterComponentGt
 from gwproto.types.fibaro_smart_implant_component_gt import (
     FibaroSmartImplantComponentGt,
 )
-from gwproto.types.gt_sh_booleanactuator_cmd_status import GtShBooleanactuatorCmdStatus
 from gwproto.types.gt_sh_cli_atn_cmd import GtShCliAtnCmd
-from gwproto.types.gt_sh_multipurpose_telemetry_status import (
-    GtShMultipurposeTelemetryStatus,
-)
-from gwproto.types.gt_sh_simple_telemetry_status import (
-    GtShSimpleTelemetryStatus,
-)
-from gwproto.types.gt_sh_status import GtShStatus
-from gwproto.types.gt_sh_telemetry_from_multipurpose_sensor import (
-    GtShTelemetryFromMultipurposeSensor,
-)
 from gwproto.types.heartbeat_b import HeartbeatB
 from gwproto.types.hubitat_component_gt import (
     HubitatComponentGt,
@@ -58,9 +47,6 @@ from gwproto.types.single_reading import SingleReading
 from gwproto.types.snapshot_spaceheat import SnapshotSpaceheat
 from gwproto.types.spaceheat_node_gt import SpaceheatNodeGt
 from gwproto.types.synced_readings import SyncedReadings
-from gwproto.types.telemetry_snapshot_spaceheat import (
-    TelemetrySnapshotSpaceheat,
-)
 from gwproto.types.web_server_component_gt import WebServerComponentGt
 
 __all__ = [
@@ -77,12 +63,7 @@ __all__ = [
     "ElectricMeterComponentGt",
     "ElectricMeterChannelConfig",
     "FibaroSmartImplantComponentGt",
-    "GtShBooleanactuatorCmdStatus",
     "GtShCliAtnCmd",
-    "GtShMultipurposeTelemetryStatus",
-    "GtShSimpleTelemetryStatus",
-    "GtShStatus",
-    "GtShTelemetryFromMultipurposeSensor",
     "HeartbeatB",
     "HubitatComponentGt",
     "HubitatPollerComponentGt",
@@ -96,7 +77,6 @@ __all__ = [
     "SyncedReadings",
     "SnapshotSpaceheat",
     "SpaceheatNodeGt",
-    "TelemetrySnapshotSpaceheat",
     "WebServerComponentGt",
     "cacs",  # noqa: F822
     "components",  # noqa: F822

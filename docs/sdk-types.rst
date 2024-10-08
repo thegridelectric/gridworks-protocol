@@ -26,12 +26,7 @@ forth between type instances and Python objects.
     ElectricMeterCacGt  <types/electric-meter-cac-gt>
     ElectricMeterComponentGt  <types/electric-meter-component-gt>
     FibaroSmartImplantComponentGt  <types/fibaro-smart-implant-component-gt>
-    GtShBooleanactuatorCmdStatus  <types/gt-sh-booleanactuator-cmd-status>
     GtShCliAtnCmd  <types/gt-sh-cli-atn-cmd>
-    GtShMultipurposeTelemetryStatus  <types/gt-sh-multipurpose-telemetry-status>
-    GtShSimpleTelemetryStatus  <types/gt-sh-simple-telemetry-status>
-    GtShStatus  <types/gt-sh-status>
-    GtShTelemetryFromMultipurposeSensor  <types/gt-sh-telemetry-from-multipurpose-sensor>
     HeartbeatB  <types/heartbeat-b>
     HubitatComponentGt  <types/hubitat-component-gt>
     HubitatPollerComponentGt  <types/hubitat-poller-component-gt>
@@ -44,5 +39,3 @@ forth between type instances and Python objects.
     RestPollerComponentGt  <types/rest-poller-component-gt>
     SnapshotSpaceheat  <types/snapshot-spaceheat>
     SpaceheatNodeGt  <types/spaceheat-node-gt>
-    TelemetryReportingConfig  <types/telemetry-reporting-config>
-    TelemetrySnapshotSpaceheat  <types/telemetry-snapshot-spaceheat>

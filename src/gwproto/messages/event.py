@@ -119,3 +119,4 @@ class ReportEvent(EventBase):
     def __init__(self, **data: dict[str, Any]) -> None:
         super().__init__(**data)
         self.MessageId = self.Report.Id
+        self.TimeCreatedMs = self.Report.MessageCreatedMs

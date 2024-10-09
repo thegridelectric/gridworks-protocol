@@ -4,10 +4,10 @@
 from enum import auto
 from typing import List
 
-from gw.enums import GwStrEnum
+from gwproto.enums.relay_action_base import RelayActionBase
 
 
-class ChangeRelayState(GwStrEnum):
+class ChangeRelayState(RelayActionBase):
     """
     This is meant for relays in either NormallyOpen or NormallyClosed configuration (i.e. not
     configured as DoubleThrow). It provides the natural Finite State Machine actions that go

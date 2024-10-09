@@ -35,7 +35,6 @@ from gwproto.enums.alert_priority import AlertPriority
 from gwproto.enums.change_aquastat_control import ChangeAquastatControl
 from gwproto.enums.change_heat_pump_control import ChangeHeatPumpControl
 from gwproto.enums.change_heatcall_source import ChangeHeatcallSource
-from gwproto.enums.change_lg_operating_mode import ChangeLgOperatingMode
 from gwproto.enums.change_primary_pump_control import ChangePrimaryPumpControl
 from gwproto.enums.change_primary_pump_state import ChangePrimaryPumpState
 from gwproto.enums.change_relay_pin import ChangeRelayPin
@@ -47,8 +46,8 @@ from gwproto.enums.fsm_event_type import FsmEventType
 from gwproto.enums.fsm_name import FsmName
 from gwproto.enums.fsm_report_type import FsmReportType
 from gwproto.enums.kind_of_param import KindOfParam
-from gwproto.enums.lg_operating_mode import LgOperatingMode
 from gwproto.enums.make_model import MakeModel
+from gwproto.enums.relay_action_base import RelayActionBase
 from gwproto.enums.relay_closed_or_open import RelayClosedOrOpen
 from gwproto.enums.relay_energization_state import RelayEnergizationState
 from gwproto.enums.relay_pin_set import RelayPinSet
@@ -59,12 +58,12 @@ from gwproto.enums.thermistor_data_method import ThermistorDataMethod
 from gwproto.enums.unit import Unit
 
 __all__ = [
+    "RelayActionBase",
     "ActorClass",  # [sh.actor.class.001](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shactorclass)
     "AlertPriority",  # [alert.priority.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#alertpriority)
     "ChangeAquastatControl",  # [change.aquastat.control.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeaquastatcontrol)
     "ChangeHeatPumpControl",  # [change.heat.pump.control.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeheatpumpcontrol)
     "ChangeHeatcallSource",  # [change.heatcall.source.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeheatcallsource)
-    "ChangeLgOperatingMode",  # [change.lg.operating.mode.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changelgoperatingmode)
     "ChangePrimaryPumpControl",  # [change.primary.pump.control.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeprimarypumpcontrol)
     "ChangePrimaryPumpState",  # [change.primary.pump.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeprimarypumpstate)
     "ChangeRelayPin",  # [change.relay.pin.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changerelaypin)
@@ -80,7 +79,6 @@ __all__ = [
     "FsmReportType",  # [fsm.report.type.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#fsmreporttype)
     "FsmReportType",  # [fsm.report.type.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#fsmreporttype)
     "KindOfParam",  # [spaceheat.kind.of.param.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatkindofparam)
-    "LgOperatingMode",  # [lg.operating.mode.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#lgoperatingmode)
     "MakeModel",  # [spaceheat.make.model.002](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatmakemodel)
     "RelayClosedOrOpen",  # [relay.closed.or.open.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relayclosedoropen)
     "RelayEnergizationState",  # [relay.energization.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relayenergizationstate)

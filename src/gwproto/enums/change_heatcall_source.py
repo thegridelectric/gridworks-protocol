@@ -4,10 +4,10 @@
 from enum import auto
 from typing import List
 
-from gw.enums import GwStrEnum
+from gwproto.enums.relay_action_base import RelayActionBase
 
 
-class ChangeHeatcallSource(GwStrEnum):
+class ChangeHeatcallSource(RelayActionBase):
     """
     Used for dispatch/actions between the two states of a double-throw failsafe relay that toggles
     between the SCADA and a Thermostat for controlling the heat call to a zone.

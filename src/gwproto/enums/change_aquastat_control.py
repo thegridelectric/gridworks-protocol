@@ -4,10 +4,10 @@
 from enum import auto
 from typing import List
 
-from gw.enums import GwStrEnum
+from gwproto.enums.relay_action_base import RelayActionBase
 
 
-class ChangeAquastatControl(GwStrEnum):
+class ChangeAquastatControl(RelayActionBase):
     """
     A Finite State Machine action changing the function of an Aquastat Control
     """

@@ -1,4 +1,4 @@
-from typing import ClassVar, Dict, List
+from typing import ClassVar, Dict, List, Literal
 
 from gwproto.data_classes.telemetry_tuple import ChannelStub
 from gwproto.enums import TelemetryName
@@ -49,16 +49,14 @@ class TankChannelNames:
 
 
 class House0RelayIdx:
-    vdc = 1
-    tstat_common = 2
-    store_charge_disharge = (
-        3  # 16 seconds to go to discharge, 62 seconds to go to charge
-    )
-    hp_failsafe = 5
-    hp_scada_ops = 6
-    aquastat_ctrl = 8
-    store_pump_failsafe = 9
-    boiler_scada_ops = 10
+    vdc: Literal[1] = 1
+    tstat_common: Literal[2] = 2
+    store_charge_disharge: Literal[3] = 3
+    hp_failsafe: Literal[5] = 5
+    hp_scada_ops: Literal[6] = 6
+    aquastat_ctrl: Literal[8] = 8
+    store_pump_failsafe: Literal[9] = 9
+    boiler_scada_ops: Literal[10] = 10
 
 
 class H0N:

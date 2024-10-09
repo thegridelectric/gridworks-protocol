@@ -321,3 +321,4 @@ class H0CN:
                     TelemetryName=TelemetryName.ThermostatState,
                 ),
             )
+        return d

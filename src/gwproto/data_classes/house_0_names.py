@@ -57,6 +57,8 @@ class House0RelayIdx:
     aquastat_ctrl: Literal[8] = 8
     store_pump_failsafe: Literal[9] = 9
     boiler_scada_ops: Literal[10] = 10
+    primary_pump_ops: Literal[11] = 11
+    primary_pump_failsafe: Literal[12] = 12
 
 
 class H0N:

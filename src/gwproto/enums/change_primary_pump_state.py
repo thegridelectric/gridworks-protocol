@@ -4,10 +4,10 @@
 from enum import auto
 from typing import List
 
-from gw.enums import GwStrEnum
+from gwproto.enums.relay_action_base import RelayActionBase
 
 
-class ChangePrimaryPumpState(GwStrEnum):
+class ChangePrimaryPumpState(RelayActionBase):
     """
     Either forces the heat pump's primary circulator pump off, or allows the heat pump to turn
     on its circulatory pumpprimary pump

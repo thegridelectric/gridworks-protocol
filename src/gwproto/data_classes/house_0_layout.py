@@ -34,7 +34,7 @@ class House0Layout(HardwareLayout):
             cacs=cacs,
             components=components,
             nodes=nodes,
-            channels=channels,
+            data_channels=channels,
         )
 
         scada_dict = next((x for x in self.layout["ShNodes"] if x["Name"] == "s"), None)

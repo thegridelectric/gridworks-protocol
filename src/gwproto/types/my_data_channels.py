@@ -13,10 +13,6 @@ from gwproto.types.data_channel_gt import DataChannelGt
 
 
 class MyDataChannels(BaseModel):
-    """
-    A message designed for a SCADA or AtomicTNode to share its data channels
-    """
-
     FromGNodeAlias: LeftRightDotStr
     FromGNodeInstanceId: UUID4Str
     MessageCreatedMs: UTCMilliseconds

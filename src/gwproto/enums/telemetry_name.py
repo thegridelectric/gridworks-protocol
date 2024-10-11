@@ -1,5 +1,5 @@
 from enum import auto
-from typing import Optional
+from typing import List
 
 from gw.enums import GwStrEnum
 
@@ -7,14 +7,6 @@ from gw.enums import GwStrEnum
 class TelemetryName(GwStrEnum):
     """
     Specifies the name of sensed data reported by a Spaceheat SCADA
-
-    Enum spaceheat.telemetry.name version 001 in the GridWorks Type registry.
-
-    Used by multiple Application Shared Languages (ASLs). For more information:
-      - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
-      - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheattelemetryname)
-      - [More Info](https://gridworks-protocol.readthedocs.io/en/latest/telemetry-name.html)
-
     Values:
       - Unknown: Default Value - unknown telemetry name.
       - PowerW: Power in Watts.
@@ -38,6 +30,11 @@ class TelemetryName(GwStrEnum):
         69329 means 69.329 deg Fahrenheit.
       - ThermostatState: Thermostat State: 0 means idle, 1 means heating, 2 means pending
         heat
+
+    For more information:
+      - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
+      - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheattelemetryname)
+      - [More Info](https://gridworks-protocol.readthedocs.io/en/latest/telemetry-name.html)
     """
 
     Unknown = auto()
@@ -57,49 +54,16 @@ class TelemetryName(GwStrEnum):
 
     @classmethod
     def default(cls) -> "TelemetryName":
-        """
-        Returns default value (in this case Unknown)
-        """
         return cls.Unknown
 
     @classmethod
-    def version(cls, value: Optional[str] = None) -> str:
-        if value is None:
-            return "001"
-        if not isinstance(value, str):
-            raise TypeError("This method applies to strings, not enums")
-        if value not in value_to_version:
-            raise ValueError(f"Unknown enum value: {value}")
-        return value_to_version[value]
+    def values(cls) -> List[str]:
+        return [elt.value for elt in cls]
 
     @classmethod
     def enum_name(cls) -> str:
-        """
-        The name in the GridWorks Type Registry (spaceheat.telemetry.name)
-        """
         return "spaceheat.telemetry.name"
 
     @classmethod
     def enum_version(cls) -> str:
-        """
-        The version in the GridWorks Type Registry (001)
-        """
         return "001"
-
-
-value_to_version = {
-    "Unknown": "000",
-    "PowerW": "000",
-    "RelayState": "000",
-    "WaterTempCTimes1000": "000",
-    "WaterTempFTimes1000": "000",
-    "GpmTimes100": "000",
-    "CurrentRmsMicroAmps": "000",
-    "GallonsTimes100": "000",
-    "VoltageRmsMilliVolts": "001",
-    "MilliWattHours": "001",
-    "FrequencyMicroHz": "001",
-    "AirTempCTimes1000": "001",
-    "AirTempFTimes1000": "001",
-    "ThermostatState": "001",
-}

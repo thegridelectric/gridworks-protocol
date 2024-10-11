@@ -15,7 +15,3 @@ def test_kind_of_param() -> None:
     assert KindOfParam.default() == KindOfParam.Other
     assert KindOfParam.enum_name() == "spaceheat.kind.of.param"
     assert KindOfParam.enum_version() == "000"
-
-    assert KindOfParam.version("Other") == "000"
-    assert KindOfParam.version("HardwareLayout") == "000"
-    assert KindOfParam.version("DotEnv") == "000"

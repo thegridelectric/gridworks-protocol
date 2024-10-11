@@ -15,7 +15,3 @@ def test_fsm_report_type() -> None:
     assert FsmReportType.default() == FsmReportType.Other
     assert FsmReportType.enum_name() == "fsm.report.type"
     assert FsmReportType.enum_version() == "000"
-
-    assert FsmReportType.version("Other") == "000"
-    assert FsmReportType.version("Event") == "000"
-    assert FsmReportType.version("Action") == "000"

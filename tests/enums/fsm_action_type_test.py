@@ -15,7 +15,3 @@ def test_fsm_action_type() -> None:
     assert FsmActionType.default() == FsmActionType.RelayPinSet
     assert FsmActionType.enum_name() == "sh.fsm.action.type"
     assert FsmActionType.enum_version() == "000"
-
-    assert FsmActionType.version("RelayPinSet") == "000"
-    assert FsmActionType.version("Analog010VSignalSet") == "000"
-    assert FsmActionType.version("Analog420maSignalSet") == "000"

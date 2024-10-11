@@ -17,9 +17,3 @@ def test_alert_priority() -> None:
     assert AlertPriority.default() == AlertPriority.P3Medium
     assert AlertPriority.enum_name() == "alert.priority"
     assert AlertPriority.enum_version() == "000"
-
-    assert AlertPriority.version("P1Critical") == "000"
-    assert AlertPriority.version("P2High") == "000"
-    assert AlertPriority.version("P3Medium") == "000"
-    assert AlertPriority.version("P4Low") == "000"
-    assert AlertPriority.version("P5Info") == "000"

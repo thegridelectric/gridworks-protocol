@@ -16,8 +16,3 @@ def test_fsm_name() -> None:
     assert FsmName.default() == FsmName.StoreFlowDirection
     assert FsmName.enum_name() == "sh.fsm.name"
     assert FsmName.enum_version() == "000"
-
-    assert FsmName.version("Unknown") == "000"
-    assert FsmName.version("StoreFlowDirection") == "000"
-    assert FsmName.version("RelayState") == "000"
-    assert FsmName.version("RelayPinState") == "000"

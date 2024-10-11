@@ -41,7 +41,6 @@
 
 <xsl:text>from enum import auto
 from typing import List
-from typing import Optional
 
 from gw.enums import GwStrEnum
 
@@ -57,26 +56,7 @@ class </xsl:text><xsl:value-of select="$enum-class-name"/>
         <xsl:with-param name="indent-spaces" select="4"/>
     </xsl:call-template>
     </xsl:if>
-
     <xsl:text>
-
-    Enum </xsl:text><xsl:value-of select="Name"/><xsl:text> version </xsl:text><xsl:value-of select="$enum-version"/>
-    <xsl:text> in the GridWorks Type registry.
-
-    Used by multiple Application Shared Languages (ASLs). For more information:
-      - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
-      - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#</xsl:text>
-    <xsl:value-of select="translate($enum-name,'.','')"/>
-    <xsl:text>)</xsl:text>
-
-    <xsl:if test="(normalize-space(Url)!='')">
-    <xsl:text>
-      - [More Info](</xsl:text>
-    <xsl:value-of select="normalize-space(Url)"/>
-    <xsl:text>)</xsl:text>
-    </xsl:if>
-    <xsl:text>
-
     Values:</xsl:text>
     <xsl:for-each select="$airtable//EnumSymbols/EnumSymbol[(Enum = $enum-id)  and (Version &lt;= $enum-version)]">
     <xsl:sort select="Idx" data-type="number"/>
@@ -104,7 +84,20 @@ class </xsl:text><xsl:value-of select="$enum-class-name"/>
     </xsl:if>
 
     </xsl:for-each>
+    <xsl:text>
 
+    For more information:
+      - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
+      - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#</xsl:text>
+    <xsl:value-of select="translate($enum-name,'.','')"/>
+    <xsl:text>)</xsl:text>
+
+    <xsl:if test="(normalize-space(Url)!='')">
+    <xsl:text>
+      - [More Info](</xsl:text>
+    <xsl:value-of select="normalize-space(Url)"/>
+    <xsl:text>)</xsl:text>
+    </xsl:if>
     <xsl:text>
     """
 
@@ -130,16 +123,6 @@ class </xsl:text><xsl:value-of select="$enum-class-name"/>
     def default(cls) -> "</xsl:text>
     <xsl:value-of select="$enum-class-name"/>
     <xsl:text>":
-        """
-        Returns default value (in this case </xsl:text>
-        <xsl:if test="$enum-type = 'Upper'">
-            <xsl:value-of select="translate(translate(DefaultEnumValue,'-',''),$lcletters, $ucletters)"/>
-        </xsl:if>
-        <xsl:if test="$enum-type ='UpperPython'">
-            <xsl:value-of select="DefaultEnumValue"/>
-        </xsl:if>
-        <xsl:text>)
-        """
         return cls.</xsl:text>
         <xsl:if test="$enum-type = 'Upper'">
             <xsl:value-of select="translate(translate(DefaultEnumValue,'-',''),$lcletters, $ucletters)"/>
@@ -151,49 +134,22 @@ class </xsl:text><xsl:value-of select="$enum-class-name"/>
     <xsl:text>
 
     @classmethod
-    def version(cls, value: Optional[str] = None) -> str:
-        if value is None:
-            return "</xsl:text><xsl:value-of select="$enum-version"/><xsl:text>"
-        if not isinstance(value, str):
-            raise TypeError("This method applies to strings, not enums")
-        if value not in value_to_version:
-            raise ValueError(f"Unknown enum value: {value}")
-        return value_to_version[value]
+    def values(cls) -> List[str]:
+        return [elt.value for elt in cls]
 
     @classmethod
     def enum_name(cls) -> str:
-        """
-        The name in the GridWorks Type Registry (</xsl:text><xsl:value-of select="$enum-name"/><xsl:text>)
-        """
         return "</xsl:text>
     <xsl:value-of select="$enum-name"/>
     <xsl:text>"
 
     @classmethod
     def enum_version(cls) -> str:
-        """
-        The version in the GridWorks Type Registry (</xsl:text><xsl:value-of select="$enum-version"/><xsl:text>)
-        """
         return "</xsl:text>
     <xsl:value-of select="$enum-version"/>
-    <xsl:text>"
+    <xsl:text>"</xsl:text>
 
 
-value_to_version = {</xsl:text>
-<xsl:for-each select="$airtable//EnumSymbols/EnumSymbol[(Enum = $enum-id) and (Version &lt;= $enum-version)]">
-<xsl:sort select="Idx" data-type="number"/>
-    <xsl:text>
-    "</xsl:text>
-    <xsl:if test="$enum-type = 'Upper'">
-        <xsl:value-of select="translate(translate(LocalValue,'-',''),$lcletters, $ucletters)"/>
-    </xsl:if>
-    <xsl:if test="$enum-type ='UpperPython'">
-        <xsl:value-of select="LocalValue"/>
-    </xsl:if>
-<xsl:text>": "</xsl:text> <xsl:value-of select="Version"/><xsl:text>",</xsl:text>
-</xsl:for-each>
-<xsl:text>
-}</xsl:text>
 
 <!-- Add newline at EOF for git and pre-commit-->
 <xsl:text>&#10;</xsl:text>

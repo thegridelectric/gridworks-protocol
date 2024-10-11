@@ -36,7 +36,6 @@ from gwproto.enums.change_aquastat_control import ChangeAquastatControl
 from gwproto.enums.change_heat_pump_control import ChangeHeatPumpControl
 from gwproto.enums.change_heatcall_source import ChangeHeatcallSource
 from gwproto.enums.change_primary_pump_control import ChangePrimaryPumpControl
-from gwproto.enums.change_primary_pump_state import ChangePrimaryPumpState
 from gwproto.enums.change_relay_pin import ChangeRelayPin
 from gwproto.enums.change_relay_state import ChangeRelayState
 from gwproto.enums.change_store_flow_direction import ChangeStoreFlowDirection
@@ -65,7 +64,6 @@ __all__ = [
     "ChangeHeatPumpControl",  # [change.heat.pump.control.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeheatpumpcontrol)
     "ChangeHeatcallSource",  # [change.heatcall.source.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeheatcallsource)
     "ChangePrimaryPumpControl",  # [change.primary.pump.control.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeprimarypumpcontrol)
-    "ChangePrimaryPumpState",  # [change.primary.pump.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeprimarypumpstate)
     "ChangeRelayPin",  # [change.relay.pin.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changerelaypin)
     "ChangeRelayState",  # [change.relay.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changerelaystate)
     "ChangeStoreFlowDirection",  # [change.store.flow.direction.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changestoreflowdirection)

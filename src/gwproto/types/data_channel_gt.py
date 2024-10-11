@@ -40,4 +40,4 @@ class DataChannelGt(BaseModel):
             )
         return self
 
-    model_config = ConfigDict(use_enum_values=True)
+    model_config = ConfigDict(use_enum_values=True, extra="ignore")

@@ -1,13 +1,14 @@
-"""Tests my.data.channels type, version 000"""
+"""Tests my.channels type, version 000"""
 
-from gwproto.types import MyDataChannels
+from gwproto.types import MyChannels
 
 
-def test_my_data_channels_generated() -> None:
+def test_my_channels_generated() -> None:
     d = {
         "FromGNodeAlias": "hw1.isone.me.versant.keene.beech.scada",
         "FromGNodeInstanceId": "98542a17-3180-4f2a-a929-6023f0e7a106",
         "MessageCreatedMs": 1728651445746,
+        "MessageId": "1302c0f8-1983-43b2-90d2-61678d731db3",
         "ChannelList": [
             {
                 "Name": "hp-idu-pwr",
@@ -23,10 +24,10 @@ def test_my_data_channels_generated() -> None:
                 "Version": "001",
             }
         ],
-        "TypeName": "my.data.channels",
+        "TypeName": "my.channels",
         "Version": "000",
     }
 
-    d2 = MyDataChannels.model_validate(d).model_dump(exclude_none=True)
+    d2 = MyChannels.model_validate(d).model_dump(exclude_none=True)
 
     assert d2 == d

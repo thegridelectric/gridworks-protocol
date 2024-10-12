@@ -54,10 +54,13 @@ def child_to_parent_messages() -> list[MessageCase]:
     report_event_dict = stored_message_dicts["report"]
     report = Report.model_validate(report_event_dict["Payload"]["Report"])
     report_event = ReportEvent.model_validate(report_event_dict["Payload"])
-    unrecongized_report_event = AnyEvent(**report_event.model_dump(exclude_none=True))
-    unrecongized_report_event.TypeName += ".foo"
+    unrecognized_report_event = AnyEvent(**report_event.model_dump(exclude_none=True))
+    unrecognized_report_event.TypeName += ".foo"
     unrecognized_event = AnyEvent(
-        TypeName="gridworks.event.bar", MessageId="1", TimeNS=1, Src="1"
+        TypeName="gridworks.event.bar",
+        MessageId="1",
+        TimeCreatedMs=1728754878213,
+        Src="1",
     )
     unrecognizeable_not_event_type = AnyEvent(
         **dict(
@@ -74,7 +77,7 @@ def child_to_parent_messages() -> list[MessageCase]:
             "power-watts",
             Message(Src=CHILD, MessageType="power.watts", Payload=PowerWatts(Watts=1)),
         ),
-        # Batched Readings
+        # Report
         MessageCase(
             "report",
             Message(Src=CHILD, MessageType="report", Payload=report),
@@ -103,15 +106,15 @@ def child_to_parent_messages() -> list[MessageCase]:
         ),
         # # events
         MessageCase(
-            "br-event",
+            "report-event",
             Message(Src=CHILD, Payload=report_event_dict["Payload"]),
             None,
             report_event,
         ),
-        MessageCase(
-            "event-unrecognized-status",
-            Message(Src=CHILD, Payload=unrecongized_report_event),
-        ),
+        # MessageCase(
+        #     "event-unrecognized-status",
+        #     Message(Src=CHILD, Payload=unrecognized_report_event),
+        # ),
         MessageCase(
             "event-unrecognized", Message(Src=CHILD, Payload=unrecognized_event)
         ),

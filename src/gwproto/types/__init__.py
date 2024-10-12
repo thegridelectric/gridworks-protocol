@@ -28,7 +28,7 @@ from gwproto.types.i2c_multichannel_dt_relay_component_gt import (
     I2cMultichannelDtRelayComponentGt,
 )
 from gwproto.types.keyparam_change_log import KeyparamChangeLog
-from gwproto.types.my_data_channels import MyDataChannels
+from gwproto.types.my_channels import MyChannels
 from gwproto.types.power_watts import PowerWatts
 from gwproto.types.relay_actor_config import RelayActorConfig
 from gwproto.types.report import Report
@@ -66,7 +66,7 @@ __all__ = [
     "HubitatTankComponentGt",
     "I2cMultichannelDtRelayComponentGt",
     "KeyparamChangeLog",
-    "MyDataChannels",
+    "MyChannels",
     "PowerWatts",
     "RelayActorConfig",
     "Report",

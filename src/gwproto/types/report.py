@@ -1,15 +1,8 @@
-"""Type report, version 000"""
+"""Type report, version 001"""
 
 from typing import List, Literal
 
-from pydantic import (
-    BaseModel,
-    ConfigDict,
-    PositiveInt,
-    field_validator,
-    model_validator,
-)
-from typing_extensions import Self
+from pydantic import BaseModel, PositiveInt, field_validator  # Count:true
 
 from gwproto.property_format import (
     LeftRightDotStr,
@@ -23,54 +16,24 @@ from gwproto.types.fsm_full_report import FsmFullReport
 
 
 class Report(BaseModel):
+    """ """
+
     FromGNodeAlias: LeftRightDotStr
     FromGNodeInstanceId: UUID4Str
     AboutGNodeAlias: LeftRightDotStr
     SlotStartUnixS: UTCSeconds
-    BatchedTransmissionPeriodS: PositiveInt
+    SlotDurationS: PositiveInt
     ChannelReadingList: List[ChannelReadings]
+    FsmActionList: List[FsmAtomicReport]
+    FsmReportList: List[FsmFullReport]
     MessageCreatedMs: UTCMilliseconds
     Id: UUID4Str
-    FsmActionList: List[FsmAtomicReport] = []
-    FsmReportList: List[FsmFullReport] = []
     TypeName: Literal["report"] = "report"
-    Version: Literal["000"] = "000"
+    Version: Literal["001"] = "001"
 
-    model_config = ConfigDict(extra="allow", use_enum_values=True)
-
-    @field_validator("FsmActionList")
+    @field_validator("ChannelReadingList")
     @classmethod
-    def check_fsm_action_list(cls, v: List[FsmAtomicReport]) -> List[FsmAtomicReport]:
-        """
-        Axiom 1: Each of the fsm.atomic.reports in this list must be actions (i.e. ActionType is not None)).
-        """
-        # Implement Axiom(s)
+    def _check_channel_reading_list(
+        cls, v: List[ChannelReadings]
+    ) -> List[ChannelReadings]:
         return v
-
-    @model_validator(mode="after")
-    def check_axiom_2(self) -> Self:
-        """
-        Axiom 2: Time Consistency.
-        For every ScadaReadTimeUnixMs   let read_s = read_ms / 1000.  Let start_s be SlotStartUnixS.  Then read_s >= start_s and start_s + BatchedTransmissionPeriodS + 1 + start_s > read_s.
-        """
-        # Implement check for axiom 1"
-
-        return self
-
-    @model_validator(mode="after")
-    def check_axiom_3(self) -> Self:
-        """
-        Axiom 2: Unique Channel names and Ids
-        """
-
-        ids = [cr.ChannelId for cr in self.ChannelReadingList]
-        if len(ids) != len(set(ids)):
-            raise ValueError(
-                "Axiom 1 violated! ChannelReadingList ChannelIds must be unique"
-            )
-        names = [cr.ChannelName for cr in self.ChannelReadingList]
-        if len(names) != len(set(names)):
-            raise ValueError(
-                "Axiom 1 violated! ChannelReadingList ChannelNames must be unique"
-            )
-        return self

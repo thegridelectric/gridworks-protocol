@@ -16,9 +16,9 @@ class RelayWiringConfig(GwStrEnum):
         is wired through COM and NC).
       - NormallyOpen: When the relay is de-energized, the circuit is open (circuit is
         wired through COM and NC).
-      - DoubleThrow: COM, NC, and NO are all connected to parts of the circuit. For example, NC
-        could activate a heat pump and NO could activate a backup oil boiler. The Double Throw
-        configuration allows for switching between these two.
+      - DoubleThrow: COM, NC, and NO are all connected to parts of the circuit. For example,
+        NC could activate a heat pump and NO could activate a backup oil boiler. The Double
+        Throw configuration allows for switching between these two.
 
     For more information:
       - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)

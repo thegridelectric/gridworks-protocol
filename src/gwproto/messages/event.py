@@ -7,7 +7,7 @@ from pydantic import BaseModel, Field, field_validator
 
 from gwproto.message import Message, as_enum
 from gwproto.property_format import UTCMilliseconds
-from gwproto.types import Report
+from gwproto.types import MyChannels, Report
 
 
 class EventBase(BaseModel):
@@ -113,10 +113,21 @@ class PeerActiveEvent(CommEvent):
 
 class ReportEvent(EventBase):
     Report: Report
-    TypeName: Literal["gridworks.event.report"] = "gridworks.event.report"
+    TypeName: Literal["report.event"] = "report.event"
     Version: Literal["000"] = "000"
 
     def __init__(self, **data: dict[str, Any]) -> None:
         super().__init__(**data)
         self.MessageId = self.Report.Id
         self.TimeCreatedMs = self.Report.MessageCreatedMs
+
+
+class MyChannelsEvent(EventBase):
+    MyChannels: MyChannels
+    TypeName: Literal["my.channels.event"] = "my.channels.event"
+    Version: Literal["000"] = "000"
+
+    def __init__(self, **data: dict[str, Any]) -> None:
+        super().__init__(**data)
+        self.MessageId = self.MyChannels.MessageId
+        self.TimeCreatedMs = self.MyChannels.MessageCreatedMs

@@ -39,4 +39,7 @@ CACS_BY_MAKE_MODEL: Dict[str, str] = {
     MakeModel.GRIDWORKS__SIMTOTALIZER.value: "a88f8f4c-fe1e-4645-a7f4-249912131dc8",
     MakeModel.KRIDA__DOUBLEEMR16I2CV3.value: "29eab8b1-100f-4230-bb44-3a2fcba33cc3",
     MakeModel.GRIDWORKS__SIMDOUBLE16PINI2CRELAY.value: "44ff9d75-edb9-4249-afea-96822bfc55f3",
+    MakeModel.GRIDWORKS__TANKMODULE2.value: "f88fbf89-5b74-46d6-84a3-8e7494d08435",
+    MakeModel.GRIDWORKS__PICOFLOWHALL.value: "9d045a8d-12ee-43e6-8d7b-11c77b19de2f",
+    MakeModel.GRIDWORKS__PICOFLOWREED.value: "aa4ad342-883a-4f89-bf86-9eb430aeb308",
 }

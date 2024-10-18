@@ -28,8 +28,7 @@ def test_actor_class() -> None:
         "Hubitat",
         "HoneywellThermostat",
         "ApiTankModule",
-        "ApiHallFlowMeter",
-        "ApiReedFlowMeter",
+        "ApiFlowMeter",
     }
 
     assert ActorClass.default() == ActorClass.NoActor

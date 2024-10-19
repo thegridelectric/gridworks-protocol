@@ -33,6 +33,13 @@ class ShNode(SpaceheatNodeGt):
         return self.Name
 
     @property
+    def actor_hierarchy_name(self) -> str:
+        v = self.ActorHierarchyName
+        if self.ActorHierarchyName is None:
+            v = self.Name
+        return v
+
+    @property
     def actor_class(self) -> ActorClass:
         return self.ActorClass
 

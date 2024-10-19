@@ -64,7 +64,8 @@ class House0RelayIdx:
 class H0N:
     # core actors
     atn = "a"
-    scada = "s"
+    primary_scada = "s"
+    secondary_scada = "s2"
     home_alone = "h"
     primary_power_meter = "power-meter"
 

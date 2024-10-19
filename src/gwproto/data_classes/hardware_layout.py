@@ -601,10 +601,10 @@ class HardwareLayout:
         )
 
     @classmethod
-    def parent_hierarchy_name(cls, hierarchy_name: str) -> str:
+    def parent_hierarchy_name(cls, hierarchy_name: str) -> Optional[str]:
         last_delimiter = hierarchy_name.rfind(".")
         if last_delimiter == -1:
-            return ""
+            return None
         return hierarchy_name[:last_delimiter]
 
     def parent_node(self, node: ShNode) -> Optional[ShNode]:

@@ -607,15 +607,15 @@ class HardwareLayout:
             return ""
         return hierarchy_name[:last_delimiter]
 
-    def parent_node(self, hierarchy_name: str) -> Optional[ShNode]:
-        h_name = self.parent_hierarchy_name(hierarchy_name)
+    def parent_node(self, node: ShNode) -> Optional[ShNode]:
+        h_name = self.parent_hierarchy_name(node.actor_hierarchy_name)
         if not h_name:
             return None
         parent = next(
-            (n for n in self.nodes.values() if n.ActorHierarchyName == h_name), None
+            (n for n in self.nodes.values() if n.actor_hierarchy_name == h_name), None
         )
         if parent is None:
-            raise DcError(f"{hierarchy_name} is missing parent {h_name}!")
+            raise DcError(f"{node} is missing parent {h_name}!")
         return self.node(h_name)
 
     @cached_property

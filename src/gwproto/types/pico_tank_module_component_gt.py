@@ -5,16 +5,20 @@ from typing import Literal, Optional
 from pydantic import ConfigDict, model_validator
 from typing_extensions import Self
 
+from gwproto.enums import TempCalcMethod
 from gwproto.types.component_gt import ComponentGt
 
 
 class PicoTankModuleComponentGt(ComponentGt):
-    PicoAHwUid: Optional[str] = None
-    PicoBHwUid: Optional[str] = None
+    TempCalcMethod: TempCalcMethod
+    ThermistorBeta: int
     Enabled: bool
     SendMicroVolts: bool
     Samples: int
     NumSampleAverages: int
+    PicoAHwUid: Optional[str] = None
+    PicoBHwUid: Optional[str] = None
+    PicoKOhms: Optional[int] = None
     TypeName: Literal["pico.tank.module.component.gt"] = "pico.tank.module.component.gt"
     Version: Literal["000"] = "000"
 

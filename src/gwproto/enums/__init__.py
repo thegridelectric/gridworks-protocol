@@ -52,6 +52,7 @@ from gwproto.enums.relay_pin_set import RelayPinSet
 from gwproto.enums.relay_wiring_config import RelayWiringConfig
 from gwproto.enums.store_flow_direction import StoreFlowDirection
 from gwproto.enums.telemetry_name import TelemetryName
+from gwproto.enums.temp_calc_method import TempCalcMethod
 from gwproto.enums.thermistor_data_method import ThermistorDataMethod
 from gwproto.enums.unit import Unit
 
@@ -78,6 +79,7 @@ __all__ = [
     "RelayWiringConfig",  # [relay.wiring.config.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relaywiringconfig)
     "StoreFlowDirection",  # [store.flow.direction.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#storeflowdirection)
     "TelemetryName",  # [spaceheat.telemetry.name.001](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheattelemetryname)
+    "TempCalcMethod",  # [temp.calc.method.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#tempcalcmethod)
     "ThermistorDataMethod",  # [thermistor.data.method.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#thermistordatamethod)
     "Unit",  # [spaceheat.unit.001](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatunit)
 ]

@@ -13,7 +13,7 @@ from gwproto.property_format import (
 
 class ChannelConfig(BaseModel):
     ChannelName: SpaceheatName
-    PollPeriodMs: PositiveInt
+    PollPeriodMs: Optional[PositiveInt] = None
     CapturePeriodS: PositiveInt
     AsyncCapture: bool
     AsyncCaptureDelta: Optional[PositiveInt] = None
@@ -30,20 +30,7 @@ class ChannelConfig(BaseModel):
     @model_validator(mode="after")
     def check_axiom_1(self) -> Self:
         """
-        Axiom 1: Async Capture Consistency.
-        If AsyncCapture is True, then AsyncCaptureDelta exists
-        """
-        if self.AsyncCapture and not self.AsyncCaptureDelta:
-            raise ValueError(
-                "Axiom 1 violated! If AsyncCapture is true, "
-                "then AsyncCaptureDelta must exist"
-            )
-        return self
-
-    @model_validator(mode="after")
-    def check_axiom_2(self) -> Self:
-        """
-        Axiom 2: Capture and Polling Consistency.
+        Axiom 1: Capture and Polling Consistency.
         CapturePeriodMs (CapturePeriodS * 1000) must be larger than PollPeriodMs. If CapturePeriodMs < 10 * PollPeriodMs then CapturePeriodMs must be a multiple of PollPeriodMs.
         """
         # Implement check for axiom 2"

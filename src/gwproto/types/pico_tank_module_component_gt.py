@@ -9,8 +9,8 @@ from gwproto.types.component_gt import ComponentGt
 
 
 class PicoTankModuleComponentGt(ComponentGt):
-    PicoAHwUid: Optional[str]
-    PicoBHwUid: Optional[str]
+    PicoAHwUid: Optional[str] = None
+    PicoBHwUid: Optional[str] = None
     Enabled: bool
     SendMicroVolts: bool
     Samples: int

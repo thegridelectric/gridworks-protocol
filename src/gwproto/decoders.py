@@ -94,10 +94,10 @@ class MQTTCodec(abc.ABC):
                 f"Type {decoded_topic.envelope_type} not recognized. "
                 f"Available decoders: {self.message_model.type_name()}"
             )
-        self.validate_source_alias(decoded_topic.src)
+        self.validate_source_and_destination(decoded_topic.src, decoded_topic.dst)
 
     @abstractmethod
-    def validate_source_alias(self, source_alias: str) -> None: ...
+    def validate_source_and_destination(self, src: str, dst: str) -> None: ...
 
     @classmethod
     def _try_message_as_event(

@@ -83,6 +83,7 @@ class MakeModel(GwStrEnum):
       - GridWorks__TankModule2
       - GridWorks__PicoFlowHall
       - GridWorks__PicoFlowReed
+      - Saier__Sen-HZG1WA
 
     For more information:
       - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
@@ -130,6 +131,7 @@ class MakeModel(GwStrEnum):
     GRIDWORKS__TANKMODULE2 = auto()
     GRIDWORKS__PICOFLOWHALL = auto()
     GRIDWORKS__PICOFLOWREED = auto()
+    SAIER__SENHZG1WA = auto()
 
     @classmethod
     def default(cls) -> "MakeModel":

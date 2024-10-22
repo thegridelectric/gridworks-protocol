@@ -47,6 +47,7 @@ def test_make_model() -> None:
         "GRIDWORKS__TANKMODULE2",
         "GRIDWORKS__PICOFLOWHALL",
         "GRIDWORKS__PICOFLOWREED",
+        "SAIER__SENHZG1WA",
     }
 
     assert MakeModel.default() == MakeModel.UNKNOWNMAKE__UNKNOWNMODEL

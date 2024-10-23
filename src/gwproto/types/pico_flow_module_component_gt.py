@@ -16,6 +16,7 @@ class PicoFlowModuleComponentGt(ComponentGt):
     SendTickLists: bool = False
     NoFlowMs: int
     PublishEmptyTicklistAfterS: int
+    AsyncCaptureThresholdGpmTimes10: int
     PublishTicklistPeriodS: Optional[int] = 10  # Required for Hall Params
     PublishTicklistLength: Optional[int] = 300  # required for Reed Params
     ExpAlpha: Optional[float] = 0.5

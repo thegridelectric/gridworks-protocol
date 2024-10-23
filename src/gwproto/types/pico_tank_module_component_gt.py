@@ -11,13 +11,13 @@ from gwproto.types.component_gt import ComponentGt
 
 class PicoTankModuleComponentGt(ComponentGt):
     Enabled: bool
+    PicoAHwUid: Optional[str] = None
+    PicoBHwUid: Optional[str] = None
     TempCalcMethod: TempCalcMethod
     ThermistorBeta: int
     SendMicroVolts: bool
     Samples: int
     NumSampleAverages: int
-    PicoAHwUid: Optional[str] = None
-    PicoBHwUid: Optional[str] = None
     PicoKOhms: Optional[int] = None
     TypeName: Literal["pico.tank.module.component.gt"] = "pico.tank.module.component.gt"
     Version: Literal["000"] = "000"

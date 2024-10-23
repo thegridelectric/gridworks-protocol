@@ -42,4 +42,5 @@ CACS_BY_MAKE_MODEL: Dict[str, str] = {
     MakeModel.GRIDWORKS__TANKMODULE2.value: "f88fbf89-5b74-46d6-84a3-8e7494d08435",
     MakeModel.GRIDWORKS__PICOFLOWHALL.value: "9d045a8d-12ee-43e6-8d7b-11c77b19de2f",
     MakeModel.GRIDWORKS__PICOFLOWREED.value: "aa4ad342-883a-4f89-bf86-9eb430aeb308",
+    MakeModel.SAIER__SENHZG1WA.value: "'58ecde10-b015-4711-9659-d5bfb7665393",
 }

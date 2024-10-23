@@ -10,9 +10,9 @@ from gwproto.types.component_gt import ComponentGt
 
 
 class PicoTankModuleComponentGt(ComponentGt):
+    Enabled: bool
     TempCalcMethod: TempCalcMethod
     ThermistorBeta: int
-    Enabled: bool
     SendMicroVolts: bool
     Samples: int
     NumSampleAverages: int

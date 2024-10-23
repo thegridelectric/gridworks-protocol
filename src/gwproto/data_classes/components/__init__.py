@@ -16,6 +16,9 @@ from gwproto.data_classes.components.hubitat_tank_component import HubitatTankCo
 from gwproto.data_classes.components.i2c_multichannel_dt_relay_component import (
     I2cMultichannelDtRelayComponent,
 )
+from gwproto.data_classes.components.pico_flow_module_component import (
+    PicoFlowModuleComponent,
+)
 from gwproto.data_classes.components.pico_tank_module_component import (
     PicoTankModuleComponent,
 )
@@ -34,6 +37,7 @@ __all__ = [
     "HubitatPollerComponent",
     "HubitatTankComponent",
     "I2cMultichannelDtRelayComponent",
+    "PicoFlowModuleComponent",
     "PicoTankModuleComponent",
     "RESTPollerComponent",
     "ResistiveHeaterComponent",

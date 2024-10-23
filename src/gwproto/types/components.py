@@ -7,6 +7,7 @@ from gwproto.types.fibaro_smart_implant_component_gt import (
 from gwproto.types.hubitat_component_gt import HubitatComponentGt
 from gwproto.types.hubitat_poller_component_gt import HubitatPollerComponentGt
 from gwproto.types.hubitat_tank_component_gt import HubitatTankComponentGt
+from gwproto.types.pico_flow_module_component_gt import PicoFlowModuleComponentGt
 from gwproto.types.pico_tank_module_component_gt import PicoTankModuleComponentGt
 from gwproto.types.resistive_heater_component_gt import ResistiveHeaterComponentGt
 from gwproto.types.rest_poller_component_gt import RESTPollerComponentGt
@@ -20,6 +21,7 @@ __all__ = [
     "HubitatComponentGt",
     "HubitatPollerComponentGt",
     "HubitatTankComponentGt",
+    "PicoFlowModuleComponentGt",
     "PicoTankModuleComponentGt",
     "RESTPollerComponentGt",
     "ResistiveHeaterComponentGt",

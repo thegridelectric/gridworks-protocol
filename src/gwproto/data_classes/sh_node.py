@@ -9,6 +9,13 @@ from gwproto.enums import ActorClass
 from gwproto.types import SpaceheatNodeGt
 
 
+def parent_hierarchy_name(hierarchy_name: str) -> str:
+    last_delimiter = hierarchy_name.rfind(".")
+    if last_delimiter == -1:
+        return hierarchy_name
+    return hierarchy_name[:last_delimiter]
+
+
 class ShNode(SpaceheatNodeGt):
     """
     A SpaceheatNode, or ShNode, is an organizing principal for the SCADA software.
@@ -31,6 +38,13 @@ class ShNode(SpaceheatNodeGt):
     @property
     def name(self) -> str:
         return self.Name
+
+    @property
+    def actor_hierarchy_name(self) -> str:
+        v = self.ActorHierarchyName
+        if self.ActorHierarchyName is None:
+            v = self.Name
+        return v
 
     @property
     def actor_class(self) -> ActorClass:

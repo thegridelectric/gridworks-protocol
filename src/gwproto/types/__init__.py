@@ -29,6 +29,8 @@ from gwproto.types.i2c_multichannel_dt_relay_component_gt import (
 )
 from gwproto.types.keyparam_change_log import KeyparamChangeLog
 from gwproto.types.my_channels import MyChannels
+from gwproto.types.pico_flow_module_component_gt import PicoFlowModuleComponentGt
+from gwproto.types.pico_tank_module_component_gt import PicoTankModuleComponentGt
 from gwproto.types.power_watts import PowerWatts
 from gwproto.types.relay_actor_config import RelayActorConfig
 from gwproto.types.report import Report
@@ -39,6 +41,7 @@ from gwproto.types.single_reading import SingleReading
 from gwproto.types.snapshot_spaceheat import SnapshotSpaceheat
 from gwproto.types.spaceheat_node_gt import SpaceheatNodeGt
 from gwproto.types.synced_readings import SyncedReadings
+from gwproto.types.tank_module_params import TankModuleParams
 from gwproto.types.web_server_component_gt import WebServerComponentGt
 
 __all__ = [
@@ -67,6 +70,8 @@ __all__ = [
     "I2cMultichannelDtRelayComponentGt",
     "KeyparamChangeLog",
     "MyChannels",
+    "PicoFlowModuleComponentGt",
+    "PicoTankModuleComponentGt",
     "PowerWatts",
     "RelayActorConfig",
     "Report",
@@ -77,6 +82,7 @@ __all__ = [
     "SnapshotSpaceheat",
     "SpaceheatNodeGt",
     "SyncedReadings",
+    "TankModuleParams",
     "WebServerComponentGt",
     "cacs",  # noqa: F822
     "components",  # noqa: F822

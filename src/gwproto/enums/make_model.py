@@ -80,6 +80,10 @@ class MakeModel(GwStrEnum):
         Board, with first at address 0x20 and second at address 0x21
       - GridWorks__SimDouble16PinI2cRelay: Simulated I2c Relay board with two boards and
         32 pins (for dev code using Krida__Doubler-Emr16-I2c-V3).
+      - GridWorks__TankModule2
+      - GridWorks__PicoFlowHall
+      - GridWorks__PicoFlowReed
+      - Saier__Sen-HZG1WA
 
     For more information:
       - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
@@ -124,6 +128,10 @@ class MakeModel(GwStrEnum):
     GRIDWORKS__SIMTOTALIZER = auto()
     KRIDA__DOUBLEEMR16I2CV3 = auto()
     GRIDWORKS__SIMDOUBLE16PINI2CRELAY = auto()
+    GRIDWORKS__TANKMODULE2 = auto()
+    GRIDWORKS__PICOFLOWHALL = auto()
+    GRIDWORKS__PICOFLOWREED = auto()
+    SAIER__SENHZG1WA = auto()
 
     @classmethod
     def default(cls) -> "MakeModel":
@@ -139,4 +147,4 @@ class MakeModel(GwStrEnum):
 
     @classmethod
     def enum_version(cls) -> str:
-        return "002"
+        return "003"

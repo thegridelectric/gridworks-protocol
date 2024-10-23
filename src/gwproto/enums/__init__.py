@@ -52,11 +52,12 @@ from gwproto.enums.relay_pin_set import RelayPinSet
 from gwproto.enums.relay_wiring_config import RelayWiringConfig
 from gwproto.enums.store_flow_direction import StoreFlowDirection
 from gwproto.enums.telemetry_name import TelemetryName
+from gwproto.enums.temp_calc_method import TempCalcMethod
 from gwproto.enums.thermistor_data_method import ThermistorDataMethod
 from gwproto.enums.unit import Unit
 
 __all__ = [
-    "ActorClass",  # [sh.actor.class.001](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shactorclass)
+    "ActorClass",  # [sh.actor.class.002](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shactorclass)
     "AlertPriority",  # [alert.priority.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#alertpriority)
     "ChangeAquastatControl",  # [change.aquastat.control.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeaquastatcontrol)
     "ChangeHeatPumpControl",  # [change.heat.pump.control.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeheatpumpcontrol)
@@ -71,13 +72,14 @@ __all__ = [
     "FsmName",  # [sh.fsm.name.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shfsmname)
     "FsmReportType",  # [fsm.report.type.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#fsmreporttype)
     "KindOfParam",  # [spaceheat.kind.of.param.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatkindofparam)
-    "MakeModel",  # [spaceheat.make.model.002](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatmakemodel)
+    "MakeModel",  # [spaceheat.make.model.003](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatmakemodel)
     "RelayClosedOrOpen",  # [relay.closed.or.open.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relayclosedoropen)
     "RelayEnergizationState",  # [relay.energization.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relayenergizationstate)
     "RelayPinSet",  # [relay.pin.set.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relaypinset)
     "RelayWiringConfig",  # [relay.wiring.config.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relaywiringconfig)
     "StoreFlowDirection",  # [store.flow.direction.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#storeflowdirection)
     "TelemetryName",  # [spaceheat.telemetry.name.001](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheattelemetryname)
+    "TempCalcMethod",  # [temp.calc.method.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#tempcalcmethod)
     "ThermistorDataMethod",  # [thermistor.data.method.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#thermistordatamethod)
     "Unit",  # [spaceheat.unit.001](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatunit)
 ]

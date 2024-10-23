@@ -30,6 +30,7 @@ class TelemetryName(GwStrEnum):
         69329 means 69.329 deg Fahrenheit.
       - ThermostatState: Thermostat State: 0 means idle, 1 means heating, 2 means pending
         heat
+      - MicroVolts: Microvolts RMS
 
     For more information:
       - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
@@ -51,6 +52,7 @@ class TelemetryName(GwStrEnum):
     AirTempCTimes1000 = auto()
     AirTempFTimes1000 = auto()
     ThermostatState = auto()
+    MicroVolts = auto()
 
     @classmethod
     def default(cls) -> "TelemetryName":

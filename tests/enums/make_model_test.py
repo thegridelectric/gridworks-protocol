@@ -1,5 +1,5 @@
 """
-Tests for enum spaceheat.make.model.002 from the GridWorks Type Registry.
+Tests for enum spaceheat.make.model.003 from the GridWorks Type Registry.
 """
 
 from gwproto.enums import MakeModel
@@ -44,8 +44,12 @@ def test_make_model() -> None:
         "GRIDWORKS__SIMTOTALIZER",
         "KRIDA__DOUBLEEMR16I2CV3",
         "GRIDWORKS__SIMDOUBLE16PINI2CRELAY",
+        "GRIDWORKS__TANKMODULE2",
+        "GRIDWORKS__PICOFLOWHALL",
+        "GRIDWORKS__PICOFLOWREED",
+        "SAIER__SENHZG1WA",
     }
 
     assert MakeModel.default() == MakeModel.UNKNOWNMAKE__UNKNOWNMODEL
     assert MakeModel.enum_name() == "spaceheat.make.model"
-    assert MakeModel.enum_version() == "002"
+    assert MakeModel.enum_version() == "003"

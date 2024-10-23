@@ -6,6 +6,7 @@ from gwproto.types.component_gt import ComponentGt
 
 class PicoFlowModuleComponentGt(ComponentGt):
     Enabled: bool
+    PicoHwUid: str
     FlowMeterType: MakeModel = MakeModel.SAIER__SENHZG1WA
     ConstantGallonsPerTick: float
     SendHz: bool = True

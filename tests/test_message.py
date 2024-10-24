@@ -38,7 +38,7 @@ def test_naive_payload() -> None:
     )
     assert m.src() == src
     assert m.message_type() == message_type
-    assert m.mqtt_topic() == f"gw/{src}/{message_type}"
+    assert m.mqtt_topic() == f"gw/{src}/to//{message_type}"
     assert m.Payload == x
     assert m.Header.Src == src
     assert m.Header.Dst == ""
@@ -55,7 +55,7 @@ def test_naive_payload() -> None:
     )
     assert m.src() == src
     assert m.message_type() == message_type
-    assert m.mqtt_topic() == f"gw/{src}/{message_type}"
+    assert m.mqtt_topic() == f"gw/{src}/to//{message_type}"
     assert m.Payload.x == x
     assert m.Header.Src == src
     assert m.Header.Dst == ""
@@ -100,7 +100,7 @@ def test_naive_payload() -> None:
     )
     assert m.src() == src
     assert m.message_type() == message_type
-    assert m.mqtt_topic() == f"gw/{src}/{message_type}"
+    assert m.mqtt_topic() == f"gw/{src}/to/{dst}/{message_type}"
     assert m.Payload.x == x
     assert m.Header.Src == src
     assert m.Header.Dst == dst
@@ -131,7 +131,7 @@ def test_from_payload() -> None:
     m = Message(Payload=PayloadProvides(Src=src, x=1))
     assert m.src() == src
     assert m.message_type() == message_type
-    assert m.mqtt_topic() == f"gw/{src}/{message_type}".replace(".", "-")
+    assert m.mqtt_topic() == f"gw/{src}/to//{message_type}".replace(".", "-")
     assert m.Payload.x == x
     assert m.Header.Src == src
     assert m.Header.Dst == ""
@@ -161,7 +161,7 @@ def test_from_payload() -> None:
     m = Message(Payload=p)
     assert m.src() == src
     assert m.message_type() == message_type
-    assert m.mqtt_topic() == f"gw/{src}/{message_type}".replace(".", "-")
+    assert m.mqtt_topic() == f"gw/{src}/to/{dst}/{message_type}".replace(".", "-")
     assert m.Payload.x == x
     assert m.Header.Src == src
     assert m.Header.Dst == dst

@@ -8,7 +8,7 @@ from gwproto.types.ticklist_reed import TicklistReed
 
 class TicklistReedReport(BaseModel):
     TerminalAssetAlias: LeftRightDotStr
-    ChannelName: SpaceheatName
+    FlowNodeName: SpaceheatName
     ScadaReceivedUnixMs: UTCMilliseconds
     Ticklist: TicklistReed
 

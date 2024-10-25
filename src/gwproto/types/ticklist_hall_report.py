@@ -8,7 +8,7 @@ from gwproto.types.ticklist_hall import TicklistHall
 
 class TicklistHallReport(BaseModel):
     TerminalAssetAlias: LeftRightDotStr
-    ChannelName: SpaceheatName
+    FlowNodeName: SpaceheatName
     ScadaReceivedUnixMs: UTCMilliseconds
     Ticklist: TicklistHall
 

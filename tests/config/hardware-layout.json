@@ -20,7 +20,7 @@
           "MilliWattHours",
           "VoltageRmsMilliVolts",
           "CurrentRmsMicroAmps",
-          "FrequencyMicroHz"
+          "MicroHz"
       ],
       "TypeName": "electric.meter.cac.gt",
       "Version": "001"

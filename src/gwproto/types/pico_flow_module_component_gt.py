@@ -7,6 +7,7 @@ from gwproto.types.component_gt import ComponentGt
 
 class PicoFlowModuleComponentGt(ComponentGt):
     Enabled: bool
+    HwUid: str
     PicoHwUid: str
     FlowNodeName: SpaceheatName
     FlowMeterType: MakeModel = MakeModel.SAIER__SENHZG1WA

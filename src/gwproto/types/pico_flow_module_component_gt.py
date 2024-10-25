@@ -13,7 +13,7 @@ class PicoFlowModuleComponentGt(ComponentGt):
     FlowMeterType: MakeModel = MakeModel.SAIER__SENHZG1WA
     HzCalcMethod: HzCalcMethod
     GpmFromHzMethod: GpmFromHzMethod
-    ConstantTicksPerGallon: int
+    ConstantGallonsPerTick: float
     SendHz: bool = True
     SendGallons: bool = False
     SendTickLists: bool = False

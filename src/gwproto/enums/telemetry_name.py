@@ -23,7 +23,7 @@ class TelemetryName(GwStrEnum):
         report cumulative gallons as their raw output. Example: 55300 means 55.3 gallons.
       - VoltageRmsMilliVolts: Voltage in Root Mean Square MilliVolts.
       - MilliWattHours: Energy in MilliWattHours.
-      - FrequencyMicroHz: Frequency in MicroHz. Example: 59,965,332 means 59.965332 Hz.
+      - MicroHz: Frequency in MicroHz. Example: 59,965,332 means 59.965332 Hz.
       - AirTempCTimes1000: Air temperature, in Degrees Celsius multiplied by 1000. Example:
         6234 means 6.234 deg Celcius.
       - AirTempFTimes1000: Air temperature, in Degrees F multiplied by 1000. Example:
@@ -48,7 +48,7 @@ class TelemetryName(GwStrEnum):
     GallonsTimes100 = auto()
     VoltageRmsMilliVolts = auto()
     MilliWattHours = auto()
-    FrequencyMicroHz = auto()
+    MicroHz = auto()
     AirTempCTimes1000 = auto()
     AirTempFTimes1000 = auto()
     ThermostatState = auto()

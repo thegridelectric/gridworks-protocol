@@ -17,7 +17,7 @@ def test_telemetry_name() -> None:
         "GallonsTimes100",
         "VoltageRmsMilliVolts",
         "MilliWattHours",
-        "FrequencyMicroHz",
+        "MicroHz",
         "AirTempCTimes1000",
         "AirTempFTimes1000",
         "ThermostatState",

@@ -18,10 +18,11 @@ class PicoFlowModuleComponentGt(ComponentGt):
     SendGallons: bool = False
     SendTickLists: bool = False
     NoFlowMs: int
-    PublishEmptyTicklistAfterS: int
     AsyncCaptureThresholdGpmTimes100: int
-    PublishTicklistPeriodS: Optional[int] = 10  # Required for Hall Params
-    PublishTicklistLength: Optional[int] = 300  # required for Reed Params
+    PublishEmptyTicklistAfterS: Optional[int] = None  # Hall Params
+    PublishAnyTicklistAfterS: Optional[int] = None  # Reed Params
+    PublishTicklistPeriodS: Optional[int] = None  # Required for Hall Params
+    PublishTicklistLength: Optional[int] = None  # required for Reed Params
     ExpAlpha: Optional[float] = 0.5
     CutoffFrequency: Optional[float] = 1.25
     TypeName: Literal["pico.flow.module.component.gt"] = "pico.flow.module.component.gt"

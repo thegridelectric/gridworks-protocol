@@ -10,7 +10,7 @@ class TicklistHall(BaseModel):
     HwUid: str
     FirstTickTimestampNanoSecond: Optional[int]
     RelativeMicrosecondList: List[int]
-    PicoBeforePostTimestampNanoSecond: float
+    PicoBeforePostTimestampNanoSecond: int
     TypeName: Literal["ticklist.hall"] = "ticklist.hall"
     Version: Literal["101"] = "101"
 

@@ -10,7 +10,7 @@ class TicklistReed(BaseModel):
     HwUid: str
     FirstTickTimestampNanoSecond: Optional[int]
     RelativeMillisecondList: List[int]
-    PicoBeforePostTimestampNanoSecond: float
+    PicoBeforePostTimestampNanoSecond: int
     TypeName: Literal["ticklist.reed"] = "ticklist.reed"
     Version: Literal["101"] = "101"
 

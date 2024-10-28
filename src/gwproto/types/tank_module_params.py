@@ -4,10 +4,16 @@ from typing import Literal, Optional
 
 from pydantic import BaseModel, PositiveInt, field_validator
 
-from gwproto.property_format import SpaceheatName
+from gwproto.property_format import (
+    SpaceheatName,
+)
 
 
 class TankModuleParams(BaseModel):
+    """
+    Parameters expected by a GridWorks TankModule2
+    """
+
     HwUid: str
     ActorNodeName: SpaceheatName
     PicoAB: str
@@ -25,6 +31,5 @@ class TankModuleParams(BaseModel):
         """
         Axiom 1: "PicoAB must be a or b"
         """
-        if v not in {"a", "b"}:
-            raise ValueError(f"PicoAB must be lowercase a or lowercase b, not <{v}>")
+        # Implement Axiom(s)
         return v

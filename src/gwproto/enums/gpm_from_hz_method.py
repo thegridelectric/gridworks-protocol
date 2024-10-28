@@ -5,6 +5,16 @@ from gw.enums import GwStrEnum
 
 
 class GpmFromHzMethod(GwStrEnum):
+    """
+
+    Values:
+      - Constant
+
+    For more information:
+      - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
+      - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#gpmfromhzmethod)
+    """
+
     Constant = auto()
 
     @classmethod

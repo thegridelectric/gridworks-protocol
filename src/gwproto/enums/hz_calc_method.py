@@ -5,6 +5,17 @@ from gw.enums import GwStrEnum
 
 
 class HzCalcMethod(GwStrEnum):
+    """
+
+    Values:
+      - BasicExpWeightedAvg
+      - BasicButterWorth
+
+    For more information:
+      - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
+      - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#hzcalcmethod)
+    """
+
     BasicExpWeightedAvg = auto()
     BasicButterWorth = auto()
 
@@ -18,7 +29,7 @@ class HzCalcMethod(GwStrEnum):
 
     @classmethod
     def enum_name(cls) -> str:
-        return "temp.calc.method"
+        return "hz.calc.method"
 
     @classmethod
     def enum_version(cls) -> str:

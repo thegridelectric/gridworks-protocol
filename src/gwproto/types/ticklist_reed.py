@@ -1,21 +1,25 @@
 """Type ticklist.reed, version 101"""
 
-from typing import List, Literal, Optional
+from typing import List, Literal
 
-from pydantic import BaseModel, model_validator
+from pydantic import BaseModel, StrictInt, model_validator
 from typing_extensions import Self
 
 
 class TicklistReed(BaseModel):
     HwUid: str
-    FirstTickTimestampNanoSecond: Optional[int]
-    RelativeMillisecondList: List[int]
-    PicoBeforePostTimestampNanoSecond: int
+    FirstTickTimestampNanoSecond: StrictInt
+    RelativeMillisecondList: List[StrictInt]
+    PicoBeforePostTimestampNanoSecond: StrictInt
     TypeName: Literal["ticklist.reed"] = "ticklist.reed"
     Version: Literal["101"] = "101"
 
     @model_validator(mode="after")
     def check_axiom_1(self) -> Self:
+        """
+        Axiom 1: .
+        FirstTickTimestampNanoSecond is None iff RelativeMillisecondList has length 0
+        """
         if (
             self.FirstTickTimestampNanoSecond is None
             and len(self.RelativeMillisecondList) > 0

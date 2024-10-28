@@ -102,13 +102,6 @@ from pydantic import BaseModel</xsl:text>
                                 and not(PropertyFormat = 'UTCSeconds')
                                 and not(PropertyFormat = 'PositiveInteger')
                                 ])>0">
-<xsl:text>, StrictInt # Count:</xsl:text>
-<xsl:value-of select="count($airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id) 
-                                and (PrimitiveType = 'Integer') 
-                                and not(PropertyFormat = 'UTCMilliseconds') 
-                                and not(PropertyFormat = 'UTCSeconds')
-                                and not(PropertyFormat = 'PositiveInteger')
-                                ])>0"/>
 </xsl:if>
 
 

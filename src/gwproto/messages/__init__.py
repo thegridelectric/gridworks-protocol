@@ -18,6 +18,8 @@ __all__ = [
     "MQTTConnectFailedEvent",
     "MQTTDisconnectEvent",
     "MQTTFullySubscribedEvent",
+    "MyChannels",
+    "MyChannelsEvent",
     "PeerActiveEvent",
     "Ping",
     "PingMessage",
@@ -32,4 +34,8 @@ __all__ = [
     "SnapshotSpaceheat",
     "SyncedReadings",
     "StartupEvent",
+    "TicklistHall",
+    "TicklistHallReport",
+    "TicklistReed",
+    "TicklistReedReport",
 ]

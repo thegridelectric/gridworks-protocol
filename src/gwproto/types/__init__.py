@@ -42,6 +42,10 @@ from gwproto.types.snapshot_spaceheat import SnapshotSpaceheat
 from gwproto.types.spaceheat_node_gt import SpaceheatNodeGt
 from gwproto.types.synced_readings import SyncedReadings
 from gwproto.types.tank_module_params import TankModuleParams
+from gwproto.types.ticklist_hall import TicklistHall
+from gwproto.types.ticklist_hall_report import TicklistHallReport
+from gwproto.types.ticklist_reed import TicklistReed
+from gwproto.types.ticklist_reed_report import TicklistReedReport
 from gwproto.types.web_server_component_gt import WebServerComponentGt
 
 __all__ = [
@@ -83,6 +87,10 @@ __all__ = [
     "SpaceheatNodeGt",
     "SyncedReadings",
     "TankModuleParams",
+    "TicklistHall",
+    "TicklistHallReport",
+    "TicklistReed",
+    "TicklistReedReport",
     "WebServerComponentGt",
     "cacs",  # noqa: F822
     "components",  # noqa: F822

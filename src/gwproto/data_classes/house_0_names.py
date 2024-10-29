@@ -144,9 +144,9 @@ class H0CN:
     dist_flow = H0N.dist_flow
     primary_flow = H0N.primary_flow
     store_flow = H0N.store_flow
-    dist_flow_integrated = f"{H0N.dist_flow}-integrated"
-    primary_flow_integrated = f"{H0N.primary_flow}-integrated"
-    store_flow_integrated = f"{H0N.store_flow}-integrated"
+    dist_flow_hz = f"{H0N.dist_flow}-hz"
+    primary_flow_hz = f"{H0N.primary_flow}-hz"
+    store_flow_hz = f"{H0N.store_flow}-hz"
 
     def __init__(self, total_store_tanks: int, zone_list: List[str]) -> None:
         for i in range(total_store_tanks):

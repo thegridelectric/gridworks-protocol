@@ -66,7 +66,7 @@ class ActorClass(GwStrEnum):
       - HoneywellThermostat: An actor for representing a Honeywell Hubitat thermostat
         which can load thermostat heating state change messages into status reports.
       - ApiTankModule
-      - ApiFlowMeter
+      - ApiFlowModule
 
     For more information:
       - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
@@ -95,7 +95,7 @@ class ActorClass(GwStrEnum):
     Hubitat = auto()
     HoneywellThermostat = auto()
     ApiTankModule = auto()
-    ApiFlowMeter = auto()
+    ApiFlowModule = auto()
 
     @classmethod
     def default(cls) -> "ActorClass":

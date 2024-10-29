@@ -44,6 +44,8 @@ from gwproto.enums.fsm_action_type import FsmActionType
 from gwproto.enums.fsm_event_type import FsmEventType
 from gwproto.enums.fsm_name import FsmName
 from gwproto.enums.fsm_report_type import FsmReportType
+from gwproto.enums.gpm_from_hz_method import GpmFromHzMethod
+from gwproto.enums.hz_calc_method import HzCalcMethod
 from gwproto.enums.kind_of_param import KindOfParam
 from gwproto.enums.make_model import MakeModel
 from gwproto.enums.relay_closed_or_open import RelayClosedOrOpen
@@ -71,6 +73,8 @@ __all__ = [
     "FsmEventType",  # [sh.fsm.event.type.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shfsmeventtype)
     "FsmName",  # [sh.fsm.name.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shfsmname)
     "FsmReportType",  # [fsm.report.type.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#fsmreporttype)
+    "GpmFromHzMethod",  # [gpm.from.hz.method.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#gpmfromhzmethod)
+    "HzCalcMethod",  # [hz.calc.method.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#hzcalcmethod)
     "KindOfParam",  # [spaceheat.kind.of.param.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatkindofparam)
     "MakeModel",  # [spaceheat.make.model.003](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatmakemodel)
     "RelayClosedOrOpen",  # [relay.closed.or.open.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relayclosedoropen)

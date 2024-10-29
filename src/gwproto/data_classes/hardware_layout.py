@@ -560,6 +560,12 @@ class HardwareLayout:
     def node(self, name: str, default: Any = None) -> ShNode:  # noqa: ANN401
         return self.nodes.get(name, default)
 
+    def node_by_handle(self, handle: str) -> Optional[ShNode]:
+        d = {node.Handle: node for node in self.nodes.values() if node.Handle}
+        if handle in d:
+            return d[handle]
+        return None
+
     def component(self, node_name: str) -> Optional[Component]:
         return self.component_from_node(self.node(node_name, None))
 

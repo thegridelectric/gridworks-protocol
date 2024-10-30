@@ -7,7 +7,7 @@ import sys
 import typing
 from abc import abstractmethod
 
-# Static analysis (mypy, pycharm) thinks 'types' here is gwproto.types.
+# Static analysis (mypy, pycharm) thinks 'types' here is gwproto.named_types.
 from types import ModuleType  # noqa
 from typing import (
     Any,
@@ -27,8 +27,8 @@ from pydantic_core import ErrorDetails
 
 from gwproto.message import Message
 from gwproto.messages import AnyEvent
+from gwproto.named_types import ComponentAttributeClassGt, ComponentGt
 from gwproto.topic import MQTTTopic
-from gwproto.types import ComponentAttributeClassGt, ComponentGt
 
 MessageDiscriminator = TypeVar("MessageDiscriminator", bound=Message[Any])
 

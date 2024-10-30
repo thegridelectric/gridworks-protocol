@@ -33,7 +33,7 @@ from gwproto.default_decoders import (
     default_component_decoder,
 )
 from gwproto.enums import ActorClass, TelemetryName
-from gwproto.types import (
+from gwproto.named_types import (
     ComponentAttributeClassGt,
     ComponentGt,
     ElectricMeterCacGt,

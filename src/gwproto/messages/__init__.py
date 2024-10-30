@@ -1,6 +1,6 @@
 # ruff: noqa: F405, F403
 
-from gwproto.types import *
+from gwproto.named_types import *
 
 from .event import *
 from .misc import *

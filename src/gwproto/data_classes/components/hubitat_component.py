@@ -3,8 +3,8 @@ from typing import Optional
 import yarl
 
 from gwproto.data_classes.components.component import Component
-from gwproto.types.component_attribute_class_gt import ComponentAttributeClassGt
-from gwproto.types.hubitat_component_gt import HubitatComponentGt
+from gwproto.named_types.component_attribute_class_gt import ComponentAttributeClassGt
+from gwproto.named_types.hubitat_component_gt import HubitatComponentGt
 
 
 class HubitatComponent(Component[HubitatComponentGt, ComponentAttributeClassGt]):

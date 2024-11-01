@@ -21,7 +21,7 @@ from gwproto.messages import (
     ShutdownEvent,
     StartupEvent,
 )
-from gwproto.types import (
+from gwproto.named_types import (
     GtShCliAtnCmd,
     PowerWatts,
     Report,

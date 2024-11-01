@@ -6,7 +6,7 @@ from pydantic import ConfigDict
 
 from gwproto.data_classes.components.component import Component
 from gwproto.enums import ActorClass
-from gwproto.types import SpaceheatNodeGt
+from gwproto.named_types import SpaceheatNodeGt
 
 
 def parent_hierarchy_name(hierarchy_name: str) -> str:

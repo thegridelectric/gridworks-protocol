@@ -7,7 +7,7 @@ from gwproto.data_classes.hardware_layout import (
 )
 from gwproto.data_classes.house_0_names import H0N
 from gwproto.data_classes.sh_node import ShNode
-from gwproto.types import ComponentAttributeClassGt
+from gwproto.named_types import ComponentAttributeClassGt
 
 
 class House0StartHandles:

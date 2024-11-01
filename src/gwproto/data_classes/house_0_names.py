@@ -77,6 +77,7 @@ class H0N:
     store_pump = "store-pump"
 
     # core temperatures
+    analog_temp = "analog-temp"
     dist_swt = "dist-swt"
     dist_rwt = "dist-rwt"
     hp_lwt = "hp-lwt"
@@ -112,10 +113,6 @@ class H0N:
             self.tank[i + 1] = TankNodes(f"tank{i + 1}")
         for i in range(len(zone_list)):
             self.zone[zone_list[i]] = ZoneNodes(zone=zone_list[i], idx=i)
-
-
-class H0Readers:
-    analog_temp = "analog-temp"
 
 
 class H0CN:

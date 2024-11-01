@@ -6,8 +6,8 @@ from typing import Any, Generic, Literal, Optional, TypeVar
 from pydantic import BaseModel, Field, field_validator
 
 from gwproto.message import Message, as_enum
+from gwproto.named_types import MyChannels, Report
 from gwproto.property_format import UTCMilliseconds
-from gwproto.types import MyChannels, Report
 
 
 class EventBase(BaseModel):

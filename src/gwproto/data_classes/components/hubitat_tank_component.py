@@ -6,13 +6,13 @@ from gwproto.data_classes.components import HubitatComponent
 from gwproto.data_classes.components.component import Component
 from gwproto.data_classes.resolver import ComponentResolver
 from gwproto.data_classes.sh_node import ShNode
-from gwproto.types.component_attribute_class_gt import ComponentAttributeClassGt
-from gwproto.types.hubitat_component_gt import (
+from gwproto.named_types.component_attribute_class_gt import ComponentAttributeClassGt
+from gwproto.named_types.hubitat_component_gt import (
     HubitatComponentGt,
     HubitatRESTResolutionSettings,
 )
-from gwproto.types.hubitat_tank_component_gt import HubitatTankComponentGt
-from gwproto.types.hubitat_tank_gt import (
+from gwproto.named_types.hubitat_tank_component_gt import HubitatTankComponentGt
+from gwproto.named_types.hubitat_tank_gt import (
     FibaroTempSensorSettings,
     FibaroTempSensorSettingsGt,
 )

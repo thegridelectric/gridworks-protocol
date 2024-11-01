@@ -2,7 +2,7 @@
 
 from typing import Generic, TypeVar
 
-from gwproto.types import ComponentAttributeClassGt, ComponentGt
+from gwproto.named_types import ComponentAttributeClassGt, ComponentGt
 
 ComponentT = TypeVar("ComponentT", bound=ComponentGt)
 CacT = TypeVar("CacT", bound=ComponentAttributeClassGt)

@@ -1,5 +1,5 @@
 from gwproto import MQTTCodec, create_message_model
-from tests.dummy_decoders import PARENT
+from tests.dummy_decoders import CHILD, PARENT
 
 
 class ChildMQTTCodec(MQTTCodec):
@@ -11,6 +11,10 @@ class ChildMQTTCodec(MQTTCodec):
             )
         )
 
-    def validate_source_alias(self, source_alias: str) -> None:  # noqa: PLR6301, RUF100
-        if source_alias != PARENT:
-            raise ValueError(f"alias {source_alias} not my parent!")
+    def validate_source_and_destination(self, src: str, dst: str) -> None:
+        if src != PARENT or dst != CHILD:
+            raise ValueError(
+                "ERROR validating src and/or dst\n"
+                f"  exp: {PARENT} -> {CHILD}\n"
+                f"  got: {src} -> {dst}"
+            )

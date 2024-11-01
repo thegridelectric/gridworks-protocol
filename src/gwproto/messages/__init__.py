@@ -1,6 +1,6 @@
 # ruff: noqa: F405, F403
 
-from gwproto.types import *
+from gwproto.named_types import *
 
 from .event import *
 from .misc import *
@@ -18,6 +18,8 @@ __all__ = [
     "MQTTConnectFailedEvent",
     "MQTTDisconnectEvent",
     "MQTTFullySubscribedEvent",
+    "MyChannels",
+    "MyChannelsEvent",
     "PeerActiveEvent",
     "Ping",
     "PingMessage",
@@ -32,4 +34,8 @@ __all__ = [
     "SnapshotSpaceheat",
     "SyncedReadings",
     "StartupEvent",
+    "TicklistHall",
+    "TicklistHallReport",
+    "TicklistReed",
+    "TicklistReedReport",
 ]

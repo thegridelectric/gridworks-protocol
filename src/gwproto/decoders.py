@@ -7,7 +7,7 @@ import sys
 import typing
 from abc import abstractmethod
 
-# Static analysis (mypy, pycharm) thinks 'types' here is gwproto.types.
+# Static analysis (mypy, pycharm) thinks 'types' here is gwproto.named_types.
 from types import ModuleType  # noqa
 from typing import (
     Any,
@@ -27,8 +27,8 @@ from pydantic_core import ErrorDetails
 
 from gwproto.message import Message
 from gwproto.messages import AnyEvent
+from gwproto.named_types import ComponentAttributeClassGt, ComponentGt
 from gwproto.topic import MQTTTopic
-from gwproto.types import ComponentAttributeClassGt, ComponentGt
 
 MessageDiscriminator = TypeVar("MessageDiscriminator", bound=Message[Any])
 
@@ -94,10 +94,10 @@ class MQTTCodec(abc.ABC):
                 f"Type {decoded_topic.envelope_type} not recognized. "
                 f"Available decoders: {self.message_model.type_name()}"
             )
-        self.validate_source_alias(decoded_topic.src)
+        self.validate_source_and_destination(decoded_topic.src, decoded_topic.dst)
 
     @abstractmethod
-    def validate_source_alias(self, source_alias: str) -> None: ...
+    def validate_source_and_destination(self, src: str, dst: str) -> None: ...
 
     @classmethod
     def _try_message_as_event(

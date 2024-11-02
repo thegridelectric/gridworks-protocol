@@ -6,7 +6,7 @@ from typing import Any, Generic, Literal, Optional, TypeVar
 from pydantic import BaseModel, Field, field_validator
 
 from gwproto.message import Message, as_enum
-from gwproto.named_types import MyChannels, Report
+from gwproto.named_types import LayoutLite, Report
 from gwproto.property_format import UTCMilliseconds
 
 
@@ -122,12 +122,12 @@ class ReportEvent(EventBase):
         self.TimeCreatedMs = self.Report.MessageCreatedMs
 
 
-class MyChannelsEvent(EventBase):
-    MyChannels: MyChannels
-    TypeName: Literal["my.channels.event"] = "my.channels.event"
+class LayoutEvent(EventBase):
+    Layout: LayoutLite
+    TypeName: Literal["layout.event"] = "layout.event"
     Version: Literal["000"] = "000"
 
     def __init__(self, **data: dict[str, Any]) -> None:
         super().__init__(**data)
-        self.MessageId = self.MyChannels.MessageId
-        self.TimeCreatedMs = self.MyChannels.MessageCreatedMs
+        self.MessageId = self.Layout.MessageId
+        self.TimeCreatedMs = self.Layout.MessageCreatedMs

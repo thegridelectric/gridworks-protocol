@@ -28,7 +28,7 @@ from gwproto.named_types.i2c_multichannel_dt_relay_component_gt import (
     I2cMultichannelDtRelayComponentGt,
 )
 from gwproto.named_types.keyparam_change_log import KeyparamChangeLog
-from gwproto.named_types.my_channels import MyChannels
+from gwproto.named_types.layout_lite import LayoutLite
 from gwproto.named_types.pico_flow_module_component_gt import PicoFlowModuleComponentGt
 from gwproto.named_types.pico_tank_module_component_gt import PicoTankModuleComponentGt
 from gwproto.named_types.power_watts import PowerWatts
@@ -73,7 +73,7 @@ __all__ = [
     "HubitatTankComponentGt",
     "I2cMultichannelDtRelayComponentGt",
     "KeyparamChangeLog",
-    "MyChannels",
+    "LayoutLite",
     "PicoFlowModuleComponentGt",
     "PicoTankModuleComponentGt",
     "PowerWatts",

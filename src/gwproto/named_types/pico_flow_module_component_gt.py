@@ -25,8 +25,8 @@ class PicoFlowModuleComponentGt(ComponentGt):
     PublishAnyTicklistAfterS: Optional[int] = None  # Reed Params
     PublishTicklistPeriodS: Optional[int] = None  # Required for Hall Params
     PublishTicklistLength: Optional[int] = None  # required for Reed Params
-    ExpAlpha: Optional[float] = 0.5
-    CutoffFrequency: Optional[float] = 1.25
+    ExpAlpha: Optional[float] = None
+    CutoffFrequency: Optional[float] = None
     TypeName: Literal["pico.flow.module.component.gt"] = "pico.flow.module.component.gt"
     Version: Literal["000"] = "000"
 

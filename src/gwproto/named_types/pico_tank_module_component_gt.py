@@ -18,7 +18,8 @@ class PicoTankModuleComponentGt(ComponentGt):
     SendMicroVolts: bool
     Samples: int
     NumSampleAverages: int
-    PicoKOhms: Optional[int] = None
+    PicoKOhms: int
+    SerialNumber: str = "NA"
     TypeName: Literal["pico.tank.module.component.gt"] = "pico.tank.module.component.gt"
     Version: Literal["000"] = "000"
 

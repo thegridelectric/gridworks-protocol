@@ -1,4 +1,4 @@
-"""Type component.gt, version 000"""
+"""Type component.gt, version 001"""
 
 from typing import List, Literal, Optional
 

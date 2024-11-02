@@ -46,7 +46,7 @@
                     </xsl:if>
                     </xsl:variable>
                 <FileSetFile>
-                            <xsl:element name="RelativePath"><xsl:text>../../../../tests/types/test_</xsl:text>
+                            <xsl:element name="RelativePath"><xsl:text>../../../../tests/named_types/test_</xsl:text>
                             <xsl:value-of select="translate($type-name,'.','_')"/><xsl:text>.py</xsl:text></xsl:element>
 
                     <OverwriteMode><xsl:value-of select="$overwrite-mode"/></OverwriteMode>
@@ -78,13 +78,13 @@ from gwproto.enums import </xsl:text>
 <xsl:choose>
 <xsl:when test="(NotInInit='true')">
 <xsl:text>
-from gwproto.types.</xsl:text><xsl:value-of select="translate($type-name,'.','_')"/>
+from gwproto.named_types.</xsl:text><xsl:value-of select="translate($type-name,'.','_')"/>
 <xsl:text> import </xsl:text><xsl:value-of select="$class-name"/>
 </xsl:when>
 
 <xsl:otherwise>
 <xsl:text>
-from gwproto.types import </xsl:text><xsl:value-of select="$class-name"/>
+from gwproto.named_types import </xsl:text><xsl:value-of select="$class-name"/>
 </xsl:otherwise>
 
 </xsl:choose>

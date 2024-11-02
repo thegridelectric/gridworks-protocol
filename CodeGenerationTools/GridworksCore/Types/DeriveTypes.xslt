@@ -46,7 +46,7 @@
                     </xsl:variable>
 
                     <FileSetFile>
-                                <xsl:element name="RelativePath"><xsl:text>../../../src/gwproto/types/</xsl:text>
+                                <xsl:element name="RelativePath"><xsl:text>../../../src/gwproto/named_types/</xsl:text>
                                 <xsl:value-of select="translate($type-name,'.','_')"/><xsl:text>.py</xsl:text></xsl:element>
 
                         <OverwriteMode><xsl:value-of select="$overwrite-mode"/></OverwriteMode>
@@ -122,7 +122,7 @@ from gw import check_is_market_slot_name_lrd_format</xsl:text>
 
 <xsl:if test="(IsType = 'true') and (normalize-space(SubTypeDataClass) = '' or IsList = 'true')">
 <xsl:text>
-from gwproto.types.</xsl:text>
+from gwproto.named_types.</xsl:text>
 <xsl:call-template name="python-case">
     <xsl:with-param name="camel-case-text" select="translate(SubTypeName,'.','_')"  />
 </xsl:call-template>

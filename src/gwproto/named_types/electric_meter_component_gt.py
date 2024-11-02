@@ -1,4 +1,4 @@
-"""Type electric.meter.component.gt, version 000"""
+"""Type electric.meter.component.gt, version 001"""
 
 from typing import List, Literal, Optional, Self
 
@@ -13,6 +13,7 @@ class ElectricMeterComponentGt(ComponentGt):
     ModbusPort: Optional[PositiveInt] = None
     ConfigList: List[ElectricMeterChannelConfig]
     TypeName: Literal["electric.meter.component.gt"] = "electric.meter.component.gt"
+    Version: Literal["001"] = "001"
 
     @field_validator("ConfigList")
     @classmethod

@@ -1,4 +1,4 @@
-"""Type electric.meter.cac.gt, version 000"""
+"""Type electric.meter.cac.gt, version 010"""
 
 from typing import Literal, Optional
 
@@ -10,3 +10,4 @@ class ElectricMeterCacGt(ComponentAttributeClassGt):
     TelemetryNameList: list[TelemetryName]
     DefaultBaud: Optional[int] = None
     TypeName: Literal["electric.meter.cac.gt"] = "electric.meter.cac.gt"
+    Version: Literal["001"] = "001"

@@ -1,4 +1,4 @@
-"""Type component.attribute.class.gt, version 000"""
+"""Type component.attribute.class.gt, version 001"""
 
 from typing import Literal, Optional
 

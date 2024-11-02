@@ -20,6 +20,7 @@ class PicoTankModuleComponentGt(ComponentGt):
     NumSampleAverages: int
     PicoKOhms: int
     SerialNumber: str = "NA"
+    AsyncCaptureDeltaMicroHz: int = 4000
     TypeName: Literal["pico.tank.module.component.gt"] = "pico.tank.module.component.gt"
     Version: Literal["000"] = "000"
 

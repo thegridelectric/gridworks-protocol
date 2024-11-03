@@ -20,13 +20,6 @@ from gwproto.default_decoders import (
 from gwproto.named_types import ComponentAttributeClassGt
 
 
-class House0StartHandles:
-    scada = "h.s"
-    admin = "admin"
-    home_alone = "h"
-    i2c_multiplexer = "admin.relay-multiplexer"
-
-
 class House0Layout(HardwareLayout):
     zone_list: List[str]
     total_store_tanks: int
@@ -149,6 +142,26 @@ class House0Layout(HardwareLayout):
 
     @property
     def chg_dschg_relay(self) -> ShNode:
+        return next(
+            (
+                node
+                for name, node in self.nodes.items()
+                if name.split(".")[-1] == self.short_names.store_charge_discharge_relay
+            )
+        )
+
+    @property
+    def tstat_common_relay(self) -> ShNode:
+        return next(
+            (
+                node
+                for name, node in self.nodes.items()
+                if name.split(".")[-1] == self.short_names.tstat_common_relay
+            )
+        )
+
+    @property
+    def store_charge_discharge_relay(self) -> ShNode:
         return next(
             (
                 node

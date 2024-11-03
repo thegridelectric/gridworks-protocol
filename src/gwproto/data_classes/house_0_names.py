@@ -68,6 +68,9 @@ class H0N:
     secondary_scada = "s2"
     home_alone = "h"
     primary_power_meter = "power-meter"
+    admin = "admin"  # used when starter scripts take control
+    analog_temp = "analog-temp"
+    relay_multiplexer = "relay-multiplexer"
 
     # core power-metered nodes
     hp_odu = "hp-odu"
@@ -77,7 +80,6 @@ class H0N:
     store_pump = "store-pump"
 
     # core temperatures
-    analog_temp = "analog-temp"
     dist_swt = "dist-swt"
     dist_rwt = "dist-rwt"
     hp_lwt = "hp-lwt"
@@ -97,15 +99,18 @@ class H0N:
     store_flow = "store-flow"
 
     # relay nodes
-    vdc_relay = f"relay{House0RelayIdx.vdc}"
-    tstat_common_relay = f"relay{House0RelayIdx.tstat_common}"
-    store_charge_discharge_relay = f"relay{House0RelayIdx.store_charge_disharge}"
+    vdc_relay: Literal["relay1"] = f"relay{House0RelayIdx.vdc}"
+    tstat_common_relay: Literal["relay2"] = f"relay{House0RelayIdx.tstat_common}"
+    store_charge_discharge_relay: Literal["relay3"] = (
+        f"relay{House0RelayIdx.store_charge_disharge}"
+    )
     hp_failsafe_relay = f"relay{House0RelayIdx.hp_failsafe}"
     hp_scada_ops_relay = f"relay{House0RelayIdx.hp_scada_ops}"
     aquastat_ctrl_relay = f"relay{House0RelayIdx.aquastat_ctrl}"
     store_pump_failsafe = f"relay{House0RelayIdx.store_pump_failsafe}"
     boiler_scada_ops = f"relay{House0RelayIdx.boiler_scada_ops}"
-
+    primary_pump_scada_ops = f"relay{House0RelayIdx.primary_pump_ops}"
+    primary_pump_failsafe = f"relay{House0RelayIdx.primary_pump_failsafe}"
     hubitat = "hubitat"
 
     def __init__(self, total_store_tanks: int, zone_list: List[str]) -> None:
@@ -113,6 +118,13 @@ class H0N:
             self.tank[i + 1] = TankNodes(f"tank{i + 1}")
         for i in range(len(zone_list)):
             self.zone[zone_list[i]] = ZoneNodes(zone=zone_list[i], idx=i)
+
+
+class House0StartHandles:
+    scada = "h.s"
+    admin = "admin"
+    home_alone = "h"
+    relay_multiplexer = "admin.relay-multiplexer"
 
 
 class H0CN:
@@ -144,6 +156,26 @@ class H0CN:
     dist_flow_hz = f"{H0N.dist_flow}-hz"
     primary_flow_hz = f"{H0N.primary_flow}-hz"
     store_flow_hz = f"{H0N.store_flow}-hz"
+
+    # relay state channels
+    vdc_relay_state: Literal["vdc-relay1"] = f"vdc-{H0N.vdc_relay}"
+    tstat_common_relay_state: Literal["tstat-common-relay2"] = (
+        f"tstat-common-{H0N.tstat_common_relay}"
+    )
+    charge_discharge_relay_state: Literal["charge-discharge-relay3"] = (
+        f"charge-discharge-{H0N.store_charge_discharge_relay}"
+    )
+    hp_failsafe_relay_state = f"hp-failsafe-{H0N.hp_failsafe_relay}"
+    hp_scada_ops_relay_state = f"hp-scada-ops-{H0N.hp_scada_ops_relay}"
+    aquastat_ctrl_relay_state = f"aquastat-ctrl-{H0N.aquastat_ctrl_relay}"
+    store_pump_failsafe_relay_state = f"store-pump-failsafe-{H0N.store_pump_failsafe}"
+    boiler_scada_ops_relay_state = f"boiler-scada_ops-{H0N.boiler_scada_ops}"
+    primary_pump_scada_ops_relay_state = (
+        f"primary-pump-scada-ops-{H0N.primary_pump_scada_ops}"
+    )
+    primary_pump_failsafe_relay_state = (
+        f"primary-pump-failsafe-{H0N.primary_pump_failsafe}"
+    )
 
     def __init__(self, total_store_tanks: int, zone_list: List[str]) -> None:
         for i in range(total_store_tanks):
@@ -239,21 +271,6 @@ class H0CN:
                 Name=self.store_flow,
                 AboutNodeName=H0N.store_flow,
                 TelemetryName=TelemetryName.GpmTimes100,
-            ),
-            self.dist_flow_integrated: ChannelStub(
-                Name=self.dist_flow_integrated,
-                AboutNodeName=H0N.dist_flow,
-                TelemetryName=TelemetryName.GallonsTimes100,
-            ),
-            self.primary_flow_integrated: ChannelStub(
-                Name=self.primary_flow_integrated,
-                AboutNodeName=H0N.primary_flow,
-                TelemetryName=TelemetryName.GallonsTimes100,
-            ),
-            self.store_flow_integrated: ChannelStub(
-                Name=self.store_flow_integrated,
-                AboutNodeName=H0N.store_flow,
-                TelemetryName=TelemetryName.GallonsTimes100,
             ),
             self.buffer.depth1: ChannelStub(
                 Name=self.buffer.depth1,

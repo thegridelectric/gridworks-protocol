@@ -4,10 +4,10 @@
 from enum import auto
 from typing import List
 
-from gwproto.enums.relay_action_base import RelayActionBase
+from gwproto.enums.relay_event_base import RelayEventBase
 
 
-class ChangeStoreFlowDirection(RelayActionBase):
+class ChangeStoreFlowDirection(RelayEventBase):
     """
     Events that trigger changing StoreFlowDirection finite state machine
     """

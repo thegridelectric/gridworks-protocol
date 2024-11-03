@@ -4,10 +4,10 @@
 from enum import auto
 from typing import List
 
-from gwproto.enums.relay_action_base import RelayActionBase
+from gwproto.enums.relay_event_base import RelayEventBase
 
 
-class ChangeHeatPumpControl(RelayActionBase):
+class ChangeHeatPumpControl(RelayEventBase):
     """
     Change control between a fallback analog system and SCADA
     """

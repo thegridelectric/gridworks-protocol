@@ -16,9 +16,11 @@ from gwproto.named_types.rest_poller_gt import (
 )
 from gwproto.named_types.web_server_gt import WebServerGt
 from gwproto.type_helpers.cacs_by_make_model import CACS_BY_MAKE_MODEL
+from gwproto.type_helpers.event_enum_by_name import EVENT_ENUM_BY_NAME
 
 __all__ = [
     "CACS_BY_MAKE_MODEL",
+    "EVENT_ENUM_BY_NAME",
     "AioHttpClientTimeout",
     "FibaroTempSensorSettings",
     "FibaroTempSensorSettingsGt",

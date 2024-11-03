@@ -4,10 +4,10 @@
 from enum import auto
 from typing import List
 
-from gwproto.enums.relay_action_base import RelayActionBase
+from gwproto.enums.relay_event_base import RelayEventBase
 
 
-class ChangeHeatcallSource(RelayActionBase):
+class ChangeHeatcallSource(RelayEventBase):
     """
     Used for dispatch/actions between the two states of a double-throw failsafe relay that toggles
     between the SCADA and a Thermostat for controlling the heat call to a zone.

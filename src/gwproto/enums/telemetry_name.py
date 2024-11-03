@@ -10,8 +10,8 @@ class TelemetryName(GwStrEnum):
     Values:
       - Unknown: Default Value - unknown telemetry name.
       - PowerW: Power in Watts.
-      - RelayState: The Telemetry reading belongs to [1 ('Energized'), 0 ('DeEnergized')]
-        (relay.energization.state enum).
+      - RelayState: The Telemetry reading belongs to [1 ('Energized') , 0 ('DeEnergized')] (relay.energization.state
+        enum).
       - WaterTempCTimes1000: Water temperature, in Degrees Celcius multiplied by 1000.
         Example: 43200 means 43.2 deg Celcius.
       - WaterTempFTimes1000: Water temperature, in Degrees F multiplied by 1000. Example:

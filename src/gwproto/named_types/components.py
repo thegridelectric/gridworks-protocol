@@ -7,6 +7,9 @@ from gwproto.named_types.fibaro_smart_implant_component_gt import (
 from gwproto.named_types.hubitat_component_gt import HubitatComponentGt
 from gwproto.named_types.hubitat_poller_component_gt import HubitatPollerComponentGt
 from gwproto.named_types.hubitat_tank_component_gt import HubitatTankComponentGt
+from gwproto.named_types.i2c_multichannel_dt_relay_component_gt import (
+    I2cMultichannelDtRelayComponentGt,
+)
 from gwproto.named_types.pico_flow_module_component_gt import PicoFlowModuleComponentGt
 from gwproto.named_types.pico_tank_module_component_gt import PicoTankModuleComponentGt
 from gwproto.named_types.resistive_heater_component_gt import ResistiveHeaterComponentGt
@@ -21,6 +24,7 @@ __all__ = [
     "HubitatComponentGt",
     "HubitatPollerComponentGt",
     "HubitatTankComponentGt",
+    "I2cMultichannelDtRelayComponentGt",
     "PicoFlowModuleComponentGt",
     "PicoTankModuleComponentGt",
     "RESTPollerComponentGt",

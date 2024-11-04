@@ -120,6 +120,7 @@ def test_layout_lite_generated() -> None:
                 "PicoKOhms": 30,
                 "Samples": 1000,
                 "SendMicroVolts": True,
+                "AsyncCaptureDeltaMicroVolts": 2000,
                 "TempCalcMethod": "SimpleBetaForPico",
                 "ThermistorBeta": 3977,
                 "TypeName": "pico.tank.module.component.gt",

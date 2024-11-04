@@ -47,6 +47,13 @@ class ShNode(SpaceheatNodeGt):
         return v
 
     @property
+    def handle(self) -> str:
+        v = self.Handle
+        if self.Handle is None:
+            v = self.Name
+        return v
+
+    @property
     def actor_class(self) -> ActorClass:
         return self.ActorClass
 

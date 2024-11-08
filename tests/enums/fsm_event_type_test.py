@@ -1,5 +1,5 @@
 """
-Tests for enum sh.fsm.event.type.000 from the GridWorks Type Registry.
+Tests for enum sh.fsm.event.type.001 from the GridWorks Type Registry.
 """
 
 from gwproto.enums import FsmEventType
@@ -7,6 +7,7 @@ from gwproto.enums import FsmEventType
 
 def test_fsm_event_type() -> None:
     assert set(FsmEventType.values()) == {
+        "PicoCyclerEvent",
         "ChangeRelayPin",
         "ChangeRelayState",
         "SetAnalog010V",
@@ -24,4 +25,4 @@ def test_fsm_event_type() -> None:
 
     assert FsmEventType.default() == FsmEventType.ChangeRelayState
     assert FsmEventType.enum_name() == "sh.fsm.event.type"
-    assert FsmEventType.enum_version() == "000"
+    assert FsmEventType.enum_version() == "001"

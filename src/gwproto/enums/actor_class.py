@@ -67,6 +67,7 @@ class ActorClass(GwStrEnum):
         which can load thermostat heating state change messages into status reports.
       - ApiTankModule
       - ApiFlowModule
+      - PicoCycler
 
     For more information:
       - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
@@ -96,6 +97,7 @@ class ActorClass(GwStrEnum):
     HoneywellThermostat = auto()
     ApiTankModule = auto()
     ApiFlowModule = auto()
+    PicoCycler = auto()
 
     @classmethod
     def default(cls) -> "ActorClass":

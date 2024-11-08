@@ -113,6 +113,9 @@ class H0N:
     primary_pump_failsafe = f"relay{House0RelayIdx.primary_pump_failsafe}"
     hubitat = "hubitat"
 
+    # finite state machines
+    pico_cycler = "pico-cycler"
+
     def __init__(self, total_store_tanks: int, zone_list: List[str]) -> None:
         for i in range(total_store_tanks):
             self.tank[i + 1] = TankNodes(f"tank{i + 1}")

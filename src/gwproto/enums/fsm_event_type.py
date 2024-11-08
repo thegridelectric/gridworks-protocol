@@ -8,6 +8,7 @@ class FsmEventType(GwStrEnum):
     """
     The name of a set of events for a particular Spaceheat finite state machine.
     Values:
+      - PicoCyclerEvent
       - ChangeRelayPin: Meant to be used between a single relay actor and a multiplexer
         (for example, an i2c relay actor and an i2c relay multiplexer). The associated values
         are DeEnergized and Energized. Note that the multiplexer does not concern itself with
@@ -37,6 +38,7 @@ class FsmEventType(GwStrEnum):
       - [More Info](https://gridworks-protocol.readthedocs.io/en/latest/finite-state-machines.html)
     """
 
+    PicoCyclerEvent = auto()
     ChangeRelayPin = auto()
     ChangeRelayState = auto()
     SetAnalog010V = auto()
@@ -65,4 +67,4 @@ class FsmEventType(GwStrEnum):
 
     @classmethod
     def enum_version(cls) -> str:
-        return "000"
+        return "001"

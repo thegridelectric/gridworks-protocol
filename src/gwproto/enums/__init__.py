@@ -48,6 +48,7 @@ from gwproto.enums.gpm_from_hz_method import GpmFromHzMethod
 from gwproto.enums.hz_calc_method import HzCalcMethod
 from gwproto.enums.kind_of_param import KindOfParam
 from gwproto.enums.make_model import MakeModel
+from gwproto.enums.pico_cycler_state import PicoCyclerState
 from gwproto.enums.relay_closed_or_open import RelayClosedOrOpen
 from gwproto.enums.relay_energization_state import RelayEnergizationState
 from gwproto.enums.relay_pin_set import RelayPinSet
@@ -77,6 +78,7 @@ __all__ = [
     "HzCalcMethod",  # [hz.calc.method.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#hzcalcmethod)
     "KindOfParam",  # [spaceheat.kind.of.param.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatkindofparam)
     "MakeModel",  # [spaceheat.make.model.003](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatmakemodel)
+    "PicoCyclerState",  # [pico.cycler.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#picocyclerstate)
     "RelayClosedOrOpen",  # [relay.closed.or.open.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relayclosedoropen)
     "RelayEnergizationState",  # [relay.energization.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relayenergizationstate)
     "RelayPinSet",  # [relay.pin.set.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relaypinset)

@@ -48,11 +48,11 @@
                 "Version":"002"
             }
             ],
-            "FsmActionList": [],
+            "StateList": [],
             "FsmReportList": [],
             "Id":"4dab57dd-8b4e-4ea4-90a3-d63df9eeb061",
             "TypeName":"report",
-            "Version":"001"
+            "Version":"002"
         }
     },
     "TypeName": "gw"

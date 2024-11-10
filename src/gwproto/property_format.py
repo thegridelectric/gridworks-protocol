@@ -37,7 +37,7 @@ def check_is_log_style_date_with_millis(v: str) -> None:
         )
 
 
-def is_handle_name(v: str) -> None:
+def is_handle_name(v: str) -> str:
     """
     HandleName format: words separated by periods, where the worlds are lowercase
     alphanumeric plus hyphens
@@ -197,10 +197,11 @@ def check_is_ads1115_i2c_address(v: int) -> None:
         raise ValueError(f"Not Ads1115I2cAddress: <{hex(v)}>")
 
 
-def check_is_near5(v: str) -> None:
+def check_is_near5(v: str | float) -> None:
     """
     4.5  <= v  <= 5.5
     """
+    v = float(v)
     min_pi_voltage = 4.5
     max_pi_voltage = 5.5
     if v < min_pi_voltage or v > max_pi_voltage:

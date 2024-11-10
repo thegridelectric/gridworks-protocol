@@ -1,23 +1,35 @@
 """Tests fsm.atomic.report type, version 000"""
 
+import json
+
+from gwproto.enums import FsmReportType
 from gwproto.named_types import FsmAtomicReport
 
 
 def test_fsm_atomic_report_generated() -> None:
     d = {
-        "FromHandle": "h.admin.store-charge-discharge.relay3",
-        "AboutFsm": "RelayState",
-        "ReportType": "Action",
-        "ActionType": "RelayPinSet",
-        "Action": 0,
-        "UnixTimeMs": 1710158001624,
+        "MachineHandle": "h.pico-cycler.relay1",
+        "StateEnum": "relay.closed.or.open",
+        "ReportType": "Event",
+        "EventEnum": "change.relay.state",
+        "Event": "CloseRelay",
+        "FromState": "RelayOpen",
+        "ToState": "RelayClosed",
+        "UnixTimeMs": 1709923792000,
         "TriggerId": "12da4269-63c3-44f4-ab65-3ee5e29329fe",
         "TypeName": "fsm.atomic.report",
         "Version": "000",
     }
 
-    d2 = FsmAtomicReport.model_validate(d).model_dump(exclude_none=True)
+    t = FsmAtomicReport.model_validate(d).model_dump_json(exclude_none=True)
+    d2 = json.loads(t)
+    assert d == d2
 
-    assert d2 == d
+    ######################################
+    # Enum related
+    ######################################
 
-    assert type(d2["AboutFsm"]) is str
+    assert type(d2["ReportType"]) is str
+
+    d2 = dict(d, ReportType="unknown_enum_thing")
+    assert FsmAtomicReport(**d2).ReportType == FsmReportType.default()

@@ -13,6 +13,7 @@ class PicoCyclerState(GwStrEnum):
       - RelayOpen
       - RelayClosing
       - PicosRebooting
+      - AllZombies
 
     For more information:
       - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
@@ -24,6 +25,7 @@ class PicoCyclerState(GwStrEnum):
     RelayOpen = auto()
     RelayClosing = auto()
     PicosRebooting = auto()
+    AllZombies = auto()
 
     @classmethod
     def default(cls) -> "PicoCyclerState":

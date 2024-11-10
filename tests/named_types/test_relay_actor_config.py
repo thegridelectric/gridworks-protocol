@@ -1,6 +1,6 @@
 """Tests relay.actor.config type, version 000"""
 
-from gwproto.enums import FsmEventType, RelayWiringConfig
+from gwproto.enums import RelayWiringConfig
 from gwproto.named_types import RelayActorConfig
 
 
@@ -16,7 +16,7 @@ def test_relay_actor_config_generated() -> None:
         "RelayIdx": 18,
         "ActorName": "zone1-ctrl-relay",
         "WiringConfig": "NormallyOpen",
-        "EventType": "ChangeRelayState",
+        "EventType": "change.relay.state",
         "DeEnergizingEvent": "OpenRelay",
         "TypeName": "relay.actor.config",
         "Version": "000",
@@ -34,8 +34,3 @@ def test_relay_actor_config_generated() -> None:
 
     d2 = dict(d, WiringConfig="unknown_enum_thing")
     assert RelayActorConfig(**d2).WiringConfig == RelayWiringConfig.default()
-
-    assert type(d2["EventType"]) is str
-
-    d2 = dict(d, EventType="unknown_enum_thing")
-    assert RelayActorConfig(**d2).EventType == FsmEventType.default()

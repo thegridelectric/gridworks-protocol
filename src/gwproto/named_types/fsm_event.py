@@ -12,11 +12,11 @@ from gwproto.enums import (
     ChangePrimaryPumpControl,
     ChangeRelayPin,
     ChangeRelayState,
-    ChangeStoreFlowDirection,
-    FsmEventType,
+    ChangeStoreFlowRelay,
 )
 from gwproto.property_format import (
     HandleName,
+    LeftRightDotStr,
     UTCMilliseconds,
     UUID4Str,
 )
@@ -25,7 +25,7 @@ from gwproto.property_format import (
 class FsmEvent(BaseModel):
     FromHandle: HandleName
     ToHandle: HandleName
-    EventType: FsmEventType
+    EventType: LeftRightDotStr
     EventName: str
     TriggerId: UUID4Str
     SendTimeUnixMs: UTCMilliseconds
@@ -41,71 +41,66 @@ class FsmEvent(BaseModel):
 
         """
         if (
-            self.EventType == "ChangeAquastatControl"
+            self.EventType == ChangeAquastatControl.enum_name()
             and self.EventName not in ChangeAquastatControl.values()
         ):
             raise ValueError(
-                f"EventName {self.EventName} must belong to EventType ChangeAquastatControl values {ChangeAquastatControl.values()}"
+                f"EventName {self.EventName} must belong to EventType {ChangeAquastatControl.enum_name()} values {ChangeAquastatControl.values()}"
             )
         if (
-            self.EventType == "ChangeHeatcallSource"
+            self.EventType == ChangeHeatcallSource.enum_name()
             and self.EventName not in ChangeHeatcallSource.values()
         ):
             raise ValueError(
-                f"EventName {self.EventName} must belong to EventType ChangeHeatcallSource values {ChangeHeatcallSource.values()}"
+                f"EventName {self.EventName} must belong to EventType {ChangeHeatcallSource.enum_name()} values {ChangeHeatcallSource.values()}"
             )
         if (
-            self.EventType == "ChangeHeatPumpControl"
+            self.EventType == ChangeHeatPumpControl.enum_name()
             and self.EventName not in ChangeHeatPumpControl.values()
         ):
             raise ValueError(
-                f"EventName {self.EventName} must belong to EventType ChangeHeatPumpControl values {ChangeHeatPumpControl.values()}"
+                f"EventName {self.EventName} must belong to EventType {ChangeHeatPumpControl.enum_name()} values {ChangeHeatPumpControl.values()}"
             )
         if (
-            self.EventType == "ChangePrimaryPumpControl"
+            self.EventType == ChangePrimaryPumpControl.enum_name()
             and self.EventName not in ChangePrimaryPumpControl.values()
         ):
             raise ValueError(
-                f"EventName {self.EventName} must belong to EventType ChangePrimaryPumpControl values {ChangePrimaryPumpControl.values()}"
+                f"EventName {self.EventName} must belong to EventType {ChangePrimaryPumpControl.enum_name()} values {ChangePrimaryPumpControl.values()}"
             )
         if (
-            self.EventType == "ChangeRelayPin"
+            self.EventType == ChangeRelayPin.enum_name()
             and self.EventName not in ChangeRelayPin.values()
         ):
             raise ValueError(
-                f"EventName {self.EventName} must belong to EventType ChangeRelayPin values {ChangeRelayPin.values()}"
+                f"EventName {self.EventName} must belong to EventType {ChangeRelayPin.enum_name()} values {ChangeRelayPin.values()}"
             )
         if (
-            self.EventType == "ChangeRelayState"
+            self.EventType == ChangeRelayState.enum_name()
             and self.EventName not in ChangeRelayState.values()
         ):
             raise ValueError(
-                f"EventName {self.EventName} must belong to EventType ChangeRelayState values {ChangeRelayState.values()}"
+                f"EventName {self.EventName} must belong to EventType {ChangeRelayState.enum_name()} values {ChangeRelayState.values()}"
             )
         if (
-            self.EventType == "ChangeStoreFlowDirection"
-            and self.EventName not in ChangeStoreFlowDirection.values()
+            self.EventType == ChangeStoreFlowRelay.enum_name()
+            and self.EventName not in ChangeStoreFlowRelay.values()
         ):
             raise ValueError(
-                f"EventName {self.EventName} must belong to EventType ChangeStoreFlowDirection values {ChangeStoreFlowDirection.values()}"
-            )
-        if (
-            self.EventType == "ChangeStoreFlowDirection"
-            and self.EventName not in ChangeStoreFlowDirection.values()
-        ):
-            raise ValueError(
-                f"EventName {self.EventName} must belong to EventType ChangeStoreFlowDirection values {ChangeStoreFlowDirection.values()}"
+                f"EventName {self.EventName} must belong to EventType {ChangeStoreFlowRelay.enum_name()} values {ChangeStoreFlowRelay.values()}"
             )
         if self.EventType not in [
-            "ChangeAquastatControl",
-            "ChangeHeatcallSource",
-            "ChangeHeatPumpControl",
-            "ChangePrimaryPumpControl",
-            "ChangeRelayPin",
-            "ChangeRelayState",
-            "ChangeStoreFlowDirection",
+            ChangeAquastatControl.enum_name(),
+            ChangeHeatcallSource.enum_name(),
+            ChangeHeatPumpControl.enum_name(),
+            ChangePrimaryPumpControl.enum_name(),
+            ChangeRelayPin.enum_name(),
+            ChangeRelayState.enum_name(),
+            ChangeStoreFlowRelay.enum_name(),
         ]:
-            raise ValueError(f"Unrecognized event type {self.EventType}!")
+            raise ValueError(
+                f"Axiom 1 violated! Unrecognized event type {self.EventType}!"
+            )
         return self
 
     @model_validator(mode="after")

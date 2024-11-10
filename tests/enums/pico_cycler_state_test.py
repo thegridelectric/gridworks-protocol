@@ -12,6 +12,7 @@ def test_pico_cycler_state() -> None:
         "RelayOpen",
         "RelayClosing",
         "PicosRebooting",
+        "AllZombies",
     }
 
     assert PicoCyclerState.default() == PicoCyclerState.PicosLive

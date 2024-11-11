@@ -70,20 +70,34 @@ class FibaroTempSensorSettings(FibaroTempSensorSettingsGt):
             # request.url.
             collapsed_url = v.url
             v.session.base_url = URLConfig()
+            if v.request.url is None:
+                v.request.url = URLConfig()
             v.request.url.url_args = URLArgs.from_url(collapsed_url)
         return v
 
     @cached_property
     def url(self) -> yarl.URL:
+        if self.rest is None:
+            raise ValueError("Cannot produce url since self.rest is None")
         return self.rest.url
 
     @cached_property
     def api_id(self) -> int:
-        return int(HUBITAT_ID_REGEX.match(str(self.url)).group("api_id"))
+        match = HUBITAT_ID_REGEX.match(str(self.url))
+        if match is None:
+            raise ValueError(
+                f"url <{self.url}> does not match regex {HUBITAT_ID_REGEX}"
+            )
+        return int(match.group("api_id"))
 
     @property
     def host(self) -> str:
-        return self.rest.url.host
+        if self.rest is None:
+            raise ValueError("Cannot produce host since self.rest is None")
+        host = self.rest.url.host
+        if host is None:
+            raise ValueError(f"Url {self.rest.url} has host None")
+        return host
 
     @cached_property
     def access_token(self) -> Optional[str]:
@@ -109,6 +123,8 @@ class FibaroTempSensorSettings(FibaroTempSensorSettingsGt):
         # Constuct url config on top of maker api url url config
         constructed_config = copy.deepcopy(hubitat.maker_api_url_config)
         constructed_config.url_path_format += "/devices/{device_id}/refresh"
+        if constructed_config.url_path_args is None:
+            constructed_config.url_path_args = {}
         constructed_config.url_path_args["device_id"] = self.device_id
 
         if self.rest is None:
@@ -127,17 +143,21 @@ class FibaroTempSensorSettings(FibaroTempSensorSettingsGt):
             # An inline config exists; take items *not* in inline config from
             # constructed config (inline config 'wins' on disagreement)
             existing_config = self.rest.request.url
-            if not existing_config.url_args.host:
-                existing_config.url_args.host = constructed_config.url_args.host
-            if existing_config.url_path_format is None:
-                existing_config.url_path_format = constructed_config.url_path_format
-            if existing_config.url_path_args is None:
-                existing_config.url_path_args = constructed_config.url_path_args
+            if existing_config.url_args is None:
+                existing_config.url_args = constructed_config.url_args
             else:
-                existing_config.url_path_args = dict(
-                    constructed_config.url_path_args,
-                    **existing_config.url_path_args,
-                )
+                if (
+                    not existing_config.url_args.host
+                    and constructed_config.url_args is not None
+                ):
+                    existing_config.url_args.host = constructed_config.url_args.host
+                if existing_config.url_path_args is None:
+                    existing_config.url_path_args = constructed_config.url_path_args
+                else:
+                    existing_config.url_path_args = dict(
+                        constructed_config.url_path_args,
+                        **existing_config.url_path_args,
+                    )
         self.rest.clear_property_cache()
 
         # Verify new URL produced by combining any inline REST configuration

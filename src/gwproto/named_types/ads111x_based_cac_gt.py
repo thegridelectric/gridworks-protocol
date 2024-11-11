@@ -29,7 +29,7 @@ class Ads111xBasedCacGt(ComponentAttributeClassGt):
 
     @field_validator("AdsI2cAddressList")
     @classmethod
-    def _check_ads_i2c_address_list(cls, v: List[int]) -> List[str]:
+    def _check_ads_i2c_address_list(cls, v: List[int]) -> List[int]:
         try:
             for elt in v:
                 check_is_ads1115_i2c_address(elt)

@@ -1,9 +1,9 @@
 import time
 import uuid
 from enum import Enum
-from typing import Any, Generic, Literal, Optional, TypeVar
+from typing import Any, Generic, Literal, Optional, Self, TypeVar
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 from gwproto.message import Message, as_enum
 from gwproto.named_types import LayoutLite, Report
@@ -116,10 +116,11 @@ class ReportEvent(EventBase):
     TypeName: Literal["report.event"] = "report.event"
     Version: Literal["000"] = "000"
 
-    def __init__(self, **data: dict[str, Any]) -> None:
-        super().__init__(**data)
+    @model_validator(mode="after")
+    def infer_base_fields(self) -> Self:
         self.MessageId = self.Report.Id
         self.TimeCreatedMs = self.Report.MessageCreatedMs
+        return self
 
 
 class LayoutEvent(EventBase):
@@ -127,7 +128,8 @@ class LayoutEvent(EventBase):
     TypeName: Literal["layout.event"] = "layout.event"
     Version: Literal["000"] = "000"
 
-    def __init__(self, **data: dict[str, Any]) -> None:
-        super().__init__(**data)
+    @model_validator(mode="after")
+    def infer_base_fields(self) -> Self:
         self.MessageId = self.Layout.MessageId
         self.TimeCreatedMs = self.Layout.MessageCreatedMs
+        return self

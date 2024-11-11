@@ -7,6 +7,7 @@ from gwproto.enums import PicoCyclerState
 
 def test_pico_cycler_state() -> None:
     assert set(PicoCyclerState.values()) == {
+        "Dormant",
         "PicosLive",
         "RelayOpening",
         "RelayOpen",

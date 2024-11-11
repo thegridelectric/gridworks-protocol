@@ -31,6 +31,8 @@ on these ideas:
 """
 
 from gwproto.enums.actor_class import ActorClass
+from gwproto.enums.admin_event import AdminEvent
+from gwproto.enums.admin_state import AdminState
 from gwproto.enums.alert_priority import AlertPriority
 from gwproto.enums.aquastat_control import AquastatControl
 from gwproto.enums.change_aquastat_control import ChangeAquastatControl
@@ -65,6 +67,8 @@ from gwproto.enums.unit import Unit
 
 __all__ = [
     "ActorClass",  # [sh.actor.class.002](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shactorclass)
+    "AdminEvent",  # [admin.event.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#adminevent)
+    "AdminState",  # [admin.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#adminstate)
     "AlertPriority",  # [alert.priority.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#alertpriority)
     "AquastatControl",  # [aquastat.control.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#aquastatcontrolstate)
     "ChangeAquastatControl",  # [change.aquastat.control.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeaquastatcontrol)

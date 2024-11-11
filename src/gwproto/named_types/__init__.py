@@ -19,6 +19,7 @@ from gwproto.named_types.fsm_atomic_report import FsmAtomicReport
 from gwproto.named_types.fsm_event import FsmEvent
 from gwproto.named_types.fsm_full_report import FsmFullReport
 from gwproto.named_types.fsm_trigger_from_atn import FsmTriggerFromAtn
+from gwproto.named_types.go_dormant import GoDormant
 from gwproto.named_types.gt_sh_cli_atn_cmd import GtShCliAtnCmd
 from gwproto.named_types.heartbeat_b import HeartbeatB
 from gwproto.named_types.hubitat_component_gt import HubitatComponentGt
@@ -48,6 +49,7 @@ from gwproto.named_types.ticklist_hall import TicklistHall
 from gwproto.named_types.ticklist_hall_report import TicklistHallReport
 from gwproto.named_types.ticklist_reed import TicklistReed
 from gwproto.named_types.ticklist_reed_report import TicklistReedReport
+from gwproto.named_types.wake_up import WakeUp
 from gwproto.named_types.web_server_component_gt import WebServerComponentGt
 
 __all__ = [
@@ -68,6 +70,7 @@ __all__ = [
     "FsmEvent",
     "FsmFullReport",
     "FsmTriggerFromAtn",
+    "GoDormant",
     "GtShCliAtnCmd",
     "HeartbeatB",
     "HubitatComponentGt",
@@ -95,6 +98,7 @@ __all__ = [
     "TicklistHallReport",
     "TicklistReed",
     "TicklistReedReport",
+    "WakeUp",
     "WebServerComponentGt",
     "cacs",  # noqa: F822
     "components",  # noqa: F822

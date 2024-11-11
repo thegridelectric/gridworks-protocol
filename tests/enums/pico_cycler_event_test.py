@@ -7,6 +7,8 @@ from gwproto.enums import PicoCyclerEvent
 
 def test_pico_cycler_event() -> None:
     assert set(PicoCyclerEvent.values()) == {
+        "WakeUp",
+        "GoDormant",
         "PicoMissing",
         "ConfirmOpened",
         "StartClosing",

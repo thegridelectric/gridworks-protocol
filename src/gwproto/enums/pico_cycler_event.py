@@ -8,6 +8,8 @@ class PicoCyclerEvent(GwStrEnum):
     """
 
     Values:
+      - WakeUp
+      - GoDormant
       - PicoMissing
       - ConfirmOpened
       - StartClosing
@@ -21,6 +23,8 @@ class PicoCyclerEvent(GwStrEnum):
       - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#picocyclerevent)
     """
 
+    WakeUp = auto()
+    GoDormant = auto()
     PicoMissing = auto()
     ConfirmOpened = auto()
     StartClosing = auto()

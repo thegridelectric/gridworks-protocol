@@ -8,6 +8,7 @@ class PicoCyclerState(GwStrEnum):
     """
 
     Values:
+      - Dormant
       - PicosLive
       - RelayOpening
       - RelayOpen
@@ -20,6 +21,7 @@ class PicoCyclerState(GwStrEnum):
       - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#picocyclerstate)
     """
 
+    Dormant = auto()
     PicosLive = auto()
     RelayOpening = auto()
     RelayOpen = auto()

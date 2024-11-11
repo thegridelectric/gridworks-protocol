@@ -1,6 +1,6 @@
 """Type channel.config, version 000"""
 
-from typing import Literal, Optional
+from typing import Optional
 
 from pydantic import BaseModel, ConfigDict, PositiveInt, StrictInt, model_validator
 from typing_extensions import Self
@@ -19,8 +19,8 @@ class ChannelConfig(BaseModel):
     AsyncCaptureDelta: Optional[PositiveInt] = None
     Exponent: StrictInt
     Unit: Unit
-    TypeName: Literal["channel.config"] = "channel.config"
-    Version: Literal["000"] = "000"
+    TypeName: str = "channel.config"
+    Version: str = "000"
 
     model_config = ConfigDict(use_enum_values=True)
 

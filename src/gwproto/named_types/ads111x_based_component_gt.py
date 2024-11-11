@@ -1,6 +1,6 @@
 """Type ads111x.based.component.gt, version 000"""
 
-from typing import List, Literal
+from typing import List, Literal, Sequence
 
 from pydantic import ConfigDict, field_validator
 
@@ -15,7 +15,7 @@ from gwproto.property_format import (
 
 class Ads111xBasedComponentGt(ComponentGt):
     OpenVoltageByAds: List[float]
-    ConfigList: List[AdsChannelConfig]
+    ConfigList: Sequence[AdsChannelConfig]
     TypeName: Literal["ads111x.based.component.gt"] = "ads111x.based.component.gt"
     Version: Literal["000"] = "000"
 
@@ -35,7 +35,9 @@ class Ads111xBasedComponentGt(ComponentGt):
 
     @field_validator("ConfigList")
     @classmethod
-    def check_config_list(cls, v: List[AdsChannelConfig]) -> List[AdsChannelConfig]:
+    def check_ads_channel_config_list(
+        cls, v: Sequence[AdsChannelConfig]
+    ) -> Sequence[AdsChannelConfig]:
         """
             Axiom 1: Terminal Block consistency and Channel Name uniqueness.
             Terminal Block consistency and Channel Name uniqueness. - Each TerminalBlockIdx occurs at

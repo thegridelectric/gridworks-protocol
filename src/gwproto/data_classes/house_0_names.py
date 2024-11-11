@@ -104,13 +104,19 @@ class H0N:
     store_charge_discharge_relay: Literal["relay3"] = (
         f"relay{House0RelayIdx.store_charge_disharge}"
     )
-    hp_failsafe_relay = f"relay{House0RelayIdx.hp_failsafe}"
-    hp_scada_ops_relay = f"relay{House0RelayIdx.hp_scada_ops}"
-    aquastat_ctrl_relay = f"relay{House0RelayIdx.aquastat_ctrl}"
-    store_pump_failsafe = f"relay{House0RelayIdx.store_pump_failsafe}"
-    boiler_scada_ops = f"relay{House0RelayIdx.boiler_scada_ops}"
-    primary_pump_scada_ops = f"relay{House0RelayIdx.primary_pump_ops}"
-    primary_pump_failsafe = f"relay{House0RelayIdx.primary_pump_failsafe}"
+    hp_failsafe_relay: Literal["relay5"] = f"relay{House0RelayIdx.hp_failsafe}"
+    hp_scada_ops_relay: Literal["relay6"] = f"relay{House0RelayIdx.hp_scada_ops}"
+    aquastat_ctrl_relay: Literal["relay8"] = f"relay{House0RelayIdx.aquastat_ctrl}"
+    store_pump_failsafe: Literal["relay9"] = (
+        f"relay{House0RelayIdx.store_pump_failsafe}"
+    )
+    boiler_scada_ops: Literal["relay10"] = f"relay{House0RelayIdx.boiler_scada_ops}"
+    primary_pump_scada_ops: Literal["relay11"] = (
+        f"relay{House0RelayIdx.primary_pump_ops}"
+    )
+    primary_pump_failsafe: Literal["relay12"] = (
+        f"relay{House0RelayIdx.primary_pump_failsafe}"
+    )
     hubitat = "hubitat"
 
     # finite state machines

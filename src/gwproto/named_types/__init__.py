@@ -19,6 +19,7 @@ from gwproto.named_types.fsm_atomic_report import FsmAtomicReport
 from gwproto.named_types.fsm_event import FsmEvent
 from gwproto.named_types.fsm_full_report import FsmFullReport
 from gwproto.named_types.fsm_trigger_from_atn import FsmTriggerFromAtn
+from gwproto.named_types.go_dormant import GoDormant
 from gwproto.named_types.gt_sh_cli_atn_cmd import GtShCliAtnCmd
 from gwproto.named_types.heartbeat_b import HeartbeatB
 from gwproto.named_types.hubitat_component_gt import HubitatComponentGt
@@ -29,6 +30,7 @@ from gwproto.named_types.i2c_multichannel_dt_relay_component_gt import (
 )
 from gwproto.named_types.keyparam_change_log import KeyparamChangeLog
 from gwproto.named_types.layout_lite import LayoutLite
+from gwproto.named_types.machine_states import MachineStates
 from gwproto.named_types.pico_flow_module_component_gt import PicoFlowModuleComponentGt
 from gwproto.named_types.pico_missing import PicoMissing
 from gwproto.named_types.pico_tank_module_component_gt import PicoTankModuleComponentGt
@@ -47,6 +49,7 @@ from gwproto.named_types.ticklist_hall import TicklistHall
 from gwproto.named_types.ticklist_hall_report import TicklistHallReport
 from gwproto.named_types.ticklist_reed import TicklistReed
 from gwproto.named_types.ticklist_reed_report import TicklistReedReport
+from gwproto.named_types.wake_up import WakeUp
 from gwproto.named_types.web_server_component_gt import WebServerComponentGt
 
 __all__ = [
@@ -67,6 +70,7 @@ __all__ = [
     "FsmEvent",
     "FsmFullReport",
     "FsmTriggerFromAtn",
+    "GoDormant",
     "GtShCliAtnCmd",
     "HeartbeatB",
     "HubitatComponentGt",
@@ -75,6 +79,7 @@ __all__ = [
     "I2cMultichannelDtRelayComponentGt",
     "KeyparamChangeLog",
     "LayoutLite",
+    "MachineStates",
     "PicoFlowModuleComponentGt",
     "PicoMissing",
     "PicoTankModuleComponentGt",
@@ -93,6 +98,7 @@ __all__ = [
     "TicklistHallReport",
     "TicklistReed",
     "TicklistReedReport",
+    "WakeUp",
     "WebServerComponentGt",
     "cacs",  # noqa: F822
     "components",  # noqa: F822

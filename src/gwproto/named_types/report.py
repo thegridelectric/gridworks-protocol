@@ -1,12 +1,12 @@
-"""Type report, version 001"""
+"""Type report, version 002"""
 
 from typing import List, Literal
 
-from pydantic import BaseModel, PositiveInt, field_validator  # Count:true
+from pydantic import BaseModel, PositiveInt, field_validator
 
 from gwproto.named_types.channel_readings import ChannelReadings
-from gwproto.named_types.fsm_atomic_report import FsmAtomicReport
 from gwproto.named_types.fsm_full_report import FsmFullReport
+from gwproto.named_types.machine_states import MachineStates
 from gwproto.property_format import (
     LeftRightDotStr,
     UTCMilliseconds,
@@ -16,20 +16,18 @@ from gwproto.property_format import (
 
 
 class Report(BaseModel):
-    """ """
-
     FromGNodeAlias: LeftRightDotStr
     FromGNodeInstanceId: UUID4Str
     AboutGNodeAlias: LeftRightDotStr
     SlotStartUnixS: UTCSeconds
     SlotDurationS: PositiveInt
     ChannelReadingList: List[ChannelReadings]
-    FsmActionList: List[FsmAtomicReport]
+    StateList: List[MachineStates]
     FsmReportList: List[FsmFullReport]
     MessageCreatedMs: UTCMilliseconds
     Id: UUID4Str
     TypeName: Literal["report"] = "report"
-    Version: Literal["001"] = "001"
+    Version: Literal["002"] = "002"
 
     @field_validator("ChannelReadingList")
     @classmethod

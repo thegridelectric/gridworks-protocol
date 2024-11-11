@@ -5,18 +5,16 @@ from typing import Literal
 from pydantic import ConfigDict, PositiveInt, model_validator
 from typing_extensions import Self
 
-from gwproto.enums import FsmEventType, RelayWiringConfig
+from gwproto.enums import RelayWiringConfig
 from gwproto.named_types.channel_config import ChannelConfig
-from gwproto.property_format import (
-    SpaceheatName,
-)
+from gwproto.property_format import LeftRightDotStr, SpaceheatName
 
 
 class RelayActorConfig(ChannelConfig):
     RelayIdx: PositiveInt
     ActorName: SpaceheatName
     WiringConfig: RelayWiringConfig
-    EventType: FsmEventType
+    EventType: LeftRightDotStr
     DeEnergizingEvent: str
     TypeName: Literal["relay.actor.config"] = "relay.actor.config"
     Version: Literal["000"] = "000"
@@ -27,13 +25,7 @@ class RelayActorConfig(ChannelConfig):
     def check_axiom_1(self) -> Self:
         """
                 Axiom 1: EventType, DeEnergizingEvent consistency.
-                a) The EventType must belong to one of the boolean choices for FsmEventType (for example, it is NOT SetAnalog010V):
-            ChangeRelayState    ChangeValveState
-            ChangeStoreFlowDirection
-            ChangeHeatcallSource
-            ChangeBoilerControl
-            ChangeHeatPumpControl
-            ChangeLgOperatingMode
+                a) The EventType must belong to one of the boolean choices for EventType
 
         b) The DeEnergizingEvent string must be one of the two choices for the EventType as an enum. For example,  if the EventType is ChangeValveState then the  DeEnergizingEvent  must either be OpenValve or CloseValve.
 

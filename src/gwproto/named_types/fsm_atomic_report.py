@@ -5,7 +5,7 @@ from typing import Literal, Optional
 from pydantic import BaseModel, ConfigDict, StrictInt, model_validator
 from typing_extensions import Self
 
-from gwproto.enums import FsmActionType, FsmEventType, FsmName, FsmReportType
+from gwproto.enums import FsmActionType, FsmReportType
 from gwproto.property_format import (
     HandleName,
     UTCMilliseconds,
@@ -14,12 +14,12 @@ from gwproto.property_format import (
 
 
 class FsmAtomicReport(BaseModel):
-    FromHandle: HandleName
-    AboutFsm: FsmName
+    MachineHandle: HandleName
+    StateEnum: str
     ReportType: FsmReportType
     ActionType: Optional[FsmActionType] = None
     Action: Optional[StrictInt] = None
-    EventType: Optional[FsmEventType] = None
+    EventEnum: Optional[str] = None
     Event: Optional[str] = None
     FromState: Optional[str] = None
     ToState: Optional[str] = None
@@ -28,7 +28,7 @@ class FsmAtomicReport(BaseModel):
     TypeName: Literal["fsm.atomic.report"] = "fsm.atomic.report"
     Version: Literal["000"] = "000"
 
-    model_config = ConfigDict(use_enum_values=True)
+    model_config = ConfigDict(extra="allow")
 
     @model_validator(mode="after")
     def check_axiom_1(self) -> Self:

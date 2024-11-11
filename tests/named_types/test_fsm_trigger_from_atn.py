@@ -11,8 +11,8 @@ def test_fsm_trigger_from_atn_generated() -> None:
         "Trigger": {
             "FromHandle": "a",
             "ToHandle": "a.store-charge-discharge",
-            "EventType": "ChangeStoreFlowDirection",
-            "EventName": "Discharge",
+            "EventType": "change.store.flow.relay",
+            "EventName": "DischargeStore",
             "TriggerId": "12da4269-63c3-44f4-ab65-3ee5e29329fe",
             "SendTimeUnixMs": 1709923791330,
             "TypeName": "fsm.event",

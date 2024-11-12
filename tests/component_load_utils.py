@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import Optional, Type
+from typing import Any, Optional, Type
 
 from gwproto import (
     ComponentDecoder,
@@ -13,10 +13,10 @@ from gwproto.named_types import ComponentAttributeClassGt, ComponentGt
 @dataclass
 class ComponentCase:
     tag: str
-    src_component_gt: ComponentGt | dict
-    exp_component_gt_type: Type = ComponentGt
-    exp_component_type: Type = Component
-    exp_component: Optional[Component] = None
+    src_component_gt: ComponentGt | dict[str, Any]
+    exp_component_gt_type: Type[Any] = ComponentGt
+    exp_component_type: Type[Any] = Component
+    exp_component: Optional[Component[Any, Any]] = None
     exp_exceptions: list[Type[Exception]] = field(default_factory=list)
 
 
@@ -43,8 +43,8 @@ class ComponentLoadError(ComponentCaseError):
 
 @dataclass
 class ComponentMatchError(ComponentCaseError):
-    exp_component: Component | dict
-    loaded_component: Component
+    exp_component: Component[Any, Any] | dict[str, Any]
+    loaded_component: Component[Any, Any]
 
     def __str__(self) -> str:
         return (
@@ -57,7 +57,7 @@ class ComponentMatchError(ComponentCaseError):
 @dataclass
 class ComponentLoadResult:
     ok: bool
-    loaded: Component | None
+    loaded: Component[Any, Any] | None
     exception: Exception | None
 
 
@@ -103,6 +103,7 @@ def assert_component_load(
     for case_idx, case in enumerate(cases):
         load_result = _decode_component(case, decoder, cacs)
         if not load_result.ok:
+            assert isinstance(load_result.exception, Exception)
             errors.append(ComponentLoadError(case_idx, case, load_result.exception))
         elif not case.exp_exceptions:
             exp_component_gt = (
@@ -113,11 +114,13 @@ def assert_component_load(
             if isinstance(exp_component_gt, dict):
                 exp_component_gt = case.exp_component_gt_type(**exp_component_gt)
             if case.exp_component is None:
+                assert isinstance(exp_component_gt, ComponentGt)
                 cac = cacs[exp_component_gt.ComponentAttributeClassId]
                 exp_component = case.exp_component_type(exp_component_gt, cac)
             else:
                 exp_component = case.exp_component
             if load_result.loaded.__dict__ != exp_component.__dict__:
+                assert isinstance(load_result.loaded, Component)
                 errors.append(
                     ComponentMatchError(
                         case_idx=case_idx,

@@ -1,6 +1,7 @@
 import json
 import uuid
 from pathlib import Path
+from typing import Any
 
 from pydantic import ValidationError
 
@@ -36,11 +37,11 @@ from .decode_utils import MessageCase, assert_encode_decode
 TEST_DATA_DIR = Path(__file__).parent / "data"
 
 
-def get_stored_message_dicts() -> dict:
+def get_stored_message_dicts() -> dict[str, Any]:
     return {}
 
 
-def child_to_parent_payload_dicts() -> dict:
+def child_to_parent_payload_dicts() -> dict[str, Any]:
     d = {}
     for prefix in ["report", "snapshot"]:
         with (TEST_DATA_DIR / f"{prefix}_message.json").open() as f:

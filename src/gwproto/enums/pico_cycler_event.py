@@ -15,7 +15,7 @@ class PicoCyclerEvent(GwStrEnum):
       - StartClosing
       - ConfirmClosed
       - ConfirmRebooted
-      - AllZombies
+      - ShakeZombies
       - RebootDud
 
     For more information:
@@ -30,7 +30,7 @@ class PicoCyclerEvent(GwStrEnum):
     StartClosing = auto()
     ConfirmClosed = auto()
     ConfirmRebooted = auto()
-    AllZombies = auto()
+    ShakeZombies = auto()
     RebootDud = auto()
 
     @classmethod

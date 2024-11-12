@@ -14,7 +14,7 @@ def test_pico_cycler_event() -> None:
         "StartClosing",
         "ConfirmClosed",
         "ConfirmRebooted",
-        "AllZombies",
+        "ShakeZombies",
         "RebootDud",
     }
 

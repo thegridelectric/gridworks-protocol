@@ -118,7 +118,7 @@ class ReportEvent(EventBase):
 
     @model_validator(mode="after")
     def infer_base_fields(self) -> Self:
-        if self.Report.Version == "001":
+        if str(self.Report.Version) == "001":
             self.Version = "000"
         elif self.Report.Version == "002":
             self.Version = "002"

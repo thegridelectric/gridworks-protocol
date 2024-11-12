@@ -99,24 +99,16 @@ class H0N:
     store_flow = "store-flow"
 
     # relay nodes
-    vdc_relay: Literal["relay1"] = f"relay{House0RelayIdx.vdc}"
-    tstat_common_relay: Literal["relay2"] = f"relay{House0RelayIdx.tstat_common}"
-    store_charge_discharge_relay: Literal["relay3"] = (
-        f"relay{House0RelayIdx.store_charge_disharge}"
-    )
-    hp_failsafe_relay: Literal["relay5"] = f"relay{House0RelayIdx.hp_failsafe}"
-    hp_scada_ops_relay: Literal["relay6"] = f"relay{House0RelayIdx.hp_scada_ops}"
-    aquastat_ctrl_relay: Literal["relay8"] = f"relay{House0RelayIdx.aquastat_ctrl}"
-    store_pump_failsafe: Literal["relay9"] = (
-        f"relay{House0RelayIdx.store_pump_failsafe}"
-    )
-    boiler_scada_ops: Literal["relay10"] = f"relay{House0RelayIdx.boiler_scada_ops}"
-    primary_pump_scada_ops: Literal["relay11"] = (
-        f"relay{House0RelayIdx.primary_pump_ops}"
-    )
-    primary_pump_failsafe: Literal["relay12"] = (
-        f"relay{House0RelayIdx.primary_pump_failsafe}"
-    )
+    vdc_relay: str = f"relay{House0RelayIdx.vdc}"
+    tstat_common_relay: str = f"relay{House0RelayIdx.tstat_common}"
+    store_charge_discharge_relay: str = f"relay{House0RelayIdx.store_charge_disharge}"
+    hp_failsafe_relay: str = f"relay{House0RelayIdx.hp_failsafe}"
+    hp_scada_ops_relay: str = f"relay{House0RelayIdx.hp_scada_ops}"
+    aquastat_ctrl_relay: str = f"relay{House0RelayIdx.aquastat_ctrl}"
+    store_pump_failsafe: str = f"relay{House0RelayIdx.store_pump_failsafe}"
+    boiler_scada_ops: str = f"relay{House0RelayIdx.boiler_scada_ops}"
+    primary_pump_scada_ops: str = f"relay{House0RelayIdx.primary_pump_ops}"
+    primary_pump_failsafe: str = f"relay{House0RelayIdx.primary_pump_failsafe}"
     hubitat = "hubitat"
 
     # finite state machines
@@ -167,11 +159,9 @@ class H0CN:
     store_flow_hz = f"{H0N.store_flow}-hz"
 
     # relay state channels
-    vdc_relay_state: Literal["vdc-relay1"] = f"vdc-{H0N.vdc_relay}"
-    tstat_common_relay_state: Literal["tstat-common-relay2"] = (
-        f"tstat-common-{H0N.tstat_common_relay}"
-    )
-    charge_discharge_relay_state: Literal["charge-discharge-relay3"] = (
+    vdc_relay_state: str = f"vdc-{H0N.vdc_relay}"
+    tstat_common_relay_state: str = f"tstat-common-{H0N.tstat_common_relay}"
+    charge_discharge_relay_state: str = (
         f"charge-discharge-{H0N.store_charge_discharge_relay}"
     )
     hp_failsafe_relay_state = f"hp-failsafe-{H0N.hp_failsafe_relay}"
@@ -324,25 +314,19 @@ class H0CN:
                 TelemetryName=TelemetryName.WaterTempCTimes1000,
             )
         for i in self.zone:
-            d[self.zone[i].temp] = (
-                ChannelStub(
-                    Name=self.zone[i].temp,
-                    AboutNodeName=self.zone[i].zone_name,
-                    TelemetryName=TelemetryName.AirTempFTimes1000,
-                ),
+            d[self.zone[i].temp] = ChannelStub(
+                Name=self.zone[i].temp,
+                AboutNodeName=self.zone[i].zone_name,
+                TelemetryName=TelemetryName.AirTempFTimes1000,
             )
-            d[self.zone[i].set] = (
-                ChannelStub(
-                    Name=self.zone[i].temp,
-                    AboutNodeName=self.zone[i].stat_name,
-                    TelemetryName=TelemetryName.AirTempFTimes1000,
-                ),
+            d[self.zone[i].set] = ChannelStub(
+                Name=self.zone[i].temp,
+                AboutNodeName=self.zone[i].stat_name,
+                TelemetryName=TelemetryName.AirTempFTimes1000,
             )
-            d[self.zone[i].set] = (
-                ChannelStub(
-                    Name=self.zone[i].state,
-                    AboutNodeName=self.zone[i].stat_name,
-                    TelemetryName=TelemetryName.ThermostatState,
-                ),
+            d[self.zone[i].set] = ChannelStub(
+                Name=self.zone[i].state,
+                AboutNodeName=self.zone[i].stat_name,
+                TelemetryName=TelemetryName.ThermostatState,
             )
         return d

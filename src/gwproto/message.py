@@ -48,7 +48,7 @@ PayloadT = TypeVar("PayloadT")
 PAYLOAD_TYPE_FIELDS = ["TypeName", "type_alias", "TypeName", "type_name"]
 
 
-def ensure_arg(arg_name: str, default_value: Any, kwargs_dict: dict) -> None:
+def ensure_arg(arg_name: str, default_value: Any, kwargs_dict: dict[str, Any]) -> None:
     if arg_name not in kwargs_dict:
         payload = kwargs_dict.get("Payload")
         if payload is None or not hasattr(payload, arg_name):
@@ -76,7 +76,7 @@ class Message(BaseModel, Generic[PayloadT]):
 
     @classmethod
     def type_name(cls) -> str:
-        return Message.model_fields["TypeName"].default
+        return str(Message.model_fields["TypeName"].default)
 
     def mqtt_topic(self) -> str:
         return MQTTTopic.encode(

@@ -13,7 +13,7 @@ from gwproto.data_classes.hardware_layout import (
 )
 from gwproto.data_classes.house_0_names import H0N
 from gwproto.data_classes.sh_node import ShNode
-from gwproto.default_decoders import (
+from gwproto.decoders import (
     CacDecoder,
     ComponentDecoder,
 )
@@ -28,10 +28,10 @@ class House0Layout(HardwareLayout):
     def __init__(
         self,
         layout: dict[Any, Any],
-        cacs: Optional[dict[str, ComponentAttributeClassGt]] = None,  # by id
-        components: Optional[dict[str, Component]] = None,  # by id
-        nodes: Optional[dict[str, ShNode]] = None,  # by name
-        data_channels: Optional[dict[str, DataChannel]] = None,  # by name
+        cacs: dict[str, ComponentAttributeClassGt],
+        components: dict[str, Component[Any, Any]],
+        nodes: dict[str, ShNode],
+        data_channels: dict[str, DataChannel],
     ) -> None:
         super().__init__(
             layout=layout,

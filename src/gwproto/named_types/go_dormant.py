@@ -4,7 +4,9 @@ from typing import Literal
 
 from pydantic import BaseModel
 
-from gwproto.property_format import SpaceheatName
+from gwproto.property_format import (
+    SpaceheatName,
+)
 
 
 class GoDormant(BaseModel):

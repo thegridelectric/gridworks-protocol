@@ -27,8 +27,9 @@
             "Version": "000"
         }
     ],
+    "LatestStateList": [],
     "TypeName": "snapshot.spaceheat",
-    "Version": "001"
+    "Version": "002"
 },
   "TypeName": "gw"
 }

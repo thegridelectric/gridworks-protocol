@@ -98,7 +98,6 @@ class ActorClass(GwStrEnum):
     ApiTankModule = auto()
     ApiFlowModule = auto()
     PicoCycler = auto()
-    RealHomeAlone = auto()
 
     @classmethod
     def default(cls) -> "ActorClass":

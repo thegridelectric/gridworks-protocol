@@ -1,4 +1,4 @@
-"""Tests report type, version 001"""
+"""Tests report type, version 002"""
 
 from gwproto.named_types import Report
 
@@ -30,16 +30,7 @@ def test_report_generated() -> None:
                 "Version": "002",
             },
         ],
-        "StateList": [
-            {
-                "MachineHandle": "h.pico-cycler",
-                "StateEnum": "pico.cycler.state",
-                "StateList": ["PicosLive"],
-                "UnixMsList": [1731168353695],
-                "TypeName": "machine.states",
-                "Version": "000",
-            }
-        ],
+        "StateList": [],
         "FsmReportList": [],
         "MessageCreatedMs": 1656945600044,
         "Id": "4dab57dd-8b4e-4ea4-90a3-d63df9eeb061",

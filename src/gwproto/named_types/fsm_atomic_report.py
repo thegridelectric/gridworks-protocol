@@ -8,6 +8,7 @@ from typing_extensions import Self
 from gwproto.enums import FsmActionType, FsmReportType
 from gwproto.property_format import (
     HandleName,
+    LeftRightDotStr,
     UTCMilliseconds,
     UUID4Str,
 )
@@ -19,7 +20,7 @@ class FsmAtomicReport(BaseModel):
     ReportType: FsmReportType
     ActionType: Optional[FsmActionType] = None
     Action: Optional[StrictInt] = None
-    EventEnum: Optional[str] = None
+    EventEnum: Optional[LeftRightDotStr] = None
     Event: Optional[str] = None
     FromState: Optional[str] = None
     ToState: Optional[str] = None

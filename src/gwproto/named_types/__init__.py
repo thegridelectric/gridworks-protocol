@@ -8,6 +8,8 @@ from gwproto.named_types.channel_readings import ChannelReadings
 from gwproto.named_types.component_attribute_class_gt import ComponentAttributeClassGt
 from gwproto.named_types.component_gt import ComponentGt
 from gwproto.named_types.data_channel_gt import DataChannelGt
+from gwproto.named_types.dfr_component_gt import DfrComponentGt
+from gwproto.named_types.dfr_config import DfrConfig
 from gwproto.named_types.egauge_register_config import EgaugeRegisterConfig
 from gwproto.named_types.electric_meter_cac_gt import ElectricMeterCacGt
 from gwproto.named_types.electric_meter_channel_config import ElectricMeterChannelConfig
@@ -20,7 +22,6 @@ from gwproto.named_types.fsm_event import FsmEvent
 from gwproto.named_types.fsm_full_report import FsmFullReport
 from gwproto.named_types.fsm_trigger_from_atn import FsmTriggerFromAtn
 from gwproto.named_types.go_dormant import GoDormant
-from gwproto.named_types.gt_sh_cli_atn_cmd import GtShCliAtnCmd
 from gwproto.named_types.heartbeat_b import HeartbeatB
 from gwproto.named_types.hubitat_component_gt import HubitatComponentGt
 from gwproto.named_types.hubitat_poller_component_gt import HubitatPollerComponentGt
@@ -40,6 +41,8 @@ from gwproto.named_types.report import Report
 from gwproto.named_types.resistive_heater_cac_gt import ResistiveHeaterCacGt
 from gwproto.named_types.resistive_heater_component_gt import ResistiveHeaterComponentGt
 from gwproto.named_types.rest_poller_component_gt import RESTPollerComponentGt
+from gwproto.named_types.scada_params import ScadaParams
+from gwproto.named_types.send_snap import SendSnap
 from gwproto.named_types.single_reading import SingleReading
 from gwproto.named_types.snapshot_spaceheat import SnapshotSpaceheat
 from gwproto.named_types.spaceheat_node_gt import SpaceheatNodeGt
@@ -61,6 +64,8 @@ __all__ = [
     "ComponentAttributeClassGt",
     "ComponentGt",
     "DataChannelGt",
+    "DfrComponentGt",
+    "DfrConfig",
     "EgaugeRegisterConfig",
     "ElectricMeterCacGt",
     "ElectricMeterChannelConfig",
@@ -71,7 +76,6 @@ __all__ = [
     "FsmFullReport",
     "FsmTriggerFromAtn",
     "GoDormant",
-    "GtShCliAtnCmd",
     "HeartbeatB",
     "HubitatComponentGt",
     "HubitatPollerComponentGt",
@@ -89,6 +93,8 @@ __all__ = [
     "ResistiveHeaterCacGt",
     "ResistiveHeaterComponentGt",
     "RESTPollerComponentGt",
+    "ScadaParams",
+    "SendSnap",
     "SingleReading",
     "SnapshotSpaceheat",
     "SpaceheatNodeGt",

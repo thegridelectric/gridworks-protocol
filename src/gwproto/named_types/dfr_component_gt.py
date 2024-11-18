@@ -4,7 +4,7 @@ from typing import List, Literal
 
 from pydantic import PositiveInt
 
-from gwproto.named_types.component_gt import ComponentGt
+from gwproto.named_types import ComponentGt
 from gwproto.named_types.dfr_config import DfrConfig
 
 

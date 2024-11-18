@@ -11,6 +11,8 @@ from gwproto.property_format import (
 
 
 class DfrConfig(BaseModel):
+    """ """
+
     ChannelName: SpaceheatName
     PollPeriodMs: Optional[PositiveInt] = None
     CapturePeriodS: PositiveInt
@@ -19,5 +21,6 @@ class DfrConfig(BaseModel):
     Exponent: StrictInt
     Unit: Unit
     OutputIdx: PositiveInt
+    InitialVoltsTimes100: PositiveInt
     TypeName: Literal["dfr.config"] = "dfr.config"
     Version: Literal["000"] = "000"

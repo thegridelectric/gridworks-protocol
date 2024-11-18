@@ -68,6 +68,8 @@ class ActorClass(GwStrEnum):
       - ApiTankModule
       - ApiFlowModule
       - PicoCycler
+      - I2cDfrMultiplexer
+      - ZeroTenOutputer
 
     For more information:
       - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
@@ -98,6 +100,8 @@ class ActorClass(GwStrEnum):
     ApiTankModule = auto()
     ApiFlowModule = auto()
     PicoCycler = auto()
+    I2cDfrMultiplexer = auto()
+    ZeroTenOutputer = auto()
 
     @classmethod
     def default(cls) -> "ActorClass":
@@ -113,4 +117,4 @@ class ActorClass(GwStrEnum):
 
     @classmethod
     def enum_version(cls) -> str:
-        return "002"
+        return "003"

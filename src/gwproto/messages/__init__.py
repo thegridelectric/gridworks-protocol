@@ -8,6 +8,7 @@ from .misc import *
 __all__ = [
     "Ack",
     "AnyEvent",
+    "AnalogDispatch",
     "ChannelReadings",
     "CommEvent",
     "EventBase",

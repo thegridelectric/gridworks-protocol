@@ -69,8 +69,10 @@ class H0N:
     home_alone = "h"
     primary_power_meter = "power-meter"
     admin = "admin"  # used when starter scripts take control
+    auto = "auto"  # Finite State Machine responsible for homealone <-> atn transition
     analog_temp = "analog-temp"
     relay_multiplexer = "relay-multiplexer"
+    zero_ten_out_multiplexer = "dfr-multiplexer"
 
     # core power-metered nodes
     hp_odu = "hp-odu"
@@ -117,6 +119,11 @@ class H0N:
     primary_pump_failsafe: Literal["relay12"] = (
         f"relay{House0RelayIdx.primary_pump_failsafe}"
     )
+
+    # zero ten output
+    dist_010v = "dist-010v"
+    primary_010v = "primary-010v"
+    store_010v = "store-010v"
     hubitat = "hubitat"
 
     # finite state machines
@@ -185,6 +192,11 @@ class H0CN:
     primary_pump_failsafe_relay_state = (
         f"primary-pump-failsafe-{H0N.primary_pump_failsafe}"
     )
+
+    # 010V output state (as declared by entity sending, not reading)
+    dist_010v = "dist-010v"
+    primary_010v = "primary-010v"
+    store_010v = "store-010v"
 
     def __init__(self, total_store_tanks: int, zone_list: List[str]) -> None:
         for i in range(total_store_tanks):

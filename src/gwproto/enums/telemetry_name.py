@@ -53,6 +53,7 @@ class TelemetryName(GwStrEnum):
     AirTempFTimes1000 = auto()
     ThermostatState = auto()
     MicroVolts = auto()
+    VoltsTimesTen = auto()
 
     @classmethod
     def default(cls) -> "TelemetryName":

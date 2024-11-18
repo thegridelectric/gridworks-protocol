@@ -624,6 +624,21 @@ class HardwareLayout:
             raise DcError(f"{node} is missing parent {h_name}!")
         return self.node(h_name)
 
+    @classmethod
+    def boss_handle(cls, handle: str) -> Optional[str]:
+        if "." not in handle:
+            return None
+        return ".".join(handle.split(".")[:-1])
+
+    def boss_node(self, node: ShNode) -> Optional[ShNode]:
+        boss_handle = self.boss_handle(node.handle)
+        if not boss_handle:
+            return None
+        boss = next((n for n in self.nodes.values() if n.handle == boss_handle), None)
+        if boss is None:
+            raise DcError(f"{node} is missing boss {boss_handle}")
+        return boss
+
     @cached_property
     def atn_g_node_alias(self) -> str:
         return self.layout["MyAtomicTNodeGNode"]["Alias"]  # type: ignore[no-any-return]

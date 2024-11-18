@@ -16,13 +16,15 @@ def test_dfr_config_generated() -> None:
         "Exponent": 6,
         "Unit": "W",
         "OutputIdx": 1,
+        "InitialVoltsTimes100": 40,
         "TypeName": "dfr.config",
         "Version": "000",
     }
 
     t = DfrConfig.model_validate(d).model_dump_json(exclude_none=True)
     d2 = json.loads(t)
-    assert d == d2
+
+    assert d2 == d
 
     ######################################
     # Enum related

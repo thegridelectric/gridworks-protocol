@@ -1,8 +1,10 @@
 """List of all the types"""
 
+from gwproto.named_types.admin_wakes_up import AdminWakesUp
 from gwproto.named_types.ads111x_based_cac_gt import Ads111xBasedCacGt
 from gwproto.named_types.ads111x_based_component_gt import Ads111xBasedComponentGt
 from gwproto.named_types.ads_channel_config import AdsChannelConfig
+from gwproto.named_types.analog_dispatch import AnalogDispatch
 from gwproto.named_types.channel_config import ChannelConfig
 from gwproto.named_types.channel_readings import ChannelReadings
 from gwproto.named_types.component_attribute_class_gt import ComponentAttributeClassGt
@@ -56,9 +58,11 @@ from gwproto.named_types.wake_up import WakeUp
 from gwproto.named_types.web_server_component_gt import WebServerComponentGt
 
 __all__ = [
+    "AdminWakesUp",
     "AdsChannelConfig",
     "Ads111xBasedCacGt",
     "Ads111xBasedComponentGt",
+    "AnalogDispatch",
     "ChannelConfig",
     "ChannelReadings",
     "ComponentAttributeClassGt",

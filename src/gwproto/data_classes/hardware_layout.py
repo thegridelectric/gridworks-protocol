@@ -305,6 +305,18 @@ class HardwareLayout:
                 )
 
     @classmethod
+    def check_handle_hierarchy(cls, nodes: dict[str, ShNode]) -> None:
+        for n in nodes.values():
+            boss_handle = cls.boss_handle(n.handle)
+            # No dots in your name: you are your own boss
+            if boss_handle:
+                boss = next(
+                    (n for n in nodes.values() if n.handle == boss_handle), None
+                )
+                if boss is None:
+                    raise DcError(f"{n.name} is missing boss {boss_handle}")
+
+    @classmethod
     def check_node_unique_ids(cls, nodes: dict[str, ShNode]) -> None:
         id_counter = Counter(node.ShNodeId for node in nodes.values())
         dupes = [node_id for node_id, count in id_counter.items() if count > 1]
@@ -461,6 +473,7 @@ class HardwareLayout:
         data_channels = load_args["data_channels"]
         try:
             cls.check_node_unique_ids(nodes)
+            cls.check_handle_hierarchy(nodes)
         except Exception as e:
             if raise_errors:
                 raise
@@ -632,12 +645,16 @@ class HardwareLayout:
 
     def boss_node(self, node: ShNode) -> Optional[ShNode]:
         boss_handle = self.boss_handle(node.handle)
+        # No dots in your name: you are your own boss
         if not boss_handle:
-            return None
+            return node
         boss = next((n for n in self.nodes.values() if n.handle == boss_handle), None)
         if boss is None:
             raise DcError(f"{node} is missing boss {boss_handle}")
         return boss
+
+    def node_from_handle(self, handle: str) -> Optional[ShNode]:
+        return next((n for n in self.nodes.values() if n.handle == handle), None)
 
     @cached_property
     def atn_g_node_alias(self) -> str:

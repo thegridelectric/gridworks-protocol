@@ -653,6 +653,9 @@ class HardwareLayout:
             raise DcError(f"{node} is missing boss {boss_handle}")
         return boss
 
+    def direct_reports(self, node: ShNode) -> List[ShNode]:
+        return [n for n in self.nodes.values() if self.boss_node(n) == node]
+
     def node_from_handle(self, handle: str) -> Optional[ShNode]:
         return next((n for n in self.nodes.values() if n.handle == handle), None)
 

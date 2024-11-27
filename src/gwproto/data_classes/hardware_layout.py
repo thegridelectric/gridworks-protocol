@@ -327,6 +327,18 @@ class HardwareLayout:
                 )
 
     @classmethod
+    def check_handle_hierarchy(cls, nodes: dict[str, ShNode]) -> None:
+        for n in nodes.values():
+            boss_handle = cls.boss_handle(n.handle)
+            # No dots in your name: you are your own boss
+            if boss_handle:
+                boss = next(
+                    (n for n in nodes.values() if n.handle == boss_handle), None
+                )
+                if boss is None:
+                    raise DcError(f"{n.name} is missing boss {boss_handle}")
+
+    @classmethod
     def check_node_unique_ids(cls, nodes: dict[str, ShNode]) -> None:
         id_counter = Counter(node.ShNodeId for node in nodes.values())
         dupes = [node_id for node_id, count in id_counter.items() if count > 1]
@@ -473,12 +485,12 @@ class HardwareLayout:
         )
 
     @classmethod
-    def validate_layout(
+    def validate_layout(  # noqa: C901
         cls,
         load_args: LoadArgs,
         *,
         raise_errors: bool,
-        errors: Optional[list[LoadError]],
+        errors: Optional[list[LoadError]] = None,
     ) -> None:
         nodes = load_args["nodes"]
         components = load_args["components"]
@@ -487,6 +499,12 @@ class HardwareLayout:
         try:
             cls.check_node_unique_ids(nodes)
         except Exception as e:  # noqa: BLE001
+            errors_caught.append(LoadError("hardware.layout", nodes, e))
+        try:
+            cls.check_handle_hierarchy(nodes)
+        except Exception as e:
+            if raise_errors:
+                raise
             errors_caught.append(LoadError("hardware.layout", nodes, e))
         try:
             cls.check_actor_component_consistency(nodes)
@@ -650,6 +668,28 @@ class HardwareLayout:
         if parent is None:
             raise DcError(f"{node} is missing parent {h_name}!")
         return self.node(h_name)
+
+    @classmethod
+    def boss_handle(cls, handle: str) -> Optional[str]:
+        if "." not in handle:
+            return None
+        return ".".join(handle.split(".")[:-1])
+
+    def boss_node(self, node: ShNode) -> Optional[ShNode]:
+        boss_handle = self.boss_handle(node.handle)
+        # No dots in your name: you are your own boss
+        if not boss_handle:
+            return node
+        boss = next((n for n in self.nodes.values() if n.handle == boss_handle), None)
+        if boss is None:
+            raise DcError(f"{node} is missing boss {boss_handle}")
+        return boss
+
+    def direct_reports(self, node: ShNode) -> List[ShNode]:
+        return [n for n in self.nodes.values() if self.boss_node(n) == node]
+
+    def node_from_handle(self, handle: str) -> Optional[ShNode]:
+        return next((n for n in self.nodes.values() if n.handle == handle), None)
 
     @cached_property
     def atn_g_node_alias(self) -> str:

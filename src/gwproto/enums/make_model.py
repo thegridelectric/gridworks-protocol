@@ -84,6 +84,8 @@ class MakeModel(GwStrEnum):
       - GridWorks__PicoFlowHall
       - GridWorks__PicoFlowReed
       - Saier__Sen-HZG1WA
+      - DFRobot__DFR0971_Times2: Two DfRobot DFR0971 i2c 0-10V analog output actuators,
+        set so the first has address 0x5e and the second has address 0x5f
 
     For more information:
       - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
@@ -132,6 +134,7 @@ class MakeModel(GwStrEnum):
     GRIDWORKS__PICOFLOWHALL = auto()
     GRIDWORKS__PICOFLOWREED = auto()
     SAIER__SENHZG1WA = auto()
+    DFROBOT__DFR0971_TIMES2 = auto()
 
     @classmethod
     def default(cls) -> "MakeModel":
@@ -147,4 +150,4 @@ class MakeModel(GwStrEnum):
 
     @classmethod
     def enum_version(cls) -> str:
-        return "003"
+        return "004"

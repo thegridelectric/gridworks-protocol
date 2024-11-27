@@ -2,6 +2,7 @@ from gwproto.data_classes.components.ads111x_based_component import (
     Ads111xBasedComponent,
 )
 from gwproto.data_classes.components.component import Component
+from gwproto.data_classes.components.dfr_component import DfrComponent
 from gwproto.data_classes.components.electric_meter_component import (
     ElectricMeterComponent,
 )
@@ -31,6 +32,7 @@ from gwproto.data_classes.components.web_server_component import WebServerCompon
 __all__ = [
     "Component",
     "Ads111xBasedComponent",
+    "DfrComponent",
     "ElectricMeterComponent",
     "FibaroSmartImplantComponent",
     "HubitatComponent",

@@ -1,5 +1,5 @@
 """
-Tests for enum sh.actor.class.002 from the GridWorks Type Registry.
+Tests for enum sh.actor.class.003 from the GridWorks Type Registry.
 """
 
 from gwproto.enums import ActorClass
@@ -30,8 +30,10 @@ def test_actor_class() -> None:
         "ApiTankModule",
         "ApiFlowModule",
         "PicoCycler",
+        "I2cDfrMultiplexer",
+        "ZeroTenOutputer",
     }
 
     assert ActorClass.default() == ActorClass.NoActor
     assert ActorClass.enum_name() == "sh.actor.class"
-    assert ActorClass.enum_version() == "002"
+    assert ActorClass.enum_version() == "003"

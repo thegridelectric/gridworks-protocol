@@ -16,6 +16,8 @@ from gwproto.property_format import (
 
 
 class Report(BaseModel):
+    """ """
+
     FromGNodeAlias: LeftRightDotStr
     FromGNodeInstanceId: UUID4Str
     AboutGNodeAlias: LeftRightDotStr

@@ -1,4 +1,4 @@
-"""Type wake.up, version 000"""
+"""Type admin.wakes.up, version 000"""
 
 from typing import Literal
 
@@ -9,9 +9,8 @@ from gwproto.property_format import (
 )
 
 
-class WakeUp(BaseModel):
-    """ """
-
+class AdminWakesUp(BaseModel):
+    FromName: SpaceheatName
     ToName: SpaceheatName
-    TypeName: Literal["wake.up"] = "wake.up"
+    TypeName: Literal["admin.wakes.up"] = "admin.wakes.up"
     Version: Literal["000"] = "000"

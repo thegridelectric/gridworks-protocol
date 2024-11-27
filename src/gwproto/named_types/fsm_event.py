@@ -115,6 +115,6 @@ class FsmEvent(BaseModel):
         immediate_boss = ".".join(self.ToHandle.split(".")[:-1])
         if immediate_boss != self.FromHandle:
             raise ValueError(
-                f"FromHandle {self.FromHandle} must be immediate boss of ToHandle {immediate_boss}"
+                f"FromHandle {self.FromHandle} must be immediate boss of ToHandle {self.ToHandle}"
             )
         return self

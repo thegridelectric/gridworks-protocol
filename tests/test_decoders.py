@@ -1,5 +1,4 @@
 import json
-import uuid
 from pathlib import Path
 from typing import Any
 
@@ -23,9 +22,9 @@ from gwproto.messages import (
     StartupEvent,
 )
 from gwproto.named_types import (
-    GtShCliAtnCmd,
     PowerWatts,
     Report,
+    SendSnap,
     SnapshotSpaceheat,
 )
 from tests.dummy_decoders import CHILD, PARENT
@@ -200,10 +199,8 @@ def child_to_parent_messages() -> list[MessageCase]:
 
 
 def parent_to_child_messages() -> list[MessageCase]:
-    snapshot_request = GtShCliAtnCmd(
+    snapshot_request = SendSnap(
         FromGNodeAlias="a.b.c",
-        FromGNodeId=str(uuid.uuid4()),
-        SendSnapshot=True,
     )
     # set_relay = GtDispatchBoolean(
     #     AboutNodeName="a.b.c",

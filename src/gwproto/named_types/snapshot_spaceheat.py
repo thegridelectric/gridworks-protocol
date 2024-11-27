@@ -14,6 +14,13 @@ from gwproto.property_format import (
 
 
 class SnapshotSpaceheat(BaseModel):
+    """
+    Snapshot.
+
+    Collection of all the latest measurements (timestamped) captured by the SCADA for all of
+    its data channels. Add LatestStateList
+    """
+
     FromGNodeAlias: LeftRightDotStr
     FromGNodeInstanceId: UUID4Str
     SnapshotTimeUnixMs: UTCMilliseconds

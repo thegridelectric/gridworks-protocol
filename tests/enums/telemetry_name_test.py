@@ -1,5 +1,5 @@
 """
-Tests for enum spaceheat.telemetry.name.001 from the GridWorks Type Registry.
+Tests for enum spaceheat.telemetry.name.002 from the GridWorks Type Registry.
 """
 
 from gwproto.enums import TelemetryName
@@ -27,4 +27,4 @@ def test_telemetry_name() -> None:
 
     assert TelemetryName.default() == TelemetryName.Unknown
     assert TelemetryName.enum_name() == "spaceheat.telemetry.name"
-    assert TelemetryName.enum_version() == "001"
+    assert TelemetryName.enum_version() == "002"

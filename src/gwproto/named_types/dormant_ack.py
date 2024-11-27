@@ -1,4 +1,4 @@
-"""Type go.dormant, version 000"""
+"""Type dormant.ack, version 000"""
 
 from typing import Literal
 
@@ -10,11 +10,9 @@ from gwproto.property_format import (
 )
 
 
-class GoDormant(BaseModel):
-    """ """
-
+class DormantAck(BaseModel):
     FromName: SpaceheatName
     ToName: SpaceheatName
     TriggerId: UUID4Str
-    TypeName: Literal["go.dormant"] = "go.dormant"
+    TypeName: Literal["dormant.ack"] = "dormant.ack"
     Version: Literal["000"] = "000"

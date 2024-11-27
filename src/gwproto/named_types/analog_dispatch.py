@@ -1,8 +1,12 @@
+"""Type analog.dispatch, version 000"""
+
 from typing import Literal, Optional
 
-from pydantic import BaseModel, PositiveInt
+from pydantic import BaseModel, StrictInt, model_validator
+from typing_extensions import Self
 
 from gwproto.property_format import (
+    HandleName,
     LeftRightDotStr,
     SpaceheatName,
     UTCMilliseconds,
@@ -12,11 +16,20 @@ from gwproto.property_format import (
 
 class AnalogDispatch(BaseModel):
     FromGNodeAlias: Optional[LeftRightDotStr] = None
-    FromName: SpaceheatName
-    ToName: SpaceheatName
+    FromHandle: HandleName
+    ToHandle: HandleName
     AboutName: SpaceheatName
-    Value: PositiveInt
-    MessageId: UUID4Str
+    Value: StrictInt
+    TriggerId: UUID4Str
     UnixTimeMs: UTCMilliseconds
     TypeName: Literal["analog.dispatch"] = "analog.dispatch"
     Version: Literal["000"] = "000"
+
+    @model_validator(mode="after")
+    def check_axiom_1(self) -> Self:
+        """
+        Axiom 1: FromHandle must be the immediate boss of ToHandle, unless ToHandle contains 'multiplexer'.
+
+        """
+        # Implement check for axiom 1"
+        return self

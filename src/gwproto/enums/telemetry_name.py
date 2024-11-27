@@ -31,6 +31,7 @@ class TelemetryName(GwStrEnum):
       - ThermostatState: Thermostat State: 0 means idle, 1 means heating, 2 means pending
         heat
       - MicroVolts: Microvolts RMS
+      - VoltsTimesTen
 
     For more information:
       - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
@@ -69,4 +70,4 @@ class TelemetryName(GwStrEnum):
 
     @classmethod
     def enum_version(cls) -> str:
-        return "001"
+        return "002"

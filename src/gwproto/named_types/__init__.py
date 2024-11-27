@@ -4,6 +4,7 @@ from gwproto.named_types.admin_wakes_up import AdminWakesUp
 from gwproto.named_types.ads111x_based_cac_gt import Ads111xBasedCacGt
 from gwproto.named_types.ads111x_based_component_gt import Ads111xBasedComponentGt
 from gwproto.named_types.ads_channel_config import AdsChannelConfig
+from gwproto.named_types.alert import Alert
 from gwproto.named_types.analog_dispatch import AnalogDispatch
 from gwproto.named_types.channel_config import ChannelConfig
 from gwproto.named_types.channel_readings import ChannelReadings
@@ -12,6 +13,7 @@ from gwproto.named_types.component_gt import ComponentGt
 from gwproto.named_types.data_channel_gt import DataChannelGt
 from gwproto.named_types.dfr_component_gt import DfrComponentGt
 from gwproto.named_types.dfr_config import DfrConfig
+from gwproto.named_types.dormant_ack import DormantAck
 from gwproto.named_types.egauge_register_config import EgaugeRegisterConfig
 from gwproto.named_types.electric_meter_cac_gt import ElectricMeterCacGt
 from gwproto.named_types.electric_meter_channel_config import ElectricMeterChannelConfig
@@ -62,6 +64,7 @@ __all__ = [
     "AdsChannelConfig",
     "Ads111xBasedCacGt",
     "Ads111xBasedComponentGt",
+    "Alert",
     "AnalogDispatch",
     "ChannelConfig",
     "ChannelReadings",
@@ -70,6 +73,7 @@ __all__ = [
     "DataChannelGt",
     "DfrComponentGt",
     "DfrConfig",
+    "DormantAck",
     "EgaugeRegisterConfig",
     "ElectricMeterCacGt",
     "ElectricMeterChannelConfig",

@@ -1,25 +1,13 @@
 """Type dfr.config, version 000"""
 
-from typing import Literal, Optional
+from typing import Literal
 
-from pydantic import BaseModel, PositiveInt, StrictInt
+from pydantic import PositiveInt
 
-from gwproto.enums import Unit
-from gwproto.property_format import (
-    SpaceheatName,
-)
+from gwproto.named_types.channel_config import ChannelConfig
 
 
-class DfrConfig(BaseModel):
-    """ """
-
-    ChannelName: SpaceheatName
-    PollPeriodMs: Optional[PositiveInt] = None
-    CapturePeriodS: PositiveInt
-    AsyncCapture: bool
-    AsyncCaptureDelta: Optional[PositiveInt] = None
-    Exponent: StrictInt
-    Unit: Unit
+class DfrConfig(ChannelConfig):
     OutputIdx: PositiveInt
     InitialVoltsTimes100: PositiveInt
     TypeName: Literal["dfr.config"] = "dfr.config"

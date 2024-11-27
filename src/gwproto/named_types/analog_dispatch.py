@@ -31,5 +31,10 @@ class AnalogDispatch(BaseModel):
         Axiom 1: FromHandle must be the immediate boss of ToHandle, unless ToHandle contains 'multiplexer'.
 
         """
-        # Implement check for axiom 1"
+        if "multiplexer" in self.ToHandle:
+            return self
+        if ".".join(self.ToHandle.split(".")[:-1]) != self.FromHandle:
+            raise ValueError(
+                f"FromHandle {self.FromHandle} must be direct boss of ToHandle {self.ToHandle}"
+            )
         return self

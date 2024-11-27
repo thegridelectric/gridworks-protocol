@@ -32,7 +32,7 @@ class PicoFlowModuleComponentGt(ComponentGt):
 
     @field_validator("HwUid")
     @classmethod
-    def check_config_list(cls, v: str) -> str:
+    def check_hw_uid(cls, v: str) -> str:
         """
         Axiom 1: HwUid is of the form 'pico_xxxxxx' where xxxxxx
         are lowercase hex (the last digits of its pico W hw id)

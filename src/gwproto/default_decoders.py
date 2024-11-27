@@ -5,6 +5,11 @@ import gwproto.named_types.cacs
 import gwproto.named_types.components
 from gwproto.decoders import CacDecoder, ComponentDecoder
 
+__all__ = [
+    "default_cac_decoder",
+    "default_component_decoder",
+]
+
 default_cac_decoder = CacDecoder(
     model_name="DefaultCacDecoder",
     modules=[gwproto.named_types.cacs],

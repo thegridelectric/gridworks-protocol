@@ -1,6 +1,6 @@
 """Type electric.meter.component.gt, version 001"""
 
-from typing import List, Literal, Optional, Self
+from typing import List, Literal, Optional, Self, Sequence
 
 from pydantic import PositiveInt, field_validator, model_validator
 
@@ -11,13 +11,13 @@ from gwproto.named_types.electric_meter_channel_config import ElectricMeterChann
 class ElectricMeterComponentGt(ComponentGt):
     ModbusHost: Optional[str] = None
     ModbusPort: Optional[PositiveInt] = None
-    ConfigList: List[ElectricMeterChannelConfig]
+    ConfigList: Sequence[ElectricMeterChannelConfig]
     TypeName: Literal["electric.meter.component.gt"] = "electric.meter.component.gt"
     Version: Literal["001"] = "001"
 
     @field_validator("ConfigList")
     @classmethod
-    def check_config_list(
+    def check_electric_meter_config_list(
         cls, v: List[ElectricMeterChannelConfig]
     ) -> List[ElectricMeterChannelConfig]:
         """

@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Any, Optional
 
 import yarl
 
@@ -36,7 +36,7 @@ class HubitatPollerComponent(
         self,
         node_name: str,
         _nodes: dict[str, ShNode],
-        components: dict[str, Component],
+        components: dict[str, Component[Any, Any]],
     ) -> None:
         if self._rest is not None:
             raise ValueError(

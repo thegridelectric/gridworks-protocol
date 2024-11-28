@@ -80,3 +80,7 @@ class ShNode(SpaceheatNodeGt):
     @property
     def has_actor(self) -> bool:
         return self.actor_class != ActorClass.NoActor
+
+    def to_gt(self) -> SpaceheatNodeGt:
+        # Copy the current instance excluding the extra fields
+        return SpaceheatNodeGt(**self.model_dump(exclude={"component"}))

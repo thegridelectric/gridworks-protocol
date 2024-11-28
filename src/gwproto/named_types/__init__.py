@@ -26,6 +26,7 @@ from gwproto.named_types.fsm_event import FsmEvent
 from gwproto.named_types.fsm_full_report import FsmFullReport
 from gwproto.named_types.fsm_trigger_from_atn import FsmTriggerFromAtn
 from gwproto.named_types.go_dormant import GoDormant
+from gwproto.named_types.ha1_params import Ha1Params
 from gwproto.named_types.heartbeat_b import HeartbeatB
 from gwproto.named_types.hubitat_component_gt import HubitatComponentGt
 from gwproto.named_types.hubitat_poller_component_gt import HubitatPollerComponentGt
@@ -84,6 +85,7 @@ __all__ = [
     "FsmFullReport",
     "FsmTriggerFromAtn",
     "GoDormant",
+    "Ha1Params",
     "HeartbeatB",
     "HubitatComponentGt",
     "HubitatPollerComponentGt",

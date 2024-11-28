@@ -1,6 +1,4 @@
-"""Tests layout.lite type, version 000"""
-
-import json
+"""Tests layout.lite type, version 001"""
 
 from gwproto.named_types import LayoutLite
 
@@ -11,14 +9,44 @@ def test_layout_lite_generated() -> None:
         "FromGNodeInstanceId": "98542a17-3180-4f2a-a929-6023f0e7a106",
         "MessageCreatedMs": 1728651445746,
         "MessageId": "1302c0f8-1983-43b2-90d2-61678d731db3",
-        "ZoneList": ["Down", "Up"],
         "Strategy": "House0",
+        "ZoneList": ["Down", "Up"],
         "TotalStoreTanks": 3,
+        "ShNodes": [
+            {
+                "ActorClass": "Scada",
+                "DisplayName": "Keene Beech Scada",
+                "Name": "s",
+                "ShNodeId": "da9a0427-d6c0-44c0-b51c-492c1e580dc5",
+                "TypeName": "spaceheat.node.gt",
+                "Version": "200",
+            },
+            {
+                "ActorClass": "PowerMeter",
+                "ActorHierarchyName": "s.power-meter",
+                "ComponentId": "9633adef-2373-422d-8a0e-dfbd16ae081c",
+                "DisplayName": "Primary Power Meter",
+                "Name": "power-meter",
+                "ShNodeId": "6c0563b7-5171-4b1c-bba3-de156bea4b95",
+                "TypeName": "spaceheat.node.gt",
+                "Version": "200",
+            },
+            {
+                "ActorClass": "NoActor",
+                "DisplayName": "Hp Idu",
+                "InPowerMetering": True,
+                "Name": "hp-idu",
+                "NameplatePowerW": 4000,
+                "ShNodeId": "07b8ca98-12c4-4510-8d0f-14fda2331215",
+                "TypeName": "spaceheat.node.gt",
+                "Version": "200",
+            },
+        ],
         "DataChannels": [
             {
                 "Name": "hp-idu-pwr",
                 "DisplayName": "Hp IDU",
-                "AboutNodeName": "hp-idu-pwr",
+                "AboutNodeName": "hp-idu",
                 "CapturedByNodeName": "power-meter",
                 "TelemetryName": "PowerW",
                 "TerminalAssetAlias": "hw1.isone.me.versant.keene.beech.ta",
@@ -120,9 +148,9 @@ def test_layout_lite_generated() -> None:
                 "PicoKOhms": 30,
                 "Samples": 1000,
                 "SendMicroVolts": True,
-                "AsyncCaptureDeltaMicroVolts": 2000,
                 "TempCalcMethod": "SimpleBetaForPico",
                 "ThermistorBeta": 3977,
+                "AsyncCaptureDeltaMicroVolts": 2000,
                 "TypeName": "pico.tank.module.component.gt",
                 "Version": "000",
             }
@@ -173,9 +201,9 @@ def test_layout_lite_generated() -> None:
             }
         ],
         "TypeName": "layout.lite",
-        "Version": "000",
+        "Version": "001",
     }
 
-    t2 = LayoutLite.model_validate(d).model_dump_json(exclude_none=True)
-    d2 = json.loads(t2)
+    d2 = LayoutLite.model_validate(d).model_dump(exclude_none=True)
+
     assert d2 == d

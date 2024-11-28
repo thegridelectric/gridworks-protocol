@@ -1,12 +1,15 @@
-"""Type layout.lite, version 000"""
+"""Type layout.lite, version 001"""
 
 from typing import List, Literal
 
-from pydantic import BaseModel, PositiveInt
+from pydantic import BaseModel, PositiveInt, model_validator
+from typing_extensions import Self
 
+from gwproto.enums import ActorClass
 from gwproto.named_types.data_channel_gt import DataChannelGt
 from gwproto.named_types.pico_flow_module_component_gt import PicoFlowModuleComponentGt
 from gwproto.named_types.pico_tank_module_component_gt import PicoTankModuleComponentGt
+from gwproto.named_types.spaceheat_node_gt import SpaceheatNodeGt
 from gwproto.property_format import (
     LeftRightDotStr,
     UTCMilliseconds,
@@ -15,13 +18,6 @@ from gwproto.property_format import (
 
 
 class LayoutLite(BaseModel):
-    """
-    Layout Lite.
-
-    A light-weight version of the layout for a Spaceheat Node, with key parameters about how
-    the SCADA operates.
-    """
-
     FromGNodeAlias: LeftRightDotStr
     FromGNodeInstanceId: UUID4Str
     MessageCreatedMs: UTCMilliseconds
@@ -29,8 +25,59 @@ class LayoutLite(BaseModel):
     Strategy: str
     ZoneList: List[str]
     TotalStoreTanks: PositiveInt
+    ShNodes: List[SpaceheatNodeGt]
     DataChannels: List[DataChannelGt]
     TankModuleComponents: List[PicoTankModuleComponentGt]
     FlowModuleComponents: List[PicoFlowModuleComponentGt]
     TypeName: Literal["layout.lite"] = "layout.lite"
-    Version: Literal["000"] = "000"
+    Version: Literal["001"] = "001"
+
+    @model_validator(mode="after")
+    def check_axiom_1(self) -> Self:
+        """
+        Axiom 1: Dc Node Consistency. Every AboutNodeName and CapturedByNodeName in a
+        DataChannel belongs to an ShNode, and in addition every CapturedByNodeName does
+        not have ActorClass NoActor.
+        """
+        for dc in self.DataChannels:
+            if dc.AboutNodeName not in [n.Name for n in self.ShNodes]:
+                raise ValueError(
+                    f"dc {dc.Name} AboutNodeName {dc.AboutNodeName} not in ShNodes!"
+                )
+            captured_by_node = next(
+                (n for n in self.ShNodes if n.Name == dc.CapturedByNodeName), None
+            )
+            if not captured_by_node:
+                raise ValueError(
+                    f"dc {dc.Name} CapturedByNodeName {dc.CapturedByNodeName} not in ShNodes!"
+                )
+            if captured_by_node.ActorClass == ActorClass.NoActor:
+                raise ValueError(
+                    f"dc {dc.Name}'s CatpuredByNode cannot have ActorClass NoActor!"
+                )
+        return self
+
+    @model_validator(mode="after")
+    def check_axiom_2(self) -> Self:
+        """
+        Node Handle Hierarchy Consistency. Every ShNode with a handle containing at least
+        two words (separated by '.') has an immediate boss: another ShNode whose handle
+        matches the original handle minus its last word.
+        """
+        existing_handles = {get_handle(node) for node in self.ShNodes}
+        for node in self.ShNodes:
+            handle = get_handle(node)
+            if "." in handle:
+                boss_handle = ".".join(handle.split(".")[:-1])
+                if boss_handle not in existing_handles:
+                    raise ValueError(
+                        f"node {node.Name} with handle {handle} missing"
+                        " its immediate boss!"
+                    )
+        return self
+
+
+def get_handle(node: SpaceheatNodeGt) -> str:
+    if node.Handle:
+        return node.Handle
+    return node.Name

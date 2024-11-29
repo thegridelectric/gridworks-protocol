@@ -47,6 +47,7 @@ from gwproto.named_types.resistive_heater_cac_gt import ResistiveHeaterCacGt
 from gwproto.named_types.resistive_heater_component_gt import ResistiveHeaterComponentGt
 from gwproto.named_types.rest_poller_component_gt import RESTPollerComponentGt
 from gwproto.named_types.scada_params import ScadaParams
+from gwproto.named_types.send_layout import SendLayout
 from gwproto.named_types.send_snap import SendSnap
 from gwproto.named_types.single_reading import SingleReading
 from gwproto.named_types.snapshot_spaceheat import SnapshotSpaceheat
@@ -104,6 +105,7 @@ __all__ = [
     "ResistiveHeaterComponentGt",
     "RESTPollerComponentGt",
     "ScadaParams",
+    "SendLayout",
     "SendSnap",
     "SingleReading",
     "SnapshotSpaceheat",

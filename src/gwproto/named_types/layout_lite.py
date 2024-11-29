@@ -7,6 +7,7 @@ from typing_extensions import Self
 
 from gwproto.enums import ActorClass
 from gwproto.named_types.data_channel_gt import DataChannelGt
+from gwproto.named_types.ha1_params import Ha1Params
 from gwproto.named_types.pico_flow_module_component_gt import PicoFlowModuleComponentGt
 from gwproto.named_types.pico_tank_module_component_gt import PicoTankModuleComponentGt
 from gwproto.named_types.spaceheat_node_gt import SpaceheatNodeGt
@@ -29,6 +30,7 @@ class LayoutLite(BaseModel):
     DataChannels: List[DataChannelGt]
     TankModuleComponents: List[PicoTankModuleComponentGt]
     FlowModuleComponents: List[PicoFlowModuleComponentGt]
+    Ha1Params: Ha1Params
     TypeName: Literal["layout.lite"] = "layout.lite"
     Version: Literal["001"] = "001"
 

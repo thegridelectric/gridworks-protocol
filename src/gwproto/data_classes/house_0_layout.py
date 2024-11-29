@@ -11,7 +11,7 @@ from gwproto.data_classes.hardware_layout import (
     LoadArgs,
     LoadError,
 )
-from gwproto.data_classes.house_0_names import H0N
+from gwproto.data_classes.house_0_names import H0CN, H0N
 from gwproto.data_classes.sh_node import ShNode
 from gwproto.default_decoders import (
     CacDecoder,
@@ -52,6 +52,7 @@ class House0Layout(HardwareLayout):
             raise DcError("House0 requires House0 strategy!")
         self.zone_list = layout["ZoneList"]
         self.total_store_tanks = layout["TotalStoreTanks"]
+        self.channel_names = H0CN(self.total_store_tanks, self.zone_list)
         if not isinstance(self.total_store_tanks, int):
             raise TypeError("TotalStoreTanks must be an integer")
         if not 1 <= self.total_store_tanks <= 6:

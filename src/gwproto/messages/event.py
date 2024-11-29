@@ -129,7 +129,7 @@ class ReportEvent(EventBase):
 class LayoutEvent(EventBase):
     Layout: LayoutLite
     TypeName: Literal["layout.event"] = "layout.event"
-    Version: Literal["000"] = "000"
+    Version: Literal["000"] = "001"
 
     def __init__(self, **data: dict[str, Any]) -> None:
         super().__init__(**data)

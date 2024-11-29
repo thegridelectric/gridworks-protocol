@@ -12,6 +12,19 @@ def test_layout_lite_generated() -> None:
         "Strategy": "House0",
         "ZoneList": ["Down", "Up"],
         "TotalStoreTanks": 3,
+        "Ha1Params": {
+            "AlphaTimes10": 120,
+            "BetaTimes100": -22,
+            "GammaEx6": 0,
+            "IntermediatePowerKw": 1.5,
+            "IntermediateRswtF": 100,
+            "DdPowerKw": 12,
+            "DdRswtF": 160,
+            "DdDeltaTF": 20,
+            "HpMaxKwTh": 6,
+            "TypeName": "ha1.params",
+            "Version": "000",
+        },
         "ShNodes": [
             {
                 "ActorClass": "Scada",

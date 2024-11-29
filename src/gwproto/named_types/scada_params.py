@@ -14,6 +14,8 @@ from gwproto.property_format import (
 
 
 class ScadaParams(BaseModel):
+    """ """
+
     FromGNodeAlias: LeftRightDotStr
     FromName: SpaceheatName
     ToName: SpaceheatName

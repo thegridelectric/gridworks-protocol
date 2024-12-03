@@ -1,4 +1,4 @@
-"""Type ha1.params, version 000"""
+"""Type ha1.params, version 001"""
 
 from typing import Literal
 
@@ -17,4 +17,4 @@ class Ha1Params(BaseModel):
     HpMaxKwTh: float
     MaxEwtF: StrictInt
     TypeName: Literal["ha1.params"] = "ha1.params"
-    Version: Literal["000"] = "000"
+    Version: Literal["001"] = "001"

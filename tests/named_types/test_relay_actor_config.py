@@ -1,5 +1,7 @@
 """Tests relay.actor.config type, version 000"""
 
+import json
+
 from gwproto.enums import RelayWiringConfig
 from gwproto.named_types import RelayActorConfig
 
@@ -18,12 +20,13 @@ def test_relay_actor_config_generated() -> None:
         "WiringConfig": "NormallyOpen",
         "EventType": "change.relay.state",
         "DeEnergizingEvent": "OpenRelay",
+        "EnergizingEvent": "CloseRelay",
         "TypeName": "relay.actor.config",
-        "Version": "000",
+        "Version": "001",
     }
 
-    d2 = RelayActorConfig.model_validate(d).model_dump(exclude_none=True)
-
+    t = RelayActorConfig.model_validate(d).model_dump_json(exclude_none=True)
+    d2 = json.loads(t)
     assert d2 == d
 
     ######################################

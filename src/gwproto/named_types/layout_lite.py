@@ -8,6 +8,9 @@ from typing_extensions import Self
 from gwproto.enums import ActorClass
 from gwproto.named_types.data_channel_gt import DataChannelGt
 from gwproto.named_types.ha1_params import Ha1Params
+from gwproto.named_types.i2c_multichannel_dt_relay_component_gt import (
+    I2cMultichannelDtRelayComponentGt,
+)
 from gwproto.named_types.pico_flow_module_component_gt import PicoFlowModuleComponentGt
 from gwproto.named_types.pico_tank_module_component_gt import PicoTankModuleComponentGt
 from gwproto.named_types.spaceheat_node_gt import SpaceheatNodeGt
@@ -31,8 +34,9 @@ class LayoutLite(BaseModel):
     TankModuleComponents: List[PicoTankModuleComponentGt]
     FlowModuleComponents: List[PicoFlowModuleComponentGt]
     Ha1Params: Ha1Params
+    I2cRelayComponent: I2cMultichannelDtRelayComponentGt
     TypeName: Literal["layout.lite"] = "layout.lite"
-    Version: Literal["001"] = "001"
+    Version: Literal["002"] = "002"
 
     @model_validator(mode="after")
     def check_axiom_1(self) -> Self:

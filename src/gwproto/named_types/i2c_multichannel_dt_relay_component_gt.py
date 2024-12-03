@@ -15,7 +15,7 @@ class I2cMultichannelDtRelayComponentGt(ComponentGt):
     TypeName: Literal["i2c.multichannel.dt.relay.component.gt"] = (
         "i2c.multichannel.dt.relay.component.gt"
     )
-    Version: Literal["000"] = "000"
+    Version: Literal["001"] = "001"
 
     model_config = ConfigDict(extra="allow", use_enum_values=True)
 

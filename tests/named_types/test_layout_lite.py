@@ -22,6 +22,7 @@ def test_layout_lite_generated() -> None:
             "DdRswtF": 160,
             "DdDeltaTF": 20,
             "HpMaxKwTh": 6,
+            "MaxEwtF": 170,
             "TypeName": "ha1.params",
             "Version": "000",
         },

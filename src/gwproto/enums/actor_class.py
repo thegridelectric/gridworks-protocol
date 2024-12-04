@@ -90,6 +90,7 @@ class ActorClass(GwStrEnum):
     HubitatTankModule = auto()
     HubitatPoller = auto()
     I2cRelayMultiplexer = auto()
+    FakeAtn = auto()
     FlowTotalizer = auto()
     Relay = auto()
     Admin = auto()
@@ -102,6 +103,8 @@ class ActorClass(GwStrEnum):
     PicoCycler = auto()
     I2cDfrMultiplexer = auto()
     ZeroTenOutputer = auto()
+    SynthGenerator = auto()
+    AtomicAlly = auto()
 
     @classmethod
     def default(cls) -> "ActorClass":

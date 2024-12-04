@@ -1,10 +1,9 @@
 """Type synth.channel.gt, version 000"""
-
 from typing import Literal
 
-from pydantic import BaseModel
+from pydantic import BaseModel, PositiveInt
 
-from gwproto.enums import TelemetryName
+from gwproto.enums import TelemetryName, ActorClass
 from gwproto.property_format import (
     LeftRightDotStr,
     SpaceheatName,
@@ -20,5 +19,6 @@ class SynthChannelGt(BaseModel):
     TerminalAssetAlias: LeftRightDotStr
     Strategy: str
     DisplayName: str
+    SyncReportMinutes: PositiveInt
     TypeName: Literal["synth.channel.gt"] = "synth.channel.gt"
     Version: Literal["000"] = "000"

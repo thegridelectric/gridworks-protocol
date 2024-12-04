@@ -64,6 +64,8 @@ class House0RelayIdx:
 class H0N:
     # core actors
     atn = "a"
+    atomic_ally = "aa"
+    fake_atn = "fake-atn"
     primary_scada = "s"
     secondary_scada = "s2"
     home_alone = "h"
@@ -72,6 +74,7 @@ class H0N:
     auto = "auto"  # Finite State Machine responsible for homealone <-> atn transition
     analog_temp = "analog-temp"
     relay_multiplexer = "relay-multiplexer"
+    synth_generator = "synth-generator"
     zero_ten_out_multiplexer = "dfr-multiplexer"
 
     # core power-metered nodes

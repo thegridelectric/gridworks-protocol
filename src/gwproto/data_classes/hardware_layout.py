@@ -25,6 +25,7 @@ from gwproto.data_classes.components.electric_meter_component import (
 from gwproto.data_classes.data_channel import DataChannel
 from gwproto.data_classes.resolver import ComponentResolver
 from gwproto.data_classes.sh_node import ShNode
+from gwproto.data_classes.synth_channel import SynthChannel
 from gwproto.data_classes.telemetry_tuple import TelemetryTuple
 from gwproto.default_decoders import (
     CacDecoder,
@@ -54,6 +55,7 @@ class LoadArgs(typing.TypedDict):
     components: dict[str, Component]
     nodes: dict[str, ShNode]
     data_channels: dict[str, DataChannel]
+    synth_channels: dict[str, SynthChannel]
 
 
 class HardwareLayout:
@@ -64,6 +66,7 @@ class HardwareLayout:
     nodes: dict[str, ShNode]
     nodes_by_component: dict[str, str]
     data_channels: dict[str, DataChannel]
+    synth_channels: dict[str, SynthChannel]
 
     GT_SUFFIX = "Gt"
 
@@ -216,6 +219,19 @@ class HardwareLayout:
         return DataChannel(
             about_node=about_node, captured_by_node=captured_by_node, **dc_dict
         )
+
+    @classmethod
+    def make_synth_channel(
+        cls, synth_dict: dict, nodes: dict[str, ShNode]
+    ) -> SynthChannel:
+        created_by_node = nodes.get(synth_dict.get("CreatedByNodeName"))
+        if created_by_node is None:
+            raise ValueError(
+                f"ERROR. SynthChannel related nodes must exist for {synth_dict.get('Name')}!\n"
+                f"  For CreatedByNodeName<{synth_dict.get('CreatedByNodeName')}> "
+                f"got None!\n"
+            )
+        return SynthChannel(created_by_node=created_by_node, **synth_dict)
 
     @classmethod
     def check_dc_id_uniqueness(
@@ -379,6 +395,28 @@ class HardwareLayout:
         return dcs
 
     @classmethod
+    def load_synth_channels(
+        cls,
+        layout: dict[Any, Any],
+        nodes: dict[str, ShNode],
+        *,
+        raise_errors: bool = True,
+        errors: Optional[list[LoadError]] = None,
+    ) -> dict[str, DataChannel]:
+        synths = {}
+        if errors is None:
+            errors = []
+        for d in layout.get("SynthChannels", []):
+            try:
+                name = d["Name"]
+                synths[name] = cls.make_synth_channel(d, nodes)
+            except Exception as e:  # noqa: PERF203
+                if raise_errors:
+                    raise
+                errors.append(LoadError("SynthChannel", d, e))
+        return synths
+
+    @classmethod
     def resolve_links(
         cls,
         nodes: dict[str, ShNode],
@@ -409,7 +447,7 @@ class HardwareLayout:
                     raise
                 errors.append(LoadError("ShNode", d, e))
 
-    def __init__(
+    def __init__(  # noqa: PLR0913
         self,
         layout: dict[Any, Any],
         *,
@@ -417,6 +455,7 @@ class HardwareLayout:
         components: dict[str, Component],
         nodes: dict[str, ShNode],
         data_channels: dict[str, DataChannel],
+        synth_channels: dict[str, SynthChannel],
     ) -> None:
         self.layout = copy.deepcopy(layout)
         self.cacs = dict(cacs)
@@ -429,6 +468,7 @@ class HardwareLayout:
             node.component_id: node.name for node in self.nodes.values()
         }
         self.data_channels = dict(data_channels)
+        self.synth_channels = dict(synth_channels)
 
     def clear_property_cache(self) -> None:
         for cached_prop_name in [
@@ -552,11 +592,18 @@ class HardwareLayout:
             raise_errors=raise_errors,
             errors=errors,
         )
+        synth_channels = cls.load_synth_channels(
+            layout=layout,
+            nodes=nodes,
+            raise_errors=raise_errors,
+            errors=errors,
+        )
         load_args: LoadArgs = {
             "cacs": cacs,
             "components": components,
             "nodes": nodes,
             "data_channels": data_channels,
+            "synth_channels": synth_channels,
         }
         cls.resolve_links(
             load_args["nodes"],
@@ -569,6 +616,9 @@ class HardwareLayout:
 
     def channel(self, name: str, default: Any = None) -> DataChannel:  # noqa: ANN401
         return self.data_channels.get(name, default)
+
+    def synth_channel(self, name: str, default: Any = None) -> SynthChannel:  # noqa: ANN401
+        return self.synth_channels.get(name, default)
 
     def node(self, name: str, default: Any = None) -> ShNode:  # noqa: ANN401
         return self.nodes.get(name, default)

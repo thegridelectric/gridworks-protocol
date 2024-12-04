@@ -1,4 +1,4 @@
-"""Type layout.lite, version 001"""
+"""Type layout.lite, version 002"""
 
 from typing import List, Literal
 
@@ -14,6 +14,7 @@ from gwproto.named_types.i2c_multichannel_dt_relay_component_gt import (
 from gwproto.named_types.pico_flow_module_component_gt import PicoFlowModuleComponentGt
 from gwproto.named_types.pico_tank_module_component_gt import PicoTankModuleComponentGt
 from gwproto.named_types.spaceheat_node_gt import SpaceheatNodeGt
+from gwproto.named_types.synth_channel_gt import SynthChannelGt
 from gwproto.property_format import (
     LeftRightDotStr,
     UTCMilliseconds,
@@ -31,6 +32,7 @@ class LayoutLite(BaseModel):
     TotalStoreTanks: PositiveInt
     ShNodes: List[SpaceheatNodeGt]
     DataChannels: List[DataChannelGt]
+    SynthChannels: List[SynthChannelGt]
     TankModuleComponents: List[PicoTankModuleComponentGt]
     FlowModuleComponents: List[PicoFlowModuleComponentGt]
     Ha1Params: Ha1Params

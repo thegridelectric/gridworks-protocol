@@ -53,6 +53,7 @@ from gwproto.named_types.single_reading import SingleReading
 from gwproto.named_types.snapshot_spaceheat import SnapshotSpaceheat
 from gwproto.named_types.spaceheat_node_gt import SpaceheatNodeGt
 from gwproto.named_types.synced_readings import SyncedReadings
+from gwproto.named_types.synth_channel_gt import SynthChannelGt
 from gwproto.named_types.tank_module_params import TankModuleParams
 from gwproto.named_types.ticklist_hall import TicklistHall
 from gwproto.named_types.ticklist_hall_report import TicklistHallReport
@@ -111,6 +112,7 @@ __all__ = [
     "SnapshotSpaceheat",
     "SpaceheatNodeGt",
     "SyncedReadings",
+    "SynthChannelGt",
     "TankModuleParams",
     "TicklistHall",
     "TicklistHallReport",

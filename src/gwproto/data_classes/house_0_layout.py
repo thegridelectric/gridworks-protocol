@@ -13,6 +13,7 @@ from gwproto.data_classes.hardware_layout import (
 )
 from gwproto.data_classes.house_0_names import H0CN, H0N
 from gwproto.data_classes.sh_node import ShNode
+from gwproto.data_classes.synth_channel import SynthChannel
 from gwproto.default_decoders import (
     CacDecoder,
     ComponentDecoder,
@@ -25,13 +26,14 @@ class House0Layout(HardwareLayout):
     total_store_tanks: int
     strategy: Literal["House0"] = "House0"
 
-    def __init__(
+    def __init__(  # noqa: PLR0913
         self,
         layout: dict[Any, Any],
         cacs: Optional[dict[str, ComponentAttributeClassGt]] = None,  # by id
         components: Optional[dict[str, Component]] = None,  # by id
         nodes: Optional[dict[str, ShNode]] = None,  # by name
         data_channels: Optional[dict[str, DataChannel]] = None,  # by name
+        synth_channels: Optional[dict[str, SynthChannel]] = None,
     ) -> None:
         super().__init__(
             layout=layout,
@@ -39,6 +41,7 @@ class House0Layout(HardwareLayout):
             components=components,
             nodes=nodes,
             data_channels=data_channels,
+            synth_channels=synth_channels,
         )
         if "ZoneList" not in layout:
             raise DcError(
@@ -126,11 +129,18 @@ class House0Layout(HardwareLayout):
             raise_errors=raise_errors,
             errors=errors,
         )
+        synth_channels = cls.load_synth_channels(
+            layout=layout,
+            nodes=nodes,
+            raise_errors=raise_errors,
+            errors=errors,
+        )
         load_args: LoadArgs = {
             "cacs": cacs,
             "components": components,
             "nodes": nodes,
             "data_channels": data_channels,
+            "synth_channels": synth_channels,
         }
         cls.resolve_links(
             load_args["nodes"],

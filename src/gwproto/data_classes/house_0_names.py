@@ -103,6 +103,10 @@ class H0N:
     primary_flow = "primary-flow"
     store_flow = "store-flow"
 
+    # synth channels
+    usable_energy = "usable_energy"
+    required_energy = "required_energy"
+
     # relay nodes
     vdc_relay: Literal["relay1"] = f"relay{House0RelayIdx.vdc}"
     tstat_common_relay: Literal["relay2"] = f"relay{House0RelayIdx.tstat_common}"
@@ -175,6 +179,10 @@ class H0CN:
     dist_flow_hz = f"{H0N.dist_flow}-hz"
     primary_flow_hz = f"{H0N.primary_flow}-hz"
     store_flow_hz = f"{H0N.store_flow}-hz"
+
+    # Synth Channels
+    required_energy = H0N.required_energy
+    usable_energy = H0N.usable_energy
 
     # relay state channels
     vdc_relay_state: Literal["vdc-relay1"] = f"vdc-{H0N.vdc_relay}"

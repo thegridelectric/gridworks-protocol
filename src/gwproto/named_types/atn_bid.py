@@ -7,7 +7,7 @@ from typing_extensions import Self
 
 from gwproto.enums import MarketPriceUnit, MarketQuantityUnit
 from gwproto.named_types.price_quantity_unitless import PriceQuantityUnitless
-from gwproto.property_format import LeftRightDotStr, MarketSlotName, UUID4Str
+from gwproto.property_format import LeftRightDotStr, MarketSlotName
 
 
 class AtnBid(BaseModel):
@@ -17,7 +17,6 @@ class AtnBid(BaseModel):
     """
 
     BidderAlias: LeftRightDotStr
-    BidderGNodeInstanceId: UUID4Str
     MarketSlotName: MarketSlotName
     PqPairs: List[PriceQuantityUnitless]
     InjectionIsPositive: bool

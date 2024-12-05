@@ -217,10 +217,14 @@ def is_bit(candidate: int) -> int:
 def is_market_name(v: str) -> None:
     try:
         x = v.split(".")
-    except AttributeError:
-        raise ValueError(f"{v} failed to split on '.'")
+    except AttributeError as e:
+        raise ValueError(f"{v} failed to split on '.'") from e
     if len(x) < 3:
         raise ValueError("MarketNames need at least 3 words")
+    if x[0] not in {"e", "r", "d"}:
+        raise ValueError(
+            f"{v} first word must be e,r or d (energy, regulation, distribution)"
+        )
     if x[1] not in MarketTypeName.values():
         raise ValueError(f"{v} not recognized MarketType")
     g_node_alias = ".".join(x[2:])
@@ -242,7 +246,8 @@ MarketMinutes: Dict[MarketTypeName, int] = {
 def is_market_slot_name(v: str) -> None:
     """
     MaketSlotNameLrdFormat: the format of a MarketSlotName.
-      - The first word must be a MarketTypeName
+      - First word must be e, r or d (energy, regulation, distribution)
+      - The second word must be a MarketTypeName
       - The last word (unix time of market slot start) must
       be a 10-digit integer divisible by 300 (i.e. all MarketSlots
       start at the top of 5 minutes)
@@ -251,7 +256,7 @@ def is_market_slot_name(v: str) -> None:
       for hourly markets)
       - The middle words have LeftRightDot format (GNodeAlias
       of the MarketMaker)
-    Example: rt60gate5.d1.isone.ver.keene.1673539200
+    Example: e.rt60gate5.d1.isone.ver.keene.1673539200
 
     """
     try:

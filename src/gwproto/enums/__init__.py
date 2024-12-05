@@ -54,6 +54,8 @@ from gwproto.enums.kind_of_param import KindOfParam
 from gwproto.enums.main_auto_event import MainAutoEvent
 from gwproto.enums.main_auto_state import MainAutoState
 from gwproto.enums.make_model import MakeModel
+from gwproto.enums.market_price_unit import MarketPriceUnit
+from gwproto.enums.market_quantity_unit import MarketQuantityUnit
 from gwproto.enums.pico_cycler_event import PicoCyclerEvent
 from gwproto.enums.pico_cycler_state import PicoCyclerState
 from gwproto.enums.primary_pump_control import PrimaryPumpControl
@@ -93,6 +95,8 @@ __all__ = [
     "MainAutoEvent",  # [main.auto.event.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#mainautoevent)
     "MainAutoState",  # [main.auto.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#mainautostate)
     "MakeModel",  # [spaceheat.make.model.004](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatmakemodel)
+    "MarketPriceUnit",  # [market.price.unit.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#marketpriceunit)
+    "MarketQuantityUnit",  # [market.quantity.unit.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#marketquantityunit)
     "PicoCyclerEvent",  # [pico.cycler.event.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#picocyclerevent)
     "PicoCyclerState",  # [pico.cycler.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#picocyclerstate)
     "PrimaryPumpControl",  # [primary.pump.control.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#primarypumpcontrol)

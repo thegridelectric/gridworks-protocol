@@ -6,6 +6,7 @@ from gwproto.named_types.ads111x_based_component_gt import Ads111xBasedComponent
 from gwproto.named_types.ads_channel_config import AdsChannelConfig
 from gwproto.named_types.alert import Alert
 from gwproto.named_types.analog_dispatch import AnalogDispatch
+from gwproto.named_types.atn_bid import AtnBid
 from gwproto.named_types.channel_config import ChannelConfig
 from gwproto.named_types.channel_readings import ChannelReadings
 from gwproto.named_types.component_attribute_class_gt import ComponentAttributeClassGt
@@ -18,6 +19,7 @@ from gwproto.named_types.egauge_register_config import EgaugeRegisterConfig
 from gwproto.named_types.electric_meter_cac_gt import ElectricMeterCacGt
 from gwproto.named_types.electric_meter_channel_config import ElectricMeterChannelConfig
 from gwproto.named_types.electric_meter_component_gt import ElectricMeterComponentGt
+from gwproto.named_types.energy_instruction import EnergyInstruction
 from gwproto.named_types.fibaro_smart_implant_component_gt import (
     FibaroSmartImplantComponentGt,
 )
@@ -35,12 +37,14 @@ from gwproto.named_types.i2c_multichannel_dt_relay_component_gt import (
     I2cMultichannelDtRelayComponentGt,
 )
 from gwproto.named_types.keyparam_change_log import KeyparamChangeLog
+from gwproto.named_types.latest_price import LatestPrice
 from gwproto.named_types.layout_lite import LayoutLite
 from gwproto.named_types.machine_states import MachineStates
 from gwproto.named_types.pico_flow_module_component_gt import PicoFlowModuleComponentGt
 from gwproto.named_types.pico_missing import PicoMissing
 from gwproto.named_types.pico_tank_module_component_gt import PicoTankModuleComponentGt
 from gwproto.named_types.power_watts import PowerWatts
+from gwproto.named_types.price_quantity_unitless import PriceQuantityUnitless
 from gwproto.named_types.relay_actor_config import RelayActorConfig
 from gwproto.named_types.report import Report
 from gwproto.named_types.resistive_heater_cac_gt import ResistiveHeaterCacGt
@@ -69,6 +73,7 @@ __all__ = [
     "Ads111xBasedComponentGt",
     "Alert",
     "AnalogDispatch",
+    "AtnBid",
     "ChannelConfig",
     "ChannelReadings",
     "ComponentAttributeClassGt",
@@ -81,6 +86,7 @@ __all__ = [
     "ElectricMeterCacGt",
     "ElectricMeterChannelConfig",
     "ElectricMeterComponentGt",
+    "EnergyInstruction",
     "FibaroSmartImplantComponentGt",
     "FsmAtomicReport",
     "FsmEvent",
@@ -94,12 +100,14 @@ __all__ = [
     "HubitatTankComponentGt",
     "I2cMultichannelDtRelayComponentGt",
     "KeyparamChangeLog",
+    "LatestPrice",
     "LayoutLite",
     "MachineStates",
     "PicoFlowModuleComponentGt",
     "PicoMissing",
     "PicoTankModuleComponentGt",
     "PowerWatts",
+    "PriceQuantityUnitless",
     "RelayActorConfig",
     "Report",
     "ResistiveHeaterCacGt",

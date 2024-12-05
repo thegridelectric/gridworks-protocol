@@ -32,6 +32,7 @@ class TelemetryName(GwStrEnum):
         heat
       - MicroVolts: Microvolts RMS
       - VoltsTimesTen
+      - WattHours
 
     For more information:
       - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
@@ -71,4 +72,4 @@ class TelemetryName(GwStrEnum):
 
     @classmethod
     def enum_version(cls) -> str:
-        return "002"
+        return "003"

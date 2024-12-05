@@ -64,6 +64,7 @@ def test_layout_lite_generated() -> None:
                 "TelemetryName": "WaterTempCTimes1000",
                 "TerminalAssetAlias": "d1.isone.ct.orange.ta",
                 "Strategy": "simple",
+                "SyncReportMinutes": 60,
                 "DisplayName": "Required Source Water Temp",
                 "TypeName": "synth.channel.gt",
                 "Version": "000",

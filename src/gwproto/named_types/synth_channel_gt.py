@@ -1,9 +1,10 @@
 """Type synth.channel.gt, version 000"""
+
 from typing import Literal
 
 from pydantic import BaseModel, PositiveInt
 
-from gwproto.enums import TelemetryName, ActorClass
+from gwproto.enums import TelemetryName
 from gwproto.property_format import (
     LeftRightDotStr,
     SpaceheatName,
@@ -12,6 +13,13 @@ from gwproto.property_format import (
 
 
 class SynthChannelGt(BaseModel):
+    """
+    Synthesized Channel.
+
+    A descriptor for time-series data channel synthesized from multiple sources (instead of
+    the raw telemetry captured by data.channel.gt
+    """
+
     Id: UUID4Str
     Name: SpaceheatName
     CreatedByNodeName: SpaceheatName

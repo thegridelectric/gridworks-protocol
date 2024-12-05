@@ -70,6 +70,9 @@ class ActorClass(GwStrEnum):
       - PicoCycler
       - I2cDfrMultiplexer
       - ZeroTenOutputer
+      - AtomicAlly: Direct report of Atn when the Scada is in Atn mode.
+      - SynthGenerator
+      - FakeAtn
 
     For more information:
       - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
@@ -90,7 +93,6 @@ class ActorClass(GwStrEnum):
     HubitatTankModule = auto()
     HubitatPoller = auto()
     I2cRelayMultiplexer = auto()
-    FakeAtn = auto()
     FlowTotalizer = auto()
     Relay = auto()
     Admin = auto()
@@ -103,8 +105,9 @@ class ActorClass(GwStrEnum):
     PicoCycler = auto()
     I2cDfrMultiplexer = auto()
     ZeroTenOutputer = auto()
-    SynthGenerator = auto()
     AtomicAlly = auto()
+    SynthGenerator = auto()
+    FakeAtn = auto()
 
     @classmethod
     def default(cls) -> "ActorClass":
@@ -120,4 +123,4 @@ class ActorClass(GwStrEnum):
 
     @classmethod
     def enum_version(cls) -> str:
-        return "003"
+        return "004"

@@ -10,20 +10,19 @@ def test_synth_channel_gt_generated() -> None:
     d = {
         "Id": "99fb8f0e-3c7c-4b62-be5a-4f7a6376519f",
         "Name": "required-swt",
-        "CreatedByNodeName": "homealone",
-        "TelemetryName": "WaterTempCTimes1000",
+        "CreatedByNodeName": "synth-generator",
+        "TelemetryName": "WaterTempFTimes1000",
         "TerminalAssetAlias": "d1.isone.ct.orange.ta",
         "Strategy": "simple",
         "DisplayName": "Required Source Water Temp",
+        "SyncReportMinutes": 60,
         "TypeName": "synth.channel.gt",
         "Version": "000",
     }
 
     t = SynthChannelGt.model_validate(d).model_dump_json(exclude_none=True)
     d2 = json.loads(t)
-    assert d2 == d
-
-    assert d2 == d
+    assert d == d2
 
     ######################################
     # Enum related

@@ -104,8 +104,8 @@ class H0N:
     store_flow = "store-flow"
 
     # synth channels
-    usable_energy = "usable_energy"
-    required_energy = "required_energy"
+    usable_energy = "usable-energy"
+    required_energy = "required-energy"
 
     # relay nodes
     vdc_relay: Literal["relay1"] = f"relay{House0RelayIdx.vdc}"

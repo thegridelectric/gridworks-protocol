@@ -51,12 +51,9 @@ from gwproto.enums.heat_pump_control import HeatPumpControl
 from gwproto.enums.heatcall_source import HeatcallSource
 from gwproto.enums.hz_calc_method import HzCalcMethod
 from gwproto.enums.kind_of_param import KindOfParam
-from gwproto.enums.main_auto_state import MainAutoState
 from gwproto.enums.make_model import MakeModel
 from gwproto.enums.market_price_unit import MarketPriceUnit
 from gwproto.enums.market_quantity_unit import MarketQuantityUnit
-from gwproto.enums.pico_cycler_event import PicoCyclerEvent
-from gwproto.enums.pico_cycler_state import PicoCyclerState
 from gwproto.enums.primary_pump_control import PrimaryPumpControl
 from gwproto.enums.relay_closed_or_open import RelayClosedOrOpen
 from gwproto.enums.relay_energization_state import RelayEnergizationState
@@ -91,12 +88,9 @@ __all__ = [
     "HeatcallSource",  # [heatcall.source.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#heatcallsource)
     "HzCalcMethod",  # [hz.calc.method.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#hzcalcmethod)
     "KindOfParam",  # [spaceheat.kind.of.param.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatkindofparam)
-    "MainAutoState",  # [main.auto.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#mainautostate)
     "MakeModel",  # [spaceheat.make.model.004](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatmakemodel)
     "MarketPriceUnit",  # [market.price.unit.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#marketpriceunit)
     "MarketQuantityUnit",  # [market.quantity.unit.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#marketquantityunit)
-    "PicoCyclerEvent",  # [pico.cycler.event.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#picocyclerevent)
-    "PicoCyclerState",  # [pico.cycler.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#picocyclerstate)
     "PrimaryPumpControl",  # [primary.pump.control.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#primarypumpcontrol)
     "RelayClosedOrOpen",  # [relay.closed.or.open.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relayclosedoropen)
     "RelayEnergizationState",  # [relay.energization.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relayenergizationstate)

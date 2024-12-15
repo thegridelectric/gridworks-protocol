@@ -73,6 +73,8 @@ class ActorClass(GwStrEnum):
       - AtomicAlly: Direct report of Atn when the Scada is in Atn mode.
       - SynthGenerator
       - FakeAtn
+      - PumpDoctor: An actor that monitors and resets pumps if necessary
+      - DefrostManager: Actor that handles the defrost cycle of a heat pump.
 
     For more information:
       - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
@@ -108,6 +110,8 @@ class ActorClass(GwStrEnum):
     AtomicAlly = auto()
     SynthGenerator = auto()
     FakeAtn = auto()
+    PumpDoctor = auto()
+    DefrostManager = auto()
 
     @classmethod
     def default(cls) -> "ActorClass":
@@ -123,4 +127,4 @@ class ActorClass(GwStrEnum):
 
     @classmethod
     def enum_version(cls) -> str:
-        return "004"
+        return "005"

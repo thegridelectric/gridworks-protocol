@@ -57,6 +57,7 @@ class TelemetryName(GwStrEnum):
     MicroVolts = auto()
     VoltsTimesTen = auto()
     WattHours = auto()
+    StorageLayer = auto()
 
     @classmethod
     def default(cls) -> "TelemetryName":

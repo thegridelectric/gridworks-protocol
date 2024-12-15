@@ -24,6 +24,7 @@ def test_telemetry_name() -> None:
         "MicroVolts",
         "VoltsTimesTen",
         "WattHours",
+        "StorageLayer",
     }
 
     assert TelemetryName.default() == TelemetryName.Unknown

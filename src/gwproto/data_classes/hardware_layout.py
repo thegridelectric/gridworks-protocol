@@ -25,6 +25,7 @@ from gwproto.data_classes.components.electric_meter_component import (
 from gwproto.data_classes.data_channel import DataChannel
 from gwproto.data_classes.resolver import ComponentResolver
 from gwproto.data_classes.sh_node import ShNode
+from gwproto.data_classes.synth_channel import SynthChannel
 from gwproto.data_classes.telemetry_tuple import TelemetryTuple
 from gwproto.default_decoders import (
     CacDecoder,
@@ -33,7 +34,7 @@ from gwproto.default_decoders import (
     default_component_decoder,
 )
 from gwproto.enums import ActorClass, TelemetryName
-from gwproto.types import (
+from gwproto.named_types import (
     ComponentAttributeClassGt,
     ComponentGt,
     ElectricMeterCacGt,
@@ -54,6 +55,7 @@ class LoadArgs(typing.TypedDict):
     components: dict[str, Component]
     nodes: dict[str, ShNode]
     data_channels: dict[str, DataChannel]
+    synth_channels: dict[str, SynthChannel]
 
 
 class HardwareLayout:
@@ -64,6 +66,7 @@ class HardwareLayout:
     nodes: dict[str, ShNode]
     nodes_by_component: dict[str, str]
     data_channels: dict[str, DataChannel]
+    synth_channels: dict[str, SynthChannel]
 
     GT_SUFFIX = "Gt"
 
@@ -218,6 +221,19 @@ class HardwareLayout:
         )
 
     @classmethod
+    def make_synth_channel(
+        cls, synth_dict: dict, nodes: dict[str, ShNode]
+    ) -> SynthChannel:
+        created_by_node = nodes.get(synth_dict.get("CreatedByNodeName"))
+        if created_by_node is None:
+            raise ValueError(
+                f"ERROR. SynthChannel related nodes must exist for {synth_dict.get('Name')}!\n"
+                f"  For CreatedByNodeName<{synth_dict.get('CreatedByNodeName')}> "
+                f"got None!\n"
+            )
+        return SynthChannel(created_by_node=created_by_node, **synth_dict)
+
+    @classmethod
     def check_dc_id_uniqueness(
         cls,
         data_channels: dict[str, DataChannel],
@@ -305,6 +321,18 @@ class HardwareLayout:
                 )
 
     @classmethod
+    def check_handle_hierarchy(cls, nodes: dict[str, ShNode]) -> None:
+        for n in nodes.values():
+            boss_handle = cls.boss_handle(n.handle)
+            # No dots in your name: you are your own boss
+            if boss_handle:
+                boss = next(
+                    (n for n in nodes.values() if n.handle == boss_handle), None
+                )
+                if boss is None:
+                    raise DcError(f"{n.name} is missing boss {boss_handle}")
+
+    @classmethod
     def check_node_unique_ids(cls, nodes: dict[str, ShNode]) -> None:
         id_counter = Counter(node.ShNodeId for node in nodes.values())
         dupes = [node_id for node_id, count in id_counter.items() if count > 1]
@@ -367,6 +395,28 @@ class HardwareLayout:
         return dcs
 
     @classmethod
+    def load_synth_channels(
+        cls,
+        layout: dict[Any, Any],
+        nodes: dict[str, ShNode],
+        *,
+        raise_errors: bool = True,
+        errors: Optional[list[LoadError]] = None,
+    ) -> dict[str, DataChannel]:
+        synths = {}
+        if errors is None:
+            errors = []
+        for d in layout.get("SynthChannels", []):
+            try:
+                name = d["Name"]
+                synths[name] = cls.make_synth_channel(d, nodes)
+            except Exception as e:  # noqa: PERF203
+                if raise_errors:
+                    raise
+                errors.append(LoadError("SynthChannel", d, e))
+        return synths
+
+    @classmethod
     def resolve_links(
         cls,
         nodes: dict[str, ShNode],
@@ -397,7 +447,7 @@ class HardwareLayout:
                     raise
                 errors.append(LoadError("ShNode", d, e))
 
-    def __init__(
+    def __init__(  # noqa: PLR0913
         self,
         layout: dict[Any, Any],
         *,
@@ -405,6 +455,7 @@ class HardwareLayout:
         components: dict[str, Component],
         nodes: dict[str, ShNode],
         data_channels: dict[str, DataChannel],
+        synth_channels: dict[str, SynthChannel],
     ) -> None:
         self.layout = copy.deepcopy(layout)
         self.cacs = dict(cacs)
@@ -417,6 +468,7 @@ class HardwareLayout:
             node.component_id: node.name for node in self.nodes.values()
         }
         self.data_channels = dict(data_channels)
+        self.synth_channels = dict(synth_channels)
 
     def clear_property_cache(self) -> None:
         for cached_prop_name in [
@@ -461,6 +513,7 @@ class HardwareLayout:
         data_channels = load_args["data_channels"]
         try:
             cls.check_node_unique_ids(nodes)
+            cls.check_handle_hierarchy(nodes)
         except Exception as e:
             if raise_errors:
                 raise
@@ -539,11 +592,18 @@ class HardwareLayout:
             raise_errors=raise_errors,
             errors=errors,
         )
+        synth_channels = cls.load_synth_channels(
+            layout=layout,
+            nodes=nodes,
+            raise_errors=raise_errors,
+            errors=errors,
+        )
         load_args: LoadArgs = {
             "cacs": cacs,
             "components": components,
             "nodes": nodes,
             "data_channels": data_channels,
+            "synth_channels": synth_channels,
         }
         cls.resolve_links(
             load_args["nodes"],
@@ -557,8 +617,17 @@ class HardwareLayout:
     def channel(self, name: str, default: Any = None) -> DataChannel:  # noqa: ANN401
         return self.data_channels.get(name, default)
 
+    def synth_channel(self, name: str, default: Any = None) -> SynthChannel:  # noqa: ANN401
+        return self.synth_channels.get(name, default)
+
     def node(self, name: str, default: Any = None) -> ShNode:  # noqa: ANN401
         return self.nodes.get(name, default)
+
+    def node_by_handle(self, handle: str) -> Optional[ShNode]:
+        d = {node.Handle: node for node in self.nodes.values() if node.Handle}
+        if handle in d:
+            return d[handle]
+        return None
 
     def component(self, node_name: str) -> Optional[Component]:
         return self.component_from_node(self.node(node_name, None))
@@ -601,22 +670,44 @@ class HardwareLayout:
         )
 
     @classmethod
-    def parent_hierarchy_name(cls, hierarchy_name: str) -> str:
+    def parent_hierarchy_name(cls, hierarchy_name: str) -> Optional[str]:
         last_delimiter = hierarchy_name.rfind(".")
         if last_delimiter == -1:
-            return ""
+            return None
         return hierarchy_name[:last_delimiter]
 
-    def parent_node(self, hierarchy_name: str) -> Optional[ShNode]:
-        h_name = self.parent_hierarchy_name(hierarchy_name)
+    def parent_node(self, node: ShNode) -> Optional[ShNode]:
+        h_name = self.parent_hierarchy_name(node.actor_hierarchy_name)
         if not h_name:
             return None
         parent = next(
-            (n for n in self.nodes.values() if n.ActorHierarchyName == h_name), None
+            (n for n in self.nodes.values() if n.actor_hierarchy_name == h_name), None
         )
         if parent is None:
-            raise DcError(f"{hierarchy_name} is missing parent {h_name}!")
+            raise DcError(f"{node} is missing parent {h_name}!")
         return self.node(h_name)
+
+    @classmethod
+    def boss_handle(cls, handle: str) -> Optional[str]:
+        if "." not in handle:
+            return None
+        return ".".join(handle.split(".")[:-1])
+
+    def boss_node(self, node: ShNode) -> Optional[ShNode]:
+        boss_handle = self.boss_handle(node.handle)
+        # No dots in your name: you are your own boss
+        if not boss_handle:
+            return node
+        boss = next((n for n in self.nodes.values() if n.handle == boss_handle), None)
+        if boss is None:
+            raise DcError(f"{node} is missing boss {boss_handle}")
+        return boss
+
+    def direct_reports(self, node: ShNode) -> List[ShNode]:
+        return [n for n in self.nodes.values() if self.boss_node(n) == node]
+
+    def node_from_handle(self, handle: str) -> Optional[ShNode]:
+        return next((n for n in self.nodes.values() if n.handle == handle), None)
 
     @cached_property
     def atn_g_node_alias(self) -> str:

@@ -1,5 +1,5 @@
 from enum import auto
-from typing import Optional
+from typing import List
 
 from gw.enums import GwStrEnum
 
@@ -7,14 +7,6 @@ from gw.enums import GwStrEnum
 class ActorClass(GwStrEnum):
     """
     Determines the code running Spaceheat Nodes supervised by Spaceheat SCADA software
-
-    Enum sh.actor.class version 001 in the GridWorks Type registry.
-
-    Used by multiple Application Shared Languages (ASLs). For more information:
-      - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
-      - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shactorclass)
-      - [More Info](https://gridworks-protocol.readthedocs.io/en/latest/actor-class.html)
-
     Values:
       - NoActor: A SpaceheatNode that does not have any code running on its behalf within
         the SCADA, but is instead only a reference object (for example, a tank of hot water
@@ -73,6 +65,21 @@ class ActorClass(GwStrEnum):
         HTTP.
       - HoneywellThermostat: An actor for representing a Honeywell Hubitat thermostat
         which can load thermostat heating state change messages into status reports.
+      - ApiTankModule
+      - ApiFlowModule
+      - PicoCycler
+      - I2cDfrMultiplexer
+      - ZeroTenOutputer
+      - AtomicAlly: Direct report of Atn when the Scada is in Atn mode.
+      - SynthGenerator
+      - FakeAtn
+      - PumpDoctor: An actor that monitors and resets pumps if necessary
+      - DefrostManager: Actor that handles the defrost cycle of a heat pump.
+
+    For more information:
+      - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
+      - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shactorclass)
+      - [More Info](https://gridworks-protocol.readthedocs.io/en/latest/actor-class.html)
     """
 
     NoActor = auto()
@@ -95,58 +102,29 @@ class ActorClass(GwStrEnum):
     Parentless = auto()
     Hubitat = auto()
     HoneywellThermostat = auto()
+    ApiTankModule = auto()
+    ApiFlowModule = auto()
+    PicoCycler = auto()
+    I2cDfrMultiplexer = auto()
+    ZeroTenOutputer = auto()
+    AtomicAlly = auto()
+    SynthGenerator = auto()
+    FakeAtn = auto()
+    PumpDoctor = auto()
+    DefrostManager = auto()
 
     @classmethod
     def default(cls) -> "ActorClass":
-        """
-        Returns default value (in this case NoActor)
-        """
         return cls.NoActor
 
     @classmethod
-    def version(cls, value: Optional[str] = None) -> str:
-        if value is None:
-            return "001"
-        if not isinstance(value, str):
-            raise TypeError("This method applies to strings, not enums")
-        if value not in value_to_version:
-            raise ValueError(f"Unknown enum value: {value}")
-        return value_to_version[value]
+    def values(cls) -> List[str]:
+        return [elt.value for elt in cls]
 
     @classmethod
     def enum_name(cls) -> str:
-        """
-        The name in the GridWorks Type Registry (sh.actor.class)
-        """
         return "sh.actor.class"
 
     @classmethod
     def enum_version(cls) -> str:
-        """
-        The version in the GridWorks Type Registry (001)
-        """
-        return "001"
-
-
-value_to_version = {
-    "NoActor": "000",
-    "Scada": "000",
-    "HomeAlone": "000",
-    "BooleanActuator": "000",
-    "PowerMeter": "000",
-    "Atn": "000",
-    "SimpleSensor": "000",
-    "MultipurposeSensor": "000",
-    "Thermostat": "000",
-    "HubitatTelemetryReader": "001",
-    "HubitatTankModule": "001",
-    "HubitatPoller": "001",
-    "I2cRelayMultiplexer": "001",
-    "FlowTotalizer": "001",
-    "Relay": "001",
-    "Admin": "001",
-    "Fsm": "001",
-    "Parentless": "001",
-    "Hubitat": "001",
-    "HoneywellThermostat": "001",
-}
+        return "005"

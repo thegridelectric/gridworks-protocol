@@ -28,22 +28,74 @@ on these ideas:
   - [GridWorks Enums](https://gridwork-type-registry.readthedocs.io/en/latest/types.html)
   - [GridWorks Types](https://gridwork-type-registry.readthedocs.io/en/latest/types.html)
   - [ASLs](https://gridwork-type-registry.readthedocs.io/en/latest/asls.html)
-
-
 """
 
 from gwproto.enums.actor_class import ActorClass
-from gwproto.enums.local_comm_interface import LocalCommInterface
+from gwproto.enums.admin_event import AdminEvent
+from gwproto.enums.admin_state import AdminState
+from gwproto.enums.alert_priority import AlertPriority
+from gwproto.enums.aquastat_control import AquastatControl
+from gwproto.enums.change_aquastat_control import ChangeAquastatControl
+from gwproto.enums.change_heat_pump_control import ChangeHeatPumpControl
+from gwproto.enums.change_heatcall_source import ChangeHeatcallSource
+from gwproto.enums.change_primary_pump_control import ChangePrimaryPumpControl
+from gwproto.enums.change_relay_pin import ChangeRelayPin
+from gwproto.enums.change_relay_state import ChangeRelayState
+from gwproto.enums.change_store_flow_relay import ChangeStoreFlowRelay
+from gwproto.enums.change_valve_state import ChangeValveState
+from gwproto.enums.fsm_action_type import FsmActionType
+from gwproto.enums.fsm_name import FsmName
+from gwproto.enums.fsm_report_type import FsmReportType
+from gwproto.enums.gpm_from_hz_method import GpmFromHzMethod
+from gwproto.enums.heat_pump_control import HeatPumpControl
+from gwproto.enums.heatcall_source import HeatcallSource
+from gwproto.enums.hz_calc_method import HzCalcMethod
+from gwproto.enums.kind_of_param import KindOfParam
 from gwproto.enums.make_model import MakeModel
+from gwproto.enums.primary_pump_control import PrimaryPumpControl
+from gwproto.enums.relay_closed_or_open import RelayClosedOrOpen
+from gwproto.enums.relay_energization_state import RelayEnergizationState
+from gwproto.enums.relay_pin_set import RelayPinSet
+from gwproto.enums.relay_wiring_config import RelayWiringConfig
+from gwproto.enums.store_flow_relay import StoreFlowRelay
+from gwproto.enums.strategy import Strategy
 from gwproto.enums.telemetry_name import TelemetryName
+from gwproto.enums.temp_calc_method import TempCalcMethod
 from gwproto.enums.thermistor_data_method import ThermistorDataMethod
 from gwproto.enums.unit import Unit
 
 __all__ = [
-    "ActorClass",  # [sh.actor.class.001](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shactorclass)
-    "LocalCommInterface",  # [local.comm.interface.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#localcomminterface)
-    "MakeModel",  # [spaceheat.make.model.001](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatmakemodel)
-    "TelemetryName",  # [spaceheat.telemetry.name.001](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheattelemetryname)
-    "ThermistorDataMethod",
-    "Unit",  # [spaceheat.unit.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatunit)
+    "ActorClass",  # [sh.actor.class.005](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shactorclass)
+    "AdminEvent",  # [admin.event.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#adminevent)
+    "AdminState",  # [admin.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#adminstate)
+    "AlertPriority",  # [alert.priority.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#alertpriority)
+    "AquastatControl",  # [aquastat.control.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#aquastatcontrolstate)
+    "ChangeAquastatControl",  # [change.aquastat.control.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeaquastatcontrol)
+    "ChangeHeatPumpControl",  # [change.heat.pump.control.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeheatpumpcontrol)
+    "ChangeHeatcallSource",  # [change.heatcall.source.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeheatcallsource)
+    "ChangePrimaryPumpControl",  # [change.primary.pump.control.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeprimarypumpcontrol)
+    "ChangeRelayPin",  # [change.relay.pin.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changerelaypin)
+    "ChangeRelayState",  # [change.relay.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changerelaystate)
+    "ChangeStoreFlowRelay",  # [change.store.flow.relay.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changestoreflowrelay)
+    "ChangeValveState",  # [change.valve.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changevalvestate)
+    "FsmActionType",  # [sh.fsm.action.type.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shfsmactiontype)
+    "FsmName",  # [sh.fsm.name.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shfsmname)
+    "FsmReportType",  # [fsm.report.type.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#fsmreporttype)
+    "GpmFromHzMethod",  # [gpm.from.hz.method.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#gpmfromhzmethod)
+    "HeatPumpControl",  # [heat.pump.control.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#heatpumpcontrol)
+    "HeatcallSource",  # [heatcall.source.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#heatcallsource)
+    "HzCalcMethod",  # [hz.calc.method.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#hzcalcmethod)
+    "KindOfParam",  # [spaceheat.kind.of.param.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatkindofparam)
+    "MakeModel",  # [spaceheat.make.model.004](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatmakemodel)
+    "PrimaryPumpControl",  # [primary.pump.control.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#primarypumpcontrol)
+    "RelayClosedOrOpen",  # [relay.closed.or.open.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relayclosedoropen)
+    "RelayEnergizationState",  # [relay.energization.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relayenergizationstate)
+    "RelayPinSet",  # [relay.pin.set.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relaypinset)
+    "RelayWiringConfig",  # [relay.wiring.config.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relaywiringconfig)
+    "StoreFlowRelay",  # [store.flow.relay.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#storeflowrelay)
+    "Strategy",  # [spaceheat.strategy.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatstrategy)
+    "TelemetryName",  # [spaceheat.telemetry.name.003](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheattelemetryname)
+    "TempCalcMethod",  # [temp.calc.method.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#tempcalcmethod)
+    "ThermistorDataMethod",  # [thermistor.data.method.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#thermistordatamethod)
+    "Unit",  # [spaceheat.unit.001](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatunit)
 ]

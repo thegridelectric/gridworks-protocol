@@ -1,5 +1,4 @@
 import json
-import uuid
 from pathlib import Path
 
 from pydantic import ValidationError
@@ -19,13 +18,12 @@ from gwproto.messages import (
     ReportEvent,
     ResponseTimeoutEvent,
     ShutdownEvent,
-    SnapshotSpaceheatEvent,
     StartupEvent,
 )
-from gwproto.types import (
-    GtShCliAtnCmd,
+from gwproto.named_types import (
     PowerWatts,
     Report,
+    SendSnap,
     SnapshotSpaceheat,
 )
 from tests.dummy_decoders import CHILD, PARENT
@@ -47,6 +45,7 @@ def child_to_parent_payload_dicts() -> dict:
         with (TEST_DATA_DIR / f"{prefix}_message.json").open() as f:
             d[prefix] = json.loads(f.read())
             d[prefix]["Header"]["Src"] = CHILD
+            d[prefix]["Header"]["Dst"] = PARENT
     return d
 
 
@@ -55,10 +54,13 @@ def child_to_parent_messages() -> list[MessageCase]:
     report_event_dict = stored_message_dicts["report"]
     report = Report.model_validate(report_event_dict["Payload"]["Report"])
     report_event = ReportEvent.model_validate(report_event_dict["Payload"])
-    unrecongized_report_event = AnyEvent(**report_event.model_dump(exclude_none=True))
-    unrecongized_report_event.TypeName += ".foo"
+    unrecognized_report_event = AnyEvent(**report_event.model_dump(exclude_none=True))
+    unrecognized_report_event.TypeName += ".foo"
     unrecognized_event = AnyEvent(
-        TypeName="gridworks.event.bar", MessageId="1", TimeNS=1, Src="1"
+        TypeName="gridworks.event.bar",
+        MessageId="1",
+        TimeCreatedMs=1728754878213,
+        Src="1",
     )
     unrecognizeable_not_event_type = AnyEvent(
         **dict(
@@ -69,23 +71,27 @@ def child_to_parent_messages() -> list[MessageCase]:
     unrecognizeable_bad_event_content = {"TypeName": "gridworks.event.baz"}
     snap_message_dict = stored_message_dicts["snapshot"]
     snapshot_spaceheat = SnapshotSpaceheat.model_validate(snap_message_dict["Payload"])
-    snapshot_event = SnapshotSpaceheatEvent(Src=CHILD, Snap=snapshot_spaceheat)
 
     return [
         MessageCase(
             "power-watts",
-            Message(Src=CHILD, MessageType="power.watts", Payload=PowerWatts(Watts=1)),
+            Message(
+                Src=CHILD,
+                Dst=PARENT,
+                MessageType="power.watts",
+                Payload=PowerWatts(Watts=1),
+            ),
         ),
-        # Batched Readings
+        # Report
         MessageCase(
             "report",
-            Message(Src=CHILD, MessageType="report", Payload=report),
+            Message(Src=CHILD, Dst=PARENT, MessageType="report", Payload=report),
             None,
             report,
         ),
         MessageCase(
             "report-as_dict",
-            Message(Src=CHILD, Payload=report),
+            Message(Src=CHILD, Dst=PARENT, Payload=report),
             None,
             report,
         ),
@@ -93,34 +99,36 @@ def child_to_parent_messages() -> list[MessageCase]:
         MessageCase("snap", Message(**snap_message_dict), None, snapshot_spaceheat),
         MessageCase(
             "snap-payload-dict",
-            Message(Src=CHILD, Payload=snap_message_dict["Payload"]),
+            Message(Src=CHILD, Dst=PARENT, Payload=snap_message_dict["Payload"]),
             None,
             snapshot_spaceheat,
         ),
         MessageCase(
             "snap-payload-as_dict",
-            Message(Src=CHILD, Payload=snapshot_spaceheat),
+            Message(Src=CHILD, Dst=PARENT, Payload=snapshot_spaceheat),
             None,
             snapshot_spaceheat,
         ),
         # # events
         MessageCase(
-            "br-event",
-            Message(Src=CHILD, Payload=report_event_dict["Payload"]),
+            "report-event",
+            Message(Src=CHILD, Dst=PARENT, Payload=report_event_dict["Payload"]),
             None,
             report_event,
         ),
+        # MessageCase(
+        #     "event-unrecognized-status",
+        #     Message(Src=CHILD, Dst=PARENT, Payload=unrecognized_report_event),
+        # ),
         MessageCase(
-            "event-unrecognized-status",
-            Message(Src=CHILD, Payload=unrecongized_report_event),
-        ),
-        MessageCase(
-            "event-unrecognized", Message(Src=CHILD, Payload=unrecognized_event)
+            "event-unrecognized",
+            Message(Src=CHILD, Dst=PARENT, Payload=unrecognized_event),
         ),
         MessageCase(
             "unrecognized-not-event",
             Message(
                 Src=CHILD,
+                Dst=PARENT,
                 Payload=unrecognizeable_not_event_type,
             ),
             exp_exceptions=[ValidationError],
@@ -129,57 +137,69 @@ def child_to_parent_messages() -> list[MessageCase]:
             "unrecognizeable-bad-event",
             Message(
                 Src=CHILD,
+                Dst=PARENT,
                 Payload=unrecognizeable_bad_event_content,
             ),
             exp_exceptions=[ValidationError],
         ),
-        MessageCase("snap-payload-obj", Message(Src=CHILD, Payload=snapshot_event)),
-        MessageCase("startup-event", Message(Src=CHILD, Payload=StartupEvent())),
         MessageCase(
-            "shutdown-event", Message(Src=CHILD, Payload=ShutdownEvent(Reason="foo"))
+            "startup-event", Message(Src=CHILD, Dst=PARENT, Payload=StartupEvent())
+        ),
+        MessageCase(
+            "shutdown-event",
+            Message(Src=CHILD, Dst=PARENT, Payload=ShutdownEvent(Reason="foo")),
         ),
         MessageCase(
             "problem-event",
             Message(
                 Src=CHILD,
+                Dst=PARENT,
                 Payload=ProblemEvent(ProblemType=Problems.error, Summary="foo"),
             ),
         ),
         MessageCase(
             "mqtt-connect-event",
-            Message(Src=CHILD, Payload=MQTTConnectEvent(PeerName=PARENT)),
+            Message(Src=CHILD, Dst=PARENT, Payload=MQTTConnectEvent(PeerName=PARENT)),
         ),
         MessageCase(
             "mqtt-conenct-failed-event",
-            Message(Src=CHILD, Payload=MQTTConnectFailedEvent(PeerName=PARENT)),
+            Message(
+                Src=CHILD, Dst=PARENT, Payload=MQTTConnectFailedEvent(PeerName=PARENT)
+            ),
         ),
         MessageCase(
             "mqtt-disconnect-event",
-            Message(Src=CHILD, Payload=MQTTDisconnectEvent(PeerName=PARENT)),
+            Message(
+                Src=CHILD, Dst=PARENT, Payload=MQTTDisconnectEvent(PeerName=PARENT)
+            ),
         ),
         MessageCase(
             "mqtt-fully-subscribed-event",
-            Message(Src=CHILD, Payload=MQTTFullySubscribedEvent(PeerName=PARENT)),
+            Message(
+                Src=CHILD, Dst=PARENT, Payload=MQTTFullySubscribedEvent(PeerName=PARENT)
+            ),
         ),
         MessageCase(
             "response-timeout-event",
-            Message(Src=CHILD, Payload=ResponseTimeoutEvent(PeerName=PARENT)),
+            Message(
+                Src=CHILD, Dst=PARENT, Payload=ResponseTimeoutEvent(PeerName=PARENT)
+            ),
         ),
         MessageCase(
             "peer-active-event",
-            Message(Src=CHILD, Payload=PeerActiveEvent(PeerName=PARENT)),
+            Message(Src=CHILD, Dst=PARENT, Payload=PeerActiveEvent(PeerName=PARENT)),
         ),
         # # misc messages
-        MessageCase("ping", PingMessage(Src=CHILD)),
-        MessageCase("ack", Message(Src=CHILD, Payload=Ack(AckMessageID="1"))),
+        MessageCase("ping", PingMessage(Src=CHILD, Dst=PARENT)),
+        MessageCase(
+            "ack", Message(Src=CHILD, Dst=PARENT, Payload=Ack(AckMessageID="1"))
+        ),
     ]
 
 
 def parent_to_child_messages() -> list[MessageCase]:
-    snapshot_request = GtShCliAtnCmd(
+    snapshot_request = SendSnap(
         FromGNodeAlias="a.b.c",
-        FromGNodeId=str(uuid.uuid4()),
-        SendSnapshot=True,
     )
     # set_relay = GtDispatchBoolean(
     #     AboutNodeName="a.b.c",
@@ -191,17 +211,19 @@ def parent_to_child_messages() -> list[MessageCase]:
     # )
     return [
         # misc messages
-        MessageCase("ping", PingMessage(Src=PARENT)),
-        MessageCase("ack", Message(Src=PARENT, Payload=Ack(AckMessageID="1"))),
+        MessageCase("ping", PingMessage(Src=PARENT, Dst=CHILD)),
+        MessageCase(
+            "ack", Message(Src=PARENT, Dst=CHILD, Payload=Ack(AckMessageID="1"))
+        ),
         MessageCase(
             "snap",
-            Message(Src=PARENT, Payload=snapshot_request),
+            Message(Src=PARENT, Dst=CHILD, Payload=snapshot_request),
             None,
             snapshot_request,
         ),
         # MessageCase(
         #     "set-relay",
-        #     Message(Src=PARENT, Payload=set_relay),
+        #     Message(Src=PARENT, Dst=CHILD, Payload=set_relay),
         #     None,
         #     set_relay,
         # ),

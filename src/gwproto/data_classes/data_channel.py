@@ -1,7 +1,7 @@
 from pydantic import ConfigDict
 
 from gwproto.data_classes.sh_node import ShNode
-from gwproto.types import DataChannelGt
+from gwproto.named_types import DataChannelGt
 
 
 class DataChannel(DataChannelGt):
@@ -12,3 +12,9 @@ class DataChannel(DataChannelGt):
 
     def __hash__(self) -> int:
         return hash(self.Id)
+
+    def to_gt(self) -> DataChannelGt:
+        # Copy the current instance excluding the extra fields
+        return DataChannelGt(
+            **self.model_dump(exclude={"about_node", "captured_by_node"})
+        )

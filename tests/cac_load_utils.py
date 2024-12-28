@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from typing import Optional, Type
 
 from gwproto import CacDecoder, HardwareLayout, default_cac_decoder
-from gwproto.types import ComponentAttributeClassGt
+from gwproto.named_types import ComponentAttributeClassGt
 
 
 @dataclass

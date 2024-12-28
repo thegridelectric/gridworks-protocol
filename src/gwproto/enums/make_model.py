@@ -1,5 +1,5 @@
 from enum import auto
-from typing import Optional
+from typing import List
 
 from gw.enums import GwStrEnum
 
@@ -7,14 +7,6 @@ from gw.enums import GwStrEnum
 class MakeModel(GwStrEnum):
     """
     Determines Make/Model of device associated to a Spaceheat Node supervised by SCADA
-
-    Enum spaceheat.make.model version 002 in the GridWorks Type registry.
-
-    Used by multiple Application Shared Languages (ASLs). For more information:
-      - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
-      - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatmakemodel)
-      - [More Info](https://gridworks-protocol.readthedocs.io/en/latest/make-model.html)
-
     Values:
       - UnknownMake__UnknownModel
       - Egauge__4030: A power meter in Egauge's 403x line. [More Info](https://drive.google.com/drive/u/0/folders/1abJ-o9tlTscsQpMvT6SHxIm5j5aODgfA).
@@ -88,6 +80,17 @@ class MakeModel(GwStrEnum):
         Board, with first at address 0x20 and second at address 0x21
       - GridWorks__SimDouble16PinI2cRelay: Simulated I2c Relay board with two boards and
         32 pins (for dev code using Krida__Doubler-Emr16-I2c-V3).
+      - GridWorks__TankModule2
+      - GridWorks__PicoFlowHall
+      - GridWorks__PicoFlowReed
+      - Saier__Sen-HZG1WA
+      - DFRobot__DFR0971_Times2: Two DfRobot DFR0971 i2c 0-10V analog output actuators,
+        set so the first has address 0x5e and the second has address 0x5f
+
+    For more information:
+      - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
+      - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatmakemodel)
+      - [More Info](https://gridworks-protocol.readthedocs.io/en/latest/make-model.html)
     """
 
     UNKNOWNMAKE__UNKNOWNMODEL = auto()
@@ -127,75 +130,24 @@ class MakeModel(GwStrEnum):
     GRIDWORKS__SIMTOTALIZER = auto()
     KRIDA__DOUBLEEMR16I2CV3 = auto()
     GRIDWORKS__SIMDOUBLE16PINI2CRELAY = auto()
+    GRIDWORKS__TANKMODULE2 = auto()
+    GRIDWORKS__PICOFLOWHALL = auto()
+    GRIDWORKS__PICOFLOWREED = auto()
+    SAIER__SENHZG1WA = auto()
+    DFROBOT__DFR0971_TIMES2 = auto()
 
     @classmethod
     def default(cls) -> "MakeModel":
-        """
-        Returns default value (in this case UNKNOWNMAKE__UNKNOWNMODEL)
-        """
         return cls.UNKNOWNMAKE__UNKNOWNMODEL
 
     @classmethod
-    def version(cls, value: Optional[str] = None) -> str:
-        if value is None:
-            return "002"
-        if not isinstance(value, str):
-            raise TypeError("This method applies to strings, not enums")
-        if value not in value_to_version:
-            raise ValueError(f"Unknown enum value: {value}")
-        return value_to_version[value]
+    def values(cls) -> List[str]:
+        return [elt.value for elt in cls]
 
     @classmethod
     def enum_name(cls) -> str:
-        """
-        The name in the GridWorks Type Registry (spaceheat.make.model)
-        """
         return "spaceheat.make.model"
 
     @classmethod
     def enum_version(cls) -> str:
-        """
-        The version in the GridWorks Type Registry (002)
-        """
-        return "002"
-
-
-value_to_version = {
-    "UNKNOWNMAKE__UNKNOWNMODEL": "000",
-    "EGAUGE__4030": "000",
-    "NCD__PR814SPST": "000",
-    "ADAFRUIT__642": "000",
-    "GRIDWORKS__TSNAP1": "000",
-    "GRIDWORKS__WATERTEMPHIGHPRECISION": "000",
-    "GRIDWORKS__SIMPM1": "000",
-    "SCHNEIDERELECTRIC__IEM3455": "000",
-    "GRIDWORKS__SIMBOOL30AMPRELAY": "000",
-    "OPENENERGY__EMONPI": "000",
-    "GRIDWORKS__SIMTSNAP1": "000",
-    "ATLAS__EZFLO": "000",
-    "HUBITAT__C7__LAN1": "001",
-    "GRIDWORKS__TANK_MODULE_1": "001",
-    "FIBARO__ANALOG_TEMP_SENSOR": "001",
-    "AMPHENOL__NTC_10K_THERMISTOR_MA100GG103BN": "001",
-    "YHDC__SCT013100": "001",
-    "MAGNELAB__SCT0300050": "001",
-    "GRIDWORKS__MULTITEMP1": "001",
-    "KRIDA__EMR16I2CV3": "001",
-    "OMEGA__FTB8007HWPT": "002",
-    "ISTEC_4440": "002",
-    "OMEGA__FTB8010HWPT": "002",
-    "BELIMO__BALLVALVE232VS": "002",
-    "BELIMO__DIVERTERB332L": "002",
-    "TACO__0034EPLUS": "002",
-    "TACO__007E": "002",
-    "ARMSTRONG__COMPASSH": "002",
-    "HONEYWELL__T6ZWAVETHERMOSTAT": "002",
-    "PRMFILTRATION__WM075": "002",
-    "BELLGOSSETT__ECOCIRC20_18": "002",
-    "TEWA__TT0P10KC3T1051500": "002",
-    "EKM__HOTSPWM075HD": "002",
-    "GRIDWORKS__SIMMULTITEMP": "002",
-    "GRIDWORKS__SIMTOTALIZER": "002",
-    "KRIDA__DOUBLEEMR16I2CV3": "002",
-    "GRIDWORKS__SIMDOUBLE16PINI2CRELAY": "002",
-}
+        return "004"

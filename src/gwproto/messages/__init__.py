@@ -1,6 +1,6 @@
 # ruff: noqa: F405, F403
 
-from gwproto.types import *
+from gwproto.named_types import *
 
 from .event import *
 from .misc import *
@@ -8,16 +8,13 @@ from .misc import *
 __all__ = [
     "Ack",
     "AnyEvent",
-    "Report",
+    "AnalogDispatch",
     "ChannelReadings",
     "CommEvent",
     "EventBase",
     "EventMessage",
     "EventT",
-    "GtShCliAtnCmd",
-    "GtShMultipurposeTelemetryStatus",
-    "GtShSimpleTelemetryStatus",
-    "GtShTelemetryFromMultipurposeSensor",
+    "MachineStates",
     "MQTTConnectEvent",
     "MQTTConnectFailedEvent",
     "MQTTDisconnectEvent",
@@ -28,11 +25,17 @@ __all__ = [
     "PowerWatts",
     "ProblemEvent",
     "Problems",
+    "Report",
+    "ReportEvent",
     "ResponseTimeoutEvent",
+    "SendSnap",
     "SingleReading",
     "ShutdownEvent",
     "SnapshotSpaceheat",
-    "SnapshotSpaceheatEvent",
-    "SyncedReadings" "StartupEvent",
-    "TelemetrySnapshotSpaceheat",
+    "SyncedReadings",
+    "StartupEvent",
+    "TicklistHall",
+    "TicklistHallReport",
+    "TicklistReed",
+    "TicklistReedReport",
 ]

@@ -6,7 +6,14 @@ from pydantic import ConfigDict
 
 from gwproto.data_classes.components.component import Component
 from gwproto.enums import ActorClass
-from gwproto.types import SpaceheatNodeGt
+from gwproto.named_types import SpaceheatNodeGt
+
+
+def parent_hierarchy_name(hierarchy_name: str) -> str:
+    last_delimiter = hierarchy_name.rfind(".")
+    if last_delimiter == -1:
+        return hierarchy_name
+    return hierarchy_name[:last_delimiter]
 
 
 class ShNode(SpaceheatNodeGt):
@@ -31,6 +38,20 @@ class ShNode(SpaceheatNodeGt):
     @property
     def name(self) -> str:
         return self.Name
+
+    @property
+    def actor_hierarchy_name(self) -> str:
+        v = self.ActorHierarchyName
+        if self.ActorHierarchyName is None:
+            v = self.Name
+        return v
+
+    @property
+    def handle(self) -> str:
+        v = self.Handle
+        if self.Handle is None:
+            v = self.Name
+        return v
 
     @property
     def actor_class(self) -> ActorClass:
@@ -59,3 +80,7 @@ class ShNode(SpaceheatNodeGt):
     @property
     def has_actor(self) -> bool:
         return self.actor_class != ActorClass.NoActor
+
+    def to_gt(self) -> SpaceheatNodeGt:
+        # Copy the current instance excluding the extra fields
+        return SpaceheatNodeGt(**self.model_dump(exclude={"component"}))

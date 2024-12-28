@@ -7,7 +7,7 @@ from gwproto import (
     default_component_decoder,
 )
 from gwproto.data_classes.components import Component
-from gwproto.types import ComponentAttributeClassGt, ComponentGt
+from gwproto.named_types import ComponentAttributeClassGt, ComponentGt
 
 
 @dataclass

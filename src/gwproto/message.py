@@ -25,6 +25,7 @@ class Header(BaseModel):
     MessageId: str = ""
     AckRequired: bool = False
     TypeName: Literal["gridworks.header"] = "gridworks.header"
+    Version: Literal["001"] = "001"
 
 
 PayloadT = TypeVar("PayloadT")
@@ -57,12 +58,20 @@ class Message(BaseModel, Generic[PayloadT]):
     def src(self) -> str:
         return self.Header.Src
 
+    def dst(self) -> str:
+        return self.Header.Dst
+
     @classmethod
     def type_name(cls) -> str:
         return Message.model_fields["TypeName"].default
 
     def mqtt_topic(self) -> str:
-        return MQTTTopic.encode(self.type_name(), self.src(), self.message_type())
+        return MQTTTopic.encode(
+            envelope_type=self.type_name(),
+            src=self.src(),
+            dst=self.dst(),
+            message_type=self.message_type(),
+        )
 
     @classmethod
     def _header_from_kwargs(cls, kwargs: dict[str, Any]) -> Header:

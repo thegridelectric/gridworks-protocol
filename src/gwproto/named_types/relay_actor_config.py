@@ -18,5 +18,7 @@ class RelayActorConfig(ChannelConfig):
     EventType: str
     DeEnergizingEvent: str
     EnergizingEvent: str
+    DeEnergizedState: str
+    EnergizedState: str
     TypeName: Literal["relay.actor.config"] = "relay.actor.config"
-    Version: Literal["001"] = "001"
+    Version: Literal["002"] = "002"

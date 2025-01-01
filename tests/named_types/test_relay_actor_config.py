@@ -19,10 +19,13 @@ def test_relay_actor_config_generated() -> None:
         "ActorName": "zone1-ctrl-relay",
         "WiringConfig": "NormallyOpen",
         "EventType": "change.relay.state",
+        "StateType": "relay.open.or.closed",
         "DeEnergizingEvent": "OpenRelay",
         "EnergizingEvent": "CloseRelay",
+        "DeEnergizedState": "RelayOpen",
+        "EnergizedState": "RelayClosed",
         "TypeName": "relay.actor.config",
-        "Version": "001",
+        "Version": "002",
     }
 
     t = RelayActorConfig.model_validate(d).model_dump_json(exclude_none=True)

@@ -1,6 +1,6 @@
 """Type component.attribute.class.gt, version 001"""
 
-from typing import Literal, Optional
+from typing import Optional
 
 from pydantic import BaseModel, ConfigDict, PositiveInt, model_validator
 from typing_extensions import Self
@@ -15,8 +15,8 @@ class ComponentAttributeClassGt(BaseModel):
     DisplayName: Optional[str] = None
     MakeModel: MakeModel
     MinPollPeriodMs: Optional[PositiveInt] = None
-    TypeName: Literal["component.attribute.class.gt"] = "component.attribute.class.gt"
-    Version: Literal["001"] = "001"
+    TypeName: str = "component.attribute.class.gt"
+    Version: str = "001"
 
     model_config = ConfigDict(use_enum_values=True, extra="allow")
 

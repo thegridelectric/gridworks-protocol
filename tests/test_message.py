@@ -1,5 +1,5 @@
 import enum
-from typing import Literal
+from typing import Any, Literal
 
 import pytest
 from pydantic import BaseModel, ValidationError
@@ -31,7 +31,7 @@ def test_naive_payload() -> None:
     x = 1
     src = "foo"
     message_type = "primitive"
-    m = Message(
+    m: Message[Any] = Message(
         Src=src,
         MessageType=message_type,
         Payload=1,
@@ -65,7 +65,7 @@ def test_naive_payload() -> None:
     assert m.Header.TypeName == "gridworks.header"
 
     # Explicit Header, naive payload
-    m2 = Message(
+    m2: Message[Any] = Message(
         Header=Header(
             Src=src,
             MessageType=message_type,
@@ -119,7 +119,7 @@ class PayloadProvidesMore(PayloadProvides):
     Dst: str = ""
     MessageId: str = ""
     AckRequired: bool = False
-    TypeName: Literal["payload.provides.more"] = "payload.provides.more"
+    TypeName: Literal["payload.provides.more"] = "payload.provides.more"  # type: ignore[assignment]
 
 
 def test_from_payload() -> None:
@@ -128,7 +128,7 @@ def test_from_payload() -> None:
     message_type = "payload.provides"
 
     # Payload object provides fields
-    m = Message(Payload=PayloadProvides(Src=src, x=1))
+    m: Message[Any] = Message(Payload=PayloadProvides(Src=src, x=1))
     assert m.src() == src
     assert m.message_type() == message_type
     assert m.mqtt_topic() == f"gw/{src}/to//{message_type}".replace(".", "-")
@@ -141,7 +141,7 @@ def test_from_payload() -> None:
     assert m.Header.TypeName == "gridworks.header"
 
     # Payload dict provides fields
-    m2 = Message(Payload=PayloadProvides(Src=src, x=1).model_dump())
+    m2: Message[Any] = Message(Payload=PayloadProvides(Src=src, x=1).model_dump())
     assert m.model_dump() == m2.model_dump()
     m3 = Message[PayloadProvides](Payload=m2.Payload)
     assert m == m3
@@ -173,8 +173,8 @@ def test_from_payload() -> None:
     # *All* header fields from payload dict
     m2 = Message(Payload=p.model_dump())
     assert m.model_dump() == m2.model_dump()
-    m3 = Message[PayloadProvidesMore](Payload=m2.Payload)
-    assert m == m3
+    m4 = Message[PayloadProvidesMore](Payload=m2.Payload)
+    assert m == m4
 
     # other message type fields
     for message_type_field_name in PAYLOAD_TYPE_FIELDS:
@@ -200,4 +200,4 @@ def test_errors() -> None:
 
     # Bad payload
     with pytest.raises(ValidationError):
-        Message[list](Src="foo", MessageType="bar", Payload=1)
+        Message[list[int]](Src="foo", MessageType="bar", Payload=1)

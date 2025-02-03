@@ -38,7 +38,7 @@ def check_is_log_style_date_with_millis(v: str) -> None:
         )
 
 
-def is_handle_name(v: str) -> None:
+def is_handle_name(v: str) -> str:
     """
     HandleName format: words separated by periods, where the worlds are lowercase
     alphanumeric plus hyphens
@@ -198,10 +198,11 @@ def check_is_ads1115_i2c_address(v: int) -> None:
         raise ValueError(f"Not Ads1115I2cAddress: <{hex(v)}>")
 
 
-def check_is_near5(v: str) -> None:
+def check_is_near5(v: str | float) -> None:
     """
     4.5  <= v  <= 5.5
     """
+    v = float(v)
     min_pi_voltage = 4.5
     max_pi_voltage = 5.5
     if v < min_pi_voltage or v > max_pi_voltage:
@@ -214,7 +215,7 @@ def is_bit(candidate: int) -> int:
     return candidate
 
 
-def is_market_name(v: str) -> None:
+def is_market_name(v: str) -> str:
     try:
         x = v.split(".")
     except AttributeError as e:
@@ -243,7 +244,7 @@ MarketMinutes: Dict[MarketTypeName, int] = {
 }
 
 
-def is_market_slot_name(v: str) -> None:
+def is_market_slot_name(v: str) -> str:
     """
     MaketSlotNameLrdFormat: the format of a MarketSlotName.
       - First word must be e, r or d (energy, regulation, distribution)
@@ -263,15 +264,15 @@ def is_market_slot_name(v: str) -> None:
         x = v.split(".")
     except AttributeError:
         raise ValueError(f"{v} failed to split on '.'")
-    slot_start = x[-1]
-    if len(slot_start) != 10:
-        raise ValueError(f"slot start {slot_start} not of length 10")
+    slot_start_str = x[-1]
+    if len(slot_start_str) != 10:
+        raise ValueError(f"slot start {slot_start_str} not of length 10")
     try:
-        slot_start = int(slot_start)
+        slot_start = int(slot_start_str)
     except ValueError:
-        raise ValueError(f"slot start {slot_start} not an int")
+        raise ValueError(f"slot start {slot_start_str} not an int")
     is_market_name(".".join(x[:-1]))
-    market_type_name = x[1]
+    market_type_name = MarketTypeName(x[1])
     market_duration_minutes = MarketMinutes[market_type_name]
     if not slot_start % (market_duration_minutes * 60) == 0:
         raise ValueError(

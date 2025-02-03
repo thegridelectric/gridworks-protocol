@@ -1,3 +1,5 @@
+from typing import Any
+
 from pydantic import BaseModel, ConfigDict
 
 from gwproto.utils import snake_to_camel
@@ -10,7 +12,7 @@ class WebServerGt(BaseModel):
     Host: str = "localhost"
     Port: int = 8080
     Enabled: bool = True
-    Kwargs: dict = {}
+    Kwargs: dict[str, Any] = {}
     model_config = ConfigDict(
         extra="allow", alias_generator=snake_to_camel, populate_by_name=True
     )

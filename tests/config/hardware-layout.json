@@ -476,7 +476,7 @@
       "Version": "200"
     },
     {
-      "Name": "home",
+      "Name": "h",
       "Role": "HomeAlone",
       "ActorClass": "HomeAlone",
       "DisplayName": "Little Orange House HomeAlone",
@@ -649,6 +649,20 @@
       "ShNodeId": "13d9b3cb-2b13-444c-9e03-f31203772b64",
       "TypeName": "spaceheat.node.gt",
       "Version": "200"
+    }
+  ],
+  "SynthChannels": [
+      {
+        "Id": "99fb8f0e-3c7c-4b62-be5a-4f7a6376519f",
+        "Name": "required-swt",
+        "CreatedByNodeName": "h",
+        "TelemetryName": "WaterTempCTimes1000",
+        "TerminalAssetAlias": "d1.isone.ct.orange.ta",
+        "Strategy": "simple",
+        "SyncReportMinutes": 60,
+        "DisplayName": "Required Source Water Temp",
+        "TypeName": "synth.channel.gt",
+        "Version": "000"
     }
   ],
   "DataChannels": [

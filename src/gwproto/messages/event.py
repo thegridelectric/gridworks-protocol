@@ -6,7 +6,7 @@ from typing import Any, Generic, Literal, Optional, Self, TypeVar
 from pydantic import BaseModel, Field, field_validator, model_validator
 
 from gwproto.message import Message, as_enum
-from gwproto.named_types import LayoutLite, Report
+from gwproto.named_types import Report
 from gwproto.property_format import UTCMilliseconds
 
 
@@ -124,16 +124,4 @@ class ReportEvent(EventBase):
             self.Version = "002"
         self.MessageId = self.Report.Id
         self.TimeCreatedMs = self.Report.MessageCreatedMs
-        return self
-
-
-class LayoutEvent(EventBase):
-    Layout: LayoutLite
-    TypeName: Literal["layout.event"] = "layout.event"
-    Version: Literal["000"] = "000"
-
-    @model_validator(mode="after")
-    def infer_base_fields(self) -> Self:
-        self.MessageId = self.Layout.MessageId
-        self.TimeCreatedMs = self.Layout.MessageCreatedMs
         return self

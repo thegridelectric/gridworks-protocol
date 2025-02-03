@@ -51,24 +51,21 @@ from gwproto.enums.heat_pump_control import HeatPumpControl
 from gwproto.enums.heatcall_source import HeatcallSource
 from gwproto.enums.hz_calc_method import HzCalcMethod
 from gwproto.enums.kind_of_param import KindOfParam
-from gwproto.enums.main_auto_event import MainAutoEvent
-from gwproto.enums.main_auto_state import MainAutoState
 from gwproto.enums.make_model import MakeModel
-from gwproto.enums.pico_cycler_event import PicoCyclerEvent
-from gwproto.enums.pico_cycler_state import PicoCyclerState
 from gwproto.enums.primary_pump_control import PrimaryPumpControl
 from gwproto.enums.relay_closed_or_open import RelayClosedOrOpen
 from gwproto.enums.relay_energization_state import RelayEnergizationState
 from gwproto.enums.relay_pin_set import RelayPinSet
 from gwproto.enums.relay_wiring_config import RelayWiringConfig
 from gwproto.enums.store_flow_relay import StoreFlowRelay
+from gwproto.enums.strategy import Strategy
 from gwproto.enums.telemetry_name import TelemetryName
 from gwproto.enums.temp_calc_method import TempCalcMethod
 from gwproto.enums.thermistor_data_method import ThermistorDataMethod
 from gwproto.enums.unit import Unit
 
 __all__ = [
-    "ActorClass",  # [sh.actor.class.003](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shactorclass)
+    "ActorClass",  # [sh.actor.class.005](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shactorclass)
     "AdminEvent",  # [admin.event.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#adminevent)
     "AdminState",  # [admin.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#adminstate)
     "AlertPriority",  # [alert.priority.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#alertpriority)
@@ -89,18 +86,15 @@ __all__ = [
     "HeatcallSource",  # [heatcall.source.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#heatcallsource)
     "HzCalcMethod",  # [hz.calc.method.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#hzcalcmethod)
     "KindOfParam",  # [spaceheat.kind.of.param.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatkindofparam)
-    "MainAutoEvent",
-    "MainAutoState",
     "MakeModel",  # [spaceheat.make.model.004](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatmakemodel)
-    "PicoCyclerEvent",  # [pico.cycler.event.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#picocyclerevent)
-    "PicoCyclerState",  # [pico.cycler.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#picocyclerstate)
     "PrimaryPumpControl",  # [primary.pump.control.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#primarypumpcontrol)
     "RelayClosedOrOpen",  # [relay.closed.or.open.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relayclosedoropen)
     "RelayEnergizationState",  # [relay.energization.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relayenergizationstate)
     "RelayPinSet",  # [relay.pin.set.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relaypinset)
     "RelayWiringConfig",  # [relay.wiring.config.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relaywiringconfig)
     "StoreFlowRelay",  # [store.flow.relay.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#storeflowrelay)
-    "TelemetryName",  # [spaceheat.telemetry.name.001](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheattelemetryname)
+    "Strategy",  # [spaceheat.strategy.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatstrategy)
+    "TelemetryName",  # [spaceheat.telemetry.name.004](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheattelemetryname)
     "TempCalcMethod",  # [temp.calc.method.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#tempcalcmethod)
     "ThermistorDataMethod",  # [thermistor.data.method.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#thermistordatamethod)
     "Unit",  # [spaceheat.unit.001](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatunit)

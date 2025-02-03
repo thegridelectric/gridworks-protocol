@@ -10,8 +10,6 @@ from gwproto.property_format import (
 
 
 class SendSnap(BaseModel):
-    """ """
-
     FromGNodeAlias: LeftRightDotStr
     TypeName: Literal["send.snap"] = "send.snap"
     Version: Literal["000"] = "000"

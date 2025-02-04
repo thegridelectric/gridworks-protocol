@@ -36,7 +36,8 @@ def test_actor_class() -> None:
         "SynthGenerator",
         "FakeAtn",
         "PumpDoctor",
-        "DefrostManager",
+        "StratBoss",
+        "HpRelayBoss",
     }
 
     assert ActorClass.default() == ActorClass.NoActor

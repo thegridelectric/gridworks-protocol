@@ -40,7 +40,6 @@ from gwproto.named_types.resistive_heater_component_gt import ResistiveHeaterCom
 from gwproto.named_types.rest_poller_component_gt import RESTPollerComponentGt
 from gwproto.named_types.send_snap import SendSnap
 from gwproto.named_types.single_reading import SingleReading
-from gwproto.named_types.snapshot_spaceheat import SnapshotSpaceheat
 from gwproto.named_types.spaceheat_node_gt import SpaceheatNodeGt
 from gwproto.named_types.synced_readings import SyncedReadings
 from gwproto.named_types.synth_channel_gt import SynthChannelGt
@@ -88,7 +87,6 @@ __all__ = [
     "RESTPollerComponentGt",
     "SendSnap",
     "SingleReading",
-    "SnapshotSpaceheat",
     "SpaceheatNodeGt",
     "SyncedReadings",
     "SynthChannelGt",

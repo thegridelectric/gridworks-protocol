@@ -31,7 +31,6 @@ __all__ = [
     "SendSnap",
     "SingleReading",
     "ShutdownEvent",
-    "SnapshotSpaceheat",
     "SyncedReadings",
     "StartupEvent",
     "TicklistHall",

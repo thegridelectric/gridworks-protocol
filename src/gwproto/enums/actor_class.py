@@ -111,7 +111,8 @@ class ActorClass(GwStrEnum):
     SynthGenerator = auto()
     FakeAtn = auto()
     PumpDoctor = auto()
-    DefrostManager = auto()
+    StratBoss = auto()
+    HpRelayBoss = auto()
 
     @classmethod
     def default(cls) -> "ActorClass":

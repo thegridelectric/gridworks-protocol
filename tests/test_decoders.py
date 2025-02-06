@@ -25,7 +25,6 @@ from gwproto.named_types import (
     PowerWatts,
     Report,
     SendSnap,
-    SnapshotSpaceheat,
 )
 from tests.dummy_decoders import CHILD, PARENT
 from tests.dummy_decoders.child.codec import ChildMQTTCodec
@@ -70,8 +69,6 @@ def child_to_parent_messages() -> list[MessageCase]:
         )
     )
     unrecognizeable_bad_event_content = {"TypeName": "gridworks.event.baz"}
-    snap_message_dict = stored_message_dicts["snapshot"]
-    snapshot_spaceheat = SnapshotSpaceheat.model_validate(snap_message_dict["Payload"])
 
     return [
         MessageCase(
@@ -95,20 +92,6 @@ def child_to_parent_messages() -> list[MessageCase]:
             Message(Src=CHILD, Dst=PARENT, Payload=report),
             None,
             report,
-        ),
-        # snapshot
-        MessageCase("snap", Message(**snap_message_dict), None, snapshot_spaceheat),
-        MessageCase(
-            "snap-payload-dict",
-            Message(Src=CHILD, Dst=PARENT, Payload=snap_message_dict["Payload"]),
-            None,
-            snapshot_spaceheat,
-        ),
-        MessageCase(
-            "snap-payload-as_dict",
-            Message(Src=CHILD, Dst=PARENT, Payload=snapshot_spaceheat),
-            None,
-            snapshot_spaceheat,
         ),
         # # events
         MessageCase(

@@ -1,4 +1,4 @@
-"""List of all the types"""
+"""list of all the types"""
 
 from gwproto.named_types.ads111x_based_cac_gt import Ads111xBasedCacGt
 from gwproto.named_types.ads111x_based_component_gt import Ads111xBasedComponentGt

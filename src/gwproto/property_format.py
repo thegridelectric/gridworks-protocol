@@ -2,7 +2,7 @@
 import re
 import uuid
 from datetime import datetime, timezone
-from typing import Annotated, Dict, List
+from typing import Annotated, Dict
 
 from gw.enums import MarketTypeName
 from pydantic import BeforeValidator, Field
@@ -102,7 +102,7 @@ def is_left_right_dot(candidate: str) -> str:
         ValueError: if candidate is not of lrd format (e.g. d1.iso.me.apple)
     """
     try:
-        x: List[str] = candidate.split(".")
+        x: list[str] = candidate.split(".")
     except Exception as e:
         raise ValueError("Failed to seperate into words with split'.'") from e
     first_word = x[0]

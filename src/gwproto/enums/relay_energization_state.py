@@ -1,7 +1,6 @@
 """Old School enum (uses integers)"""
 
 from enum import Enum
-from typing import List
 
 
 class RelayEnergizationState(Enum):
@@ -15,7 +14,7 @@ class RelayEnergizationState(Enum):
     Energized = 1
 
     @classmethod
-    def values(cls) -> List[int]:
+    def values(cls) -> list[int]:
         """
         Returns enum choices
         """

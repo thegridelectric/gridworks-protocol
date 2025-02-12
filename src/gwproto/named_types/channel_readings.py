@@ -1,6 +1,6 @@
 """Type channel.readings, version 002"""
 
-from typing import List, Literal
+from typing import Literal
 
 from pydantic import BaseModel, StrictInt, model_validator  # Count:true
 from typing_extensions import Self
@@ -20,8 +20,8 @@ class ChannelReadings(BaseModel):
     """
 
     ChannelName: SpaceheatName
-    ValueList: List[StrictInt]
-    ScadaReadTimeUnixMsList: List[UTCMilliseconds]
+    ValueList: list[StrictInt]
+    ScadaReadTimeUnixMsList: list[UTCMilliseconds]
     TypeName: Literal["channel.readings"] = "channel.readings"
     Version: Literal["002"] = "002"
 

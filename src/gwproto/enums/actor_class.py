@@ -1,5 +1,4 @@
 from enum import auto
-from typing import List
 
 from gw.enums import GwStrEnum
 
@@ -119,7 +118,7 @@ class ActorClass(GwStrEnum):
         return cls.NoActor
 
     @classmethod
-    def values(cls) -> List[str]:
+    def values(cls) -> list[str]:
         return [elt.value for elt in cls]
 
     @classmethod

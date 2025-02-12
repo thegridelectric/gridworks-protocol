@@ -1,7 +1,7 @@
 """Type ads111x.based.component.gt, version 000"""
 
 from collections.abc import Sequence
-from typing import List, Literal
+from typing import Literal
 
 from pydantic import ConfigDict, field_validator
 
@@ -15,7 +15,7 @@ from gwproto.property_format import (
 
 
 class Ads111xBasedComponentGt(ComponentGt):
-    OpenVoltageByAds: List[float]
+    OpenVoltageByAds: list[float]
     ConfigList: Sequence[AdsChannelConfig]
     TypeName: Literal["ads111x.based.component.gt"] = "ads111x.based.component.gt"
     Version: Literal["000"] = "000"
@@ -24,7 +24,7 @@ class Ads111xBasedComponentGt(ComponentGt):
 
     @field_validator("OpenVoltageByAds")
     @classmethod
-    def _check_open_voltage_by_ads(cls, v: List[float]) -> List[float]:
+    def _check_open_voltage_by_ads(cls, v: list[float]) -> list[float]:
         try:
             for elt in v:
                 check_is_near5(elt)

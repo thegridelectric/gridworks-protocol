@@ -30,11 +30,7 @@ class DecodeError(CaseError):
     exception: Exception | None
 
     def __str__(self) -> str:
-        return (
-            f"{super().__str__()}"
-            f"\n\t\t{type(self.exception)}"
-            f"\n\t\t{self.exception}"
-        )
+        return f"{super().__str__()}\n\t\t{type(self.exception)}\n\t\t{self.exception}"
 
 
 @dataclass

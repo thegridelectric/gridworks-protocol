@@ -1,7 +1,7 @@
 """Type electric.meter.component.gt, version 001"""
 
 from collections.abc import Sequence
-from typing import List, Literal, Optional, Self
+from typing import Literal, Optional, Self
 
 from pydantic import PositiveInt, field_validator, model_validator
 
@@ -19,8 +19,8 @@ class ElectricMeterComponentGt(ComponentGt):
     @field_validator("ConfigList")
     @classmethod
     def check_electric_meter_config_list(
-        cls, v: List[ElectricMeterChannelConfig]
-    ) -> List[ElectricMeterChannelConfig]:
+        cls, v: list[ElectricMeterChannelConfig]
+    ) -> list[ElectricMeterChannelConfig]:
         """
         Axiom 1: Channel Name uniqueness. Data Channel names are
         unique in the config list

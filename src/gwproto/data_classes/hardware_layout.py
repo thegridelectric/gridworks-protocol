@@ -12,7 +12,7 @@ from collections import Counter, defaultdict
 from dataclasses import dataclass
 from functools import cached_property
 from pathlib import Path
-from typing import Any, List, Optional, Type, TypeVar
+from typing import Any, Optional, Type, TypeVar
 
 from gw.errors import DcError
 
@@ -736,7 +736,7 @@ class HardwareLayout:
             raise DcError(f"{node} is missing boss {boss_handle}")
         return boss
 
-    def direct_reports(self, node: ShNode) -> List[ShNode]:
+    def direct_reports(self, node: ShNode) -> list[ShNode]:
         return [n for n in self.nodes.values() if self.boss_node(n) == node]
 
     def node_from_handle(self, handle: str) -> Optional[ShNode]:
@@ -775,7 +775,7 @@ class HardwareLayout:
         return my_scada_as_dict["GNodeId"]  # type: ignore[no-any-return]
 
     @cached_property
-    def all_telemetry_tuples_for_agg_power_metering(self) -> List[TelemetryTuple]:
+    def all_telemetry_tuples_for_agg_power_metering(self) -> list[TelemetryTuple]:
         telemetry_tuples = []
         for node in self.all_nodes_in_agg_power_metering:
             telemetry_tuples += [
@@ -788,13 +788,13 @@ class HardwareLayout:
         return telemetry_tuples
 
     @cached_property
-    def all_nodes_in_agg_power_metering(self) -> List[ShNode]:
+    def all_nodes_in_agg_power_metering(self) -> list[ShNode]:
         """All nodes whose power level is metered and included in power reporting by the Scada"""
         all_nodes = list(self.nodes.values())
         return list(filter(lambda x: x.in_power_metering, all_nodes))
 
     @cached_property
-    def all_power_meter_telemetry_tuples(self) -> List[TelemetryTuple]:
+    def all_power_meter_telemetry_tuples(self) -> list[TelemetryTuple]:
         return [
             TelemetryTuple(
                 AboutNode=self.nodes[
@@ -830,7 +830,7 @@ class HardwareLayout:
         )
 
     @cached_property
-    def all_multipurpose_telemetry_tuples(self) -> List[TelemetryTuple]:
+    def all_multipurpose_telemetry_tuples(self) -> list[TelemetryTuple]:
         multi_nodes = list(
             filter(
                 lambda x: (
@@ -864,7 +864,7 @@ class HardwareLayout:
         return telemetry_tuples
 
     @cached_property
-    def my_telemetry_tuples(self) -> List[TelemetryTuple]:
+    def my_telemetry_tuples(self) -> list[TelemetryTuple]:
         """This will include telemetry tuples from all the multipurpose sensors, the most
         important of which is the power meter."""
         return (

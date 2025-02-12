@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import Any, Optional, Type
+from typing import Any, Optional
 
 from gwproto import CacDecoder, HardwareLayout, default_cac_decoder
 from gwproto.named_types import ComponentAttributeClassGt
@@ -9,9 +9,9 @@ from gwproto.named_types import ComponentAttributeClassGt
 class CacCase:
     tag: str
     src_cac: ComponentAttributeClassGt | dict[str, Any]
-    exp_cac_type: Optional[Type[Any]] = ComponentAttributeClassGt
+    exp_cac_type: Optional[type[Any]] = ComponentAttributeClassGt
     exp_cac: Optional[ComponentAttributeClassGt | dict[str, Any]] = None
-    exp_exceptions: list[Type[Exception]] = field(default_factory=list)
+    exp_exceptions: list[type[Exception]] = field(default_factory=list)
 
 
 @dataclass
@@ -28,11 +28,7 @@ class CacLoadError(CacCaseError):
     exception: Exception | None
 
     def __str__(self) -> str:
-        return (
-            f"{super().__str__()}"
-            f"\n\t\t{type(self.exception)}"
-            f"\n\t\t{self.exception}"
-        )
+        return f"{super().__str__()}\n\t\t{type(self.exception)}\n\t\t{self.exception}"
 
 
 @dataclass

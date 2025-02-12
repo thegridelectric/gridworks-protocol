@@ -12,7 +12,7 @@ from collections import Counter, defaultdict
 from dataclasses import dataclass
 from functools import cached_property
 from pathlib import Path
-from typing import Any, Optional, Type, TypeVar
+from typing import Any, Optional, TypeVar
 
 from gw.errors import DcError
 
@@ -66,7 +66,7 @@ class HardwareLayout:
     layout: dict[Any, Any]
     cacs: dict[str, ComponentAttributeClassGt]
     components: dict[str, Component[Any, Any]]
-    components_by_type: dict[Type[Any], list[Component[Any, Any]]]
+    components_by_type: dict[type[Any], list[Component[Any, Any]]]
     nodes: dict[str, ShNode]
     nodes_by_component: dict[str, str]
     data_channels: dict[str, DataChannel]
@@ -120,7 +120,7 @@ class HardwareLayout:
     @classmethod
     def get_data_class_class(
         cls, component_gt: ComponentGt
-    ) -> Type[Component[Any, Any]]:
+    ) -> type[Component[Any, Any]]:
         return getattr(
             gwproto.data_classes.components,
             cls.get_data_class_name(component_gt),
@@ -669,7 +669,7 @@ class HardwareLayout:
             return None
         return typing.cast(ComponentAttributeClassGt, component.cac)
 
-    def get_component_as_type(self, component_id: str, type_: Type[T]) -> Optional[T]:
+    def get_component_as_type(self, component_id: str, type_: type[T]) -> Optional[T]:
         component = self.components.get(component_id, None)
         if component is not None and not isinstance(component, type_):
             raise ValueError(
@@ -677,7 +677,7 @@ class HardwareLayout:
             )
         return component
 
-    def get_components_by_type(self, type_: Type[T]) -> list[T]:
+    def get_components_by_type(self, type_: type[T]) -> list[T]:
         entries = self.components_by_type.get(type_, [])
         for i, entry in enumerate(entries):
             if not isinstance(entry, type_):

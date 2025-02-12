@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import Any, Optional, Type
+from typing import Any, Optional
 
 from gwproto import (
     ComponentDecoder,
@@ -14,10 +14,10 @@ from gwproto.named_types import ComponentAttributeClassGt, ComponentGt
 class ComponentCase:
     tag: str
     src_component_gt: ComponentGt | dict[str, Any]
-    exp_component_gt_type: Type[Any] = ComponentGt
-    exp_component_type: Type[Any] = Component
+    exp_component_gt_type: type[Any] = ComponentGt
+    exp_component_type: type[Any] = Component
     exp_component: Optional[Component[Any, Any]] = None
-    exp_exceptions: list[Type[Exception]] = field(default_factory=list)
+    exp_exceptions: list[type[Exception]] = field(default_factory=list)
 
 
 @dataclass
@@ -34,11 +34,7 @@ class ComponentLoadError(ComponentCaseError):
     exception: Exception
 
     def __str__(self) -> str:
-        return (
-            f"{super().__str__()}"
-            f"\n\t\t{type(self.exception)}"
-            f"\n\t\t{self.exception}"
-        )
+        return f"{super().__str__()}\n\t\t{type(self.exception)}\n\t\t{self.exception}"
 
 
 @dataclass

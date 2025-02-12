@@ -2,7 +2,7 @@
 import re
 import uuid
 from datetime import datetime, timezone
-from typing import Annotated, Dict
+from typing import Annotated
 
 from gw.enums import MarketTypeName
 from pydantic import BeforeValidator, Field
@@ -233,7 +233,7 @@ def is_market_name(v: str) -> str:
     return v
 
 
-MarketMinutes: Dict[MarketTypeName, int] = {
+MarketMinutes: dict[MarketTypeName, int] = {
     MarketTypeName.da60: 60,
     MarketTypeName.rt15gate5: 15,
     MarketTypeName.rt30gate5: 30,

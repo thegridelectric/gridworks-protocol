@@ -1,6 +1,6 @@
 from collections.abc import Sequence
 from dataclasses import dataclass, field
-from typing import Any, Optional, Type
+from typing import Any, Optional
 
 from result import Err, Ok, Result
 
@@ -13,7 +13,7 @@ class MessageCase:
     src_message: Message[Any]
     exp_message: Optional[Message[Any]] = None
     exp_payload: Any = None
-    exp_exceptions: list[Type[Exception]] = field(default_factory=list)
+    exp_exceptions: list[type[Exception]] = field(default_factory=list)
 
 
 @dataclass
@@ -60,18 +60,18 @@ class PayloadMatchError(CaseError):
 
 
 class NoExceptionError(ValueError):
-    expected_types: Sequence[Type[Exception]]
+    expected_types: Sequence[type[Exception]]
 
-    def __init__(self, expected_types: Sequence[Type[Exception]]) -> None:
+    def __init__(self, expected_types: Sequence[type[Exception]]) -> None:
         self.expected_types = expected_types
 
 
 class UnexpectedExceptionTypeError(ValueError):
     got: Exception
-    expected_types: Sequence[Type[Exception]]
+    expected_types: Sequence[type[Exception]]
 
     def __init__(
-        self, got: Exception, expected_types: Sequence[Type[Exception]]
+        self, got: Exception, expected_types: Sequence[type[Exception]]
     ) -> None:
         self.got = got
         self.expected_types = expected_types

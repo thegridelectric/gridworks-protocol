@@ -4,7 +4,6 @@ import abc
 import inspect
 import re
 import sys
-import typing
 from abc import abstractmethod
 from collections.abc import Sequence
 
@@ -15,7 +14,6 @@ from typing import (
     Generic,
     Literal,
     Optional,
-    Type,
     TypeVar,
     Union,
     get_origin,
@@ -37,9 +35,9 @@ TYPE_NAME_FIELD: str = "TypeName"
 
 class MQTTCodec(abc.ABC):
     ENCODING = "utf-8"
-    message_model: Type[Message[Any]]
+    message_model: type[Message[Any]]
 
-    def __init__(self, message_model: Type[Message[Any]]) -> None:
+    def __init__(self, message_model: type[Message[Any]]) -> None:
         self.message_model = message_model
 
     def encode(self, content: bytes | BaseModel) -> bytes:  # noqa
@@ -149,7 +147,7 @@ EXCLUDED_TYPE_NAMES: set[str] = {Message.type_name()}
 
 def get_candidate_payload_classes(
     module: ModuleType,
-) -> Sequence[typing.Tuple[str, Type[BaseModel]]]:
+) -> Sequence[tuple[str, type[BaseModel]]]:
     """From a given module, return list of (TypeName, class) tuples for each
     object in the module that:
         * Is a class
@@ -175,8 +173,8 @@ def get_candidate_payload_classes(
 
 def include_candidate_class(
     type_name: str,
-    candidate_class: Type[BaseModel],
-    accumulated_types: dict[str, Type[BaseModel]],
+    candidate_class: type[BaseModel],
+    accumulated_types: dict[str, type[BaseModel]],
     type_name_regex: Optional[re.Pattern[str]],
 ) -> bool:
     if (
@@ -223,7 +221,7 @@ def create_message_model(
     modules: Optional[Sequence[Any]] = None,
     explicit_types: Optional[Sequence[Any]] = None,
     type_name_regex: Optional[re.Pattern[str]] = None,
-) -> Type[Message[Any]]:
+) -> type[Message[Any]]:
     used_types = pydantic_named_types(
         module_names=module_names,
         modules=modules,
@@ -261,7 +259,7 @@ class UnionWrapper(BaseModel, Generic[WrappedT]):
         modules: Optional[Sequence[Any]] = None,
         explicit_types: Optional[Sequence[Any]] = None,
         type_name_regex: Optional[re.Pattern[str]] = None,
-    ) -> Type["UnionWrapper[WrappedT]"]:
+    ) -> type["UnionWrapper[WrappedT]"]:
         """Create pydantic model that is a union of all appropriate types found via
         module_names, modules and explicit_types"""
         used_types = pydantic_named_types(
@@ -291,7 +289,7 @@ class UnionWrapper(BaseModel, Generic[WrappedT]):
 class UnionDecoder:
     """A Utility base class for decoding from a union of types."""
 
-    loader: Type[UnionWrapper[Any]]
+    loader: type[UnionWrapper[Any]]
 
     def __init__(
         self,
@@ -313,7 +311,7 @@ class UnionDecoder:
 
 class CacDecoder(UnionDecoder):
     TYPE_NAME_REGEX = re.compile(r".*\.cac\.gt")
-    loader: Type[UnionWrapper[Any]]
+    loader: type[UnionWrapper[Any]]
 
     def __init__(
         self,

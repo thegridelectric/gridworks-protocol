@@ -1,5 +1,6 @@
+from collections.abc import Sequence
 from dataclasses import dataclass, field
-from typing import Any, Optional, Sequence, Type
+from typing import Any, Optional, Type
 
 from result import Err, Ok, Result
 

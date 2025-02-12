@@ -44,8 +44,8 @@ xdoctest = {extras = ["colors"], version = ">=0.15.10"}
 myst-parser = {version = ">=0.16.1"}
 types-pytz = ">=2022.4.0.0"
 rich = ">=12.6.0"
-ruff = "^0.6.6"
 result = "^0.17.0"
+ruff = "^0.9.6"
 
 [tool.coverage.paths]
 source = ["src", "*/site-packages"]

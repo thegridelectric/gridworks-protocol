@@ -6,6 +6,7 @@ import re
 import sys
 import typing
 from abc import abstractmethod
+from collections.abc import Sequence
 
 # Static analysis (mypy, pycharm) thinks 'types' here is gwproto.named_types.
 from types import ModuleType  # noqa
@@ -14,7 +15,6 @@ from typing import (
     Generic,
     Literal,
     Optional,
-    Sequence,
     Type,
     TypeVar,
     Union,

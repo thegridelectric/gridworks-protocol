@@ -1,11 +1,10 @@
 import copy
 import re
 from functools import cached_property
-from typing import Optional
+from typing import Annotated, Optional
 
 import yarl
 from pydantic import BaseModel, ConfigDict, Field, field_validator
-from typing_extensions import Annotated
 
 from gwproto.enums import TelemetryName, Unit
 from gwproto.named_types.hubitat_component_gt import HubitatRESTResolutionSettings

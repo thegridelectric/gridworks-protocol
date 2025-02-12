@@ -1,6 +1,7 @@
 """Type ads111x.based.component.gt, version 000"""
 
-from typing import List, Literal, Sequence
+from collections.abc import Sequence
+from typing import List, Literal
 
 from pydantic import ConfigDict, field_validator
 

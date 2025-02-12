@@ -1,6 +1,7 @@
 """Type electric.meter.component.gt, version 001"""
 
-from typing import List, Literal, Optional, Self, Sequence
+from collections.abc import Sequence
+from typing import List, Literal, Optional, Self
 
 from pydantic import PositiveInt, field_validator, model_validator
 

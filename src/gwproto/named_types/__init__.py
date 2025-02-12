@@ -51,9 +51,9 @@ from gwproto.named_types.ticklist_reed_report import TicklistReedReport
 from gwproto.named_types.web_server_component_gt import WebServerComponentGt
 
 __all__ = [
-    "AdsChannelConfig",
     "Ads111xBasedCacGt",
     "Ads111xBasedComponentGt",
+    "AdsChannelConfig",
     "Alert",
     "AnalogDispatch",
     "ChannelConfig",
@@ -80,11 +80,11 @@ __all__ = [
     "PicoFlowModuleComponentGt",
     "PicoTankModuleComponentGt",
     "PowerWatts",
+    "RESTPollerComponentGt",
     "RelayActorConfig",
     "Report",
     "ResistiveHeaterCacGt",
     "ResistiveHeaterComponentGt",
-    "RESTPollerComponentGt",
     "SendSnap",
     "SingleReading",
     "SpaceheatNodeGt",

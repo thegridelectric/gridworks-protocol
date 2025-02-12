@@ -1,11 +1,11 @@
 # ruff: noqa: ANN401
 
+from collections.abc import Mapping
 from typing import (
     Any,
     Callable,
     Generic,
     Literal,
-    Mapping,
     Optional,
     TypeAlias,
     TypeVar,

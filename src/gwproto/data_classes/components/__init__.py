@@ -30,8 +30,8 @@ from gwproto.data_classes.components.rest_poller_component import RESTPollerComp
 from gwproto.data_classes.components.web_server_component import WebServerComponent
 
 __all__ = [
-    "Component",
     "Ads111xBasedComponent",
+    "Component",
     "DfrComponent",
     "ElectricMeterComponent",
     "FibaroSmartImplantComponent",

@@ -1,6 +1,6 @@
 """Type fsm.full.report, version 000"""
 
-from typing import List, Literal
+from typing import Literal
 
 from pydantic import BaseModel, ConfigDict
 
@@ -14,7 +14,7 @@ from gwproto.property_format import (
 class FsmFullReport(BaseModel):
     FromName: SpaceheatName
     TriggerId: UUID4Str
-    AtomicList: List[FsmAtomicReport]
+    AtomicList: list[FsmAtomicReport]
     TypeName: Literal["fsm.full.report"] = "fsm.full.report"
     Version: Literal["000"] = "000"
 

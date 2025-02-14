@@ -1,4 +1,4 @@
-"""List of all the types"""
+"""list of all the types"""
 
 from gwproto.named_types.ads111x_based_cac_gt import Ads111xBasedCacGt
 from gwproto.named_types.ads111x_based_component_gt import Ads111xBasedComponentGt
@@ -51,9 +51,9 @@ from gwproto.named_types.ticklist_reed_report import TicklistReedReport
 from gwproto.named_types.web_server_component_gt import WebServerComponentGt
 
 __all__ = [
-    "AdsChannelConfig",
     "Ads111xBasedCacGt",
     "Ads111xBasedComponentGt",
+    "AdsChannelConfig",
     "Alert",
     "AnalogDispatch",
     "ChannelConfig",
@@ -80,11 +80,11 @@ __all__ = [
     "PicoFlowModuleComponentGt",
     "PicoTankModuleComponentGt",
     "PowerWatts",
+    "RESTPollerComponentGt",
     "RelayActorConfig",
     "Report",
     "ResistiveHeaterCacGt",
     "ResistiveHeaterComponentGt",
-    "RESTPollerComponentGt",
     "SendSnap",
     "SingleReading",
     "SpaceheatNodeGt",

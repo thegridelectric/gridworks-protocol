@@ -1,6 +1,6 @@
 """Type ticklist.hall, version 101"""
 
-from typing import List, Literal, Optional
+from typing import Literal, Optional
 
 from pydantic import BaseModel, StrictInt, model_validator  # Count:true
 from typing_extensions import Self
@@ -9,7 +9,7 @@ from typing_extensions import Self
 class TicklistHall(BaseModel):
     HwUid: str
     FirstTickTimestampNanoSecond: Optional[StrictInt] = None
-    RelativeMicrosecondList: List[StrictInt]
+    RelativeMicrosecondList: list[StrictInt]
     PicoBeforePostTimestampNanoSecond: StrictInt
     TypeName: Literal["ticklist.hall"] = "ticklist.hall"
     Version: Literal["101"] = "101"

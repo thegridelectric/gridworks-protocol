@@ -1,5 +1,4 @@
 from enum import auto
-from typing import List
 
 from gw.enums import GwStrEnum
 
@@ -35,7 +34,7 @@ class RelayWiringConfig(GwStrEnum):
         return cls.NormallyClosed
 
     @classmethod
-    def values(cls) -> List[str]:
+    def values(cls) -> list[str]:
         return [elt.value for elt in cls]
 
     @classmethod

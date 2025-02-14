@@ -2,7 +2,6 @@
 #  - no additional values can be added over time.
 #  - Sent as-is, not in hex symbol
 from enum import auto
-from typing import List
 
 from gw.enums import GwStrEnum
 
@@ -17,7 +16,7 @@ class ChangeRelayPin(GwStrEnum):
     Energize = auto()
 
     @classmethod
-    def values(cls) -> List[str]:
+    def values(cls) -> list[str]:
         """
         Returns enum choices
         """

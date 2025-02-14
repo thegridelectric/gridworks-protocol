@@ -1,4 +1,5 @@
-from typing import Optional
+from collections.abc import Mapping
+from typing import Any, Optional
 
 import yarl
 
@@ -53,13 +54,11 @@ class HubitatTankComponent(
         self,
         tank_node_name: str,
         nodes: dict[str, ShNode],
-        components: dict[str, Component],
+        components: Mapping[str, Component[Any, Any]],
     ) -> None:
         hubitat_component = components.get(self.hubitat.ComponentId, None)
-        if hubitat_component is None or not isinstance(
-            hubitat_component, HubitatComponent
-        ):
-            raise ValueError(
+        if not isinstance(hubitat_component, HubitatComponent):
+            raise ValueError(  # noqa: TRY004
                 f"ERROR. Component for {self.hubitat.ComponentId} "
                 f"has type <{type(hubitat_component)}>. Expected <HubitatComponent>"
             )

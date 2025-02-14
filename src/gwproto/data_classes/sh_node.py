@@ -1,11 +1,11 @@
 """ShNode definition"""
 
-from typing import Optional
+from typing import Any, Optional
 
 from pydantic import ConfigDict
 
 from gwproto.data_classes.components.component import Component
-from gwproto.enums import ActorClass
+from gwproto.enums import ActorClass as ActorClassEnum
 from gwproto.named_types import SpaceheatNodeGt
 
 
@@ -25,7 +25,7 @@ class ShNode(SpaceheatNodeGt):
     temperature data for the purposes of thermostatic control).
     """
 
-    component: Optional[Component] = None
+    component: Optional[Component[Any, Any]] = None
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
     def __hash__(self) -> int:
@@ -41,20 +41,18 @@ class ShNode(SpaceheatNodeGt):
 
     @property
     def actor_hierarchy_name(self) -> str:
-        v = self.ActorHierarchyName
         if self.ActorHierarchyName is None:
-            v = self.Name
-        return v
+            return self.Name
+        return self.ActorHierarchyName
 
     @property
     def handle(self) -> str:
-        v = self.Handle
         if self.Handle is None:
-            v = self.Name
-        return v
+            return self.Name
+        return self.Handle
 
     @property
-    def actor_class(self) -> ActorClass:
+    def actor_class(self) -> ActorClassEnum:
         return self.ActorClass
 
     @property
@@ -79,7 +77,7 @@ class ShNode(SpaceheatNodeGt):
 
     @property
     def has_actor(self) -> bool:
-        return self.actor_class != ActorClass.NoActor
+        return self.actor_class != ActorClassEnum.NoActor
 
     def to_gt(self) -> SpaceheatNodeGt:
         # Copy the current instance excluding the extra fields

@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import Optional, Type
+from typing import Any, Optional
 
 from gwproto import CacDecoder, HardwareLayout, default_cac_decoder
 from gwproto.named_types import ComponentAttributeClassGt
@@ -8,10 +8,10 @@ from gwproto.named_types import ComponentAttributeClassGt
 @dataclass
 class CacCase:
     tag: str
-    src_cac: ComponentAttributeClassGt | dict
-    exp_cac_type: Optional[Type] = ComponentAttributeClassGt
-    exp_cac: Optional[ComponentAttributeClassGt | dict] = None
-    exp_exceptions: list[Type[Exception]] = field(default_factory=list)
+    src_cac: ComponentAttributeClassGt | dict[str, Any]
+    exp_cac_type: Optional[type[Any]] = ComponentAttributeClassGt
+    exp_cac: Optional[ComponentAttributeClassGt | dict[str, Any]] = None
+    exp_exceptions: list[type[Exception]] = field(default_factory=list)
 
 
 @dataclass
@@ -25,20 +25,16 @@ class CacCaseError:
 
 @dataclass
 class CacLoadError(CacCaseError):
-    exception: Exception
+    exception: Exception | None
 
     def __str__(self) -> str:
-        return (
-            f"{super().__str__()}"
-            f"\n\t\t{type(self.exception)}"
-            f"\n\t\t{self.exception}"
-        )
+        return f"{super().__str__()}\n\t\t{type(self.exception)}\n\t\t{self.exception}"
 
 
 @dataclass
 class CacMatchError(CacCaseError):
-    exp_cac: ComponentAttributeClassGt | dict
-    loaded_cac: ComponentAttributeClassGt
+    exp_cac: ComponentAttributeClassGt | dict[str, Any]
+    loaded_cac: ComponentAttributeClassGt | None
 
     def __str__(self) -> str:
         return (
@@ -90,6 +86,10 @@ def assert_cac_load(cases: list[CacCase], decoder: Optional[CacDecoder] = None) 
         elif not case.exp_exceptions:
             exp_cac = case.src_cac if case.exp_cac is None else case.exp_cac
             if isinstance(exp_cac, dict):
+                if case.exp_cac_type is None:
+                    raise ValueError(
+                        "When exp_cac is a dict, exp_cac_type must not be None"
+                    )
                 exp_cac = case.exp_cac_type(**exp_cac)
             if load_result.loaded != exp_cac:
                 errors.append(

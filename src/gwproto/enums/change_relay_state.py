@@ -2,7 +2,6 @@
 #  - no additional values can be added over time.
 #  - Sent as-is, not in hex symbol
 from enum import auto
-from typing import List
 
 from gwproto.enums.relay_event_base import RelayEventBase
 
@@ -19,7 +18,7 @@ class ChangeRelayState(RelayEventBase):
     OpenRelay = auto()
 
     @classmethod
-    def values(cls) -> List[str]:
+    def values(cls) -> list[str]:
         """
         Returns enum choices
         """

@@ -4,7 +4,7 @@ REST commands into a message posted to main processing thread.
 """
 
 from functools import cached_property
-from typing import Any, Literal, Optional, Self, Tuple
+from typing import Any, Literal, Optional, Self
 
 import yarl
 from pydantic import BaseModel, ConfigDict, HttpUrl, model_validator
@@ -21,7 +21,7 @@ class URLArgs(BaseModel):
     host: str = ""
     port: Optional[int] = None
     path: str = ""
-    query: Optional[list[Tuple[str, str | int | float]]] = None
+    query: Optional[list[tuple[str, str | int | float]]] = None
     fragment: str = ""
     encoded: bool = True
     model_config = ConfigDict(alias_generator=snake_to_camel, populate_by_name=True)

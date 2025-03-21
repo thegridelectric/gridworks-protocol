@@ -18,8 +18,8 @@ from gwproto.named_types.rest_poller_component_gt import RESTPollerComponentGt
 from gwproto.named_types.web_server_component_gt import WebServerComponentGt
 
 __all__ = [
-    "ComponentGt",
     "Ads111xBasedComponentGt",
+    "ComponentGt",
     "DfrComponentGt",
     "ElectricMeterComponentGt",
     "FibaroSmartImplantComponentGt",

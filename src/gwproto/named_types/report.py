@@ -1,6 +1,6 @@
 """Type report, version 002"""
 
-from typing import List, Literal
+from typing import Literal
 
 from pydantic import BaseModel, PositiveInt, field_validator
 
@@ -23,9 +23,9 @@ class Report(BaseModel):
     AboutGNodeAlias: LeftRightDotStr
     SlotStartUnixS: UTCSeconds
     SlotDurationS: PositiveInt
-    ChannelReadingList: List[ChannelReadings]
-    StateList: List[MachineStates]
-    FsmReportList: List[FsmFullReport]
+    ChannelReadingList: list[ChannelReadings]
+    StateList: list[MachineStates]
+    FsmReportList: list[FsmFullReport]
     MessageCreatedMs: UTCMilliseconds
     Id: UUID4Str
     TypeName: Literal["report"] = "report"
@@ -34,6 +34,6 @@ class Report(BaseModel):
     @field_validator("ChannelReadingList")
     @classmethod
     def _check_channel_reading_list(
-        cls, v: List[ChannelReadings]
-    ) -> List[ChannelReadings]:
+        cls, v: list[ChannelReadings]
+    ) -> list[ChannelReadings]:
         return v

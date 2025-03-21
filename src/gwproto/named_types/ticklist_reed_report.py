@@ -1,4 +1,4 @@
-"""Type ticklist.reed.report, version 000"""
+"""type ticklist.reed.report, version 000"""
 
 from typing import Literal
 

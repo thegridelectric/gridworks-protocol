@@ -1,5 +1,4 @@
 from enum import auto
-from typing import List
 
 from gw.enums import GwStrEnum
 
@@ -33,7 +32,7 @@ class KindOfParam(GwStrEnum):
         return cls.Other
 
     @classmethod
-    def values(cls) -> List[str]:
+    def values(cls) -> list[str]:
         return [elt.value for elt in cls]
 
     @classmethod

@@ -1,8 +1,6 @@
-from typing import Dict
-
 from gwproto.enums import MakeModel
 
-CACS_BY_MAKE_MODEL: Dict[str, str] = {
+CACS_BY_MAKE_MODEL: dict[str, str] = {
     MakeModel.EGAUGE__4030.value: "739a6e32-bb9c-43bc-a28d-fb61be665522",
     MakeModel.NCD__PR814SPST.value: "c6e736d8-8078-44f5-98bb-d72ca91dc773",
     MakeModel.ADAFRUIT__642.value: "43564cd2-0e78-41a2-8b67-ad80c02161e8",

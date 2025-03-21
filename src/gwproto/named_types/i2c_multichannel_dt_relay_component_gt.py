@@ -1,6 +1,6 @@
 """Type i2c.multichannel.dt.relay.component.gt, version 000"""
 
-from typing import List, Literal
+from typing import Literal
 
 from pydantic import ConfigDict, StrictInt, model_validator
 from typing_extensions import Self
@@ -10,8 +10,8 @@ from gwproto.named_types.relay_actor_config import RelayActorConfig
 
 
 class I2cMultichannelDtRelayComponentGt(ComponentGt):
-    I2cAddressList: List[StrictInt]
-    ConfigList: List[RelayActorConfig]
+    I2cAddressList: list[StrictInt]
+    ConfigList: list[RelayActorConfig]
     TypeName: Literal["i2c.multichannel.dt.relay.component.gt"] = (
         "i2c.multichannel.dt.relay.component.gt"
     )

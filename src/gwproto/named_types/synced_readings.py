@@ -1,6 +1,6 @@
 """Type synced.readings, version 000"""
 
-from typing import List, Literal
+from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, StrictInt, model_validator
 from typing_extensions import Self
@@ -12,8 +12,8 @@ from gwproto.property_format import (
 
 
 class SyncedReadings(BaseModel):
-    ChannelNameList: List[SpaceheatName]
-    ValueList: List[StrictInt]
+    ChannelNameList: list[SpaceheatName]
+    ValueList: list[StrictInt]
     ScadaReadTimeUnixMs: UTCMilliseconds
     TypeName: Literal["synced.readings"] = "synced.readings"
     Version: Literal["000"] = "000"
@@ -23,7 +23,7 @@ class SyncedReadings(BaseModel):
     @model_validator(mode="after")
     def check_axiom_1(self) -> Self:
         """
-        Axiom 1: List Length Consistency.
+        Axiom 1: list Length Consistency.
         len(ChannelNameList) = len(ValueList)
         """
         # Implement check for axiom 1"

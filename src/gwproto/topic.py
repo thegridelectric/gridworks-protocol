@@ -89,6 +89,7 @@ class MQTTTopic:
         split = topic.split("/")
         envelope_type = split[0]
         # for example: 'gw'
+        remainder: list[str]
         if len(split) == 1:
             src = ""
             dst = ""

@@ -1,5 +1,4 @@
 from enum import auto
-from typing import List
 
 from gw.enums import GwStrEnum
 
@@ -113,13 +112,15 @@ class ActorClass(GwStrEnum):
     PumpDoctor = auto()
     StratBoss = auto()
     HpRelayBoss = auto()
+    SiegLoop = auto()
+    HpBoss = auto()
 
     @classmethod
     def default(cls) -> "ActorClass":
         return cls.NoActor
 
     @classmethod
-    def values(cls) -> List[str]:
+    def values(cls) -> list[str]:
         return [elt.value for elt in cls]
 
     @classmethod
@@ -128,4 +129,4 @@ class ActorClass(GwStrEnum):
 
     @classmethod
     def enum_version(cls) -> str:
-        return "005"
+        return "007"

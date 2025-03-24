@@ -25,8 +25,9 @@ def test_telemetry_name() -> None:
         "VoltsTimesTen",
         "WattHours",
         "StorageLayer",
+        "PercentKeep",
     }
 
     assert TelemetryName.default() == TelemetryName.Unknown
     assert TelemetryName.enum_name() == "spaceheat.telemetry.name"
-    assert TelemetryName.enum_version() == "004"
+    assert TelemetryName.enum_version() == "005"

@@ -12,7 +12,7 @@ from collections import Counter, defaultdict
 from dataclasses import dataclass
 from functools import cached_property
 from pathlib import Path
-from typing import Any, List, Optional, Type, TypeVar
+from typing import Any, Optional, TypeVar
 
 from gw.errors import DcError
 
@@ -27,9 +27,11 @@ from gwproto.data_classes.resolver import ComponentResolver
 from gwproto.data_classes.sh_node import ShNode
 from gwproto.data_classes.synth_channel import SynthChannel
 from gwproto.data_classes.telemetry_tuple import TelemetryTuple
-from gwproto.default_decoders import (
+from gwproto.decoders import (
     CacDecoder,
     ComponentDecoder,
+)
+from gwproto.default_decoders import (
     default_cac_decoder,
     default_component_decoder,
 )
@@ -37,7 +39,9 @@ from gwproto.enums import ActorClass, TelemetryName
 from gwproto.named_types import (
     ComponentAttributeClassGt,
     ComponentGt,
+    DataChannelGt,
     ElectricMeterCacGt,
+    SpaceheatNodeGt,
 )
 
 T = TypeVar("T")
@@ -52,7 +56,7 @@ class LoadError:
 
 class LoadArgs(typing.TypedDict):
     cacs: dict[str, ComponentAttributeClassGt]
-    components: dict[str, Component]
+    components: dict[str, Component[Any, Any]]
     nodes: dict[str, ShNode]
     data_channels: dict[str, DataChannel]
     synth_channels: dict[str, SynthChannel]
@@ -61,8 +65,8 @@ class LoadArgs(typing.TypedDict):
 class HardwareLayout:
     layout: dict[Any, Any]
     cacs: dict[str, ComponentAttributeClassGt]
-    components: dict[str, Component]
-    components_by_type: dict[Type, list[Component]]
+    components: dict[str, Component[Any, Any]]
+    components_by_type: dict[type[Any], list[Component[Any, Any]]]
     nodes: dict[str, ShNode]
     nodes_by_component: dict[str, str]
     data_channels: dict[str, DataChannel]
@@ -114,7 +118,9 @@ class HardwareLayout:
         return gt_class_name[: -len(cls.GT_SUFFIX)]
 
     @classmethod
-    def get_data_class_class(cls, component_gt: ComponentGt) -> Type[Component]:
+    def get_data_class_class(
+        cls, component_gt: ComponentGt
+    ) -> type[Component[Any, Any]]:
         return getattr(
             gwproto.data_classes.components,
             cls.get_data_class_name(component_gt),
@@ -124,12 +130,7 @@ class HardwareLayout:
     @classmethod
     def make_component(
         cls, component_gt: ComponentGt, cac: ComponentAttributeClassGt
-    ) -> Component:
-        if cac is None:
-            raise DcError(  # noqa: TRY301
-                f"cac {component_gt.ComponentAttributeClassId} not loaded for component "
-                f"<{component_gt.ComponentId}/<{component_gt.DisplayName}>\n"
-            )
+    ) -> Component[Any, Any]:
         return cls.get_data_class_class(component_gt)(gt=component_gt, cac=cac)
 
     @classmethod
@@ -141,7 +142,7 @@ class HardwareLayout:
         raise_errors: bool = True,
         errors: Optional[list[LoadError]] = None,
         component_decoder: Optional[ComponentDecoder] = None,
-    ) -> dict[str, Component]:
+    ) -> dict[str, Component[Any, Any]]:
         if errors is None:
             errors = []
         if component_decoder is None:
@@ -156,9 +157,15 @@ class HardwareLayout:
             for component_dict in layout.get(type_name, ()):
                 try:
                     component_gt = component_decoder.decode(component_dict)
+                    cac_gt = cacs.get(component_gt.ComponentAttributeClassId, None)
+                    if cac_gt is None:
+                        raise DcError(  # noqa: TRY301
+                            f"cac {component_gt.ComponentAttributeClassId} not loaded for component "
+                            f"<{component_gt.ComponentId}/<{component_gt.DisplayName}>\n"
+                        )
                     components[component_gt.ComponentId] = cls.make_component(
                         component_gt,
-                        cacs.get(component_gt.ComponentAttributeClassId, None),
+                        cac_gt,
                     )
                 except Exception as e:  # noqa: PERF203
                     if raise_errors:
@@ -167,24 +174,26 @@ class HardwareLayout:
         return components
 
     @classmethod
-    def make_node(cls, node_dict: dict, components: dict[str, Component]) -> ShNode:
-        component_id = node_dict.get("ComponentId")
-        if component_id:
-            component = components.get(component_id)
+    def make_node(
+        cls, node_dict: dict[str, Any], components: dict[str, Component[Any, Any]]
+    ) -> ShNode:
+        node_gt = SpaceheatNodeGt.model_validate(node_dict)
+        if node_gt.ComponentId:
+            component = components.get(node_gt.ComponentId)
             if component is None:
                 raise ValueError(
-                    f"ERROR. Component <{component_id}> not loaded "
-                    f"for node <{node_dict.get('Alias')}>"
+                    f"ERROR. Component <{node_gt.ComponentId}> not loaded "
+                    f"for node <{node_gt.Name}>"
                 )
         else:
             component = None
-        return ShNode(component=component, **node_dict)
+        return ShNode(component=component, **node_gt.model_dump())
 
     @classmethod
     def load_nodes(
         cls,
         layout: dict[Any, Any],
-        components: dict[str, Component],
+        components: dict[str, Component[Any, Any]],
         *,
         raise_errors: bool = True,
         errors: Optional[list[LoadError]] = None,
@@ -205,15 +214,18 @@ class HardwareLayout:
         return nodes
 
     @classmethod
-    def make_channel(cls, dc_dict: dict, nodes: dict[str, ShNode]) -> DataChannel:
-        about_node = nodes.get(dc_dict.get("AboutNodeName"))
-        captured_by_node = nodes.get(dc_dict.get("CapturedByNodeName"))
+    def make_channel(
+        cls, dc_dict: dict[str, Any], nodes: dict[str, ShNode]
+    ) -> DataChannel:
+        data_channel_gt = DataChannelGt.model_validate(dc_dict)
+        about_node = nodes.get(data_channel_gt.AboutNodeName)
+        captured_by_node = nodes.get(data_channel_gt.CapturedByNodeName)
         if about_node is None or captured_by_node is None:
             raise ValueError(
                 f"ERROR. DataChannel related nodes must exist for {dc_dict.get('Name')}!\n"
-                f"  For AboutNodeName <{dc_dict.get('AboutNodeName')}> "
+                f"  For AboutNodeName <{data_channel_gt.AboutNodeName}> "
                 f"got {about_node}\n"
-                f"  for CapturedByNodeName <{dc_dict.get('CapturedByNodeName')}>"
+                f"  for CapturedByNodeName <{data_channel_gt.CapturedByNodeName}>"
                 f"got {captured_by_node}"
             )
         return DataChannel(
@@ -222,13 +234,14 @@ class HardwareLayout:
 
     @classmethod
     def make_synth_channel(
-        cls, synth_dict: dict, nodes: dict[str, ShNode]
+        cls, synth_dict: dict[str, Any], nodes: dict[str, ShNode]
     ) -> SynthChannel:
-        created_by_node = nodes.get(synth_dict.get("CreatedByNodeName"))
+        created_by_node_name = synth_dict.get("CreatedByNodeName", "")
+        created_by_node = nodes.get(created_by_node_name)
         if created_by_node is None:
             raise ValueError(
                 f"ERROR. SynthChannel related nodes must exist for {synth_dict.get('Name')}!\n"
-                f"  For CreatedByNodeName<{synth_dict.get('CreatedByNodeName')}> "
+                f"  For CreatedByNodeName<{created_by_node_name}> "
                 f"got None!\n"
             )
         return SynthChannel(created_by_node=created_by_node, **synth_dict)
@@ -255,8 +268,12 @@ class HardwareLayout:
             node for node in nodes.values() if node.ActorClass in capturing_classes
         ]
         for node in active_nodes:
-            c: ComponentGt = node.component.gt
-            my_channel_names = [config.ChannelName for config in c.ConfigList]
+            if node.component is None:
+                my_channel_names = []
+            else:
+                my_channel_names = [
+                    config.ChannelName for config in node.component.gt.ConfigList
+                ]
             my_channels = [
                 dc for dc in data_channels.values() if dc.Name in my_channel_names
             ]
@@ -270,11 +287,11 @@ class HardwareLayout:
     def check_data_channel_consistency(
         cls,
         nodes: dict[str, ShNode],
-        components: dict[str, Component],
+        components: dict[str, Component[Any, Any]],
         data_channels: dict[str, DataChannel],
     ) -> None:
         cls.check_dc_id_uniqueness(data_channels)
-        dc_names_by_component = set()
+        dc_names_by_component: set[str] = set()
         for c in components.values():
             channel_names = {config.ChannelName for config in c.gt.ConfigList}
             if dc_names_by_component & channel_names:
@@ -301,10 +318,13 @@ class HardwareLayout:
             node for node in nodes.values() if node.ActorClass == ActorClass.PowerMeter
         ]
         for node in pm_nodes:
-            if node.component.gt.TypeName != "electric.meter.component.gt":
+            if (
+                node.component is None
+                or node.component.gt.TypeName != "electric.meter.component.gt"
+            ):
                 raise DcError(
                     f"Power Meter node {node} needs ElectricMeterComponent."
-                    f"Got {node.component.gt}"
+                    f"Got component {node.component}"
                 )
         em_nodes = [
             node
@@ -313,11 +333,14 @@ class HardwareLayout:
         ]
         for node in em_nodes:
             multi_comp_type_names = ["ads111x.based.component.gt"]
-            if node.component.gt.TypeName not in multi_comp_type_names:
+            if (
+                node.component is None
+                or node.component.gt.TypeName not in multi_comp_type_names
+            ):
                 raise DcError(
-                    f"Power Meter node {node} needs Compeont "
-                    f"in {multi_comp_type_names}. Got "
-                    f"{node.component.gt}"
+                    f"Power Meter node {node} needs Component "
+                    f"in {multi_comp_type_names}. Got component"
+                    f"{node.component}"
                 )
 
     @classmethod
@@ -402,7 +425,7 @@ class HardwareLayout:
         *,
         raise_errors: bool = True,
         errors: Optional[list[LoadError]] = None,
-    ) -> dict[str, DataChannel]:
+    ) -> dict[str, SynthChannel]:
         synths = {}
         if errors is None:
             errors = []
@@ -420,7 +443,7 @@ class HardwareLayout:
     def resolve_links(
         cls,
         nodes: dict[str, ShNode],
-        components: dict[str, Component],
+        components: dict[str, Component[Any, Any]],
         *,
         raise_errors: bool = True,
         errors: Optional[list[LoadError]] = None,
@@ -452,7 +475,7 @@ class HardwareLayout:
         layout: dict[Any, Any],
         *,
         cacs: dict[str, ComponentAttributeClassGt],
-        components: dict[str, Component],
+        components: dict[str, Component[Any, Any]],
         nodes: dict[str, ShNode],
         data_channels: dict[str, DataChannel],
         synth_channels: dict[str, SynthChannel],
@@ -465,7 +488,9 @@ class HardwareLayout:
             self.components_by_type[type(component)].append(component)
         self.nodes = dict(nodes)
         self.nodes_by_component = {
-            node.component_id: node.name for node in self.nodes.values()
+            node.component_id: node.name
+            for node in self.nodes.values()
+            if node.component_id is not None
         }
         self.data_channels = dict(data_channels)
         self.synth_channels = dict(synth_channels)
@@ -501,29 +526,31 @@ class HardwareLayout:
         )
 
     @classmethod
-    def validate_layout(
+    def validate_layout(  # noqa: C901
         cls,
         load_args: LoadArgs,
         *,
         raise_errors: bool,
-        errors: Optional[list[LoadError]],
+        errors: Optional[list[LoadError]] = None,
     ) -> None:
         nodes = load_args["nodes"]
         components = load_args["components"]
         data_channels = load_args["data_channels"]
+        errors_caught = []
         try:
             cls.check_node_unique_ids(nodes)
+        except Exception as e:  # noqa: BLE001
+            errors_caught.append(LoadError("hardware.layout", nodes, e))
+        try:
             cls.check_handle_hierarchy(nodes)
         except Exception as e:
             if raise_errors:
                 raise
-            errors.append(LoadError("hardware.layout", nodes, e))
+            errors_caught.append(LoadError("hardware.layout", nodes, e))
         try:
             cls.check_actor_component_consistency(nodes)
-        except Exception as e:
-            if raise_errors:
-                raise
-            errors.append(LoadError("hardware.layout", nodes, e))
+        except Exception as e:  # noqa: BLE001
+            errors_caught.append(LoadError("hardware.layout", nodes, e))
         try:
             cls.check_data_channel_consistency(
                 nodes,
@@ -534,10 +561,8 @@ class HardwareLayout:
                 nodes,
                 data_channels,
             )
-        except Exception as e:
-            if raise_errors:
-                raise
-            errors.append(LoadError("data.channel.gt", data_channels, e))
+        except Exception as e:  # noqa: BLE001
+            errors_caught.append(LoadError("data.channel.gt", data_channels, e))
         ads111x_components = [
             comp
             for comp in components.values()
@@ -546,12 +571,18 @@ class HardwareLayout:
         for c in ads111x_components:
             try:
                 cls.check_ads_terminal_block_consistency(c)
-            except Exception as e:  # noqa: PERF203
-                if raise_errors:
-                    raise
-                errors.append(
+            except Exception as e:  # noqa: BLE001, PERF203
+                errors_caught.append(
                     LoadError("ads111x.based.component.gt", c.gt.model_dump(), e)
                 )
+        if errors_caught:
+            if raise_errors:
+                s = "ERROR in HardwareLayout validation. Caught:\n"
+                for error in errors_caught:
+                    s += f"  TypeName: {error.type_name}  Exception: <{error.exception}>  src: {error.src_dict}\n"
+                raise DcError(s)
+            if errors is not None:
+                errors.extend(errors_caught)
 
     @classmethod
     def load_dict(  # noqa: PLR0913
@@ -629,16 +660,16 @@ class HardwareLayout:
             return d[handle]
         return None
 
-    def component(self, node_name: str) -> Optional[Component]:
+    def component(self, node_name: str) -> Optional[Component[Any, Any]]:
         return self.component_from_node(self.node(node_name, None))
 
     def cac(self, node_name: str) -> Optional[ComponentAttributeClassGt]:
         component = self.component(node_name)
         if component is None:
             return None
-        return component.cac
+        return typing.cast(ComponentAttributeClassGt, component.cac)
 
-    def get_component_as_type(self, component_id: str, type_: Type[T]) -> Optional[T]:
+    def get_component_as_type(self, component_id: str, type_: type[T]) -> Optional[T]:
         component = self.components.get(component_id, None)
         if component is not None and not isinstance(component, type_):
             raise ValueError(
@@ -646,7 +677,7 @@ class HardwareLayout:
             )
         return component
 
-    def get_components_by_type(self, type_: Type[T]) -> list[T]:
+    def get_components_by_type(self, type_: type[T]) -> list[T]:
         entries = self.components_by_type.get(type_, [])
         for i, entry in enumerate(entries):
             if not isinstance(entry, type_):
@@ -655,12 +686,14 @@ class HardwareLayout:
                     f"HardwareLayout.components_by_typ[{type_}] "
                     f"has the wrong type {type(entry)}"
                 )
-        return entries
+        return typing.cast(list[T], entries)
 
     def node_from_component(self, component_id: str) -> Optional[ShNode]:
         return self.nodes.get(self.nodes_by_component.get(component_id, ""), None)
 
-    def component_from_node(self, node: Optional[ShNode]) -> Optional[Component]:
+    def component_from_node(
+        self, node: Optional[ShNode]
+    ) -> Optional[Component[Any, Any]]:
         return (
             self.components.get(
                 node.component_id if node.component_id is not None else "", None
@@ -703,7 +736,7 @@ class HardwareLayout:
             raise DcError(f"{node} is missing boss {boss_handle}")
         return boss
 
-    def direct_reports(self, node: ShNode) -> List[ShNode]:
+    def direct_reports(self, node: ShNode) -> list[ShNode]:
         return [n for n in self.nodes.values() if self.boss_node(n) == node]
 
     def node_from_handle(self, handle: str) -> Optional[ShNode]:
@@ -742,7 +775,7 @@ class HardwareLayout:
         return my_scada_as_dict["GNodeId"]  # type: ignore[no-any-return]
 
     @cached_property
-    def all_telemetry_tuples_for_agg_power_metering(self) -> List[TelemetryTuple]:
+    def all_telemetry_tuples_for_agg_power_metering(self) -> list[TelemetryTuple]:
         telemetry_tuples = []
         for node in self.all_nodes_in_agg_power_metering:
             telemetry_tuples += [
@@ -755,13 +788,13 @@ class HardwareLayout:
         return telemetry_tuples
 
     @cached_property
-    def all_nodes_in_agg_power_metering(self) -> List[ShNode]:
+    def all_nodes_in_agg_power_metering(self) -> list[ShNode]:
         """All nodes whose power level is metered and included in power reporting by the Scada"""
         all_nodes = list(self.nodes.values())
         return list(filter(lambda x: x.in_power_metering, all_nodes))
 
     @cached_property
-    def all_power_meter_telemetry_tuples(self) -> List[TelemetryTuple]:
+    def all_power_meter_telemetry_tuples(self) -> list[TelemetryTuple]:
         return [
             TelemetryTuple(
                 AboutNode=self.nodes[
@@ -789,15 +822,15 @@ class HardwareLayout:
 
     @cached_property
     def power_meter_cac(self) -> ElectricMeterCacGt:
-        if not isinstance(self.power_meter_component.cac, ElectricMeterCacGt):
-            raise TypeError(
-                f"ERROR. power_meter_component cac {self.power_meter_component.cac}"
-                f" / {type(self.power_meter_component.cac)} is not an ElectricMeterCac"
-            )
-        return self.power_meter_node.component.cac  # type: ignore[union-attr, return-value]
+        if isinstance(self.power_meter_component.cac, ElectricMeterCacGt):
+            return self.power_meter_component.cac
+        raise TypeError(
+            f"ERROR. power_meter_component cac {self.power_meter_component.cac}"
+            f" / {type(self.power_meter_component.cac)} is not an ElectricMeterCac"
+        )
 
     @cached_property
-    def all_multipurpose_telemetry_tuples(self) -> List[TelemetryTuple]:
+    def all_multipurpose_telemetry_tuples(self) -> list[TelemetryTuple]:
         multi_nodes = list(
             filter(
                 lambda x: (
@@ -812,24 +845,26 @@ class HardwareLayout:
                 self.nodes.values(),
             )
         )
-        telemetry_tuples = []
+        telemetry_tuples: list[TelemetryTuple] = []
         for node in multi_nodes:
-            channels = [
-                self.data_channels[cfg.ChannelName]
-                for cfg in node.component.gt.ConfigList
-            ]
-            telemetry_tuples.extend(
-                TelemetryTuple(
-                    AboutNode=ch.about_node,
-                    SensorNode=ch.captured_by_node,
-                    TelemetryName=ch.TelemetryName,
+            if node.component is not None and (
+                channels := [
+                    self.data_channels[cfg.ChannelName]
+                    for cfg in node.component.gt.ConfigList
+                ]
+            ):
+                telemetry_tuples.extend(
+                    TelemetryTuple(
+                        AboutNode=ch.about_node,
+                        SensorNode=ch.captured_by_node,
+                        TelemetryName=ch.TelemetryName,
+                    )
+                    for ch in channels
                 )
-                for ch in channels
-            )
         return telemetry_tuples
 
     @cached_property
-    def my_telemetry_tuples(self) -> List[TelemetryTuple]:
+    def my_telemetry_tuples(self) -> list[TelemetryTuple]:
         """This will include telemetry tuples from all the multipurpose sensors, the most
         important of which is the power meter."""
         return (

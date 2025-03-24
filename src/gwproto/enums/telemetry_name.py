@@ -1,5 +1,4 @@
 from enum import auto
-from typing import List
 
 from gw.enums import GwStrEnum
 
@@ -59,13 +58,14 @@ class TelemetryName(GwStrEnum):
     VoltsTimesTen = auto()
     WattHours = auto()
     StorageLayer = auto()
+    PercentKeep = auto()
 
     @classmethod
     def default(cls) -> "TelemetryName":
         return cls.Unknown
 
     @classmethod
-    def values(cls) -> List[str]:
+    def values(cls) -> list[str]:
         return [elt.value for elt in cls]
 
     @classmethod
@@ -74,4 +74,4 @@ class TelemetryName(GwStrEnum):
 
     @classmethod
     def enum_version(cls) -> str:
-        return "004"
+        return "005"

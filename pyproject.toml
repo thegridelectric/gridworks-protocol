@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gridworks-protocol"
-version = "1.2.3"
+version = "1.2.4"
 description = "Gridworks Protocol"
 authors = ["Jessica Millar <jmillar@gridworks-consulting.com>"]
 license = "MIT"
@@ -44,7 +44,8 @@ xdoctest = {extras = ["colors"], version = ">=0.15.10"}
 myst-parser = {version = ">=0.16.1"}
 types-pytz = ">=2022.4.0.0"
 rich = ">=12.6.0"
-ruff = "^0.6.6"
+result = "^0.17.0"
+ruff = "^0.9.6"
 
 [tool.coverage.paths]
 source = ["src", "*/site-packages"]
@@ -73,17 +74,12 @@ pretty = false
 show_column_numbers = true
 show_error_codes = true
 show_error_context = false
-[[tool.mypy.overrides]]
-module = [
-    "gwproto.gt.*",
-    "gwproto.gs.*",
-    "gwproto.enums.*",
+plugins = [
+  "pydantic.mypy"
 ]
-ignore_errors = true
-
-[[tool.mypy.overrides]]
-module = "pendulum"
-implicit_reexport = true
+exclude = [
+    "hacking",
+]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

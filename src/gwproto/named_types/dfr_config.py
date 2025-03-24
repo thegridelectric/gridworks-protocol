@@ -4,7 +4,7 @@ from typing import Literal
 
 from pydantic import PositiveInt, StrictInt
 
-from gwproto.named_types.channel_config import ChannelConfig
+from gwproto.named_types import ChannelConfig
 
 
 class DfrConfig(ChannelConfig):

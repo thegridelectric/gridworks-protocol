@@ -38,8 +38,10 @@ def test_actor_class() -> None:
         "PumpDoctor",
         "StratBoss",
         "HpRelayBoss",
+        "SiegLoop",
+        "HpBoss",
     }
 
     assert ActorClass.default() == ActorClass.NoActor
     assert ActorClass.enum_name() == "sh.actor.class"
-    assert ActorClass.enum_version() == "005"
+    assert ActorClass.enum_version() == "007"

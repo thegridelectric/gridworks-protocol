@@ -112,6 +112,8 @@ class ActorClass(GwStrEnum):
     PumpDoctor = auto()
     StratBoss = auto()
     HpRelayBoss = auto()
+    SiegLoop = auto()
+    HpBoss = auto()
 
     @classmethod
     def default(cls) -> "ActorClass":
@@ -127,4 +129,4 @@ class ActorClass(GwStrEnum):
 
     @classmethod
     def enum_version(cls) -> str:
-        return "005"
+        return "007"

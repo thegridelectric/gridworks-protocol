@@ -31,7 +31,7 @@ class KeyparamChangeLog(BaseModel):
     Description: str
     Kind: KindOfParam
     TypeName: Literal["keyparam.change.log"] = "keyparam.change.log"
-    Version: Literal["000"] = "000"
+    Version: str = "000"
 
     model_config = ConfigDict(extra="allow", use_enum_values=True)
 

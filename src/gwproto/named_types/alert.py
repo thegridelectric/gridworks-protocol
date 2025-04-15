@@ -18,4 +18,4 @@ class Alert(BaseModel):
     Summary: str
     OpsGenieAlias: Optional[str] = None
     TypeName: Literal["alert"] = "alert"
-    Version: Literal["000"] = "000"
+    Version: str = "000"

@@ -35,7 +35,7 @@ class RelayActorConfig(ChannelConfig):
     DeEnergizedState: str
     EnergizedState: str
     TypeName: Literal["relay.actor.config"] = "relay.actor.config"
-    Version: Literal["002"] = "002"
+    Version: str = "002"
 
     @model_validator(mode="after")
     def check_axiom_1(self) -> Self:

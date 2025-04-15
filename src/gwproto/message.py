@@ -35,7 +35,7 @@ class Header(BaseModel):
     MessageId: str = ""
     AckRequired: bool = False
     TypeName: Literal["gridworks.header"] = "gridworks.header"
-    Version: Literal["001"] = "001"
+    Version: str = "001"
 
 
 # MyPy needs this because the class variable of Message is 'Header'.

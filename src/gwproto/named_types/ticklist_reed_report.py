@@ -18,4 +18,4 @@ class TicklistReedReport(BaseModel):
     ScadaReceivedUnixMs: UTCMilliseconds
     Ticklist: TicklistReed
     TypeName: Literal["ticklist.reed.report"] = "ticklist.reed.report"
-    Version: Literal["000"] = "000"
+    Version: str = "000"

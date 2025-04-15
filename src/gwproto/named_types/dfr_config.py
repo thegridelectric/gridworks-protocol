@@ -11,4 +11,4 @@ class DfrConfig(ChannelConfig):
     OutputIdx: PositiveInt
     InitialVoltsTimes100: StrictInt
     TypeName: Literal["dfr.config"] = "dfr.config"
-    Version: Literal["000"] = "000"
+    Version: str = "000"

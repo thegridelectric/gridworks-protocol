@@ -15,6 +15,6 @@ class SingleReading(BaseModel):
     Value: StrictInt
     ScadaReadTimeUnixMs: UTCMilliseconds
     TypeName: Literal["single.reading"] = "single.reading"
-    Version: Literal["000"] = "000"
+    Version: str = "000"
 
     model_config = ConfigDict(use_enum_values=True)

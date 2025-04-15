@@ -18,7 +18,7 @@ class Ads111xBasedComponentGt(ComponentGt):
     OpenVoltageByAds: list[float]
     ConfigList: Sequence[AdsChannelConfig]
     TypeName: Literal["ads111x.based.component.gt"] = "ads111x.based.component.gt"
-    Version: Literal["000"] = "000"
+    Version: str = "000"
 
     model_config = ConfigDict(use_enum_values=True)
 

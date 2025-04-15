@@ -22,7 +22,7 @@ class PicoTankModuleComponentGt(ComponentGt):
     SerialNumber: str = "NA"
     AsyncCaptureDeltaMicroVolts: int
     TypeName: Literal["pico.tank.module.component.gt"] = "pico.tank.module.component.gt"
-    Version: Literal["000"] = "000"
+    Version: str = "000"
 
     model_config = ConfigDict(extra="allow")
 

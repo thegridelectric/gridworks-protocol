@@ -46,4 +46,4 @@ class EgaugeRegisterConfig(BaseModel):
         description="The EGauge unit - typically A, Hz, or W.",
     )
     TypeName: Literal["egauge.register.config"] = "egauge.register.config"
-    Version: Literal["000"] = "000"
+    Version: str = "000"

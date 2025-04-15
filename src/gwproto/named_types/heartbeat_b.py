@@ -32,7 +32,7 @@ class HeartbeatB(BaseModel):
         ),
     )
     TypeName: Literal["heartbeat.b"] = "heartbeat.b"
-    Version: Literal["001"] = "001"
+    Version: str = "001"
 
     def __hash__(self) -> int:
         return hash((type(self), *self.__dict__.values()))

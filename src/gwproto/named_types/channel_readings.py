@@ -23,7 +23,7 @@ class ChannelReadings(BaseModel):
     ValueList: list[StrictInt]
     ScadaReadTimeUnixMsList: list[UTCMilliseconds]
     TypeName: Literal["channel.readings"] = "channel.readings"
-    Version: Literal["002"] = "002"
+    Version: str = "002"
 
     @model_validator(mode="after")
     def check_axiom_1(self) -> Self:

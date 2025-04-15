@@ -20,7 +20,7 @@ class MachineStates(BaseModel):
     StateList: list[str]
     UnixMsList: list[UTCMilliseconds]
     TypeName: Literal["machine.states"] = "machine.states"
-    Version: Literal["000"] = "000"
+    Version: str = "000"
 
     @model_validator(mode="after")
     def check_axiom_1(self) -> Self:

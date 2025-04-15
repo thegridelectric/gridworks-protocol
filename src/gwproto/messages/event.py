@@ -41,7 +41,7 @@ class StartupEvent(EventBase):
 class ShutdownEvent(EventBase):
     Reason: str
     TypeName: Literal["gridworks.event.shutdown"] = "gridworks.event.shutdown"
-    Version: Literal["001"] = "001"
+    Version: str = "001"
 
 
 class Problems(Enum):
@@ -54,7 +54,7 @@ class ProblemEvent(EventBase):
     Summary: str
     Details: str = ""
     TypeName: Literal["gridworks.event.problem"] = "gridworks.event.problem"
-    Version: Literal["001"] = "001"
+    Version: str = "001"
 
     @field_validator("ProblemType", mode="before")
     @classmethod
@@ -73,48 +73,48 @@ class MQTTConnectEvent(MQTTCommEvent):
     TypeName: Literal["gridworks.event.comm.mqtt.connect"] = (
         "gridworks.event.comm.mqtt.connect"
     )
-    Version: Literal["001"] = "001"
+    Version: str = "001"
 
 
 class MQTTConnectFailedEvent(MQTTCommEvent):
     TypeName: Literal["gridworks.event.comm.mqtt.connect.failed"] = (
         "gridworks.event.comm.mqtt.connect.failed"
     )
-    Version: Literal["001"] = "001"
+    Version: str = "001"
 
 
 class MQTTDisconnectEvent(MQTTCommEvent):
     TypeName: Literal["gridworks.event.comm.mqtt.disconnect"] = (
         "gridworks.event.comm.mqtt.disconnect"
     )
-    Version: Literal["001"] = "001"
+    Version: str = "001"
 
 
 class MQTTFullySubscribedEvent(CommEvent):
     TypeName: Literal["gridworks.event.comm.mqtt.fully.subscribed"] = (
         "gridworks.event.comm.mqtt.fully.subscribed"
     )
-    Version: Literal["001"] = "001"
+    Version: str = "001"
 
 
 class ResponseTimeoutEvent(CommEvent):
     TypeName: Literal["gridworks.event.comm.response.timeout"] = (
         "gridworks.event.comm.response.timeout"
     )
-    Version: Literal["001"] = "001"
+    Version: str = "001"
 
 
 class PeerActiveEvent(CommEvent):
     TypeName: Literal["gridworks.event.comm.peer.active"] = (
         "gridworks.event.comm.peer.active"
     )
-    Version: Literal["001"] = "001"
+    Version: str = "001"
 
 
 class ReportEvent(EventBase):
     Report: Report
     TypeName: Literal["report.event"] = "report.event"
-    Version: Literal["000", "002"] = "002"
+    Version: str = "002"
 
     @model_validator(mode="after")
     def infer_base_fields(self) -> Self:

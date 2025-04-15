@@ -25,7 +25,7 @@ class DataChannelGt(BaseModel):
     StartS: Optional[UTCSeconds] = None
     Id: UUID4Str
     TypeName: Literal["data.channel.gt"] = "data.channel.gt"
-    Version: Literal["001"] = "001"
+    Version: str = "001"
 
     @model_validator(mode="after")
     def check_axiom_1(self) -> Self:

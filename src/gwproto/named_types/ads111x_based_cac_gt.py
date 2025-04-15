@@ -23,7 +23,7 @@ class Ads111xBasedCacGt(ComponentAttributeClassGt):
     TotalTerminalBlocks: PositiveInt
     TelemetryNameList: list[TelemetryName]
     TypeName: Literal["ads111x.based.cac.gt"] = "ads111x.based.cac.gt"
-    Version: Literal["000"] = "000"
+    Version: str = "000"
 
     model_config = ConfigDict(extra="allow", use_enum_values=True)
 

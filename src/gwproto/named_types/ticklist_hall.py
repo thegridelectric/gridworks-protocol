@@ -12,7 +12,7 @@ class TicklistHall(BaseModel):
     RelativeMicrosecondList: list[StrictInt]
     PicoBeforePostTimestampNanoSecond: StrictInt
     TypeName: Literal["ticklist.hall"] = "ticklist.hall"
-    Version: Literal["101"] = "101"
+    Version: str = "101"
 
     @model_validator(mode="after")
     def check_axiom_1(self) -> Self:

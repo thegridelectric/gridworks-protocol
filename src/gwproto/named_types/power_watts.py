@@ -18,4 +18,4 @@ class PowerWatts(BaseModel):
 
     Watts: int
     TypeName: Literal["power.watts"] = "power.watts"
-    Version: Literal["000"] = "000"
+    Version: str = "000"

@@ -27,7 +27,7 @@ class FsmAtomicReport(BaseModel):
     UnixTimeMs: UTCMilliseconds
     TriggerId: UUID4Str
     TypeName: Literal["fsm.atomic.report"] = "fsm.atomic.report"
-    Version: Literal["000"] = "000"
+    Version: str = "000"
 
     model_config = ConfigDict(extra="allow")
 

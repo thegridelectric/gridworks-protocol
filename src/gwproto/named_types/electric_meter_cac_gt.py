@@ -10,4 +10,4 @@ class ElectricMeterCacGt(ComponentAttributeClassGt):
     TelemetryNameList: list[TelemetryName]
     DefaultBaud: Optional[int] = None
     TypeName: Literal["electric.meter.cac.gt"] = "electric.meter.cac.gt"
-    Version: Literal["001"] = "001"
+    Version: str = "001"

@@ -20,7 +20,7 @@ class SpaceheatNodeGt(BaseModel):
     InPowerMetering: Optional[bool] = None
     ShNodeId: UUID4Str
     TypeName: Literal["spaceheat.node.gt"] = "spaceheat.node.gt"
-    Version: Literal["200"] = "200"
+    Version: str = "200"
 
     @model_validator(mode="after")
     def check_axiom_1(self) -> Self:

@@ -53,6 +53,10 @@ class ShNode(SpaceheatNodeGt):
 
     @property
     def actor_class(self) -> ActorClassEnum:
+        return ActorClassEnum(self.ActorClass)
+
+    @property
+    def actor_class_str(self) -> str:
         return self.ActorClass
 
     @property

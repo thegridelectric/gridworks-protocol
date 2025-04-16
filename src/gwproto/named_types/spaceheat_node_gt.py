@@ -5,7 +5,6 @@ from typing import Literal, Optional
 from pydantic import BaseModel, ConfigDict, StrictInt, model_validator
 from typing_extensions import Self
 
-from gwproto.enums import ActorClass
 from gwproto.property_format import HandleName, SpaceheatName, UUID4Str
 
 
@@ -13,7 +12,7 @@ class SpaceheatNodeGt(BaseModel):
     Name: SpaceheatName
     ActorHierarchyName: Optional[HandleName] = None
     Handle: Optional[HandleName] = None
-    ActorClass: ActorClass
+    ActorClass: str
     DisplayName: Optional[str] = None
     ComponentId: Optional[str] = None
     NameplatePowerW: Optional[StrictInt] = None

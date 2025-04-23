@@ -18,4 +18,4 @@ class TicklistHallReport(BaseModel):
     ScadaReceivedUnixMs: UTCMilliseconds
     Ticklist: TicklistHall
     TypeName: Literal["ticklist.hall.report"] = "ticklist.hall.report"
-    Version: Literal["000"] = "000"
+    Version: str = "000"

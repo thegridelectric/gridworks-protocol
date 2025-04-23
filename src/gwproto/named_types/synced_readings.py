@@ -16,7 +16,7 @@ class SyncedReadings(BaseModel):
     ValueList: list[StrictInt]
     ScadaReadTimeUnixMs: UTCMilliseconds
     TypeName: Literal["synced.readings"] = "synced.readings"
-    Version: Literal["000"] = "000"
+    Version: str = "000"
 
     model_config = ConfigDict(use_enum_values=True)
 

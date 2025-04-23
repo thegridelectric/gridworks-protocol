@@ -23,7 +23,7 @@ class TankModuleParams(BaseModel):
     AsyncCaptureDeltaMicroVolts: PositiveInt
     CaptureOffsetS: Optional[float] = None
     TypeName: Literal["tank.module.params"] = "tank.module.params"
-    Version: Literal["100"] = "100"
+    Version: str = "100"
 
     @field_validator("PicoAB")
     @classmethod

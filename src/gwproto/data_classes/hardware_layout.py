@@ -175,9 +175,14 @@ class HardwareLayout:
 
     @classmethod
     def make_node(
-        cls, node_dict: dict[str, Any], components: dict[str, Component[Any, Any]]
+        cls,
+        node_dict: dict[str, Any] | SpaceheatNodeGt,
+        components: dict[str, Component[Any, Any]],
     ) -> ShNode:
-        node_gt = SpaceheatNodeGt.model_validate(node_dict)
+        if isinstance(node_dict, SpaceheatNodeGt):
+            node_gt = node_dict
+        else:
+            node_gt = SpaceheatNodeGt.model_validate(node_dict)
         if node_gt.ComponentId:
             component = components.get(node_gt.ComponentId)
             if component is None:
@@ -440,6 +445,38 @@ class HardwareLayout:
         return synths
 
     @classmethod
+    def resolve_node_links(
+        cls,
+        node: ShNode,
+        all_nodes: dict[str, ShNode],
+        components: dict[str, Component[Any, Any]],
+        *,
+        raise_errors: bool = True,
+        errors: Optional[list[LoadError]] = None,
+    ) -> None:
+        if errors is None:
+            errors = []
+        try:
+            if node.component_id is not None:
+                component = components.get(node.component_id, None)
+                if component is None:
+                    raise DcError(  # noqa: TRY301
+                        f"{node.name} component {node.component_id} not loaded!"
+                    )
+                if isinstance(component, ComponentResolver):
+                    component.resolve(
+                        node.name,
+                        all_nodes,
+                        components,
+                    )
+        except Exception as e:
+            if raise_errors:
+                raise
+            errors.append(
+                LoadError("ShNode", {"node": {"name": node.Name, "node": node}}, e)
+            )
+
+    @classmethod
     def resolve_links(
         cls,
         nodes: dict[str, ShNode],
@@ -450,25 +487,14 @@ class HardwareLayout:
     ) -> None:
         if errors is None:
             errors = []
-        for node_name, node in nodes.items():
-            d = {"node": {"name": node_name, "node": node}}
-            try:
-                if node.component_id is not None:
-                    component = components.get(node.component_id, None)
-                    if component is None:
-                        raise DcError(  # noqa: TRY301
-                            f"{node.name} component {node.component_id} not loaded!"
-                        )
-                    if isinstance(component, ComponentResolver):
-                        component.resolve(
-                            node.name,
-                            nodes,
-                            components,
-                        )
-            except Exception as e:
-                if raise_errors:
-                    raise
-                errors.append(LoadError("ShNode", d, e))
+        for node in nodes.values():
+            cls.resolve_node_links(
+                node=node,
+                all_nodes=nodes,
+                components=components,
+                raise_errors=raise_errors,
+                errors=errors,
+            )
 
     def __init__(  # noqa: PLR0913
         self,
@@ -644,6 +670,24 @@ class HardwareLayout:
         )
         cls.validate_layout(load_args, raise_errors=raise_errors, errors=errors)
         return HardwareLayout(layout, **load_args)
+
+    def add_node(self, node: dict[str, Any] | SpaceheatNodeGt) -> ShNode:
+        node = self.make_node(node, self.components)
+        if node.Name in self.nodes:
+            raise ValueError(f"ERROR. Node with name {node.Name} already exists")
+        if node.ComponentId in self.nodes_by_component:
+            raise ValueError(
+                f"ERROR. Node with component id {node.ComponentId} "
+                "already exists. "
+                f"Tried to add node {node.Name}. Existing node is "
+                f"{self.nodes_by_component[node.ComponentId]}"
+            )
+        self.nodes[node.Name] = node
+        self.resolve_node_links(node, self.nodes, self.components, raise_errors=True)
+        if node.ComponentId is not None:
+            self.nodes_by_component[node.ComponentId] = node.Name
+        self.clear_property_cache()
+        return node
 
     def channel(self, name: str, default: Any = None) -> DataChannel:  # noqa: ANN401
         return self.data_channels.get(name, default)

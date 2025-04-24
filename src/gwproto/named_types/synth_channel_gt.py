@@ -29,4 +29,4 @@ class SynthChannelGt(BaseModel):
     DisplayName: str
     SyncReportMinutes: PositiveInt
     TypeName: Literal["synth.channel.gt"] = "synth.channel.gt"
-    Version: Literal["000"] = "000"
+    Version: str = "000"

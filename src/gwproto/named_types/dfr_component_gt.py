@@ -13,4 +13,4 @@ class DfrComponentGt(ComponentGt):
     ConfigList: Sequence[DfrConfig]
     I2cAddressList: list[PositiveInt]
     TypeName: Literal["dfr.component.gt"] = "dfr.component.gt"
-    Version: Literal["000"] = "000"
+    Version: str = "000"

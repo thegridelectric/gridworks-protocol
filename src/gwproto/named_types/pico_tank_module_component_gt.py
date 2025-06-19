@@ -11,6 +11,7 @@ from gwproto.named_types.component_gt import ComponentGt
 
 class PicoTankModuleComponentGt(ComponentGt):
     Enabled: bool
+    PicoHwUid: Optional[str] = None
     PicoAHwUid: Optional[str] = None
     PicoBHwUid: Optional[str] = None
     TempCalcMethod: TempCalcMethod

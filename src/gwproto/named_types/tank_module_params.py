@@ -2,7 +2,8 @@
 
 from typing import Literal, Optional
 
-from pydantic import BaseModel, PositiveInt, field_validator
+from pydantic import BaseModel, PositiveInt, model_validator
+from typing_extensions import Self
 
 from gwproto.property_format import (
     SpaceheatName,
@@ -11,25 +12,28 @@ from gwproto.property_format import (
 
 class TankModuleParams(BaseModel):
     """
-    Parameters expected by a GridWorks TankModule2
+    Parameters for a  GRIDWORKS__TANKMODULE2 device or a GRIDWORKS__TANKMODULE3 device
     """
 
     HwUid: str
     ActorNodeName: SpaceheatName
-    PicoAB: str
+    PicoAB: Optional[str] = None
     CapturePeriodS: PositiveInt
     Samples: PositiveInt
     NumSampleAverages: PositiveInt
     AsyncCaptureDeltaMicroVolts: PositiveInt
     CaptureOffsetS: Optional[float] = None
     TypeName: Literal["tank.module.params"] = "tank.module.params"
-    Version: str = "100"
+    Version: str = "110"
 
-    @field_validator("PicoAB")
-    @classmethod
-    def check_pico_a_b(cls, v: str) -> str:
+    @model_validator(mode="after")
+    def check_pico_a_b(self) -> Self:
         """
-        Axiom 1: "PicoAB must be a or b"
+        Axiom 1: "If PicoAB exists it must be a or b"
         """
-        # Implement Axiom(s)
-        return v
+        if self.PicoAB and self.PicoAB not in ["a", "b"]:
+            raise ValueError(
+                f"Axiom 1: If PicoAB exists it must be a or b, not {self.PicoAB}"
+            )
+
+        return self

@@ -49,8 +49,9 @@ def test_make_model() -> None:
         "GRIDWORKS__PICOFLOWREED",
         "SAIER__SENHZG1WA",
         "DFROBOT__DFR0971_TIMES2",
+        "GRIDWORKS__TANKMODULE3",
     }
 
     assert MakeModel.default() == MakeModel.UNKNOWNMAKE__UNKNOWNMODEL
     assert MakeModel.enum_name() == "spaceheat.make.model"
-    assert MakeModel.enum_version() == "004"
+    assert MakeModel.enum_version() == "005"

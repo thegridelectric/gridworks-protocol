@@ -134,6 +134,7 @@ class MakeModel(GwStrEnum):
     GRIDWORKS__PICOFLOWREED = auto()
     SAIER__SENHZG1WA = auto()
     DFROBOT__DFR0971_TIMES2 = auto()
+    GRIDWORKS__TANKMODULE3 = auto()
 
     @classmethod
     def default(cls) -> "MakeModel":
@@ -149,4 +150,4 @@ class MakeModel(GwStrEnum):
 
     @classmethod
     def enum_version(cls) -> str:
-        return "004"
+        return "005"

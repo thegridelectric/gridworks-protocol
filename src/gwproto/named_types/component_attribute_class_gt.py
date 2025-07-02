@@ -64,7 +64,8 @@ class ComponentAttributeClassGt(BaseModel):
             MakeModel.EKM__HOTSPWM075HD: 'e52cb571-913a-4614-90f4-5cc81f8e7fe5',
             MakeModel.GRIDWORKS__SIMMULTITEMP: '627ac482-24fe-46b2-ba8c-3d6f1e1ee069',
             MakeModel.GRIDWORKS__SIMTOTALIZER: 'a88f8f4c-fe1e-4645-a7f4-249912131dc8',
-            MakeModel.KRIDA__DOUBLEEMR16I2CV3: '29eab8b1-100f-4230-bb44-3a2fcba33cc3'.
+            MakeModel.KRIDA__DOUBLEEMR16I2CV3: '29eab8b1-100f-4230-bb44-3a2fcba33cc3',
+            MakeModel.GRIDWORKS__TANKMODULE3: 'cbe49338-5d14-47ff-b05e-22031876962e',
         }
         """
         if (

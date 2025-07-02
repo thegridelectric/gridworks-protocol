@@ -42,4 +42,5 @@ CACS_BY_MAKE_MODEL: dict[str, str] = {
     MakeModel.GRIDWORKS__PICOFLOWREED.value: "aa4ad342-883a-4f89-bf86-9eb430aeb308",
     MakeModel.SAIER__SENHZG1WA.value: "58ecde10-b015-4711-9659-d5bfb7665393",
     MakeModel.DFROBOT__DFR0971_TIMES2.value: "69a0e36e-9c15-4d50-8a7b-ae63649ecc36",
+    MakeModel.GRIDWORKS__TANKMODULE3.value: "cbe49338-5d14-47ff-b05e-22031876962e",
 }

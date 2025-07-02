@@ -30,14 +30,16 @@ class PicoTankModuleComponentGt(ComponentGt):
     @model_validator(mode="after")
     def check_axiom_1(self) -> Self:
         """
-        Axiom 1: Exactly one of PicoHwUid, PicoAwUid, PicoBHwUid exists.
+        Axiom 1: PicoHwUid exists  XOR (both PicoAHwUid and PicoBHwUid exist)
         """
-        id_fields = [self.PicoHwUid, self.PicoAHwUid, self.PicoBHwUid]
-        num_provided = sum(1 for v in id_fields if v is not None)
-
-        if num_provided != 1:
+        if self.PicoHwUid is not None:
+            if self.PicoAHwUid or self.PicoBHwUid:
+                raise ValueError(
+                    "Can't have both PicoHwUid and any of (PicoAHwUid, PicoBHwUid"
+                )
+        elif not (self.PicoAHwUid and self.PicoBHwUid):
             raise ValueError(
-                "Exactly one of PicoHwUid, PicoAHwUid, PicoBHwUid must be provided"
+                "If PicoHwUid is not set, PicoAHwUid and PicoBHwUid must both be set!"
             )
 
         return self

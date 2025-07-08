@@ -26,7 +26,6 @@ from gwproto.data_classes.data_channel import DataChannel
 from gwproto.data_classes.resolver import ComponentResolver
 from gwproto.data_classes.sh_node import ShNode
 from gwproto.data_classes.synth_channel import SynthChannel
-from gwproto.data_classes.telemetry_tuple import TelemetryTuple
 from gwproto.decoders import (
     CacDecoder,
     ComponentDecoder,
@@ -35,7 +34,7 @@ from gwproto.default_decoders import (
     default_cac_decoder,
     default_component_decoder,
 )
-from gwproto.enums import ActorClass, TelemetryName
+from gwproto.enums import ActorClass
 from gwproto.named_types import (
     ComponentAttributeClassGt,
     ComponentGt,
@@ -819,36 +818,10 @@ class HardwareLayout:
         return my_scada_as_dict["GNodeId"]  # type: ignore[no-any-return]
 
     @cached_property
-    def all_telemetry_tuples_for_agg_power_metering(self) -> list[TelemetryTuple]:
-        telemetry_tuples = []
-        for node in self.all_nodes_in_agg_power_metering:
-            telemetry_tuples += [
-                TelemetryTuple(
-                    AboutNode=node,
-                    SensorNode=self.power_meter_node,
-                    TelemetryName=TelemetryName.PowerW,
-                )
-            ]
-        return telemetry_tuples
-
-    @cached_property
     def all_nodes_in_agg_power_metering(self) -> list[ShNode]:
         """All nodes whose power level is metered and included in power reporting by the Scada"""
         all_nodes = list(self.nodes.values())
         return list(filter(lambda x: x.in_power_metering, all_nodes))
-
-    @cached_property
-    def all_power_meter_telemetry_tuples(self) -> list[TelemetryTuple]:
-        return [
-            TelemetryTuple(
-                AboutNode=self.nodes[
-                    self.data_channels[config.ChannelName].AboutNodeName
-                ],
-                SensorNode=self.power_meter_node,
-                TelemetryName=self.data_channels[config.ChannelName].TelemetryName,
-            )
-            for config in self.power_meter_component.gt.ConfigList
-        ]
 
     @cached_property
     def power_meter_node(self) -> ShNode:
@@ -871,47 +844,4 @@ class HardwareLayout:
         raise TypeError(
             f"ERROR. power_meter_component cac {self.power_meter_component.cac}"
             f" / {type(self.power_meter_component.cac)} is not an ElectricMeterCac"
-        )
-
-    @cached_property
-    def all_multipurpose_telemetry_tuples(self) -> list[TelemetryTuple]:
-        multi_nodes = list(
-            filter(
-                lambda x: (
-                    x.actor_class
-                    in {
-                        ActorClass.MultipurposeSensor,
-                        ActorClass.HubitatTankModule,
-                        ActorClass.HubitatPoller,
-                        ActorClass.HoneywellThermostat,
-                    }
-                ),
-                self.nodes.values(),
-            )
-        )
-        telemetry_tuples: list[TelemetryTuple] = []
-        for node in multi_nodes:
-            if node.component is not None and (
-                channels := [
-                    self.data_channels[cfg.ChannelName]
-                    for cfg in node.component.gt.ConfigList
-                ]
-            ):
-                telemetry_tuples.extend(
-                    TelemetryTuple(
-                        AboutNode=ch.about_node,
-                        SensorNode=ch.captured_by_node,
-                        TelemetryName=ch.TelemetryName,
-                    )
-                    for ch in channels
-                )
-        return telemetry_tuples
-
-    @cached_property
-    def my_telemetry_tuples(self) -> list[TelemetryTuple]:
-        """This will include telemetry tuples from all the multipurpose sensors, the most
-        important of which is the power meter."""
-        return (
-            self.all_power_meter_telemetry_tuples
-            + self.all_multipurpose_telemetry_tuples
         )

@@ -130,7 +130,7 @@ def is_handle_name(v: str) -> None:
     first_char = first_word[0]
     if not first_char.isalpha():
         raise ValueError(
-            f"Most significant word of &lt;{v}> must start wif64th alphabet char."
+            f"Most significant word of &lt;{v}> must start with alphabet char."
         )
     for word in x:
         for char in word:

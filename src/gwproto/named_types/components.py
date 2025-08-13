@@ -2,9 +2,6 @@ from gwproto.named_types.ads111x_based_component_gt import Ads111xBasedComponent
 from gwproto.named_types.component_gt import ComponentGt
 from gwproto.named_types.dfr_component_gt import DfrComponentGt
 from gwproto.named_types.electric_meter_component_gt import ElectricMeterComponentGt
-from gwproto.named_types.fibaro_smart_implant_component_gt import (
-    FibaroSmartImplantComponentGt,
-)
 from gwproto.named_types.hubitat_component_gt import HubitatComponentGt
 from gwproto.named_types.hubitat_poller_component_gt import HubitatPollerComponentGt
 from gwproto.named_types.hubitat_tank_component_gt import HubitatTankComponentGt
@@ -22,7 +19,6 @@ __all__ = [
     "ComponentGt",
     "DfrComponentGt",
     "ElectricMeterComponentGt",
-    "FibaroSmartImplantComponentGt",
     "HubitatComponentGt",
     "HubitatPollerComponentGt",
     "HubitatTankComponentGt",

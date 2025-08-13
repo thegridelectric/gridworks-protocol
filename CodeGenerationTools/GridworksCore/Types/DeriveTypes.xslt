@@ -2,13 +2,13 @@
     <xsl:output method="xml" indent="yes" />
     <xsl:param name="root" />
     <xsl:param name="codee-root" />
-    <xsl:include href="../CommonXsltTemplates.xslt"/>
+    <xsl:include href="../CommonXsltTemplates.xslt"/> 
+    <xsl:include href="GnfCommon.xslt"/>
     <xsl:param name="exclude-collections" select="'false'" />
     <xsl:param name="relationship-suffix" select="''" />
     <xsl:variable name="airtable" select="/" />
     <xsl:variable name="squot">'</xsl:variable>
     <xsl:variable name="init-space">             </xsl:variable>
-    <xsl:include href="GnfCommon.xslt"/>
 
     <xsl:template match="@*|node()">
         <xsl:copy>
@@ -55,18 +55,21 @@
 
 <xsl:text>"""Type </xsl:text><xsl:value-of select="$type-name"/><xsl:text>, version </xsl:text>
 <xsl:value-of select="Version"/><xsl:text>"""
-
-from typing import Any, Literal</xsl:text>
-	<xsl:if test="count($airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id) and (IsList = 'true')])>0">
-<xsl:text>, List</xsl:text>
+from gw.named_types.gw_base import GwBase</xsl:text>
+<xsl:if test="count(PropertyFormatsUsed)>0">
+<xsl:for-each select="$airtable//PropertyFormats/PropertyFormat[(normalize-space(Name) ='MarketSlotNameLrdFormat')  and (count(TypesThatUse[text()=$versioned-type-id])>0)]">
+<xsl:text>, check_is_market_slot_name_lrd_format</xsl:text>
+</xsl:for-each>
 </xsl:if>
+<xsl:text>
+from typing import Literal</xsl:text>
 
 <xsl:if test="count($airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id) and not (IsRequired = 'true')]) > 0">
 <xsl:text>, Optional</xsl:text>
 </xsl:if>
 
 
-<xsl:variable name="use-field-validator" select="count($airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id) and
+<xsl:variable name="single-attribute-axiom" select="count($airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id) and
                             ((Axiom != '') or
                             (not (PrimitiveFormat = '') 
                                 and PrimitiveFormat != 'UUID4Str'
@@ -81,15 +84,15 @@ from typing import Any, Literal</xsl:text>
                             )
                             ]) > 0" />
 
-<xsl:text>
-from pydantic import BaseModel</xsl:text>
+<xsl:variable name="multi-attribute-axiom" select="count($airtable//TypeAxioms/TypeAxiom[MultiPropertyAxiom=$versioned-type-id]) > 0" />
 
-    
-<xsl:if test="$use-field-validator='true'">
-<xsl:text>, field_validator</xsl:text>
-</xsl:if>
-<xsl:if test="count($airtable//TypeAxioms/TypeAxiom[MultiPropertyAxiom=$versioned-type-id]) > 0 or count($airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id) and (IsEnum='true')]) > 0">
-<xsl:text>, model_validator</xsl:text>
+<xsl:variable name="needs-pydantic" select="$single-attribute-axiom or $multi-attribute-axiom or count($airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id) and (IsEnum='true')]) > 0 or count($airtable//PropertyFormats/PropertyFormat[(normalize-space(Name) ='PositiveInteger')  and (count(TypesThatUse[text()=$versioned-type-id])>0)]) > 0 or ExtraAllowed='true' or count($airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id) and (PrimitiveType = 'Integer') and not(PropertyFormat = 'UTCMilliseconds') and not(PropertyFormat = 'UTCSeconds') and not(PropertyFormat = 'PositiveInteger')]) > 0" />
+
+<xsl:if test="$needs-pydantic">
+<xsl:text>
+from pydantic import</xsl:text>
+<xsl:if test="$single-attribute-axiom or $multi-attribute-axiom or count($airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id) and (IsEnum='true')]) > 0">
+<xsl:text> model_validator</xsl:text>
 </xsl:if>
 <xsl:if test="count($airtable//PropertyFormats/PropertyFormat[(normalize-space(Name) ='PositiveInteger')  and (count(TypesThatUse[text()=$versioned-type-id])>0)]) > 0">
 <xsl:text>, PositiveInt</xsl:text>
@@ -102,21 +105,17 @@ from pydantic import BaseModel</xsl:text>
                                 and not(PropertyFormat = 'UTCSeconds')
                                 and not(PropertyFormat = 'PositiveInteger')
                                 ])>0">
+<xsl:text>, StrictInt</xsl:text>
+</xsl:if>
 </xsl:if>
 
 
-<xsl:if test="count($airtable//TypeAxioms/TypeAxiom[MultiPropertyAxiom=$versioned-type-id]) > 0">
+<xsl:if test="$single-attribute-axiom or $multi-attribute-axiom">
 <xsl:text>
 from typing_extensions import Self</xsl:text>
 </xsl:if>
 
 <xsl:text>&#10;</xsl:text>
-<xsl:if test="count(PropertyFormatsUsed)>0">
-<xsl:for-each select="$airtable//PropertyFormats/PropertyFormat[(normalize-space(Name) ='MarketSlotNameLrdFormat')  and (count(TypesThatUse[text()=$versioned-type-id])>0)]">
-<xsl:text>
-from gw import check_is_market_slot_name_lrd_format</xsl:text>
-</xsl:for-each>
-</xsl:if>
 <xsl:for-each select="$airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id)]">
 
 
@@ -210,7 +209,7 @@ from gwproto.property_format import (</xsl:text>
 
 class </xsl:text>
 <xsl:value-of select="$python-class-name"/>
-<xsl:text>(BaseModel):
+<xsl:text>(GwBase):
     """
     </xsl:text>
     <!-- One line title, if it exists -->
@@ -248,12 +247,18 @@ class </xsl:text>
 <xsl:for-each select="$airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id)]">
 <xsl:sort select="Idx" data-type="number"/>
 
-<xsl:variable name = "attribute-name">
+<xsl:variable name="attribute-name-camel">
         <xsl:value-of select="Value"/>
     <!-- If attribute is associated to a data class, add Id to the Attribute name-->
     <xsl:if test="not(normalize-space(SubTypeDataClass) = '') and not(IsList='true')">
     <xsl:text>Id</xsl:text>
     </xsl:if>
+</xsl:variable>
+
+<xsl:variable name = "attribute-name">
+    <xsl:call-template name="python-case">
+        <xsl:with-param name="camel-case-text" select="$attribute-name-camel"/>
+    </xsl:call-template>
 </xsl:variable>
 
 <xsl:variable name="enum-local-name">
@@ -271,7 +276,7 @@ class </xsl:text>
 
     <!-- If List, start the List bracket-->
     <xsl:if test="IsList = 'true'">
-    <xsl:text>List[</xsl:text>
+    <xsl:text>list[</xsl:text>
     </xsl:if>
     <xsl:choose>
     <xsl:when test="(IsPrimitive = 'true')">
@@ -353,8 +358,8 @@ class </xsl:text>
 </xsl:for-each>
 
 
-<xsl:text>    TypeName: Literal["</xsl:text><xsl:value-of select="TypeName"/><xsl:text>"] = "</xsl:text><xsl:value-of select="TypeName"/><xsl:text>"
-    Version: Literal["</xsl:text>
+<xsl:text>    type_name: Literal["</xsl:text><xsl:value-of select="TypeName"/><xsl:text>"] = "</xsl:text><xsl:value-of select="TypeName"/><xsl:text>"
+    version: Literal["</xsl:text>
 <xsl:value-of select="Version"/><xsl:text>"] = "</xsl:text><xsl:value-of select="Version"/><xsl:text>"</xsl:text>
 
 <xsl:if test="ExtraAllowed='true'"><xsl:text>
@@ -392,7 +397,7 @@ class </xsl:text>
 
         <!-- If List, start the List bracket-->
         <xsl:if test="IsList = 'true'">
-        <xsl:text>List[</xsl:text>
+        <xsl:text>list[</xsl:text>
         </xsl:if>
         <xsl:choose>
         <xsl:when test="(IsPrimitive = 'true')">
@@ -429,12 +434,18 @@ class </xsl:text>
         </xsl:if>
     </xsl:variable>
 
-    <xsl:variable name = "attribute-name">
+    <xsl:variable name="attribute-name-camel">
             <xsl:value-of select="Value"/>
         <!-- If attribute is associated to a data class, add Id to the Attribute name-->
         <xsl:if test="not(normalize-space(SubTypeDataClass) = '') and not(IsList='true')">
         <xsl:text>Id</xsl:text>
         </xsl:if>
+    </xsl:variable>
+
+    <xsl:variable name = "attribute-name">
+        <xsl:call-template name="python-case">
+            <xsl:with-param name="camel-case-text" select="$attribute-name-camel"/>
+        </xsl:call-template>
     </xsl:variable>
 
     <xsl:if test="((Axiom != '') or
@@ -451,13 +462,14 @@ class </xsl:text>
                             )">
     <xsl:text>
 
-    @field_validator("</xsl:text><xsl:value-of select="$attribute-name"/><xsl:text>"</xsl:text>
-
+    @model_validator</xsl:text>
     <xsl:if test="PreValidateFormat='true'">
-    <xsl:text>, mode="before"</xsl:text>
+    <xsl:text>(mode="before")</xsl:text>
     </xsl:if>
-    <xsl:text>)
-    @classmethod
+    <xsl:if test="not(PreValidateFormat='true')">
+    <xsl:text>(mode="after")</xsl:text>
+    </xsl:if>
+    <xsl:text>
     def </xsl:text>
 
     <!-- add an underscore if there are no axioms getting checked, in which case its just property formats and/or enums -->
@@ -467,11 +479,7 @@ class </xsl:text>
 
     <xsl:text>check_</xsl:text><xsl:call-template name="python-case">
         <xsl:with-param name="camel-case-text" select="$attribute-name"  />
-        </xsl:call-template><xsl:text>(cls, v: </xsl:text>
-        <xsl:value-of select="$attribute-type"/>
-        <xsl:text>) -> </xsl:text>
-        <xsl:value-of select="$attribute-type"/>
-        <xsl:text>:</xsl:text>
+        </xsl:call-template><xsl:text>(self) -> Self:</xsl:text>
 
         <xsl:if test="count($airtable//TypeAxioms/TypeAxiom[(normalize-space(SinglePropertyAxiom)=$type-attribute-id)]) > 1">
         <xsl:text>
@@ -533,8 +541,8 @@ class </xsl:text>
 
         <xsl:if test="not(IsRequired = 'true')">
                 <xsl:text>
-        if v is None:
-            return v</xsl:text>
+        if self.</xsl:text><xsl:value-of select="$attribute-name"/><xsl:text> is None:
+            return self</xsl:text>
         </xsl:if>
 
         <xsl:if test="count($airtable//TypeAxioms/TypeAxiom[(normalize-space(SinglePropertyAxiom)=$type-attribute-id)]) > 0">
@@ -561,7 +569,7 @@ class </xsl:text>
             <xsl:call-template name="python-case">
                 <xsl:with-param name="camel-case-text" select="translate(PrimitiveFormat,'.','_')"  />
                 </xsl:call-template>
-        <xsl:text>(v)
+        <xsl:text>(self.</xsl:text><xsl:value-of select="$attribute-name"/><xsl:text>)
         except ValueError as e:</xsl:text>
         <xsl:choose>
             <xsl:when test="string-length(PrimitiveFormat) + string-length(Value)> 24">
@@ -594,7 +602,7 @@ class </xsl:text>
                         and (IsList='true')">
         <xsl:text>
         try:
-            for elt in v:
+            for elt in self.</xsl:text><xsl:value-of select="$attribute-name"/><xsl:text>:
                 check_is_</xsl:text>
             <xsl:call-template name="python-case">
                 <xsl:with-param name="camel-case-text" select="translate(PrimitiveFormat,'.','_')"  />
@@ -612,7 +620,7 @@ class </xsl:text>
         <xsl:when test = "not(normalize-space(SubTypeDataClass) = '') and not(IsList='true')">
         <xsl:text>
         try:
-            is_uuid4_str(v)
+            is_uuid4_str(self.</xsl:text><xsl:value-of select="$attribute-name"/><xsl:text>)
         except ValueError as e:
             raise ValueError(
                 f"</xsl:text>
@@ -624,7 +632,7 @@ class </xsl:text>
         <xsl:when test="not(normalize-space(SubTypeDataClass) = '') and IsList='true'">
         <xsl:text>
         try:
-            for elt in v:
+            for elt in self.</xsl:text><xsl:value-of select="$attribute-name"/><xsl:text>:
                 is_uuid4_str(elt)
         except ValueError as e:
             raise ValueError(
@@ -652,7 +660,7 @@ class </xsl:text>
                 ) 
                 or (Axiom != '')">
         <xsl:text>
-        return v</xsl:text>
+        return self</xsl:text>
     </xsl:if>
     
         </xsl:for-each>

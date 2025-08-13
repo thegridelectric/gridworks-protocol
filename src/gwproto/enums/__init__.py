@@ -1,33 +1,31 @@
 """
-GridWorks Enums used in gwproto, the Application Shared Language (ASL) used by SCADA
-devices and AtomicTNodes to communicate with each other. These enums play a specific structural
-role as semantic "glue" within ASLs.
+Enums from the GridWorks Application Shared Languages (ASL)
 
-Key attributes:
-  - Enum values are translated into "GridWorks Type Enum Symbols" (GtEnumSymbols) when embedded
-  in a serialized type sent as a message from one Application and/or Actor to another.
-  - Each Enum has a unique name in the type registry (like spaceheat.telemetry.name), along
-  with a version (like 001).
-  - That name are interpretted locally in the SDK and do not necessarily carry the larger
-  context of the unique type registry name (for example gwproto uses TelemetryName, since
-  the `spaceheat` context goes without saying).
-  - Each Value/Symbol pair also has a version. Value/Symbol pairs cannot be changed or removed.
-  The only adjustments that can be made to an enum are adding more Value/Symbols. This is to
-  support forwards- and backwards- compatability in GridWorks Types that use these enums.
+The GridWorks ASL enables peer-to-peer shared vocabulary between energy system actors like
+SCADA devices, trading nodes, and market makers. Enums serve as the "controlled vocabulary"
+foundation that ensures everyone speaks the same language.
 
-If Enums are "glue", then GridWorks Types are the building blocks of SALs. Every SAL is comprised
-of a set of shared GridWorks Types.
+Key characteristics:
+ - Immutable evolution: Enum values can be added but never changed or removed, ensuring
+   backwards compatibility across distributed systems
+ - Transport-agnostic: Same enums work with RabbitMQ, HTTP APIs, Kafka, or any message delivery
+ - Organizational autonomy: Each organization can build exactly the sophistication they need
+   on top of shared foundations
+ - Constitutional governance: Follow naming conventions (left.right.dot format) and
+   ownership rules defined in the ASL registry
 
-Application Shared Languages are an evolution of the concept of Application Programming Interfaces.
-In a nutshell, an API can be viewed as a rather restricted version of an SAL, where only one application
-has anything complex/interesting to say and, in general, the developers/owners of that application
-have sole responsibility for managing the versioning and changing of that API. Note also that SALs
-do not make any a priori assumption about the relationship (i.e. the default client/server for an API)
-or the message delivery mechanism (i.e. via default GET/POST to RESTful URLs). For more information
-on these ideas:
-  - [GridWorks Enums](https://gridwork-type-registry.readthedocs.io/en/latest/types.html)
-  - [GridWorks Types](https://gridwork-type-registry.readthedocs.io/en/latest/types.html)
-  - [ASLs](https://gridwork-type-registry.readthedocs.io/en/latest/asls.html)
+Enums are the semantic building blocks that enable organizations to collaborate without
+compromising their independence. Unlike APIs where one party controls the vocabulary,
+ASL enums evolve through community governance while maintaining stability.
+
+Application Shared Languages represent an evolution beyond traditional APIs - enabling
+true peer-to-peer collaboration where organizations maintain autonomy while sharing
+vocabulary, rather than client/server relationships where one party dictates the interface.
+
+For more information:
+ - [Why GridWorks ASL Exists](https://gridworks-asl.readthedocs.io/motivation/)
+ - [ASL Rules and Guidelines](https://gridworks-asl.readthedocs.io/rules-and-guidelines/)
+ - [GridWorks ASL Overview](https://gridworks-asl.readthedocs.io/)
 """
 
 from gwproto.enums.actor_class import ActorClass
@@ -65,37 +63,37 @@ from gwproto.enums.thermistor_data_method import ThermistorDataMethod
 from gwproto.enums.unit import Unit
 
 __all__ = [
-    "ActorClass",  # [sh.actor.class.005](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shactorclass)
-    "AdminEvent",  # [admin.event.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#adminevent)
-    "AdminState",  # [admin.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#adminstate)
-    "AlertPriority",  # [alert.priority.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#alertpriority)
-    "AquastatControl",  # [aquastat.control.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#aquastatcontrolstate)
-    "ChangeAquastatControl",  # [change.aquastat.control.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeaquastatcontrol)
-    "ChangeHeatPumpControl",  # [change.heat.pump.control.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeheatpumpcontrol)
-    "ChangeHeatcallSource",  # [change.heatcall.source.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeheatcallsource)
-    "ChangePrimaryPumpControl",  # [change.primary.pump.control.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changeprimarypumpcontrol)
-    "ChangeRelayPin",  # [change.relay.pin.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changerelaypin)
-    "ChangeRelayState",  # [change.relay.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changerelaystate)
-    "ChangeStoreFlowRelay",  # [change.store.flow.relay.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changestoreflowrelay)
-    "ChangeValveState",  # [change.valve.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changevalvestate)
-    "FsmActionType",  # [sh.fsm.action.type.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shfsmactiontype)
-    "FsmName",  # [sh.fsm.name.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shfsmname)
-    "FsmReportType",  # [fsm.report.type.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#fsmreporttype)
-    "GpmFromHzMethod",  # [gpm.from.hz.method.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#gpmfromhzmethod)
-    "HeatPumpControl",  # [heat.pump.control.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#heatpumpcontrol)
-    "HeatcallSource",  # [heatcall.source.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#heatcallsource)
-    "HzCalcMethod",  # [hz.calc.method.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#hzcalcmethod)
-    "KindOfParam",  # [spaceheat.kind.of.param.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatkindofparam)
-    "MakeModel",  # [spaceheat.make.model.004](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatmakemodel)
-    "PrimaryPumpControl",  # [primary.pump.control.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#primarypumpcontrol)
-    "RelayClosedOrOpen",  # [relay.closed.or.open.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relayclosedoropen)
-    "RelayEnergizationState",  # [relay.energization.state.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relayenergizationstate)
-    "RelayPinSet",  # [relay.pin.set.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relaypinset)
-    "RelayWiringConfig",  # [relay.wiring.config.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relaywiringconfig)
-    "StoreFlowRelay",  # [store.flow.relay.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#storeflowrelay)
-    "Strategy",  # [spaceheat.strategy.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatstrategy)
-    "TelemetryName",  # [spaceheat.telemetry.name.004](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheattelemetryname)
-    "TempCalcMethod",  # [temp.calc.method.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#tempcalcmethod)
-    "ThermistorDataMethod",  # [thermistor.data.method.000](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#thermistordatamethod)
-    "Unit",  # [spaceheat.unit.001](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatunit)
+    "ActorClass",
+    "AdminEvent",
+    "AdminState",
+    "AlertPriority",
+    "AquastatControl",
+    "ChangeAquastatControl",
+    "ChangeHeatPumpControl",
+    "ChangeHeatcallSource",
+    "ChangePrimaryPumpControl",
+    "ChangeRelayPin",
+    "ChangeRelayState",
+    "ChangeStoreFlowRelay",
+    "ChangeValveState",
+    "FsmActionType",
+    "FsmName",
+    "FsmReportType",
+    "GpmFromHzMethod",
+    "HeatPumpControl",
+    "HeatcallSource",
+    "HzCalcMethod",
+    "KindOfParam",
+    "MakeModel",
+    "PrimaryPumpControl",
+    "RelayClosedOrOpen",
+    "RelayEnergizationState",
+    "RelayPinSet",
+    "RelayWiringConfig",
+    "StoreFlowRelay",
+    "Strategy",
+    "TelemetryName",
+    "TempCalcMethod",
+    "ThermistorDataMethod",
+    "Unit",
 ]

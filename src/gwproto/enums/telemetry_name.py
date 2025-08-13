@@ -33,6 +33,8 @@ class TelemetryName(GwStrEnum):
       - VoltsTimesTen
       - WattHours
       - StorageLayer
+      - PercentKeep: Percentage of the flow in the Siegenthaler loop that returns to the
+        heat pump
 
     For more information:
       - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)

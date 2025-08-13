@@ -73,7 +73,10 @@ class ActorClass(GwStrEnum):
       - SynthGenerator
       - FakeAtn
       - PumpDoctor: An actor that monitors and resets pumps if necessary
-      - DefrostManager: Actor that handles the defrost cycle of a heat pump.
+      - StratBoss: Protects thermal stratification during heat pump transitions
+      - HpRelayBoss: Responsible for deciding when to close and open the HpScadaOps relay
+      - SiegLoop
+      - HpBoss
 
     For more information:
       - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)

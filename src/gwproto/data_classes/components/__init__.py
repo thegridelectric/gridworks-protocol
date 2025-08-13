@@ -6,9 +6,6 @@ from gwproto.data_classes.components.dfr_component import DfrComponent
 from gwproto.data_classes.components.electric_meter_component import (
     ElectricMeterComponent,
 )
-from gwproto.data_classes.components.fibaro_smart_implant_component import (
-    FibaroSmartImplantComponent,
-)
 from gwproto.data_classes.components.hubitat_component import HubitatComponent
 from gwproto.data_classes.components.hubitat_poller_component import (
     HubitatPollerComponent,
@@ -34,7 +31,6 @@ __all__ = [
     "Component",
     "DfrComponent",
     "ElectricMeterComponent",
-    "FibaroSmartImplantComponent",
     "HubitatComponent",
     "HubitatPollerComponent",
     "HubitatTankComponent",

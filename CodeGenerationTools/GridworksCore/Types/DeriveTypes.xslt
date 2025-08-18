@@ -38,7 +38,7 @@
                     <xsl:variable name="overwrite-mode">
 
                     <xsl:if test="not (Status = 'Pending')">
-                    <xsl:text>Never</xsl:text>
+                    <xsl:text>Always</xsl:text>
                     </xsl:if>
                     <xsl:if test="(Status = 'Pending')">
                     <xsl:text>Always</xsl:text>
@@ -88,16 +88,21 @@ from typing import Literal</xsl:text>
 
 <xsl:variable name="needs-pydantic" select="$single-attribute-axiom or $multi-attribute-axiom or count($airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id) and (IsEnum='true')]) > 0 or count($airtable//PropertyFormats/PropertyFormat[(normalize-space(Name) ='PositiveInteger')  and (count(TypesThatUse[text()=$versioned-type-id])>0)]) > 0 or ExtraAllowed='true' or count($airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id) and (PrimitiveType = 'Integer') and not(PropertyFormat = 'UTCMilliseconds') and not(PropertyFormat = 'UTCSeconds') and not(PropertyFormat = 'PositiveInteger')]) > 0" />
 
-<xsl:if test="$needs-pydantic">
-<xsl:text>
-from pydantic import</xsl:text>
+<xsl:variable name="pydantic-imports">
 <xsl:if test="$single-attribute-axiom or $multi-attribute-axiom or count($airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id) and (IsEnum='true')]) > 0">
-<xsl:text> model_validator</xsl:text>
+<xsl:text>model_validator</xsl:text>
 </xsl:if>
 <xsl:if test="count($airtable//PropertyFormats/PropertyFormat[(normalize-space(Name) ='PositiveInteger')  and (count(TypesThatUse[text()=$versioned-type-id])>0)]) > 0">
-<xsl:text>, PositiveInt</xsl:text>
+<xsl:if test="$single-attribute-axiom or $multi-attribute-axiom or count($airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id) and (IsEnum='true')]) > 0">
+<xsl:text>, </xsl:text>
 </xsl:if>
-<xsl:if test="ExtraAllowed='true'"><xsl:text>, ConfigDict</xsl:text>
+<xsl:text>PositiveInt</xsl:text>
+</xsl:if>
+<xsl:if test="ExtraAllowed='true'">
+<xsl:if test="$single-attribute-axiom or $multi-attribute-axiom or count($airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id) and (IsEnum='true')]) > 0 or count($airtable//PropertyFormats/PropertyFormat[(normalize-space(Name) ='PositiveInteger')  and (count(TypesThatUse[text()=$versioned-type-id])>0)]) > 0">
+<xsl:text>, </xsl:text>
+</xsl:if>
+<xsl:text>ConfigDict</xsl:text>
 </xsl:if>
 <xsl:if test="count($airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id) 
                                 and (PrimitiveType = 'Integer') 
@@ -105,8 +110,17 @@ from pydantic import</xsl:text>
                                 and not(PropertyFormat = 'UTCSeconds')
                                 and not(PropertyFormat = 'PositiveInteger')
                                 ])>0">
-<xsl:text>, StrictInt</xsl:text>
+<xsl:if test="$single-attribute-axiom or $multi-attribute-axiom or count($airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id) and (IsEnum='true')]) > 0 or count($airtable//PropertyFormats/PropertyFormat[(normalize-space(Name) ='PositiveInteger')  and (count(TypesThatUse[text()=$versioned-type-id])>0)]) > 0 or ExtraAllowed='true'">
+<xsl:text>, </xsl:text>
 </xsl:if>
+<xsl:text>StrictInt</xsl:text>
+</xsl:if>
+</xsl:variable>
+
+<xsl:if test="string-length(normalize-space($pydantic-imports)) > 0">
+<xsl:text>
+from pydantic import </xsl:text>
+<xsl:value-of select="normalize-space($pydantic-imports)"/>
 </xsl:if>
 
 

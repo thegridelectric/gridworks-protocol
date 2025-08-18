@@ -55,7 +55,7 @@
 
 <xsl:text>"""Type </xsl:text><xsl:value-of select="$type-name"/><xsl:text>, version </xsl:text>
 <xsl:value-of select="Version"/><xsl:text>"""
-from gw.named_types.gw_base import GwBase</xsl:text>
+from gw.named_types import GwBase</xsl:text>
 <xsl:if test="count(PropertyFormatsUsed)>0">
 <xsl:for-each select="$airtable//PropertyFormats/PropertyFormat[(normalize-space(Name) ='MarketSlotNameLrdFormat')  and (count(TypesThatUse[text()=$versioned-type-id])>0)]">
 <xsl:text>, check_is_market_slot_name_lrd_format</xsl:text>

@@ -13,12 +13,7 @@ from gwproto.property_format import (
 
 
 class ChannelReadings(GwBase):
-    """
-    A list of timestamped readings (values) for a data channel. This is meant to be reported
-    for non-local consumption (AtomicTNode, other) by a SCADA. Therefore, the data channel is
-    referenced by its globally unique identifier. The receiver needs to reference this idea
-    against a list of the data channels used by the SCADA for accurate parsing.
-    """
+    """ASL schema of record [channel.readings v000](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/schemas/channel.readings.000.yaml)"""
 
     channel_name: SpaceheatName
     value_list: list[StrictInt]

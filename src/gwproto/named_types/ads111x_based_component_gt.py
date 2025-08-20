@@ -13,6 +13,8 @@ from gwproto.property_format import (
 
 
 class Ads111xBasedComponentGt(ComponentGt):
+    """ASL schema of record [ads111x.based.component.gt v000](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/schemas/ads111x.based.component.gt.000.yaml)"""
+
     open_voltage_by_ads: list[float]
     config_list: list[AdsChannelConfig]
     type_name: Literal["ads111x.based.component.gt"] = "ads111x.based.component.gt"

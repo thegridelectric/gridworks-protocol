@@ -224,36 +224,13 @@ from gwproto.property_format import (</xsl:text>
 class </xsl:text>
 <xsl:value-of select="$python-class-name"/>
 <xsl:text>(GwBase):
-    """
-    </xsl:text>
-    <!-- One line title, if it exists -->
-    <xsl:if test="(normalize-space(Title) != '')">
-        <xsl:value-of select="Title"/>
-            <!-- With a space before the Description (if description exists)-->
-            <xsl:if test="(normalize-space(Description) != '')">
-                <xsl:text>.
+    """ASL schema of record [</xsl:text>
+<xsl:value-of select="TypeName"/><xsl:text> v</xsl:text>
+<xsl:value-of select="Version"/>
+<xsl:text>](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/schemas/</xsl:text>
+<xsl:value-of select="TypeName"/><xsl:text>.</xsl:text><xsl:value-of select="Version"/><xsl:text>.yaml)"""
 
-    </xsl:text>
-            </xsl:if>
-    </xsl:if>
-
-    <!-- Type Description, wrapped, if it exists -->
-    <xsl:if test="(normalize-space(Description) != '')">
-    <xsl:call-template name="wrap-text">
-        <xsl:with-param name="text" select="normalize-space(concat(Description, ' ', UpdateDescription))"/>
-        <xsl:with-param name="indent-spaces" select="4"/>
-    </xsl:call-template>
-    </xsl:if>
-
-
-    <xsl:if test="(normalize-space(Url) != '')">
-    <xsl:text>
-
-    [More info](</xsl:text>
-        <xsl:value-of select="normalize-space(Url)"/>
-        <xsl:text>)</xsl:text>
-    </xsl:if>
-    <xsl:text>
+<xsl:text>
     """
 </xsl:text>
 
@@ -709,7 +686,7 @@ class </xsl:text>
 
         <xsl:text>
         """
-        # Implement check for axiom </xsl:text><xsl:value-of select="AxiomNumber"/><xsl:text>"
+        # Implement check for axiom </xsl:text><xsl:value-of select="AxiomNumber"/><xsl:text>""
         return self</xsl:text>
 
     </xsl:for-each>

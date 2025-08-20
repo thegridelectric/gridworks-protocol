@@ -15,6 +15,6 @@ def test_dfr_component_gt_generated() -> None:
         "Version": "000",
     }
 
-    d2 = DfrComponentGt.model_validate(d).model_dump(exclude_none=True)
+    d2 = DfrComponentGt.from_dict(d).to_dict()
 
     assert d2 == d

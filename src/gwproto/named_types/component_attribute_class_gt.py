@@ -12,6 +12,8 @@ from gwproto.type_helpers import CACS_BY_MAKE_MODEL
 
 
 class ComponentAttributeClassGt(GwBase):
+    """ASL schema of record [component.attribute.class.gt v000](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/schemas/component.attribute.class.gt.000.yaml)"""
+
     component_attribute_class_id: UUID4Str
     display_name: Optional[str] = None
     make_model: MakeModel

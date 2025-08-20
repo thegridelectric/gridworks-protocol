@@ -11,6 +11,8 @@ from gwproto.property_format import (
 
 
 class Ads111xBasedCacGt(ComponentAttributeClassGt):
+    """ASL schema of record [ads111x.based.cac.gt v000](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/schemas/ads111x.based.cac.gt.000.yaml)"""
+
     ads_i2c_address_list: list[StrictInt]
     total_terminal_blocks: PositiveInt
     telemetry_name_list: list[TelemetryName]

@@ -16,7 +16,7 @@ from gwproto.property_format import (
 
 
 class AnalogDispatch(GwBase):
-    """ """
+    """ASL schema of record [analog.dispatch v000](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/schemas/analog.dispatch.000.yaml)"""
 
     from_g_node_alias: Optional[LeftRightDotStr] = None
     from_handle: HandleName

@@ -16,11 +16,13 @@ from gwproto.property_format import (
 
 
 class DataChannelGt(GwBase):
+    """ASL schema of record [data.channel.gt v001](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/schemas/data.channel.gt.001.yaml)"""
+
     name: SpaceheatName
     display_name: str
     about_node_name: SpaceheatName
     captured_by_node_name: SpaceheatName
-    telemetry_name: str
+    telemetry_name: TelemetryName
     terminal_asset_alias: LeftRightDotStr
     in_power_metering: Optional[bool] = None
     start_s: Optional[UTCSeconds] = None

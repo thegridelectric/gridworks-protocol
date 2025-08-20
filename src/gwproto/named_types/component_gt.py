@@ -13,6 +13,8 @@ from gwproto.property_format import (
 
 
 class ComponentGt(GwBase):
+    """ASL schema of record [component.gt v001](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/schemas/component.gt.001.yaml)"""
+
     component_id: UUID4Str
     component_attribute_class_id: UUID4Str
     config_list: list[ChannelConfig]

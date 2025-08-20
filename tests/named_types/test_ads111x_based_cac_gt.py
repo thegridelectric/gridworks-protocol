@@ -16,6 +16,6 @@ def test_ads111x_based_cac_gt_generated() -> None:
         "Version": "000",
     }
 
-    d2 = Ads111xBasedCacGt.model_validate(d).model_dump(exclude_none=True)
+    d2 = Ads111xBasedCacGt.from_dict(d).to_dict()
     assert type(d2["MakeModel"]) is str
     assert d2 == d

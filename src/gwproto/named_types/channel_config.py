@@ -13,6 +13,8 @@ from gwproto.property_format import (
 
 
 class ChannelConfig(GwBase):
+    """ASL schema of record [channel.config v000](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/schemas/channel.config.000.yaml)"""
+
     channel_name: SpaceheatName
     poll_period_ms: Optional[PositiveInt] = None
     capture_period_s: PositiveInt

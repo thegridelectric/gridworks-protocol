@@ -9,6 +9,8 @@ from gwproto.named_types.channel_config import ChannelConfig
 
 
 class AdsChannelConfig(ChannelConfig):
+    """ASL schema of record [ads.channel.config v000](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/schemas/ads.channel.config.000.yaml)"""
+
     terminal_block_idx: PositiveInt
     thermistor_make_model: MakeModel
     data_processing_method: Optional[ThermistorDataMethod] = None

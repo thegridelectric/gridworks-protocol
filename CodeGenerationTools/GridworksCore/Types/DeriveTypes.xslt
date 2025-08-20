@@ -229,9 +229,6 @@ class </xsl:text>
 <xsl:value-of select="Version"/>
 <xsl:text>](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/schemas/</xsl:text>
 <xsl:value-of select="TypeName"/><xsl:text>.</xsl:text><xsl:value-of select="Version"/><xsl:text>.yaml)"""
-
-<xsl:text>
-    """
 </xsl:text>
 
 

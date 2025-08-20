@@ -9,6 +9,6 @@ from gwproto.named_types.egauge_register_config import (
 
 
 class ElectricMeterChannelConfig(ChannelConfig):
-    EgaugeRegisterConfig: Optional[EgaugeConfig] = None
+    egauage_register_config: Optional[EgaugeConfig] = None
     TypeName: Literal["electric.meter.channel.config"] = "electric.meter.channel.config"
     Version: str = "000"

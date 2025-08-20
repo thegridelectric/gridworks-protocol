@@ -375,13 +375,13 @@ sphinx-basic-ng = ">=1.0.0.beta2"
 
 [[package]]
 name = "gridworks"
-version = "1.5.0"
+version = "1.5.4"
 description = "Gridworks"
 optional = false
 python-versions = "<4.0,>=3.11"
 files = [
-    {file = "gridworks-1.5.0-py3-none-any.whl", hash = "sha256:d39e5296371b76d98901d0d6563429ef23dc4733a6382a98d88c870e2c3ea076"},
-    {file = "gridworks-1.5.0.tar.gz", hash = "sha256:334abe4615d4b562050727f348b4d74d6ad5e6429c9d57fae8ba8112af9c0646"},
+    {file = "gridworks-1.5.4-py3-none-any.whl", hash = "sha256:7cb2a36d18028f50f1824252aa70fd70e22b11e5f1f9eaf0e26050fdac3ddda9"},
+    {file = "gridworks-1.5.4.tar.gz", hash = "sha256:244f3edc252e22153b3154143d6a039c3d74279d2e61d4dba83d66f431d0c45d"},
 ]
 
 [package.dependencies]
@@ -2313,4 +2313,4 @@ propcache = ">=0.2.1"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "eb9e8916f191fde996533042471163367026022bd0532ee4f1d099977cf96143"
+content-hash = "18de0f26b0fdd508a798e7d2b7bd7b1eda76f3c65c30485c4a7f957346fd2faf"

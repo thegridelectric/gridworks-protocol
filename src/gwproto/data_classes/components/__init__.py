@@ -6,11 +6,6 @@ from gwproto.data_classes.components.dfr_component import DfrComponent
 from gwproto.data_classes.components.electric_meter_component import (
     ElectricMeterComponent,
 )
-from gwproto.data_classes.components.hubitat_component import HubitatComponent
-from gwproto.data_classes.components.hubitat_poller_component import (
-    HubitatPollerComponent,
-)
-from gwproto.data_classes.components.hubitat_tank_component import HubitatTankComponent
 from gwproto.data_classes.components.i2c_multichannel_dt_relay_component import (
     I2cMultichannelDtRelayComponent,
 )
@@ -31,9 +26,6 @@ __all__ = [
     "Component",
     "DfrComponent",
     "ElectricMeterComponent",
-    "HubitatComponent",
-    "HubitatPollerComponent",
-    "HubitatTankComponent",
     "I2cMultichannelDtRelayComponent",
     "PicoFlowModuleComponent",
     "PicoTankModuleComponent",

@@ -19,9 +19,6 @@ from gwproto.named_types.electric_meter_component_gt import ElectricMeterCompone
 from gwproto.named_types.fsm_atomic_report import FsmAtomicReport
 from gwproto.named_types.fsm_full_report import FsmFullReport
 from gwproto.named_types.heartbeat_b import HeartbeatB
-from gwproto.named_types.hubitat_component_gt import HubitatComponentGt
-from gwproto.named_types.hubitat_poller_component_gt import HubitatPollerComponentGt
-from gwproto.named_types.hubitat_tank_component_gt import HubitatTankComponentGt
 from gwproto.named_types.i2c_multichannel_dt_relay_component_gt import (
     I2cMultichannelDtRelayComponentGt,
 )
@@ -67,9 +64,6 @@ __all__ = [
     "FsmAtomicReport",
     "FsmFullReport",
     "HeartbeatB",
-    "HubitatComponentGt",
-    "HubitatPollerComponentGt",
-    "HubitatTankComponentGt",
     "I2cMultichannelDtRelayComponentGt",
     "KeyparamChangeLog",
     "MachineStates",

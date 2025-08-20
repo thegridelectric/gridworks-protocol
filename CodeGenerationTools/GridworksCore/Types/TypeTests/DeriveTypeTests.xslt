@@ -129,7 +129,7 @@ def test_</xsl:text><xsl:value-of select="translate($type-name,'.','_')"/>
         "Version": "</xsl:text><xsl:value-of select="Version"/><xsl:text>",
     }
 
-    d2 = </xsl:text><xsl:value-of select="$class-name"/><xsl:text>.model_validate(d).model_dump(exclude_none=True)
+    d2 = </xsl:text><xsl:value-of select="$class-name"/><xsl:text>.from_dict(d).to_dict()
 
     assert d2 == d</xsl:text>
 

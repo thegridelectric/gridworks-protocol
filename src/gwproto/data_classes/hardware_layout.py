@@ -31,8 +31,8 @@ from gwproto.decoders import (
     ComponentDecoder,
 )
 from gwproto.default_decoders import (
-    default_cac_decoder,
-    default_component_decoder,
+    _get_default_cac_decoder,
+    _get_default_component_decoder,
 )
 from gwproto.enums import ActorClass
 from gwproto.named_types import (
@@ -85,7 +85,7 @@ class HardwareLayout:
         if errors is None:
             errors = []
         if cac_decoder is None:
-            cac_decoder = default_cac_decoder
+            cac_decoder = _get_default_cac_decoder()
         cacs: dict[str, ComponentAttributeClassGt] = {}
         for type_name in [
             "Ads111xBasedCacs",
@@ -145,7 +145,7 @@ class HardwareLayout:
         if errors is None:
             errors = []
         if component_decoder is None:
-            component_decoder = default_component_decoder
+            component_decoder = _get_default_component_decoder()
         components = {}
         for type_name in [
             "Ads111xBasedComponents",

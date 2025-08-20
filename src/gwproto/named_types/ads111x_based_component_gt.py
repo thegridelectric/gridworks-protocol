@@ -1,48 +1,58 @@
 """Type ads111x.based.component.gt, version 000"""
 
-from collections.abc import Sequence
-from typing import Literal
+from typing import Literal, Optional
 
-from pydantic import ConfigDict, field_validator
+from gw.named_types import GwBase
+from pydantic import ConfigDict, model_validator
+from typing_extensions import Self
 
-from gwproto.named_types.ads_channel_config import (
-    AdsChannelConfig,
-)
-from gwproto.named_types.component_gt import ComponentGt
+from gwproto.named_types.ads_channel_config import AdsChannelConfig
+from gwproto.named_types.channel_config import ChannelConfig
 from gwproto.property_format import (
+    UUID4Str,
     check_is_near5,
 )
 
 
-class Ads111xBasedComponentGt(ComponentGt):
-    OpenVoltageByAds: list[float]
-    ConfigList: Sequence[AdsChannelConfig]
-    TypeName: Literal["ads111x.based.component.gt"] = "ads111x.based.component.gt"
-    Version: str = "000"
+class Ads111xBasedComponentGt(GwBase):
+    """
+    TI ADS111x Based Temp Sensing Component.
 
-    model_config = ConfigDict(use_enum_values=True)
+    Designed for specific instances of a temp sensor based on the Texas Instrument ADS111X series
+    of chips used w 10K thermistors for reading temperature.
 
-    @field_validator("OpenVoltageByAds")
-    @classmethod
-    def _check_open_voltage_by_ads(cls, v: list[float]) -> list[float]:
+    [More info](https://drive.google.com/drive/u/0/folders/1oFvs4-kvwyzt220eYlFnwdzEgVCIbbt6)
+    """
+
+    component_id: UUID4Str
+    component_attribute_class_id: UUID4Str
+    display_name: Optional[str] = None
+    open_voltage_by_ads: list[float]
+    config_list: list[ChannelConfig]
+    thermistor_config_list: list[AdsChannelConfig]
+    hw_uid: Optional[str] = None
+    type_name: Literal["ads111x.based.component.gt"] = "ads111x.based.component.gt"
+    version: Literal["000"] = "000"
+
+    model_config = ConfigDict(extra="allow")
+
+    @model_validator(mode="after")
+    def _check_open_voltage_by_ads(self) -> Self:
         try:
-            for elt in v:
+            for elt in self.open_voltage_by_ads:
                 check_is_near5(elt)
         except ValueError as e:
             raise ValueError(
                 f"OpenVoltageByAds element failed Near5 format validation: {e}",
             ) from e
-        return v
+        return self
 
-    @field_validator("ConfigList")
-    @classmethod
-    def check_ads_channel_config_list(
-        cls, v: Sequence[AdsChannelConfig]
-    ) -> Sequence[AdsChannelConfig]:
+    @model_validator(mode="after")
+    def check_thermistor_config_list(self) -> Self:
         """
-            Axiom 1: Terminal Block consistency and Channel Name uniqueness.
+            Axiom 1: Terminal Block consistency and Channel Name uniqueness..
             Terminal Block consistency and Channel Name uniqueness. - Each TerminalBlockIdx occurs at
-        most once in the ConfigList .Each data channel occurs at most once in the ConfigList
+        most once in the ThermistorConfigList - Each data channel occurs at most once in the ThermistorConfigList
         """
         # Implement Axiom(s)
-        return v
+        return self

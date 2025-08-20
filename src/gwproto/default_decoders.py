@@ -1,21 +1,30 @@
-# ruff: noqa: ANN401, RUF100,
+# ruff: noqa: ANN401, RUF100, ANN202
 
-
-import gwproto.named_types.cacs
-import gwproto.named_types.components
-from gwproto.decoders import CacDecoder, ComponentDecoder
+from functools import lru_cache
 
 __all__ = [
-    "default_cac_decoder",
-    "default_component_decoder",
+    "_get_default_cac_decoder",
+    "_get_default_component_decoder",
 ]
 
-default_cac_decoder = CacDecoder(
-    model_name="DefaultCacDecoder",
-    modules=[gwproto.named_types.cacs],
-)
 
-default_component_decoder = ComponentDecoder(
-    model_name="DefaultComponentDecoder",
-    modules=[gwproto.named_types.components],
-)
+@lru_cache(maxsize=1)
+def _get_default_cac_decoder():
+    from gwproto.decoders import CacDecoder
+    from gwproto.named_types import cacs
+
+    return CacDecoder(
+        model_name="DefaultCacDecoder",
+        modules=[cacs],
+    )
+
+
+@lru_cache(maxsize=1)
+def _get_default_component_decoder():
+    from gwproto.decoders import ComponentDecoder
+    from gwproto.named_types import components
+
+    return ComponentDecoder(
+        model_name="DefaultComponentDecoder",
+        modules=[components],
+    )

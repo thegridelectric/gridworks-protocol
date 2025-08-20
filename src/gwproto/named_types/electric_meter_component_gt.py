@@ -10,15 +10,15 @@ from gwproto.named_types.electric_meter_channel_config import ElectricMeterChann
 
 
 class ElectricMeterComponentGt(ComponentGt):
-    ModbusHost: Optional[str] = None
-    ModbusPort: Optional[PositiveInt] = None
-    ConfigList: Sequence[ElectricMeterChannelConfig]
-    TypeName: Literal["electric.meter.component.gt"] = "electric.meter.component.gt"
-    Version: str = "001"
+    modbus_host: Optional[str] = None
+    modbus_port: Optional[PositiveInt] = None
+    config_list: Sequence[ElectricMeterChannelConfig]
+    type_name: Literal["electric.meter.component.gt"] = "electric.meter.component.gt"
+    version: str = "001"
 
-    @field_validator("ConfigList")
+    @field_validator("config_list")
     @classmethod
-    def check_electric_meter_config_list(
+    def check_config_list(
         cls, v: list[ElectricMeterChannelConfig]
     ) -> list[ElectricMeterChannelConfig]:
         """

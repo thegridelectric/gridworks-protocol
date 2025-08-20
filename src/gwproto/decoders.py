@@ -30,7 +30,7 @@ from gwproto.topic import MQTTTopic
 
 MessageDiscriminator = TypeVar("MessageDiscriminator", bound=Message[Any])
 
-TYPE_NAME_FIELD: str = "TypeName"
+TYPE_NAME_FIELD: str = "type_name"
 
 
 class MQTTCodec(abc.ABC):

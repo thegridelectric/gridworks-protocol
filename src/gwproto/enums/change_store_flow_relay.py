@@ -11,8 +11,8 @@ class ChangeStoreFlowRelay(GwStrEnum):
       - ChargeStore
 
     For more information:
-      - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
-      - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#changestoreflowrelay)
+        - [ASL Definition](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/type_definitions/enums/change.store.flow.relay.000.yaml)
+        - [GridWorks ASL Docs](https://gridworks-asl.readthedocs.io)
     """
 
     DischargeStore = auto()

@@ -20,8 +20,8 @@ class Unit(GwStrEnum):
       - ThermostatStateEnum
 
     For more information:
-      - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
-      - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatunit)
+        - [ASL Definition](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/type_definitions/enums/spaceheat.unit.001.yaml)
+        - [GridWorks ASL Docs](https://gridworks-asl.readthedocs.io)
     """
 
     Unknown = auto()

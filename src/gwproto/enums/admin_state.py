@@ -11,8 +11,8 @@ class AdminState(GwStrEnum):
       - Dormant
 
     For more information:
-      - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
-      - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#adminstate)
+        - [ASL Definition](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/type_definitions/enums/admin.state.000.yaml)
+        - [GridWorks ASL Docs](https://gridworks-asl.readthedocs.io)
     """
 
     Awake = auto()

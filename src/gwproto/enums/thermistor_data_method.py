@@ -13,8 +13,8 @@ class ThermistorDataMethod(GwStrEnum):
         reading, and then some sort of exponential weighted averaging on polled data.
 
     For more information:
-      - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
-      - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#thermistordatamethod)
+        - [ASL Definition](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/type_definitions/enums/thermistor.data.method.000.yaml)
+        - [GridWorks ASL Docs](https://gridworks-asl.readthedocs.io)
     """
 
     SimpleBeta = auto()

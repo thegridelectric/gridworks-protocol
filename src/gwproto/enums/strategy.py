@@ -12,8 +12,8 @@ class Strategy(GwStrEnum):
       - Ha1: HomeAlone1 - the first home alone strategy for House0. TODO: WRITE UP
 
     For more information:
-      - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
-      - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatstrategy)
+        - [ASL Definition](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/type_definitions/enums/spaceheat.strategy.000.yaml)
+        - [GridWorks ASL Docs](https://gridworks-asl.readthedocs.io)
     """
 
     Ha2Oil = auto()

@@ -88,8 +88,8 @@ class MakeModel(GwStrEnum):
       - GridWorks__TankModule3: tank module with 3 temperature sensors
 
     For more information:
-      - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
-      - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatmakemodel)
+        - [ASL Definition](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/type_definitions/enums/spaceheat.make.model.005.yaml)
+        - [GridWorks ASL Docs](https://gridworks-asl.readthedocs.io)
       - [More Info](https://gridworks-protocol.readthedocs.io/en/latest/make-model.html)
     """
 

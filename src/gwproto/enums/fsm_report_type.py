@@ -12,8 +12,8 @@ class FsmReportType(GwStrEnum):
       - Action
 
     For more information:
-      - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
-      - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#fsmreporttype)
+        - [ASL Definition](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/type_definitions/enums/fsm.report.type.000.yaml)
+        - [GridWorks ASL Docs](https://gridworks-asl.readthedocs.io)
       - [More Info](https://gridworks-protocol.readthedocs.io/en/latest/finite-state-machines.html)
     """
 

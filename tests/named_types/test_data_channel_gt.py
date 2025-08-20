@@ -19,7 +19,7 @@ def test_data_channel_gt_generated() -> None:
         "Version": "001",
     }
 
-    d2 = DataChannelGt.model_validate(d).model_dump(exclude_none=True)
+    d2 = DataChannelGt.from_dict(d).to_dict()
 
     assert d2 == d
 
@@ -30,4 +30,4 @@ def test_data_channel_gt_generated() -> None:
     assert type(d2["TelemetryName"]) is str
 
     d2 = dict(d, TelemetryName="unknown_enum_thing", InPowerMetering=False)
-    assert DataChannelGt(**d2).TelemetryName == TelemetryName.default()
+    assert DataChannelGt(**d2).telemetry_name == TelemetryName.default()

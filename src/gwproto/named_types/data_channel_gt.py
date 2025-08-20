@@ -2,7 +2,8 @@
 
 from typing import Literal, Optional
 
-from pydantic import BaseModel, ConfigDict, model_validator
+from gw.named_types import GwBase
+from pydantic import model_validator
 from typing_extensions import Self
 
 from gwproto.enums import TelemetryName
@@ -14,18 +15,18 @@ from gwproto.property_format import (
 )
 
 
-class DataChannelGt(BaseModel):
-    Name: SpaceheatName
-    DisplayName: str
-    AboutNodeName: SpaceheatName
-    CapturedByNodeName: SpaceheatName
-    TelemetryName: TelemetryName
-    TerminalAssetAlias: LeftRightDotStr
-    InPowerMetering: Optional[bool] = None
-    StartS: Optional[UTCSeconds] = None
-    Id: UUID4Str
-    TypeName: Literal["data.channel.gt"] = "data.channel.gt"
-    Version: str = "001"
+class DataChannelGt(GwBase):
+    name: SpaceheatName
+    display_name: str
+    about_node_name: SpaceheatName
+    captured_by_node_name: SpaceheatName
+    telemetry_name: str
+    terminal_asset_alias: LeftRightDotStr
+    in_power_metering: Optional[bool] = None
+    start_s: Optional[UTCSeconds] = None
+    id: UUID4Str
+    type_name: Literal["data.channel.gt"] = "data.channel.gt"
+    version: Literal["001"] = "001"
 
     @model_validator(mode="after")
     def check_axiom_1(self) -> Self:
@@ -33,11 +34,10 @@ class DataChannelGt(BaseModel):
         Axiom 1: Power Metering.
         If InPowerMetering is true then the TelemetryName must be PowerW
         """
-        if self.InPowerMetering and self.TelemetryName != TelemetryName.PowerW:
+
+        if self.in_power_metering and self.telemetry_name != TelemetryName.PowerW:
             raise ValueError(
                 "Axiom 1 violated! If InPowerMetering is true then"
-                f"the TelemetryName must be PowerW. Got  {self.TelemetryName}"
+                f"the TelemetryName must be PowerW. Got  {self.telemetry_name}"
             )
         return self
-
-    model_config = ConfigDict(use_enum_values=True)

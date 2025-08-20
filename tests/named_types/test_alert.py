@@ -14,6 +14,6 @@ def test_alert_generated() -> None:
         "Version": "000",
     }
 
-    d2 = Alert.model_validate(d).model_dump(exclude_none=True)
+    d2 = Alert.from_dict(d).to_dict()
 
     assert d2 == d

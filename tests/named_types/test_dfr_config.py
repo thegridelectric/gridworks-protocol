@@ -19,7 +19,7 @@ def test_dfr_config_generated() -> None:
         "Version": "000",
     }
 
-    d2 = DfrConfig.model_validate(d).model_dump(exclude_none=True)
+    d2 = DfrConfig.from_dict(d).to_dict()
 
     assert d2 == d
 
@@ -30,4 +30,4 @@ def test_dfr_config_generated() -> None:
     assert type(d2["Unit"]) is str
 
     d2 = dict(d, Unit="unknown_enum_thing")
-    assert DfrConfig(**d2).Unit == Unit.default()
+    assert DfrConfig(**d2).unit == Unit.default()

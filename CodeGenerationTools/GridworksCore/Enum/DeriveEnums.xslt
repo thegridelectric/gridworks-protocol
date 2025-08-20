@@ -32,7 +32,7 @@
                         </xsl:call-template>
                     </xsl:variable>
                     <FileSetFile>
-                                <xsl:element name="RelativePath"><xsl:text>../../../src/gwproto/enums/</xsl:text>
+                                <xsl:element name="RelativePath"><xsl:text>../../../src/gwprot/enums/</xsl:text>
                                 <xsl:value-of select="translate(LocalName,'.','_')"/><xsl:text>.py</xsl:text></xsl:element>
 
                         <OverwriteMode>Always</OverwriteMode>
@@ -86,10 +86,10 @@ class </xsl:text><xsl:value-of select="$enum-class-name"/>
     <xsl:text>
 
     For more information:
-      - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
-      - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#</xsl:text>
-    <xsl:value-of select="translate($enum-name,'.','')"/>
-    <xsl:text>)</xsl:text>
+        - [ASL Definition](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/type_definitions/enums/</xsl:text>
+       <xsl:value-of select="$enum-name"/> <xsl:text>.</xsl:text>
+       <xsl:value-of select="$enum-version"/><xsl:text>.yaml)
+        - [GridWorks ASL Docs](https://gridworks-asl.readthedocs.io)</xsl:text>
 
     <xsl:if test="(normalize-space(Url)!='')">
     <xsl:text>

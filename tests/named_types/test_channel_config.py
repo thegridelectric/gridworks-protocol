@@ -11,20 +11,21 @@ def test_channel_config_generated() -> None:
         "CapturePeriodS": 60,
         "AsyncCapture": True,
         "AsyncCaptureDelta": 30,
-        "Exponent": 0,
+        "Exponent": 6,
         "Unit": "W",
         "TypeName": "channel.config",
         "Version": "000",
     }
 
-    d2 = ChannelConfig.model_validate(d).model_dump(exclude_none=True)
+    d2 = ChannelConfig.from_dict(d).to_dict()
 
-    assert type(d2["Unit"]) is str
     assert d2 == d
 
     ######################################
-    # Behavior on unknown enum values: sends to default
+    # Enum related
     ######################################
 
+    assert type(d2["Unit"]) is str
+
     d2 = dict(d, Unit="unknown_enum_thing")
-    assert ChannelConfig(**d2).Unit == Unit.default()
+    assert ChannelConfig(**d2).unit == Unit.default()

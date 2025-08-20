@@ -8,7 +8,7 @@ from gwproto.named_types import ChannelConfig
 
 
 class DfrConfig(ChannelConfig):
-    OutputIdx: PositiveInt
-    InitialVoltsTimes100: StrictInt
-    TypeName: Literal["dfr.config"] = "dfr.config"
-    Version: str = "000"
+    output_idx: PositiveInt
+    initial_volts_times_100: StrictInt
+    type_name: Literal["dfr.config"] = "dfr.config"
+    version: str = "000"

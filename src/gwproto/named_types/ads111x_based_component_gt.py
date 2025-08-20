@@ -1,36 +1,20 @@
 """Type ads111x.based.component.gt, version 000"""
 
-from typing import Literal, Optional
+from typing import Literal
 
-from gw.named_types import GwBase
 from pydantic import ConfigDict, model_validator
 from typing_extensions import Self
 
 from gwproto.named_types.ads_channel_config import AdsChannelConfig
-from gwproto.named_types.channel_config import ChannelConfig
+from gwproto.named_types.component_gt import ComponentGt
 from gwproto.property_format import (
-    UUID4Str,
     check_is_near5,
 )
 
 
-class Ads111xBasedComponentGt(GwBase):
-    """
-    TI ADS111x Based Temp Sensing Component.
-
-    Designed for specific instances of a temp sensor based on the Texas Instrument ADS111X series
-    of chips used w 10K thermistors for reading temperature.
-
-    [More info](https://drive.google.com/drive/u/0/folders/1oFvs4-kvwyzt220eYlFnwdzEgVCIbbt6)
-    """
-
-    component_id: UUID4Str
-    component_attribute_class_id: UUID4Str
-    display_name: Optional[str] = None
+class Ads111xBasedComponentGt(ComponentGt):
     open_voltage_by_ads: list[float]
-    config_list: list[ChannelConfig]
-    thermistor_config_list: list[AdsChannelConfig]
-    hw_uid: Optional[str] = None
+    config_list: list[AdsChannelConfig]
     type_name: Literal["ads111x.based.component.gt"] = "ads111x.based.component.gt"
     version: Literal["000"] = "000"
 
@@ -48,7 +32,7 @@ class Ads111xBasedComponentGt(GwBase):
         return self
 
     @model_validator(mode="after")
-    def check_thermistor_config_list(self) -> Self:
+    def check_config_list(self) -> Self:
         """
             Axiom 1: Terminal Block consistency and Channel Name uniqueness..
             Terminal Block consistency and Channel Name uniqueness. - Each TerminalBlockIdx occurs at

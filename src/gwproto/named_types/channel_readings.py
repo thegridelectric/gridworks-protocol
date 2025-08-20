@@ -2,7 +2,8 @@
 
 from typing import Literal
 
-from pydantic import BaseModel, StrictInt, model_validator  # Count:true
+from gw.named_types import GwBase
+from pydantic import StrictInt, model_validator
 from typing_extensions import Self
 
 from gwproto.property_format import (
@@ -11,7 +12,7 @@ from gwproto.property_format import (
 )
 
 
-class ChannelReadings(BaseModel):
+class ChannelReadings(GwBase):
     """
     A list of timestamped readings (values) for a data channel. This is meant to be reported
     for non-local consumption (AtomicTNode, other) by a SCADA. Therefore, the data channel is
@@ -19,11 +20,11 @@ class ChannelReadings(BaseModel):
     against a list of the data channels used by the SCADA for accurate parsing.
     """
 
-    ChannelName: SpaceheatName
-    ValueList: list[StrictInt]
-    ScadaReadTimeUnixMsList: list[UTCMilliseconds]
-    TypeName: Literal["channel.readings"] = "channel.readings"
-    Version: str = "002"
+    channel_name: SpaceheatName
+    value_list: list[StrictInt]
+    scada_read_time_unix_ms_list: list[UTCMilliseconds]
+    type_name: Literal["channel.readings"] = "channel.readings"
+    version: Literal["002"] = "002"
 
     @model_validator(mode="after")
     def check_axiom_1(self) -> Self:

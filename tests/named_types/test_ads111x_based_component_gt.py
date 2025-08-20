@@ -150,7 +150,7 @@ def test_ads111x_based_component_gt_generated() -> None:
         "Version": "000",
     }
 
-    d2 = Ads111xBasedComponentGt.model_validate(d).model_dump(exclude_none=True)
+    d2 = Ads111xBasedComponentGt.from_dict(d).to_dict()
 
     assert type(d2["ConfigList"][0]["DataProcessingMethod"]) is str
     assert d2 == d

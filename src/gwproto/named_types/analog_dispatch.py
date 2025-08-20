@@ -2,7 +2,8 @@
 
 from typing import Literal, Optional
 
-from pydantic import BaseModel, StrictInt, model_validator
+from gw.named_types import GwBase
+from pydantic import StrictInt, model_validator
 from typing_extensions import Self
 
 from gwproto.property_format import (
@@ -14,16 +15,18 @@ from gwproto.property_format import (
 )
 
 
-class AnalogDispatch(BaseModel):
-    FromGNodeAlias: Optional[LeftRightDotStr] = None
-    FromHandle: HandleName
-    ToHandle: HandleName
-    AboutName: SpaceheatName
-    Value: StrictInt
-    TriggerId: UUID4Str
-    UnixTimeMs: UTCMilliseconds
-    TypeName: Literal["analog.dispatch"] = "analog.dispatch"
-    Version: str = "000"
+class AnalogDispatch(GwBase):
+    """ """
+
+    from_g_node_alias: Optional[LeftRightDotStr] = None
+    from_handle: HandleName
+    to_handle: HandleName
+    about_name: SpaceheatName
+    value: StrictInt
+    trigger_id: UUID4Str
+    unix_time_ms: UTCMilliseconds
+    type_name: Literal["analog.dispatch"] = "analog.dispatch"
+    version: Literal["000"] = "000"
 
     @model_validator(mode="after")
     def check_axiom_1(self) -> Self:
@@ -31,10 +34,5 @@ class AnalogDispatch(BaseModel):
         Axiom 1: FromHandle must be the immediate boss of ToHandle, unless ToHandle contains 'multiplexer'.
 
         """
-        if "multiplexer" in self.ToHandle:
-            return self
-        if ".".join(self.ToHandle.split(".")[:-1]) != self.FromHandle:
-            raise ValueError(
-                f"FromHandle {self.FromHandle} must be direct boss of ToHandle {self.ToHandle}"
-            )
+        # Implement check for axiom 1"
         return self

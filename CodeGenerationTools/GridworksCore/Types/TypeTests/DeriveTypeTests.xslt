@@ -153,7 +153,9 @@ def test_</xsl:text><xsl:value-of select="translate($type-name,'.','_')"/>
     assert </xsl:text>
    <xsl:value-of select="$class-name"/>
     <xsl:text>(**d2).</xsl:text>
-        <xsl:value-of select="Value"/>
+    <xsl:call-template name="python-case">
+        <xsl:with-param name="camel-case-text" select="Value" />
+    </xsl:call-template>
     <xsl:text> == </xsl:text>
     <xsl:call-template name="nt-case">
         <xsl:with-param name="type-name-text" select="EnumLocalName" />

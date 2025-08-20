@@ -10,7 +10,7 @@ from gwproto.named_types.dfr_config import DfrConfig
 
 
 class DfrComponentGt(ComponentGt):
-    ConfigList: Sequence[DfrConfig]
-    I2cAddressList: list[PositiveInt]
-    TypeName: Literal["dfr.component.gt"] = "dfr.component.gt"
-    Version: str = "000"
+    config_list: Sequence[DfrConfig]
+    i2c_address_list: list[PositiveInt]
+    type_name: Literal["dfr.component.gt"] = "dfr.component.gt"
+    version: str = "000"

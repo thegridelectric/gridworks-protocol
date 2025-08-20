@@ -2,7 +2,7 @@
 
 from typing import Literal, Optional
 
-from pydantic import BaseModel
+from gw.named_types import GwBase
 
 from gwproto.property_format import (
     LeftRightDotStr,
@@ -11,11 +11,11 @@ from gwproto.property_format import (
 )
 
 
-class Alert(BaseModel):
-    FromGNodeAlias: LeftRightDotStr
-    AboutNode: Optional[SpaceheatName] = None
-    UnixS: UTCSeconds
-    Summary: str
-    OpsGenieAlias: Optional[str] = None
-    TypeName: Literal["alert"] = "alert"
-    Version: str = "000"
+class Alert(GwBase):
+    from_g_node_alias: LeftRightDotStr
+    about_node: Optional[SpaceheatName] = None
+    unix_s: UTCSeconds
+    summary: str
+    ops_genie_alias: Optional[str] = None
+    type_name: Literal["alert"] = "alert"
+    version: Literal["000"] = "000"

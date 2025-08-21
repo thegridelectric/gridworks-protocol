@@ -1,7 +1,5 @@
 """Tests synth.channel.gt type, version 000"""
 
-import json
-
 from gwproto.enums import TelemetryName
 from gwproto.named_types import SynthChannelGt
 
@@ -20,8 +18,7 @@ def test_synth_channel_gt_generated() -> None:
         "Version": "000",
     }
 
-    t = SynthChannelGt.model_validate(d).model_dump_json(exclude_none=True)
-    d2 = json.loads(t)
+    d2 = SynthChannelGt.from_dict(d).to_dict()
     assert d == d2
 
     ######################################
@@ -31,4 +28,4 @@ def test_synth_channel_gt_generated() -> None:
     assert type(d2["TelemetryName"]) is str
 
     d2 = dict(d, TelemetryName="unknown_enum_thing")
-    assert SynthChannelGt(**d2).TelemetryName == TelemetryName.default()
+    assert SynthChannelGt(**d2).telemetry_name == TelemetryName.default()

@@ -12,6 +12,5 @@ def test_single_reading_generated() -> None:
         "Version": "000",
     }
 
-    d2 = SingleReading.model_validate(d).model_dump(exclude_none=True)
-
+    d2 = SingleReading.from_dict(d).to_dict()
     assert d2 == d

@@ -10,5 +10,5 @@ from gwproto.named_types.rest_poller_gt import RESTPollerSettings
 
 
 class RESTPollerComponentGt(ComponentGt):
-    Rest: RESTPollerSettings
-    TypeName: Literal["rest.poller.component.gt"] = "rest.poller.component.gt"
+    rest: RESTPollerSettings
+    type_name: Literal["rest.poller.component.gt"] = "rest.poller.component.gt"

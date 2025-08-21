@@ -96,7 +96,7 @@ class HardwareLayout:
             for cac_dict in layout.get(type_name, ()):
                 try:
                     cac = cac_decoder.decode(cac_dict)
-                    cacs[cac.ComponentAttributeClassId] = cac
+                    cacs[cac.component_attribute_class_id] = cac
                 except Exception as e:  # noqa: PERF203
                     if raise_errors:
                         raise
@@ -156,13 +156,13 @@ class HardwareLayout:
             for component_dict in layout.get(type_name, ()):
                 try:
                     component_gt = component_decoder.decode(component_dict)
-                    cac_gt = cacs.get(component_gt.ComponentAttributeClassId, None)
+                    cac_gt = cacs.get(component_gt.component_attribute_class_id, None)
                     if cac_gt is None:
                         raise DcError(  # noqa: TRY301
-                            f"cac {component_gt.ComponentAttributeClassId} not loaded for component "
-                            f"<{component_gt.ComponentId}/<{component_gt.DisplayName}>\n"
+                            f"cac {component_gt.component_attribute_class_id} not loaded for component "
+                            f"<{component_gt.component_id}/<{component_gt.display_name}>\n"
                         )
-                    components[component_gt.ComponentId] = cls.make_component(
+                    components[component_gt.component_id] = cls.make_component(
                         component_gt,
                         cac_gt,
                     )
@@ -182,11 +182,11 @@ class HardwareLayout:
             node_gt = node_dict
         else:
             node_gt = SpaceheatNodeGt.model_validate(node_dict)
-        if node_gt.ComponentId:
-            component = components.get(node_gt.ComponentId)
+        if node_gt.component_id:
+            component = components.get(node_gt.component_id)
             if component is None:
                 raise ValueError(
-                    f"ERROR. Component <{node_gt.ComponentId}> not loaded "
+                    f"ERROR. Component <{node_gt.component_id}> not loaded "
                     f"for node <{node_gt.Name}>"
                 )
         else:
@@ -269,7 +269,7 @@ class HardwareLayout:
             ActorClass.MultipurposeSensor,
         ]
         active_nodes = [
-            node for node in nodes.values() if node.ActorClass in capturing_classes
+            node for node in nodes.values() if node.actor_class in capturing_classes
         ]
         for node in active_nodes:
             if node.component is None:
@@ -279,12 +279,12 @@ class HardwareLayout:
                     config.ChannelName for config in node.component.gt.ConfigList
                 ]
             my_channels = [
-                dc for dc in data_channels.values() if dc.Name in my_channel_names
+                dc for dc in data_channels.values() if dc.name in my_channel_names
             ]
             for channel in my_channels:
-                if channel.CapturedByNodeName != node.Name:
+                if channel.captured_by_node_name != node.name:
                     raise DcError(
-                        f"Channel {channel} should have CapturedByNodeName {node.Name}"
+                        f"Channel {channel} should have CapturedByNodeName {node.name}"
                     )
 
     @classmethod
@@ -319,7 +319,7 @@ class HardwareLayout:
     @classmethod
     def check_actor_component_consistency(cls, nodes: dict[str, ShNode]) -> None:
         pm_nodes = [
-            node for node in nodes.values() if node.ActorClass == ActorClass.PowerMeter
+            node for node in nodes.values() if node.actor_class == ActorClass.PowerMeter
         ]
         for node in pm_nodes:
             if (
@@ -333,7 +333,7 @@ class HardwareLayout:
         em_nodes = [
             node
             for node in nodes.values()
-            if node.ActorClass == ActorClass.MultipurposeSensor
+            if node.actor_class == ActorClass.MultipurposeSensor
         ]
         for node in em_nodes:
             multi_comp_type_names = ["ads111x.based.component.gt"]
@@ -361,7 +361,7 @@ class HardwareLayout:
 
     @classmethod
     def check_node_unique_ids(cls, nodes: dict[str, ShNode]) -> None:
-        id_counter = Counter(node.ShNodeId for node in nodes.values())
+        id_counter = Counter(node.sh_node_id for node in nodes.values())
         dupes = [node_id for node_id, count in id_counter.items() if count > 1]
         if dupes:
             raise DcError(f"Duplicate ShNodeId(s) found: {dupes}")
@@ -370,9 +370,9 @@ class HardwareLayout:
     def check_transactive_metering_consistency(
         cls, nodes: dict[str, ShNode], data_channels: dict[str, DataChannel]
     ) -> None:
-        transactive_nodes = {node for node in nodes.values() if node.InPowerMetering}
+        transactive_nodes = {node for node in nodes.values() if node.in_power_metering}
         transactive_channels = {
-            dc for dc in data_channels.values() if dc.InPowerMetering
+            dc for dc in data_channels.values() if dc.in_power_metering
         }
         # Part 1: If a data channel is in transactive_channels, its about_node must be in transactive_nodes
         for tc in transactive_channels:
@@ -472,7 +472,7 @@ class HardwareLayout:
             if raise_errors:
                 raise
             errors.append(
-                LoadError("ShNode", {"node": {"name": node.Name, "node": node}}, e)
+                LoadError("ShNode", {"node": {"name": node.name, "node": node}}, e)
             )
 
     @classmethod
@@ -672,19 +672,19 @@ class HardwareLayout:
 
     def add_node(self, node: dict[str, Any] | SpaceheatNodeGt) -> ShNode:
         node = self.make_node(node, self.components)
-        if node.Name in self.nodes:
-            raise ValueError(f"ERROR. Node with name {node.Name} already exists")
-        if node.ComponentId in self.nodes_by_component:
+        if node.name in self.nodes:
+            raise ValueError(f"ERROR. Node with name {node.name} already exists")
+        if node.component_id in self.nodes_by_component:
             raise ValueError(
-                f"ERROR. Node with component id {node.ComponentId} "
+                f"ERROR. Node with component id {node.component_id} "
                 "already exists. "
-                f"Tried to add node {node.Name}. Existing node is "
-                f"{self.nodes_by_component[node.ComponentId]}"
+                f"Tried to add node {node.name}. Existing node is "
+                f"{self.nodes_by_component[node.component_id]}"
             )
-        self.nodes[node.Name] = node
+        self.nodes[node.name] = node
         self.resolve_node_links(node, self.nodes, self.components, raise_errors=True)
-        if node.ComponentId is not None:
-            self.nodes_by_component[node.ComponentId] = node.Name
+        if node.component_id is not None:
+            self.nodes_by_component[node.component_id] = node.name
         self.clear_property_cache()
         return node
 
@@ -698,7 +698,7 @@ class HardwareLayout:
         return self.nodes.get(name, default)
 
     def node_by_handle(self, handle: str) -> Optional[ShNode]:
-        d = {node.Handle: node for node in self.nodes.values() if node.Handle}
+        d = {node.handle: node for node in self.nodes.values() if node.handle}
         if handle in d:
             return d[handle]
         return None

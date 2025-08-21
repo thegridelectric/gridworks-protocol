@@ -74,10 +74,7 @@ def test_i2c_multichannel_dt_relay_component_gt_generated() -> None:
         "Version": "002",
     }
 
-    d2 = I2cMultichannelDtRelayComponentGt.model_validate(d).model_dump(
-        exclude_none=True
-    )
+    d2 = I2cMultichannelDtRelayComponentGt.from_dict(d).to_dict()
+    assert d2 == d
 
     assert type(d2["ConfigList"][0]["EventType"]) is str
-
-    assert d2 == d

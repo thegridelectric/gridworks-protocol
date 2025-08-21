@@ -1,41 +1,38 @@
 """Type relay.actor.config, version 002"""
 
-from typing import Literal
+from typing import Literal, Optional
 
-from pydantic import PositiveInt, model_validator
+from gw.named_types import GwBase
+from pydantic import PositiveInt, StrictInt, model_validator
 from typing_extensions import Self
 
-from gwproto.enums import RelayWiringConfig
-from gwproto.named_types import ChannelConfig
+from gwproto.enums import RelayWiringConfig, Unit
 from gwproto.property_format import (
     SpaceheatName,
 )
 
 
-class RelayActorConfig(ChannelConfig):
-    """
-    Relay Actor Config.
+class RelayActorConfig(GwBase):
+    """ASL schema of record [relay.actor.config v002](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/schemas/relay.actor.config.002.yaml)"""
 
-    Used to associate individual relays on a multi-channel relay board to specific SpaceheatNode
-    actors. Each actor managed by the Spaceheat SCADA has an associated SpaceheatNode. That
-    Node will be associated to a relay board component with multiple relays. Th relay board
-    will have a list of relay actor configs so that the actor can identify which relay it has
-    purview over. Has DeEnergizedState and EnergizedState
-
-    [More info](https://gridworks-protocol.readthedocs.io/en/latest/spaceheat-actor.html)
-    """
-
-    RelayIdx: PositiveInt
-    ActorName: SpaceheatName
-    WiringConfig: RelayWiringConfig
-    EventType: str
-    DeEnergizingEvent: str
-    EnergizingEvent: str
-    StateType: str
-    DeEnergizedState: str
-    EnergizedState: str
-    TypeName: Literal["relay.actor.config"] = "relay.actor.config"
-    Version: str = "002"
+    relay_idx: PositiveInt
+    actor_name: SpaceheatName
+    wiring_config: RelayWiringConfig
+    event_type: str
+    de_energizing_event: str
+    energizing_event: str
+    state_type: str
+    de_energized_state: str
+    energized_state: str
+    channel_name: SpaceheatName
+    poll_period_ms: Optional[PositiveInt] = None
+    capture_period_s: PositiveInt
+    async_capture: bool
+    async_capture_delta: Optional[PositiveInt] = None
+    exponent: StrictInt
+    unit: Unit
+    type_name: Literal["relay.actor.config"] = "relay.actor.config"
+    version: Literal["002"] = "002"
 
     @model_validator(mode="after")
     def check_axiom_1(self) -> Self:
@@ -43,7 +40,7 @@ class RelayActorConfig(ChannelConfig):
         Axiom 1: EventType, DeEnergizingEvent/EnergizingEvent consistency.
         If the event type is the name of a known enum, then the DeEnergizingEvent, EnergizingEvent pair are the values of that enum.
         """
-        # Implement check for axiom 1"
+        # Implement check for axiom 1
         return self
 
     @model_validator(mode="after")
@@ -52,7 +49,7 @@ class RelayActorConfig(ChannelConfig):
         Axiom 2: StateType, EnergizedState/DeEnergizedState consistency.
         If the state type is the name of a known enum, then the DeEnergizedState, EnergizedState pair are the values of that enum.
         """
-        # Implement check for axiom 2"
+        # Implement check for axiom 2
         return self
 
     @model_validator(mode="after")
@@ -61,5 +58,5 @@ class RelayActorConfig(ChannelConfig):
         Axiom 3: Events and States match. .
          E.g. if RelayOpen is the EnergizedState then the EnergizingEvent is OpenRelay.
         """
-        # Implement check for axiom 3"
+        # Implement check for axiom 3
         return self

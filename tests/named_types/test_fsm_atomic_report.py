@@ -1,7 +1,5 @@
 """Tests fsm.atomic.report type, version 000"""
 
-import json
-
 from gwproto.enums import FsmReportType
 from gwproto.named_types import FsmAtomicReport
 
@@ -21,8 +19,7 @@ def test_fsm_atomic_report_generated() -> None:
         "Version": "000",
     }
 
-    t = FsmAtomicReport.model_validate(d).model_dump_json(exclude_none=True)
-    d2 = json.loads(t)
+    d2 = FsmAtomicReport.from_dict(d).to_dict()
     assert d == d2
 
     ######################################
@@ -32,4 +29,4 @@ def test_fsm_atomic_report_generated() -> None:
     assert type(d2["ReportType"]) is str
 
     d2 = dict(d, ReportType="unknown_enum_thing")
-    assert FsmAtomicReport(**d2).ReportType == FsmReportType.default()
+    assert FsmAtomicReport.from_dict(d2).report_type == FsmReportType.default()

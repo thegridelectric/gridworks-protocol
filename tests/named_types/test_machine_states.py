@@ -13,6 +13,5 @@ def test_machine_states_generated() -> None:
         "Version": "000",
     }
 
-    d2 = MachineStates.model_validate(d).model_dump(exclude_none=True)
-
+    d2 = MachineStates.from_dict(d).to_dict()
     assert d2 == d

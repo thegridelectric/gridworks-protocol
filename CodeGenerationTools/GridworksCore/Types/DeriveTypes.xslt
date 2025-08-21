@@ -683,7 +683,7 @@ class </xsl:text>
 
         <xsl:text>
         """
-        # Implement check for axiom </xsl:text><xsl:value-of select="AxiomNumber"/><xsl:text>""
+        # Implement check for axiom </xsl:text><xsl:value-of select="AxiomNumber"/><xsl:text>
         return self</xsl:text>
 
     </xsl:for-each>

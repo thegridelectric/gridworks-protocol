@@ -9,6 +9,10 @@ from gwproto.named_types.egauge_register_config import (
 
 
 class ElectricMeterChannelConfig(ChannelConfig):
-    egauage_register_config: Optional[EgaugeConfig] = None
-    TypeName: Literal["electric.meter.channel.config"] = "electric.meter.channel.config"
-    Version: str = "000"
+    """ASL schema of record [electric.meter.channel.config v000](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/schemas/electric.meter.channel.config.000.yaml)"""
+
+    egauge_register_config: Optional[EgaugeConfig] = None
+    type_name: Literal["electric.meter.channel.config"] = (
+        "electric.meter.channel.config"
+    )
+    version: str = "000"

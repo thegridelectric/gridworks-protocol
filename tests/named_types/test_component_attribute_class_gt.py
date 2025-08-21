@@ -1,7 +1,11 @@
 """Tests component.attribute.class.gt type, version 001"""
 
+import pytest
+from gw.errors import GwTypeError
+
 from gwproto.enums import MakeModel
 from gwproto.named_types import ComponentAttributeClassGt
+from gwproto.type_helpers import CACS_BY_MAKE_MODEL
 
 
 def test_component_attribute_class_gt_generated() -> None:
@@ -24,5 +28,14 @@ def test_component_attribute_class_gt_generated() -> None:
 
     assert type(d2["MakeModel"]) is str
 
-    d2 = dict(d, MakeModel="unknown_enum_thing")
-    assert ComponentAttributeClassGt(**d2).make_model == MakeModel.default()
+    d2 = dict(
+        d,
+        MakeModel="unknown_enum_thing",
+        ComponentAttributeClassId="c00ec7bd-332a-4647-b08a-b00705adee2d",
+    )
+    assert ComponentAttributeClassGt.from_dict(d2).make_model == MakeModel.default()
+
+    d2 = dict(d, ComponentAttributeClassId=CACS_BY_MAKE_MODEL[MakeModel.ADAFRUIT__642])
+
+    with pytest.raises(GwTypeError):
+        ComponentAttributeClassGt.from_dict(d2)

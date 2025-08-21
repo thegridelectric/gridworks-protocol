@@ -1,7 +1,5 @@
 """Tests relay.actor.config type, version 000"""
 
-import json
-
 from gwproto.enums import RelayWiringConfig
 from gwproto.named_types import RelayActorConfig
 
@@ -28,8 +26,7 @@ def test_relay_actor_config_generated() -> None:
         "Version": "002",
     }
 
-    t = RelayActorConfig.model_validate(d).model_dump_json(exclude_none=True)
-    d2 = json.loads(t)
+    d2 = RelayActorConfig.from_dict(d).to_dict()
     assert d2 == d
 
     ######################################
@@ -39,4 +36,4 @@ def test_relay_actor_config_generated() -> None:
     assert type(d2["WiringConfig"]) is str
 
     d2 = dict(d, WiringConfig="unknown_enum_thing")
-    assert RelayActorConfig(**d2).WiringConfig == RelayWiringConfig.default()
+    assert RelayActorConfig.from_dict(d2).wiring_config == RelayWiringConfig.default()

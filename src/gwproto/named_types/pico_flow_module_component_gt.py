@@ -1,43 +1,53 @@
-import re
+"""Type pico.flow.module.component.gt, version 000"""
+
 from typing import Literal, Optional
 
-from pydantic import field_validator
+from pydantic import ConfigDict, PositiveInt, StrictInt, model_validator
+from typing_extensions import Self
 
 from gwproto.enums import GpmFromHzMethod, HzCalcMethod, MakeModel
 from gwproto.named_types.component_gt import ComponentGt
-from gwproto.property_format import SpaceheatName
+from gwproto.property_format import (
+    SpaceheatName,
+)
 
 
 class PicoFlowModuleComponentGt(ComponentGt):
-    Enabled: bool
-    SerialNumber: str
-    FlowNodeName: SpaceheatName
-    FlowMeterType: MakeModel = MakeModel.SAIER__SENHZG1WA
-    HzCalcMethod: HzCalcMethod
-    GpmFromHzMethod: GpmFromHzMethod
-    ConstantGallonsPerTick: float
-    SendHz: bool = True
-    SendGallons: bool = False
-    SendTickLists: bool = False
-    NoFlowMs: int
-    AsyncCaptureThresholdGpmTimes100: int
-    PublishEmptyTicklistAfterS: Optional[int] = None  # Hall Params
-    PublishAnyTicklistAfterS: Optional[int] = None  # Reed Params
-    PublishTicklistPeriodS: Optional[int] = None  # Required for Hall Params
-    PublishTicklistLength: Optional[int] = None  # required for Reed Params
-    ExpAlpha: Optional[float] = None
-    CutoffFrequency: Optional[float] = None
-    TypeName: Literal["pico.flow.module.component.gt"] = "pico.flow.module.component.gt"
-    Version: str = "000"
+    """ASL schema of record [pico.flow.module.component.gt v000](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/schemas/pico.flow.module.component.gt.000.yaml)"""
 
-    @field_validator("HwUid")
-    @classmethod
-    def check_hw_uid(cls, v: str) -> str:
+    enabled: bool
+    serial_number: str
+    flow_node_name: SpaceheatName
+    flow_meter_type: MakeModel
+    hz_calc_method: HzCalcMethod
+    gpm_from_hz_method: GpmFromHzMethod
+    constant_gallons_per_tick: float
+    send_hz: bool
+    send_gallons: bool
+    send_tick_lists: bool
+    no_flow_ms: PositiveInt
+    async_capture_threshold_gpm_times100: StrictInt
+    publish_empty_ticklist_after_s: Optional[PositiveInt] = None
+    publish_any_ticklist_after_s: Optional[PositiveInt] = None
+    publish_ticklist_period_s: Optional[PositiveInt] = None
+    publish_ticklist_length: Optional[PositiveInt] = None
+    exp_alpha: Optional[float] = None
+    cutoff_frequency: Optional[float] = None
+    type_name: Literal["pico.flow.module.component.gt"] = (
+        "pico.flow.module.component.gt"
+    )
+    version: Literal["000"] = "000"
+
+    model_config = ConfigDict(extra="allow")
+
+    @model_validator(mode="after")
+    def check_axiom_1(self) -> Self:
         """
-        Axiom 1: HwUid is of the form 'pico_xxxxxx' where xxxxxx
-        are lowercase hex (the last digits of its pico W hw id)
+                Axiom 1: Param consistency.
+                - If HzCalcMethod is BasicExpWeightedAvg then ExpAlpha must exist.
+        - If HzCalcMethod is BasicButterhworth then CutoffFrequency must exist
+
+
         """
-        pattern = r"^pico_[0-9a-f]{6}$"
-        if not bool(re.match(pattern, v)):
-            raise ValueError("HwUid should be the pico hwuid, eg pico_60e352")
-        return v
+        # Implement check for axiom 1""
+        return self

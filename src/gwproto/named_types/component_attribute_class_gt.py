@@ -32,21 +32,21 @@ class ComponentAttributeClassGt(GwBase):
            - XOR its MakeModel is MakeModel.UNKNOWNMAKE__UNKNOWNMODEL
         """
         if (
-            self.MakeModel not in CACS_BY_MAKE_MODEL
-            and self.MakeModel is not MakeModel.default().value
+            self.make_model not in CACS_BY_MAKE_MODEL
+            and self.make_model is not MakeModel.default()
         ):
             raise ValueError(
                 "Axiom 1 violated! If MakeModel not in this list, "
                 f"must be UNKNOWN: {CACS_BY_MAKE_MODEL}"
             )
-        if self.MakeModel is MakeModel.default().value:
-            if self.ComponentAttributeClassId in CACS_BY_MAKE_MODEL.values():
+        if self.make_model is MakeModel.default():
+            if self.component_attribute_class_id in CACS_BY_MAKE_MODEL.values():
                 raise ValueError(
-                    f"Id {self.ComponentAttributeClassId} already used by known MakeModel!"
+                    f"Id {self.component_attribute_class_id} already used by known MakeModel!"
                 )
-        elif self.ComponentAttributeClassId != CACS_BY_MAKE_MODEL[self.MakeModel]:
+        elif self.component_attribute_class_id != CACS_BY_MAKE_MODEL[self.make_model]:
             raise ValueError(
-                f"Axiom 1 violated! MakeModel {self.MakeModel} must have "
-                f"id {CACS_BY_MAKE_MODEL[self.MakeModel]}!"
+                f"Axiom 1 violated! MakeModel {self.make_model} must have "
+                f"id {CACS_BY_MAKE_MODEL[self.make_model]}!"
             )
         return self

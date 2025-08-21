@@ -29,47 +29,7 @@ class ShNode(SpaceheatNodeGt):
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
     def __hash__(self) -> int:
-        return hash(self.ShNodeId)
-
-    @property
-    def sh_node_id(self) -> str:
-        return self.ShNodeId
-
-    @property
-    def name(self) -> str:
-        return self.Name
-
-    @property
-    def actor_hierarchy_name(self) -> str:
-        if self.ActorHierarchyName is None:
-            return self.Name
-        return self.ActorHierarchyName
-
-    @property
-    def handle(self) -> str:
-        if self.Handle is None:
-            return self.Name
-        return self.Handle
-
-    @property
-    def actor_class(self) -> ActorClassEnum:
-        return ActorClassEnum(self.ActorClass)
-
-    @property
-    def actor_class_str(self) -> str:
-        return self.ActorClass
-
-    @property
-    def display_name(self) -> Optional[str]:
-        return self.DisplayName
-
-    @property
-    def component_id(self) -> Optional[str]:
-        return self.ComponentId
-
-    @property
-    def in_power_metering(self) -> Optional[bool]:
-        return self.InPowerMetering
+        return hash(self.sh_node_id)
 
     def __repr__(self) -> str:
         rs = f"ShNode {self.display_name} => {self.name}, "
@@ -84,5 +44,4 @@ class ShNode(SpaceheatNodeGt):
         return self.actor_class != ActorClassEnum.NoActor
 
     def to_gt(self) -> SpaceheatNodeGt:
-        # Copy the current instance excluding the extra fields
-        return SpaceheatNodeGt(**self.model_dump(exclude={"component"}))
+        return SpaceheatNodeGt.from_dict(self.to_dict(exclude={"component"}))

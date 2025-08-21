@@ -76,38 +76,3 @@ def _decode_cac(case: CacCase, decoder: Optional[CacDecoder]) -> CacLoadResult:
     else:
         ok = not case.exp_exceptions
     return CacLoadResult(ok, loaded_cac, exception)
-
-
-def assert_cac_load(cases: list[CacCase], decoder: Optional[CacDecoder] = None) -> None:
-    errors: list[CacCaseError] = []
-    for case_idx, case in enumerate(cases):
-        load_result = _decode_cac(case, decoder)
-        if not load_result.ok:
-            errors.append(CacLoadError(case_idx, case, load_result.exception))
-        elif not case.exp_exceptions:
-            exp_cac = case.src_cac if case.exp_cac is None else case.exp_cac
-            if isinstance(exp_cac, dict):
-                if case.exp_cac_type is None:
-                    raise ValueError(
-                        "When exp_cac is a dict, exp_cac_type must not be None"
-                    )
-                exp_cac = case.exp_cac_type(**exp_cac)
-            if load_result.loaded != exp_cac:
-                errors.append(
-                    CacMatchError(
-                        case_idx=case_idx,
-                        case=case,
-                        exp_cac=exp_cac,
-                        loaded_cac=load_result.loaded,
-                    )
-                )
-    if errors:
-        err_str = "ERROR. Got cac load/matching errors:"
-        first_exception = None
-        for error in errors:
-            err_str += f"\n\t{error}"
-            if first_exception is None and hasattr(error, "exception"):
-                first_exception = error.exception
-        if first_exception is not None:
-            raise ValueError(err_str) from first_exception
-        raise ValueError(err_str)

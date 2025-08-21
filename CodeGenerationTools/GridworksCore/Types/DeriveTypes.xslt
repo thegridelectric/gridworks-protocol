@@ -69,20 +69,26 @@ from typing import Literal</xsl:text>
 </xsl:if>
 
 
-<xsl:variable name="single-attribute-axiom" select="count($airtable//TypeAttributes/TypeAttribute[(VersionedType = $versioned-type-id) and
-                            ((Axiom != '') or
-                            (not (PrimitiveFormat = '') 
-                                and PrimitiveFormat != 'UUID4Str'
-                                and PrimitiveFormat != 'SpaceheatName' 
-                                and PrimitiveFormat != 'LeftRightDot' 
-                                and PrimitiveFormat != 'HandleName'
-                                and PrimitiveFormat != 'HexChar' 
-                                and PrimitiveFormat != 'UTCSeconds' 
-                                and PrimitiveFormat != 'UTCMilliseconds'
-                                and PrimitiveFormat != 'PositiveInteger'
-                               )
-                            )
-                            ]) > 0" />
+<xsl:variable name="single-attribute-axiom" select="
+  count(
+    $airtable//TypeAttributes/TypeAttribute[
+      (VersionedType = $versioned-type-id)
+      and (
+        normalize-space(Axiom) != ''
+        or (
+          normalize-space(string(PrimitiveFormat)) != ''
+          and normalize-space(string(PrimitiveFormat)) != 'UUID4Str'
+          and normalize-space(string(PrimitiveFormat)) != 'SpaceheatName'
+          and normalize-space(string(PrimitiveFormat)) != 'LeftRightDot'
+          and normalize-space(string(PrimitiveFormat)) != 'HandleName'
+          and normalize-space(string(PrimitiveFormat)) != 'HexChar'
+          and normalize-space(string(PrimitiveFormat)) != 'UTCSeconds'
+          and normalize-space(string(PrimitiveFormat)) != 'UTCMilliseconds'
+          and normalize-space(string(PrimitiveFormat)) != 'PositiveInteger'
+        )
+      )
+    ]
+  ) > 0" />
 
 <xsl:variable name="multi-attribute-axiom" select="count($airtable//TypeAxioms/TypeAxiom[MultiPropertyAxiom=$versioned-type-id]) > 0" />
 
@@ -229,6 +235,7 @@ class </xsl:text>
 <xsl:value-of select="Version"/>
 <xsl:text>](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/schemas/</xsl:text>
 <xsl:value-of select="TypeName"/><xsl:text>.</xsl:text><xsl:value-of select="Version"/><xsl:text>.yaml)"""
+
 </xsl:text>
 
 
@@ -436,18 +443,18 @@ class </xsl:text>
         </xsl:call-template>
     </xsl:variable>
 
-    <xsl:if test="((Axiom != '') or
-                            (not (PrimitiveFormat = '') 
-                                and PrimitiveFormat != 'UUID4Str'
-                                and PrimitiveFormat != 'SpaceheatName' 
-                                and PrimitiveFormat != 'LeftRightDot' 
-                                and PrimitiveFormat != 'HandleName' 
-                                and PrimitiveFormat != 'HexChar' 
-                                and PrimitiveFormat != 'UTCSeconds' 
-                                and PrimitiveFormat != 'UTCMilliseconds'
-                                and PrimitiveFormat != 'PositiveInteger'
-                               )
-                            )">
+    <!-- Normalize fields so missing/whitespace doesn't trigger -->
+    <xsl:variable name="pf" select="normalize-space(string(PrimitiveFormat))"/>
+    <xsl:variable name="has-axiom" select="normalize-space(Axiom) != ''"/>
+    <xsl:variable name="needs-format-check" select="
+        $pf != '' and not(
+            $pf='UUID4Str' or $pf='SpaceheatName' or $pf='LeftRightDot' or
+            $pf='HandleName' or $pf='HexChar' or $pf='UTCSeconds' or
+            $pf='UTCMilliseconds' or $pf='PositiveInteger'
+        )
+        "/>
+
+    <xsl:if test="$has-axiom or $needs-format-check">
     <xsl:text>
 
     @model_validator</xsl:text>
@@ -459,11 +466,6 @@ class </xsl:text>
     </xsl:if>
     <xsl:text>
     def </xsl:text>
-
-    <!-- add an underscore if there are no axioms getting checked, in which case its just property formats and/or enums -->
-    <xsl:if test="count($airtable//TypeAxioms/TypeAxiom[(normalize-space(SinglePropertyAxiom)=$type-attribute-id)]) = 0">
-    <xsl:text>_</xsl:text>
-    </xsl:if>
 
     <xsl:text>check_</xsl:text><xsl:call-template name="python-case">
         <xsl:with-param name="camel-case-text" select="$attribute-name"  />
@@ -636,17 +638,7 @@ class </xsl:text>
 
     </xsl:if>
     <!-- End the field_validator by returning v-->
-    <xsl:if test="(not(PrimitiveFormat = '') 
-                and PrimitiveFormat != 'UUID4Str' 
-                and PrimitiveFormat != 'SpaceheatName' 
-                and PrimitiveFormat != 'LeftRightDot' 
-                and PrimitiveFormat != 'HandleName' 
-                and PrimitiveFormat != 'HexChar' 
-                and PrimitiveFormat != 'UTCSeconds' 
-                and PrimitiveFormat != 'UTCMilliseconds'
-                and PrimitiveFormat != 'PositiveInteger'
-                ) 
-                or (Axiom != '')">
+    <xsl:if test="$has-axiom or $needs-format-check">
         <xsl:text>
         return self</xsl:text>
     </xsl:if>

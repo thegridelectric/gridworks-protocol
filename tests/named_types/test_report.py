@@ -38,6 +38,5 @@ def test_report_generated() -> None:
         "Version": "002",
     }
 
-    d2 = Report.model_validate(d).model_dump(exclude_none=True)
-
+    d2 = Report.from_dict(d).to_dict()
     assert d2 == d

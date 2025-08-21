@@ -20,6 +20,6 @@ def test_ticklist_hall_report_generated() -> None:
         "Version": "000",
     }
 
-    d2 = TicklistHallReport.model_validate(d).model_dump(exclude_none=True)
+    d2 = TicklistHallReport.from_dict(d).to_dict()
 
     assert d2 == d

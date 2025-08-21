@@ -13,6 +13,6 @@ def test_ticklist_reed_generated() -> None:
         "Version": "101",
     }
 
-    d2 = TicklistReed.model_validate(d).model_dump(exclude_none=True)
+    d2 = TicklistReed.from_dict(d).to_dict()
 
     assert d2 == d

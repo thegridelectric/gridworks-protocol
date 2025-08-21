@@ -1,8 +1,9 @@
-"""Type tank.module.params, version 100"""
+"""Type tank.module.params, version 110"""
 
 from typing import Literal, Optional
 
-from pydantic import BaseModel, PositiveInt, model_validator
+from gw.named_types import GwBase
+from pydantic import PositiveInt, model_validator
 from typing_extensions import Self
 
 from gwproto.property_format import (
@@ -10,30 +11,28 @@ from gwproto.property_format import (
 )
 
 
-class TankModuleParams(BaseModel):
-    """
-    Parameters for a  GRIDWORKS__TANKMODULE2 device or a GRIDWORKS__TANKMODULE3 device
-    """
+class TankModuleParams(GwBase):
+    """ASL schema of record [tank.module.params v110](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/schemas/tank.module.params.110.yaml)"""
 
-    HwUid: str
-    ActorNodeName: SpaceheatName
-    PicoAB: Optional[str] = None
-    CapturePeriodS: PositiveInt
-    Samples: PositiveInt
-    NumSampleAverages: PositiveInt
-    AsyncCaptureDeltaMicroVolts: PositiveInt
-    CaptureOffsetS: Optional[float] = None
-    TypeName: Literal["tank.module.params"] = "tank.module.params"
-    Version: str = "110"
+    hw_uid: str
+    actor_node_name: SpaceheatName
+    pico_a_b: Optional[str] = None
+    capture_period_s: PositiveInt
+    samples: PositiveInt
+    num_sample_averages: PositiveInt
+    async_capture_delta_micro_volts: PositiveInt
+    capture_offset_s: Optional[float] = None
+    type_name: Literal["tank.module.params"] = "tank.module.params"
+    version: Literal["110"] = "110"
 
     @model_validator(mode="after")
     def check_pico_a_b(self) -> Self:
         """
         Axiom 1: "If PicoAB exists it must be a or b"
         """
-        if self.PicoAB and self.PicoAB not in ["a", "b"]:
+        if self.pico_a_b and self.pico_a_b not in ["a", "b"]:
             raise ValueError(
-                f"Axiom 1: If PicoAB exists it must be a or b, not {self.PicoAB}"
+                f"Axiom 1: If PicoAB exists it must be a or b, not {self.pico_a_b}"
             )
 
         return self

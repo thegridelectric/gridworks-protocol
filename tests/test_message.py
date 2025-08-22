@@ -2,7 +2,6 @@ import enum
 from typing import Any, Literal
 
 import pytest
-from gw.errors import GwTypeError
 from gw.named_types import GwBase
 from pydantic import ValidationError
 
@@ -40,7 +39,7 @@ def test_naive_payload() -> None:
     )
     assert m.src() == src
     assert m.message_type() == message_type
-    assert m.mqtt_topic() == f"gw/{src}/to//{message_type}"
+    assert m.mqtt_topic() == f"gw/{src}/to//some-payload"
     assert m.payload.x == 1
     assert m.header.src == src
     assert m.header.dst == ""
@@ -51,25 +50,14 @@ def test_naive_payload() -> None:
 
     # Explicit Header, naive payload
     m2: Message[Any] = Message(
-        Header=Header(
+        header=Header(
             src=src,
             message_type=message_type,
         ),
-        Payload=SomePayload(x=1),
+        payload=SomePayload(x=1),
     )
     assert m == m2
     assert m.to_dict() == m2.to_dict()
-
-    # Explicit header from dict, naive payload
-    m3 = Message(
-        Header=Header(
-            src=src,
-            message_type=message_type,
-        ).model_dump(),
-        Payload=SomePayload(x=1),
-    )
-    assert m == m3
-    assert m.to_dict() == m3.to_dict()
 
     # All header fields in kwargs
     dst = "bar"
@@ -85,7 +73,7 @@ def test_naive_payload() -> None:
     )
     assert m.src() == src
     assert m.message_type() == message_type
-    assert m.mqtt_topic() == f"gw/{src}/to/{dst}/{message_type}"
+    assert m.mqtt_topic() == f"gw/{src}/to/{dst}/some-payload"
     assert m.payload.x == x
     assert m.header.src == src
     assert m.header.dst == dst
@@ -108,28 +96,21 @@ class PayloadProvidesMore(PayloadProvides):
 
 
 def test_from_payload() -> None:
-    x = 1
-    src = "foo"
     message_type = "payload.provides"
+    src = "foo"
 
     # Payload object provides fields
-    m: Message[Any] = Message(payload=PayloadProvides(src=src, x=1))
+    m: Message[Any] = Message(payload=PayloadProvides(src="foo", x=1))
     assert m.src() == src
     assert m.message_type() == message_type
     assert m.mqtt_topic() == f"gw/{src}/to//{message_type}".replace(".", "-")
-    assert m.payload.x == x
+    assert m.payload.x == 1
     assert m.header.src == src
     assert m.header.dst == ""
-    assert m.header.message_typee == message_type
+    assert m.header.message_type == message_type
     assert m.header.message_id == ""
     assert m.header.ack_required is False
     assert m.header.type_name == "gridworks.header"
-
-    # Payload dict provides fields
-    m2: Message[Any] = Message(Payload=PayloadProvides(src=src, x=1).model_dump())
-    assert m.model_dump() == m2.model_dump()
-    m3 = Message[PayloadProvides](Payload=m2.Payload)
-    assert m == m3
 
     # *All* header fields from payload object
     dst = "bar"
@@ -141,13 +122,13 @@ def test_from_payload() -> None:
         dst=dst,
         message_id=message_id,
         ack_required=ack_required,
-        x=x,
+        x=1,
     )
     m = Message(payload=p)
     assert m.src() == src
     assert m.message_type() == message_type
     assert m.mqtt_topic() == f"gw/{src}/to/{dst}/{message_type}".replace(".", "-")
-    assert m.payload.x == x
+    assert m.payload.x == 1
     assert m.header.src == src
     assert m.header.dst == dst
     assert m.header.message_type == message_type
@@ -163,12 +144,12 @@ def test_errors() -> None:
 
     # No Src
     with pytest.raises(ValidationError):
-        Message(src="foo", payload=SomePayload(x=1))
+        Message(payload=SomePayload(x=1))
 
-    # No MessageType
-    with pytest.raises(GwTypeError):
-        Message(src="foo", payload=SomePayload(x=1))
+    # Conflicting message type: goes with payload
+    m = Message(message_type="foo", src="bar", payload=SomePayload(x=1))
+    assert m.header.message_type == "some.payload"
 
-    # Bad payload
-    with pytest.raises(ValidationError):
-        Message[Any](Src="foo", MessageType="bar", Payload=1)
+    # Non GwBase payload
+    with pytest.raises(AttributeError):
+        Message[Any](src="foo", payload=1)

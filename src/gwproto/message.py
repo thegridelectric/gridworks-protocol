@@ -76,7 +76,7 @@ class Message(GwBase, Generic[PayloadT]):
                 header_kwargs["ack_required"] = payload.ack_required
 
             # MessageType always comes from payload.type_name
-            header_kwargs["message_type"] = payload.type_name
+            header_kwargs["message_type"] = payload.type_name_value()
 
             header = Header(**header_kwargs)
 

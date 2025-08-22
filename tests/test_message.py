@@ -2,10 +2,11 @@ import enum
 from typing import Any, Literal
 
 import pytest
-from pydantic import BaseModel, ValidationError
+from gw.errors import GwTypeError
+from gw.named_types import GwBase
+from pydantic import ValidationError
 
 from gwproto import Header, Message, as_enum
-from gwproto.message import PAYLOAD_TYPE_FIELDS
 
 
 class E(enum.Enum):
@@ -20,106 +21,90 @@ def test_as_enum() -> None:
     assert as_enum(3, E, E.a) == E.a
 
 
-class NaivePayload(BaseModel):
+class SomePayload(GwBase):
     x: int
+    type_name: Literal["some.payload"] = "some.payload"
 
 
 def test_naive_payload() -> None:
-    assert Message.type_name() == "gw"
+    assert Message.type_name_value() == "gw"
 
     # Explicit src, message_type fields, pydantic-known-type payload
     x = 1
     src = "foo"
-    message_type = "primitive"
+    message_type = "some.payload"
     m: Message[Any] = Message(
-        Src=src,
-        MessageType=message_type,
-        Payload=1,
+        src=src,
+        message_type=SomePayload.type_name_value,
+        payload=SomePayload(x=1),
     )
     assert m.src() == src
     assert m.message_type() == message_type
     assert m.mqtt_topic() == f"gw/{src}/to//{message_type}"
-    assert m.Payload == x
-    assert m.Header.Src == src
-    assert m.Header.Dst == ""
-    assert m.Header.MessageType == message_type
-    assert m.Header.MessageId == ""
-    assert m.Header.AckRequired is False
-    assert m.Header.TypeName == "gridworks.header"
-
-    # Explicit src, message_type fields, naive payload
-    m = Message(
-        Src=src,
-        MessageType=message_type,
-        Payload=NaivePayload(x=1),
-    )
-    assert m.src() == src
-    assert m.message_type() == message_type
-    assert m.mqtt_topic() == f"gw/{src}/to//{message_type}"
-    assert m.Payload.x == x
-    assert m.Header.Src == src
-    assert m.Header.Dst == ""
-    assert m.Header.MessageType == message_type
-    assert m.Header.MessageId == ""
-    assert m.Header.AckRequired is False
-    assert m.Header.TypeName == "gridworks.header"
+    assert m.payload.x == 1
+    assert m.header.src == src
+    assert m.header.dst == ""
+    assert m.header.message_type == message_type
+    assert m.header.message_id == ""
+    assert m.header.ack_required is False
+    assert m.header.type_name == "gridworks.header"
 
     # Explicit Header, naive payload
     m2: Message[Any] = Message(
         Header=Header(
-            Src=src,
-            MessageType=message_type,
+            src=src,
+            message_type=message_type,
         ),
-        Payload=NaivePayload(x=1),
+        Payload=SomePayload(x=1),
     )
     assert m == m2
-    assert m.model_dump() == m2.model_dump()
+    assert m.to_dict() == m2.to_dict()
 
     # Explicit header from dict, naive payload
-    m2 = Message(
+    m3 = Message(
         Header=Header(
-            Src=src,
-            MessageType=message_type,
+            src=src,
+            message_type=message_type,
         ).model_dump(),
-        Payload=NaivePayload(x=1),
+        Payload=SomePayload(x=1),
     )
-    assert m == m2
-    assert m.model_dump() == m2.model_dump()
+    assert m == m3
+    assert m.to_dict() == m3.to_dict()
 
     # All header fields in kwargs
     dst = "bar"
     message_id = "bla"
     ack_required = True
     m = Message(
-        Src=src,
-        MessageType=message_type,
-        Payload=NaivePayload(x=1),
-        Dst=dst,
-        MessageId=message_id,
-        AckRequired=ack_required,
+        src=src,
+        message_type=message_type,
+        payload=SomePayload(x=1),
+        dst=dst,
+        message_id=message_id,
+        ack_required=ack_required,
     )
     assert m.src() == src
     assert m.message_type() == message_type
     assert m.mqtt_topic() == f"gw/{src}/to/{dst}/{message_type}"
-    assert m.Payload.x == x
-    assert m.Header.Src == src
-    assert m.Header.Dst == dst
-    assert m.Header.MessageType == message_type
-    assert m.Header.MessageId == message_id
-    assert m.Header.AckRequired == ack_required
-    assert m.Header.TypeName == "gridworks.header"
+    assert m.payload.x == x
+    assert m.header.src == src
+    assert m.header.dst == dst
+    assert m.header.message_type == message_type
+    assert m.header.message_id == message_id
+    assert m.header.ack_required == ack_required
+    assert m.header.type_name == "gridworks.header"
 
 
-class PayloadProvides(NaivePayload):
-    Src: str
-    TypeName: Literal["payload.provides"] = "payload.provides"
+class PayloadProvides(SomePayload):
+    src: str
+    type_name: Literal["payload.provides"] = "payload.provides"
 
 
 class PayloadProvidesMore(PayloadProvides):
-    Dst: str = ""
-    MessageId: str = ""
-    AckRequired: bool = False
-    TypeName: Literal["payload.provides.more"] = "payload.provides.more"  # type: ignore[assignment]
+    dst: str = ""
+    message_id: str = ""
+    ack_required: bool = False
+    type_name: Literal["payload.provides.more"] = "payload.provides.more"  # type: ignore[assignment]
 
 
 def test_from_payload() -> None:
@@ -128,20 +113,20 @@ def test_from_payload() -> None:
     message_type = "payload.provides"
 
     # Payload object provides fields
-    m: Message[Any] = Message(Payload=PayloadProvides(Src=src, x=1))
+    m: Message[Any] = Message(payload=PayloadProvides(src=src, x=1))
     assert m.src() == src
     assert m.message_type() == message_type
     assert m.mqtt_topic() == f"gw/{src}/to//{message_type}".replace(".", "-")
-    assert m.Payload.x == x
-    assert m.Header.Src == src
-    assert m.Header.Dst == ""
-    assert m.Header.MessageType == message_type
-    assert m.Header.MessageId == ""
-    assert m.Header.AckRequired is False
-    assert m.Header.TypeName == "gridworks.header"
+    assert m.payload.x == x
+    assert m.header.src == src
+    assert m.header.dst == ""
+    assert m.header.message_typee == message_type
+    assert m.header.message_id == ""
+    assert m.header.ack_required is False
+    assert m.header.type_name == "gridworks.header"
 
     # Payload dict provides fields
-    m2: Message[Any] = Message(Payload=PayloadProvides(Src=src, x=1).model_dump())
+    m2: Message[Any] = Message(Payload=PayloadProvides(src=src, x=1).model_dump())
     assert m.model_dump() == m2.model_dump()
     m3 = Message[PayloadProvides](Payload=m2.Payload)
     assert m == m3
@@ -152,52 +137,38 @@ def test_from_payload() -> None:
     ack_required = True
     message_type = "payload.provides.more"
     p = PayloadProvidesMore(
-        Src=src,
-        Dst=dst,
-        MessageId=message_id,
-        AckRequired=ack_required,
+        src=src,
+        dst=dst,
+        message_id=message_id,
+        ack_required=ack_required,
         x=x,
     )
-    m = Message(Payload=p)
+    m = Message(payload=p)
     assert m.src() == src
     assert m.message_type() == message_type
     assert m.mqtt_topic() == f"gw/{src}/to/{dst}/{message_type}".replace(".", "-")
-    assert m.Payload.x == x
-    assert m.Header.Src == src
-    assert m.Header.Dst == dst
-    assert m.Header.MessageType == message_type
-    assert m.Header.MessageId == message_id
-    assert m.Header.AckRequired == ack_required
-    assert m.Header.TypeName == "gridworks.header"
-
-    # *All* header fields from payload dict
-    m2 = Message(Payload=p.model_dump())
-    assert m.model_dump() == m2.model_dump()
-    m4 = Message[PayloadProvidesMore](Payload=m2.Payload)
-    assert m == m4
-
-    # other message type fields
-    for message_type_field_name in PAYLOAD_TYPE_FIELDS:
-        payload_dict = p.model_dump()
-        del payload_dict["TypeName"]
-        payload_dict[message_type_field_name] = p.TypeName
-        m3 = Message(Payload=payload_dict)
-        assert m.Header == m3.Header
+    assert m.payload.x == x
+    assert m.header.src == src
+    assert m.header.dst == dst
+    assert m.header.message_type == message_type
+    assert m.header.message_id == message_id
+    assert m.header.ack_required == ack_required
+    assert m.header.type_name == "gridworks.header"
 
 
 def test_errors() -> None:
     # no Payload
-    with pytest.raises(ValidationError):
+    with pytest.raises(TypeError):
         Message()
 
     # No Src
     with pytest.raises(ValidationError):
-        Message(MessageType="foo", Payload=NaivePayload(x=1))
+        Message(src="foo", payload=SomePayload(x=1))
 
     # No MessageType
-    with pytest.raises(ValidationError):
-        Message(Src="foo", Payload=NaivePayload(x=1))
+    with pytest.raises(GwTypeError):
+        Message(src="foo", payload=SomePayload(x=1))
 
     # Bad payload
     with pytest.raises(ValidationError):
-        Message[list[int]](Src="foo", MessageType="bar", Payload=1)
+        Message[Any](Src="foo", MessageType="bar", Payload=1)

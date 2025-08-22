@@ -375,13 +375,13 @@ sphinx-basic-ng = ">=1.0.0.beta2"
 
 [[package]]
 name = "gridworks"
-version = "1.5.4"
+version = "1.5.5"
 description = "Gridworks"
 optional = false
 python-versions = "<4.0,>=3.11"
 files = [
-    {file = "gridworks-1.5.4-py3-none-any.whl", hash = "sha256:7cb2a36d18028f50f1824252aa70fd70e22b11e5f1f9eaf0e26050fdac3ddda9"},
-    {file = "gridworks-1.5.4.tar.gz", hash = "sha256:244f3edc252e22153b3154143d6a039c3d74279d2e61d4dba83d66f431d0c45d"},
+    {file = "gridworks-1.5.5-py3-none-any.whl", hash = "sha256:7e3e797e8c04c1392f3bf3136099a0e5e57404ca8319e9a95af5abaa1bf46bf6"},
+    {file = "gridworks-1.5.5.tar.gz", hash = "sha256:661dadfe770dae8319240fbff88a5e3a8fdfbf06d2a13e7ade966744dd8a6881"},
 ]
 
 [package.dependencies]
@@ -1382,13 +1382,13 @@ dev = ["argcomplete", "attrs (>=19.2)", "hypothesis (>=3.56)", "mock", "pygments
 
 [[package]]
 name = "python-dotenv"
-version = "1.1.0"
+version = "1.1.1"
 description = "Read key-value pairs from a .env file and set them as environment variables"
 optional = false
 python-versions = ">=3.9"
 files = [
-    {file = "python_dotenv-1.1.0-py3-none-any.whl", hash = "sha256:d7c01d9e2293916c18baf562d95698754b0dbbb5e74d457c45d4f6561fb9d55d"},
-    {file = "python_dotenv-1.1.0.tar.gz", hash = "sha256:41f90bc6f5f177fb41f53e87666db362025010eb28f60a01c9143bfa33a2b2d5"},
+    {file = "python_dotenv-1.1.1-py3-none-any.whl", hash = "sha256:31f23644fe2602f88ff55e1f5c79ba497e01224ee7737937930c448e4d0e24dc"},
+    {file = "python_dotenv-1.1.1.tar.gz", hash = "sha256:a8a6399716257f45be6a007360200409fce5cda2661e3dec71d23dc15f6189ab"},
 ]
 
 [package.extras]
@@ -2313,4 +2313,4 @@ propcache = ">=0.2.1"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "18de0f26b0fdd508a798e7d2b7bd7b1eda76f3c65c30485c4a7f957346fd2faf"
+content-hash = "19c63ba29f32de582e3801b5a3af6bcfc6e4695f2891357104f533ab395f765e"

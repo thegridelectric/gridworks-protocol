@@ -20,6 +20,7 @@ from typing import (
 )
 
 import pydantic
+from gw.named_types import GwBase
 from pydantic import BaseModel, Field, ValidationError, create_model
 from pydantic_core import ErrorDetails
 
@@ -40,12 +41,8 @@ class MQTTCodec(abc.ABC):
     def __init__(self, message_model: type[Message[Any]]) -> None:
         self.message_model = message_model
 
-    def encode(self, content: bytes | BaseModel) -> bytes:  # noqa
-        if isinstance(content, bytes):
-            encoded = content
-        else:
-            encoded = content.model_dump_json().encode()
-        return encoded
+    def encode(self, content: bytes | GwBase) -> bytes:  # noqa
+        return content if isinstance(content, bytes) else content.to_type()
 
     @classmethod
     def get_unrecognized_payload_error(
@@ -114,19 +111,6 @@ class MQTTCodec(abc.ABC):
         raise original_exception
 
 
-def get_model_type_name(cls: Any) -> str:
-    """Return cls.TypeName, if cls inherits from BaseModel, has a TypeName field,
-    and that field is a Literal, else returns an empty string.
-    """
-    if (
-        issubclass(cls, BaseModel)
-        and TYPE_NAME_FIELD in cls.model_fields
-        and get_origin(cls.model_fields[TYPE_NAME_FIELD].annotation) == Literal
-    ):
-        return str(cls.model_fields[TYPE_NAME_FIELD].default)
-    return ""
-
-
 def get_candidate_modules(
     module_names: str | Sequence[str],
     modules: Optional[Sequence[Any]] = None,
@@ -142,7 +126,7 @@ def get_candidate_modules(
     return [sys.modules[module_name] for module_name in module_names] + list(modules)
 
 
-EXCLUDED_TYPE_NAMES: set[str] = {Message.type_name()}
+EXCLUDED_TYPE_NAMES: set[str] = {Message.type_name_value()}
 
 
 def get_candidate_payload_classes(

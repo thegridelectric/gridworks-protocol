@@ -79,39 +79,42 @@ def child_to_parent_messages() -> list[MessageCase]:
         MessageCase(
             "power-watts",
             Message(
-                Src=CHILD,
-                Dst=PARENT,
-                MessageType="power.watts",
-                Payload=PowerWatts(Watts=1),
+                src=CHILD,
+                dst=PARENT,
+                payload=PowerWatts(Watts=1),
             ),
         ),
         # Report
         MessageCase(
             "report",
-            Message(Src=CHILD, Dst=PARENT, MessageType="report", Payload=report),
+            Message(src=CHILD, dst=PARENT, message_type="report", payload=report),
             None,
             report,
         ),
         MessageCase(
             "report-as_dict",
-            Message(Src=CHILD, Dst=PARENT, Payload=report),
+            Message(src=CHILD, dst=PARENT, payload=report),
             None,
             report,
         ),
         # # events
         MessageCase(
             "report-event",
-            Message(Src=CHILD, Dst=PARENT, Payload=report_event_dict["Payload"]),
+            Message(
+                src=CHILD,
+                dst=PARENT,
+                payload=Report.from_dict(report_event_dict["Payload"]),
+            ),
             None,
             report_event,
         ),
         MessageCase(
             "event-unrecognized-report",
-            Message(Src=CHILD, Dst=PARENT, Payload=unrecognized_report_event),
+            Message(src=CHILD, dst=PARENT, payload=unrecognized_report_event),
         ),
         MessageCase(
             "event-unrecognized",
-            Message(Src=CHILD, Dst=PARENT, Payload=unrecognized_event),
+            Message(src=CHILD, dst=PARENT, payload=unrecognized_event),
         ),
         MessageCase(
             "unrecognized-not-event",
@@ -125,25 +128,25 @@ def child_to_parent_messages() -> list[MessageCase]:
         MessageCase(
             "unrecognizeable-bad-event",
             Message(
-                Src=CHILD,
-                Dst=PARENT,
-                Payload=unrecognizeable_bad_event_content,
+                src=CHILD,
+                dst=PARENT,
+                payload=unrecognizeable_bad_event_content,
             ),
             exp_exceptions=[ValidationError],
         ),
         MessageCase(
-            "startup-event", Message(Src=CHILD, Dst=PARENT, Payload=StartupEvent())
+            "startup-event", Message(src=CHILD, dst=PARENT, payload=StartupEvent())
         ),
         MessageCase(
             "shutdown-event",
-            Message(Src=CHILD, Dst=PARENT, Payload=ShutdownEvent(reason="foo")),
+            Message(src=CHILD, dst=PARENT, payload=ShutdownEvent(reason="foo")),
         ),
         MessageCase(
             "problem-event",
             Message(
-                Src=CHILD,
-                Dst=PARENT,
-                Payload=ProblemEvent(problem_type=Problems.error, summary="foo"),
+                src=CHILD,
+                dst=PARENT,
+                payload=ProblemEvent(problem_type=Problems.error, summary="foo"),
             ),
         ),
         MessageCase(
@@ -153,27 +156,27 @@ def child_to_parent_messages() -> list[MessageCase]:
         MessageCase(
             "mqtt-conenct-failed-event",
             Message(
-                Src=CHILD, Dst=PARENT, Payload=MQTTConnectFailedEvent(peer_name=PARENT)
+                src=CHILD, dst=PARENT, payload=MQTTConnectFailedEvent(peer_name=PARENT)
             ),
         ),
         MessageCase(
             "mqtt-disconnect-event",
             Message(
-                Src=CHILD, Dst=PARENT, Payload=MQTTDisconnectEvent(peer_name=PARENT)
+                src=CHILD, dst=PARENT, payload=MQTTDisconnectEvent(peer_name=PARENT)
             ),
         ),
         MessageCase(
             "mqtt-fully-subscribed-event",
             Message(
-                Src=CHILD,
-                Dst=PARENT,
-                Payload=MQTTFullySubscribedEvent(peer_name=PARENT),
+                src=CHILD,
+                dst=PARENT,
+                payload=MQTTFullySubscribedEvent(peer_name=PARENT),
             ),
         ),
         MessageCase(
             "response-timeout-event",
             Message(
-                Src=CHILD, Dst=PARENT, Payload=ResponseTimeoutEvent(peer_name=PARENT)
+                src=CHILD, dst=PARENT, payload=ResponseTimeoutEvent(peer_name=PARENT)
             ),
         ),
         MessageCase(
@@ -181,9 +184,9 @@ def child_to_parent_messages() -> list[MessageCase]:
             Message(Src=CHILD, Dst=PARENT, Payload=PeerActiveEvent(peer_name=PARENT)),
         ),
         # # misc messages
-        MessageCase("ping", PingMessage(Src=CHILD, Dst=PARENT)),
+        MessageCase("ping", PingMessage(src=CHILD, dst=PARENT)),
         MessageCase(
-            "ack", Message(Src=CHILD, Dst=PARENT, Payload=Ack(AckMessageID="1"))
+            "ack", Message(src=CHILD, dst=PARENT, Payload=Ack(AckMessageID="1"))
         ),
     ]
 

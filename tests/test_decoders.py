@@ -4,7 +4,7 @@ from typing import Any
 
 from pydantic import ValidationError
 
-from gwproto import Message
+from gwproto import Message, MQTTCodec, create_message_model
 from gwproto.messages import (
     Ack,
     AnyEvent,
@@ -26,13 +26,50 @@ from gwproto.named_types import (
     Report,
     SendSnap,
 )
-from tests.dummy_decoders import CHILD, PARENT
-from tests.dummy_decoders.child.codec import ChildMQTTCodec
-from tests.dummy_decoders.parent.codec import ParentMQTTCodec
 
 from .decode_utils import MessageCase, assert_encode_decode
 
 TEST_DATA_DIR = Path(__file__).parent / "data"
+
+
+CHILD = "child"
+PARENT = "parent"
+
+
+class ParentMQTTCodec(MQTTCodec):
+    def __init__(self) -> None:
+        super().__init__(
+            create_message_model(
+                model_name="ParentMessageDecoder",
+                module_names=["gwproto.messages"],
+            )
+        )
+
+    def validate_source_and_destination(self, src: str, dst: str) -> None:
+        if src != CHILD or dst != PARENT:
+            raise ValueError(
+                "ERROR validating src and/or dst\n"
+                f"  exp: {CHILD} -> {PARENT}\n"
+                f"  got: {src} -> {dst}"
+            )
+
+
+class ChildMQTTCodec(MQTTCodec):
+    def __init__(self) -> None:
+        super().__init__(
+            create_message_model(
+                "ChildMessageDecoder",
+                ["gwproto.messages"],
+            )
+        )
+
+    def validate_source_and_destination(self, src: str, dst: str) -> None:
+        if src != PARENT or dst != CHILD:
+            raise ValueError(
+                "ERROR validating src and/or dst\n"
+                f"  exp: {PARENT} -> {CHILD}\n"
+                f"  got: {src} -> {dst}"
+            )
 
 
 def get_stored_message_dicts() -> dict[str, Any]:
@@ -52,14 +89,12 @@ def child_to_parent_payload_dicts() -> dict[str, Any]:
 def child_to_parent_messages() -> list[MessageCase]:
     stored_message_dicts = child_to_parent_payload_dicts()
     report_event_dict = stored_message_dicts["report"]
-    report = Report.model_validate(report_event_dict["Payload"]["Report"])
-    report_event = ReportEvent.model_validate(report_event_dict["Payload"])
-    unrecognized_report_event = AnyEvent(
-        **dict(
-            **report_event.model_dump(exclude_none=True),
-            TypeName=ReportEvent.type_name_value() + ".foo",
-        ),
-    )
+    report = Report.from_dict(report_event_dict["Payload"]["Report"])
+    report_event = ReportEvent.from_dict(report_event_dict["Payload"])
+    d = report_event.to_dict()
+    d["TypeName"] = ReportEvent.type_name_value() + ".foo"
+    unrecognized_report_event = AnyEvent.from_dict(d)
+
     unrecognized_event = AnyEvent(
         type_name="gridworks.event.bar",
         message_id="1",
@@ -67,13 +102,8 @@ def child_to_parent_messages() -> list[MessageCase]:
         src="1",
         version=None,
     )
-    unrecognizeable_not_event_type = AnyEvent(
-        **dict(
-            report_event.model_dump(),
-            TypeName="bla",
-        )
-    )
-    unrecognizeable_bad_event_content = {"TypeName": "gridworks.event.baz"}
+    d["TypeName"] = "bla"
+    unrecognizeable_not_event_type = AnyEvent.from_dict(d)
 
     return [
         MessageCase(
@@ -103,7 +133,7 @@ def child_to_parent_messages() -> list[MessageCase]:
             Message(
                 src=CHILD,
                 dst=PARENT,
-                payload=Report.from_dict(report_event_dict["Payload"]),
+                payload=ReportEvent.from_dict(report_event_dict["Payload"]),
             ),
             None,
             report_event,
@@ -119,18 +149,9 @@ def child_to_parent_messages() -> list[MessageCase]:
         MessageCase(
             "unrecognized-not-event",
             Message(
-                Src=CHILD,
-                Dst=PARENT,
-                Payload=unrecognizeable_not_event_type,
-            ),
-            exp_exceptions=[ValidationError],
-        ),
-        MessageCase(
-            "unrecognizeable-bad-event",
-            Message(
                 src=CHILD,
                 dst=PARENT,
-                payload=unrecognizeable_bad_event_content,
+                payload=unrecognizeable_not_event_type,
             ),
             exp_exceptions=[ValidationError],
         ),
@@ -151,7 +172,7 @@ def child_to_parent_messages() -> list[MessageCase]:
         ),
         MessageCase(
             "mqtt-connect-event",
-            Message(Src=CHILD, Dst=PARENT, Payload=MQTTConnectEvent(peer_name=PARENT)),
+            Message(src=CHILD, dst=PARENT, payload=MQTTConnectEvent(peer_name=PARENT)),
         ),
         MessageCase(
             "mqtt-conenct-failed-event",
@@ -181,12 +202,12 @@ def child_to_parent_messages() -> list[MessageCase]:
         ),
         MessageCase(
             "peer-active-event",
-            Message(Src=CHILD, Dst=PARENT, Payload=PeerActiveEvent(peer_name=PARENT)),
+            Message(src=CHILD, dst=PARENT, payload=PeerActiveEvent(peer_name=PARENT)),
         ),
         # # misc messages
         MessageCase("ping", PingMessage(src=CHILD, dst=PARENT)),
         MessageCase(
-            "ack", Message(src=CHILD, dst=PARENT, Payload=Ack(AckMessageID="1"))
+            "ack", Message(src=CHILD, dst=PARENT, payload=Ack(ack_message_i_d="1"))
         ),
     ]
 

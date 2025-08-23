@@ -20,6 +20,7 @@ from typing import (
 )
 
 import pydantic
+from gw.errors import GwTypeError
 from gw.named_types import GwBase
 from pydantic import BaseModel, Field, ValidationError, create_model
 from pydantic_core import ErrorDetails
@@ -70,24 +71,25 @@ class MQTTCodec(abc.ABC):
     def decode(self, topic: str, payload: bytes) -> Message[Any]:
         self.validate_topic(topic)
         try:
-            message = self.message_model.model_validate_json(payload)
-        except pydantic.ValidationError as e:
+            message = self.message_model.from_type(payload)
+        except (pydantic.ValidationError, GwTypeError) as e:
             # ValidationError can result because we receive a TypeName we don't
             # recognize, either because the sender is newer or older than our
             # code. In some cases we can still meaningfully interpret the
             # message, for example if we can recognize that it is an event
             # message, as is done here.
-            if error_details := self.get_unrecognized_payload_error(e):
-                return self.handle_unrecognized_payload(payload, e, error_details)
-            raise
+            if isinstance(e, pydantic.ValidationError):
+                if error_details := self.get_unrecognized_payload_error(e):
+                    return self.handle_unrecognized_payload(payload, e, error_details)
+                raise
         return message
 
     def validate_topic(self, topic: str) -> None:
         decoded_topic = MQTTTopic.decode(topic)
-        if decoded_topic.envelope_type != self.message_model.type_name():
+        if decoded_topic.envelope_type != self.message_model.type_name_value():
             raise ValueError(
                 f"Type {decoded_topic.envelope_type} not recognized. "
-                f"Available decoders: {self.message_model.type_name()}"
+                f"Available decoders: {self.message_model.type_name_value()}"
             )
         self.validate_source_and_destination(decoded_topic.src, decoded_topic.dst)
 

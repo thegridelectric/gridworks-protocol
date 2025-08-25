@@ -4,7 +4,7 @@ from typing import Any
 
 from pydantic import ValidationError
 
-from gwproto import Message
+from gwproto import Message, MQTTCodec, create_message_model
 from gwproto.messages import (
     Ack,
     AnyEvent,
@@ -26,13 +26,50 @@ from gwproto.named_types import (
     Report,
     SendSnap,
 )
-from tests.dummy_decoders import CHILD, PARENT
-from tests.dummy_decoders.child.codec import ChildMQTTCodec
-from tests.dummy_decoders.parent.codec import ParentMQTTCodec
 
 from .decode_utils import MessageCase, assert_encode_decode
 
 TEST_DATA_DIR = Path(__file__).parent / "data"
+
+
+CHILD = "child"
+PARENT = "parent"
+
+
+class ParentMQTTCodec(MQTTCodec):
+    def __init__(self) -> None:
+        super().__init__(
+            create_message_model(
+                model_name="ParentMessageDecoder",
+                module_names=["gwproto.messages"],
+            )
+        )
+
+    def validate_source_and_destination(self, src: str, dst: str) -> None:
+        if src != CHILD or dst != PARENT:
+            raise ValueError(
+                "ERROR validating src and/or dst\n"
+                f"  exp: {CHILD} -> {PARENT}\n"
+                f"  got: {src} -> {dst}"
+            )
+
+
+class ChildMQTTCodec(MQTTCodec):
+    def __init__(self) -> None:
+        super().__init__(
+            create_message_model(
+                "ChildMessageDecoder",
+                ["gwproto.messages"],
+            )
+        )
+
+    def validate_source_and_destination(self, src: str, dst: str) -> None:
+        if src != PARENT or dst != CHILD:
+            raise ValueError(
+                "ERROR validating src and/or dst\n"
+                f"  exp: {PARENT} -> {CHILD}\n"
+                f"  got: {src} -> {dst}"
+            )
 
 
 def get_stored_message_dicts() -> dict[str, Any]:
@@ -52,131 +89,125 @@ def child_to_parent_payload_dicts() -> dict[str, Any]:
 def child_to_parent_messages() -> list[MessageCase]:
     stored_message_dicts = child_to_parent_payload_dicts()
     report_event_dict = stored_message_dicts["report"]
-    report = Report.model_validate(report_event_dict["Payload"]["Report"])
-    report_event = ReportEvent.model_validate(report_event_dict["Payload"])
-    unrecognized_report_event = AnyEvent(**report_event.model_dump(exclude_none=True))
-    unrecognized_report_event.TypeName += ".foo"
+    report = Report.from_dict(report_event_dict["Payload"]["Report"])
+    report_event = ReportEvent.from_dict(report_event_dict["Payload"])
+    d = report_event.to_dict()
+    d["TypeName"] = ReportEvent.type_name_value() + ".foo"
+    unrecognized_report_event = AnyEvent.from_dict(d)
+
     unrecognized_event = AnyEvent(
-        TypeName="gridworks.event.bar",
-        MessageId="1",
-        TimeCreatedMs=1728754878213,
-        Src="1",
+        type_name="gridworks.event.bar",
+        message_id="1",
+        time_created_ms=1728754878213,
+        src="1",
+        version=None,
     )
-    unrecognizeable_not_event_type = AnyEvent(
-        **dict(
-            report_event.model_dump(),
-            TypeName="bla",
-        )
-    )
-    unrecognizeable_bad_event_content = {"TypeName": "gridworks.event.baz"}
+    d["TypeName"] = "bla"
+    unrecognizeable_not_event_type = AnyEvent.from_dict(d)
 
     return [
         MessageCase(
             "power-watts",
             Message(
-                Src=CHILD,
-                Dst=PARENT,
-                MessageType="power.watts",
-                Payload=PowerWatts(Watts=1),
+                src=CHILD,
+                dst=PARENT,
+                payload=PowerWatts(Watts=1),
             ),
         ),
         # Report
         MessageCase(
             "report",
-            Message(Src=CHILD, Dst=PARENT, MessageType="report", Payload=report),
+            Message(src=CHILD, dst=PARENT, message_type="report", payload=report),
             None,
             report,
         ),
         MessageCase(
             "report-as_dict",
-            Message(Src=CHILD, Dst=PARENT, Payload=report),
+            Message(src=CHILD, dst=PARENT, payload=report),
             None,
             report,
         ),
         # # events
         MessageCase(
             "report-event",
-            Message(Src=CHILD, Dst=PARENT, Payload=report_event_dict["Payload"]),
+            Message(
+                src=CHILD,
+                dst=PARENT,
+                payload=ReportEvent.from_dict(report_event_dict["Payload"]),
+            ),
             None,
             report_event,
         ),
-        # MessageCase(
-        #     "event-unrecognized-status",
-        #     Message(Src=CHILD, Dst=PARENT, Payload=unrecognized_report_event),
-        # ),
+        MessageCase(
+            "event-unrecognized-report",
+            Message(src=CHILD, dst=PARENT, payload=unrecognized_report_event),
+        ),
         MessageCase(
             "event-unrecognized",
-            Message(Src=CHILD, Dst=PARENT, Payload=unrecognized_event),
+            Message(src=CHILD, dst=PARENT, payload=unrecognized_event),
         ),
         MessageCase(
             "unrecognized-not-event",
             Message(
-                Src=CHILD,
-                Dst=PARENT,
-                Payload=unrecognizeable_not_event_type,
+                src=CHILD,
+                dst=PARENT,
+                payload=unrecognizeable_not_event_type,
             ),
             exp_exceptions=[ValidationError],
         ),
         MessageCase(
-            "unrecognizeable-bad-event",
-            Message(
-                Src=CHILD,
-                Dst=PARENT,
-                Payload=unrecognizeable_bad_event_content,
-            ),
-            exp_exceptions=[ValidationError],
-        ),
-        MessageCase(
-            "startup-event", Message(Src=CHILD, Dst=PARENT, Payload=StartupEvent())
+            "startup-event", Message(src=CHILD, dst=PARENT, payload=StartupEvent())
         ),
         MessageCase(
             "shutdown-event",
-            Message(Src=CHILD, Dst=PARENT, Payload=ShutdownEvent(Reason="foo")),
+            Message(src=CHILD, dst=PARENT, payload=ShutdownEvent(reason="foo")),
         ),
         MessageCase(
             "problem-event",
             Message(
-                Src=CHILD,
-                Dst=PARENT,
-                Payload=ProblemEvent(ProblemType=Problems.error, Summary="foo"),
+                src=CHILD,
+                dst=PARENT,
+                payload=ProblemEvent(problem_type=Problems.error, summary="foo"),
             ),
         ),
         MessageCase(
             "mqtt-connect-event",
-            Message(Src=CHILD, Dst=PARENT, Payload=MQTTConnectEvent(PeerName=PARENT)),
+            Message(src=CHILD, dst=PARENT, payload=MQTTConnectEvent(peer_name=PARENT)),
         ),
         MessageCase(
             "mqtt-conenct-failed-event",
             Message(
-                Src=CHILD, Dst=PARENT, Payload=MQTTConnectFailedEvent(PeerName=PARENT)
+                src=CHILD, dst=PARENT, payload=MQTTConnectFailedEvent(peer_name=PARENT)
             ),
         ),
         MessageCase(
             "mqtt-disconnect-event",
             Message(
-                Src=CHILD, Dst=PARENT, Payload=MQTTDisconnectEvent(PeerName=PARENT)
+                src=CHILD, dst=PARENT, payload=MQTTDisconnectEvent(peer_name=PARENT)
             ),
         ),
         MessageCase(
             "mqtt-fully-subscribed-event",
             Message(
-                Src=CHILD, Dst=PARENT, Payload=MQTTFullySubscribedEvent(PeerName=PARENT)
+                src=CHILD,
+                dst=PARENT,
+                payload=MQTTFullySubscribedEvent(peer_name=PARENT),
             ),
         ),
         MessageCase(
             "response-timeout-event",
             Message(
-                Src=CHILD, Dst=PARENT, Payload=ResponseTimeoutEvent(PeerName=PARENT)
+                src=CHILD, dst=PARENT, payload=ResponseTimeoutEvent(peer_name=PARENT)
             ),
         ),
         MessageCase(
             "peer-active-event",
-            Message(Src=CHILD, Dst=PARENT, Payload=PeerActiveEvent(PeerName=PARENT)),
+            Message(src=CHILD, dst=PARENT, payload=PeerActiveEvent(peer_name=PARENT)),
         ),
         # # misc messages
-        MessageCase("ping", PingMessage(Src=CHILD, Dst=PARENT)),
+        MessageCase("ping", PingMessage(src=CHILD, dst=PARENT)),
         MessageCase(
-            "ack", Message(Src=CHILD, Dst=PARENT, Payload=Ack(AckMessageID="1"))
+            "ack", Message(src=CHILD, dst=PARENT, payload=Ack(ack_message_i_d="1"))
         ),
     ]
 

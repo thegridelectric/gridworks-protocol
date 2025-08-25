@@ -1,2 +1,0 @@
-CHILD = "child"
-PARENT = "parent"

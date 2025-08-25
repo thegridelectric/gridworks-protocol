@@ -1,7 +1,8 @@
 from dataclasses import dataclass, field
 from typing import Any, Optional
 
-from gwproto import CacDecoder, HardwareLayout, default_cac_decoder
+from gwproto import CacDecoder, HardwareLayout
+from gwproto.default_decoders import _get_default_cac_decoder
 from gwproto.named_types import ComponentAttributeClassGt
 
 
@@ -53,7 +54,7 @@ class CacLoadResult:
 
 def _decode_cac(case: CacCase, decoder: Optional[CacDecoder]) -> CacLoadResult:
     if decoder is None:
-        decoder = default_cac_decoder
+        decoder = _get_default_cac_decoder()
     cac_dict = (
         case.src_cac.model_dump()
         if isinstance(case.src_cac, ComponentAttributeClassGt)

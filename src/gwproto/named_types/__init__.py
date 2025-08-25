@@ -1,4 +1,4 @@
-"""list of all the types"""
+"""List of all the types"""
 
 from gwproto.named_types.ads111x_based_cac_gt import Ads111xBasedCacGt
 from gwproto.named_types.ads111x_based_component_gt import Ads111xBasedComponentGt
@@ -16,15 +16,9 @@ from gwproto.named_types.egauge_register_config import EgaugeRegisterConfig
 from gwproto.named_types.electric_meter_cac_gt import ElectricMeterCacGt
 from gwproto.named_types.electric_meter_channel_config import ElectricMeterChannelConfig
 from gwproto.named_types.electric_meter_component_gt import ElectricMeterComponentGt
-from gwproto.named_types.fibaro_smart_implant_component_gt import (
-    FibaroSmartImplantComponentGt,
-)
 from gwproto.named_types.fsm_atomic_report import FsmAtomicReport
 from gwproto.named_types.fsm_full_report import FsmFullReport
 from gwproto.named_types.heartbeat_b import HeartbeatB
-from gwproto.named_types.hubitat_component_gt import HubitatComponentGt
-from gwproto.named_types.hubitat_poller_component_gt import HubitatPollerComponentGt
-from gwproto.named_types.hubitat_tank_component_gt import HubitatTankComponentGt
 from gwproto.named_types.i2c_multichannel_dt_relay_component_gt import (
     I2cMultichannelDtRelayComponentGt,
 )
@@ -67,13 +61,9 @@ __all__ = [
     "ElectricMeterCacGt",
     "ElectricMeterChannelConfig",
     "ElectricMeterComponentGt",
-    "FibaroSmartImplantComponentGt",
     "FsmAtomicReport",
     "FsmFullReport",
     "HeartbeatB",
-    "HubitatComponentGt",
-    "HubitatPollerComponentGt",
-    "HubitatTankComponentGt",
     "I2cMultichannelDtRelayComponentGt",
     "KeyparamChangeLog",
     "MachineStates",

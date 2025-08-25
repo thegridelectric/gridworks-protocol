@@ -15,6 +15,6 @@ class DataChannel(DataChannelGt):
 
     def to_gt(self) -> DataChannelGt:
         # Copy the current instance excluding the extra fields
-        return DataChannelGt(
-            **self.model_dump(exclude={"about_node", "captured_by_node"})
+        return DataChannelGt.from_dict(
+            self.to_dict(exclude={"about_node", "captured_by_node"})
         )

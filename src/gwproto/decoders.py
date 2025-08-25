@@ -6,8 +6,6 @@ import re
 import sys
 from abc import abstractmethod
 from collections.abc import Sequence
-
-# Static analysis (mypy, pycharm) thinks 'types' here is gwproto.named_types.
 from types import ModuleType  # noqa
 from typing import (
     Any,
@@ -20,6 +18,7 @@ from typing import (
 )
 
 import pydantic
+from gw.named_types import GwBase
 from pydantic import BaseModel, Field, ValidationError, create_model
 from pydantic_core import ErrorDetails
 
@@ -28,9 +27,149 @@ from gwproto.messages import AnyEvent
 from gwproto.named_types import ComponentAttributeClassGt, ComponentGt
 from gwproto.topic import MQTTTopic
 
-MessageDiscriminator = TypeVar("MessageDiscriminator", bound=Message[Any])
+TYPE_NAME_FIELD: str = "type_name"
+EXCLUDED_TYPE_NAMES: set[str] = {Message.type_name_value()}  # gw
 
-TYPE_NAME_FIELD: str = "TypeName"
+
+def get_candidate_modules(
+    module_names: str | Sequence[str],
+    modules: Optional[Sequence[Any]] = None,
+) -> Sequence[ModuleType]:
+    if isinstance(module_names, str):
+        module_names = [module_names] if module_names else []
+    if unimported := [
+        module_name for module_name in module_names if module_name not in sys.modules
+    ]:
+        raise ValueError(f"ERROR. modules {unimported} have not been imported.")
+    if modules is None:
+        modules = []
+    return [sys.modules[module_name] for module_name in module_names] + list(modules)
+
+
+def get_candidate_gwbase_classes(
+    module: ModuleType,
+) -> Sequence[tuple[str, type[GwBase]]]:
+    """From a given module, return list of (type_name, class) tuples for each
+    object in the module that:
+        * Is a class
+        * Inherits from GwBase
+        * Has a type_name field or type_name_value() method
+        * type_name is not in EXCLUDED_TYPE_NAMES
+    """
+    candidates = []
+    for _, obj in inspect.getmembers(module, inspect.isclass):
+        if issubclass(obj, GwBase) and obj is not GwBase:
+            # Try to get type_name
+            type_name = None
+            if hasattr(obj, "type_name_value"):
+                type_name = obj.type_name_value()
+            elif TYPE_NAME_FIELD in obj.model_fields:
+                field = obj.model_fields[TYPE_NAME_FIELD]
+                if get_origin(field.annotation) == Literal:
+                    type_name = str(field.default)
+
+            if type_name and type_name not in EXCLUDED_TYPE_NAMES:
+                candidates.append((type_name, obj))
+
+    return candidates
+
+
+def named_types(
+    module_names: str | Sequence[str] = "",
+    modules: Optional[Sequence[Any]] = None,
+    type_name_regex: Optional[re.Pattern[str]] = None,
+) -> list[type[GwBase]]:
+    """Find all GwBase types with type_name fields."""
+    found_types = []
+    accumulated_types: dict[str, type[GwBase]] = {}
+
+    for module in get_candidate_modules(module_names, modules):
+        for type_name, candidate_class in get_candidate_gwbase_classes(module):
+            if (
+                type_name in accumulated_types
+                and accumulated_types[type_name] is not candidate_class
+            ):
+                raise ValueError(
+                    f"ERROR type_name ({type_name}) "
+                    f"for {candidate_class} already seen for "
+                    f"class {accumulated_types[type_name]}"
+                )
+            if type_name_regex is None or type_name_regex.match(type_name):
+                accumulated_types[type_name] = candidate_class
+                found_types.append(candidate_class)
+
+    return found_types
+
+
+class MessageDecoder:
+    """Decoder for Message types that handles payload discrimination"""
+
+    def __init__(
+        self,
+        model_name: str,
+        module_names: str | Sequence[str] = "",
+        modules: Optional[Sequence[Any]] = None,
+        explicit_types: Optional[Sequence[Any]] = None,
+        type_name_regex: Optional[re.Pattern[str]] = None,
+    ) -> None:
+        self.model_name = model_name
+        self.payload_types = self._get_payload_types(
+            module_names, modules, explicit_types, type_name_regex
+        )
+        # Create a mapping from type_name to class for fast lookup
+        self.type_name_to_class = {
+            cls.type_name_value(): cls
+            for cls in self.payload_types
+            if hasattr(cls, "type_name_value")
+        }
+
+    def _get_payload_types(
+        self,
+        module_names: str | Sequence[str],
+        modules: Optional[Sequence[Any]],
+        explicit_types: Optional[Sequence[Any]],
+        type_name_regex: Optional[re.Pattern[str]],
+    ) -> list[type[GwBase]]:
+        """Get all GwBase types that can be used as payloads"""
+        types = named_types(
+            module_names=module_names,
+            modules=modules,
+            type_name_regex=type_name_regex,
+        )
+        if explicit_types:
+            types.extend(explicit_types)
+        return types
+
+    def decode_payload(self, payload_dict: dict[str, Any]) -> GwBase:
+        """Decode a payload dict to the appropriate GwBase type"""
+        type_name = payload_dict.get("TypeName", payload_dict.get("type_name"))
+        if not type_name:
+            raise ValueError("Payload missing TypeName/type_name field")
+
+        payload_class = self.type_name_to_class.get(type_name)
+        if not payload_class:
+            # Handle unrecognized event types
+            if type_name.startswith("gridworks.event"):
+                return AnyEvent.from_dict(payload_dict)
+            raise ValueError(f"Unknown payload type: {type_name}")
+
+        return payload_class.from_dict(payload_dict)
+
+    def decode_message(self, message_dict: dict[str, Any]) -> Message[Any]:
+        """Decode a full message dict"""
+        # Extract payload dict
+        payload_dict = message_dict.get("Payload", message_dict.get("payload"))
+        if not payload_dict:
+            raise ValueError("Message missing Payload/payload field")
+
+        # Decode the payload
+        payload = self.decode_payload(payload_dict)
+
+        # Extract header if present
+        header_dict = message_dict.get("Header", message_dict.get("header"))
+
+        # Create the Message with the decoded payload
+        return Message(payload=payload, header=header_dict)
 
 
 class MQTTCodec(abc.ABC):
@@ -125,24 +264,6 @@ def get_model_type_name(cls: Any) -> str:
     ):
         return str(cls.model_fields[TYPE_NAME_FIELD].default)
     return ""
-
-
-def get_candidate_modules(
-    module_names: str | Sequence[str],
-    modules: Optional[Sequence[Any]] = None,
-) -> Sequence[ModuleType]:
-    if isinstance(module_names, str):
-        module_names = [module_names] if module_names else []
-    if unimported := [
-        module_name for module_name in module_names if module_name not in sys.modules
-    ]:
-        raise ValueError(f"ERROR. modules {unimported} have not been imported.")
-    if modules is None:
-        modules = []
-    return [sys.modules[module_name] for module_name in module_names] + list(modules)
-
-
-EXCLUDED_TYPE_NAMES: set[str] = {Message.type_name()}
 
 
 def get_candidate_payload_classes(

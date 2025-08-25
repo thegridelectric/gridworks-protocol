@@ -218,7 +218,7 @@ def create_message_model(
     return create_model(
         model_name,
         __base__=Message,
-        Payload=(
+        payload=(
             Union[tuple(used_types)],
             Field(..., discriminator=TYPE_NAME_FIELD),
         ),

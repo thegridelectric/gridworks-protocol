@@ -85,10 +85,11 @@ class MakeModel(GwStrEnum):
       - Saier__Sen-HZG1WA
       - DFRobot__DFR0971_Times2: Two DfRobot DFR0971 i2c 0-10V analog output actuators,
         set so the first has address 0x5e and the second has address 0x5f
+      - GridWorks__TankModule3: tank module with 3 temperature sensors
 
     For more information:
-      - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
-      - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#spaceheatmakemodel)
+        - [ASL Definition](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/type_definitions/enums/spaceheat.make.model.005.yaml)
+        - [GridWorks ASL Docs](https://gridworks-asl.readthedocs.io)
       - [More Info](https://gridworks-protocol.readthedocs.io/en/latest/make-model.html)
     """
 

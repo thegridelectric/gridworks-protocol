@@ -20,8 +20,8 @@ class RelayWiringConfig(GwStrEnum):
         Throw configuration allows for switching between these two.
 
     For more information:
-      - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
-      - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#relaywiringconfig)
+        - [ASL Definition](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/type_definitions/enums/relay.wiring.config.000.yaml)
+        - [GridWorks ASL Docs](https://gridworks-asl.readthedocs.io)
       - [More Info](https://gridworks-protocol.readthedocs.io/en/latest/relays.html)
     """
 

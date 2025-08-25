@@ -14,8 +14,8 @@ class FsmActionType(GwStrEnum):
       - Analog420maSignalSet
 
     For more information:
-      - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
-      - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#shfsmactiontype)
+        - [ASL Definition](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/type_definitions/enums/sh.fsm.action.type.000.yaml)
+        - [GridWorks ASL Docs](https://gridworks-asl.readthedocs.io)
       - [More Info](https://gridworks-protocol.readthedocs.io/en/latest/finite-state-machines.html)
     """
 

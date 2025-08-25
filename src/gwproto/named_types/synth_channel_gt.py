@@ -2,7 +2,8 @@
 
 from typing import Literal
 
-from pydantic import BaseModel, PositiveInt
+from gw.named_types import GwBase
+from pydantic import PositiveInt
 
 from gwproto.enums import TelemetryName
 from gwproto.property_format import (
@@ -12,21 +13,16 @@ from gwproto.property_format import (
 )
 
 
-class SynthChannelGt(BaseModel):
-    """
-    Synthesized Channel.
+class SynthChannelGt(GwBase):
+    """ASL schema of record [synth.channel.gt v000](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/schemas/synth.channel.gt.000.yaml)"""
 
-    A descriptor for time-series data channel synthesized from multiple sources (instead of
-    the raw telemetry captured by data.channel.gt
-    """
-
-    Id: UUID4Str
-    Name: SpaceheatName
-    CreatedByNodeName: SpaceheatName
-    TelemetryName: TelemetryName
-    TerminalAssetAlias: LeftRightDotStr
-    Strategy: str
-    DisplayName: str
-    SyncReportMinutes: PositiveInt
-    TypeName: Literal["synth.channel.gt"] = "synth.channel.gt"
-    Version: str = "000"
+    id: UUID4Str
+    name: SpaceheatName
+    created_by_node_name: SpaceheatName
+    telemetry_name: TelemetryName
+    terminal_asset_alias: LeftRightDotStr
+    strategy: str
+    display_name: str
+    sync_report_minutes: PositiveInt
+    type_name: Literal["synth.channel.gt"] = "synth.channel.gt"
+    version: Literal["000"] = "000"

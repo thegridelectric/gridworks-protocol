@@ -1,4 +1,4 @@
-"""Tests tank.module.params type, version 100"""
+"""Tests tank.module.params type, version 110"""
 
 from gwproto.named_types import TankModuleParams
 
@@ -14,9 +14,9 @@ def test_tank_module_params_generated() -> None:
         "AsyncCaptureDeltaMicroVolts": 2000,
         "CaptureOffsetS": 0,
         "TypeName": "tank.module.params",
-        "Version": "100",
+        "Version": "110",
     }
 
-    d2 = TankModuleParams.model_validate(d).model_dump(exclude_none=True)
+    d2 = TankModuleParams.from_dict(d).to_dict()
 
     assert d2 == d

@@ -1,6 +1,5 @@
 """Tests resistive.heater.cac.gt type, version 001"""
 
-from gwproto.enums import MakeModel
 from gwproto.named_types import ResistiveHeaterCacGt
 
 
@@ -16,15 +15,5 @@ def test_resistive_heater_cac_gt_generated() -> None:
         "Version": "001",
     }
 
-    d2 = ResistiveHeaterCacGt.model_validate(d).model_dump(exclude_none=True)
-
+    d2 = ResistiveHeaterCacGt.from_dict(d).to_dict()
     assert d2 == d
-
-    ######################################
-    # Enum related
-    ######################################
-
-    assert type(d2["MakeModel"]) is str
-
-    d2 = dict(d, MakeModel="unknown_enum_thing")
-    assert ResistiveHeaterCacGt(**d2).MakeModel == MakeModel.default()

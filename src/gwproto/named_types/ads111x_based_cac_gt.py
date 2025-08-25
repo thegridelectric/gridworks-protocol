@@ -1,15 +1,7 @@
 """Type ads111x.based.cac.gt, version 000"""
 
-from typing import Literal
-
-from pydantic import (
-    ConfigDict,
-    PositiveInt,
-    StrictInt,
-    field_validator,
-    model_validator,
-)
-from typing_extensions import Self
+from pydantic import ConfigDict, PositiveInt, StrictInt, model_validator
+from typing_extensions import Literal, Self
 
 from gwproto.enums import TelemetryName
 from gwproto.named_types.component_attribute_class_gt import ComponentAttributeClassGt
@@ -19,25 +11,26 @@ from gwproto.property_format import (
 
 
 class Ads111xBasedCacGt(ComponentAttributeClassGt):
-    AdsI2cAddressList: list[StrictInt]
-    TotalTerminalBlocks: PositiveInt
-    TelemetryNameList: list[TelemetryName]
-    TypeName: Literal["ads111x.based.cac.gt"] = "ads111x.based.cac.gt"
-    Version: str = "000"
+    """ASL schema of record [ads111x.based.cac.gt v000](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/schemas/ads111x.based.cac.gt.000.yaml)"""
 
-    model_config = ConfigDict(extra="allow", use_enum_values=True)
+    ads_i2c_address_list: list[StrictInt]
+    total_terminal_blocks: PositiveInt
+    telemetry_name_list: list[TelemetryName]
+    type_name: Literal["ads111x.based.cac.gt"] = "ads111x.based.cac.gt"
+    version: Literal["000"] = "000"
 
-    @field_validator("AdsI2cAddressList")
-    @classmethod
-    def _check_ads_i2c_address_list(cls, v: list[int]) -> list[int]:
+    model_config = ConfigDict(extra="allow")
+
+    @model_validator(mode="after")
+    def _check_ads_i2c_address_list(self) -> Self:
         try:
-            for elt in v:
+            for elt in self.ads_i2c_address_list:
                 check_is_ads1115_i2c_address(elt)
         except ValueError as e:
             raise ValueError(
                 f"AdsI2cAddressList element failed Ads1115I2cAddress format validation: {e}",
             ) from e
-        return v
+        return self
 
     @model_validator(mode="after")
     def check_axiom_1(self) -> Self:

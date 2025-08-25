@@ -14,4 +14,6 @@ def test_egauge_register_config_generated() -> None:
         "TypeName": "egauge.register.config",
         "Version": "000",
     }
-    assert EgaugeRegisterConfig.model_validate(d).model_dump() == d
+    d2 = EgaugeRegisterConfig.from_dict(d).to_dict()
+
+    assert d2

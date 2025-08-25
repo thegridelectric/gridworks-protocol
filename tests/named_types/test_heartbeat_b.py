@@ -15,4 +15,5 @@ def test_heartbeat_b_generated() -> None:
         "TypeName": "heartbeat.b",
         "Version": "001",
     }
-    assert HeartbeatB.model_validate(d).model_dump() == d
+    d2 = HeartbeatB.from_dict(d).to_dict()
+    assert d2 == d

@@ -21,7 +21,7 @@ def test_ads_channel_config_generated() -> None:
         "Version": "000",
     }
 
-    d2 = AdsChannelConfig.model_validate(d).model_dump(exclude_none=True)
+    d2 = AdsChannelConfig.from_dict(d).to_dict()
 
     assert d2 == d
 
@@ -32,9 +32,11 @@ def test_ads_channel_config_generated() -> None:
     assert type(d2["ThermistorMakeModel"]) is str
 
     d2 = dict(d, ThermistorMakeModel="unknown_enum_thing")
-    assert AdsChannelConfig(**d2).ThermistorMakeModel == MakeModel.default()
+    assert AdsChannelConfig(**d2).thermistor_make_model == MakeModel.default()
 
     assert type(d2["DataProcessingMethod"]) is str
 
     d2 = dict(d, DataProcessingMethod="unknown_enum_thing")
-    assert AdsChannelConfig(**d2).DataProcessingMethod == ThermistorDataMethod.default()
+    assert (
+        AdsChannelConfig(**d2).data_processing_method == ThermistorDataMethod.default()
+    )

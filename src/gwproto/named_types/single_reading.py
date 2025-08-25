@@ -2,7 +2,8 @@
 
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, StrictInt
+from gw.named_types import GwBase
+from pydantic import StrictInt
 
 from gwproto.property_format import (
     SpaceheatName,
@@ -10,11 +11,11 @@ from gwproto.property_format import (
 )
 
 
-class SingleReading(BaseModel):
-    ChannelName: SpaceheatName
-    Value: StrictInt
-    ScadaReadTimeUnixMs: UTCMilliseconds
-    TypeName: Literal["single.reading"] = "single.reading"
-    Version: str = "000"
+class SingleReading(GwBase):
+    """ASL schema of record [single.reading v000](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/schemas/single.reading.000.yaml)"""
 
-    model_config = ConfigDict(use_enum_values=True)
+    channel_name: SpaceheatName
+    value: StrictInt
+    scada_read_time_unix_ms: UTCMilliseconds
+    type_name: Literal["single.reading"] = "single.reading"
+    version: Literal["000"] = "000"

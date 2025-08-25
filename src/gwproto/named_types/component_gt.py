@@ -1,29 +1,35 @@
 """Type component.gt, version 001"""
 
-from collections.abc import Sequence
-from typing import Optional
+from typing import Literal, Optional
 
-from pydantic import BaseModel, field_validator
+from gw.named_types import GwBase
+from pydantic import ConfigDict, model_validator
+from typing_extensions import Self
 
 from gwproto.named_types.channel_config import ChannelConfig
-from gwproto.property_format import UUID4Str
+from gwproto.property_format import (
+    UUID4Str,
+)
 
 
-class ComponentGt(BaseModel):
-    ComponentId: UUID4Str
-    ComponentAttributeClassId: UUID4Str
-    ConfigList: Sequence[ChannelConfig]
-    DisplayName: Optional[str] = None
-    HwUid: Optional[str] = None
-    TypeName: str = "component.gt"
-    Version: str = "001"
+class ComponentGt(GwBase):
+    """ASL schema of record [component.gt v001](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/schemas/component.gt.001.yaml)"""
 
-    @field_validator("ConfigList")
-    @classmethod
-    def check_config_list(cls, v: Sequence[ChannelConfig]) -> Sequence[ChannelConfig]:
+    component_id: UUID4Str
+    component_attribute_class_id: UUID4Str
+    config_list: list[ChannelConfig]
+    display_name: Optional[str] = None
+    hw_uid: Optional[str] = None
+    type_name: Literal["component.gt"] = "component.gt"
+    version: Literal["001"] = "001"
+
+    model_config = ConfigDict(extra="allow")
+
+    @model_validator(mode="after")
+    def check_axiom_1(self) -> Self:
         """
-        Axiom 1: Channel Name uniqueness. Data Channel names are
-        unique in the config list
+        Axiom 1: Channel Name Uniqueness.
+        Data Channel names are unique in the config list
         """
-        # Implement Axiom(s)
-        return v
+        # Implement check for axiom 1"
+        return self

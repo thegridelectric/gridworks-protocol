@@ -25,4 +25,6 @@ def test_electric_meter_channel_config_generated() -> None:
         "TypeName": "electric.meter.channel.config",
         "Version": "000",
     }
-    assert ElectricMeterChannelConfig.model_validate(d).model_dump() == d
+
+    d2 = ElectricMeterChannelConfig.from_dict(d).to_dict()
+    assert d2 == d

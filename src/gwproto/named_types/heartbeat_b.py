@@ -2,37 +2,25 @@
 
 from typing import Literal
 
-from pydantic import BaseModel, Field
+from gw.named_types import GwBase
 
-from gwproto.property_format import HexChar, LeftRightDotStr, UTCMilliseconds, UUID4Str
+from gwproto.property_format import (
+    HexChar,
+    LeftRightDotStr,
+    UTCMilliseconds,
+    UUID4Str,
+)
 
 
-class HeartbeatB(BaseModel):
-    FromGNodeAlias: LeftRightDotStr
-    FromGNodeInstanceId: UUID4Str
-    MyHex: HexChar = Field(
-        title="Hex character getting sent",
-        default="0",
-    )
-    YourLastHex: HexChar = Field(
-        title="Last hex character received from heartbeat partner.",
-    )
-    LastReceivedTimeUnixMs: UTCMilliseconds = Field(
-        title="Time YourLastHex was received on my clock",
-    )
-    SendTimeUnixMs: UTCMilliseconds = Field(
-        title="Time this message is made and sent on my clock",
-    )
-    StartingOver: bool = Field(
-        title="True if the heartbeat initiator wants to start the volley over",
-        description=(
-            "(typically the AtomicTNode in an AtomicTNode / SCADA pair) wants to start the heartbeating "
-            "volley over. The result is that its partner will not expect the initiator to know "
-            "its last Hex."
-        ),
-    )
-    TypeName: Literal["heartbeat.b"] = "heartbeat.b"
-    Version: str = "001"
+class HeartbeatB(GwBase):
+    """ASL schema of record [heartbeat.b v001](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/schemas/heartbeat.b.001.yaml)"""
 
-    def __hash__(self) -> int:
-        return hash((type(self), *self.__dict__.values()))
+    from_g_node_alias: LeftRightDotStr
+    from_g_node_instance_id: UUID4Str
+    my_hex: HexChar
+    your_last_hex: HexChar
+    last_received_time_unix_ms: UTCMilliseconds
+    send_time_unix_ms: UTCMilliseconds
+    starting_over: bool
+    type_name: Literal["heartbeat.b"] = "heartbeat.b"
+    version: Literal["001"] = "001"

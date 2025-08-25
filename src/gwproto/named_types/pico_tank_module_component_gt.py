@@ -10,20 +10,24 @@ from gwproto.named_types.component_gt import ComponentGt
 
 
 class PicoTankModuleComponentGt(ComponentGt):
-    Enabled: bool
-    PicoHwUid: Optional[str] = None
-    PicoAHwUid: Optional[str] = None
-    PicoBHwUid: Optional[str] = None
-    TempCalcMethod: TempCalcMethod
-    ThermistorBeta: int
-    SendMicroVolts: bool
-    Samples: int
-    NumSampleAverages: int
-    PicoKOhms: Optional[int] = None
-    SerialNumber: str = "NA"
-    AsyncCaptureDeltaMicroVolts: int
-    TypeName: Literal["pico.tank.module.component.gt"] = "pico.tank.module.component.gt"
-    Version: str = "010"
+    """ASL schema of record [pico.tank.module.component.gt v010](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/schemas/pico.tank.module.component.gt.010.yaml)"""
+
+    enabled: bool
+    pico_hw_uid: Optional[str] = None
+    pico_a_hw_uid: Optional[str] = None
+    pico_b_hw_uid: Optional[str] = None
+    temp_calc_method: TempCalcMethod
+    thermistor_beta: int
+    send_micro_volts: bool
+    samples: int
+    num_sample_averages: int
+    pico_k_ohms: Optional[int] = None
+    serial_number: str = "NA"
+    async_capture_delta_micro_volts: int
+    type_name: Literal["pico.tank.module.component.gt"] = (
+        "pico.tank.module.component.gt"
+    )
+    version: str = "010"
 
     model_config = ConfigDict(extra="allow")
 
@@ -32,12 +36,12 @@ class PicoTankModuleComponentGt(ComponentGt):
         """
         Axiom 1: PicoHwUid exists  XOR (both PicoAHwUid and PicoBHwUid exist)
         """
-        if self.PicoHwUid is not None:
-            if self.PicoAHwUid or self.PicoBHwUid:
+        if self.pico_hw_uid is not None:
+            if self.pico_a_hw_uid or self.pico_b_hw_uid:
                 raise ValueError(
                     "Can't have both PicoHwUid and any of (PicoAHwUid, PicoBHwUid"
                 )
-        elif not (self.PicoAHwUid and self.PicoBHwUid):
+        elif not (self.pico_a_hw_uid and self.pico_b_hw_uid):
             raise ValueError(
                 "If PicoHwUid is not set, PicoAHwUid and PicoBHwUid must both be set!"
             )
@@ -51,8 +55,8 @@ class PicoTankModuleComponentGt(ComponentGt):
         # note this is a known incorrect method, but there are a few in the field
         # that do this.
         """
-        is_simple_beta = self.TempCalcMethod == TempCalcMethod.SimpleBetaForPico
-        has_kohms = self.PicoKOhms is not None
+        is_simple_beta = self.temp_calc_method == TempCalcMethod.SimpleBetaForPico
+        has_kohms = self.pico_k_ohms is not None
 
         if is_simple_beta != has_kohms:
             raise ValueError(

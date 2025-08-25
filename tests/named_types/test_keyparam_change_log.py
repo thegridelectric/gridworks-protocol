@@ -16,8 +16,7 @@ def test_keyparam_change_log_generated() -> None:
         "Version": "000",
     }
 
-    d2 = KeyparamChangeLog.model_validate(d).model_dump(exclude_none=True)
-
+    d2 = KeyparamChangeLog.from_dict(d).to_dict()
     assert d2 == d
 
     ######################################
@@ -27,4 +26,4 @@ def test_keyparam_change_log_generated() -> None:
     assert type(d2["Kind"]) is str
 
     d2 = dict(d, Kind="unknown_enum_thing")
-    assert KeyparamChangeLog(**d2).Kind == KindOfParam.default()
+    assert KeyparamChangeLog.from_dict(d2).kind == KindOfParam.default()

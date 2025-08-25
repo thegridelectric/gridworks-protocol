@@ -10,14 +10,16 @@ from gwproto.named_types.relay_actor_config import RelayActorConfig
 
 
 class I2cMultichannelDtRelayComponentGt(ComponentGt):
-    I2cAddressList: list[StrictInt]
-    ConfigList: list[RelayActorConfig]
-    TypeName: Literal["i2c.multichannel.dt.relay.component.gt"] = (
+    """ASL schema of record [i2c.multichannel.dt.relay.component.gt v002](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/schemas/i2c.multichannel.dt.relay.component.gt.002.yaml)"""
+
+    i2c_address_list: list[StrictInt]
+    config_list: list[RelayActorConfig]
+    type_name: Literal["i2c.multichannel.dt.relay.component.gt"] = (
         "i2c.multichannel.dt.relay.component.gt"
     )
-    Version: str = "002"
+    version: Literal["002"] = "002"
 
-    model_config = ConfigDict(extra="allow", use_enum_values=True)
+    model_config = ConfigDict(extra="allow")
 
     @model_validator(mode="after")
     def check_axiom_3(self) -> Self:

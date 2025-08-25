@@ -2,7 +2,9 @@
 
 from typing import Literal
 
-from pydantic import BaseModel, PositiveInt, field_validator
+from gw.named_types import GwBase
+from pydantic import PositiveInt, model_validator
+from typing_extensions import Self
 
 from gwproto.named_types.channel_readings import ChannelReadings
 from gwproto.named_types.fsm_full_report import FsmFullReport
@@ -15,25 +17,27 @@ from gwproto.property_format import (
 )
 
 
-class Report(BaseModel):
-    """ """
+class Report(GwBase):
+    """ASL schema of record [report v002](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/schemas/report.002.yaml)"""
 
-    FromGNodeAlias: LeftRightDotStr
-    FromGNodeInstanceId: UUID4Str
-    AboutGNodeAlias: LeftRightDotStr
-    SlotStartUnixS: UTCSeconds
-    SlotDurationS: PositiveInt
-    ChannelReadingList: list[ChannelReadings]
-    StateList: list[MachineStates]
-    FsmReportList: list[FsmFullReport]
-    MessageCreatedMs: UTCMilliseconds
-    Id: UUID4Str
-    TypeName: Literal["report"] = "report"
-    Version: str = "002"
+    from_g_node_alias: LeftRightDotStr
+    from_g_node_instance_id: UUID4Str
+    about_g_node_alias: LeftRightDotStr
+    slot_start_unix_s: UTCSeconds
+    slot_duration_s: PositiveInt
+    channel_reading_list: list[ChannelReadings]
+    state_list: list[MachineStates]
+    fsm_report_list: list[FsmFullReport]
+    message_created_ms: UTCMilliseconds
+    id: UUID4Str
+    type_name: Literal["report"] = "report"
+    version: Literal["002"] = "002"
 
-    @field_validator("ChannelReadingList")
-    @classmethod
-    def _check_channel_reading_list(
-        cls, v: list[ChannelReadings]
-    ) -> list[ChannelReadings]:
-        return v
+    @model_validator(mode="after")
+    def check_channel_reading_list(self) -> Self:
+        """
+        Axiom 2: Unique Channel names and Ids.
+        The ChannelIds in the ChannelReadingList are all unique, as are the ChannelNames.
+        """
+        # Implement Axiom(s)
+        return self

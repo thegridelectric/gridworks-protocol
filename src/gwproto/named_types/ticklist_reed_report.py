@@ -1,21 +1,23 @@
-"""type ticklist.reed.report, version 000"""
+"""Type ticklist.reed.report, version 000"""
 
 from typing import Literal
 
-from pydantic import BaseModel  # Count:true
+from gw.named_types import GwBase
 
 from gwproto.named_types.ticklist_reed import TicklistReed
-from gwproto.property_format import LeftRightDotStr, SpaceheatName, UTCMilliseconds
+from gwproto.property_format import (
+    LeftRightDotStr,
+    SpaceheatName,
+    UTCMilliseconds,
+)
 
 
-class TicklistReedReport(BaseModel):
-    """
-    Used by the SCADA to forward a ticklist.reed message received from a PicoFlowReed module.
-    """
+class TicklistReedReport(GwBase):
+    """ASL schema of record [ticklist.reed.report v000](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/schemas/ticklist.reed.report.000.yaml)"""
 
-    TerminalAssetAlias: LeftRightDotStr
-    ChannelName: SpaceheatName
-    ScadaReceivedUnixMs: UTCMilliseconds
-    Ticklist: TicklistReed
-    TypeName: Literal["ticklist.reed.report"] = "ticklist.reed.report"
-    Version: str = "000"
+    terminal_asset_alias: LeftRightDotStr
+    channel_name: SpaceheatName
+    scada_received_unix_ms: UTCMilliseconds
+    ticklist: TicklistReed
+    type_name: Literal["ticklist.reed.report"] = "ticklist.reed.report"
+    version: Literal["000"] = "000"

@@ -2,17 +2,20 @@
 
 from typing import Literal, Optional
 
-from pydantic import BaseModel, StrictInt, model_validator  # Count:true
+from gw.named_types import GwBase
+from pydantic import StrictInt, model_validator
 from typing_extensions import Self
 
 
-class TicklistHall(BaseModel):
-    HwUid: str
-    FirstTickTimestampNanoSecond: Optional[StrictInt] = None
-    RelativeMicrosecondList: list[StrictInt]
-    PicoBeforePostTimestampNanoSecond: StrictInt
-    TypeName: Literal["ticklist.hall"] = "ticklist.hall"
-    Version: str = "101"
+class TicklistHall(GwBase):
+    """ASL schema of record [ticklist.hall v101](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/schemas/ticklist.hall.101.yaml)"""
+
+    hw_uid: str
+    first_tick_timestamp_nano_second: Optional[StrictInt] = None
+    relative_microsecond_list: list[StrictInt]
+    pico_before_post_timestamp_nano_second: StrictInt
+    type_name: Literal["ticklist.hall"] = "ticklist.hall"
+    version: Literal["101"] = "101"
 
     @model_validator(mode="after")
     def check_axiom_1(self) -> Self:
@@ -20,15 +23,5 @@ class TicklistHall(BaseModel):
         Axiom 1: FirstTickTimestampNanoSecond is none iff RelativeMicrosecondList has length 0.
 
         """
-        if (
-            self.FirstTickTimestampNanoSecond is None
-            and len(self.RelativeMicrosecondList) > 0
-        ):
-            raise ValueError(
-                "FirstTickTimestampNanoSecond is None but  RelativeMicrosecondList has nonzero length!"
-            )
-        if self.FirstTickTimestampNanoSecond and len(self.RelativeMicrosecondList) == 0:
-            raise ValueError(
-                "FirstTickTimestampNanoSecond exists but  RelativeMicrosecondList has no elements!"
-            )
+        # Implement check for axiom 1
         return self

@@ -10,6 +10,5 @@ def test_send_snap_generated() -> None:
         "Version": "000",
     }
 
-    d2 = SendSnap.model_validate(d).model_dump(exclude_none=True)
-
+    d2 = SendSnap.from_dict(d).to_dict()
     assert d2 == d

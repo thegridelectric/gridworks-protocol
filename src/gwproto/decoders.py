@@ -17,10 +17,9 @@ from typing import (
     get_origin,
 )
 
-import pydantic
+from gw.errors import GwTypeError
 from gw.named_types import GwBase
 from pydantic import BaseModel, Field, ValidationError, create_model
-from pydantic_core import ErrorDetails
 
 from gwproto.message import Message
 from gwproto.messages import AnyEvent
@@ -117,11 +116,36 @@ class MessageDecoder:
             module_names, modules, explicit_types, type_name_regex
         )
         # Create a mapping from type_name to class for fast lookup
-        self.type_name_to_class = {
-            cls.type_name_value(): cls
-            for cls in self.payload_types
-            if hasattr(cls, "type_name_value")
-        }
+        self.type_name_to_class = self._build_type_name_mapping(self.payload_types)
+
+    def _build_type_name_mapping(
+        self, payload_types: list[type[GwBase]]
+    ) -> dict[str, type[GwBase]]:
+        """Build mapping from type_name to class, checking for duplicates"""
+        type_name_to_class = {}
+        for cls in payload_types:
+            # Get the type_name for this class
+            type_name = None
+            if hasattr(cls, "type_name_value"):
+                type_name = cls.type_name_value()
+            elif TYPE_NAME_FIELD in cls.model_fields:
+                field = cls.model_fields[TYPE_NAME_FIELD]
+                if get_origin(field.annotation) == Literal:
+                    type_name = str(field.default)
+
+            if type_name:
+                # Check for duplicates
+                if (
+                    type_name in type_name_to_class
+                    and type_name_to_class[type_name] is not cls
+                ):
+                    raise ValueError(
+                        f"ERROR: type_name '{type_name}' used by multiple classes: "
+                        f"{type_name_to_class[type_name]} and {cls}"
+                    )
+                type_name_to_class[type_name] = cls
+
+        return type_name_to_class
 
     def _get_payload_types(
         self,
@@ -174,83 +198,65 @@ class MessageDecoder:
 
 class MQTTCodec(abc.ABC):
     ENCODING = "utf-8"
-    message_model: type[Message[Any]]
+    message_decoder: MessageDecoder
 
-    def __init__(self, message_model: type[Message[Any]]) -> None:
-        self.message_model = message_model
+    def __init__(
+        self, message_decoder: Optional[MessageDecoder] = None, **decoder_kwargs: Any
+    ) -> None:
+        if message_decoder is None:
+            # Create a default decoder with provided kwargs
+            message_decoder = MessageDecoder(
+                model_name=f"{self.__class__.__name__}Decoder", **decoder_kwargs
+            )
+        self.message_decoder = message_decoder
 
-    def encode(self, content: bytes | BaseModel) -> bytes:  # noqa
-        if isinstance(content, bytes):
-            encoded = content
-        else:
-            encoded = content.model_dump_json().encode()
-        return encoded
-
-    @classmethod
-    def get_unrecognized_payload_error(
-        cls, e: ValidationError
-    ) -> Optional[ErrorDetails]:
-        for error in e.errors():
-            if error.get("type", "") == "union_tag_invalid" and error.get("loc") == (
-                "Payload",
-            ):
-                ctx = error.get("ctx", {})
-                if ctx.get("discriminator") == "'TypeName'":
-                    return error
-        return None
-
-    def handle_unrecognized_payload(  # noqa
-        self, payload: bytes, e: ValidationError, details: ErrorDetails
-    ) -> Message[Any]:
-        if details.get("ctx", {}).get("tag", "").startswith("gridworks.event"):
-            try:
-                return Message[AnyEvent].model_validate_json(payload)
-            except ValidationError as e2:
-                raise e2 from e
-        raise e
+    def encode(self, content: bytes | GwBase) -> bytes:
+        return content if isinstance(content, bytes) else content.to_type()
 
     def decode(self, topic: str, payload: bytes) -> Message[Any]:
         self.validate_topic(topic)
+
+        # Parse the JSON payload
+        import json
+
+        payload_str = (
+            payload.decode(self.ENCODING) if isinstance(payload, bytes) else payload
+        )
+        message_dict = json.loads(payload_str)
+
         try:
-            message = self.message_model.model_validate_json(payload)
-        except pydantic.ValidationError as e:
-            # ValidationError can result because we receive a TypeName we don't
-            # recognize, either because the sender is newer or older than our
-            # code. In some cases we can still meaningfully interpret the
-            # message, for example if we can recognize that it is an event
-            # message, as is done here.
-            if error_details := self.get_unrecognized_payload_error(e):
-                return self.handle_unrecognized_payload(payload, e, error_details)
-            raise
+            # Use our custom decoder
+            message = self.message_decoder.decode_message(message_dict)
+        except (ValueError, ValidationError, GwTypeError) as e:
+            # Try to handle as an unrecognized event
+            if self._is_unrecognized_event(message_dict):
+                payload_dict = message_dict.get(
+                    "Payload", message_dict.get("payload", {})
+                )
+                event_payload = AnyEvent.from_dict(payload_dict)
+                message = Message(payload=event_payload)
+            else:
+                raise ValueError(f"Trouble decoding! {e}")
+
         return message
+
+    def _is_unrecognized_event(self, message_dict: dict[str, Any]) -> bool:
+        """Check if this might be an unrecognized event type"""
+        payload_dict = message_dict.get("Payload", message_dict.get("payload", {}))
+        type_name = payload_dict.get("TypeName", payload_dict.get("type_name", ""))
+        return type_name.startswith("gridworks.event")
 
     def validate_topic(self, topic: str) -> None:
         decoded_topic = MQTTTopic.decode(topic)
-        if decoded_topic.envelope_type != self.message_model.type_name():
+        if decoded_topic.envelope_type != Message.type_name_value():
             raise ValueError(
                 f"Type {decoded_topic.envelope_type} not recognized. "
-                f"Available decoders: {self.message_model.type_name()}"
+                f"Expected: {Message.type_name_value()}"
             )
         self.validate_source_and_destination(decoded_topic.src, decoded_topic.dst)
 
     @abstractmethod
     def validate_source_and_destination(self, src: str, dst: str) -> None: ...
-
-    @classmethod
-    def _try_message_as_event(
-        cls, payload: bytes, original_exception: ValidationError
-    ) -> Message[Any]:
-        for error in original_exception.errors():
-            if error.get("type", "") == "union_tag_invalid":
-                ctx = error.get("ctx", {})
-                if ctx.get("discriminator", "") == "'TypeName'" and ctx.get(
-                    "tag", ""
-                ).startswith("gridworks.event"):
-                    try:
-                        return Message[AnyEvent].model_validate_json(payload)
-                    except Exception as e2:  # noqa: BLE001
-                        raise e2 from original_exception
-        raise original_exception
 
 
 def get_model_type_name(cls: Any) -> str:

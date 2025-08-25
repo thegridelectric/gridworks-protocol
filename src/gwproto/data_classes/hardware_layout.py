@@ -181,17 +181,17 @@ class HardwareLayout:
         if isinstance(node_dict, SpaceheatNodeGt):
             node_gt = node_dict
         else:
-            node_gt = SpaceheatNodeGt.model_validate(node_dict)
+            node_gt = SpaceheatNodeGt.from_dict(node_dict)
         if node_gt.component_id:
             component = components.get(node_gt.component_id)
             if component is None:
                 raise ValueError(
                     f"ERROR. Component <{node_gt.component_id}> not loaded "
-                    f"for node <{node_gt.Name}>"
+                    f"for node <{node_gt.name}>"
                 )
         else:
             component = None
-        return ShNode(component=component, **node_gt.model_dump())
+        return ShNode(component=component, **node_gt.to_dict())
 
     @classmethod
     def load_nodes(
@@ -221,15 +221,15 @@ class HardwareLayout:
     def make_channel(
         cls, dc_dict: dict[str, Any], nodes: dict[str, ShNode]
     ) -> DataChannel:
-        data_channel_gt = DataChannelGt.model_validate(dc_dict)
-        about_node = nodes.get(data_channel_gt.AboutNodeName)
-        captured_by_node = nodes.get(data_channel_gt.CapturedByNodeName)
+        data_channel_gt = DataChannelGt.from_dict(dc_dict)
+        about_node = nodes.get(data_channel_gt.about_node_name)
+        captured_by_node = nodes.get(data_channel_gt.captured_by_node_name)
         if about_node is None or captured_by_node is None:
             raise ValueError(
                 f"ERROR. DataChannel related nodes must exist for {dc_dict.get('Name')}!\n"
-                f"  For AboutNodeName <{data_channel_gt.AboutNodeName}> "
+                f"  For AboutNodeName <{data_channel_gt.about_node_name}> "
                 f"got {about_node}\n"
-                f"  for CapturedByNodeName <{data_channel_gt.CapturedByNodeName}>"
+                f"  for CapturedByNodeName <{data_channel_gt.captured_by_node_name}>"
                 f"got {captured_by_node}"
             )
         return DataChannel(
@@ -598,7 +598,7 @@ class HardwareLayout:
                 cls.check_ads_terminal_block_consistency(c)
             except Exception as e:  # noqa: BLE001, PERF203
                 errors_caught.append(
-                    LoadError("ads111x.based.component.gt", c.gt.model_dump(), e)
+                    LoadError("ads111x.based.component.gt", c.gt.to_dict(), e)
                 )
         if errors_caught:
             if raise_errors:

@@ -22,7 +22,7 @@ class SpaceheatNodeGt(GwBase):
     handle: Optional[HandleName] = None
     actor_class: ActorClass
     display_name: Optional[str] = None
-    component_id_id: Optional[str] = None
+    component_id: Optional[str] = None
     nameplate_power_w: Optional[StrictInt] = None
     in_power_metering: Optional[bool] = None
     sh_node_id: UUID4Str

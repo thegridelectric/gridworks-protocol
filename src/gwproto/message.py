@@ -137,5 +137,18 @@ class Message(GwBase, Generic[PayloadT]):
             message_type=self.message_type(),
         )
 
+    def __repr__(self) -> str:
+        return (
+            f"Message("
+            f"src='{self.header.src}', "
+            f"dst='{self.header.dst}', "
+            f"type='{self.header.message_type}', "
+            f"payload={self.payload.__class__.__name__}"
+            f")"
+        )
+
+    def __str__(self) -> str:
+        return f"{self.header.src} -> {self.header.dst}: {self.header.message_type}"
+
 
 GRIDWORKS_ENVELOPE_TYPE = Message.type_name_value()

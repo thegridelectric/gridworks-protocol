@@ -14,7 +14,6 @@ def _get_default_cac_decoder():
     from gwproto.named_types import cacs
 
     return CacDecoder(
-        model_name="DefaultCacDecoder",
         modules=[cacs],
     )
 
@@ -25,6 +24,5 @@ def _get_default_component_decoder():
     from gwproto.named_types import components
 
     return ComponentDecoder(
-        model_name="DefaultComponentDecoder",
         modules=[components],
     )

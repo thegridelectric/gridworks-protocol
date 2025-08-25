@@ -17,6 +17,7 @@ from typing import (
 from gw.errors import GwTypeError
 from gw.named_types import GwBase
 from pydantic import ValidationError
+from pydantic_core import PydanticUndefined
 
 from gwproto.message import Message
 from gwproto.messages import AnyEvent
@@ -58,13 +59,23 @@ def get_candidate_gwbase_classes(
             # Try to get type_name
             type_name = None
             if hasattr(obj, "type_name_value"):
-                type_name = obj.type_name_value()
+                try:
+                    type_name = obj.type_name_value()
+                except (AttributeError, TypeError, ValueError):
+                    # Skip classes where type_name_value() is not properly implemented
+                    continue
             elif TYPE_NAME_FIELD in obj.model_fields:
                 field = obj.model_fields[TYPE_NAME_FIELD]
                 if get_origin(field.annotation) == Literal:
-                    type_name = str(field.default)
-
-            if type_name and type_name not in EXCLUDED_TYPE_NAMES:
+                    default = field.default
+                    # Skip if default is undefined or None
+                    if default is not PydanticUndefined and default is not None:
+                        type_name = str(default)
+            if (
+                type_name
+                and type_name not in EXCLUDED_TYPE_NAMES
+                and type_name != PydanticUndefined
+            ):
                 candidates.append((type_name, obj))
 
     return candidates
@@ -116,13 +127,11 @@ class MessageDecoder:
 
     def __init__(
         self,
-        model_name: str,
         module_names: str | Sequence[str] = "",
         modules: Optional[Sequence[Any]] = None,
         explicit_types: Optional[Sequence[Any]] = None,
         type_name_regex: Optional[re.Pattern[str]] = None,
     ) -> None:
-        self.model_name = model_name
         self.payload_types = self._get_payload_types(
             module_names, modules, explicit_types, type_name_regex
         )
@@ -216,9 +225,7 @@ class MQTTCodec(abc.ABC):
     ) -> None:
         if message_decoder is None:
             # Create a default decoder with provided kwargs
-            message_decoder = MessageDecoder(
-                model_name=f"{self.__class__.__name__}Decoder", **decoder_kwargs
-            )
+            message_decoder = MessageDecoder(**decoder_kwargs)
         self.message_decoder = message_decoder
 
     def encode(self, content: bytes | GwBase) -> bytes:
@@ -271,7 +278,6 @@ class MQTTCodec(abc.ABC):
 
 
 def create_message_model(
-    model_name: str,
     module_names: str | Sequence[str] = "",
     modules: Optional[Sequence[Any]] = None,
     explicit_types: Optional[Sequence[Any]] = None,
@@ -279,7 +285,6 @@ def create_message_model(
 ) -> MessageDecoder:
     """Create a MessageDecoder instead of a pydantic model"""
     return MessageDecoder(
-        model_name=model_name,
         module_names=module_names,
         modules=modules,
         explicit_types=explicit_types,
@@ -293,14 +298,12 @@ class UnionDecoder:
 
     def __init__(
         self,
-        model_name: str,
         *,
         module_names: str | Sequence[str] = "",
         modules: Optional[Sequence[Any]] = None,
         explicit_types: Optional[Sequence[Any]] = None,
         type_name_regex: Optional[re.Pattern[str]] = None,
     ) -> None:
-        self.model_name = model_name
         self.types = named_types(
             module_names=module_names,
             modules=modules,
@@ -344,11 +347,10 @@ class CacDecoder(UnionDecoder):
 
     def __init__(
         self,
-        model_name: str,
         type_name_regex: Optional[re.Pattern[str]] = TYPE_NAME_REGEX,
         **kwargs: Any,
     ) -> None:
-        super().__init__(model_name, type_name_regex=type_name_regex, **kwargs)
+        super().__init__(type_name_regex=type_name_regex, **kwargs)
 
     def decode(
         self, cac_dict: dict[str, Any], *, allow_missing: bool = True
@@ -363,6 +365,8 @@ class CacDecoder(UnionDecoder):
         except ValueError as e:
             if allow_missing and "Unknown type" in str(e):
                 # Fall back to base ComponentAttributeClassGt for unknown types
+                fallback_dict = dict(cac_dict)
+                fallback_dict["TypeName"] = "component.attribute.class.gt"
                 return ComponentAttributeClassGt.from_dict(cac_dict)
             raise
         else:
@@ -374,11 +378,10 @@ class ComponentDecoder(UnionDecoder):
 
     def __init__(
         self,
-        model_name: str,
         type_name_regex: Optional[re.Pattern[str]] = TYPE_NAME_REGEX,
         **kwargs: Any,
     ) -> None:
-        super().__init__(model_name, type_name_regex=type_name_regex, **kwargs)
+        super().__init__(type_name_regex=type_name_regex, **kwargs)
 
     def decode(
         self, component_dict: dict[str, Any], *, allow_missing: bool = True
@@ -393,7 +396,10 @@ class ComponentDecoder(UnionDecoder):
         except ValueError as e:
             if allow_missing and "Unknown type" in str(e):
                 # Fall back to base ComponentGt for unknown types
-                return ComponentGt.from_dict(component_dict)
+                # Need to override TypeName to match ComponentGt's expectation
+                fallback_dict = dict(component_dict)
+                fallback_dict["TypeName"] = "component.gt"
+                return ComponentGt.from_dict(fallback_dict)
             raise
         else:
             return decoded

@@ -38,12 +38,7 @@ PARENT = "parent"
 
 class ParentMQTTCodec(MQTTCodec):
     def __init__(self) -> None:
-        super().__init__(
-            create_message_model(
-                model_name="ParentMessageDecoder",
-                module_names=["gwproto.messages"],
-            )
-        )
+        super().__init__(create_message_model("gwproto.messages"))
 
     def validate_source_and_destination(self, src: str, dst: str) -> None:
         if src != CHILD or dst != PARENT:
@@ -56,12 +51,7 @@ class ParentMQTTCodec(MQTTCodec):
 
 class ChildMQTTCodec(MQTTCodec):
     def __init__(self) -> None:
-        super().__init__(
-            create_message_model(
-                "ChildMessageDecoder",
-                ["gwproto.messages"],
-            )
-        )
+        super().__init__(create_message_model("gwproto.messages"))
 
     def validate_source_and_destination(self, src: str, dst: str) -> None:
         if src != PARENT or dst != CHILD:

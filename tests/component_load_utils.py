@@ -1,12 +1,9 @@
 from dataclasses import dataclass, field
 from typing import Any, Optional
 
-from gwproto import (
-    ComponentDecoder,
-    HardwareLayout,
-    default_component_decoder,
-)
+from gwproto import ComponentDecoder, HardwareLayout
 from gwproto.data_classes.components import Component
+from gwproto.default_decoders import _get_default_component_decoder
 from gwproto.named_types import ComponentAttributeClassGt, ComponentGt
 
 
@@ -63,7 +60,7 @@ def _decode_component(
     cacs: dict[str, ComponentAttributeClassGt],
 ) -> ComponentLoadResult:
     if decoder is None:
-        decoder = default_component_decoder
+        decoder = _get_default_component_decoder()
     component_dict = (
         case.src_component_gt.model_dump()
         if isinstance(case.src_component_gt, ComponentGt)

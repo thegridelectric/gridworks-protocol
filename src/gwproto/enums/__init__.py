@@ -50,6 +50,8 @@ from gwproto.enums.heatcall_source import HeatcallSource
 from gwproto.enums.hz_calc_method import HzCalcMethod
 from gwproto.enums.kind_of_param import KindOfParam
 from gwproto.enums.make_model import MakeModel
+from gwproto.enums.message_category import MessageCategory
+from gwproto.enums.message_category_symbol import MessageCategorySymbol
 from gwproto.enums.primary_pump_control import PrimaryPumpControl
 from gwproto.enums.relay_closed_or_open import RelayClosedOrOpen
 from gwproto.enums.relay_energization_state import RelayEnergizationState
@@ -85,6 +87,8 @@ __all__ = [
     "HzCalcMethod",
     "KindOfParam",
     "MakeModel",
+    "MessageCategory",
+    "MessageCategorySymbol",
     "PrimaryPumpControl",
     "RelayClosedOrOpen",
     "RelayEnergizationState",

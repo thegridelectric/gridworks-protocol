@@ -15,6 +15,7 @@ scratch*
 cook.sh
 
 # Code generation airtable
-CodeGenerationTools/GridworksCore/SassyMQ/
-CodeGenerationTools/GridworksCore/SMQL
-CodeGenerationTools/GridworksCore/.ssotme/**/*.zfs
+*.zfs
+code_gen/core/SassyMQ/
+code_gen/core/SMQL
+code_gen/core/.ssotme/**/*.zfs

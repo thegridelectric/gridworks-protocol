@@ -40,8 +40,6 @@
 
 
 <xsl:text>from enum import auto
-from typing import List
-
 from gw.enums import GwStrEnum
 
 
@@ -87,10 +85,10 @@ class </xsl:text><xsl:value-of select="$enum-class-name"/>
     <xsl:text>
 
     For more information:
-      - [ASLs](https://gridworks-type-registry.readthedocs.io/en/latest/)
-      - [Global Authority](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#</xsl:text>
-    <xsl:value-of select="translate($enum-name,'.','')"/>
-    <xsl:text>)</xsl:text>
+        - [ASL Definition](https://raw.githubusercontent.com/thegridelectric/gridworks-asl/refs/heads/dev/type_definitions/enums/</xsl:text>
+      <xsl:value-of select="$enum-name"/><xsl:text>.</xsl:text>
+      <xsl:value-of select="$enum-version"/><xsl:text>.yaml)
+        - [GridWorks ASL Docs](https://gridworks-asl.readthedocs.io)</xsl:text>
 
     <xsl:if test="(normalize-space(Url)!='')">
     <xsl:text>
@@ -134,7 +132,7 @@ class </xsl:text><xsl:value-of select="$enum-class-name"/>
     <xsl:text>
 
     @classmethod
-    def values(cls) -> List[str]:
+    def values(cls) -> list[str]:
         return [elt.value for elt in cls]
 
     @classmethod

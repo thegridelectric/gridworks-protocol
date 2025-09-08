@@ -1,5 +1,6 @@
 # ruff: noqa: F405, F403
 
+from gwproto.message import Header, Message
 from gwproto.named_types import *
 
 from .event import *
@@ -14,11 +15,13 @@ __all__ = [
     "EventBase",
     "EventMessage",
     "EventT",
+    "Header",
     "MQTTConnectEvent",
     "MQTTConnectFailedEvent",
     "MQTTDisconnectEvent",
     "MQTTFullySubscribedEvent",
     "MachineStates",
+    "Message",
     "PeerActiveEvent",
     "Ping",
     "PingMessage",

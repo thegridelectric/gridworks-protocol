@@ -13,7 +13,7 @@ class DecodedMQTTTopic:
     remainder: list[str] = dataclasses.field(default_factory=list)
 
     def __str__(self) -> str:
-        return f"DecodedMQTTTopic {self.envelope_type}/{self.src}/{self.message_type} remainder:{self.remainder}"
+        return f"DecodedMQTTTopic type: {self.envelope_type} src: {self.src} message type:{self.message_type} remainder:{self.remainder}"
 
 
 class MQTTTopic:
@@ -78,7 +78,7 @@ class MQTTTopic:
 
         ScadaWrapped: gw/src/to/dst/type
         JsonDirect: rj/from-alias/from-class/type-name/to-class/to-alias
-        JsonBrodacast: rjb/from-alias/from-role/type-name[/radio-channel]
+        JsonBroadcast: rjb/from-alias/from-role/type-name[/radio-channel]
 
         For backwards compatibility, ScadaWrapped (gw) allows empty dst,
         producing topics like: gw/src/to//type
@@ -104,14 +104,14 @@ class MQTTTopic:
             # rj/from-alias/from-class/type-name/to-class/to-alias
             if not all([from_class, to_class, dst]):
                 raise ValueError(
-                    "JsonDirect requires from_role, to_role, and destination"
+                    "JsonDirect requires from_class, to_class, and destination"
                 )
             return f"{envelope_type}/{src_h}/{from_class}/{type_h}/{to_class}/{dst_h}"
 
         if envelope_type == MessageCategorySymbol.rjb.value:
             # rjb/from-alias/from-role/type-name[/radio-channel]
             if not from_class:
-                raise ValueError("JsonBroadcast requires from_role")
+                raise ValueError("JsonBroadcast requires from_class")
             base = f"{envelope_type}/{src_h}/{from_class}/{type_h}"
             if radio_channel:
                 return f"{base}/{radio_channel}"
@@ -125,8 +125,8 @@ class MQTTTopic:
         envelope_type: str | MessageCategorySymbol,
         src: str = "",
         dst: str = "",
-        from_role: str = "",
-        to_role: str = "",
+        from_class: str = "",
+        to_class: str = "",
     ) -> str:
         """
         Encode an MQTT subscription pattern with wildcards.
@@ -135,18 +135,18 @@ class MQTTTopic:
             envelope_type: The message category symbol (gw, rj, rjb)
             src: Source pattern (use + for single-level wildcard, # for multi-level)
             dst: Destination pattern (for gw and rj)
-            from_role: Sender's role pattern (for rj and rjb)
-            to_role: Receiver's role pattern (for rj)
+            from_class: Sender's role pattern (for rj and rjb)
+            to_class: Receiver's role pattern (for rj)
 
         Examples:
             # Subscribe to all ScadaWrapped messages to me:
             encode_subscription("gw", src="+", dst="my-alias")
 
             # Subscribe to all JsonDirect messages to my role:
-            encode_subscription("rj", to_role="scada", dst="my-alias")
+            encode_subscription("rj", to_class="scada", dst="my-alias")
 
             # Subscribe to all broadcasts from marketmakers:
-            encode_subscription("rjb", from_role="marketmaker")
+            encode_subscription("rjb", from_class="marketmaker")
         """
         if isinstance(envelope_type, MessageCategorySymbol):
             envelope_type = envelope_type.value
@@ -159,16 +159,16 @@ class MQTTTopic:
 
         if envelope_type == MessageCategorySymbol.rj.value:
             src_part = src.replace(cls.DOT, cls.DOT_REPLACEMENT) if src else "+"
-            from_role_part = from_role if from_role else "+"
-            to_role_part = to_role if to_role else "+"
+            from_class_part = from_class if from_class else "+"
+            to_class_part = to_class if to_class else "+"
             dst_part = dst.replace(cls.DOT, cls.DOT_REPLACEMENT) if dst else "+"
-            return f"{envelope_type}/{src_part}/{from_role_part}/+/{to_role_part}/{dst_part}"
+            return f"{envelope_type}/{src_part}/{from_class_part}/+/{to_class_part}/{dst_part}"
 
         if envelope_type == MessageCategorySymbol.rjb.value:
             src_part = src.replace(cls.DOT, cls.DOT_REPLACEMENT) if src else "+"
-            from_role_part = from_role if from_role else "+"
+            from_class_part = from_class if from_class else "+"
             # Use to match any remaining parts (type and optional radio channel)
-            return f"{envelope_type}/{src_part}/{from_role_part}/#"
+            return f"{envelope_type}/{src_part}/{from_class_part}/#"
 
         raise ValueError(f"Unknown envelope type: {envelope_type}")
 
@@ -215,7 +215,9 @@ class MQTTTopic:
 
         return DecodedMQTTTopic(
             envelope_type=MessageCategorySymbol.rjb.value,
+            src=parts[1],
             dst="",  # Broadcast has no destination
+            message_type=parts[3],
             remainder=parts[4:] if len(parts) > 4 else [],
         )
 
@@ -270,38 +272,3 @@ class MQTTTopic:
             message_type=message_type,
             remainder=remainder,
         )
-
-    @classmethod
-    def _decode_routing_key(cls, routing_key: str) -> DecodedMQTTTopic:
-        """Decode JsonDirect/JsonBroadcast routing key."""
-        parts = routing_key.split(".")
-        envelope_type = parts[0]
-
-        if envelope_type == MessageCategorySymbol.rj.value:
-            # rj.from-alias.from-class.type-name.to-class.to-alias
-            if len(parts) < 6:
-                raise ValueError(
-                    f"JsonDirect routing key needs 6 parts, got {len(parts)}"
-                )
-            return DecodedMQTTTopic(
-                envelope_type=envelope_type,
-                src=parts[1],
-                dst=parts[5],
-                message_type=parts[3],
-                remainder=parts[6:] if len(parts) > 6 else [],
-            )
-        if envelope_type == MessageCategorySymbol.rjb.value:
-            # rjb.from-alias.from-class.type-name[.radio-channel]
-            if len(parts) < 4:
-                raise ValueError(
-                    f"JsonBroadcast routing key needs at least 4 parts, got {len(parts)}"
-                )
-            return DecodedMQTTTopic(
-                envelope_type=envelope_type,
-                src=parts[1],
-                dst="",  # Broadcast has no specific destination
-                message_type=parts[3],
-                remainder=parts[4:] if len(parts) > 4 else [],
-            )
-
-        raise ValueError(f"Unknown routing key format: {envelope_type}")

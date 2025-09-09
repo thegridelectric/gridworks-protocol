@@ -2,8 +2,6 @@ import json
 from pathlib import Path
 from typing import Any
 
-from pydantic import ValidationError
-
 from gwproto import Message, MQTTCodec, create_message_model
 from gwproto.messages import (
     Ack,
@@ -82,7 +80,7 @@ def child_to_parent_messages() -> list[MessageCase]:
     report = Report.from_dict(report_event_dict["Payload"]["Report"])
     report_event = ReportEvent.from_dict(report_event_dict["Payload"])
     d = report_event.to_dict()
-    d["TypeName"] = ReportEvent.type_name_value() + ".foo"
+    d["TypeName"] = "gridworks.event.foo"
     unrecognized_report_event = AnyEvent.from_dict(d)
 
     unrecognized_event = AnyEvent(
@@ -143,7 +141,7 @@ def child_to_parent_messages() -> list[MessageCase]:
                 dst=PARENT,
                 payload=unrecognizeable_not_event_type,
             ),
-            exp_exceptions=[ValidationError],
+            exp_exceptions=[ValueError],
         ),
         MessageCase(
             "startup-event", Message(src=CHILD, dst=PARENT, payload=StartupEvent())
@@ -216,13 +214,13 @@ def parent_to_child_messages() -> list[MessageCase]:
     # )
     return [
         # misc messages
-        MessageCase("ping", PingMessage(Src=PARENT, Dst=CHILD)),
+        MessageCase("ping", PingMessage(src=PARENT, dst=CHILD)),
         MessageCase(
-            "ack", Message(Src=PARENT, Dst=CHILD, Payload=Ack(AckMessageID="1"))
+            "ack", Message(src=PARENT, dst=CHILD, payload=Ack(ack_message_i_d="1"))
         ),
         MessageCase(
             "snap",
-            Message(Src=PARENT, Dst=CHILD, Payload=snapshot_request),
+            Message(src=PARENT, dst=CHILD, payload=snapshot_request),
             None,
             snapshot_request,
         ),

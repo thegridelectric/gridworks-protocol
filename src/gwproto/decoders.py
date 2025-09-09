@@ -1,7 +1,7 @@
 # ruff: noqa: ANN401
-
 import abc
 import inspect
+import json
 import re
 import sys
 from abc import abstractmethod
@@ -14,13 +14,11 @@ from typing import (
     get_origin,
 )
 
-from gw.errors import GwTypeError
 from gw.named_types import GwBase
-from pydantic import ValidationError
 from pydantic_core import PydanticUndefined
 
-from gwproto.message import Message
-from gwproto.messages import AnyEvent
+from gwproto.enums import MessageCategory, MessageCategorySymbol
+from gwproto.messages import AnyEvent, Message
 from gwproto.named_types import ComponentAttributeClassGt, ComponentGt
 from gwproto.topic import MQTTTopic
 
@@ -199,22 +197,6 @@ class MessageDecoder:
 
         return payload_class.from_dict(payload_dict)
 
-    def decode_message(self, message_dict: dict[str, Any]) -> Message[Any]:
-        """Decode a full message dict"""
-        # Extract payload dict
-        payload_dict = message_dict.get("Payload", message_dict.get("payload"))
-        if not payload_dict:
-            raise ValueError("Message missing Payload/payload field")
-
-        # Decode the payload
-        payload = self.decode_payload(payload_dict)
-
-        # Extract header if present
-        header_dict = message_dict.get("Header", message_dict.get("header"))
-
-        # Create the Message with the decoded payload
-        return Message(payload=payload, header=header_dict)
-
 
 class MQTTCodec(abc.ABC):
     ENCODING = "utf-8"
@@ -228,34 +210,79 @@ class MQTTCodec(abc.ABC):
             message_decoder = MessageDecoder(**decoder_kwargs)
         self.message_decoder = message_decoder
 
-    def encode(self, content: bytes | GwBase) -> bytes:
-        return content if isinstance(content, bytes) else content.to_type()
+    def encode(
+        self,
+        content: bytes | GwBase | Message,
+        message_category: MessageCategory = MessageCategory.ScadaWrapped,
+    ) -> bytes:
+        if isinstance(content, bytes):
+            return content
+
+        if message_category == MessageCategory.ScadaWrapped:
+            # For ScadaWrapped, we need the full Message envelope
+            if isinstance(content, Message):
+                return content.to_type()
+            message = Message(payload=content)
+            return message.to_type()
+
+        # for JsonDirect and JsonBroadcast, just send the payload
+        if isinstance(content, Message):
+            return content.payload.to_type()
+        return content.to_type()
 
     def decode(self, topic: str, payload: bytes) -> Message[Any]:
-        self.validate_topic(topic)
+        decoded_topic = MQTTTopic.decode(topic)
+        envelope_type = decoded_topic.envelope_type
 
-        # Parse the JSON payload
-        import json
+        if envelope_type == MessageCategorySymbol.gw.value:
+            # ScadaWrapped - parse the JSON to get header and payload
+            payload_str = (
+                payload.decode(MQTTCodec.ENCODING)
+                if isinstance(payload, bytes)
+                else payload
+            )
+            message_dict = json.loads(payload_str)
 
-        payload_str = (
-            payload.decode(self.ENCODING) if isinstance(payload, bytes) else payload
-        )
-        message_dict = json.loads(payload_str)
-
-        try:
-            # Use our custom decoder
-            message = self.message_decoder.decode_message(message_dict)
-        except (ValueError, ValidationError, GwTypeError) as e:
-            # Try to handle as an unrecognized event
-            if self._is_unrecognized_event(message_dict):
-                payload_dict = message_dict.get(
-                    "Payload", message_dict.get("payload", {})
+            # Check it's actually a wrapped message
+            if message_dict.get("TypeName") != Message.type_name_value():  # (gw)
+                raise ValueError(
+                    f"Expected TypeName='gw', got {message_dict.get('TypeName')}"
                 )
-                event_payload = AnyEvent.from_dict(payload_dict)
-                message = Message(payload=event_payload)
-            else:
-                raise ValueError(f"Trouble decoding! {e}")
 
+            # Extract and decode the inner payload
+            inner_payload_dict = message_dict.get("Payload")
+            if not inner_payload_dict:
+                raise ValueError("ScadaWrapped message missing Payload field")
+
+            try:
+                decoded_payload = self.message_decoder.decode_payload(
+                    inner_payload_dict
+                )
+            except ValueError:
+                # Check if its an unrecognized event type
+                type_name = inner_payload_dict.get(
+                    "TypeName", inner_payload_dict.get("type_name", "")
+                )
+                if type_name.startswith("gridworks.event"):
+                    decoded_payload = AnyEvent.from_dict(inner_payload_dict)
+                else:
+                    raise  # Re-raise if not an event
+
+            header_dict = message_dict.get("Header")
+            message = Message(payload=decoded_payload, header=header_dict)
+
+        elif envelope_type in [MessageCategorySymbol.rj, MessageCategorySymbol.rjb]:
+            # Need to parse and wrap in Message
+            payload_str = (
+                payload.decode(self.ENCODING) if isinstance(payload, bytes) else payload
+            )
+            payload_dict = json.loads(payload_str)
+            decoded_payload = self.message_decoder.decode_payload(payload_dict)
+            message = Message(
+                payload=decoded_payload, src=decoded_topic.src, dst=decoded_topic.dst
+            )
+        else:
+            raise ValueError(f"Un-parsed envelope type: {envelope_type}")
         return message
 
     def _is_unrecognized_event(self, message_dict: dict[str, Any]) -> bool:
@@ -265,12 +292,13 @@ class MQTTCodec(abc.ABC):
         return type_name.startswith("gridworks.event")
 
     def validate_topic(self, topic: str) -> None:
-        decoded_topic = MQTTTopic.decode(topic)
-        if decoded_topic.envelope_type != Message.type_name_value():
-            raise ValueError(
-                f"Type {decoded_topic.envelope_type} not recognized. "
-                f"Expected: {Message.type_name_value()}"
-            )
+        """Validate topic structure based on message category"""
+
+        try:
+            decoded_topic = MQTTTopic.decode(topic)
+        except ValueError as e:
+            raise ValueError(f"Invalid topic: {e}")
+
         self.validate_source_and_destination(decoded_topic.src, decoded_topic.dst)
 
     @abstractmethod

@@ -136,16 +136,16 @@ def assert_encode_decode(
                                 )
                         else:
                             if case.exp_payload is None:
-                                exp_payload = case.src_message.Payload
+                                exp_payload = case.src_message.payload
                             else:
                                 exp_payload = case.exp_payload
-                            if decoded.Payload != exp_payload:
+                            if decoded.payload != exp_payload:
                                 errors.append(
                                     PayloadMatchError(
                                         case_idx,
                                         case,
                                         exp_payload=exp_payload,
-                                        decoded_payload=decoded.Payload,
+                                        decoded_payload=decoded.payload,
                                     )
                                 )
     if errors:

@@ -11,7 +11,7 @@ class DataChannel(DataChannelGt):
     model_config = ConfigDict(arbitrary_types_allowed=True, use_enum_values=True)
 
     def __hash__(self) -> int:
-        return hash(self.Id)
+        return hash(self.id)
 
     def to_gt(self) -> DataChannelGt:
         # Copy the current instance excluding the extra fields

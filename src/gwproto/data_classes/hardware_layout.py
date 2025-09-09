@@ -255,10 +255,10 @@ class HardwareLayout:
         cls,
         data_channels: dict[str, DataChannel],
     ) -> None:
-        id_counter = Counter(dc.Id for dc in data_channels.values())
+        id_counter = Counter(dc.id for dc in data_channels.values())
         dupes = [node_id for node_id, count in id_counter.items() if count > 1]
         if dupes:
-            raise DcError(f"Duplicate dc.Id(s) found: {dupes}")
+            raise DcError(f"Duplicate dc.id(s) found: {dupes}")
 
     @classmethod
     def check_node_channel_consistency(
@@ -276,7 +276,7 @@ class HardwareLayout:
                 my_channel_names = []
             else:
                 my_channel_names = [
-                    config.ChannelName for config in node.component.gt.ConfigList
+                    config.channel_name for config in node.component.gt.config_list
                 ]
             my_channels = [
                 dc for dc in data_channels.values() if dc.name in my_channel_names
@@ -297,13 +297,13 @@ class HardwareLayout:
         cls.check_dc_id_uniqueness(data_channels)
         dc_names_by_component: set[str] = set()
         for c in components.values():
-            channel_names = {config.ChannelName for config in c.gt.ConfigList}
+            channel_names = {config.channel_name for config in c.gt.config_list}
             if dc_names_by_component & channel_names:
                 raise DcError(
                     f"Channel name overlap!: {dc_names_by_component & channel_names}"
                 )
             dc_names_by_component.update(channel_names)
-        actual_dc_names = {dc.Name for dc in data_channels.values()}
+        actual_dc_names = {dc.name for dc in data_channels.values()}
         if dc_names_by_component != actual_dc_names:
             by_comp = list(dc_names_by_component)
             by_comp.sort()
@@ -324,7 +324,7 @@ class HardwareLayout:
         for node in pm_nodes:
             if (
                 node.component is None
-                or node.component.gt.TypeName != "electric.meter.component.gt"
+                or node.component.gt.type_name != "electric.meter.component.gt"
             ):
                 raise DcError(
                     f"Power Meter node {node} needs ElectricMeterComponent."
@@ -339,7 +339,7 @@ class HardwareLayout:
             multi_comp_type_names = ["ads111x.based.component.gt"]
             if (
                 node.component is None
-                or node.component.gt.TypeName not in multi_comp_type_names
+                or node.component.gt.type_name not in multi_comp_type_names
             ):
                 raise DcError(
                     f"Power Meter node {node} needs Component "
@@ -350,11 +350,12 @@ class HardwareLayout:
     @classmethod
     def check_handle_hierarchy(cls, nodes: dict[str, ShNode]) -> None:
         for n in nodes.values():
-            boss_handle = cls.boss_handle(n.handle)
+            boss_handle = cls.boss_handle(n.effective_handle)
             # No dots in your name: you are your own boss
             if boss_handle:
                 boss = next(
-                    (n for n in nodes.values() if n.handle == boss_handle), None
+                    (n for n in nodes.values() if n.effective_handle == boss_handle),
+                    None,
                 )
                 if boss is None:
                     raise DcError(f"{n.name} is missing boss {boss_handle}")
@@ -390,13 +391,13 @@ class HardwareLayout:
     @classmethod
     def check_ads_terminal_block_consistency(cls, c: Ads111xBasedComponent) -> None:
         possible_indices = set(
-            range(1, c.cac.TotalTerminalBlocks + 1)
+            range(1, c.cac.total_terminal_blocks + 1)
         )  # e,g {1, .., 12}
-        actual_indices = {tc.TerminalBlockIdx for tc in c.gt.ConfigList}
+        actual_indices = {tc.terminal_block_idx for tc in c.gt.config_list}
         if not actual_indices.issubset(possible_indices):
             raise DcError(
                 f"Terminal Block indices {actual_indices}"
-                f"When Ads only has {c.cac.TotalTerminalBlocks} terminal blocks!"
+                f"When Ads only has {c.cac.total_terminal_blocks} terminal blocks!"
             )
 
     @classmethod
@@ -826,7 +827,9 @@ class HardwareLayout:
     @cached_property
     def power_meter_node(self) -> ShNode:
         return next(
-            filter(lambda x: x.ActorClass == ActorClass.PowerMeter, self.nodes.values())
+            filter(
+                lambda x: x.actor_class == ActorClass.PowerMeter, self.nodes.values()
+            )
         )
 
     @cached_property

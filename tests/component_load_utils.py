@@ -108,7 +108,7 @@ def assert_component_load(
                 exp_component_gt = case.exp_component_gt_type(**exp_component_gt)
             if case.exp_component is None:
                 assert isinstance(exp_component_gt, ComponentGt)
-                cac = cacs[exp_component_gt.ComponentAttributeClassId]
+                cac = cacs[exp_component_gt.component_attribute_class_id]
                 exp_component = case.exp_component_type(exp_component_gt, cac)
             else:
                 exp_component = case.exp_component

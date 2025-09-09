@@ -10,7 +10,7 @@ class SynthChannel(SynthChannelGt):
     model_config = ConfigDict(arbitrary_types_allowed=True, use_enum_values=True)
 
     def __hash__(self) -> int:
-        return hash(self.Id)
+        return hash(self.id)
 
     def to_gt(self) -> SynthChannelGt:
         # Copy the current instance excluding the extra fields

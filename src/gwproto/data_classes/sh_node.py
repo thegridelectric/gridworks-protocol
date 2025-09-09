@@ -28,6 +28,18 @@ class ShNode(SpaceheatNodeGt):
     component: Optional[Component[Any, Any]] = None
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
+    @property
+    def effective_actor_hierarchy_name(self) -> str:
+        if self.actor_hierarchy_name is None:
+            return self.name
+        return self.actor_hierarchy_name
+
+    @property
+    def effective_handle(self) -> str:
+        if self.handle is None:
+            return self.name
+        return self.handle
+
     def __hash__(self) -> int:
         return hash(self.sh_node_id)
 

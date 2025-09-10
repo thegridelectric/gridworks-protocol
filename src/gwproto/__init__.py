@@ -8,7 +8,7 @@ from gwproto.decoders import (
     named_types,
 )
 from gwproto.errors import SchemaError
-from gwproto.message import Header, Message, as_enum
+from gwproto.message import Header, Message, MessageDecoder, as_enum
 from gwproto.topic import DecodedMQTTTopic, MQTTTopic
 
 __all__ = [
@@ -20,6 +20,7 @@ __all__ = [
     "MQTTCodec",
     "MQTTTopic",
     "Message",
+    "MessageDecoder",
     "SchemaError",
     "ShNode",
     "as_enum",

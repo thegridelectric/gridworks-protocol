@@ -3,12 +3,13 @@ from gwproto.data_classes.sh_node import ShNode
 from gwproto.decoders import (
     CacDecoder,
     ComponentDecoder,
+    MessageDecoder,
     MQTTCodec,
     create_message_model,
     named_types,
 )
 from gwproto.errors import SchemaError
-from gwproto.message import Header, Message, MessageDecoder, as_enum
+from gwproto.message import Header, Message, as_enum
 from gwproto.topic import DecodedMQTTTopic, MQTTTopic
 
 __all__ = [

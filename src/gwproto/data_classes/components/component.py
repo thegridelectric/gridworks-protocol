@@ -17,7 +17,7 @@ class Component(Generic[ComponentT, CacT]):
         self.cac = cac
 
     def __repr__(self) -> str:
-        return f"<{self.gt.DisplayName}>  ({self.cac.MakeModel})"
+        return f"<{self.gt.display_name}>  ({self.cac.make_model})"
 
 
 class ComponentOnly(Component[ComponentGt, ComponentAttributeClassGt]): ...

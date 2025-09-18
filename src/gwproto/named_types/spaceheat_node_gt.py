@@ -3,6 +3,7 @@
 from typing import Literal, Optional
 
 from gw.named_types import GwBase
+from gw.utils import snake_to_pascal
 from pydantic import ConfigDict, StrictInt, model_validator
 from typing_extensions import Self
 
@@ -29,7 +30,11 @@ class SpaceheatNodeGt(GwBase):
     type_name: Literal["spaceheat.node.gt"] = "spaceheat.node.gt"
     version: Literal["200"] = "200"
 
-    model_config = ConfigDict(extra="allow")
+    model_config = ConfigDict(
+        alias_generator=snake_to_pascal,  # Keep this
+        frozen=False,  # Change this
+        populate_by_name=True,  # Keep this
+    )
 
     @model_validator(mode="after")
     def check_axiom_1(self) -> Self:

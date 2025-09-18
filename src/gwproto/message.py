@@ -11,7 +11,8 @@ from typing import (
 )
 
 from gw.named_types import GwBase
-from pydantic import model_validator
+from gw.utils import snake_to_pascal
+from pydantic import ConfigDict, model_validator
 
 from gwproto.topic import MQTTTopic
 
@@ -35,6 +36,12 @@ class Header(GwBase):
     ack_required: bool = False
     type_name: Literal["gridworks.header"] = "gridworks.header"
     version: str = "001"
+
+    model_config = ConfigDict(
+        alias_generator=snake_to_pascal,  # Keep this
+        frozen=False,  # Change this
+        populate_by_name=True,  # Keep this
+    )
 
 
 def ensure_arg(arg_name: str, default_value: Any, kwargs_dict: dict[str, Any]) -> None:

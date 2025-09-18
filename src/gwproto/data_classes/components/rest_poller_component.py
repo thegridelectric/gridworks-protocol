@@ -7,4 +7,4 @@ from gwproto.named_types.rest_poller_gt import RESTPollerSettings
 class RESTPollerComponent(Component[RESTPollerComponentGt, ComponentAttributeClassGt]):
     @property
     def rest(self) -> RESTPollerSettings:
-        return self.gt.Rest
+        return self.gt.rest

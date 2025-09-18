@@ -46,12 +46,12 @@ class HubitatPollerComponent(
 
         # replace proxy hubitat component, which only had component id.
         # with the actual hubitat component containing data.
-        hubitat_component = components.get(self.hubitat_gt.ComponentId, None)
+        hubitat_component = components.get(self.hubitat_gt.component_id, None)
         if hubitat_component is None or not isinstance(
             hubitat_component, HubitatComponent
         ):
             raise ValueError(
-                f"ERROR. Component for {self.hubitat_gt.ComponentId} "
+                f"ERROR. Component for {self.hubitat_gt.component_id} "
                 f"has type <{type(hubitat_component)}>. Expected <HubitatComponent>"
             )
         self.hubitat_gt = hubitat_component.gt

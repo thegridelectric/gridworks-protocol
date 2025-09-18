@@ -1,4 +1,4 @@
-git checkout -- ODXML SSoT aicapture.json
+# git checkout -- ODXML SSoT aicapture.json
 pushd ../..
 # TODO: There are times where we do want to generate docs
 git checkout -- docs

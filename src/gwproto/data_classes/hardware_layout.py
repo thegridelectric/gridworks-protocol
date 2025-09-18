@@ -754,11 +754,16 @@ class HardwareLayout:
         return hierarchy_name[:last_delimiter]
 
     def parent_node(self, node: ShNode) -> Optional[ShNode]:
-        h_name = self.parent_hierarchy_name(node.actor_hierarchy_name)
+        h_name = self.parent_hierarchy_name(node.effective_actor_hierarchy_name)
         if not h_name:
             return None
         parent = next(
-            (n for n in self.nodes.values() if n.actor_hierarchy_name == h_name), None
+            (
+                n
+                for n in self.nodes.values()
+                if n.effective_actor_hierarchy_name == h_name
+            ),
+            None,
         )
         if parent is None:
             raise DcError(f"{node} is missing parent {h_name}!")

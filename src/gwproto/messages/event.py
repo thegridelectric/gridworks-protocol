@@ -4,6 +4,7 @@ from enum import Enum
 from typing import Any, Generic, Literal, Optional, TypeVar
 
 from gw.named_types import GwBase
+from gw.utils import snake_to_pascal
 from pydantic import ConfigDict, Field, field_validator
 
 from gwproto.message import Message, as_enum
@@ -17,6 +18,12 @@ class EventBase(GwBase):
         default_factory=lambda: int(time.time() * 1000)
     )
     src: str = ""
+
+    model_config = ConfigDict(
+        alias_generator=snake_to_pascal,  # Keeping this
+        frozen=False,  # Changing this
+        populate_by_name=True,  # Keep this
+    )
 
 
 class AnyEvent(EventBase):

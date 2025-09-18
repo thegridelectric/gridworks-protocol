@@ -7,4 +7,4 @@ from gwproto.named_types.web_server_gt import WebServerGt
 class WebServerComponent(Component[WebServerComponentGt, ComponentAttributeClassGt]):
     @property
     def web_server_gt(self) -> WebServerGt:
-        return self.gt.WebServer
+        return self.gt.web_server

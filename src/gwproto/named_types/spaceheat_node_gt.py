@@ -7,7 +7,6 @@ from gw.utils import snake_to_pascal
 from pydantic import ConfigDict, StrictInt, model_validator
 from typing_extensions import Self
 
-from gwproto.enums import ActorClass
 from gwproto.property_format import (
     HandleName,
     SpaceheatName,
@@ -21,7 +20,7 @@ class SpaceheatNodeGt(GwBase):
     name: SpaceheatName
     actor_hierarchy_name: Optional[HandleName] = None
     handle: Optional[HandleName] = None
-    actor_class: ActorClass
+    actor_class: str  # ActorClass
     display_name: Optional[str] = None
     component_id: Optional[str] = None
     nameplate_power_w: Optional[StrictInt] = None

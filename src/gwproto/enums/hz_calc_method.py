@@ -17,6 +17,7 @@ class HzCalcMethod(GwStrEnum):
 
     BasicExpWeightedAvg = auto()
     BasicButterWorth = auto()
+    UniformWindow = auto()
 
     @classmethod
     def default(cls) -> "HzCalcMethod":
@@ -32,4 +33,4 @@ class HzCalcMethod(GwStrEnum):
 
     @classmethod
     def enum_version(cls) -> str:
-        return "000"
+        return "001"

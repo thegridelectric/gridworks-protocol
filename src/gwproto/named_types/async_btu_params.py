@@ -1,0 +1,28 @@
+"""Type async.btu.params, version 000"""
+
+from typing import Literal, Optional
+
+from pydantic import BaseModel, PositiveInt
+
+from gwproto.property_format import (
+    SpaceheatName,
+)
+
+
+class AsyncBtuParams(BaseModel):
+    """
+    Parameters for the GridWorks AsyncBtuMain code
+    """
+
+    ActorNodeName: SpaceheatName
+    FlowNodeName: SpaceheatName
+    HotNodeName: SpaceheatName
+    ColdNodeName: SpaceheatName
+    CtNodeName: Optional[SpaceheatName] = None
+    CapturePeriodS: PositiveInt
+    GallonsPerPulse: float
+    AsyncCaptureDeltaGpmX100: PositiveInt
+    AsyncCaptureDeltaCelsiusX100: PositiveInt
+    AsyncCaptureDeltaCtVoltsX100: PositiveInt
+    TypeName: Literal["async.btu.params"] = "async.btu.params"
+    Version: Literal["000"] = "000"

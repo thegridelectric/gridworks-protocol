@@ -61,6 +61,7 @@ class TelemetryName(GwStrEnum):
     PercentKeep = auto()
     CelsiusTimes100 = auto()
     VoltsTimes100 = auto()
+    HzTimes100 = auto()
 
     @classmethod
     def default(cls) -> "TelemetryName":

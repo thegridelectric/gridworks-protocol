@@ -5,8 +5,6 @@ from gwproto.named_types.ads111x_based_component_gt import Ads111xBasedComponent
 from gwproto.named_types.ads_channel_config import AdsChannelConfig
 from gwproto.named_types.alert import Alert
 from gwproto.named_types.analog_dispatch import AnalogDispatch
-from gwproto.named_types.async_btu_data import AsyncBtuData
-from gwproto.named_types.async_btu_params import AsyncBtuParams
 from gwproto.named_types.channel_config import ChannelConfig
 from gwproto.named_types.channel_readings import ChannelReadings
 from gwproto.named_types.component_attribute_class_gt import ComponentAttributeClassGt
@@ -59,8 +57,6 @@ __all__ = [
     "AdsChannelConfig",
     "Alert",
     "AnalogDispatch",
-    "AsyncBtuData",
-    "AsyncBtuParams",
     "ChannelConfig",
     "ChannelReadings",
     "ComponentAttributeClassGt",

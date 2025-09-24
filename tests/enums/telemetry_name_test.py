@@ -28,6 +28,7 @@ def test_telemetry_name() -> None:
         "PercentKeep",
         "CelsiusTimes100",
         "VoltsTimes100",
+        "HzTimes100",
     }
 
     assert TelemetryName.default() == TelemetryName.Unknown

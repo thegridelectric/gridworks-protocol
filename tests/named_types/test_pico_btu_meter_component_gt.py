@@ -6,13 +6,18 @@ from gwproto.named_types import PicoBtuMeterComponentGt
 
 def test_pico_btu_meter_component_gt_generated() -> None:
     d = {
+        "ComponentId": "03796a77-bf88-4a4b-a96e-efeb1bc6336e",
+        "ComponentAttributeClassId": "d020608d-d5ed-4b12-9592-7135db34e4ba",
+        "DisplayName": "Pico BtuMeter",
+        "ConfigList": [],
         "Enabled": True,
         "SerialNumber": "105",
-        "FlowNodeName": "primary-flow",
-        "HotNodeName": "hp-lwt",
-        "ColdNodeName": "hp-ewt",
-        "ReadCt": True,
-        "CtNodeName": "primary-pump-pwr",
+        "FlowChannelName": "primary-flow",
+        "HotChannelName": "hp-lwt",
+        "ColdChannelName": "hp-ewt",
+        "ReadCtVoltage": True,
+        "SendHz": False,
+        "CtChannelName": "primary-pump-pwr",
         "FlowMeterType": "SAIER__SENHZG1WA",
         "HzCalcMethod": "UniformWindow",
         "TempCalcMethod": "SimpleBeta",

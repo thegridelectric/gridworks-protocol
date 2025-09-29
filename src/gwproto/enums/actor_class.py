@@ -114,6 +114,7 @@ class ActorClass(GwStrEnum):
     HpRelayBoss = auto()
     SiegLoop = auto()
     HpBoss = auto()
+    ApiBtuMeter = auto()
 
     @classmethod
     def default(cls) -> "ActorClass":
@@ -129,4 +130,4 @@ class ActorClass(GwStrEnum):
 
     @classmethod
     def enum_version(cls) -> str:
-        return "007"
+        return "008"

@@ -14,15 +14,15 @@
     }
   ],
   "ProjectTranspilers": [
-    {
+     {
       "MatchedTranspiler": {
-        "Name": "SSoT",
-        "Description": "SSoT"
+        "Name": "AirtableToODXML",
+        "Description": "Airtable to Odxml"
       },
       "IsSSoTTranspiler": false,
-      "Name": "SSoT",
-      "RelativePath": "",
-      "CommandLine": "effortless/ssot -p ssot-key=IuUqkLn41mZ8TS"
+      "Name": "AirtableToODXML",
+      "RelativePath": "/ODXML",
+      "CommandLine": "airtable/airtable-to-odxml -p baseId=appgibWM6WZW20bBx"
     },
     {
       "MatchedTranspiler": {

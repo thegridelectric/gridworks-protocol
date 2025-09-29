@@ -40,8 +40,9 @@ def test_actor_class() -> None:
         "HpRelayBoss",
         "SiegLoop",
         "HpBoss",
+        "ApiBtuMeter",
     }
 
     assert ActorClass.default() == ActorClass.NoActor
     assert ActorClass.enum_name() == "sh.actor.class"
-    assert ActorClass.enum_version() == "007"
+    assert ActorClass.enum_version() == "008"

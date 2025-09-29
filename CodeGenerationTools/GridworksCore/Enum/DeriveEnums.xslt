@@ -40,7 +40,6 @@
 
 
 <xsl:text>from enum import auto
-from typing import List
 
 from gw.enums import GwStrEnum
 
@@ -134,7 +133,7 @@ class </xsl:text><xsl:value-of select="$enum-class-name"/>
     <xsl:text>
 
     @classmethod
-    def values(cls) -> List[str]:
+    def values(cls) -> list[str]:
         return [elt.value for elt in cls]
 
     @classmethod

@@ -30,6 +30,7 @@ from gwproto.named_types.i2c_multichannel_dt_relay_component_gt import (
 )
 from gwproto.named_types.keyparam_change_log import KeyparamChangeLog
 from gwproto.named_types.machine_states import MachineStates
+from gwproto.named_types.pico_btu_meter_component_gt import PicoBtuMeterComponentGt
 from gwproto.named_types.pico_flow_module_component_gt import PicoFlowModuleComponentGt
 from gwproto.named_types.pico_tank_module_component_gt import PicoTankModuleComponentGt
 from gwproto.named_types.power_watts import PowerWatts
@@ -77,6 +78,7 @@ __all__ = [
     "I2cMultichannelDtRelayComponentGt",
     "KeyparamChangeLog",
     "MachineStates",
+    "PicoBtuMeterComponentGt",
     "PicoFlowModuleComponentGt",
     "PicoTankModuleComponentGt",
     "PowerWatts",

@@ -59,6 +59,9 @@ class TelemetryName(GwStrEnum):
     WattHours = auto()
     StorageLayer = auto()
     PercentKeep = auto()
+    CelsiusTimes100 = auto()
+    VoltsTimes100 = auto()
+    HzTimes100 = auto()
 
     @classmethod
     def default(cls) -> "TelemetryName":
@@ -74,4 +77,4 @@ class TelemetryName(GwStrEnum):
 
     @classmethod
     def enum_version(cls) -> str:
-        return "005"
+        return "006"

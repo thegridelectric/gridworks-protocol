@@ -453,6 +453,10 @@
       <EnumType>UpperPython</EnumType>
     </EnumSymbol>
     <EnumSymbol json:Array="true">
+      <EnumSymbolId>rec8jFcsrI3hW73I2</EnumSymbolId>
+      <DisplayName>__</DisplayName>
+    </EnumSymbol>
+    <EnumSymbol json:Array="true">
       <EnumSymbolId>rec8yn5AqUJJxZVsa</EnumSymbolId>
       <DisplayName>sh.actor.class__Atn</DisplayName>
       <LocalValue>Atn</LocalValue>
@@ -688,6 +692,7 @@ Example: rj.hw1-keene-beech-scada.scada.power-watts.ltn.hw1-keene-beech</Descrip
       <LocalValue>BasicExpWeightedAvg</LocalValue>
       <Enum>reclxhoGH9ipt39oM</Enum>
       <Symbol>00000000</Symbol>
+      <Description>Calculates Hz using exponentially weighted moving average of inter-pulse periods. Recent pulses have higher weight than older pulses, providing smooth response  to rate changes while filtering noise.</Description>
       <Idx>0</Idx>
       <DefaultFor>reclxhoGH9ipt39oM</DefaultFor>
       <Version>000</Version>
@@ -861,6 +866,16 @@ Use for: commands, responses, targeted telemetry</Description>
       <EnumType>UpperPython</EnumType>
     </EnumSymbol>
     <EnumSymbol json:Array="true">
+      <EnumSymbolId>recEsSDN2NVewbz8J</EnumSymbolId>
+      <DisplayName>spaceheat.make.model__Gridworks__Gw101</DisplayName>
+      <LocalValue>Gridworks__Gw101</LocalValue>
+      <Enum>recLQWqTvGwSz2GcN</Enum>
+      <Description>BtuMeter1: pcb designed for pico as MCU</Description>
+      <Idx>44</Idx>
+      <Version>006</Version>
+      <EnumType>Upper</EnumType>
+    </EnumSymbol>
+    <EnumSymbol json:Array="true">
       <EnumSymbolId>recFXfObuXADoOfoz</EnumSymbolId>
       <DisplayName>g.node.class__MarketMaker</DisplayName>
       <LocalValue>MarketMaker</LocalValue>
@@ -923,6 +938,25 @@ Use for: commands, responses, targeted telemetry</Description>
       <Symbol>11ad13a5</Symbol>
       <Idx>2</Idx>
       <Version>000</Version>
+      <EnumType>UpperPython</EnumType>
+    </EnumSymbol>
+    <EnumSymbol json:Array="true">
+      <EnumSymbolId>recHKaFfKY57BmD38</EnumSymbolId>
+      <DisplayName>spaceheat.telemetry.name__HzTimes100</DisplayName>
+      <LocalValue>HzTimes100</LocalValue>
+      <Enum>rec2HyLffy6QK9QId</Enum>
+      <Idx>22</Idx>
+      <Version>006</Version>
+      <EnumType>UpperPython</EnumType>
+    </EnumSymbol>
+    <EnumSymbol json:Array="true">
+      <EnumSymbolId>recHTSLhL36dAsQ3k</EnumSymbolId>
+      <DisplayName>hz.calc.method__UniformWindow</DisplayName>
+      <LocalValue>UniformWindow</LocalValue>
+      <Enum>reclxhoGH9ipt39oM</Enum>
+      <Description>Counts pulses within a fixed time window and calculates Hz as total_pulses/elapsed_time. Uses start and stop timestamps of the measurement window rather than individual pulse timestamps, providing a uniform average over the sampling period (typically ~1 second). </Description>
+      <Idx>2</Idx>
+      <Version>001</Version>
       <EnumType>UpperPython</EnumType>
     </EnumSymbol>
     <EnumSymbol json:Array="true">
@@ -1034,6 +1068,7 @@ Use for: resource-constrained scenarios, high-frequency data</Description>
       <Version>000</Version>
       <EnumType>UpperPython</EnumType>
     </EnumSymbol>
+    <EnumSymbol json:Array="true">itrJauaoKf9Wb0MrU/recIg9jSoS2FGMvEJ</EnumSymbol>
     <EnumSymbol json:Array="true">
       <EnumSymbolId>recJbYTbJKvSOl1An</EnumSymbolId>
       <DisplayName>g.node.class__PriceService</DisplayName>
@@ -1077,7 +1112,6 @@ Use for: resource-constrained scenarios, high-frequency data</Description>
       <Url>https://gridworks.readthedocs.io/en/latest/atomic-t-node.html</Url>
       <EnumType>UpperPython</EnumType>
     </EnumSymbol>
-    <EnumSymbol json:Array="true">itrAW2o6sp7jwbRig/recK6xt05hjixHV0W</EnumSymbol>
     <EnumSymbol json:Array="true">
       <EnumSymbolId>recKJKAW4p7ISoU8X</EnumSymbolId>
       <DisplayName>spaceheat.make.model__Omega__FTB8007HW-PT</DisplayName>
@@ -1387,6 +1421,7 @@ Examples:
       <LocalValue>BasicButterWorth</LocalValue>
       <Enum>reclxhoGH9ipt39oM</Enum>
       <Symbol>7552194e</Symbol>
+      <Description>Applies a Butterworth low-pass filter to the pulse timing data. Provides a maximally flat frequency response in the passband, reducing high-frequency noise while preserving the underlying Hz signal.</Description>
       <Idx>1</Idx>
       <Version>000</Version>
       <EnumType>UpperPython</EnumType>
@@ -1811,6 +1846,15 @@ Use for: market updates, price and weather forecasts, shared data</Description>
       <EnumType>UpperPython</EnumType>
     </EnumSymbol>
     <EnumSymbol json:Array="true">
+      <EnumSymbolId>recUBTif57lPeeC2B</EnumSymbolId>
+      <DisplayName>spaceheat.telemetry.name__VoltsTimes100</DisplayName>
+      <LocalValue>VoltsTimes100</LocalValue>
+      <Enum>rec2HyLffy6QK9QId</Enum>
+      <Idx>21</Idx>
+      <Version>006</Version>
+      <EnumType>UpperPython</EnumType>
+    </EnumSymbol>
+    <EnumSymbol json:Array="true">
       <EnumSymbolId>recUN8d2nQAfBWUDK</EnumSymbolId>
       <DisplayName>relay.wiring.config__NormallyOpen</DisplayName>
       <LocalValue>NormallyOpen</LocalValue>
@@ -2093,6 +2137,7 @@ Use for: market updates, price and weather forecasts, shared data</Description>
       <Version>000</Version>
       <EnumType>UpperPython</EnumType>
     </EnumSymbol>
+    <EnumSymbol json:Array="true">itrJauaoKf9Wb0MrU/recYZ4i0CenNHSN68</EnumSymbol>
     <EnumSymbol json:Array="true">
       <EnumSymbolId>recYbBeH9CQoRciJA</EnumSymbolId>
       <DisplayName>spaceheat.make.model__SchneiderElectric__Iem3455</DisplayName>
@@ -2156,7 +2201,6 @@ Use for: market updates, price and weather forecasts, shared data</Description>
       <Version>001</Version>
       <EnumType>UpperPython</EnumType>
     </EnumSymbol>
-    <EnumSymbol json:Array="true">itrAW2o6sp7jwbRig/recYyxheIWFcjlujv</EnumSymbol>
     <EnumSymbol json:Array="true">
       <EnumSymbolId>recZ2p1zPMmBvCVa9</EnumSymbolId>
       <DisplayName>main.auto.state__Atn</DisplayName>
@@ -2397,6 +2441,15 @@ Use for: market updates, price and weather forecasts, shared data</Description>
       <LocalValue>WakingUp</LocalValue>
       <Enum>recNjDpF57iumE61s</Enum>
       <Version>001</Version>
+      <EnumType>UpperPython</EnumType>
+    </EnumSymbol>
+    <EnumSymbol json:Array="true">
+      <EnumSymbolId>reccBxWq61gazv34G</EnumSymbolId>
+      <DisplayName>sh.actor.class__ApiBtuMeter</DisplayName>
+      <LocalValue>ApiBtuMeter</LocalValue>
+      <Enum>recQeMNisJZjsYXTl</Enum>
+      <Idx>33</Idx>
+      <Version>008</Version>
       <EnumType>UpperPython</EnumType>
     </EnumSymbol>
     <EnumSymbol json:Array="true">
@@ -2856,6 +2909,16 @@ The A Tariff is their standard residential tariff. Look for rate A in Versant
       <EnumType>Upper</EnumType>
     </EnumSymbol>
     <EnumSymbol json:Array="true">
+      <EnumSymbolId>recif3VN6ok66uHhA</EnumSymbolId>
+      <DisplayName>spaceheat.telemetry.name__CelsiusTimes100</DisplayName>
+      <LocalValue>CelsiusTimes100</LocalValue>
+      <Enum>rec2HyLffy6QK9QId</Enum>
+      <Description>So 45.32 C goes as 4532.</Description>
+      <Idx>20</Idx>
+      <Version>006</Version>
+      <EnumType>UpperPython</EnumType>
+    </EnumSymbol>
+    <EnumSymbol json:Array="true">
       <EnumSymbolId>recj7R1VzYtkQ3rX5</EnumSymbolId>
       <DisplayName>core.g.node.role__Scada</DisplayName>
       <LocalValue>Scada</LocalValue>
@@ -3143,6 +3206,7 @@ The A Tariff is their standard residential tariff. Look for rate A in Versant
       <Version>004</Version>
       <EnumType>UpperPython</EnumType>
     </EnumSymbol>
+    <EnumSymbol json:Array="true">itrJauaoKf9Wb0MrU/recmObD8O087s5CnR</EnumSymbol>
     <EnumSymbol json:Array="true">
       <EnumSymbolId>recmRfADiN3nxZR8U</EnumSymbolId>
       <DisplayName>market.type.name__da60</DisplayName>
@@ -3220,7 +3284,6 @@ The A Tariff is their standard residential tariff. Look for rate A in Versant
       <Version>000</Version>
       <EnumType>UpperPython</EnumType>
     </EnumSymbol>
-    <EnumSymbol json:Array="true">itrAW2o6sp7jwbRig/recn6a7ywzaeer0hr</EnumSymbol>
     <EnumSymbol json:Array="true">
       <EnumSymbolId>recn6s14e4skZSslj</EnumSymbolId>
       <DisplayName>sh.actor.class__FakeAtn</DisplayName>
@@ -4123,6 +4186,9 @@ characterized electrical device, using the meter described, at the location desc
       <EnumValues>recdzXknpZLln5sjW</EnumValues>
       <EnumValues>recZWG7fFMYSLHnW0</EnumValues>
       <EnumValues>recyB6Ujli88j7A5T</EnumValues>
+      <EnumValues>recif3VN6ok66uHhA</EnumValues>
+      <EnumValues>recUBTif57lPeeC2B</EnumValues>
+      <EnumValues>recHKaFfKY57BmD38</EnumValues>
       <LocalName>telemetry.name</LocalName>
       <EnumType>UpperPython</EnumType>
       <Default>recZR3u3WuSGv96su</Default>
@@ -4136,6 +4202,7 @@ characterized electrical device, using the meter described, at the location desc
       <VersionedEnums>rec4sMyojvzLSoVZz</VersionedEnums>
       <VersionedEnums>recBY3Ph0BEbIDlNL</VersionedEnums>
       <VersionedEnums>recn9sMB3Hi3GfBC8</VersionedEnums>
+      <VersionedEnums>rec29s2RTOkVZto7d</VersionedEnums>
       <AirtableId>rec2HyLffy6QK9QId</AirtableId>
       <TypeAttributes>recfMyBibCC1lqTy1</TypeAttributes>
       <TypeAttributes>recAy1MJ6WTkJC2Bt</TypeAttributes>
@@ -4607,6 +4674,7 @@ See [Message Delivery Architecture](https://gridworks.readthedocs.io/message-del
       <EnumValues>recNT6qO8FmspOR33</EnumValues>
       <EnumValues>recdgHNe1qayFgSAz</EnumValues>
       <EnumValues>reccvx1sRxCxRYw1t</EnumValues>
+      <EnumValues>recEsSDN2NVewbz8J</EnumValues>
       <LocalName>make.model</LocalName>
       <EnumType>Upper</EnumType>
       <Default>recqfsKuobhERLH1d</Default>
@@ -4620,6 +4688,7 @@ See [Message Delivery Architecture](https://gridworks.readthedocs.io/message-del
       <VersionedEnums>recKXujrTA7r3usKN</VersionedEnums>
       <VersionedEnums>recqXVWxN4bZFv5Om</VersionedEnums>
       <VersionedEnums>recB0k74TANxT6daz</VersionedEnums>
+      <VersionedEnums>recZpCE7A6ho8s8pa</VersionedEnums>
       <AirtableId>recLQWqTvGwSz2GcN</AirtableId>
       <TypeAttributes>rec9E6HTIAJLoh9wW</TypeAttributes>
       <TypeAttributes>recrX6PgQEW9ggu8q</TypeAttributes>
@@ -4635,6 +4704,7 @@ See [Message Delivery Architecture](https://gridworks.readthedocs.io/message-del
       <TypeAttributes>reci01Obdfxa46cSS</TypeAttributes>
       <TypeAttributes>recqKkKpPXlsB33Jp</TypeAttributes>
       <TypeAttributes>rec18ubVVgfCyR1hx</TypeAttributes>
+      <TypeAttributes>recVETPpb1DuIjqv3</TypeAttributes>
       <TypesThatUse>reca2LF7P05qQmFJW</TypesThatUse>
       <TypesThatUse>recmVKHF3ugtUOYrz</TypesThatUse>
       <TypesThatUse>rec3Noy3m1X4Vdly9</TypesThatUse>
@@ -4647,6 +4717,7 @@ See [Message Delivery Architecture](https://gridworks.readthedocs.io/message-del
       <TypesThatUse>recIJAYdDfLAqCR7m</TypesThatUse>
       <TypesThatUse>recrRhElVEFhc8Toa</TypesThatUse>
       <TypesThatUse>recH7btzxIxwHMCPW</TypesThatUse>
+      <TypesThatUse>recceAYnoSRWlEoKq</TypesThatUse>
     </GtEnum>
     <GtEnum json:Array="true">
       <GtEnumId>recM2pM6KPgGbqEe2</GtEnumId>
@@ -4828,6 +4899,7 @@ Defines the fundamental types of actors in the transactive energy ecosystem:  ph
       <EnumValues>rec6w922sTqwYr8SV</EnumValues>
       <EnumValues>recIImqHN1WvHJUZv</EnumValues>
       <EnumValues>recEgy3VZfawpIq6Y</EnumValues>
+      <EnumValues>reccBxWq61gazv34G</EnumValues>
       <LocalName>actor.class</LocalName>
       <EnumType>UpperPython</EnumType>
       <Default>recaZld1o7mqNRDS9</Default>
@@ -4842,6 +4914,7 @@ Defines the fundamental types of actors in the transactive energy ecosystem:  ph
       <VersionedEnums>recfhZd18OSStf0Nz</VersionedEnums>
       <VersionedEnums>recsMnuolB17LgBRI</VersionedEnums>
       <VersionedEnums>rec9RBLuVI4Ndi7vy</VersionedEnums>
+      <VersionedEnums>rec9q0Kmhy3NeiqC9</VersionedEnums>
       <AirtableId>recQeMNisJZjsYXTl</AirtableId>
       <TypeAttributes>recYtyZl3uBr6N9Ey</TypeAttributes>
       <TypeAttributes>recXk1RFSZEvWMYii</TypeAttributes>
@@ -5292,14 +5365,18 @@ See [Message Delivery Architecture](https://gridworks.readthedocs.io/message-del
       <Name>hz.calc.method</Name>
       <EnumValues>recCvg9OPMjkIO86X</EnumValues>
       <EnumValues>recOAE3u5CTho8QhK</EnumValues>
+      <EnumValues>recHTSLhL36dAsQ3k</EnumValues>
       <LocalName>hz.calc.method</LocalName>
       <EnumType>UpperPython</EnumType>
       <Default>recCvg9OPMjkIO86X</Default>
       <DefaultSymbol>00000000</DefaultSymbol>
       <DefaultEnumValue>BasicExpWeightedAvg</DefaultEnumValue>
       <VersionedEnums>recR8E7wxhsj1nTFE</VersionedEnums>
+      <VersionedEnums>recRdMDEFgbntJv57</VersionedEnums>
       <AirtableId>reclxhoGH9ipt39oM</AirtableId>
       <TypeAttributes>recYOtitVUUfe2gsl</TypeAttributes>
+      <TypeAttributes>recke5FDb5NJ49yHX</TypeAttributes>
+      <TypesThatUse>recceAYnoSRWlEoKq</TypesThatUse>
     </GtEnum>
     <GtEnum json:Array="true">
       <GtEnumId>recmxoYAbAXTEUK97</GtEnumId>
@@ -5328,6 +5405,8 @@ See [Message Delivery Architecture](https://gridworks.readthedocs.io/message-del
       <VersionedEnums>recjWunBDG7abMDwD</VersionedEnums>
       <AirtableId>recnBoQvyU230SyE5</AirtableId>
       <TypeAttributes>recjTEG3mi2hU1rQQ</TypeAttributes>
+      <TypeAttributes>recjl6qZxHhGFfrvJ</TypeAttributes>
+      <TypesThatUse>recceAYnoSRWlEoKq</TypesThatUse>
     </GtEnum>
     <GtEnum json:Array="true">
       <GtEnumId>recomGYBJ9ldSsiNU</GtEnumId>
@@ -5530,6 +5609,8 @@ See [Message Delivery Architecture](https://gridworks.readthedocs.io/message-del
       <AirtableId>reczCvEi48QAKRX3X</AirtableId>
       <TypeAttributes>recF12QtVFA66DTCJ</TypeAttributes>
       <TypeAttributes>recQsGFiomOqmGOvj</TypeAttributes>
+      <TypeAttributes>recKdQlcmQpIK5ruk</TypeAttributes>
+      <TypesThatUse>recceAYnoSRWlEoKq</TypesThatUse>
     </GtEnum>
   </GtEnums>
   <PropertyFormats xmlns:json="http://james.newtonking.com/projects/json">
@@ -5990,6 +6071,17 @@ See [Message Delivery Architecture](https://gridworks.readthedocs.io/message-del
       <TypeAttributes>recGwPV4xYpyuhPA5</TypeAttributes>
       <TypeAttributes>recih1nKtQjzIjH3K</TypeAttributes>
       <TypeAttributes>recMsNtoaBFMI4wlh</TypeAttributes>
+      <TypeAttributes>rec4jGVDhinCYuiHo</TypeAttributes>
+      <TypeAttributes>recmLcnG1hvs74joi</TypeAttributes>
+      <TypeAttributes>recYIOPQyf8BwH2Rf</TypeAttributes>
+      <TypeAttributes>rech5PF6b8pi786oo</TypeAttributes>
+      <TypeAttributes>recqxEpF3EaqoBiqE</TypeAttributes>
+      <TypeAttributes>recAUNo2zCG6i9jWr</TypeAttributes>
+      <TypeAttributes>recitQC6gCp4CuKRO</TypeAttributes>
+      <TypeAttributes>rec01D7njqKmkogh8</TypeAttributes>
+      <TypeAttributes>recJ4J6dNJZDb6MI7</TypeAttributes>
+      <TypeAttributes>recYEbK8ODVVkUcG5</TypeAttributes>
+      <TypeAttributes>rechPo6Efxpg4C7fu</TypeAttributes>
       <DefaultFail1>"A.hot-stuff"</DefaultFail1>
       <Example>store-hot-pipe</Example>
       <TypesThatUse>recyETDKMGTbGb0zf</TypesThatUse>
@@ -6035,6 +6127,10 @@ See [Message Delivery Architecture](https://gridworks.readthedocs.io/message-del
       <TypesThatUse>recQncNQggJ9gg0Ls</TypesThatUse>
       <TypesThatUse>recEz3gHwcNYvnq0v</TypesThatUse>
       <TypesThatUse>recyRWCWHBdVvP8Du</TypesThatUse>
+      <TypesThatUse>recCvEvoeDDMCRMKi</TypesThatUse>
+      <TypesThatUse>recIABnf3YmlHzxXs</TypesThatUse>
+      <TypesThatUse>recceAYnoSRWlEoKq</TypesThatUse>
+      <TypesThatUse>recsWIMGn0LnVm9eN</TypesThatUse>
       <AirtableId>rec8FKfbgEJZxvlIE</AirtableId>
     </PropertyFormat>
     <PropertyFormat json:Array="true">
@@ -6133,6 +6229,11 @@ See [Message Delivery Architecture](https://gridworks.readthedocs.io/message-del
       <TypeAttributes>recFeH1vjIqtHTLnE</TypeAttributes>
       <TypeAttributes>recDiOX4tqqBH9rPD</TypeAttributes>
       <TypeAttributes>reckFEUjXUTrWA4GC</TypeAttributes>
+      <TypeAttributes>rec5aQPKqUmydvNiB</TypeAttributes>
+      <TypeAttributes>recEqaIzgvTkotnul</TypeAttributes>
+      <TypeAttributes>recHZohg3NeFZHieB</TypeAttributes>
+      <TypeAttributes>rec06lXxVO5xMTRSu</TypeAttributes>
+      <TypeAttributes>recH9rAZtJRPQrGA4</TypeAttributes>
       <DefaultFail1>0</DefaultFail1>
       <TypesThatUse>recqhQADHovWX1hOl</TypesThatUse>
       <TypesThatUse>recxdlQ6gCN8mD39r</TypesThatUse>
@@ -7010,7 +7111,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <ProtocolTypes>recYts9GI3HDasco4</ProtocolTypes>
       <ProtocolTypes>recleupDcbcVTVRQ9</ProtocolTypes>
       <ProtocolTypes>recPkFr8lDBRTXq08</ProtocolTypes>
-      <ProtocolTypes>recbV3eBvST23mHgN</ProtocolTypes>
       <ProtocolTypes>recvpIR8rXsHiuLTP</ProtocolTypes>
     </Protocol>
     <Protocol json:Array="true">
@@ -7134,6 +7234,9 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <ProtocolTypes>recauvd56nDLaFV21</ProtocolTypes>
       <ProtocolTypes>recjEDFDBDp0zxyKv</ProtocolTypes>
       <ProtocolTypes>rectX9AnsGBbIFoHJ</ProtocolTypes>
+      <ProtocolTypes>recyuZF0gN9Ow0Ytx</ProtocolTypes>
+      <ProtocolTypes>recjZLMB0C9qAOV4f</ProtocolTypes>
+      <ProtocolTypes>recpBBwOwsBBrwEqC</ProtocolTypes>
       <ProtocolEnums>recqt9zKlCbThWViA</ProtocolEnums>
       <ProtocolEnums>rec4ZV16eScgcdZAE</ProtocolEnums>
       <ProtocolEnums>recfpgcDj8PWcwGZe</ProtocolEnums>
@@ -7237,6 +7340,12 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <ProtocolTypes>recvypMIttXCac8nE</ProtocolTypes>
       <ProtocolTypes>recTDkIFm9zfU4RPa</ProtocolTypes>
       <ProtocolTypes>rec6VwsxQu2lSU9NJ</ProtocolTypes>
+      <ProtocolTypes>recVVXTODuZCwPhsl</ProtocolTypes>
+      <ProtocolTypes>recTsZOKETkVoEigq</ProtocolTypes>
+      <ProtocolTypes>recy7pmm2t4prDfnK</ProtocolTypes>
+      <ProtocolTypes>recjVy53bPGkrDNj2</ProtocolTypes>
+      <ProtocolTypes>recZZMHd3Y1gVDTA6</ProtocolTypes>
+      <ProtocolTypes>recE95dtTVKlKIbKk</ProtocolTypes>
       <ProtocolEnums>recbgkycUOXpAA3QA</ProtocolEnums>
       <ProtocolEnums>recbj7gUbd0R32qQG</ProtocolEnums>
       <ProtocolEnums>recg8e1DnzER2kCNi</ProtocolEnums>
@@ -7256,6 +7365,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <ProtocolEnums>recLjLFAdmYrTUyV7</ProtocolEnums>
       <ProtocolEnums>recLEG6pQIrvwfTeS</ProtocolEnums>
       <ProtocolEnums>recX92NBcSfGd4KCu</ProtocolEnums>
+      <ProtocolEnums>recsVOkdBBHmnyg3Y</ProtocolEnums>
     </Protocol>
     <Protocol json:Array="true">
       <ProtocolId>recN6489A2iI0CRXz</ProtocolId>
@@ -7366,6 +7476,12 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <ProtocolTypes>rec5tU74AXkkzPN61</ProtocolTypes>
       <ProtocolTypes>recbYL1dzhB2fG0l3</ProtocolTypes>
       <ProtocolTypes>recWDVVZZJcgssAd7</ProtocolTypes>
+      <ProtocolTypes>recrkaPXrC068gmMx</ProtocolTypes>
+      <ProtocolTypes>recPVEameKJt8GxUs</ProtocolTypes>
+      <ProtocolTypes>recn7mYZdkOQ7iWyk</ProtocolTypes>
+      <ProtocolTypes>recZW7lqxC5ds2izp</ProtocolTypes>
+      <ProtocolTypes>recq86klplAA6lTnO</ProtocolTypes>
+      <ProtocolTypes>recWBjn34ecIsE5yZ</ProtocolTypes>
       <ProtocolEnums>recmZCLsbpGEyOFsK</ProtocolEnums>
       <ProtocolEnums>rechq9zU4VJXbaYH8</ProtocolEnums>
       <ProtocolEnums>recZqKV6dKa5uWasy</ProtocolEnums>
@@ -7377,6 +7493,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <ProtocolEnums>recMwKNnvMxIJwaJQ</ProtocolEnums>
       <ProtocolEnums>recAx2QRchNE8XHps</ProtocolEnums>
       <ProtocolEnums>recvqD9eEKatdiBFP</ProtocolEnums>
+      <ProtocolEnums>rec2y1jYLmx2RQB12</ProtocolEnums>
     </Protocol>
     <Protocol json:Array="true">
       <ProtocolId>reckfOYG7HASY9lkN</ProtocolId>
@@ -7461,7 +7578,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <ProtocolEnums>recajBtAfbTGx1ker</ProtocolEnums>
       <ProtocolEnums>rec4BOxYWmIFB9FUt</ProtocolEnums>
       <ProtocolEnums>recroDYPjCPBWvlb4</ProtocolEnums>
-      <ProtocolEnums>recgWHkD3A5IQc2iN</ProtocolEnums>
       <ProtocolEnums>recxkQZrnMrrkvtKg</ProtocolEnums>
       <ProtocolEnums>recCSzU2rxByLzoaR</ProtocolEnums>
       <ProtocolEnums>recmdwjYtvLMm1d7N</ProtocolEnums>
@@ -7564,6 +7680,21 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Name></Name>
     </ProtocolEnum>
     <ProtocolEnum json:Array="true">
+      <ProtocolEnumId>rec2y1jYLmx2RQB12</ProtocolEnumId>
+      <Name>scada hz.calc.method.001</Name>
+      <Protocol>recdu3DxzzmNH2eNq</Protocol>
+      <ProtocolName>scada</ProtocolName>
+      <LocalEnumName>hz.calc.method</LocalEnumName>
+      <EnumVersion>001</EnumVersion>
+      <VersionedEnum>recRdMDEFgbntJv57</VersionedEnum>
+      <GtEnumId>reclxhoGH9ipt39oM</GtEnumId>
+      <EnumId>reclxhoGH9ipt39oM</EnumId>
+      <EnumName>hz.calc.method</EnumName>
+      <NoVersions />
+      <EnumType>UpperPython</EnumType>
+      <Modified>2025-09-24T13:05:33Z</Modified>
+    </ProtocolEnum>
+    <ProtocolEnum json:Array="true">
       <ProtocolEnumId>rec36PqIOdFvtWvwC</ProtocolEnumId>
       <Name>gjk g.node.status.100</Name>
       <Protocol>reckfOYG7HASY9lkN</Protocol>
@@ -7655,18 +7786,22 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
     </ProtocolEnum>
     <ProtocolEnum json:Array="true">
       <ProtocolEnumId>rec4ZV16eScgcdZAE</ProtocolEnumId>
-      <Name>gwproto spaceheat.make.model.005</Name>
+      <Name>gwproto spaceheat.make.model.006</Name>
       <Protocol>rec5aZ8ud9lQDmlBu</Protocol>
       <ProtocolName>gwproto</ProtocolName>
       <LocalEnumName>make.model</LocalEnumName>
-      <EnumVersion>005</EnumVersion>
-      <VersionedEnum>recB0k74TANxT6daz</VersionedEnum>
+      <EnumVersion>006</EnumVersion>
+      <VersionedEnum>recZpCE7A6ho8s8pa</VersionedEnum>
       <GtEnumId>recLQWqTvGwSz2GcN</GtEnumId>
       <EnumId>recLQWqTvGwSz2GcN</EnumId>
       <EnumName>spaceheat.make.model</EnumName>
       <NoVersions />
       <EnumType>Upper</EnumType>
-      <Modified>2025-08-14T19:40:17Z</Modified>
+      <Modified>2025-09-24T11:14:26Z</Modified>
+    </ProtocolEnum>
+    <ProtocolEnum json:Array="true">
+      <ProtocolEnumId>rec6j5RUqPVihn0X4</ProtocolEnumId>
+      <Name></Name>
     </ProtocolEnum>
     <ProtocolEnum json:Array="true">
       <ProtocolEnumId>rec7umpHOe1zBQgmH</ProtocolEnumId>
@@ -7812,18 +7947,18 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
     </ProtocolEnum>
     <ProtocolEnum json:Array="true">
       <ProtocolEnumId>recCSzU2rxByLzoaR</ProtocolEnumId>
-      <Name>gjk hz.calc.method.000</Name>
+      <Name>gjk hz.calc.method.001</Name>
       <Protocol>reckfOYG7HASY9lkN</Protocol>
       <ProtocolName>gjk</ProtocolName>
       <LocalEnumName>hz.calc.method</LocalEnumName>
-      <EnumVersion>000</EnumVersion>
-      <VersionedEnum>recR8E7wxhsj1nTFE</VersionedEnum>
+      <EnumVersion>001</EnumVersion>
+      <VersionedEnum>recRdMDEFgbntJv57</VersionedEnum>
       <GtEnumId>reclxhoGH9ipt39oM</GtEnumId>
       <EnumId>reclxhoGH9ipt39oM</EnumId>
       <EnumName>hz.calc.method</EnumName>
       <NoVersions />
       <EnumType>UpperPython</EnumType>
-      <Modified>2024-11-02T17:21:04Z</Modified>
+      <Modified>2025-09-24T13:05:49Z</Modified>
     </ProtocolEnum>
     <ProtocolEnum json:Array="true">
       <ProtocolEnumId>recCYzJBdR3KfzMPU</ProtocolEnumId>
@@ -8225,18 +8360,18 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
     </ProtocolEnum>
     <ProtocolEnum json:Array="true">
       <ProtocolEnumId>recOEDyp3Fqhwkx8X</ProtocolEnumId>
-      <Name>gwproto hz.calc.method.000</Name>
+      <Name>gwproto hz.calc.method.001</Name>
       <Protocol>rec5aZ8ud9lQDmlBu</Protocol>
       <ProtocolName>gwproto</ProtocolName>
       <LocalEnumName>hz.calc.method</LocalEnumName>
-      <EnumVersion>000</EnumVersion>
-      <VersionedEnum>recR8E7wxhsj1nTFE</VersionedEnum>
+      <EnumVersion>001</EnumVersion>
+      <VersionedEnum>recRdMDEFgbntJv57</VersionedEnum>
       <GtEnumId>reclxhoGH9ipt39oM</GtEnumId>
       <EnumId>reclxhoGH9ipt39oM</EnumId>
       <EnumName>hz.calc.method</EnumName>
       <NoVersions />
       <EnumType>UpperPython</EnumType>
-      <Modified>2024-10-23T18:03:08Z</Modified>
+      <Modified>2025-09-24T13:06:00Z</Modified>
     </ProtocolEnum>
     <ProtocolEnum json:Array="true">
       <ProtocolEnumId>recOWzJB7pz71kU6u</ProtocolEnumId>
@@ -8333,18 +8468,18 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
     </ProtocolEnum>
     <ProtocolEnum json:Array="true">
       <ProtocolEnumId>recSPj8MLTWUSs6he</ProtocolEnumId>
-      <Name>gwasl sh.actor.class.007</Name>
+      <Name>gwasl sh.actor.class.008</Name>
       <Protocol>recMtuD0FitFdKlRY</Protocol>
       <ProtocolName>gwasl</ProtocolName>
       <LocalEnumName>actor.class</LocalEnumName>
-      <EnumVersion>007</EnumVersion>
-      <VersionedEnum>rec9RBLuVI4Ndi7vy</VersionedEnum>
+      <EnumVersion>008</EnumVersion>
+      <VersionedEnum>rec9q0Kmhy3NeiqC9</VersionedEnum>
       <GtEnumId>recQeMNisJZjsYXTl</GtEnumId>
       <EnumId>recQeMNisJZjsYXTl</EnumId>
       <EnumName>sh.actor.class</EnumName>
       <NoVersions />
       <EnumType>UpperPython</EnumType>
-      <Modified>2025-08-10T15:02:37Z</Modified>
+      <Modified>2025-09-24T11:15:00Z</Modified>
     </ProtocolEnum>
     <ProtocolEnum json:Array="true">
       <ProtocolEnumId>recSXyujnroySodqB</ProtocolEnumId>
@@ -8378,18 +8513,18 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
     </ProtocolEnum>
     <ProtocolEnum json:Array="true">
       <ProtocolEnumId>recSfQ8nUwyTprKyK</ProtocolEnumId>
-      <Name>gwasl spaceheat.make.model.004</Name>
+      <Name>gwasl spaceheat.make.model.006</Name>
       <Protocol>recMtuD0FitFdKlRY</Protocol>
       <ProtocolName>gwasl</ProtocolName>
       <LocalEnumName>make.model</LocalEnumName>
-      <EnumVersion>004</EnumVersion>
-      <VersionedEnum>recqXVWxN4bZFv5Om</VersionedEnum>
+      <EnumVersion>006</EnumVersion>
+      <VersionedEnum>recZpCE7A6ho8s8pa</VersionedEnum>
       <GtEnumId>recLQWqTvGwSz2GcN</GtEnumId>
       <EnumId>recLQWqTvGwSz2GcN</EnumId>
       <EnumName>spaceheat.make.model</EnumName>
       <NoVersions />
       <EnumType>Upper</EnumType>
-      <Modified>2025-08-10T15:03:19Z</Modified>
+      <Modified>2025-09-24T11:15:19Z</Modified>
     </ProtocolEnum>
     <ProtocolEnum json:Array="true">
       <ProtocolEnumId>recT0Hex9kHXfqJl9</ProtocolEnumId>
@@ -8898,6 +9033,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <EnumType>UpperPython</EnumType>
       <Modified>2024-07-01T19:25:35Z</Modified>
     </ProtocolEnum>
+    <ProtocolEnum json:Array="true">itrKe9pVv7nozj1Pi/recfKJvRoPrS32Ima</ProtocolEnum>
     <ProtocolEnum json:Array="true">
       <ProtocolEnumId>recfgj64kfJY1zLEa</ProtocolEnumId>
       <Name>gwproto gpm.from.hz.method.000</Name>
@@ -8928,7 +9064,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <EnumType>OldSchool</EnumType>
       <Modified>2024-03-08T19:24:09Z</Modified>
     </ProtocolEnum>
-    <ProtocolEnum json:Array="true">itrzzQj7BaRWVOj2F/recfn6sMZiZgrUXuH</ProtocolEnum>
     <ProtocolEnum json:Array="true">
       <ProtocolEnumId>recfpgcDj8PWcwGZe</ProtocolEnumId>
       <Name>gwproto spaceheat.unit.001</Name>
@@ -9005,34 +9140,19 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Modified>2024-11-11T16:27:47Z</Modified>
     </ProtocolEnum>
     <ProtocolEnum json:Array="true">
-      <ProtocolEnumId>recgWHkD3A5IQc2iN</ProtocolEnumId>
-      <Name>gjk hz.calc.method.000</Name>
-      <Protocol>reckfOYG7HASY9lkN</Protocol>
-      <ProtocolName>gjk</ProtocolName>
-      <LocalEnumName>hz.calc.method</LocalEnumName>
-      <EnumVersion>000</EnumVersion>
-      <VersionedEnum>recR8E7wxhsj1nTFE</VersionedEnum>
-      <GtEnumId>reclxhoGH9ipt39oM</GtEnumId>
-      <EnumId>reclxhoGH9ipt39oM</EnumId>
-      <EnumName>hz.calc.method</EnumName>
-      <NoVersions />
-      <EnumType>UpperPython</EnumType>
-      <Modified>2024-11-02T17:19:08Z</Modified>
-    </ProtocolEnum>
-    <ProtocolEnum json:Array="true">
       <ProtocolEnumId>recgZlo4ryBtvG1Nb</ProtocolEnumId>
-      <Name>gwproto sh.actor.class.007</Name>
+      <Name>gwproto sh.actor.class.008</Name>
       <Protocol>rec5aZ8ud9lQDmlBu</Protocol>
       <ProtocolName>gwproto</ProtocolName>
       <LocalEnumName>actor.class</LocalEnumName>
-      <EnumVersion>007</EnumVersion>
-      <VersionedEnum>rec9RBLuVI4Ndi7vy</VersionedEnum>
+      <EnumVersion>008</EnumVersion>
+      <VersionedEnum>rec9q0Kmhy3NeiqC9</VersionedEnum>
       <GtEnumId>recQeMNisJZjsYXTl</GtEnumId>
       <EnumId>recQeMNisJZjsYXTl</EnumId>
       <EnumName>sh.actor.class</EnumName>
       <NoVersions />
       <EnumType>UpperPython</EnumType>
-      <Modified>2025-03-24T17:07:13Z</Modified>
+      <Modified>2025-09-24T11:14:12Z</Modified>
     </ProtocolEnum>
     <ProtocolEnum json:Array="true">
       <ProtocolEnumId>recgvXwDFdPwGa5NW</ProtocolEnumId>
@@ -9274,18 +9394,18 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
     </ProtocolEnum>
     <ProtocolEnum json:Array="true">
       <ProtocolEnumId>recqt9zKlCbThWViA</ProtocolEnumId>
-      <Name>gwproto spaceheat.telemetry.name.005</Name>
+      <Name>gwproto spaceheat.telemetry.name.006</Name>
       <Protocol>rec5aZ8ud9lQDmlBu</Protocol>
       <ProtocolName>gwproto</ProtocolName>
       <LocalEnumName>telemetry.name</LocalEnumName>
-      <EnumVersion>005</EnumVersion>
-      <VersionedEnum>recn9sMB3Hi3GfBC8</VersionedEnum>
+      <EnumVersion>006</EnumVersion>
+      <VersionedEnum>rec29s2RTOkVZto7d</VersionedEnum>
       <GtEnumId>rec2HyLffy6QK9QId</GtEnumId>
       <EnumId>rec2HyLffy6QK9QId</EnumId>
       <EnumName>spaceheat.telemetry.name</EnumName>
       <NoVersions />
       <EnumType>UpperPython</EnumType>
-      <Modified>2025-03-24T17:07:43Z</Modified>
+      <Modified>2025-09-24T11:14:38Z</Modified>
     </ProtocolEnum>
     <ProtocolEnum json:Array="true">
       <ProtocolEnumId>recqx0M1MDXEJ5YdH</ProtocolEnumId>
@@ -9331,6 +9451,21 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <NoVersions />
       <EnumType>UpperPython</EnumType>
       <Modified>2024-10-21T23:11:04Z</Modified>
+    </ProtocolEnum>
+    <ProtocolEnum json:Array="true">
+      <ProtocolEnumId>recsVOkdBBHmnyg3Y</ProtocolEnumId>
+      <Name>gwasl hz.calc.method.001</Name>
+      <Protocol>recMtuD0FitFdKlRY</Protocol>
+      <ProtocolName>gwasl</ProtocolName>
+      <LocalEnumName>hz.calc.method</LocalEnumName>
+      <EnumVersion>001</EnumVersion>
+      <VersionedEnum>recRdMDEFgbntJv57</VersionedEnum>
+      <GtEnumId>reclxhoGH9ipt39oM</GtEnumId>
+      <EnumId>reclxhoGH9ipt39oM</EnumId>
+      <EnumName>hz.calc.method</EnumName>
+      <NoVersions />
+      <EnumType>UpperPython</EnumType>
+      <Modified>2025-09-24T13:05:39Z</Modified>
     </ProtocolEnum>
     <ProtocolEnum json:Array="true">
       <ProtocolEnumId>rectGOQvuxBQ1f8LZ</ProtocolEnumId>
@@ -9518,18 +9653,18 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
     </ProtocolEnum>
     <ProtocolEnum json:Array="true">
       <ProtocolEnumId>recydVnayuniYnL63</ProtocolEnumId>
-      <Name>gwasl spaceheat.telemetry.name.005</Name>
+      <Name>gwasl spaceheat.telemetry.name.006</Name>
       <Protocol>recMtuD0FitFdKlRY</Protocol>
       <ProtocolName>gwasl</ProtocolName>
       <LocalEnumName>telemetry.name</LocalEnumName>
-      <EnumVersion>005</EnumVersion>
-      <VersionedEnum>recn9sMB3Hi3GfBC8</VersionedEnum>
+      <EnumVersion>006</EnumVersion>
+      <VersionedEnum>rec29s2RTOkVZto7d</VersionedEnum>
       <GtEnumId>rec2HyLffy6QK9QId</GtEnumId>
       <EnumId>rec2HyLffy6QK9QId</EnumId>
       <EnumName>spaceheat.telemetry.name</EnumName>
       <NoVersions />
       <EnumType>UpperPython</EnumType>
-      <Modified>2025-08-10T15:03:27Z</Modified>
+      <Modified>2025-09-24T11:15:08Z</Modified>
     </ProtocolEnum>
     <ProtocolEnum json:Array="true">
       <ProtocolEnumId>reczFHbBTjRdvWIJH</ProtocolEnumId>
@@ -9816,10 +9951,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType json:Array="true">
-      <ProtocolTypeId>rec3ryhiVBQCErxej</ProtocolTypeId>
-      <Name></Name>
-    </ProtocolType>
-    <ProtocolType json:Array="true">
       <ProtocolTypeId>rec49oZw87DHVaGGI</ProtocolTypeId>
       <Name>gnf tavalidatorcert.algo.transfer.000</Name>
       <Protocol>recXaQaXNNDyxIlT7</Protocol>
@@ -9937,10 +10068,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType json:Array="true">
-      <ProtocolTypeId>rec61g6bYf0J7W5WM</ProtocolTypeId>
-      <Name></Name>
-    </ProtocolType>
-    <ProtocolType json:Array="true">
       <ProtocolTypeId>rec6AYUXI7erteX9M</ProtocolTypeId>
       <Name>origgwpro electric.meter.component.gt.000</Name>
       <Protocol>recFN8JyTVqLZBQN1</Protocol>
@@ -9957,10 +10084,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <VersionedType>recswLi7iwHDmuzfw</VersionedType>
       <VersionedTypeName>synced.readings.000</VersionedTypeName>
       <TypeStatus>Active</TypeStatus>
-    </ProtocolType>
-    <ProtocolType json:Array="true">
-      <ProtocolTypeId>rec6Y0nMEYjzREB4A</ProtocolTypeId>
-      <Name></Name>
     </ProtocolType>
     <ProtocolType json:Array="true">
       <ProtocolTypeId>rec6rBtviO9LUoOAB</ProtocolTypeId>
@@ -10033,10 +10156,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <VersionedType>rec9B9oXXi65ILjyf</VersionedType>
       <VersionedTypeName>machine.states.000</VersionedTypeName>
       <TypeStatus>Active</TypeStatus>
-    </ProtocolType>
-    <ProtocolType json:Array="true">
-      <ProtocolTypeId>rec8aJqoHzWBVhtN1</ProtocolTypeId>
-      <Name></Name>
     </ProtocolType>
     <ProtocolType json:Array="true">
       <ProtocolTypeId>rec8cREVO03dOhbWy</ProtocolTypeId>
@@ -10300,6 +10419,15 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType json:Array="true">
+      <ProtocolTypeId>recE95dtTVKlKIbKk</ProtocolTypeId>
+      <Name>gwasl admin.analog.dispatch.000</Name>
+      <Protocol>recMtuD0FitFdKlRY</Protocol>
+      <ProtocolName>gwasl</ProtocolName>
+      <VersionedType>rec6gN34hc6T9iRVb</VersionedType>
+      <VersionedTypeName>admin.analog.dispatch.000</VersionedTypeName>
+      <TypeStatus>Active</TypeStatus>
+    </ProtocolType>
+    <ProtocolType json:Array="true">
       <ProtocolTypeId>recEDep4wDC3NkHWY</ProtocolTypeId>
       <Name>gjk data.channel.gt.002</Name>
       <Protocol>reckfOYG7HASY9lkN</Protocol>
@@ -10307,14 +10435,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <VersionedType>recqdsaIFy1xavZM9</VersionedType>
       <VersionedTypeName>data.channel.gt.002</VersionedTypeName>
       <TypeStatus>Active</TypeStatus>
-    </ProtocolType>
-    <ProtocolType json:Array="true">
-      <ProtocolTypeId>recEHwVgWHza8CFZS</ProtocolTypeId>
-      <Name></Name>
-    </ProtocolType>
-    <ProtocolType json:Array="true">
-      <ProtocolTypeId>recEQAx0Jp9JfXO2t</ProtocolTypeId>
-      <Name></Name>
     </ProtocolType>
     <ProtocolType json:Array="true">
       <ProtocolTypeId>recEeB8B8GtYWvrTP</ProtocolTypeId>
@@ -10433,7 +10553,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <VersionedTypeName>energy.instruction.000</VersionedTypeName>
       <TypeStatus>Active</TypeStatus>
     </ProtocolType>
-    <ProtocolType json:Array="true">itrzNkF4960GjDhHP/recGv3tmhBTzqGTXY</ProtocolType>
     <ProtocolType json:Array="true">
       <ProtocolTypeId>recH0j9ANbXVbNttO</ProtocolTypeId>
       <Name>gwasl fsm.full.report.000</Name>
@@ -10479,10 +10598,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <VersionedTypeName>component.attribute.class.gt.000</VersionedTypeName>
       <TypeStatus>Active</TypeStatus>
     </ProtocolType>
-    <ProtocolType json:Array="true">
-      <ProtocolTypeId>recHXMHxmLJX5ryJB</ProtocolTypeId>
-      <Name></Name>
-    </ProtocolType>
+    <ProtocolType json:Array="true">itri1F3iiNCdekNes/recHXBSSbYDUn9sak</ProtocolType>
     <ProtocolType json:Array="true">
       <ProtocolTypeId>recHiHDx2WI7Dhuz7</ProtocolTypeId>
       <Name> analog.dispatch.000</Name>
@@ -10507,10 +10623,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <VersionedType>recepkVk3vOelGIUa</VersionedType>
       <VersionedTypeName>batched.readings.000</VersionedTypeName>
       <TypeStatus>Deprecated</TypeStatus>
-    </ProtocolType>
-    <ProtocolType json:Array="true">
-      <ProtocolTypeId>recIKHEmZPD4XwNko</ProtocolTypeId>
-      <Name></Name>
     </ProtocolType>
     <ProtocolType json:Array="true">
       <ProtocolTypeId>recILnGSR01nvoK4p</ProtocolTypeId>
@@ -10540,14 +10652,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType json:Array="true">
-      <ProtocolTypeId>recIfyJoqWfGyAkjs</ProtocolTypeId>
-      <Name></Name>
-    </ProtocolType>
-    <ProtocolType json:Array="true">
-      <ProtocolTypeId>recIsCmxJkWe0me80</ProtocolTypeId>
-      <Name></Name>
-    </ProtocolType>
-    <ProtocolType json:Array="true">
       <ProtocolTypeId>recIzdwTVVk71nWK3</ProtocolTypeId>
       <Name>gwatn synth.channel.gt.000</Name>
       <Protocol>rec3nJaxOMLIKJoNY</Protocol>
@@ -10555,10 +10659,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <VersionedType>recQm6UxB6DYeRQ2p</VersionedType>
       <VersionedTypeName>synth.channel.gt.000</VersionedTypeName>
       <TypeStatus>Active</TypeStatus>
-    </ProtocolType>
-    <ProtocolType json:Array="true">
-      <ProtocolTypeId>recJFn61eUXFcs8Nf</ProtocolTypeId>
-      <Name></Name>
     </ProtocolType>
     <ProtocolType json:Array="true">
       <ProtocolTypeId>recJJyBjjBHOe3FnE</ProtocolTypeId>
@@ -10831,6 +10931,15 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType json:Array="true">
+      <ProtocolTypeId>recPVEameKJt8GxUs</ProtocolTypeId>
+      <Name>scada async.btu.params.000</Name>
+      <Protocol>recdu3DxzzmNH2eNq</Protocol>
+      <ProtocolName>scada</ProtocolName>
+      <VersionedType>recIABnf3YmlHzxXs</VersionedType>
+      <VersionedTypeName>async.btu.params.000</VersionedTypeName>
+      <TypeStatus>Pending</TypeStatus>
+    </ProtocolType>
+    <ProtocolType json:Array="true">
       <ProtocolTypeId>recPXD7l0I0ybaajf</ProtocolTypeId>
       <Name>gwprice get.hourly.price.forecast.channel.000</Name>
       <Protocol>recVsPBZNyq2U6Fmz</Protocol>
@@ -10928,10 +11037,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <VersionedType>recirKkUOZZ1z2ipD</VersionedType>
       <VersionedTypeName>channel.readings.000</VersionedTypeName>
       <TypeStatus>Deprecated</TypeStatus>
-    </ProtocolType>
-    <ProtocolType json:Array="true">
-      <ProtocolTypeId>recRGRYF0Bqy54C5a</ProtocolTypeId>
-      <Name></Name>
     </ProtocolType>
     <ProtocolType json:Array="true">
       <ProtocolTypeId>recRGVVBdVN4pWLgX</ProtocolTypeId>
@@ -11069,6 +11174,13 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeStatus>Deprecated</TypeStatus>
     </ProtocolType>
     <ProtocolType json:Array="true">
+      <ProtocolTypeId>recTCXbtbYKV08KlK</ProtocolTypeId>
+      <Name> pico.comms.params.000</Name>
+      <VersionedType>recIH8gxbOmMxHBzM</VersionedType>
+      <VersionedTypeName>pico.comms.params.000</VersionedTypeName>
+      <TypeStatus>Pending</TypeStatus>
+    </ProtocolType>
+    <ProtocolType json:Array="true">
       <ProtocolTypeId>recTDkIFm9zfU4RPa</ProtocolTypeId>
       <Name>gwasl single.reading.000</Name>
       <Protocol>recMtuD0FitFdKlRY</Protocol>
@@ -11102,6 +11214,15 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <ProtocolName>gwatn</ProtocolName>
       <VersionedType>rectayh08KEGGGcZc</VersionedType>
       <VersionedTypeName>gw.cert.id.000</VersionedTypeName>
+      <TypeStatus>Pending</TypeStatus>
+    </ProtocolType>
+    <ProtocolType json:Array="true">
+      <ProtocolTypeId>recTsZOKETkVoEigq</ProtocolTypeId>
+      <Name>gwasl async.btu.params.000</Name>
+      <Protocol>recMtuD0FitFdKlRY</Protocol>
+      <ProtocolName>gwasl</ProtocolName>
+      <VersionedType>recIABnf3YmlHzxXs</VersionedType>
+      <VersionedTypeName>async.btu.params.000</VersionedTypeName>
       <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType json:Array="true">
@@ -11150,10 +11271,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeStatus>Deprecated</TypeStatus>
     </ProtocolType>
     <ProtocolType json:Array="true">
-      <ProtocolTypeId>recUtijbY7nBBJ4rx</ProtocolTypeId>
-      <Name></Name>
-    </ProtocolType>
-    <ProtocolType json:Array="true">
       <ProtocolTypeId>recVC05GWOMmVoFrs</ProtocolTypeId>
       <Name>gwprice hourly.price.forecast.000</Name>
       <Protocol>recVsPBZNyq2U6Fmz</Protocol>
@@ -11172,8 +11289,13 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType json:Array="true">
-      <ProtocolTypeId>recVjUdjpzKjlhmfy</ProtocolTypeId>
-      <Name></Name>
+      <ProtocolTypeId>recVVXTODuZCwPhsl</ProtocolTypeId>
+      <Name>gwasl multichannel.snapshot.000</Name>
+      <Protocol>recMtuD0FitFdKlRY</Protocol>
+      <ProtocolName>gwasl</ProtocolName>
+      <VersionedType>recCvEvoeDDMCRMKi</VersionedType>
+      <VersionedTypeName>multichannel.snapshot.000</VersionedTypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType json:Array="true">
       <ProtocolTypeId>recVyJz6EmMdwDjYy</ProtocolTypeId>
@@ -11191,6 +11313,15 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <ProtocolName>gwatn</ProtocolName>
       <VersionedType>rec8SHoPk3T2vCuAF</VersionedType>
       <VersionedTypeName>i2c.multichannel.dt.relay.component.gt.002</VersionedTypeName>
+      <TypeStatus>Active</TypeStatus>
+    </ProtocolType>
+    <ProtocolType json:Array="true">
+      <ProtocolTypeId>recWBjn34ecIsE5yZ</ProtocolTypeId>
+      <Name>scada admin.analog.dispatch.000</Name>
+      <Protocol>recdu3DxzzmNH2eNq</Protocol>
+      <ProtocolName>scada</ProtocolName>
+      <VersionedType>rec6gN34hc6T9iRVb</VersionedType>
+      <VersionedTypeName>admin.analog.dispatch.000</VersionedTypeName>
       <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType json:Array="true">
@@ -11257,10 +11388,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType json:Array="true">
-      <ProtocolTypeId>recX5QFJOZdZRzgoy</ProtocolTypeId>
-      <Name></Name>
-    </ProtocolType>
-    <ProtocolType json:Array="true">
       <ProtocolTypeId>recXU01EO8786ZRty</ProtocolTypeId>
       <Name>gwproto pico.flow.module.component.gt.000</Name>
       <Protocol>rec5aZ8ud9lQDmlBu</Protocol>
@@ -11287,7 +11414,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <VersionedTypeName>ads111x.based.component.gt.000</VersionedTypeName>
       <TypeStatus>Active</TypeStatus>
     </ProtocolType>
-    <ProtocolType json:Array="true">itrzNkF4960GjDhHP/recXco7pN7l8R0Uq2</ProtocolType>
     <ProtocolType json:Array="true">
       <ProtocolTypeId>recY2IQsiamoInYhP</ProtocolTypeId>
       <Name>gjk gridworks.event.report.000</Name>
@@ -11352,10 +11478,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType json:Array="true">
-      <ProtocolTypeId>recZ4ZERfXuHga5Dy</ProtocolTypeId>
-      <Name></Name>
-    </ProtocolType>
-    <ProtocolType json:Array="true">
       <ProtocolTypeId>recZ5ZrlKQUliQFni</ProtocolTypeId>
       <Name>origgwpro resistive.heater.component.gt.000</Name>
       <Protocol>recFN8JyTVqLZBQN1</Protocol>
@@ -11371,6 +11493,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <VersionedTypeName>report.event.002</VersionedTypeName>
       <TypeStatus>Active</TypeStatus>
     </ProtocolType>
+    <ProtocolType json:Array="true">itri1F3iiNCdekNes/recZA25sxCLeVpsRZ</ProtocolType>
     <ProtocolType json:Array="true">
       <ProtocolTypeId>recZBjYNMORjTSBIK</ProtocolTypeId>
       <Name>gwatn send.snap.000</Name>
@@ -11415,6 +11538,24 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <VersionedType>recn6Flk9EYnkWDEC</VersionedType>
       <VersionedTypeName>flo.params.house0.001</VersionedTypeName>
       <TypeStatus>Active</TypeStatus>
+    </ProtocolType>
+    <ProtocolType json:Array="true">
+      <ProtocolTypeId>recZW7lqxC5ds2izp</ProtocolTypeId>
+      <Name>scada baseurl.failure.alert.000</Name>
+      <Protocol>recdu3DxzzmNH2eNq</Protocol>
+      <ProtocolName>scada</ProtocolName>
+      <VersionedType>recsWIMGn0LnVm9eN</VersionedType>
+      <VersionedTypeName>baseurl.failure.alert.000</VersionedTypeName>
+      <TypeStatus>Pending</TypeStatus>
+    </ProtocolType>
+    <ProtocolType json:Array="true">
+      <ProtocolTypeId>recZZMHd3Y1gVDTA6</ProtocolTypeId>
+      <Name>gwasl pico.comms.params.000</Name>
+      <Protocol>recMtuD0FitFdKlRY</Protocol>
+      <ProtocolName>gwasl</ProtocolName>
+      <VersionedType>recIH8gxbOmMxHBzM</VersionedType>
+      <VersionedTypeName>pico.comms.params.000</VersionedTypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType json:Array="true">
       <ProtocolTypeId>recZZqjz8vL6Dj548</ProtocolTypeId>
@@ -11523,12 +11664,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <VersionedType>recMyDdiQjtfTMAP1</VersionedType>
       <VersionedTypeName>old.tadeed.algo.return.000</VersionedTypeName>
       <TypeStatus>Active</TypeStatus>
-    </ProtocolType>
-    <ProtocolType json:Array="true">
-      <ProtocolTypeId>recbV3eBvST23mHgN</ProtocolTypeId>
-      <Name>gwmm </Name>
-      <Protocol>rec3E1mvlkD3mlc6K</Protocol>
-      <ProtocolName>gwmm</ProtocolName>
     </ProtocolType>
     <ProtocolType json:Array="true">
       <ProtocolTypeId>recbYL1dzhB2fG0l3</ProtocolTypeId>
@@ -11648,10 +11783,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType json:Array="true">
-      <ProtocolTypeId>recduJTTXtkQfbmRL</ProtocolTypeId>
-      <Name></Name>
-    </ProtocolType>
-    <ProtocolType json:Array="true">
       <ProtocolTypeId>rece0jNAI2D1qrYj7</ProtocolTypeId>
       <Name>newatn pipe.flow.sensor.component.gt.000</Name>
       <Protocol>recvaW2RuHMh5mwwR</Protocol>
@@ -11704,10 +11835,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <VersionedType>recXrOxZu3uUqL6pH</VersionedType>
       <VersionedTypeName>tatradingrights.algo.create.000</VersionedTypeName>
       <TypeStatus>Active</TypeStatus>
-    </ProtocolType>
-    <ProtocolType json:Array="true">
-      <ProtocolTypeId>recgB1JznRPs89WTa</ProtocolTypeId>
-      <Name></Name>
     </ProtocolType>
     <ProtocolType json:Array="true">
       <ProtocolTypeId>recgl6hPQRR6t2fse</ProtocolTypeId>
@@ -11843,6 +11970,24 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeStatus>Deprecated</TypeStatus>
     </ProtocolType>
     <ProtocolType json:Array="true">
+      <ProtocolTypeId>recjVy53bPGkrDNj2</ProtocolTypeId>
+      <Name>gwasl baseurl.failure.alert.000</Name>
+      <Protocol>recMtuD0FitFdKlRY</Protocol>
+      <ProtocolName>gwasl</ProtocolName>
+      <VersionedType>recsWIMGn0LnVm9eN</VersionedType>
+      <VersionedTypeName>baseurl.failure.alert.000</VersionedTypeName>
+      <TypeStatus>Pending</TypeStatus>
+    </ProtocolType>
+    <ProtocolType json:Array="true">
+      <ProtocolTypeId>recjZLMB0C9qAOV4f</ProtocolTypeId>
+      <Name>gwproto async.btu.params.000</Name>
+      <Protocol>rec5aZ8ud9lQDmlBu</Protocol>
+      <ProtocolName>gwproto</ProtocolName>
+      <VersionedType>recIABnf3YmlHzxXs</VersionedType>
+      <VersionedTypeName>async.btu.params.000</VersionedTypeName>
+      <TypeStatus>Pending</TypeStatus>
+    </ProtocolType>
+    <ProtocolType json:Array="true">
       <ProtocolTypeId>recjg4AvSyxIiItff</ProtocolTypeId>
       <Name>newatn pipe.flow.sensor.cac.gt.000</Name>
       <Protocol>recvaW2RuHMh5mwwR</Protocol>
@@ -11904,10 +12049,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <VersionedType>recPy6SuizSerb3JG</VersionedType>
       <VersionedTypeName>new.tadeed.send.000</VersionedTypeName>
       <TypeStatus>Active</TypeStatus>
-    </ProtocolType>
-    <ProtocolType json:Array="true">
-      <ProtocolTypeId>recl593FskmnddRIh</ProtocolTypeId>
-      <Name></Name>
     </ProtocolType>
     <ProtocolType json:Array="true">
       <ProtocolTypeId>recl5OGEwbCR9w3O7</ProtocolTypeId>
@@ -12045,6 +12186,15 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeStatus>Deprecated</TypeStatus>
     </ProtocolType>
     <ProtocolType json:Array="true">
+      <ProtocolTypeId>recn7mYZdkOQ7iWyk</ProtocolTypeId>
+      <Name>scada pico.btu.meter.component.gt.000</Name>
+      <Protocol>recdu3DxzzmNH2eNq</Protocol>
+      <ProtocolName>scada</ProtocolName>
+      <VersionedType>recceAYnoSRWlEoKq</VersionedType>
+      <VersionedTypeName>pico.btu.meter.component.gt.000</VersionedTypeName>
+      <TypeStatus>Pending</TypeStatus>
+    </ProtocolType>
+    <ProtocolType json:Array="true">
       <ProtocolTypeId>recnB4CL7zARTAgzg</ProtocolTypeId>
       <Name>gjk report.000</Name>
       <Protocol>reckfOYG7HASY9lkN</Protocol>
@@ -12079,10 +12229,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <VersionedType>recLLnd7PSNE4n126</VersionedType>
       <VersionedTypeName>pico.tank.module.component.gt.000</VersionedTypeName>
       <TypeStatus>Deprecated</TypeStatus>
-    </ProtocolType>
-    <ProtocolType json:Array="true">
-      <ProtocolTypeId>recnjJZYomIYduNvd</ProtocolTypeId>
-      <Name></Name>
     </ProtocolType>
     <ProtocolType json:Array="true">
       <ProtocolTypeId>recnmCYq34Egk4V5L</ProtocolTypeId>
@@ -12137,6 +12283,15 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType json:Array="true">
+      <ProtocolTypeId>recpBBwOwsBBrwEqC</ProtocolTypeId>
+      <Name>gwproto pico.btu.meter.component.gt.000</Name>
+      <Protocol>rec5aZ8ud9lQDmlBu</Protocol>
+      <ProtocolName>gwproto</ProtocolName>
+      <VersionedType>recceAYnoSRWlEoKq</VersionedType>
+      <VersionedTypeName>pico.btu.meter.component.gt.000</VersionedTypeName>
+      <TypeStatus>Pending</TypeStatus>
+    </ProtocolType>
+    <ProtocolType json:Array="true">
       <ProtocolTypeId>recpDkZmV1JedYH8j</ProtocolTypeId>
       <Name>origgwpro telemetry.snapshot.spaceheat.000</Name>
       <Protocol>recFN8JyTVqLZBQN1</Protocol>
@@ -12145,11 +12300,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <VersionedTypeName>telemetry.snapshot.spaceheat.000</VersionedTypeName>
       <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
-    <ProtocolType json:Array="true">
-      <ProtocolTypeId>recpmLlSrgwRStIpV</ProtocolTypeId>
-      <Name></Name>
-    </ProtocolType>
-    <ProtocolType json:Array="true">itrzNkF4960GjDhHP/recpmLlSrgwRStIpV</ProtocolType>
     <ProtocolType json:Array="true">
       <ProtocolTypeId>recptEwhi4c7rMZoz</ProtocolTypeId>
       <Name>scada price.quantity.unitless.000</Name>
@@ -12167,6 +12317,15 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <VersionedType>recOFSIdifqAn09F5</VersionedType>
       <VersionedTypeName>weather.forecast.000</VersionedTypeName>
       <TypeStatus>Active</TypeStatus>
+    </ProtocolType>
+    <ProtocolType json:Array="true">
+      <ProtocolTypeId>recq86klplAA6lTnO</ProtocolTypeId>
+      <Name>scada pico.comms.params.000</Name>
+      <Protocol>recdu3DxzzmNH2eNq</Protocol>
+      <ProtocolName>scada</ProtocolName>
+      <VersionedType>recIH8gxbOmMxHBzM</VersionedType>
+      <VersionedTypeName>pico.comms.params.000</VersionedTypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType json:Array="true">
       <ProtocolTypeId>recqA8lnZ1i8X02WZ</ProtocolTypeId>
@@ -12205,6 +12364,15 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType json:Array="true">
+      <ProtocolTypeId>recrkaPXrC068gmMx</ProtocolTypeId>
+      <Name>scada multichannel.snapshot.000</Name>
+      <Protocol>recdu3DxzzmNH2eNq</Protocol>
+      <ProtocolName>scada</ProtocolName>
+      <VersionedType>recCvEvoeDDMCRMKi</VersionedType>
+      <VersionedTypeName>multichannel.snapshot.000</VersionedTypeName>
+      <TypeStatus>Pending</TypeStatus>
+    </ProtocolType>
+    <ProtocolType json:Array="true">
       <ProtocolTypeId>recrpoQF951bAlwS5</ProtocolTypeId>
       <Name>gnf scada.cert.transfer.000</Name>
       <Protocol>recXaQaXNNDyxIlT7</Protocol>
@@ -12222,6 +12390,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <VersionedTypeName>discoverycert.algo.create.000</VersionedTypeName>
       <TypeStatus>Active</TypeStatus>
     </ProtocolType>
+    <ProtocolType json:Array="true">itri1F3iiNCdekNes/recs6Jf8auLqC5z1T</ProtocolType>
     <ProtocolType json:Array="true">
       <ProtocolTypeId>recs8N9wVyonAKE8y</ProtocolTypeId>
       <Name>gnr basegnodes.get.000</Name>
@@ -12439,10 +12608,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType json:Array="true">
-      <ProtocolTypeId>recw9GjFYDOoWn0yt</ProtocolTypeId>
-      <Name></Name>
-    </ProtocolType>
-    <ProtocolType json:Array="true">
       <ProtocolTypeId>recwo4rfoZbTvnAYs</ProtocolTypeId>
       <Name>gjk ha1.params.001</Name>
       <Protocol>reckfOYG7HASY9lkN</Protocol>
@@ -12497,10 +12662,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType json:Array="true">
-      <ProtocolTypeId>recxremjDdXqNtGRv</ProtocolTypeId>
-      <Name></Name>
-    </ProtocolType>
-    <ProtocolType json:Array="true">
       <ProtocolTypeId>recxuu5CLZMTf4DX1</ProtocolTypeId>
       <Name>gwprice p.node.000</Name>
       <Protocol>recVsPBZNyq2U6Fmz</Protocol>
@@ -12517,6 +12678,24 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <VersionedType>recDq5Oo6baJLVS5s</VersionedType>
       <VersionedTypeName>heartbeat.b.001</VersionedTypeName>
       <TypeStatus>Active</TypeStatus>
+    </ProtocolType>
+    <ProtocolType json:Array="true">
+      <ProtocolTypeId>recy7pmm2t4prDfnK</ProtocolTypeId>
+      <Name>gwasl pico.btu.meter.component.gt.000</Name>
+      <Protocol>recMtuD0FitFdKlRY</Protocol>
+      <ProtocolName>gwasl</ProtocolName>
+      <VersionedType>recceAYnoSRWlEoKq</VersionedType>
+      <VersionedTypeName>pico.btu.meter.component.gt.000</VersionedTypeName>
+      <TypeStatus>Pending</TypeStatus>
+    </ProtocolType>
+    <ProtocolType json:Array="true">
+      <ProtocolTypeId>recyuZF0gN9Ow0Ytx</ProtocolTypeId>
+      <Name>gwproto multichannel.snapshot.000</Name>
+      <Protocol>rec5aZ8ud9lQDmlBu</Protocol>
+      <ProtocolName>gwproto</ProtocolName>
+      <VersionedType>recCvEvoeDDMCRMKi</VersionedType>
+      <VersionedTypeName>multichannel.snapshot.000</VersionedTypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType json:Array="true">
       <ProtocolTypeId>recyw0Nc5DvoobYQ4</ProtocolTypeId>
@@ -12791,6 +12970,27 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
   </Topics>
   <TypeAttributes xmlns:json="http://james.newtonking.com/projects/json">
     <TypeAttribute json:Array="true">
+      <TypeAttributeId>rec01D7njqKmkogh8</TypeAttributeId>
+      <Value>HotChannelName</Value>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>String</PrimitiveType>
+      <PrimitiveFormatId>rec8FKfbgEJZxvlIE</PrimitiveFormatId>
+      <PrimitiveFormat>SpaceheatName</PrimitiveFormat>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>"hp-lwt"</TestValue>
+      <PrimitiveFormatFail1>"A.hot-stuff"</PrimitiveFormatFail1>
+      <VersionedType>recIABnf3YmlHzxXs</VersionedType>
+      <Idx>4</Idx>
+      <TypeInPayload>String</TypeInPayload>
+      <Format>SpaceheatName</Format>
+      <PreValidateFormat />
+      <Protocols>gwproto</Protocols>
+      <Protocols>gwasl</Protocols>
+      <Protocols>scada</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
       <TypeAttributeId>rec01M0aeIJz3888s</TypeAttributeId>
       <Value>ActorName</Value>
       <IsRequired>true</IsRequired>
@@ -12845,6 +13045,27 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeInPayload>Number</TypeInPayload>
       <Protocols>satn</Protocols>
       <Protocols>gwatn</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
+      <TypeAttributeId>rec06lXxVO5xMTRSu</TypeAttributeId>
+      <Value>AsyncCaptureDeltaCelsiusX100</Value>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>Integer</PrimitiveType>
+      <PrimitiveFormatId>recKcuGOfjTIPqtXk</PrimitiveFormatId>
+      <PrimitiveFormat>PositiveInteger</PrimitiveFormat>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>20</TestValue>
+      <PrimitiveFormatFail1>0</PrimitiveFormatFail1>
+      <VersionedType>recIABnf3YmlHzxXs</VersionedType>
+      <Idx>10</Idx>
+      <TypeInPayload>Integer</TypeInPayload>
+      <Format>PositiveInteger</Format>
+      <PreValidateFormat />
+      <Protocols>gwproto</Protocols>
+      <Protocols>gwasl</Protocols>
+      <Protocols>scada</Protocols>
     </TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>rec0975A6RDsema8n</TypeAttributeId>
@@ -13474,6 +13695,24 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <PreValidateFormat />
     </TypeAttribute>
     <TypeAttribute json:Array="true">
+      <TypeAttributeId>rec156bpiu0SFlC7Y</TypeAttributeId>
+      <Value>UnitList</Value>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <IsList>true</IsList>
+      <PrimitiveType>String</PrimitiveType>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>["CelsiusTimes100"]</TestValue>
+      <VersionedType>recCvEvoeDDMCRMKi</VersionedType>
+      <Idx>3</Idx>
+      <Title>UnitList</Title>
+      <TypeInPayload>String</TypeInPayload>
+      <Protocols>gwproto</Protocols>
+      <Protocols>gwasl</Protocols>
+      <Protocols>scada</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
       <TypeAttributeId>rec17k9XzjvqTyghR</TypeAttributeId>
       <Value>TelemetryName</Value>
       <IsRequired>true</IsRequired>
@@ -13641,6 +13880,25 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeInPayload>Integer</TypeInPayload>
       <Protocols>satn</Protocols>
       <Protocols>gwatn</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
+      <TypeAttributeId>rec1QG55gKlkwKWCV</TypeAttributeId>
+      <Value>MeasurementList</Value>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <IsList>true</IsList>
+      <PrimitiveType>Integer</PrimitiveType>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>[6550]</TestValue>
+      <VersionedType>recCvEvoeDDMCRMKi</VersionedType>
+      <Description>Measurements of the about node name, in the unit list</Description>
+      <Idx>2</Idx>
+      <Title>MeasurementList</Title>
+      <TypeInPayload>Integer</TypeInPayload>
+      <Protocols>gwproto</Protocols>
+      <Protocols>gwasl</Protocols>
+      <Protocols>scada</Protocols>
     </TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>rec1SyaI5uoDhNW1f</TypeAttributeId>
@@ -14255,6 +14513,21 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Protocols>gjk</Protocols>
     </TypeAttribute>
     <TypeAttribute json:Array="true">
+      <TypeAttributeId>rec2a69VWoit3zM7i</TypeAttributeId>
+      <Value>CaptureOffsetS</Value>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>Number</PrimitiveType>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>25.2</TestValue>
+      <VersionedType>recIABnf3YmlHzxXs</VersionedType>
+      <Idx>12</Idx>
+      <TypeInPayload>Number</TypeInPayload>
+      <Protocols>gwproto</Protocols>
+      <Protocols>gwasl</Protocols>
+      <Protocols>scada</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
       <TypeAttributeId>rec2bfK23JQkMUfp3</TypeAttributeId>
       <Value>PublishEmptyTicklistAfterS</Value>
       <IsPrimitive>true</IsPrimitive>
@@ -14594,6 +14867,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <PreValidateFormat />
       <Protocols>gwprice</Protocols>
     </TypeAttribute>
+    <TypeAttribute json:Array="true">itrOq5Snz2BjGdRD8/rec312b1go6GqeS5U</TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>rec34OIYCFo5w9hkm</TypeAttributeId>
       <Value>FromGNodeInstanceId</Value>
@@ -14699,7 +14973,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Protocols>gwatn</Protocols>
       <EnumTestTranslation>Relay</EnumTestTranslation>
     </TypeAttribute>
-    <TypeAttribute json:Array="true">itrfF38pSEVwOJE0U/rec3JoWyUlqUfiTLp</TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>rec3MAw2y2MewO5VK</TypeAttributeId>
       <Value>BoostTariff</Value>
@@ -14858,6 +15131,24 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeInPayload>String</TypeInPayload>
       <Format>LeftRightDot</Format>
       <PreValidateFormat />
+      <Protocols>scada</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
+      <TypeAttributeId>rec3e1nke1k1HEMlg</TypeAttributeId>
+      <Value>HwUid</Value>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>String</PrimitiveType>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>"pico_aaaaaa"</TestValue>
+      <VersionedType>recCvEvoeDDMCRMKi</VersionedType>
+      <Description>The hardware id of the MCU sending async BTU Meter data</Description>
+      <Idx>0</Idx>
+      <Title>HwUid</Title>
+      <TypeInPayload>String</TypeInPayload>
+      <Protocols>gwproto</Protocols>
+      <Protocols>gwasl</Protocols>
       <Protocols>scada</Protocols>
     </TypeAttribute>
     <TypeAttribute json:Array="true">
@@ -15282,6 +15573,30 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Protocols>gnr</Protocols>
     </TypeAttribute>
     <TypeAttribute json:Array="true">
+      <TypeAttributeId>rec4jGVDhinCYuiHo</TypeAttributeId>
+      <Value>ChannelNameList</Value>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <IsList>true</IsList>
+      <PrimitiveType>String</PrimitiveType>
+      <PrimitiveFormatId>rec8FKfbgEJZxvlIE</PrimitiveFormatId>
+      <PrimitiveFormat>SpaceheatName</PrimitiveFormat>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>["hp-lwt"]</TestValue>
+      <PrimitiveFormatFail1>"A.hot-stuff"</PrimitiveFormatFail1>
+      <VersionedType>recCvEvoeDDMCRMKi</VersionedType>
+      <Description>The list of names of the nodes that are getting measured.</Description>
+      <Idx>1</Idx>
+      <Title>AboutNodeNameList</Title>
+      <TypeInPayload>String</TypeInPayload>
+      <Format>SpaceheatName</Format>
+      <PreValidateFormat />
+      <Protocols>gwproto</Protocols>
+      <Protocols>gwasl</Protocols>
+      <Protocols>scada</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
       <TypeAttributeId>rec4jYpfre3j4b8sC</TypeAttributeId>
       <Value>ModbusPort</Value>
       <IsPrimitive>true</IsPrimitive>
@@ -15669,6 +15984,27 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Format>AlgoAddress</Format>
       <PreValidateFormat />
       <Protocols>gwbase</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
+      <TypeAttributeId>rec5aQPKqUmydvNiB</TypeAttributeId>
+      <Value>CapturePeriodS</Value>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>Integer</PrimitiveType>
+      <PrimitiveFormatId>recKcuGOfjTIPqtXk</PrimitiveFormatId>
+      <PrimitiveFormat>PositiveInteger</PrimitiveFormat>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>60</TestValue>
+      <PrimitiveFormatFail1>0</PrimitiveFormatFail1>
+      <VersionedType>recIABnf3YmlHzxXs</VersionedType>
+      <Idx>7</Idx>
+      <TypeInPayload>Integer</TypeInPayload>
+      <Format>PositiveInteger</Format>
+      <PreValidateFormat />
+      <Protocols>gwproto</Protocols>
+      <Protocols>gwasl</Protocols>
+      <Protocols>scada</Protocols>
     </TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>rec5bPMfIoVWUfKr8</TypeAttributeId>
@@ -16476,6 +16812,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Format>LeftRightDot</Format>
       <PreValidateFormat />
     </TypeAttribute>
+    <TypeAttribute json:Array="true">itrOq5Snz2BjGdRD8/rec7H3UiK1RTlpTnf</TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>rec7HI22ZjOYteJB1</TypeAttributeId>
       <Value>CapturedByNodeName</Value>
@@ -16717,7 +17054,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <PreValidateFormat />
       <Protocols>gjk</Protocols>
     </TypeAttribute>
-    <TypeAttribute json:Array="true">itrfF38pSEVwOJE0U/rec7lQFhRkoqoV0hu</TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>rec7lUlbNs9m5sYDf</TypeAttributeId>
       <Value>MeteredShNodeName</Value>
@@ -16954,6 +17290,22 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Idx>3</Idx>
       <TypeInPayload>String</TypeInPayload>
       <Protocols>origgwpro</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
+      <TypeAttributeId>rec8ERHV8neJXD2IA</TypeAttributeId>
+      <Value>HwUid</Value>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>String</PrimitiveType>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>"pico-aaaaaa"</TestValue>
+      <VersionedType>recIABnf3YmlHzxXs</VersionedType>
+      <Idx>0</Idx>
+      <TypeInPayload>String</TypeInPayload>
+      <Protocols>gwproto</Protocols>
+      <Protocols>gwasl</Protocols>
+      <Protocols>scada</Protocols>
     </TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>rec8IlmyE7Kj46AtD</TypeAttributeId>
@@ -18089,6 +18441,27 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Protocols>gwatn</Protocols>
     </TypeAttribute>
     <TypeAttribute json:Array="true">
+      <TypeAttributeId>recAUNo2zCG6i9jWr</TypeAttributeId>
+      <Value>ActorNodeName</Value>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>String</PrimitiveType>
+      <PrimitiveFormatId>rec8FKfbgEJZxvlIE</PrimitiveFormatId>
+      <PrimitiveFormat>SpaceheatName</PrimitiveFormat>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>"primary-btu"</TestValue>
+      <PrimitiveFormatFail1>"A.hot-stuff"</PrimitiveFormatFail1>
+      <VersionedType>recIABnf3YmlHzxXs</VersionedType>
+      <Idx>1</Idx>
+      <TypeInPayload>String</TypeInPayload>
+      <Format>SpaceheatName</Format>
+      <PreValidateFormat />
+      <Protocols>gwproto</Protocols>
+      <Protocols>gwasl</Protocols>
+      <Protocols>scada</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
       <TypeAttributeId>recAY4GouAlVelRp9</TypeAttributeId>
       <Value>FromGNodeAlias</Value>
       <IsRequired>true</IsRequired>
@@ -18374,6 +18747,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Protocols>gwbase</Protocols>
       <Protocols>gridworks</Protocols>
     </TypeAttribute>
+    <TypeAttribute json:Array="true">itrOq5Snz2BjGdRD8/recB038FARPSVfhZS</TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>recB7NDDe5xXWHh9M</TypeAttributeId>
       <Value>GNodeAlias</Value>
@@ -18553,7 +18927,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Protocols>origgwpro</Protocols>
       <Protocols>gwproto</Protocols>
     </TypeAttribute>
-    <TypeAttribute json:Array="true">itrfF38pSEVwOJE0U/recBbAUUbNnnLgzWZ</TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>recBbPnDHgnSutafc</TypeAttributeId>
       <Value>DurationMinutes</Value>
@@ -20192,6 +20565,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Protocols>gwproto</Protocols>
       <Protocols>gwatn</Protocols>
     </TypeAttribute>
+    <TypeAttribute json:Array="true">itrOq5Snz2BjGdRD8/recEZp5KbpNntOKWY</TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>recEdw71HVusxHI1i</TypeAttributeId>
       <Value>MessageId</Value>
@@ -20368,7 +20742,22 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <PreValidateFormat />
       <Protocols>origgwpro</Protocols>
     </TypeAttribute>
-    <TypeAttribute json:Array="true">itrfF38pSEVwOJE0U/recEnND4VVh74Ayni</TypeAttribute>
+    <TypeAttribute json:Array="true">
+      <TypeAttributeId>recEnkK9NV7QhdXjE</TypeAttributeId>
+      <Value>SerialNumber</Value>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>String</PrimitiveType>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>105</TestValue>
+      <VersionedType>recceAYnoSRWlEoKq</VersionedType>
+      <Idx>1</Idx>
+      <TypeInPayload>String</TypeInPayload>
+      <Protocols>gwasl</Protocols>
+      <Protocols>gwproto</Protocols>
+      <Protocols>scada</Protocols>
+    </TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>recEpIg7AB9Qr2dpX</TypeAttributeId>
       <Value>Role</Value>
@@ -20387,6 +20776,27 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <EnumName>core.g.node.role</EnumName>
       <Protocols>gwbase</Protocols>
       <EnumTestTranslation>TerminalAsset</EnumTestTranslation>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
+      <TypeAttributeId>recEqaIzgvTkotnul</TypeAttributeId>
+      <Value>GallonsPerPulse</Value>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>Number</PrimitiveType>
+      <PrimitiveFormatId>recKcuGOfjTIPqtXk</PrimitiveFormatId>
+      <PrimitiveFormat>PositiveInteger</PrimitiveFormat>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>0.0009</TestValue>
+      <PrimitiveFormatFail1>0</PrimitiveFormatFail1>
+      <VersionedType>recIABnf3YmlHzxXs</VersionedType>
+      <Idx>8</Idx>
+      <TypeInPayload>Number</TypeInPayload>
+      <Format>PositiveInteger</Format>
+      <PreValidateFormat />
+      <Protocols>gwproto</Protocols>
+      <Protocols>gwasl</Protocols>
+      <Protocols>scada</Protocols>
     </TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>recEt6GRWPinWl0dp</TypeAttributeId>
@@ -20485,6 +20895,22 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Enum>reczCvEi48QAKRX3X</Enum>
       <EnumName>temp.calc.method</EnumName>
       <Protocols>gjk</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
+      <TypeAttributeId>recF37XYSIEnG93nS</TypeAttributeId>
+      <Value>ThermistorBeta</Value>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>Integer</PrimitiveType>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>3977</TestValue>
+      <VersionedType>recceAYnoSRWlEoKq</VersionedType>
+      <Idx>11</Idx>
+      <TypeInPayload>Integer</TypeInPayload>
+      <Protocols>gwasl</Protocols>
+      <Protocols>gwproto</Protocols>
+      <Protocols>scada</Protocols>
     </TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>recF4YcltowEZgCBx</TypeAttributeId>
@@ -21636,6 +22062,27 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Protocols>gwasl</Protocols>
     </TypeAttribute>
     <TypeAttribute json:Array="true">
+      <TypeAttributeId>recH9rAZtJRPQrGA4</TypeAttributeId>
+      <Value>AsyncCaptureDeltaCtVoltsX100</Value>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>Integer</PrimitiveType>
+      <PrimitiveFormatId>recKcuGOfjTIPqtXk</PrimitiveFormatId>
+      <PrimitiveFormat>PositiveInteger</PrimitiveFormat>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>20</TestValue>
+      <PrimitiveFormatFail1>0</PrimitiveFormatFail1>
+      <VersionedType>recIABnf3YmlHzxXs</VersionedType>
+      <Idx>11</Idx>
+      <TypeInPayload>Integer</TypeInPayload>
+      <Format>PositiveInteger</Format>
+      <PreValidateFormat />
+      <Protocols>gwproto</Protocols>
+      <Protocols>gwasl</Protocols>
+      <Protocols>scada</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
       <TypeAttributeId>recHFYht0MkUtdhgv</TypeAttributeId>
       <Value>DataChannels</Value>
       <IsRequired>true</IsRequired>
@@ -21826,6 +22273,27 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Protocols>origgwpro</Protocols>
     </TypeAttribute>
     <TypeAttribute json:Array="true">
+      <TypeAttributeId>recHZohg3NeFZHieB</TypeAttributeId>
+      <Value>AsyncCaptureDeltaGpmX100</Value>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>Integer</PrimitiveType>
+      <PrimitiveFormatId>recKcuGOfjTIPqtXk</PrimitiveFormatId>
+      <PrimitiveFormat>PositiveInteger</PrimitiveFormat>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>10</TestValue>
+      <PrimitiveFormatFail1>0</PrimitiveFormatFail1>
+      <VersionedType>recIABnf3YmlHzxXs</VersionedType>
+      <Idx>9</Idx>
+      <TypeInPayload>Integer</TypeInPayload>
+      <Format>PositiveInteger</Format>
+      <PreValidateFormat />
+      <Protocols>gwproto</Protocols>
+      <Protocols>gwasl</Protocols>
+      <Protocols>scada</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
       <TypeAttributeId>recHcXDJDYUZR80tR</TypeAttributeId>
       <Value>FromGNodeInstanceId</Value>
       <IsRequired>true</IsRequired>
@@ -21937,6 +22405,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Protocols>gwatn</Protocols>
       <Protocols>gwmm</Protocols>
     </TypeAttribute>
+    <TypeAttribute json:Array="true">itrOq5Snz2BjGdRD8/recHl3HcnTyMN0bF2</TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>recHnLyayIHQ166SI</TypeAttributeId>
       <Value>Alpha</Value>
@@ -21967,6 +22436,21 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeInPayload>Integer</TypeInPayload>
       <Protocols>satn</Protocols>
       <Protocols>gwatn</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
+      <TypeAttributeId>recHtvW8OSALVkBDO</TypeAttributeId>
+      <Value>SendHz</Value>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>Boolean</PrimitiveType>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <VersionedType>recIABnf3YmlHzxXs</VersionedType>
+      <Idx>3</Idx>
+      <TypeInPayload>Boolean</TypeInPayload>
+      <Protocols>gwproto</Protocols>
+      <Protocols>gwasl</Protocols>
+      <Protocols>scada</Protocols>
     </TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>recHu18HYiQOx4DwJ</TypeAttributeId>
@@ -22214,7 +22698,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Protocols>gwatn</Protocols>
       <EnumTestTranslation>IsoValve</EnumTestTranslation>
     </TypeAttribute>
-    <TypeAttribute json:Array="true">itrfF38pSEVwOJE0U/recIDQtNvErTwQpYO</TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>recIFZ5CA71I1W4BD</TypeAttributeId>
       <Value>TimeoutSeconds</Value>
@@ -22419,6 +22902,21 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Protocols>gjk</Protocols>
     </TypeAttribute>
     <TypeAttribute json:Array="true">
+      <TypeAttributeId>recIrFEZpnsAuEgEg</TypeAttributeId>
+      <Value>TimeoutSeconds</Value>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>Integer</PrimitiveType>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>300</TestValue>
+      <VersionedType>rec6gN34hc6T9iRVb</VersionedType>
+      <Idx>1</Idx>
+      <TypeInPayload>Integer</TypeInPayload>
+      <Protocols>scada</Protocols>
+      <Protocols>gwasl</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
       <TypeAttributeId>recIrVotAGpKBqu5U</TypeAttributeId>
       <Value>DisplayName</Value>
       <IsPrimitive>true</IsPrimitive>
@@ -22567,6 +23065,27 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Format>LeftRightDot</Format>
       <PreValidateFormat />
       <Protocols>origgwpro</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
+      <TypeAttributeId>recJ4J6dNJZDb6MI7</TypeAttributeId>
+      <Value>ColdChannelName</Value>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>String</PrimitiveType>
+      <PrimitiveFormatId>rec8FKfbgEJZxvlIE</PrimitiveFormatId>
+      <PrimitiveFormat>SpaceheatName</PrimitiveFormat>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>"hp-ewt"</TestValue>
+      <PrimitiveFormatFail1>"A.hot-stuff"</PrimitiveFormatFail1>
+      <VersionedType>recIABnf3YmlHzxXs</VersionedType>
+      <Idx>5</Idx>
+      <TypeInPayload>String</TypeInPayload>
+      <Format>SpaceheatName</Format>
+      <PreValidateFormat />
+      <Protocols>gwproto</Protocols>
+      <Protocols>gwasl</Protocols>
+      <Protocols>scada</Protocols>
     </TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>recJ5ujT77u7ob2kQ</TypeAttributeId>
@@ -23296,6 +23815,26 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Protocols>gwbase</Protocols>
     </TypeAttribute>
     <TypeAttribute json:Array="true">
+      <TypeAttributeId>recKdQlcmQpIK5ruk</TypeAttributeId>
+      <Value>TempCalcMethod</Value>
+      <IsRequired>true</IsRequired>
+      <EnumLocalName>temp.calc.method</EnumLocalName>
+      <IsEnum>true</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>"SimpleBeta"</TestValue>
+      <VersionedType>recceAYnoSRWlEoKq</VersionedType>
+      <DefaultEnumValue>SimpleBeta</DefaultEnumValue>
+      <Idx>10</Idx>
+      <EnumType>UpperPython</EnumType>
+      <TypeInPayload>String</TypeInPayload>
+      <Format>temp.calc.method</Format>
+      <Enum>reczCvEi48QAKRX3X</Enum>
+      <EnumName>temp.calc.method</EnumName>
+      <Protocols>gwasl</Protocols>
+      <Protocols>gwproto</Protocols>
+      <Protocols>scada</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
       <TypeAttributeId>recKdVPFQyTt95V3Y</TypeAttributeId>
       <Value>DisplayName</Value>
       <IsPrimitive>true</IsPrimitive>
@@ -23576,6 +24115,21 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Protocols>gjk</Protocols>
     </TypeAttribute>
     <TypeAttribute json:Array="true">
+      <TypeAttributeId>recL2E7BQJGqzytSI</TypeAttributeId>
+      <Value>Message</Value>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>String</PrimitiveType>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>"Switching to DNS beech.local"</TestValue>
+      <VersionedType>recsWIMGn0LnVm9eN</VersionedType>
+      <Idx>3</Idx>
+      <TypeInPayload>String</TypeInPayload>
+      <Protocols>gwasl</Protocols>
+      <Protocols>scada</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
       <TypeAttributeId>recL3IKK3qsGnacVq</TypeAttributeId>
       <Value>FsmActionList</Value>
       <IsRequired>true</IsRequired>
@@ -23650,6 +24204,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
     </TypeAttribute>
+    <TypeAttribute json:Array="true">itrOq5Snz2BjGdRD8/recLB5iW6qgqsr6X1</TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>recLBNOggI5DprUc5</TypeAttributeId>
       <Value>CopLwtCoeff</Value>
@@ -23986,7 +24541,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <PreValidateFormat />
       <Protocols>gwatn</Protocols>
     </TypeAttribute>
-    <TypeAttribute json:Array="true">itrfF38pSEVwOJE0U/recLnHXHBgC0FTXR0</TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>recLnMCNd00yOpeVw</TypeAttributeId>
       <Value>DisplayName</Value>
@@ -24674,6 +25228,21 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Format>AlgoAddress</Format>
       <PreValidateFormat />
       <Protocols>gwbase</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
+      <TypeAttributeId>recNZRiUp5E3LsWpP</TypeAttributeId>
+      <Value>HwUid</Value>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>String</PrimitiveType>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>"pico-aaaaaa"</TestValue>
+      <VersionedType>recIH8gxbOmMxHBzM</VersionedType>
+      <Idx>0</Idx>
+      <TypeInPayload>String</TypeInPayload>
+      <Protocols>gwasl</Protocols>
+      <Protocols>scada</Protocols>
     </TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>recNgNrntAoD2QuZV</TypeAttributeId>
@@ -25658,6 +26227,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <PreValidateFormat />
       <Protocols>origgwpro</Protocols>
     </TypeAttribute>
+    <TypeAttribute json:Array="true">itrOq5Snz2BjGdRD8/recP42BiKvu4xhepH</TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>recP7O26iP2lRFPSv</TypeAttributeId>
       <Value>TerminalAssetAlias</Value>
@@ -26018,7 +26588,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeInPayload>Integer</TypeInPayload>
       <Protocols>gjk</Protocols>
     </TypeAttribute>
-    <TypeAttribute json:Array="true">itrfF38pSEVwOJE0U/recPzQXX05KZV5F3v</TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>recQ0KWVdLt1K1n3U</TypeAttributeId>
       <Value>HouseHeatingCapacity</Value>
@@ -26716,6 +27285,21 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Protocols>origgwpro</Protocols>
     </TypeAttribute>
     <TypeAttribute json:Array="true">
+      <TypeAttributeId>recR8TSLWjyHUVTQD</TypeAttributeId>
+      <Value>BackupUrl</Value>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>String</PrimitiveType>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>"beech.local"</TestValue>
+      <VersionedType>recIH8gxbOmMxHBzM</VersionedType>
+      <Idx>2</Idx>
+      <TypeInPayload>String</TypeInPayload>
+      <Protocols>gwasl</Protocols>
+      <Protocols>scada</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
       <TypeAttributeId>recREgyk5HQKEtSMJ</TypeAttributeId>
       <Value>QuantityUnit</Value>
       <IsRequired>true</IsRequired>
@@ -27370,6 +27954,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeInPayload>Integer</TypeInPayload>
       <Protocols>gwatn</Protocols>
     </TypeAttribute>
+    <TypeAttribute json:Array="true">itrOq5Snz2BjGdRD8/recSeEWijLqaBvnqw</TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>recSibFgLA1SU37FE</TypeAttributeId>
       <Value>CopLwtCoeff</Value>
@@ -27786,7 +28371,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <SubTypeProtocols>gwproto</SubTypeProtocols>
       <SubTypeProtocols>gwatn</SubTypeProtocols>
     </TypeAttribute>
-    <TypeAttribute json:Array="true">itrfF38pSEVwOJE0U/recTCiZCS7vwceSSy</TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>recTDMvzUVN9sXLK5</TypeAttributeId>
       <Value>MaxStoreTempF</Value>
@@ -28646,6 +29230,26 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Protocols>satn</Protocols>
     </TypeAttribute>
     <TypeAttribute json:Array="true">
+      <TypeAttributeId>recVETPpb1DuIjqv3</TypeAttributeId>
+      <Value>FlowMeterType</Value>
+      <IsRequired>true</IsRequired>
+      <EnumLocalName>make.model</EnumLocalName>
+      <IsEnum>true</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>"SAIER__SENHZG1WA"</TestValue>
+      <VersionedType>recceAYnoSRWlEoKq</VersionedType>
+      <DefaultEnumValue>UnknownMake__UnknownModel</DefaultEnumValue>
+      <Idx>8</Idx>
+      <EnumType>Upper</EnumType>
+      <TypeInPayload>String</TypeInPayload>
+      <Format>spaceheat.make.model</Format>
+      <Enum>recLQWqTvGwSz2GcN</Enum>
+      <EnumName>spaceheat.make.model</EnumName>
+      <Protocols>gwasl</Protocols>
+      <Protocols>gwproto</Protocols>
+      <Protocols>scada</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
       <TypeAttributeId>recVFo7HaOJi2fBm3</TypeAttributeId>
       <Value>OwnershipDeedValidatorAddr</Value>
       <IsPrimitive>true</IsPrimitive>
@@ -29127,6 +29731,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Protocols>gjk</Protocols>
       <Protocols>gwatn</Protocols>
     </TypeAttribute>
+    <TypeAttribute json:Array="true">itrOq5Snz2BjGdRD8/recW6Cp5sV8nmVtfd</TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>recW6RdAsZlS8B8xV</TypeAttributeId>
       <Value>GateClosingSeconds</Value>
@@ -29527,7 +30132,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Protocols>scada</Protocols>
       <Protocols>gjk</Protocols>
     </TypeAttribute>
-    <TypeAttribute json:Array="true">itrfF38pSEVwOJE0U/recXBsGuZcQnh9QUM</TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>recXD66aK8uOYnusN</TypeAttributeId>
       <Value>NumSampleAverages</Value>
@@ -29954,6 +30558,26 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <PreValidateFormat />
     </TypeAttribute>
     <TypeAttribute json:Array="true">
+      <TypeAttributeId>recYEbK8ODVVkUcG5</TypeAttributeId>
+      <Value>CtChannelName</Value>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>String</PrimitiveType>
+      <PrimitiveFormatId>rec8FKfbgEJZxvlIE</PrimitiveFormatId>
+      <PrimitiveFormat>SpaceheatName</PrimitiveFormat>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>"primary-pump-pwr"</TestValue>
+      <PrimitiveFormatFail1>"A.hot-stuff"</PrimitiveFormatFail1>
+      <VersionedType>recIABnf3YmlHzxXs</VersionedType>
+      <Idx>6</Idx>
+      <TypeInPayload>String</TypeInPayload>
+      <Format>SpaceheatName</Format>
+      <PreValidateFormat />
+      <Protocols>gwproto</Protocols>
+      <Protocols>gwasl</Protocols>
+      <Protocols>scada</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
       <TypeAttributeId>recYFjgEXfTizyRiv</TypeAttributeId>
       <Value>SignedProof</Value>
       <IsRequired>true</IsRequired>
@@ -30016,6 +30640,27 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <SubTypeName>g.node.gt</SubTypeName>
       <Protocols>gnr</Protocols>
       <SubTypeProtocols>gwbase</SubTypeProtocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
+      <TypeAttributeId>recYIOPQyf8BwH2Rf</TypeAttributeId>
+      <Value>HotNodeName</Value>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>String</PrimitiveType>
+      <PrimitiveFormatId>rec8FKfbgEJZxvlIE</PrimitiveFormatId>
+      <PrimitiveFormat>SpaceheatName</PrimitiveFormat>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>"hp-lwt"</TestValue>
+      <PrimitiveFormatFail1>"A.hot-stuff"</PrimitiveFormatFail1>
+      <VersionedType>recceAYnoSRWlEoKq</VersionedType>
+      <Idx>3</Idx>
+      <TypeInPayload>String</TypeInPayload>
+      <Format>SpaceheatName</Format>
+      <PreValidateFormat />
+      <Protocols>gwasl</Protocols>
+      <Protocols>gwproto</Protocols>
+      <Protocols>scada</Protocols>
     </TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>recYNAWavNDwN3uX1</TypeAttributeId>
@@ -30943,6 +31588,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Protocols>gwatn</Protocols>
       <Protocols>gwasl</Protocols>
     </TypeAttribute>
+    <TypeAttribute json:Array="true">itrOq5Snz2BjGdRD8/reca4rXnFTJdSuglR</TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>reca6fj3KeJFrWBbK</TypeAttributeId>
       <Value>StoreSizeGallons</Value>
@@ -31007,6 +31653,49 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Protocols>gwatn</Protocols>
       <SubTypeProtocols>gwproto</SubTypeProtocols>
       <SubTypeProtocols>gwatn</SubTypeProtocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
+      <TypeAttributeId>recaITZLfijWezr6T</TypeAttributeId>
+      <Value>Dispatch</Value>
+      <IsRequired>true</IsRequired>
+      <VersionedSubTypeName>analog.dispatch.000</VersionedSubTypeName>
+      <IsEnum>false</IsEnum>
+      <IsType>true</IsType>
+      <TestValue>{
+        "FromGNodeAlias": "d1.isone.ct.orange",
+        "FromHandle": "admin",
+        "ToHandle": "admin.h.dist-010v",
+        "AboutName": "dist-010v",
+        "Value": 40,
+        "TriggerId": "aa7899a6-d44a-4e56-b393-8ea9039235ca",
+        "UnixTimeMs": 1732651420193,
+        "TypeName": "analog.dispatch",
+        "Version": "000",
+    }</TestValue>
+      <VersionedType>rec6gN34hc6T9iRVb</VersionedType>
+      <VersionedSubType>recfbOVc0d6oUR9wH</VersionedSubType>
+      <Idx>0</Idx>
+      <TypeInPayload>analog.dispatch.000</TypeInPayload>
+      <SubTypeName>analog.dispatch</SubTypeName>
+      <Protocols>scada</Protocols>
+      <Protocols>gwasl</Protocols>
+      <SubTypeProtocols>gwproto</SubTypeProtocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
+      <TypeAttributeId>recaKEDsWwsTN7dH9</TypeAttributeId>
+      <Value>AsyncCaptureDeltaGpmX100</Value>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>Integer</PrimitiveType>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>10</TestValue>
+      <VersionedType>recceAYnoSRWlEoKq</VersionedType>
+      <Idx>14</Idx>
+      <TypeInPayload>Integer</TypeInPayload>
+      <Protocols>gwasl</Protocols>
+      <Protocols>gwproto</Protocols>
+      <Protocols>scada</Protocols>
     </TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>recaLxBW7WMSVuP5F</TypeAttributeId>
@@ -31363,6 +32052,38 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Protocols>gwatn</Protocols>
     </TypeAttribute>
     <TypeAttribute json:Array="true">
+      <TypeAttributeId>recbLFCX4BVlIF5UO</TypeAttributeId>
+      <Value>AsyncCaptureDeltaCelsiusX100</Value>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>Integer</PrimitiveType>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>20</TestValue>
+      <VersionedType>recceAYnoSRWlEoKq</VersionedType>
+      <Idx>15</Idx>
+      <TypeInPayload>Integer</TypeInPayload>
+      <Protocols>gwasl</Protocols>
+      <Protocols>gwproto</Protocols>
+      <Protocols>scada</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
+      <TypeAttributeId>recbNIQ3ygU2rd6ak</TypeAttributeId>
+      <Value>Enabled</Value>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>Boolean</PrimitiveType>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>True</TestValue>
+      <VersionedType>recceAYnoSRWlEoKq</VersionedType>
+      <Idx>0</Idx>
+      <TypeInPayload>Boolean</TypeInPayload>
+      <Protocols>gwasl</Protocols>
+      <Protocols>gwproto</Protocols>
+      <Protocols>scada</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
       <TypeAttributeId>recbO9TZqQf87MBp9</TypeAttributeId>
       <Value>DispatchContractAddress</Value>
       <IsRequired>true</IsRequired>
@@ -31419,7 +32140,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Protocols>gnf</Protocols>
       <Protocols>gwatn</Protocols>
     </TypeAttribute>
-    <TypeAttribute json:Array="true">itrfF38pSEVwOJE0U/recbR8wOIppFVic94</TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>recbRDhEoGNs9jYEB</TypeAttributeId>
       <Value>Snapshot</Value>
@@ -32749,6 +33469,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeInPayload>Integer</TypeInPayload>
       <Protocols>gwatn</Protocols>
     </TypeAttribute>
+    <TypeAttribute json:Array="true">itrOq5Snz2BjGdRD8/receLZhjMOO95MTfS</TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>receNbOB6Nz8qypSO</TypeAttributeId>
       <Value>GammaEx6</Value>
@@ -33387,7 +34108,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Format>PositiveInteger</Format>
       <PreValidateFormat />
     </TypeAttribute>
-    <TypeAttribute json:Array="true">itrfF38pSEVwOJE0U/recfPMe6p6geRwpBO</TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>recfTPxWtwu5CVewF</TypeAttributeId>
       <Value>SerialNumber</Value>
@@ -34105,6 +34825,27 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Protocols>gwprice</Protocols>
     </TypeAttribute>
     <TypeAttribute json:Array="true">
+      <TypeAttributeId>rech5PF6b8pi786oo</TypeAttributeId>
+      <Value>ColdNodeName</Value>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>String</PrimitiveType>
+      <PrimitiveFormatId>rec8FKfbgEJZxvlIE</PrimitiveFormatId>
+      <PrimitiveFormat>SpaceheatName</PrimitiveFormat>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>"hp-ewt"</TestValue>
+      <PrimitiveFormatFail1>"A.hot-stuff"</PrimitiveFormatFail1>
+      <VersionedType>recceAYnoSRWlEoKq</VersionedType>
+      <Idx>4</Idx>
+      <TypeInPayload>String</TypeInPayload>
+      <Format>SpaceheatName</Format>
+      <PreValidateFormat />
+      <Protocols>gwasl</Protocols>
+      <Protocols>gwproto</Protocols>
+      <Protocols>scada</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
       <TypeAttributeId>rech65PHs37XIxKeb</TypeAttributeId>
       <Value>TaOwnerAddr</Value>
       <IsRequired>true</IsRequired>
@@ -34230,6 +34971,26 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <DefaultValue>60</DefaultValue>
       <TypeInPayload>Integer</TypeInPayload>
       <Protocols>gwatn</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
+      <TypeAttributeId>rechPo6Efxpg4C7fu</TypeAttributeId>
+      <Value>ActorNodeName</Value>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>String</PrimitiveType>
+      <PrimitiveFormatId>rec8FKfbgEJZxvlIE</PrimitiveFormatId>
+      <PrimitiveFormat>SpaceheatName</PrimitiveFormat>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>'primary-btu'</TestValue>
+      <PrimitiveFormatFail1>"A.hot-stuff"</PrimitiveFormatFail1>
+      <VersionedType>recsWIMGn0LnVm9eN</VersionedType>
+      <Idx>0</Idx>
+      <TypeInPayload>String</TypeInPayload>
+      <Format>SpaceheatName</Format>
+      <PreValidateFormat />
+      <Protocols>gwasl</Protocols>
+      <Protocols>scada</Protocols>
     </TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>rechRrH62e46ddgA4</TypeAttributeId>
@@ -34575,6 +35336,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Protocols>gwproto</Protocols>
       <EnumTestTranslation>SCHNEIDERELECTRIC__IEM3455</EnumTestTranslation>
     </TypeAttribute>
+    <TypeAttribute json:Array="true">itrOq5Snz2BjGdRD8/reci01Obdfxa46cSS</TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>reci06VasVLO4ZMyk</TypeAttributeId>
       <Value>TopGNode</Value>
@@ -34779,6 +35541,37 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Protocols>gwproto</Protocols>
       <Protocols>origgwpro</Protocols>
       <Protocols>gwatn</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
+      <TypeAttributeId>reciQgoRuc5SKGhOw</TypeAttributeId>
+      <Value>BaseUrl</Value>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>String</PrimitiveType>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>'192.168.2.200'</TestValue>
+      <VersionedType>recsWIMGn0LnVm9eN</VersionedType>
+      <Idx>2</Idx>
+      <TypeInPayload>String</TypeInPayload>
+      <Protocols>gwasl</Protocols>
+      <Protocols>scada</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
+      <TypeAttributeId>reciRkxrAmnI0Rz5y</TypeAttributeId>
+      <Value>GallonsPerPulse</Value>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>Number</PrimitiveType>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>0.0009</TestValue>
+      <VersionedType>recceAYnoSRWlEoKq</VersionedType>
+      <Idx>13</Idx>
+      <TypeInPayload>Number</TypeInPayload>
+      <Protocols>gwasl</Protocols>
+      <Protocols>gwproto</Protocols>
+      <Protocols>scada</Protocols>
     </TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>reciVjnhmOGgZCihR</TypeAttributeId>
@@ -35027,6 +35820,27 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Protocols>origgwpro</Protocols>
     </TypeAttribute>
     <TypeAttribute json:Array="true">
+      <TypeAttributeId>recitQC6gCp4CuKRO</TypeAttributeId>
+      <Value>FlowChannelName</Value>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>String</PrimitiveType>
+      <PrimitiveFormatId>rec8FKfbgEJZxvlIE</PrimitiveFormatId>
+      <PrimitiveFormat>SpaceheatName</PrimitiveFormat>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>"primary-flow"</TestValue>
+      <PrimitiveFormatFail1>"A.hot-stuff"</PrimitiveFormatFail1>
+      <VersionedType>recIABnf3YmlHzxXs</VersionedType>
+      <Idx>2</Idx>
+      <TypeInPayload>String</TypeInPayload>
+      <Format>SpaceheatName</Format>
+      <PreValidateFormat />
+      <Protocols>gwproto</Protocols>
+      <Protocols>gwasl</Protocols>
+      <Protocols>scada</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
       <TypeAttributeId>recj1UdiNyVsW08e0</TypeAttributeId>
       <Value>FromGNodeInstanceId</Value>
       <IsRequired>true</IsRequired>
@@ -35131,7 +35945,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <PreValidateFormat />
       <Protocols>gwprice</Protocols>
     </TypeAttribute>
-    <TypeAttribute json:Array="true">itrfF38pSEVwOJE0U/recjALXs84kW5gFR9</TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>recjAmUJgRCATMly6</TypeAttributeId>
       <Value>ForecastCreatedS</Value>
@@ -35443,6 +36256,26 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Enum>recc1W1unmzowrKX9</Enum>
       <EnumName>spaceheat.unit</EnumName>
       <Protocols>gjk</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
+      <TypeAttributeId>recjl6qZxHhGFfrvJ</TypeAttributeId>
+      <Value>GpmFromHzMethod</Value>
+      <IsRequired>true</IsRequired>
+      <EnumLocalName>gpm.from.hz.method</EnumLocalName>
+      <IsEnum>true</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>"Constant"</TestValue>
+      <VersionedType>recceAYnoSRWlEoKq</VersionedType>
+      <DefaultEnumValue>Constant</DefaultEnumValue>
+      <Idx>12</Idx>
+      <EnumType>UpperPython</EnumType>
+      <TypeInPayload>String</TypeInPayload>
+      <Format>gpm.from.hz.method</Format>
+      <Enum>recnBoQvyU230SyE5</Enum>
+      <EnumName>gpm.from.hz.method</EnumName>
+      <Protocols>gwasl</Protocols>
+      <Protocols>gwproto</Protocols>
+      <Protocols>scada</Protocols>
     </TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>recjn4JQDiHTxb8zW</TypeAttributeId>
@@ -35776,6 +36609,26 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <DefaultValue>[-5.1]</DefaultValue>
       <TypeInPayload>Number</TypeInPayload>
       <Protocols>gwatn</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
+      <TypeAttributeId>recke5FDb5NJ49yHX</TypeAttributeId>
+      <Value>HzCalcMethod</Value>
+      <IsRequired>true</IsRequired>
+      <EnumLocalName>hz.calc.method</EnumLocalName>
+      <IsEnum>true</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>"UniformWindow"</TestValue>
+      <VersionedType>recceAYnoSRWlEoKq</VersionedType>
+      <DefaultEnumValue>BasicExpWeightedAvg</DefaultEnumValue>
+      <Idx>9</Idx>
+      <EnumType>UpperPython</EnumType>
+      <TypeInPayload>String</TypeInPayload>
+      <Format>hz.calc.method</Format>
+      <Enum>reclxhoGH9ipt39oM</Enum>
+      <EnumName>hz.calc.method</EnumName>
+      <Protocols>gwasl</Protocols>
+      <Protocols>gwproto</Protocols>
+      <Protocols>scada</Protocols>
     </TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>reckfEeZNa1zs6pP1</TypeAttributeId>
@@ -36285,6 +37138,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeInPayload>Integer</TypeInPayload>
       <Protocols>gwatn</Protocols>
     </TypeAttribute>
+    <TypeAttribute json:Array="true">itrOq5Snz2BjGdRD8/reclneIsw2C57Nn40</TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>reclrTm9vQY0yCs5F</TypeAttributeId>
       <Value>AboutNodeName</Value>
@@ -36542,6 +37396,27 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Protocols>gwproto</Protocols>
     </TypeAttribute>
     <TypeAttribute json:Array="true">
+      <TypeAttributeId>recmLcnG1hvs74joi</TypeAttributeId>
+      <Value>FlowNodeName</Value>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>String</PrimitiveType>
+      <PrimitiveFormatId>rec8FKfbgEJZxvlIE</PrimitiveFormatId>
+      <PrimitiveFormat>SpaceheatName</PrimitiveFormat>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>"primary-flow"</TestValue>
+      <PrimitiveFormatFail1>"A.hot-stuff"</PrimitiveFormatFail1>
+      <VersionedType>recceAYnoSRWlEoKq</VersionedType>
+      <Idx>2</Idx>
+      <TypeInPayload>String</TypeInPayload>
+      <Format>SpaceheatName</Format>
+      <PreValidateFormat />
+      <Protocols>gwasl</Protocols>
+      <Protocols>gwproto</Protocols>
+      <Protocols>scada</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
       <TypeAttributeId>recmMJZtwNM80i3av</TypeAttributeId>
       <Value>MessageId</Value>
       <IsRequired>true</IsRequired>
@@ -36774,6 +37649,21 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Protocols>gwprice</Protocols>
     </TypeAttribute>
     <TypeAttribute json:Array="true">
+      <TypeAttributeId>recmZppaTkWERafkW</TypeAttributeId>
+      <Value>AsyncCaptureDeltaCtVoltsX100</Value>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>Integer</PrimitiveType>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>20</TestValue>
+      <VersionedType>recceAYnoSRWlEoKq</VersionedType>
+      <Idx>16</Idx>
+      <TypeInPayload>Integer</TypeInPayload>
+      <Protocols>gwasl</Protocols>
+      <Protocols>gwproto</Protocols>
+      <Protocols>scada</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
       <TypeAttributeId>recmd1RX3dQQBR2BY</TypeAttributeId>
       <Value>SupervisorGNodeInstanceId</Value>
       <IsRequired>true</IsRequired>
@@ -36842,6 +37732,21 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Format>UTCSeconds</Format>
       <PreValidateFormat />
       <Protocols>origgwpro</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
+      <TypeAttributeId>recmlRy8KWkKvFEfI</TypeAttributeId>
+      <Value>SendHz</Value>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>Boolean</PrimitiveType>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <VersionedType>recceAYnoSRWlEoKq</VersionedType>
+      <Idx>5</Idx>
+      <TypeInPayload>Boolean</TypeInPayload>
+      <Protocols>gwasl</Protocols>
+      <Protocols>gwproto</Protocols>
+      <Protocols>scada</Protocols>
     </TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>recmmOlM4okW6SVMc</TypeAttributeId>
@@ -36925,7 +37830,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <PreValidateFormat />
       <Protocols>gwproto</Protocols>
     </TypeAttribute>
-    <TypeAttribute json:Array="true">itrfF38pSEVwOJE0U/recmxBVGK5lb8O893</TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>recn0nTl0ThN6iZLb</TypeAttributeId>
       <Value>Id</Value>
@@ -38193,6 +39097,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <PreValidateFormat />
       <Protocols>gwbase</Protocols>
     </TypeAttribute>
+    <TypeAttribute json:Array="true">itrOq5Snz2BjGdRD8/recpWqCT1ckZYKduk</TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>recpWs6a9jBR8TYFG</TypeAttributeId>
       <Value>MinPollPeriodMs</Value>
@@ -38738,6 +39643,22 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <SubTypeName>gt.sh.simple.single.status</SubTypeName>
     </TypeAttribute>
     <TypeAttribute json:Array="true">
+      <TypeAttributeId>recqTyWT6FnuQG37o</TypeAttributeId>
+      <Value>ReadCtVoltage</Value>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>Boolean</PrimitiveType>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>True</TestValue>
+      <VersionedType>recceAYnoSRWlEoKq</VersionedType>
+      <Idx>6</Idx>
+      <TypeInPayload>Boolean</TypeInPayload>
+      <Protocols>gwasl</Protocols>
+      <Protocols>gwproto</Protocols>
+      <Protocols>scada</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
       <TypeAttributeId>recqVxdye192VMxA3</TypeAttributeId>
       <Value>UnixS</Value>
       <IsRequired>true</IsRequired>
@@ -38927,7 +39848,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Protocols>gwproto</Protocols>
       <Protocols>gwatn</Protocols>
     </TypeAttribute>
-    <TypeAttribute json:Array="true">itrfF38pSEVwOJE0U/recqjFqf4TQMgJqc8</TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>recqk08O9ID51tC31</TypeAttributeId>
       <Value>ComponentAttributeClass</Value>
@@ -39119,6 +40039,26 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <SubTypeName>pico.tank.module.component.gt</SubTypeName>
       <Protocols>gjk</Protocols>
       <SubTypeProtocols>gjk</SubTypeProtocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
+      <TypeAttributeId>recqxEpF3EaqoBiqE</TypeAttributeId>
+      <Value>CtNodeName</Value>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>String</PrimitiveType>
+      <PrimitiveFormatId>rec8FKfbgEJZxvlIE</PrimitiveFormatId>
+      <PrimitiveFormat>SpaceheatName</PrimitiveFormat>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>"primary-pump-pwr"</TestValue>
+      <PrimitiveFormatFail1>"A.hot-stuff"</PrimitiveFormatFail1>
+      <VersionedType>recceAYnoSRWlEoKq</VersionedType>
+      <Idx>7</Idx>
+      <TypeInPayload>String</TypeInPayload>
+      <Format>SpaceheatName</Format>
+      <PreValidateFormat />
+      <Protocols>gwasl</Protocols>
+      <Protocols>gwproto</Protocols>
+      <Protocols>scada</Protocols>
     </TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>recqxHu3Rh0kAGXDo</TypeAttributeId>
@@ -40110,6 +41050,21 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <SubTypeProtocols>gwatn</SubTypeProtocols>
     </TypeAttribute>
     <TypeAttribute json:Array="true">
+      <TypeAttributeId>rectLMhvFs0LlGgSz</TypeAttributeId>
+      <Value>BaseUrl</Value>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>String</PrimitiveType>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>"192.168.2.200"</TestValue>
+      <VersionedType>recIH8gxbOmMxHBzM</VersionedType>
+      <Idx>1</Idx>
+      <TypeInPayload>String</TypeInPayload>
+      <Protocols>gwasl</Protocols>
+      <Protocols>scada</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
       <TypeAttributeId>rectMt3G7nhz2ujs5</TypeAttributeId>
       <Value>SensorNodeAlias</Value>
       <IsRequired>true</IsRequired>
@@ -40125,6 +41080,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <TypeInPayload>String</TypeInPayload>
       <Protocols>origgwpro</Protocols>
     </TypeAttribute>
+    <TypeAttribute json:Array="true">itrOq5Snz2BjGdRD8/rectMt3G7nhz2ujs5</TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>rectNR79AXqbbBZ8Y</TypeAttributeId>
       <Value>StartUnixS</Value>
@@ -40887,7 +41843,6 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Protocols>gjk</Protocols>
       <Protocols>gwasl</Protocols>
     </TypeAttribute>
-    <TypeAttribute json:Array="true">itrfF38pSEVwOJE0U/recuzLtkrWMPT1AeL</TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>recv0jEuP3xygb0bP</TypeAttributeId>
       <Value>TaDaemonAddr</Value>
@@ -40906,6 +41861,21 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <PreValidateFormat />
       <Protocols>gnf</Protocols>
       <Protocols>gwatn</Protocols>
+    </TypeAttribute>
+    <TypeAttribute json:Array="true">
+      <TypeAttributeId>recv24RlLzyBUiG43</TypeAttributeId>
+      <Value>HwUid</Value>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>String</PrimitiveType>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TestValue>'pico-aaaaaa'</TestValue>
+      <VersionedType>recsWIMGn0LnVm9eN</VersionedType>
+      <Idx>1</Idx>
+      <TypeInPayload>String</TypeInPayload>
+      <Protocols>gwasl</Protocols>
+      <Protocols>scada</Protocols>
     </TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>recvDPtsFQBsY8Kln</TypeAttributeId>
@@ -41931,6 +42901,7 @@ bool(MAC_REGEX.match(mac_str.lower()))</Description>
       <Protocols>gjk</Protocols>
       <Protocols>gwatn</Protocols>
     </TypeAttribute>
+    <TypeAttribute json:Array="true">itrOq5Snz2BjGdRD8/recy6fmSEsMQvUqu6</TypeAttribute>
     <TypeAttribute json:Array="true">
       <TypeAttributeId>recy6wm0IgQI90zHG</TypeAttributeId>
       <Value>DistPumpFeedbackModel</Value>
@@ -43321,6 +44292,34 @@ Also, (5) the TelemetryNames in the ConfigList must belong to ['RelayState'] </D
       <VersionedTypeName>hardware.layout.000</VersionedTypeName>
     </TypeAxiom>
     <TypeAxiom json:Array="true">
+      <TypeAxiomId>recGMgLhGdNgNj1RB</TypeAxiomId>
+      <Name>async.btu.params.000 Type Axiom 1</Name>
+      <AxiomNumber>1</AxiomNumber>
+      <Title>ReadCtVoltage is True iff CtChannelName exists iff AsyncCaptureDeltaCtVoltsX100 exists. If ReadCtVoltage  exists then so does AsyncCaptureDeltaCtVoltsX100</Title>
+      <MultiPropertyAxiom>recIABnf3YmlHzxXs</MultiPropertyAxiom>
+      <VersionedTypeName>async.btu.params.000</VersionedTypeName>
+      <Proto2>gwproto</Proto2>
+      <Proto2>gwasl</Proto2>
+      <Proto2>scada</Proto2>
+      <Protocols>gwproto</Protocols>
+      <Protocols>gwasl</Protocols>
+      <Protocols>scada</Protocols>
+    </TypeAxiom>
+    <TypeAxiom json:Array="true">
+      <TypeAxiomId>recGWBq3EbaxINjIs</TypeAxiomId>
+      <Name>multichannel.snapshot.000 Type Axiom 1</Name>
+      <AxiomNumber>1</AxiomNumber>
+      <Title>all lists must have the same length</Title>
+      <MultiPropertyAxiom>recCvEvoeDDMCRMKi</MultiPropertyAxiom>
+      <VersionedTypeName>multichannel.snapshot.000</VersionedTypeName>
+      <Proto2>gwproto</Proto2>
+      <Proto2>gwasl</Proto2>
+      <Proto2>scada</Proto2>
+      <Protocols>gwproto</Protocols>
+      <Protocols>gwasl</Protocols>
+      <Protocols>scada</Protocols>
+    </TypeAxiom>
+    <TypeAxiom json:Array="true">
       <TypeAxiomId>recH512a7g6p8cLQM</TypeAxiomId>
       <Name> Type Axiom 3</Name>
       <Description>total must be 1, unit name must be TADEED, manager must be Gnf Admin or Gnf Graveyard</Description>
@@ -43753,6 +44752,7 @@ The data channel names are partitioned by:
       <OnUpdate>true</OnUpdate>
       <DataClassOnly>true</DataClassOnly>
     </TypeAxiom>
+    <TypeAxiom json:Array="true">itru5iHGYj1QFNRus/recTQN80nxhBGq1of</TypeAxiom>
     <TypeAxiom json:Array="true">
       <TypeAxiomId>recUb6ezx8SD26ynT</TypeAxiomId>
       <Name>base.g.node.gt.002 Update Axiom 4</Name>
@@ -43779,7 +44779,6 @@ The data channel names are partitioned by:
       <MultiPropertyAxiom>recyD0ycgUiT7TiH2</MultiPropertyAxiom>
       <VersionedTypeName>hardware.layout.000</VersionedTypeName>
     </TypeAxiom>
-    <TypeAxiom json:Array="true">itrhWAPFLX7AhKUID/recUggsxnD4nolyYT</TypeAxiom>
     <TypeAxiom json:Array="true">
       <TypeAxiomId>recUlYh5skV3JJFY4</TypeAxiomId>
       <Name>report.002 Type Axiom 2</Name>
@@ -43920,6 +44919,20 @@ The data channel names are partitioned by:
       <Creation>recDp8U1jLA9zeEx2</Creation>
       <OnCreate>true</OnCreate>
       <DataClassOnly>true</DataClassOnly>
+    </TypeAxiom>
+    <TypeAxiom json:Array="true">
+      <TypeAxiomId>recYRUKgfqv8aeU7w</TypeAxiomId>
+      <Name>pico.btu.meter.component.gt.000 Type Axiom 1</Name>
+      <AxiomNumber>1</AxiomNumber>
+      <Title>ReadCtVoltage is True iff AsyncCaptureDeltaCtVoltsX100 exists. If ReadCtVoltage exists then so does AsyncCaptureDeltaCtVoltsX100</Title>
+      <MultiPropertyAxiom>recceAYnoSRWlEoKq</MultiPropertyAxiom>
+      <VersionedTypeName>pico.btu.meter.component.gt.000</VersionedTypeName>
+      <Proto2>gwasl</Proto2>
+      <Proto2>gwproto</Proto2>
+      <Proto2>scada</Proto2>
+      <Protocols>gwasl</Protocols>
+      <Protocols>gwproto</Protocols>
+      <Protocols>scada</Protocols>
     </TypeAxiom>
     <TypeAxiom json:Array="true">
       <TypeAxiomId>recYb0fdGi0h5VrhS</TypeAxiomId>
@@ -45356,6 +46369,14 @@ by the concept of MarketType.</Description>
       <StrictVersion>true</StrictVersion>
     </TypeBasis>
     <TypeBasis json:Array="true">
+      <TypeBasisId>recIPyWHpGir6lyFT</TypeBasisId>
+      <TypeName>admin.analog.dispatch</TypeName>
+      <ProtocolCategory>Json</ProtocolCategory>
+      <ConsistencyCheck>1</ConsistencyCheck>
+      <VersionedTypes>rec6gN34hc6T9iRVb</VersionedTypes>
+      <StrictVersion>true</StrictVersion>
+    </TypeBasis>
+    <TypeBasis json:Array="true">
       <TypeBasisId>recIgRg0HmTWh68Ve</TypeBasisId>
       <TypeName>pico.missing</TypeName>
       <ProtocolCategory>Json</ProtocolCategory>
@@ -45722,6 +46743,7 @@ by the concept of MarketType.</Description>
       <VersionedTypes>recQNkcv7oFvOFcr8</VersionedTypes>
       <StrictVersion>true</StrictVersion>
     </TypeBasis>
+    <TypeBasis json:Array="true">itrRtKtplf6N2DtUk/recWA3vbCiHdRbdEm</TypeBasis>
     <TypeBasis json:Array="true">
       <TypeBasisId>recWDAtZiKvWaXnRX</TypeBasisId>
       <TypeName>hardware.layout</TypeName>
@@ -45730,7 +46752,6 @@ by the concept of MarketType.</Description>
       <VersionedTypes>recyD0ycgUiT7TiH2</VersionedTypes>
       <StrictVersion>true</StrictVersion>
     </TypeBasis>
-    <TypeBasis json:Array="true">itruicri86uIKwMB8/recWDAtZiKvWaXnRX</TypeBasis>
     <TypeBasis json:Array="true">
       <TypeBasisId>recWSQYtf3eGAt2EI</TypeBasisId>
       <TypeName>scada.params</TypeName>
@@ -45882,6 +46903,13 @@ by the concept of MarketType.</Description>
       <ProtocolCategory>Json</ProtocolCategory>
       <ConsistencyCheck>1</ConsistencyCheck>
       <VersionedTypes>rectBHXiwGZN7eGMZ</VersionedTypes>
+      <StrictVersion>true</StrictVersion>
+    </TypeBasis>
+    <TypeBasis json:Array="true">
+      <TypeBasisId>recakDwrYVOAlDmCE</TypeBasisId>
+      <TypeName>gw0.house.status</TypeName>
+      <ProtocolCategory>Json</ProtocolCategory>
+      <ConsistencyCheck>1</ConsistencyCheck>
       <StrictVersion>true</StrictVersion>
     </TypeBasis>
     <TypeBasis json:Array="true">
@@ -46091,6 +47119,13 @@ by the concept of MarketType.</Description>
       <ConsistencyCheck>0</ConsistencyCheck>
       <VersionedTypes>recQ1SzB1rQPnbRUR</VersionedTypes>
       <ProtocolTypes>Unnamed record</ProtocolTypes>
+      <StrictVersion>true</StrictVersion>
+    </TypeBasis>
+    <TypeBasis json:Array="true">
+      <TypeBasisId>receSqyEQrOhJw9QR</TypeBasisId>
+      <TypeName>gw0.house.contact</TypeName>
+      <ProtocolCategory>Json</ProtocolCategory>
+      <ConsistencyCheck>1</ConsistencyCheck>
       <StrictVersion>true</StrictVersion>
     </TypeBasis>
     <TypeBasis json:Array="true">
@@ -46471,6 +47506,14 @@ Shares the same purpose as gs.pwr, but is not designed to minimize bytes so come
       <StrictVersion>true</StrictVersion>
     </TypeBasis>
     <TypeBasis json:Array="true">
+      <TypeBasisId>recpMngctn1DrJqvD</TypeBasisId>
+      <TypeName>pico.comms.params</TypeName>
+      <ProtocolCategory>Json</ProtocolCategory>
+      <ConsistencyCheck>1</ConsistencyCheck>
+      <VersionedTypes>recIH8gxbOmMxHBzM</VersionedTypes>
+      <StrictVersion>true</StrictVersion>
+    </TypeBasis>
+    <TypeBasis json:Array="true">
       <TypeBasisId>recpqtAlI1M19QR9b</TypeBasisId>
       <TypeName>multipurpose.sensor.cac.gt</TypeName>
       <ProtocolCategory>Json</ProtocolCategory>
@@ -46500,6 +47543,15 @@ Shares the same purpose as gs.pwr, but is not designed to minimize bytes so come
       <ProtocolTypes>Unnamed record</ProtocolTypes>
       <Title>Type for tracking Resistive Heater ComponentAttributeClasses</Title>
       <Url>https://g-node-registry.readthedocs.io/en/latest/component-attribute-class.html</Url>
+      <StrictVersion>true</StrictVersion>
+    </TypeBasis>
+    <TypeBasis json:Array="true">
+      <TypeBasisId>recrGxu9Bto2VwnSU</TypeBasisId>
+      <TypeName>async.btu.params</TypeName>
+      <ProtocolCategory>Json</ProtocolCategory>
+      <ConsistencyCheck>1</ConsistencyCheck>
+      <VersionedTypes>recIABnf3YmlHzxXs</VersionedTypes>
+      <Title>Parameters for the GridWorks AsyncBtuMain code</Title>
       <StrictVersion>true</StrictVersion>
     </TypeBasis>
     <TypeBasis json:Array="true">
@@ -46657,11 +47709,27 @@ Shares the same purpose as gs.pwr, but is not designed to minimize bytes so come
       <StrictVersion>true</StrictVersion>
     </TypeBasis>
     <TypeBasis json:Array="true">
+      <TypeBasisId>recu1mU7USl6hhQ8H</TypeBasisId>
+      <TypeName>multichannel.snapshot</TypeName>
+      <ProtocolCategory>Json</ProtocolCategory>
+      <ConsistencyCheck>1</ConsistencyCheck>
+      <VersionedTypes>recCvEvoeDDMCRMKi</VersionedTypes>
+      <Title>Data sent by GridWOrks AsyncBtuMain code</Title>
+      <StrictVersion>true</StrictVersion>
+    </TypeBasis>
+    <TypeBasis json:Array="true">
       <TypeBasisId>recu20xs0FtMZFZtM</TypeBasisId>
       <TypeName>hourly.price.forecast.channel</TypeName>
       <ProtocolCategory>Json</ProtocolCategory>
       <ConsistencyCheck>1</ConsistencyCheck>
       <VersionedTypes>recEgtfaP7NExEDDm</VersionedTypes>
+      <StrictVersion>true</StrictVersion>
+    </TypeBasis>
+    <TypeBasis json:Array="true">
+      <TypeBasisId>recu2mp8IGHkOstRw</TypeBasisId>
+      <TypeName>gw0.house.address</TypeName>
+      <ProtocolCategory>Json</ProtocolCategory>
+      <ConsistencyCheck>1</ConsistencyCheck>
       <StrictVersion>true</StrictVersion>
     </TypeBasis>
     <TypeBasis json:Array="true">
@@ -46698,6 +47766,7 @@ Shares the same purpose as gs.pwr, but is not designed to minimize bytes so come
       <VersionedTypes>recXrOxZu3uUqL6pH</VersionedTypes>
       <StrictVersion>true</StrictVersion>
     </TypeBasis>
+    <TypeBasis json:Array="true">itrRtKtplf6N2DtUk/recuocYj9OaOIsmtn</TypeBasis>
     <TypeBasis json:Array="true">
       <TypeBasisId>recuzRX6RAVYBuYO4</TypeBasisId>
       <TypeName>atn.outside.temp.regr.coeffs</TypeName>
@@ -46786,7 +47855,6 @@ PowerOut = Alpha + Beta * OutsideTempF
       <Title>Data sent from a SimpleSensor to a SCADA</Title>
       <StrictVersion>true</StrictVersion>
     </TypeBasis>
-    <TypeBasis json:Array="true">itruicri86uIKwMB8/recx4EL5mDebUhtzp</TypeBasis>
     <TypeBasis json:Array="true">
       <TypeBasisId>recxXnNUXYPwJi4ns</TypeBasisId>
       <TypeName>egauge.register.config</TypeName>
@@ -46795,6 +47863,14 @@ PowerOut = Alpha + Beta * OutsideTempF
       <VersionedTypes>rec9dL2CYkm5s4OXX</VersionedTypes>
       <Description>This type captures the information provided by eGauge in its modbus csv map, when reading current, power, energy, voltage, frequency etc from an eGauge 4030.</Description>
       <Title>Used to translate eGauge's Modbus Map</Title>
+      <StrictVersion>true</StrictVersion>
+    </TypeBasis>
+    <TypeBasis json:Array="true">
+      <TypeBasisId>recxjKB5LK1ugmkEi</TypeBasisId>
+      <TypeName>pico.btu.meter.component.gt</TypeName>
+      <ProtocolCategory>Json</ProtocolCategory>
+      <ConsistencyCheck>1</ConsistencyCheck>
+      <VersionedTypes>recceAYnoSRWlEoKq</VersionedTypes>
       <StrictVersion>true</StrictVersion>
     </TypeBasis>
     <TypeBasis json:Array="true">
@@ -46933,6 +48009,14 @@ PowerOut = Alpha + Beta * OutsideTempF
       <ProtocolCategory>Json</ProtocolCategory>
       <ConsistencyCheck>1</ConsistencyCheck>
       <VersionedTypes>recT4SSkJ18pz5YoZ</VersionedTypes>
+      <StrictVersion>true</StrictVersion>
+    </TypeBasis>
+    <TypeBasis json:Array="true">
+      <TypeBasisId>reczwiHH7SBsQgf2h</TypeBasisId>
+      <TypeName>baseurl.failure.alert</TypeName>
+      <ProtocolCategory>Json</ProtocolCategory>
+      <ConsistencyCheck>1</ConsistencyCheck>
+      <VersionedTypes>recsWIMGn0LnVm9eN</VersionedTypes>
       <StrictVersion>true</StrictVersion>
     </TypeBasis>
   </TypeBases>
@@ -47232,6 +48316,23 @@ PowerOut = Alpha + Beta * OutsideTempF
       <NoVersions />
     </VersionedEnum>
     <VersionedEnum json:Array="true">
+      <VersionedEnumId>rec29s2RTOkVZto7d</VersionedEnumId>
+      <VersionedEnumName>spaceheat.telemetry.name.006</VersionedEnumName>
+      <Enum>rec2HyLffy6QK9QId</Enum>
+      <EnumName>spaceheat.telemetry.name</EnumName>
+      <Version>006</Version>
+      <Status>Active</Status>
+      <LocalName>telemetry.name</LocalName>
+      <EnumType>UpperPython</EnumType>
+      <DefaultEnumValue>Unknown</DefaultEnumValue>
+      <GtEnumId>rec2HyLffy6QK9QId</GtEnumId>
+      <Description>Specifies the name of sensed data reported by a Spaceheat SCADA</Description>
+      <Url>https://gridworks-protocol.readthedocs.io/en/latest/telemetry-name.html</Url>
+      <ProtocolEnums>recqt9zKlCbThWViA</ProtocolEnums>
+      <ProtocolEnums>recydVnayuniYnL63</ProtocolEnums>
+      <NoVersions />
+    </VersionedEnum>
+    <VersionedEnum json:Array="true">
       <VersionedEnumId>rec34jzNTOCttIy0e</VersionedEnumId>
       <VersionedEnumName>alert.priority.000</VersionedEnumName>
       <Enum>rechdTyUNbw1Ttzr6</Enum>
@@ -47487,6 +48588,21 @@ PowerOut = Alpha + Beta * OutsideTempF
       <Description>Determines the code running Spaceheat Nodes supervised by Spaceheat SCADA software</Description>
       <Url>https://gridworks-protocol.readthedocs.io/en/latest/actor-class.html</Url>
       <ProtocolEnums>recEtnT4pFpDn1mTt</ProtocolEnums>
+      <NoVersions />
+    </VersionedEnum>
+    <VersionedEnum json:Array="true">
+      <VersionedEnumId>rec9q0Kmhy3NeiqC9</VersionedEnumId>
+      <VersionedEnumName>sh.actor.class.008</VersionedEnumName>
+      <Enum>recQeMNisJZjsYXTl</Enum>
+      <EnumName>sh.actor.class</EnumName>
+      <Version>008</Version>
+      <Status>Active</Status>
+      <LocalName>actor.class</LocalName>
+      <EnumType>UpperPython</EnumType>
+      <DefaultEnumValue>NoActor</DefaultEnumValue>
+      <GtEnumId>recQeMNisJZjsYXTl</GtEnumId>
+      <Description>Determines the code running Spaceheat Nodes supervised by Spaceheat SCADA software</Description>
+      <Url>https://gridworks-protocol.readthedocs.io/en/latest/actor-class.html</Url>
       <ProtocolEnums>recgZlo4ryBtvG1Nb</ProtocolEnums>
       <ProtocolEnums>recSPj8MLTWUSs6he</ProtocolEnums>
       <NoVersions />
@@ -47519,7 +48635,6 @@ PowerOut = Alpha + Beta * OutsideTempF
       <GtEnumId>recLQWqTvGwSz2GcN</GtEnumId>
       <Description>Determines Make/Model of device associated to a Spaceheat Node supervised by SCADA</Description>
       <Url>https://gridworks-protocol.readthedocs.io/en/latest/make-model.html</Url>
-      <ProtocolEnums>rec4ZV16eScgcdZAE</ProtocolEnums>
       <NoVersions />
     </VersionedEnum>
     <VersionedEnum json:Array="true">
@@ -47846,9 +48961,6 @@ PowerOut = Alpha + Beta * OutsideTempF
       <EnumType>UpperPython</EnumType>
       <DefaultEnumValue>BasicExpWeightedAvg</DefaultEnumValue>
       <GtEnumId>reclxhoGH9ipt39oM</GtEnumId>
-      <ProtocolEnums>recOEDyp3Fqhwkx8X</ProtocolEnums>
-      <ProtocolEnums>recgWHkD3A5IQc2iN</ProtocolEnums>
-      <ProtocolEnums>recCSzU2rxByLzoaR</ProtocolEnums>
       <NoVersions />
     </VersionedEnum>
     <VersionedEnum json:Array="true">
@@ -47865,6 +48977,23 @@ PowerOut = Alpha + Beta * OutsideTempF
       <Description>What method is used to calculate temperature as a function of voltage?</Description>
       <ProtocolEnums>recIYuhOyocEvK4z8</ProtocolEnums>
       <ProtocolEnums>recroDYPjCPBWvlb4</ProtocolEnums>
+      <NoVersions />
+    </VersionedEnum>
+    <VersionedEnum json:Array="true">
+      <VersionedEnumId>recRdMDEFgbntJv57</VersionedEnumId>
+      <VersionedEnumName>hz.calc.method.001</VersionedEnumName>
+      <Enum>reclxhoGH9ipt39oM</Enum>
+      <EnumName>hz.calc.method</EnumName>
+      <Version>001</Version>
+      <Status>Active</Status>
+      <LocalName>hz.calc.method</LocalName>
+      <EnumType>UpperPython</EnumType>
+      <DefaultEnumValue>BasicExpWeightedAvg</DefaultEnumValue>
+      <GtEnumId>reclxhoGH9ipt39oM</GtEnumId>
+      <ProtocolEnums>rec2y1jYLmx2RQB12</ProtocolEnums>
+      <ProtocolEnums>recsVOkdBBHmnyg3Y</ProtocolEnums>
+      <ProtocolEnums>recCSzU2rxByLzoaR</ProtocolEnums>
+      <ProtocolEnums>recOEDyp3Fqhwkx8X</ProtocolEnums>
       <NoVersions />
     </VersionedEnum>
     <VersionedEnum json:Array="true">
@@ -48028,6 +49157,23 @@ Defines the fundamental types of actors in the transactive energy ecosystem:  ph
       <NoVersions />
     </VersionedEnum>
     <VersionedEnum json:Array="true">
+      <VersionedEnumId>recZpCE7A6ho8s8pa</VersionedEnumId>
+      <VersionedEnumName>spaceheat.make.model.006</VersionedEnumName>
+      <Enum>recLQWqTvGwSz2GcN</Enum>
+      <EnumName>spaceheat.make.model</EnumName>
+      <Version>006</Version>
+      <Status>Active</Status>
+      <LocalName>make.model</LocalName>
+      <EnumType>Upper</EnumType>
+      <DefaultEnumValue>UnknownMake__UnknownModel</DefaultEnumValue>
+      <GtEnumId>recLQWqTvGwSz2GcN</GtEnumId>
+      <Description>Determines Make/Model of device associated to a Spaceheat Node supervised by SCADA</Description>
+      <Url>https://gridworks-protocol.readthedocs.io/en/latest/make-model.html</Url>
+      <ProtocolEnums>rec4ZV16eScgcdZAE</ProtocolEnums>
+      <ProtocolEnums>recSfQ8nUwyTprKyK</ProtocolEnums>
+      <NoVersions />
+    </VersionedEnum>
+    <VersionedEnum json:Array="true">
       <VersionedEnumId>recaVXwLd03vCTz1X</VersionedEnumId>
       <VersionedEnumName>supervisor.container.status.000</VersionedEnumName>
       <Enum>recdH9n0oS3nRRWON</Enum>
@@ -48058,6 +49204,10 @@ Defines the fundamental types of actors in the transactive energy ecosystem:  ph
       <ProtocolEnums>recIyZCjcgxuH7wbv</ProtocolEnums>
       <ProtocolEnums>rec36PqIOdFvtWvwC</ProtocolEnums>
       <NoVersions />
+    </VersionedEnum>
+    <VersionedEnum json:Array="true">
+      <VersionedEnumId>reccQohDEef1YIGRA</VersionedEnumId>
+      <VersionedEnumName>.</VersionedEnumName>
     </VersionedEnum>
     <VersionedEnum json:Array="true">
       <VersionedEnumId>recfXEZ6IRZTnqbXw</VersionedEnumId>
@@ -48244,8 +49394,6 @@ See [Message Delivery Architecture](https://gridworks.readthedocs.io/message-del
       <Description>Specifies the name of sensed data reported by a Spaceheat SCADA</Description>
       <Url>https://gridworks-protocol.readthedocs.io/en/latest/telemetry-name.html</Url>
       <ProtocolEnums>recZdrMrH8JndGcMS</ProtocolEnums>
-      <ProtocolEnums>recqt9zKlCbThWViA</ProtocolEnums>
-      <ProtocolEnums>recydVnayuniYnL63</ProtocolEnums>
       <NoVersions />
     </VersionedEnum>
     <VersionedEnum json:Array="true">
@@ -48362,7 +49510,6 @@ See [Message Delivery Architecture](https://gridworks.readthedocs.io/message-del
       <GtEnumId>recLQWqTvGwSz2GcN</GtEnumId>
       <Description>Determines Make/Model of device associated to a Spaceheat Node supervised by SCADA</Description>
       <Url>https://gridworks-protocol.readthedocs.io/en/latest/make-model.html</Url>
-      <ProtocolEnums>recSfQ8nUwyTprKyK</ProtocolEnums>
       <NoVersions />
     </VersionedEnum>
     <VersionedEnum json:Array="true">
@@ -49299,6 +50446,25 @@ Shares the same purpose as gs.pwr, but is not designed to minimize bytes so come
       <Enums>recgnPwb3oOsvXguD</Enums>
     </VersionedType>
     <VersionedType json:Array="true">
+      <VersionedTypeId>rec6gN34hc6T9iRVb</VersionedTypeId>
+      <VersionedTypeName>admin.analog.dispatch.000</VersionedTypeName>
+      <ProtocolCategory>Json</ProtocolCategory>
+      <TypeAttributes>recaITZLfijWezr6T</TypeAttributes>
+      <TypeAttributes>recIrFEZpnsAuEgEg</TypeAttributes>
+      <Version>000</Version>
+      <MakeDataClass />
+      <IsCac />
+      <IsComponent />
+      <ConsistencyCheck>1</ConsistencyCheck>
+      <BaseType>recIPyWHpGir6lyFT</BaseType>
+      <TypeName>admin.analog.dispatch</TypeName>
+      <Status>Active</Status>
+      <ProtocolTypes>recWBjn34ecIsE5yZ</ProtocolTypes>
+      <ProtocolTypes>recE95dtTVKlKIbKk</ProtocolTypes>
+      <Protocols>scada</Protocols>
+      <Protocols>gwasl</Protocols>
+    </VersionedType>
+    <VersionedType json:Array="true">
       <VersionedTypeId>rec70ndc2atifo8Ri</VersionedTypeId>
       <VersionedTypeName>basegnode.marketmaker.create.000</VersionedTypeName>
       <ProtocolCategory>Json</ProtocolCategory>
@@ -50166,6 +51332,32 @@ Shares the same purpose as gs.pwr, but is not designed to minimize bytes so come
       <Protocols>gwproto</Protocols>
       <Protocols>origgwpro</Protocols>
       <PythonClassName>RESTPollerComponentGt</PythonClassName>
+    </VersionedType>
+    <VersionedType json:Array="true">
+      <VersionedTypeId>recCvEvoeDDMCRMKi</VersionedTypeId>
+      <VersionedTypeName>multichannel.snapshot.000</VersionedTypeName>
+      <ProtocolCategory>Json</ProtocolCategory>
+      <TypeAttributes>rec3e1nke1k1HEMlg</TypeAttributes>
+      <TypeAttributes>rec4jGVDhinCYuiHo</TypeAttributes>
+      <TypeAttributes>rec1QG55gKlkwKWCV</TypeAttributes>
+      <TypeAttributes>rec156bpiu0SFlC7Y</TypeAttributes>
+      <Version>000</Version>
+      <MakeDataClass />
+      <IsCac />
+      <IsComponent />
+      <ConsistencyCheck>1</ConsistencyCheck>
+      <BaseType>recu1mU7USl6hhQ8H</BaseType>
+      <TypeName>multichannel.snapshot</TypeName>
+      <Status>Pending</Status>
+      <ProtocolTypes>recyuZF0gN9Ow0Ytx</ProtocolTypes>
+      <ProtocolTypes>recVVXTODuZCwPhsl</ProtocolTypes>
+      <ProtocolTypes>recrkaPXrC068gmMx</ProtocolTypes>
+      <Title>Data sent by GridWOrks AsyncBtuMain code</Title>
+      <PropertyFormatsUsed>rec8FKfbgEJZxvlIE</PropertyFormatsUsed>
+      <MultiPropertyAxioms>recGWBq3EbaxINjIs</MultiPropertyAxioms>
+      <Protocols>gwproto</Protocols>
+      <Protocols>gwasl</Protocols>
+      <Protocols>scada</Protocols>
     </VersionedType>
     <VersionedType json:Array="true">
       <VersionedTypeId>recDEr7ob2KLqM4gU</VersionedTypeId>
@@ -51056,6 +52248,62 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Protocols>scada</Protocols>
     </VersionedType>
     <VersionedType json:Array="true">
+      <VersionedTypeId>recIABnf3YmlHzxXs</VersionedTypeId>
+      <VersionedTypeName>async.btu.params.000</VersionedTypeName>
+      <ProtocolCategory>Json</ProtocolCategory>
+      <TypeAttributes>recAUNo2zCG6i9jWr</TypeAttributes>
+      <TypeAttributes>rec01D7njqKmkogh8</TypeAttributes>
+      <TypeAttributes>recJ4J6dNJZDb6MI7</TypeAttributes>
+      <TypeAttributes>recitQC6gCp4CuKRO</TypeAttributes>
+      <TypeAttributes>recYEbK8ODVVkUcG5</TypeAttributes>
+      <TypeAttributes>recEqaIzgvTkotnul</TypeAttributes>
+      <TypeAttributes>rec5aQPKqUmydvNiB</TypeAttributes>
+      <TypeAttributes>recHZohg3NeFZHieB</TypeAttributes>
+      <TypeAttributes>rec06lXxVO5xMTRSu</TypeAttributes>
+      <TypeAttributes>recH9rAZtJRPQrGA4</TypeAttributes>
+      <TypeAttributes>rec8ERHV8neJXD2IA</TypeAttributes>
+      <TypeAttributes>rec2a69VWoit3zM7i</TypeAttributes>
+      <TypeAttributes>recHtvW8OSALVkBDO</TypeAttributes>
+      <Version>000</Version>
+      <MakeDataClass />
+      <IsCac />
+      <IsComponent />
+      <ConsistencyCheck>1</ConsistencyCheck>
+      <BaseType>recrGxu9Bto2VwnSU</BaseType>
+      <TypeName>async.btu.params</TypeName>
+      <Status>Pending</Status>
+      <ProtocolTypes>recjZLMB0C9qAOV4f</ProtocolTypes>
+      <ProtocolTypes>recTsZOKETkVoEigq</ProtocolTypes>
+      <ProtocolTypes>recPVEameKJt8GxUs</ProtocolTypes>
+      <Title>Parameters for the GridWorks AsyncBtuMain code</Title>
+      <PropertyFormatsUsed>rec8FKfbgEJZxvlIE</PropertyFormatsUsed>
+      <MultiPropertyAxioms>recGMgLhGdNgNj1RB</MultiPropertyAxioms>
+      <Protocols>gwproto</Protocols>
+      <Protocols>gwasl</Protocols>
+      <Protocols>scada</Protocols>
+    </VersionedType>
+    <VersionedType json:Array="true">
+      <VersionedTypeId>recIH8gxbOmMxHBzM</VersionedTypeId>
+      <VersionedTypeName>pico.comms.params.000</VersionedTypeName>
+      <ProtocolCategory>Json</ProtocolCategory>
+      <TypeAttributes>recNZRiUp5E3LsWpP</TypeAttributes>
+      <TypeAttributes>rectLMhvFs0LlGgSz</TypeAttributes>
+      <TypeAttributes>recR8TSLWjyHUVTQD</TypeAttributes>
+      <Version>000</Version>
+      <MakeDataClass />
+      <IsCac />
+      <IsComponent />
+      <ConsistencyCheck>1</ConsistencyCheck>
+      <BaseType>recpMngctn1DrJqvD</BaseType>
+      <TypeName>pico.comms.params</TypeName>
+      <Status>Pending</Status>
+      <ProtocolTypes>recZZMHd3Y1gVDTA6</ProtocolTypes>
+      <ProtocolTypes>recq86klplAA6lTnO</ProtocolTypes>
+      <ProtocolTypes>recTCXbtbYKV08KlK</ProtocolTypes>
+      <Protocols>gwasl</Protocols>
+      <Protocols>scada</Protocols>
+    </VersionedType>
+    <VersionedType json:Array="true">
       <VersionedTypeId>recIJAYdDfLAqCR7m</VersionedTypeId>
       <VersionedTypeName>electric.meter.cac.gt.001</VersionedTypeName>
       <ProtocolCategory>Json</ProtocolCategory>
@@ -51296,6 +52544,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Protocols>gwatn</Protocols>
       <Protocols>gwasl</Protocols>
     </VersionedType>
+    <VersionedType json:Array="true">itrKOSdnPZsrQqazC/recLnFlsQ8DayqexZ</VersionedType>
     <VersionedType json:Array="true">
       <VersionedTypeId>recLufl9jSdsMGsFR</VersionedTypeId>
       <VersionedTypeName>market.slot.000</VersionedTypeName>
@@ -51380,7 +52629,6 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <ProtocolTypes>rec0CVyxlO3cPJGWD</ProtocolTypes>
       <Protocols>gnr</Protocols>
     </VersionedType>
-    <VersionedType json:Array="true">itrpNKDUwMsnmNHDE/recNIlQetbTDVNam8</VersionedType>
     <VersionedType json:Array="true">
       <VersionedTypeId>recNbXbJE9rcnLXAs</VersionedTypeId>
       <VersionedTypeName>gt.sh.status.110</VersionedTypeName>
@@ -53077,6 +54325,48 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Protocols>gwatn</Protocols>
     </VersionedType>
     <VersionedType json:Array="true">
+      <VersionedTypeId>recceAYnoSRWlEoKq</VersionedTypeId>
+      <VersionedTypeName>pico.btu.meter.component.gt.000</VersionedTypeName>
+      <ProtocolCategory>Json</ProtocolCategory>
+      <TypeAttributes>recbNIQ3ygU2rd6ak</TypeAttributes>
+      <TypeAttributes>recEnkK9NV7QhdXjE</TypeAttributes>
+      <TypeAttributes>recmLcnG1hvs74joi</TypeAttributes>
+      <TypeAttributes>recYIOPQyf8BwH2Rf</TypeAttributes>
+      <TypeAttributes>rech5PF6b8pi786oo</TypeAttributes>
+      <TypeAttributes>recqTyWT6FnuQG37o</TypeAttributes>
+      <TypeAttributes>recqxEpF3EaqoBiqE</TypeAttributes>
+      <TypeAttributes>recVETPpb1DuIjqv3</TypeAttributes>
+      <TypeAttributes>recke5FDb5NJ49yHX</TypeAttributes>
+      <TypeAttributes>recKdQlcmQpIK5ruk</TypeAttributes>
+      <TypeAttributes>recF37XYSIEnG93nS</TypeAttributes>
+      <TypeAttributes>reciRkxrAmnI0Rz5y</TypeAttributes>
+      <TypeAttributes>recjl6qZxHhGFfrvJ</TypeAttributes>
+      <TypeAttributes>recaKEDsWwsTN7dH9</TypeAttributes>
+      <TypeAttributes>recbLFCX4BVlIF5UO</TypeAttributes>
+      <TypeAttributes>recmZppaTkWERafkW</TypeAttributes>
+      <TypeAttributes>recmlRy8KWkKvFEfI</TypeAttributes>
+      <Version>000</Version>
+      <MakeDataClass />
+      <IsCac />
+      <IsComponent />
+      <ConsistencyCheck>1</ConsistencyCheck>
+      <BaseType>recxjKB5LK1ugmkEi</BaseType>
+      <TypeName>pico.btu.meter.component.gt</TypeName>
+      <Status>Pending</Status>
+      <ProtocolTypes>recy7pmm2t4prDfnK</ProtocolTypes>
+      <ProtocolTypes>recpBBwOwsBBrwEqC</ProtocolTypes>
+      <ProtocolTypes>recn7mYZdkOQ7iWyk</ProtocolTypes>
+      <PropertyFormatsUsed>rec8FKfbgEJZxvlIE</PropertyFormatsUsed>
+      <MultiPropertyAxioms>recYRUKgfqv8aeU7w</MultiPropertyAxioms>
+      <Protocols>gwasl</Protocols>
+      <Protocols>gwproto</Protocols>
+      <Protocols>scada</Protocols>
+      <Enums>recLQWqTvGwSz2GcN</Enums>
+      <Enums>reclxhoGH9ipt39oM</Enums>
+      <Enums>recnBoQvyU230SyE5</Enums>
+      <Enums>reczCvEi48QAKRX3X</Enums>
+    </VersionedType>
+    <VersionedType json:Array="true">
       <VersionedTypeId>reccsu6ZeZHKoDqDy</VersionedTypeId>
       <VersionedTypeName>spaceheat.node.gt.200</VersionedTypeName>
       <ProtocolCategory>Json</ProtocolCategory>
@@ -53712,6 +55002,7 @@ ReportPeriodS -&gt; BatchedTransmissionPeriodS</UpdateDescription>
       <TypeAttributes>recpqQnLqX0JmXFGt</TypeAttributes>
       <TypeAttributes>recsxSTWPmljndFJX</TypeAttributes>
       <TypeAttributes>rec01pvMslPygsz7v</TypeAttributes>
+      <UsedAsSubMessagein>recaITZLfijWezr6T</UsedAsSubMessagein>
       <Version>000</Version>
       <MakeDataClass />
       <IsCac />
@@ -53989,6 +55280,7 @@ ReportPeriodS -&gt; BatchedTransmissionPeriodS</UpdateDescription>
       <Enums>rec75xMuw0SMkzjVc</Enums>
       <Enums>recounhEj97w5SfDm</Enums>
     </VersionedType>
+    <VersionedType json:Array="true">itrKOSdnPZsrQqazC/rechXkF4uGNAulje7</VersionedType>
     <VersionedType json:Array="true">
       <VersionedTypeId>rechjCHFIwMRxYADf</VersionedTypeId>
       <VersionedTypeName>telemetry.snapshot.spaceheat.001</VersionedTypeName>
@@ -54117,7 +55409,6 @@ ReportPeriodS -&gt; BatchedTransmissionPeriodS</UpdateDescription>
       <MultiPropertyAxioms>recNCSpyLSRWgGKhr</MultiPropertyAxioms>
       <Protocols>gjk</Protocols>
     </VersionedType>
-    <VersionedType json:Array="true">itrpNKDUwMsnmNHDE/recirKkUOZZ1z2ipD</VersionedType>
     <VersionedType json:Array="true">
       <VersionedTypeId>recj03Z1SFNu6KdKd</VersionedTypeId>
       <VersionedTypeName>glitch.000</VersionedTypeName>
@@ -55186,6 +56477,28 @@ GridWorks Spaceheat SCADA uses the GridWorks GNodeRegistry structures and abstra
       <Protocols>gwmm</Protocols>
       <Protocols>scada</Protocols>
       <Protocols>gjk</Protocols>
+    </VersionedType>
+    <VersionedType json:Array="true">
+      <VersionedTypeId>recsWIMGn0LnVm9eN</VersionedTypeId>
+      <VersionedTypeName>baseurl.failure.alert.000</VersionedTypeName>
+      <ProtocolCategory>Json</ProtocolCategory>
+      <TypeAttributes>rechPo6Efxpg4C7fu</TypeAttributes>
+      <TypeAttributes>recv24RlLzyBUiG43</TypeAttributes>
+      <TypeAttributes>reciQgoRuc5SKGhOw</TypeAttributes>
+      <TypeAttributes>recL2E7BQJGqzytSI</TypeAttributes>
+      <Version>000</Version>
+      <MakeDataClass />
+      <IsCac />
+      <IsComponent />
+      <ConsistencyCheck>1</ConsistencyCheck>
+      <BaseType>reczwiHH7SBsQgf2h</BaseType>
+      <TypeName>baseurl.failure.alert</TypeName>
+      <Status>Pending</Status>
+      <ProtocolTypes>recjVy53bPGkrDNj2</ProtocolTypes>
+      <ProtocolTypes>recZW7lqxC5ds2izp</ProtocolTypes>
+      <PropertyFormatsUsed>rec8FKfbgEJZxvlIE</PropertyFormatsUsed>
+      <Protocols>gwasl</Protocols>
+      <Protocols>scada</Protocols>
     </VersionedType>
     <VersionedType json:Array="true">
       <VersionedTypeId>recsjs6wktEqW8woa</VersionedTypeId>

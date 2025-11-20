@@ -22,6 +22,7 @@ class PicoTankModuleComponentGt(ComponentGt):
     PicoKOhms: Optional[int] = None
     SerialNumber: str = "NA"
     AsyncCaptureDeltaMicroVolts: int
+    SwapTopBottom: bool = False
     TypeName: Literal["pico.tank.module.component.gt"] = "pico.tank.module.component.gt"
     Version: str = "010"
 

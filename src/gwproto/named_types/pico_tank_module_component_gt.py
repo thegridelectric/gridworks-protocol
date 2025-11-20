@@ -22,7 +22,7 @@ class PicoTankModuleComponentGt(ComponentGt):
     PicoKOhms: Optional[int] = None
     SerialNumber: str = "NA"
     AsyncCaptureDeltaMicroVolts: int
-    SensorOrder: list[int] = [1,2,3]
+    SensorOrder: list[int] = [1, 2, 3]
     TypeName: Literal["pico.tank.module.component.gt"] = "pico.tank.module.component.gt"
     Version: str = "010"
 

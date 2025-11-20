@@ -2,7 +2,7 @@
 
 from typing import Literal, Optional
 
-from pydantic import ConfigDict, model_validator
+from pydantic import ConfigDict, Field, model_validator
 from typing_extensions import Self
 
 from gwproto.enums import TempCalcMethod
@@ -22,7 +22,7 @@ class PicoTankModuleComponentGt(ComponentGt):
     PicoKOhms: Optional[int] = None
     SerialNumber: str = "NA"
     AsyncCaptureDeltaMicroVolts: int
-    SensorOrder: list[int] = [1, 2, 3]
+    SensorOrder: list[int] = Field(default_factory=lambda: [1, 2, 3])
     TypeName: Literal["pico.tank.module.component.gt"] = "pico.tank.module.component.gt"
     Version: str = "010"
 

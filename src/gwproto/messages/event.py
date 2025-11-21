@@ -17,7 +17,7 @@ class EventBase(GwBase):
     time_created_ms: UTCMilliseconds = Field(
         default_factory=lambda: int(time.time() * 1000)
     )
-    src: str = ""
+    src: str | None = None
 
     model_config = ConfigDict(
         alias_generator=snake_to_pascal,  # Keeping this

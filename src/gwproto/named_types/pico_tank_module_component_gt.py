@@ -2,7 +2,7 @@
 
 from typing import Literal, Optional
 
-from pydantic import ConfigDict, Field, model_validator
+from pydantic import ConfigDict, PositiveInt, model_validator
 from typing_extensions import Self
 
 from gwproto.enums import TempCalcMethod
@@ -15,16 +15,16 @@ class PicoTankModuleComponentGt(ComponentGt):
     PicoAHwUid: Optional[str] = None
     PicoBHwUid: Optional[str] = None
     TempCalcMethod: TempCalcMethod
-    ThermistorBeta: int
+    ThermistorBeta: PositiveInt
     SendMicroVolts: bool
-    Samples: int
-    NumSampleAverages: int
-    PicoKOhms: Optional[int] = None
+    Samples: PositiveInt
+    NumSampleAverages: PositiveInt
+    PicoKOhms: PositiveInt | None = None
     SerialNumber: str = "NA"
     AsyncCaptureDeltaMicroVolts: int
-    SensorOrder: list[int] = Field(default_factory=lambda: [1, 2, 3])
+    SensorOrder: list[int] | None = None
     TypeName: Literal["pico.tank.module.component.gt"] = "pico.tank.module.component.gt"
-    Version: str = "010"
+    Version: str = "011"
 
     model_config = ConfigDict(extra="allow")
 
@@ -61,3 +61,24 @@ class PicoTankModuleComponentGt(ComponentGt):
             )
 
         return self
+
+    def check_axiom_3(self) -> None:
+        """
+        Axiom 3:
+        If SensorOrder is provided, it must be a permutation of [1, 2, 3].
+        """
+        if self.SensorOrder is None:
+            return
+
+        expected = [1, 2, 3]
+        order = self.SensorOrder
+
+        # Must be length 3
+        if len(order) != 3:
+            raise ValueError(f"SensorOrder must be length 3 if provided; got {order}")
+
+        # Must contain exactly the integers 1, 2, 3 with no duplicates
+        if sorted(order) != expected:
+            raise ValueError(
+                f"SensorOrder must be a permutation of {expected}; got {order}"
+            )
